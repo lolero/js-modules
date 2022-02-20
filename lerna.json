@@ -1,0 +1,14 @@
+{
+  "version": "independent",
+  "useWorkspaces": true,
+  "packages": [
+    "packages/**"
+  ],
+  "command": {
+    "version": {
+      "allowBranch": "main",
+      "conventionalCommits": true,
+      "message": "build(release): bump package versions"
+    }
+  }
+}

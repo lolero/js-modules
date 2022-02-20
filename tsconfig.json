@@ -10,13 +10,12 @@
     "forceConsistentCasingInFileNames": true,
     "sourceMap": true,
     "skipLibCheck": true,
-    "outDir": "build"
+    "outDir": "build",
+    "baseUrl": "./packages"
   },
-  "include": ["src", ".commitlintrc.js"],
+  "include": ["src"],
   "exclude": [
-    "**/node_modules",
-    "**/build",
-    "**/__tests__",
-    "**/coverage"
+    "node_modules",
+    "**/*/build",
   ]
 }
