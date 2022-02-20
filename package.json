@@ -14,6 +14,7 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "lerna:build": "lerna run build",
+    "app:dev:web-apps-dapp-example": "pnpm --filter @dapp-example/web-apps-dapp-example dev",
     "prepublish": "pnpm lint:fix && pnpm test:coverage && pnpm lerna:build"
   },
   "dependencies": {
