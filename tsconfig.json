@@ -10,9 +10,8 @@
     "forceConsistentCasingInFileNames": true,
     "sourceMap": true,
     "skipLibCheck": true,
-    "outDir": "build",
     "baseUrl": "./packages"
   },
   "include": ["src"],
-  "exclude": ["node_modules", "**/*/build"]
+  "exclude": ["node_modules", "**/*/build", "**/*/__tests__"]
 }
