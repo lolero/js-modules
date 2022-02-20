@@ -1,0 +1,18 @@
+{
+  "name": "@dapp-example/common-utils-general",
+  "description": "Common Utils General",
+  "version": "0.0.0",
+  "license": "MIT",
+  "main": "build/index",
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@mui/material": "^5.4.2",
+    "axios": "^0.26.0",
+    "react": "^17.0.2"
+  }
+}

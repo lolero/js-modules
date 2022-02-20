@@ -10,8 +10,11 @@
     "git-hooks:reset": "pnpm git-hooks:clean && pnpm git-hooks:set",
     "lint:check": "eslint       './**/*.{js,jsx,ts,tsx}' && prettier --list-different './**/*.{js,jsx,ts,tsx,css,scss,less,json,md,yml,yaml}'",
     "lint:fix": "  eslint --fix './**/*.{js,jsx,ts,tsx}' && prettier --write          './**/*.{js,jsx,ts,tsx,css,scss,less,json,md,yml,yaml}'",
-    "test:test": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "test:test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "lerna:build": "lerna run build",
+    "prepublish": "pnpm lint:fix && pnpm test:coverage && pnpm lerna:build"
   },
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.2",
