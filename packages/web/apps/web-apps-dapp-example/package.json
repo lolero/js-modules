@@ -11,11 +11,21 @@
   },
   "dependencies": {
     "@dapp-example/common-utils-general": "^0.0.0",
-    "@types/react": "^17.0.33",
-    "@types/react-dom": "^17.0.10",
+    "@emotion/react": "^11.8.1",
+    "@emotion/styled": "^11.8.1",
+    "@mui/lab": "^5.0.0-alpha.69",
+    "@mui/material": "^5.4.2",
+    "@types/fg-loadcss": "^3.1.1",
+    "@types/react": "^17.0.39",
+    "@types/react-dom": "^17.0.11",
+    "@types/react-redux": "^7.1.22",
+    "@types/react-router-dom": "^5.3.3",
     "@vitejs/plugin-react": "^1.0.7",
+    "fg-loadcss": "^3.1.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-redux": "^7.2.6",
+    "react-router-dom": "^6.2.1",
     "vite": "^2.8.0",
     "vite-tsconfig-paths": "^3.4.0"
   }
