@@ -8,7 +8,7 @@
     "build"
   ],
   "scripts": {
-    "build": "tsc -b tsconfig.build.json"
+    "build": "tsc -b"
   },
   "dependencies": {
     "@emotion/react": "^11.8.1",
