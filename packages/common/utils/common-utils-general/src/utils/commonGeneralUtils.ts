@@ -39,6 +39,6 @@ export function formatCurrencyQuantity(quantity: number): string {
  *
  * @returns {boolean} Whether or not the app is running in a web browser
  */
-export function isBrowser(): boolean {
+export function getIsBrowser(): boolean {
   return typeof window !== 'undefined';
 }

@@ -6,17 +6,17 @@
   "license": "MIT",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc -b tsconfig.build.json && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
-  },
-  "devDependencies": {
+    "@dapp-example/common-utils-general": "^0.0.0",
     "@types/react": "^17.0.33",
     "@types/react-dom": "^17.0.10",
     "@vitejs/plugin-react": "^1.0.7",
-    "vite": "^2.8.0"
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "vite": "^2.8.0",
+    "vite-tsconfig-paths": "^3.4.0"
   }
 }

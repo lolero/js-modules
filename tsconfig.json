@@ -1,20 +1,9 @@
 {
+  "extends": "./tsconfig.build.json",
   "compilerOptions": {
-    "module": "esnext",
-    "target": "esnext",
-    "moduleResolution": "node",
-    "strict": true,
-    "isolatedModules": true,
-    "allowSyntheticDefaultImports": true,
-    "resolveJsonModule": true,
-    "forceConsistentCasingInFileNames": true,
-    "sourceMap": true,
-    "skipLibCheck": true,
     "baseUrl": "./packages",
     "paths": {
-      "common-utils-general": ["common/utils/common-utils-general/src"]
+      "@dapp-example/common-utils-general": ["common/utils/common-utils-general/src"]
     }
   },
-  "include": ["src"],
-  "exclude": ["node_modules", "**/*/build", "**/*/__tests__"]
 }

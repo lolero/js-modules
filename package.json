@@ -2,7 +2,9 @@
   "name": "dapp-example",
   "private": true,
   "scripts": {
-    "reset:clean": "rm -rf `find -type d -name 'node_modules'` `find -type d -name 'build'` `find -type d -name 'coverage'` `find -type f -name 'package-lock.json'` `find -type f -name 'pnpm-lock.yaml'` `find -type f -name 'yarn.lock'` .husky .eslintignore .prettierignore",
+    "clean:main": "rm -rf `find -type d -name 'node_modules'` `find -type d -name 'build'` `find -type d -name 'coverage'` `find -type f -name 'package-lock.json'` `find -type f -name 'pnpm-lock.yaml'` `find -type f -name 'yarn.lock'` .husky .eslintignore .prettierignore",
+    "clean:tsbuildinfo": "rm -rf `find -type f -name '*.tsbuildinfo'`",
+    "reset:clean": "pnpm clean:main && pnpm clean:tsbuildinfo",
     "reset:install": "ln -s .gitignore .eslintignore && ln -s .gitignore .prettierignore && pnpm install",
     "reset:reset": "pnpm reset:clean && pnpm reset:install",
     "git-hooks:clean": "git config --unset core.hooksPath",
