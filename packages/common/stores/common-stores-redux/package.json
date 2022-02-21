@@ -11,6 +11,7 @@
     "build": "tsc -b"
   },
   "dependencies": {
+    "@dapp-example/common-utils-general": "^0.0.0",
     "@types/uuid": "^8.3.4",
     "axios": "^0.26.0",
     "normalized-reducers-utils": "^1.1.15",

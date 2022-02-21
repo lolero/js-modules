@@ -23,7 +23,6 @@
     "@testing-library/jest-dom": "^5.16.2",
     "@types/lodash": "^4.14.178",
     "@types/node": "^17.0.18",
-    "date-fns": "^2.28.0",
     "lodash": "^4.17.21"
   },
   "devDependencies": {

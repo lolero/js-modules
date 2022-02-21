@@ -3,6 +3,7 @@
   "compilerOptions": {
     "baseUrl": "./packages",
     "paths": {
+      "@dapp-example/common-stores-redux": ["common/stores/common-stores-redux/src"],
       "@dapp-example/common-utils-general": ["common/utils/common-utils-general/src"]
     }
   },

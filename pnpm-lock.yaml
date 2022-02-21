@@ -15,7 +15,6 @@ importers:
       '@types/jest': ^27.4.0
       '@types/lodash': ^4.14.178
       '@types/node': ^17.0.18
-      date-fns: ^2.28.0
       eslint: ^8.9.0
       eslint-config-airbnb-typescript-prettier: ^5.0.0
       eslint-import-resolver-typescript: ^2.5.0
@@ -31,7 +30,6 @@ importers:
       '@testing-library/jest-dom': 5.16.2
       '@types/lodash': 4.14.178
       '@types/node': 17.0.19
-      date-fns: 2.28.0
       lodash: 4.17.21
     devDependencies:
       '@babel/preset-env': 7.16.11
@@ -55,6 +53,7 @@ importers:
 
   packages/common/stores/common-stores-redux:
     specifiers:
+      '@dapp-example/common-utils-general': ^0.0.0
       '@types/uuid': ^8.3.4
       axios: ^0.26.0
       normalized-reducers-utils: ^1.1.15
@@ -64,6 +63,7 @@ importers:
       reselect: ^4.1.5
       uuid: ^8.3.2
     dependencies:
+      '@dapp-example/common-utils-general': link:../../utils/common-utils-general
       '@types/uuid': 8.3.4
       axios: 0.26.0
       normalized-reducers-utils: 1.1.15
@@ -111,7 +111,7 @@ importers:
       '@dapp-example/common-utils-general': link:../../../common/utils/common-utils-general
       '@emotion/react': 11.8.1_a0c521d4794c7ad97f5f4c1c4a7d5818
       '@emotion/styled': 11.8.1_d24c5a2cd50724e2cbcff1306f0cc72d
-      '@mui/lab': 5.0.0-alpha.69_192fff66e754963036356bde0cc89119
+      '@mui/lab': 5.0.0-alpha.69_86eb55426a8dc250b957fe1a2db4f2b0
       '@mui/material': 5.4.2_a557939b8cd577a0014b488227bec235
       '@types/fg-loadcss': 3.1.1
       '@types/react': 17.0.39
@@ -1647,7 +1647,7 @@ packages:
     resolution: {integrity: sha512-pVI9nfkf2qClb2Cxdq0Q4zJhdawMG4ybWZUVGifT78FDwzRMX2SwXBb55s5NRJk0HcIicDuxktmCtemZqMH1Zg==}
     dev: false
 
-  /@date-io/date-fns/2.13.1_date-fns@2.28.0:
+  /@date-io/date-fns/2.13.1:
     resolution: {integrity: sha512-8fmfwjiLMpFLD+t4NBwDx0eblWnNcgt4NgfT/uiiQTGI81fnPu9tpBMYdAcuWxaV7LLpXgzLBx1SYWAMDVUDQQ==}
     peerDependencies:
       date-fns: ^2.0.0
@@ -1656,7 +1656,6 @@ packages:
         optional: true
     dependencies:
       '@date-io/core': 2.13.1
-      date-fns: 2.28.0
     dev: false
 
   /@date-io/dayjs/2.13.1:
@@ -2855,7 +2854,7 @@ packages:
       react-is: 17.0.2
     dev: false
 
-  /@mui/lab/5.0.0-alpha.69_192fff66e754963036356bde0cc89119:
+  /@mui/lab/5.0.0-alpha.69_86eb55426a8dc250b957fe1a2db4f2b0:
     resolution: {integrity: sha512-VrTcmXTS9UlTsp40nIZ/R/HBHOvxP2lvgSY9zLSn5XPhMQEMD1H0wTJ68mEuCm18cnl1sbcUOCMfWx9io/u5zg==}
     engines: {node: '>=12.0.0'}
     peerDependencies:
@@ -2880,7 +2879,7 @@ packages:
         optional: true
     dependencies:
       '@babel/runtime': 7.17.2
-      '@date-io/date-fns': 2.13.1_date-fns@2.28.0
+      '@date-io/date-fns': 2.13.1
       '@date-io/dayjs': 2.13.1
       '@date-io/luxon': 2.13.1
       '@date-io/moment': 2.13.1
@@ -2890,7 +2889,6 @@ packages:
       '@mui/utils': 5.4.2_react@17.0.2
       '@types/react': 17.0.39
       clsx: 1.1.1
-      date-fns: 2.28.0
       prop-types: 15.8.1
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
@@ -4714,11 +4712,6 @@ packages:
       whatwg-mimetype: 2.3.0
       whatwg-url: 8.7.0
     dev: true
-
-  /date-fns/2.28.0:
-    resolution: {integrity: sha512-8d35hViGYx/QH0icHYCeLmsLmMUheMmTyV9Fcm6gvNwdw31yXXH+O85sOBJ+OLnLQMKZowvpKb6FgMIQjcpvQw==}
-    engines: {node: '>=0.11'}
-    dev: false
 
   /dateformat/3.0.3:
     resolution: {integrity: sha512-jyCETtSl3VMZMWeRo7iY1FL19ges1t55hMo5yaam4Jrsm5EPL89UQkoQRyiI+Yf4k8r2ZpdngkV8hr1lIdjb3Q==}
