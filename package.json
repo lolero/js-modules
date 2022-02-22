@@ -1,5 +1,5 @@
 {
-  "name": "dapp-example",
+  "name": "js-modules",
   "private": true,
   "scripts": {
     "clean:main": "rm -rf `find -type d -name 'node_modules'` `find -type d -name 'build'` `find -type d -name 'coverage'` `find -type f -name 'package-lock.json'` `find -type f -name 'pnpm-lock.yaml'` `find -type f -name 'yarn.lock'` .husky .eslintignore .prettierignore",
@@ -16,7 +16,7 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "lerna:build": "lerna run build",
-    "app:dev:web-apps-dapp-example": "pnpm --filter @dapp-example/web-apps-dapp-example dev",
+    "app:dev:web-apps-dapp-example": "pnpm --filter @js-modules/web-apps-dapp-example dev",
     "prepublish": "pnpm lint:fix && pnpm test:coverage && pnpm lerna:build"
   },
   "dependencies": {

@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "@dapp-example/web-apps-dapp-example",
+  "name": "@js-modules/web-apps-dapp-example",
   "description": "Web Apps Dapp Example",
   "version": "0.0.0",
   "license": "MIT",
@@ -10,9 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@dapp-example/common-stores-redux": "^0.0.0",
-    "@dapp-example/common-utils-general": "^0.0.0",
-    "@dapp-example/web-utils-styles": "^0.0.0",
+    "@js-modules/common-stores-dapp-example-redux": "^0.0.0",
+    "@js-modules/common-utils-general": "^0.0.0",
+    "@js-modules/web-utils-styles": "^0.0.0",
     "@emotion/react": "^11.8.1",
     "@emotion/styled": "^11.8.1",
     "@mui/lab": "^5.0.0-alpha.69",

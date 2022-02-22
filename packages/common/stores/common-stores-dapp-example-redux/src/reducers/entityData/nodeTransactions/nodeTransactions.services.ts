@@ -1,4 +1,4 @@
-import { axiosRequest } from '@dapp-example/common-utils-general';
+import { axiosRequest } from '@js-modules/common-utils-general';
 import { destructNodeTransactionPk } from './nodeTransactions.pkUtils';
 import {
   NodeTransactionsGetManyServiceResponse,

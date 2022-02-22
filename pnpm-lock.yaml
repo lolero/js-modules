@@ -51,9 +51,9 @@ importers:
       prettier: 2.5.1
       typescript: 4.5.5
 
-  packages/common/stores/common-stores-redux:
+  packages/common/stores/common-stores-dapp-example-redux:
     specifiers:
-      '@dapp-example/common-utils-general': ^0.0.0
+      '@js-modules/common-utils-general': ^0.0.0
       '@types/uuid': ^8.3.4
       axios: ^0.26.0
       normalized-reducers-utils: ^1.1.15
@@ -63,7 +63,7 @@ importers:
       reselect: ^4.1.5
       uuid: ^8.3.2
     dependencies:
-      '@dapp-example/common-utils-general': link:../../utils/common-utils-general
+      '@js-modules/common-utils-general': link:../../utils/common-utils-general
       '@types/uuid': 8.3.4
       axios: 0.26.0
       normalized-reducers-utils: 1.1.15
@@ -89,11 +89,11 @@ importers:
 
   packages/web/apps/web-apps-dapp-example:
     specifiers:
-      '@dapp-example/common-stores-redux': ^0.0.0
-      '@dapp-example/common-utils-general': ^0.0.0
-      '@dapp-example/web-utils-styles': ^0.0.0
       '@emotion/react': ^11.8.1
       '@emotion/styled': ^11.8.1
+      '@js-modules/common-stores-dapp-example-redux': ^0.0.0
+      '@js-modules/common-utils-general': ^0.0.0
+      '@js-modules/web-utils-styles': ^0.0.0
       '@mui/lab': ^5.0.0-alpha.69
       '@mui/material': ^5.4.2
       '@types/react': ^17.0.39
@@ -108,11 +108,11 @@ importers:
       vite: ^2.8.0
       vite-tsconfig-paths: ^3.4.0
     dependencies:
-      '@dapp-example/common-stores-redux': link:../../../common/stores/common-stores-redux
-      '@dapp-example/common-utils-general': link:../../../common/utils/common-utils-general
-      '@dapp-example/web-utils-styles': link:../../utils/web-utils-styles
       '@emotion/react': 11.8.1_a0c521d4794c7ad97f5f4c1c4a7d5818
       '@emotion/styled': 11.8.1_d24c5a2cd50724e2cbcff1306f0cc72d
+      '@js-modules/common-stores-dapp-example-redux': link:../../../common/stores/common-stores-dapp-example-redux
+      '@js-modules/common-utils-general': link:../../../common/utils/common-utils-general
+      '@js-modules/web-utils-styles': link:../../utils/web-utils-styles
       '@mui/lab': 5.0.0-alpha.70_10cbfafe4240c3d8422c20594173de1e
       '@mui/material': 5.4.3_a557939b8cd577a0014b488227bec235
       '@types/react': 17.0.39

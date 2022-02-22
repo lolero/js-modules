@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import { Icon, Typography } from '@mui/material';
-import { getIsBrowser } from '@dapp-example/common-utils-general';
+import { getIsBrowser } from '@js-modules/common-utils-general';
 
 const appBoxSx = {
   position: 'fixed',

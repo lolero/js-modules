@@ -1,3 +1,3 @@
-# dapp-example
+# js-modules
 
-dapp example
+js-modules
