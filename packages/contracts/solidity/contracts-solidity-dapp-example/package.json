@@ -7,13 +7,16 @@
     "build"
   ],
   "scripts": {
+    "dev": "pnpx hardhat node",
     "build": "pnpx hardhat compile",
-    "test": "pnpx hardhat test"
+    "test": "pnpx hardhat test",
+    "deploy": "pnpm build && pnpx hardhat run ./src/scripts/deploy.ts --network localhost"
   },
   "dependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.5",
     "@nomiclabs/hardhat-etherscan": "^3.0.1",
     "@nomiclabs/hardhat-waffle": "^2.0.2",
+    "@openzeppelin/contracts": "^4.5.0",
     "@typechain/ethers-v5": "^7.2.0",
     "@typechain/hardhat": "^2.3.1",
     "@types/chai": "^4.3.0",
