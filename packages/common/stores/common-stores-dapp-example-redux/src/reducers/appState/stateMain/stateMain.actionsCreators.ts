@@ -5,10 +5,9 @@ import {
   StateMainUpdatePartialReducerMetadataRequestAction,
   StateMainUpdatePartialReducerMetadataSuccessAction,
 } from './stateMain.actionsTypes';
-import { StateMainReducer } from './stateMain.types';
 
 export function createStateMainUpdatePartialReducerMetadataRequestAction(
-  partialStateMainReducerMetadata: Partial<StateMainReducer['metadata']>,
+  partialStateMainReducerMetadata: StateMainUpdatePartialReducerMetadataRequestAction['requestMetadata'],
 ): StateMainUpdatePartialReducerMetadataRequestAction {
   return {
     type: StateMainActionTypes.STATE_MAIN_UPDATE_PARTIAL_REDUCER_METADATA_REQUEST,
@@ -20,8 +19,8 @@ export function createStateMainUpdatePartialReducerMetadataRequestAction(
 }
 
 export function createStateMainUpdatePartialReducerMetadataSuccessAction(
-  partialStateMainReducerMetadata: Partial<StateMainReducer['metadata']>,
-  requestId: string,
+  partialStateMainReducerMetadata: StateMainUpdatePartialReducerMetadataSuccessAction['partialReducerMetadata'],
+  requestId: StateMainUpdatePartialReducerMetadataSuccessAction['requestId'],
 ): StateMainUpdatePartialReducerMetadataSuccessAction {
   return {
     type: StateMainActionTypes.STATE_MAIN_UPDATE_PARTIAL_REDUCER_METADATA_SUCCESS,
@@ -31,8 +30,8 @@ export function createStateMainUpdatePartialReducerMetadataSuccessAction(
 }
 
 export function createStateMainUpdatePartialReducerMetadataFailAction(
-  error: string,
-  requestId: string,
+  error: StateMainUpdatePartialReducerMetadataFailAction['error'],
+  requestId: StateMainUpdatePartialReducerMetadataFailAction['requestId'],
 ): StateMainUpdatePartialReducerMetadataFailAction {
   return {
     type: StateMainActionTypes.STATE_MAIN_UPDATE_PARTIAL_REDUCER_METADATA_FAIL,

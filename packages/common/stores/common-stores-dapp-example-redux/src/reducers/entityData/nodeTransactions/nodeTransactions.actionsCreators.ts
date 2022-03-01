@@ -21,7 +21,7 @@ export function createNodeTransactionsGetManySuccessAction(
   nodeTransactions: NodeTransactionsGetManySuccessAction['wholeEntities'],
   requestId: NodeTransactionsGetManySuccessAction['requestId'],
   statusCode: NodeTransactionsGetManySuccessAction['statusCode'],
-  flush: boolean,
+  flush: NodeTransactionsGetManySuccessAction['flush'],
 ): NodeTransactionsGetManySuccessAction {
   return {
     type: NodeTransactionsActionTypes.NODE_TRANSACTIONS_GET_MANY__SUCCESS,

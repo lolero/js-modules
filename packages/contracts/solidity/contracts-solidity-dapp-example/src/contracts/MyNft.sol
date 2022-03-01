@@ -28,15 +28,18 @@ contract FiredGuys is ERC721, ERC721URIStorage, Ownable {
 
     // The following functions are overrides required by Solidity.
 
-    function _burn(uint256 tokenId) internal override(ERC721, ERC721URIStorage) {
+    function _burn(uint256 tokenId)
+        internal
+        override(ERC721, ERC721URIStorage)
+    {
         super._burn(tokenId);
     }
 
     function tokenURI(uint256 tokenId)
-    public
-    view
-    override(ERC721, ERC721URIStorage)
-    returns (string memory)
+        public
+        view
+        override(ERC721, ERC721URIStorage)
+        returns (string memory)
     {
         return super.tokenURI(tokenId);
     }
@@ -45,9 +48,13 @@ contract FiredGuys is ERC721, ERC721URIStorage, Ownable {
         return existingURIs[uri] == 1;
     }
 
-    function payToMint(address recipient, string memory metadataURI) public payable returns (uint256) {
-        require(existingURIs[metadataURI] != 1, 'NFT already minted!');
-        require(msg.value >= 0.05 ether, 'Need to pay up!');
+    function payToMint(address recipient, string memory metadataURI)
+        public
+        payable
+        returns (uint256)
+    {
+        require(existingURIs[metadataURI] != 1, "NFT already minted!");
+        require(msg.value >= 0.05 ether, "Need to pay up!");
 
         uint256 newItemId = _tokenIdCounter.current();
         _tokenIdCounter.increment();

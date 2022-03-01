@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import { Icon, Typography } from '@mui/material';
-import { getIsBrowser } from '@js-modules/common-utils-general';
+import HomeBox from './HomeBox';
 
 const appBoxSx = {
   position: 'fixed',
@@ -21,22 +21,11 @@ const MainRoutesBox: React.FunctionComponent = () => {
           element={
             <Box>
               <Icon className="fas fa-circle-notch fa-spin" color="inherit" />
-              <Typography variant="h2">
-                isBrowser: {`${getIsBrowser()}`}
-              </Typography>
+              <Typography variant="h2">test page</Typography>
             </Box>
           }
         />
-        <Route
-          path="/*"
-          element={
-            <Box>
-              <Typography variant="h2">
-                isBrowser: {`${getIsBrowser()}`}
-              </Typography>
-            </Box>
-          }
-        />
+        <Route path="/*" element={<HomeBox />} />
       </Routes>
     </Box>
   );

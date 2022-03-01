@@ -13,8 +13,13 @@
   },
   "dependencies": {
     "@js-modules/common-utils-general": "^0.0.0",
+    "@metamask/detect-provider": "^1.2.0",
+    "@metamask/providers": "^8.1.1",
+    "@types/lodash": "^4.14.178",
     "@types/uuid": "^8.3.4",
     "axios": "^0.26.0",
+    "ethers": "^5.5.4",
+    "lodash": "^4.17.21",
     "normalized-reducers-utils": "^1.1.15",
     "redux": "^4.1.2",
     "redux-devtools-extension": "^2.13.9",

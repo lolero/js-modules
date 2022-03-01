@@ -7,9 +7,6 @@ import { ThemeProvider } from '@mui/material/styles';
 import { materialUiTheme } from '@js-modules/web-utils-styles';
 import MainRoutesBox from './MainRoutesBox';
 
-/**
- *
- */
 function initApp(): FunctionComponent {
   const reduxStore = createReduxStore();
 
