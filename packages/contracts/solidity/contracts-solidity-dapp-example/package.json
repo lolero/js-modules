@@ -7,10 +7,10 @@
     "build"
   ],
   "scripts": {
-    "dev": "pnpx hardhat node",
-    "build": "pnpx hardhat compile",
-    "test": "pnpx hardhat test",
-    "deploy": "pnpm build && pnpx hardhat run ./src/scripts/deploy.ts --network localhost"
+    "dev": "pnpx hardhat --tsconfig tsconfig.build.json node",
+    "build": "pnpx hardhat --tsconfig tsconfig.build.json compile",
+    "test": "pnpx hardhat --tsconfig tsconfig.build.json test",
+    "deploy": "pnpm build && pnpx hardhat --tsconfig tsconfig.build.json run ./src/scripts/deploy.ts --network localhost"
   },
   "dependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.5",

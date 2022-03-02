@@ -1,11 +1,5 @@
 {
-  "extends": "../../../../tsconfig.build.json",
-  "compilerOptions": {
-    "composite": true,
-    "module": "commonjs",
-    "rootDir": "src",
-    "outDir": "build"
-  },
+  "extends": "../../../../tsconfig.json",
   "include": ["src"],
   "files": ["./hardhat.config.ts"]
 }

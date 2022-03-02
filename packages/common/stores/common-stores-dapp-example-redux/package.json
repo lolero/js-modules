@@ -9,7 +9,7 @@
     "build"
   ],
   "scripts": {
-    "build": "tsc -b"
+    "build": "tsc -b tsconfig.build.json"
   },
   "dependencies": {
     "@js-modules/common-utils-general": "^0.0.0",
