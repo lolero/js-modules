@@ -2,9 +2,6 @@ import { createInitialState, Entity } from 'normalized-reducers-utils';
 import { StateWeb3Reducer } from './stateWeb3.types';
 
 const stateWeb3ReducerMetadataInitialState: StateWeb3Reducer['metadata'] = {
-  metamaskProvider: null,
-  web3Provider: null,
-  isConnectedToNetwork: false,
   wallet: null,
 };
 

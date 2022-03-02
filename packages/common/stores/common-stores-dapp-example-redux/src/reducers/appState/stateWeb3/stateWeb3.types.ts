@@ -7,13 +7,15 @@ export enum WalletType {
 }
 
 export interface StateWeb3ReducerMetadata extends ReducerMetadata {
-  metamaskProvider: MetaMaskInpageProvider | null;
-  web3Provider: ethers.providers.Web3Provider | null;
-  isConnectedToNetwork: boolean;
+  metamaskProvider?: MetaMaskInpageProvider | null;
+  web3Provider?: ethers.providers.Web3Provider;
+  network?: {
+    chainId: number;
+    isConnected: boolean;
+  };
   wallet: {
     walletType: WalletType;
-    network: ethers.providers.Network;
-    accountAddress: string;
+    account: string;
   } | null;
 }
 

@@ -94,9 +94,7 @@ export function createStateWeb3WalletDisconnectSuccessAction(
   return {
     type: StateWeb3ActionTypes.STATE_WEB3_WALLET_DISCONNECT_SUCCESS,
     partialReducerMetadata: {
-      walletType: null,
-      network: null,
-      accountAddress: null,
+      wallet: null,
     },
     requestId,
   };

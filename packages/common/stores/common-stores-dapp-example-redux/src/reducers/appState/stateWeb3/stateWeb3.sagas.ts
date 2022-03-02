@@ -1,68 +1,77 @@
 import {
   all,
   AllEffect,
-  cancel,
-  CancelEffect,
   ChannelTakeEffect,
   fork,
   ForkEffect,
   put,
   PutEffect,
-  race,
-  RaceEffect,
   select,
   SelectEffect,
   take,
-  TakeEffect,
   takeEvery,
+  takeLatest,
 } from 'redux-saga/effects';
-import { Task } from 'redux-saga';
 import { ethers } from 'ethers';
 import detectEthereumProvider from '@metamask/detect-provider';
 import { MetaMaskInpageProvider } from '@metamask/providers';
+import { Maybe } from '@metamask/providers/dist/utils';
 import {
   StateWeb3ActionTypes,
-  StateWeb3WalletConnectRequestAction,
   StateWeb3UpdatePartialReducerMetadataRequestAction,
-  StateWeb3WalletDisconnectRequestAction,
+  StateWeb3WalletConnectRequestAction,
 } from './stateWeb3.actionsTypes';
 import {
   createStateWeb3UpdatePartialReducerMetadataFailAction,
   createStateWeb3UpdatePartialReducerMetadataSuccessAction,
   createStateWeb3WalletConnectFailAction,
+  createStateWeb3WalletConnectSuccessAction,
   createStateWeb3WalletDisconnectSuccessAction,
 } from './stateWeb3.actionsCreators';
 import {
-  createGetMetamaskProviderChannel,
-  createIsNetworkConnectedChannel,
-  createOnWalletDisconnectChannel,
+  createNetworkConnectionMetadataChannel,
+  createWalletAccountChannel,
+  NetworkConnectionMetadata,
 } from './stateWeb3.sagasUtils';
 import { StateWeb3Reducer, WalletType } from './stateWeb3.types';
 import { selectStateWeb3Metadata } from './stateWeb3.selectors';
 
 export function* stateWeb3NetworkConnectionSaga(): Generator<
-  SelectEffect | ChannelTakeEffect<boolean> | PutEffect,
+  | SelectEffect
+  | ChannelTakeEffect<NetworkConnectionMetadata>
+  | Promise<ethers.providers.Network>
+  | PutEffect,
   void,
-  StateWeb3Reducer['metadata'] | boolean
+  | StateWeb3Reducer['metadata']
+  | NetworkConnectionMetadata
+  | ethers.providers.Network
 > {
-  const stateWeb3ReducerMetadata = (yield select(
+  const { metamaskProvider, web3Provider } = (yield select(
     selectStateWeb3Metadata,
   )) as StateWeb3Reducer['metadata'];
-  const metamaskProvider =
-    stateWeb3ReducerMetadata.metamaskProvider as MetaMaskInpageProvider;
 
-  const isNetworkConnectedChannel =
-    createIsNetworkConnectedChannel(metamaskProvider);
+  if (!metamaskProvider || !web3Provider) {
+    return;
+  }
+
+  const networkConnectionMetadataChannel =
+    createNetworkConnectionMetadataChannel(metamaskProvider);
 
   while (true) {
-    const isNetworkConnected = (yield take(
-      isNetworkConnectedChannel,
-    )) as boolean;
+    const networkConnectionMetadata = (yield take(
+      networkConnectionMetadataChannel,
+    )) as NetworkConnectionMetadata;
+
+    const network =
+      (yield web3Provider.getNetwork()) as ethers.providers.Network;
 
     yield put(
       createStateWeb3UpdatePartialReducerMetadataSuccessAction(
         {
-          isConnectedToNetwork: isNetworkConnected,
+          network: {
+            isConnected: networkConnectionMetadata.isConnected,
+            chainId: network.chainId,
+          },
         },
         '',
       ),
@@ -70,121 +79,27 @@ export function* stateWeb3NetworkConnectionSaga(): Generator<
   }
 }
 
-export function* stateWeb3ConnectToWalletSaga({
-  requestMetadata,
-  requestId,
-}: StateWeb3WalletConnectRequestAction): Generator<
-  SelectEffect | Promise<ethers.providers.Network> | PutEffect,
-  void,
-  StateWeb3Reducer['metadata'] | ethers.providers.Network
-> {
-  const { walletType } = requestMetadata;
-
-  const stateWeb3ReducerMetadata = (yield select(
-    selectStateWeb3Metadata,
-  )) as StateWeb3Reducer['metadata'];
-  const metamaskProvider =
-    stateWeb3ReducerMetadata.metamaskProvider as MetaMaskInpageProvider;
-  const web3Provider =
-    stateWeb3ReducerMetadata.web3Provider as ethers.providers.Web3Provider;
-
-  const network = (yield web3Provider.getNetwork()) as ethers.providers.Network;
-
-  yield put(
-    createStateWeb3UpdatePartialReducerMetadataSuccessAction(
-      {
-        walletType,
-        network,
-        accountAddress: metamaskProvider.selectedAddress,
-      },
-      requestId,
-    ),
-  );
-}
-
 export function* stateWeb3WalletConnectionSaga(): Generator<
-  | SelectEffect
-  | TakeEffect
-  | ForkEffect
-  | RaceEffect<TakeEffect | ChannelTakeEffect<true>>
-  | AllEffect<PutEffect | CancelEffect>,
+  SelectEffect | ChannelTakeEffect<string> | PutEffect,
   void,
-  | StateWeb3Reducer['metadata']
-  | StateWeb3WalletConnectRequestAction
-  | Task
-  | {
-      stateWeb3WalletDisconnectRequestAction?: StateWeb3WalletDisconnectRequestAction;
-      isWalletDisconnected?: true;
-    }
+  StateWeb3Reducer['metadata'] | string
 > {
-  const stateWeb3ReducerMetadata = (yield select(
+  const { metamaskProvider } = (yield select(
     selectStateWeb3Metadata,
   )) as StateWeb3Reducer['metadata'];
-  const metamaskProvider =
-    stateWeb3ReducerMetadata.metamaskProvider as MetaMaskInpageProvider;
 
-  const onWalletDisconnectChannel =
-    createOnWalletDisconnectChannel(metamaskProvider);
+  if (!metamaskProvider) {
+    return;
+  }
+
+  const walletAccountChannel = createWalletAccountChannel(metamaskProvider);
 
   while (true) {
-    let walletConnectTask: Task | undefined;
-    let stateWeb3WalletConnectRequestAction:
-      | StateWeb3WalletConnectRequestAction
-      | undefined;
-    if (!metamaskProvider.selectedAddress) {
-      stateWeb3WalletConnectRequestAction = (yield take(
-        StateWeb3ActionTypes.STATE_WEB3_WALLET_CONNECT_REQUEST,
-      )) as StateWeb3WalletConnectRequestAction;
+    const walletAccount = (yield take(walletAccountChannel)) as string;
 
-      walletConnectTask = (yield fork(
-        stateWeb3ConnectToWalletSaga,
-        stateWeb3WalletConnectRequestAction,
-      )) as Task;
+    if (!walletAccount) {
+      yield put(createStateWeb3WalletDisconnectSuccessAction(''));
     }
-
-    const { stateWeb3WalletDisconnectRequestAction } = (yield race({
-      stateWeb3WalletDisconnectRequestAction: take(
-        StateWeb3ActionTypes.STATE_WEB3_WALLET_DISCONNECT_REQUEST,
-      ),
-      isWalletDisconnected: take(onWalletDisconnectChannel),
-    })) as {
-      stateWeb3WalletDisconnectRequestAction?: StateWeb3WalletDisconnectRequestAction;
-      isWalletDisconnected?: true;
-    };
-
-    const effectArray: (CancelEffect | PutEffect)[] = [];
-
-    if (
-      walletConnectTask &&
-      walletConnectTask.isRunning() &&
-      stateWeb3WalletConnectRequestAction
-    ) {
-      effectArray.push(cancel(walletConnectTask));
-      effectArray.push(
-        put(
-          createStateWeb3WalletConnectFailAction(
-            `Connection interrupted by ${
-              stateWeb3WalletDisconnectRequestAction
-                ? 'a disconnect request'
-                : 'Metamask'
-            }`,
-            stateWeb3WalletConnectRequestAction.requestId,
-          ),
-        ),
-      );
-    }
-
-    effectArray.push(
-      put(
-        createStateWeb3WalletDisconnectSuccessAction(
-          stateWeb3WalletDisconnectRequestAction
-            ? stateWeb3WalletDisconnectRequestAction.requestId
-            : '',
-        ),
-      ),
-    );
-
-    yield all(effectArray);
   }
 }
 
@@ -197,42 +112,41 @@ export function* stateWeb3InitSaga(): Generator<
   void,
   MetaMaskInpageProvider | ethers.providers.Network
 > {
-  let metamaskProvider = (yield detectEthereumProvider({
+  const metamaskProvider = (yield detectEthereumProvider({
     mustBeMetaMask: true,
   })) as MetaMaskInpageProvider | null;
 
   if (!metamaskProvider) {
-    const getMetamaskProviderChannel = createGetMetamaskProviderChannel();
-
-    while (!metamaskProvider) {
-      metamaskProvider = (yield take(
-        getMetamaskProviderChannel,
-      )) as MetaMaskInpageProvider;
-
-      if (metamaskProvider) {
-        getMetamaskProviderChannel.close();
-      }
-    }
+    yield put(
+      createStateWeb3UpdatePartialReducerMetadataSuccessAction(
+        {
+          metamaskProvider: null,
+        },
+        '',
+      ),
+    );
+    return;
   }
 
   const web3Provider = new ethers.providers.Web3Provider(
     metamaskProvider as unknown as ethers.providers.ExternalProvider,
   );
+  const network = (yield web3Provider.getNetwork()) as ethers.providers.Network;
 
   const partialStateWeb3ReducerMetadata: Partial<StateWeb3Reducer['metadata']> =
     {
       metamaskProvider,
       web3Provider,
-      isConnectedToNetwork: metamaskProvider.isConnected(),
+      network: {
+        chainId: network.chainId,
+        isConnected: metamaskProvider.isConnected(),
+      },
     };
 
   if (metamaskProvider.selectedAddress) {
-    const network =
-      (yield web3Provider.getNetwork()) as ethers.providers.Network;
     partialStateWeb3ReducerMetadata.wallet = {
       walletType: WalletType.metamask,
-      network,
-      accountAddress: metamaskProvider.selectedAddress,
+      account: metamaskProvider.selectedAddress,
     };
   }
 
@@ -279,10 +193,56 @@ export function* stateWeb3UpdatePartialReducerMetadataSaga({
   }
 }
 
+export function* stateWeb3WalletConnectSaga({
+  requestMetadata,
+  requestId,
+}: StateWeb3WalletConnectRequestAction): Generator<
+  SelectEffect | Promise<Maybe<unknown>> | PutEffect,
+  void,
+  StateWeb3Reducer['metadata'] | string[]
+> {
+  try {
+    const { metamaskProvider } = (yield select(
+      selectStateWeb3Metadata,
+    )) as StateWeb3Reducer['metadata'];
+
+    if (!metamaskProvider) {
+      throw new Error('Metamask is not installed');
+    }
+
+    const { walletType } = requestMetadata;
+
+    const accounts = (yield metamaskProvider.request({
+      method: 'eth_requestAccounts',
+    })) as string[];
+
+    yield put(
+      createStateWeb3WalletConnectSuccessAction(
+        {
+          wallet: {
+            walletType,
+            account: accounts[0],
+          },
+        },
+        requestId,
+      ),
+    );
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (err: any) {
+    // eslint-disable-next-line no-console
+    console.error(err.message);
+    yield put(createStateWeb3WalletConnectFailAction(err.message, requestId));
+  }
+}
+
 export function* stateWeb3Sagas(): Generator<ForkEffect, void, void> {
-  // yield fork(stateWeb3InitSaga);
+  yield fork(stateWeb3InitSaga);
   yield takeEvery(
     StateWeb3ActionTypes.STATE_WEB3_UPDATE_PARTIAL_REDUCER_METADATA_REQUEST,
     stateWeb3UpdatePartialReducerMetadataSaga,
+  );
+  yield takeLatest(
+    StateWeb3ActionTypes.STATE_WEB3_WALLET_CONNECT_REQUEST,
+    stateWeb3WalletConnectSaga,
   );
 }

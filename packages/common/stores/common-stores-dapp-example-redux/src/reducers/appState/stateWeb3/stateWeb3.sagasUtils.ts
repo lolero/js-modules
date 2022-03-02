@@ -1,61 +1,53 @@
 import { eventChannel, EventChannel } from 'redux-saga';
 import { MetaMaskInpageProvider } from '@metamask/providers';
-import detectEthereumProvider from '@metamask/detect-provider';
 import { noop } from 'lodash';
 
-export function createGetMetamaskProviderChannel(): EventChannel<MetaMaskInpageProvider> {
-  const getMetamaskProviderChannel = eventChannel(
-    (emit: (input: MetaMaskInpageProvider) => void) => {
-      const interval = setInterval(async () => {
-        const metamaskProvider = (await detectEthereumProvider({
-          mustBeMetaMask: true,
-        })) as MetaMaskInpageProvider | null;
+export type NetworkConnectionMetadata = {
+  isConnected: boolean;
+  error?: Error;
+};
 
-        if (metamaskProvider) {
-          emit(metamaskProvider);
-        }
-      }, 2000);
-
-      return () => clearInterval(interval);
-    },
-  );
-
-  return getMetamaskProviderChannel;
-}
-
-export function createIsNetworkConnectedChannel(
+export function createNetworkConnectionMetadataChannel(
   metamaskProvider: MetaMaskInpageProvider,
-): EventChannel<boolean> {
-  const isNetworkConnectedChannel = eventChannel(
-    (emit: (input: boolean) => void) => {
-      metamaskProvider.on('connect', (t) => {
-        console.log('connect:', t);
-        emit(true);
+): EventChannel<NetworkConnectionMetadata> {
+  const networkConnectionChannel = eventChannel(
+    (emit: (input: NetworkConnectionMetadata) => void) => {
+      metamaskProvider.on('connect', () => {
+        emit({
+          isConnected: true,
+        });
       });
-      metamaskProvider.on('disconnect', (t) => {
-        console.log('disconnect:', t);
-        emit(false);
+      metamaskProvider.on('disconnect', (error) => {
+        emit({
+          isConnected: false,
+          error: error as Error,
+        });
+      });
+      metamaskProvider.on('chainChanged', () => {
+        emit({
+          isConnected: metamaskProvider.isConnected(),
+        });
       });
 
       return noop;
     },
   );
 
-  return isNetworkConnectedChannel;
+  return networkConnectionChannel;
 }
 
-export function createOnWalletDisconnectChannel(
+export function createWalletAccountChannel(
   metamaskProvider: MetaMaskInpageProvider,
-): EventChannel<true> {
+): EventChannel<string> {
   const onWalletDisconnectChannel = eventChannel(
-    (emit: (input: true) => void) => {
-      const interval = setInterval(async () => {
-        if (!metamaskProvider.selectedAddress) {
-          // emit(true);
-        }
-      }, 2000);
+    (emit: (input: string) => void) => {
+      metamaskProvider.on('accountsChanged', (accountsNoType) => {
+        const accounts = accountsNoType as string[];
+        const account = accounts.length > 0 ? accounts[0] : '';
+        emit(account);
+      });
 
-      return () => clearInterval(interval);
+      return noop;
     },
   );
 

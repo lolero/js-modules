@@ -11,7 +11,7 @@ import {
 const HomeBox: React.FunctionComponent = () => {
   const dispatch = useDispatch();
 
-  const { isConnectedToNetwork, wallet } = useSelector(selectStateWeb3Metadata);
+  const { network, wallet } = useSelector(selectStateWeb3Metadata);
 
   const connectToWalletCallback = useCallback(() => {
     const connectToWalletRequestAction =
@@ -21,13 +21,17 @@ const HomeBox: React.FunctionComponent = () => {
 
   return (
     <Box>
-      <Typography>isConnectedToNetwork: {`${isConnectedToNetwork}`}</Typography>
-      <Typography>walletType: {`${wallet?.walletType}`}</Typography>
-      <Typography>network: {`${wallet?.network.name}`}</Typography>
-      <Typography>network: {`${wallet?.network.ensAddress}`}</Typography>
-      <Typography>network: {`${wallet?.network.chainId}`}</Typography>
-      <Typography>accountAddress: {`${wallet?.accountAddress}`}</Typography>
-      <Button onClick={connectToWalletCallback}>Connect Wallet</Button>
+      <Typography>network.chainId: {`${network?.chainId}`}</Typography>
+      <Typography>network.isConnected: {`${network?.isConnected}`}</Typography>
+      <Typography>wallet.walletType: {`${wallet?.walletType}`}</Typography>
+      <Button onClick={connectToWalletCallback} disabled={!!wallet}>
+        {wallet
+          ? `Connected to: ${wallet.account.slice(
+              0,
+              3,
+            )}...${wallet.account.slice(-3)}`
+          : 'Connect Wallet'}
+      </Button>
     </Box>
   );
 };
