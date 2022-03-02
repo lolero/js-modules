@@ -280,7 +280,7 @@ export function* stateWeb3UpdatePartialReducerMetadataSaga({
 }
 
 export function* stateWeb3Sagas(): Generator<ForkEffect, void, void> {
-  yield fork(stateWeb3InitSaga);
+  // yield fork(stateWeb3InitSaga);
   yield takeEvery(
     StateWeb3ActionTypes.STATE_WEB3_UPDATE_PARTIAL_REDUCER_METADATA_REQUEST,
     stateWeb3UpdatePartialReducerMetadataSaga,
