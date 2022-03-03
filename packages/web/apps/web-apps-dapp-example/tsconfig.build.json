@@ -10,7 +10,10 @@
     {
       "path": "../../../common/stores/common-stores-dapp-example-redux/tsconfig.build.json"
     },
-    { "path": "../../../common/utils/common-utils-general/tsconfig.build.json" },
+    {
+      "path": "../../../common/utils/common-utils-general/tsconfig.build.json"
+    },
+    { "path": "../../../web/utils/web-utils-general/tsconfig.build.json" },
     { "path": "../../../web/utils/web-utils-styles/tsconfig.build.json" }
   ]
 }

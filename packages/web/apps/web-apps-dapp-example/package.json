@@ -14,6 +14,7 @@
     "@emotion/styled": "^11.8.1",
     "@js-modules/common-stores-dapp-example-redux": "^0.0.0",
     "@js-modules/common-utils-general": "^0.0.0",
+    "@js-modules/web-utils-general": "0.0.0",
     "@js-modules/web-utils-styles": "^0.0.0",
     "@mui/lab": "^5.0.0-alpha.69",
     "@mui/material": "^5.4.2",

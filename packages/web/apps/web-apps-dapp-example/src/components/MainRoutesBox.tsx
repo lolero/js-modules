@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Box from '@mui/material/Box';
-import HomeBox from './HomeBox';
+import HomeWorkspace from './HomeWorkspace';
 
 const appBoxSx = {
   position: 'fixed',
@@ -15,7 +15,7 @@ const MainRoutesBox: React.FunctionComponent = () => {
   return (
     <Box sx={appBoxSx}>
       <Routes>
-        <Route path="/*" element={<HomeBox />} />
+        <Route path="/*" element={<HomeWorkspace />} />
       </Routes>
     </Box>
   );

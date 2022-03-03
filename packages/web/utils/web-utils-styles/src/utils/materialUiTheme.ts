@@ -3,11 +3,6 @@ import { Components } from '@mui/material/styles/components';
 
 const palette: PaletteOptions = {
   mode: 'light',
-  secondary: {
-    dark: '#AB003C',
-    light: '#F73378',
-    main: '#F50057',
-  },
 };
 
 const components: Components = {

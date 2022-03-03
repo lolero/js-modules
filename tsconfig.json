@@ -9,6 +9,7 @@
       "@js-modules/common-utils-general": [
         "common/utils/common-utils-general/src"
       ],
+      "@js-modules/web-utils-general": ["web/utils/web-utils-general/src"],
       "@js-modules/web-utils-styles": ["web/utils/web-utils-styles/src"]
     }
   }
