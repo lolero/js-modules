@@ -1,4 +1,4 @@
-import { sleep } from '../commonGeneralUtils';
+import { sleep } from '../commonUtilsGeneral';
 
 describe('commonGeneralUtils', () => {
   describe('sleep', () => {

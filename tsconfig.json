@@ -3,14 +3,16 @@
   "compilerOptions": {
     "baseUrl": "./packages",
     "paths": {
-      "@js-modules/common-stores-dapp-example-redux": [
-        "common/stores/common-stores-dapp-example-redux/src"
+      "@js-modules/apps-dapp-store-redux": [
+        "apps/dapp/apps-dapp-store-redux/src"
       ],
       "@js-modules/common-utils-general": [
         "common/utils/common-utils-general/src"
       ],
-      "@js-modules/web-utils-general": ["web/utils/web-utils-general/src"],
-      "@js-modules/web-utils-styles": ["web/utils/web-utils-styles/src"]
+      "@js-modules/web-styles-material-ui": [
+        "web/styles/web-styles-material-ui/src"
+      ],
+      "@js-modules/web-utils-hooks": ["web/utils/web-utils-hooks/src"]
     }
   }
 }
