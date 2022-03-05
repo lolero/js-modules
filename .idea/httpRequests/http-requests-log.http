@@ -1,0 +1,391 @@
+GET http://localhost:3000/auth/whoami
+
+<> 2022-03-07T190826.403.json
+
+###
+
+GET http://localhost:3000/auth/signout
+
+###
+
+GET http://localhost:3000/auth/whoami
+
+<> 2022-03-07T190819.200.json
+
+###
+
+POST http://localhost:3000/auth/signin
+Content-Type: application/json
+
+{
+  "email": "c@c.com",
+  "password": "1234"
+}
+
+<> 2022-03-07T190815.201.json
+
+###
+
+GET http://localhost:3000/auth/whoami
+
+<> 2022-03-07T190154.200.json
+
+###
+
+POST http://localhost:3000/auth/signin
+Content-Type: application/json
+
+{
+  "email": "c@c.com",
+  "password": "1234"
+}
+
+<> 2022-03-07T190150.201.json
+
+###
+
+GET http://localhost:3000/auth/whoami
+
+###
+
+GET http://localhost:3000/auth/whoami
+
+###
+
+GET http://localhost:3000/auth/signout
+
+###
+
+GET http://localhost:3000/auth/whoami
+
+<> 2022-03-07T185842.200.json
+
+###
+
+POST http://localhost:3000/auth/signin
+Content-Type: application/json
+
+{
+  "email": "c@c.com",
+  "password": "1234"
+}
+
+<> 2022-03-07T185834.201.json
+
+###
+
+GET http://localhost:3000/auth/whoami
+
+###
+
+GET http://localhost:3000/auth/whoami
+
+<> 2022-03-07T103435.404.json
+
+###
+
+GET http://localhost:3000/auth/signout
+
+###
+
+GET http://localhost:3000/auth/whoami
+
+<> 2022-03-07T103427.200.json
+
+###
+
+POST http://localhost:3000/auth/signin
+Content-Type: application/json
+
+{
+  "email": "c@c.com",
+  "password": "1234"
+}
+
+<> 2022-03-07T103424.201.json
+
+###
+
+GET http://localhost:3000/auth/whoami
+
+<> 2022-03-07T103409.404.json
+
+###
+
+GET http://localhost:3000/auth/signout
+
+###
+
+POST http://localhost:3000/auth/signin
+Content-Type: application/json
+
+{
+  "email": "c@c.com",
+  "password": "1234"
+}
+
+<> 2022-03-07T103401.201.json
+
+###
+
+GET http://localhost:3000/auth/signout
+
+###
+
+POST http://localhost:3000/auth/signin
+Content-Type: application/json
+
+{
+  "email": "c@c.com",
+  "password": "1234"
+}
+
+<> 2022-03-07T102939.201.json
+
+###
+
+POST http://localhost:3000/auth/signin
+Content-Type: application/json
+
+{
+  "email": "c@c.com",
+  "password": "1234"
+}
+
+<> 2022-03-07T102920.201.json
+
+###
+
+GET http://localhost:3000/auth/signout
+
+###
+
+GET http://localhost:3000/auth/signout
+
+###
+
+POST http://localhost:3000/auth/signin
+Content-Type: application/json
+
+{
+  "email": "c@c.com",
+  "password": "1234"
+}
+
+<> 2022-03-07T102842.201.json
+
+###
+
+GET http://localhost:3000/auth/signout
+
+###
+
+GET http://localhost:3000/auth/whoami
+
+<> 2022-03-07T102013.200.json
+
+###
+
+GET http://localhost:3000/auth/whoami
+
+<> 2022-03-07T101950.500.json
+
+###
+
+GET http://localhost:3000/auth/whoami
+
+<> 2022-03-07T101904.500.json
+
+###
+
+POST http://localhost:3000/auth/signin
+Content-Type: application/json
+
+{
+  "email": "c@c.com",
+  "password": "1234"
+}
+
+<> 2022-03-07T101850.201.json
+
+###
+
+GET http://localhost:3000/auth/whoami
+
+<> 2022-03-07T101831.500.json
+
+###
+
+GET http://localhost:3000/auth/whoami
+
+<> 2022-03-07T101736.500.json
+
+###
+
+GET http://localhost:3000/auth/whoami
+
+<> 2022-03-07T101718.500.json
+
+###
+
+POST http://localhost:3000/auth/signin
+Content-Type: application/json
+
+{
+  "email": "c@c.com",
+  "password": "1234"
+}
+
+<> 2022-03-07T095916.201.json
+
+###
+
+POST http://localhost:3000/auth/signup
+Content-Type: application/json
+
+{
+  "email": "c@c.com",
+  "password": "1234"
+}
+
+<> 2022-03-07T095822.201.json
+
+###
+
+GET http://localhost:3000/auth
+
+<> 2022-03-07T095801.200.json
+
+###
+
+GET http://localhost:3000/auth/signup
+Content-Type: application/json
+
+{
+  "email": "c@c.com",
+  "password": "1234"
+}
+
+<> 2022-03-07T095722.404.json
+
+###
+
+GET http://localhost:3000/auth/signup
+Content-Type: application/json
+
+{
+  "email": "c@c.com",
+  "password": "1234"
+}
+
+<> 2022-03-07T095620.404.json
+
+###
+
+GET http://localhost:3000/auth/signup
+Content-Type: application/json
+
+{
+  "email": "c@c.com",
+  "password": "1234"
+}
+
+<> 2022-03-07T095403.404.json
+
+###
+
+GET http://localhost:3000/auth
+
+<> 2022-03-07T095211.200.json
+
+###
+
+GET http://localhost:3000/auth
+
+<> 2022-03-07T094922.200.json
+
+###
+
+GET http://localhost:3000/auth/signup
+Content-Type: application/json
+
+{
+  "email": "c@c.com",
+  "password": "1234"
+}
+
+<> 2022-03-07T094856.404.json
+
+###
+
+GET http://localhost:3000/auth/signup
+Content-Type: application/json
+
+{
+  "email": "c@c.com",
+  "password": "1234"
+}
+
+<> 2022-03-07T094802.404.json
+
+###
+
+GET http://localhost:3000/auth/signup
+Content-Type: application/json
+
+{
+  "email": "c@c.com",
+  "password": "1234"
+}
+
+<> 2022-03-07T094745.404.json
+
+###
+
+GET http://localhost:3000/auth/signup
+Content-Type: application/json
+
+{
+  "email": "c@c.com",
+  "password": "1234"
+}
+
+<> 2022-03-07T094720.404.json
+
+###
+
+GET http://localhost:3000/auth
+
+<> 2022-03-07T094523.200.json
+
+###
+
+GET http://{{baseUri}}/auth
+
+###
+
+GET http://{{baseUri}}/auth
+
+###
+
+GET http://{{baseUri}}/auth/signup
+Content-Type: application/json
+
+{
+  "email": "c@c.com",
+  "password": "1234"
+}
+
+###
+
+PATCH http://localhost:3000/auth/1
+content-type: application/json
+
+{
+  "password": "new password"
+}
+
+<> 2022-03-07T093509.200.json
+
+###
+

@@ -1,0 +1,47 @@
+###
+# @name AuthSignup
+POST {{baseUri}}/auth/signup
+Content-Type: application/json
+
+
+{
+  "email": "c@c.com",
+  "password": "1234"
+}
+
+###
+# @name AuthSignin
+POST {{baseUri}}/auth/signin
+Content-Type: application/json
+
+{
+  "email": "c@c.com",
+  "password": "1234"
+}
+
+###
+# @name AuthSignout
+GET {{baseUri}}/auth/signout
+
+###
+# @name AuthWhoAmI
+GET {{baseUri}}/auth/whoami
+
+###
+# @name UsersGetMany
+GET {{baseUri}}/auth
+
+###
+# @name UsersGetOne
+GET {{baseUri}}/auth/1
+
+###
+# @name UsersUpdateOne
+PATCH {{baseUri}}/auth/1
+Content-Type: application/json
+
+{
+  "password": "new password"
+}
+
+
