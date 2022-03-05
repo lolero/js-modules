@@ -6,5 +6,7 @@
     "module": "commonjs",
     "strictNullChecks": false
   },
-  "include": ["src"]
+  "include": [
+    "src"
+  ]
 }

@@ -17,7 +17,6 @@
     "test:coverage": "jest --coverage",
     "lerna:build": "lerna run build",
     "dev:apps-dapp-web": "pnpm --filter @js-modules/apps-dapp-web dev",
-    "dev:apps-messages-api": "pnpm --filter @js-modules/apps-messages-api dev",
     "prepublish": "pnpm lint:fix && pnpm test:coverage && pnpm lerna:build"
   },
   "dependencies": {

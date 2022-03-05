@@ -1,7 +1,7 @@
 {
   "private": true,
-  "name": "@js-modules/apps-messages-api",
-  "description": "Apps Messages API",
+  "name": "@js-modules/apps-nest-examples-computer",
+  "description": "Apps Nest Examples Computer",
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {

@@ -2,7 +2,9 @@
   "extends": "../../../../tsconfig.json",
   "compilerOptions": {
     "module": "commonjs",
-    "strictNullChecks": false,
+    "strictNullChecks": false
   },
-  "include": ["src"]
+  "include": [
+    "src"
+  ]
 }
