@@ -10,7 +10,7 @@ import {
   Request,
   RequestMetadata,
 } from 'normalized-reducers-utils';
-import { usePrevious } from '@js-modules/common-utils-general';
+import { usePrevious } from '@js-modules/common-react-hooks';
 
 /**
  * Get the Material UI upper theme breakpoint code from the client's viewport

@@ -6,6 +6,7 @@ export class DiskService {
   constructor(private powerService: PowerService) {}
 
   getData() {
+    // eslint-disable-next-line no-console
     console.log('Drawing 20 watts of power from Power Service');
     this.powerService.supplyPower(20);
     return 'data!';

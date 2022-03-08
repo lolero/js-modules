@@ -7,6 +7,7 @@ import {
 import { map, Observable } from 'rxjs';
 import { ClassConstructor, plainToInstance } from 'class-transformer';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export class SerializeInterceptor<EntityT, DtoT extends ClassConstructor<any>>
   implements NestInterceptor
 {
@@ -26,6 +27,7 @@ export class SerializeInterceptor<EntityT, DtoT extends ClassConstructor<any>>
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function Serialize<EntityT, DtoT extends ClassConstructor<any>>(
   dto: DtoT,
 ) {

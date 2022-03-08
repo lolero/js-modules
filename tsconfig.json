@@ -6,13 +6,16 @@
       "@js-modules/apps-dapp-store-redux": [
         "apps/dapp/apps-dapp-store-redux/src"
       ],
+      "@js-modules/common-react-hooks": [
+        "common/react/common-react-hooks/src"
+      ],
       "@js-modules/common-utils-general": [
         "common/utils/common-utils-general/src"
       ],
+      "@js-modules/web-react-hooks": ["web/react/web-react-hooks/src"],
       "@js-modules/web-styles-material-ui": [
         "web/styles/web-styles-material-ui/src"
-      ],
-      "@js-modules/web-utils-hooks": ["web/utils/web-utils-hooks/src"]
+      ]
     }
   }
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import Box, { BoxProps } from '@mui/material/Box';
-import { useChildNodeSize } from '@js-modules/web-utils-hooks';
+import { useChildNodeSize } from '@js-modules/web-react-hooks';
 import MainNavBar from './MainNavBar';
 
 type Props = {
