@@ -1,3 +1,5 @@
+import { autocompleteClasses } from '@mui/material';
+
 export const menuItemSx = {
   menuItem: {
     display: 'flex',
@@ -11,6 +13,12 @@ export const menuItemSx = {
   menuItemIcon: {
     width: '2em',
     textAlign: 'left',
+  },
+} as const;
+
+export const autocompleteSx = {
+  [`& .${autocompleteClasses.endAdornment}`]: {
+    top: 'inherit',
   },
 } as const;
 

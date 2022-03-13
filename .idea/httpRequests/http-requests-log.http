@@ -375,17 +375,3 @@ Content-Type: application/json
   "email": "c@c.com",
   "password": "1234"
 }
-
-###
-
-PATCH http://localhost:3000/auth/1
-content-type: application/json
-
-{
-  "password": "new password"
-}
-
-<> 2022-03-07T093509.200.json
-
-###
-

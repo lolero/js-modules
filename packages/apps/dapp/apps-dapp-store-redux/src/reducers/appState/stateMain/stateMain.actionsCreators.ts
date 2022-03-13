@@ -7,7 +7,7 @@ import {
 } from './stateMain.actionsTypes';
 
 export function createStateMainUpdatePartialReducerMetadataRequestAction(
-  partialStateMainReducerMetadata: StateMainUpdatePartialReducerMetadataRequestAction['requestMetadata'],
+  partialStateMainReducerMetadata: StateMainUpdatePartialReducerMetadataRequestAction['requestMetadata']['partialReducerMetadata'],
 ): StateMainUpdatePartialReducerMetadataRequestAction {
   return {
     type: StateMainActionTypes.STATE_MAIN_UPDATE_PARTIAL_REDUCER_METADATA_REQUEST,

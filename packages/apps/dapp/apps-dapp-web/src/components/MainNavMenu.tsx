@@ -1,13 +1,13 @@
 import React from 'react';
 import Toolbar from '@mui/material/Toolbar';
-import { Tab, Tabs } from '@mui/material';
+import { Tab, tabClasses, Tabs } from '@mui/material';
 import { Link, useLocation } from 'react-router-dom';
 import { Modules } from '../types/dappWebTypes';
 
 const tabSx = {
   color: 'background.default',
   fontSize: '1em',
-  '&.Mui-selected': {
+  [`&.${tabClasses.selected}`]: {
     color: 'background.default',
     '& span': {
       borderBottomStyle: 'solid',
@@ -38,10 +38,10 @@ const MainNavMenu: React.FunctionComponent = () => {
         <Tab sx={tabSx} value="/" label="Home" component={Link} to="/" />
         <Tab
           sx={tabSx}
-          value={`/${Modules.transactions}`}
-          label="Transactions"
+          value={`/${Modules.tokens}`}
+          label="Tokens"
           component={Link}
-          to={`/${Modules.transactions}`}
+          to={`/${Modules.tokens}`}
         />
       </Tabs>
     </Toolbar>

@@ -13,7 +13,7 @@ import {
 } from './stateWeb3.actionsTypes';
 
 export function createStateWeb3UpdatePartialReducerMetadataRequestAction(
-  partialStateWeb3ReducerMetadata: StateWeb3UpdatePartialReducerMetadataRequestAction['requestMetadata'],
+  partialStateWeb3ReducerMetadata: StateWeb3UpdatePartialReducerMetadataRequestAction['requestMetadata']['partialReducerMetadata'],
 ): StateWeb3UpdatePartialReducerMetadataRequestAction {
   return {
     type: StateWeb3ActionTypes.STATE_WEB3_UPDATE_PARTIAL_REDUCER_METADATA_REQUEST,

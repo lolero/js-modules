@@ -8,7 +8,11 @@ export function useChildNodeSize<NodeT extends HTMLElement>(): {
   const [nodeWidth, setNodeWidth] = useState<string>('0px');
   const [nodeHeight, setNodeHeight] = useState<string>('0px');
 
-  const nodeRef = useCallback((node: NodeT) => {
+  const nodeRef = useCallback((node: NodeT | null) => {
+    if (!node) {
+      return;
+    }
+
     const resizeObserver = new ResizeObserver((entries) => {
       if (entries[0]) {
         setNodeWidth(`${entries[0].contentRect.width}px`);
