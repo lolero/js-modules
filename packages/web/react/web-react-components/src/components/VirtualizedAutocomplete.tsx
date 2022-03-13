@@ -1,6 +1,8 @@
 import * as React from 'react';
-import TextField from '@mui/material/TextField';
-import Autocomplete, { autocompleteClasses } from '@mui/material/Autocomplete';
+import Autocomplete, {
+  autocompleteClasses,
+  AutocompleteProps,
+} from '@mui/material/Autocomplete';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import ListSubheader from '@mui/material/ListSubheader';
 import Popper from '@mui/material/Popper';
@@ -8,16 +10,17 @@ import { useTheme, styled } from '@mui/material/styles';
 import { VariableSizeList, ListChildComponentProps } from 'react-window';
 import Typography from '@mui/material/Typography';
 
-const LISTBOX_PADDING = 8; // px
-
 function renderRow(props: ListChildComponentProps) {
   const { data, index, style } = props;
   const dataSet = data[index];
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const theme = useTheme();
   const inlineStyle = {
     ...style,
-    top: (style.top as number) + LISTBOX_PADDING,
+    top: (style.top as number) + parseInt(theme.spacing(1), 10),
   };
 
+  // eslint-disable-next-line no-prototype-builtins
   if (dataSet.hasOwnProperty('group')) {
     return (
       <ListSubheader key={dataSet.key} component="div" style={inlineStyle}>
@@ -27,6 +30,7 @@ function renderRow(props: ListChildComponentProps) {
   }
 
   return (
+    // eslint-disable-next-line react/jsx-props-no-spreading
     <Typography component="li" {...dataSet[0]} noWrap style={inlineStyle}>
       {dataSet[1]}
     </Typography>
@@ -37,10 +41,11 @@ const OuterElementContext = React.createContext({});
 
 const OuterElementType = React.forwardRef<HTMLDivElement>((props, ref) => {
   const outerProps = React.useContext(OuterElementContext);
+  // eslint-disable-next-line react/jsx-props-no-spreading
   return <div ref={ref} {...props} {...outerProps} />;
 });
 
-function useResetCache(data: any) {
+function useResetCache(data: unknown) {
   const ref = React.useRef<VariableSizeList>(null);
   React.useEffect(() => {
     if (ref.current != null) {
@@ -53,9 +58,9 @@ function useResetCache(data: any) {
 // Adapter for react-window
 const ListboxComponent = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLElement>
+  React.HTMLAttributes<HTMLUListElement> & { overscanCount?: number }
 >(function ListboxComponent(props, ref) {
-  const { children, ...other } = props;
+  const { children, overscanCount = 5, ...other } = props;
   const itemData: React.ReactChild[] = [];
   (children as React.ReactChild[]).forEach(
     (item: React.ReactChild & { children?: React.ReactChild[] }) => {
@@ -69,11 +74,14 @@ const ListboxComponent = React.forwardRef<
     noSsr: true,
   });
   const itemCount = itemData.length;
-  const itemSize = smUp ? 36 : 48;
+  const itemSize = smUp
+    ? parseInt(theme.spacing(4.5), 10)
+    : parseInt(theme.spacing(6), 10);
 
   const getChildSize = (child: React.ReactChild) => {
+    // eslint-disable-next-line no-prototype-builtins
     if (child.hasOwnProperty('group')) {
-      return 48;
+      return parseInt(theme.spacing(6), 10);
     }
 
     return itemSize;
@@ -93,13 +101,13 @@ const ListboxComponent = React.forwardRef<
       <OuterElementContext.Provider value={other}>
         <VariableSizeList
           itemData={itemData}
-          height={getHeight() + 2 * LISTBOX_PADDING}
+          height={getHeight() + 2 * parseInt(theme.spacing(1), 10)}
           width="100%"
           ref={gridRef}
           outerElementType={OuterElementType}
           innerElementType="ul"
           itemSize={(index) => getChildSize(itemData[index])}
-          overscanCount={5}
+          overscanCount={overscanCount}
           itemCount={itemCount}
         >
           {renderRow}
@@ -108,18 +116,6 @@ const ListboxComponent = React.forwardRef<
     </div>
   );
 });
-
-function random(length: number) {
-  const characters =
-    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  let result = '';
-
-  for (let i = 0; i < length; i += 1) {
-    result += characters.charAt(Math.floor(Math.random() * characters.length));
-  }
-
-  return result;
-}
 
 const StyledPopper = styled(Popper)({
   [`& .${autocompleteClasses.listbox}`]: {
@@ -131,25 +127,42 @@ const StyledPopper = styled(Popper)({
   },
 });
 
-const OPTIONS = Array.from(new Array(10000))
-  .map(() => random(10 + Math.ceil(Math.random() * 20)))
-  .sort((a: string, b: string) =>
-    a.toUpperCase().localeCompare(b.toUpperCase()),
-  );
+export type VirtualizedAutocompleteProps<
+  OptionT,
+  MultipleT extends boolean | undefined = undefined,
+  DisableClearableT extends boolean | undefined = undefined,
+  FreeSoloT extends boolean | undefined = undefined,
+> = Omit<
+  AutocompleteProps<OptionT, MultipleT, DisableClearableT, FreeSoloT>,
+  'disableListWrap' | 'ListboxComponent' | 'PopperComponent'
+>;
 
-export default function Virtualize() {
+function VirtualizedAutocomplete<
+  OptionT,
+  MultipleT extends boolean | undefined = undefined,
+  DisableClearableT extends boolean | undefined = undefined,
+  FreeSoloT extends boolean | undefined = undefined,
+>(
+  props: VirtualizedAutocompleteProps<
+    OptionT,
+    MultipleT,
+    DisableClearableT,
+    FreeSoloT
+  > & {
+    ListboxProps?: React.HTMLAttributes<HTMLUListElement> & {
+      overscanCount?: number;
+    };
+  },
+) {
   return (
     <Autocomplete
-      id="virtualize-demo"
-      sx={{ width: 300 }}
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...props}
       disableListWrap
-      PopperComponent={StyledPopper}
       ListboxComponent={ListboxComponent}
-      options={OPTIONS}
-      groupBy={(option) => option[0].toUpperCase()}
-      renderInput={(params) => <TextField {...params} label="10,000 options" />}
-      renderOption={(props, option) => [props, option]}
-      renderGroup={(params) => params}
+      PopperComponent={StyledPopper}
     />
   );
 }
+
+export default VirtualizedAutocomplete;
