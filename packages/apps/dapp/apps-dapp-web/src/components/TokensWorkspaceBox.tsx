@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, {
+  CSSProperties,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import Box from '@mui/material/Box';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import {
@@ -16,9 +22,13 @@ import {
 import { autocompleteSx } from '@js-modules/web-styles-material-ui';
 import { useSelector } from 'react-redux';
 import { orderBy, values } from 'lodash';
-import Icon from '@mui/material/Icon';
-import { VirtualizedAutocomplete } from '@js-modules/web-react-components';
+import {
+  VirtualizedAutocomplete,
+  MuiFaIcon,
+} from '@js-modules/web-react-components';
 import { usePrevious } from '@js-modules/common-react-hooks';
+import { faCircleNotch } from '@fortawesome/free-solid-svg-icons/faCircleNotch';
+import { faCloud } from '@fortawesome/free-solid-svg-icons/faCloud';
 
 const TokensWorkspaceBox: React.FunctionComponent = () => {
   const getNodeChainsRequest = useGetNodeChainsRequest();
@@ -52,6 +62,14 @@ const TokensWorkspaceBox: React.FunctionComponent = () => {
 
   return (
     <Box>
+      <MuiFaIcon
+        icon={faCloud}
+        beat
+        style={{
+          ['--fa-animation-duration' as keyof CSSProperties]: '5s',
+        }}
+      />
+      <MuiFaIcon icon={faCloud} beat />
       <VirtualizedAutocomplete
         sx={{
           ...autocompleteSx,
@@ -62,7 +80,7 @@ const TokensWorkspaceBox: React.FunctionComponent = () => {
         groupBy={(nodeChain) => nodeChain.name[0]}
         popupIcon={
           getNodeChainsRequest?.isPending ? (
-            <Icon className="fas fa-circle-notch fa-spin" />
+            <MuiFaIcon icon={faCircleNotch} spin />
           ) : (
             <ArrowDropDownIcon />
           )

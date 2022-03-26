@@ -2,7 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { Icon } from '@mui/material';
+import { MuiFaIcon } from '@js-modules/web-react-components';
+import { faEthereum } from '@fortawesome/free-brands-svg-icons/faEthereum';
 
 const MainLogoBox: React.FunctionComponent = () => {
   return (
@@ -17,11 +18,11 @@ const MainLogoBox: React.FunctionComponent = () => {
       component={Link}
       to="/"
     >
-      <Icon
+      <MuiFaIcon
         sx={{
           mr: '.2em',
         }}
-        className="fab fa-ethereum"
+        icon={faEthereum}
       />
       <Typography variant="h4" color="inherit">
         dApp

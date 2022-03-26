@@ -13,8 +13,8 @@
     {
       "path": "../../../common/utils/common-utils-general/tsconfig.build.json"
     },
-    { "path": "../../../web/react/web-react-components/tsconfig.build.json"},
-    { "path": "../../../web/react/web-react-hooks/tsconfig.build.json"},
+    { "path": "../../../web/react/web-react-components/tsconfig.build.json" },
+    { "path": "../../../web/react/web-react-hooks/tsconfig.build.json" },
     { "path": "../../../web/styles/web-styles-material-ui/tsconfig.build.json" }
   ]
 }

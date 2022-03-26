@@ -6,7 +6,6 @@ import React, {
 } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Divider from '@mui/material/Divider';
-import Icon from '@mui/material/Icon';
 import Toolbar from '@mui/material/Toolbar';
 import Box from '@mui/material/Box';
 import Button, { buttonClasses } from '@mui/material/Button';
@@ -17,8 +16,11 @@ import {
   selectStateWeb3Requests,
   WalletType,
 } from '@js-modules/apps-dapp-store-redux';
-import MainLogoBox from './MainLogoBox';
+import { MuiFaIcon } from '@js-modules/web-react-components';
+import { faCircleNotch } from '@fortawesome/free-solid-svg-icons/faCircleNotch';
+import { faLink } from '@fortawesome/free-solid-svg-icons/faLink';
 import MainNavMenu from './MainNavMenu';
+import MainLogoBox from './MainLogoBox';
 
 const MainNavBar = forwardRef<HTMLDivElement, HTMLAttributes<HTMLElement>>(
   (props, ref) => {
@@ -85,9 +87,7 @@ const MainNavBar = forwardRef<HTMLDivElement, HTMLAttributes<HTMLElement>>(
             <Button
               variant="contained"
               disabled
-              endIcon={
-                <Icon className="fas fa-circle-notch fa-spin" color="inherit" />
-              }
+              endIcon={<MuiFaIcon icon={faCircleNotch} spin color="inherit" />}
             >
               Connecting...
             </Button>
@@ -101,7 +101,7 @@ const MainNavBar = forwardRef<HTMLDivElement, HTMLAttributes<HTMLElement>>(
               }}
               variant="contained"
               disabled
-              startIcon={<Icon className="fas fa-link" />}
+              startIcon={<MuiFaIcon icon={faLink} />}
             >
               {`${wallet.account.slice(0, 3)}...${wallet.account.slice(-3)}`}
             </Button>

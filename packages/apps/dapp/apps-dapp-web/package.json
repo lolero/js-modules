@@ -12,6 +12,9 @@
   "dependencies": {
     "@emotion/react": "^11.8.1",
     "@emotion/styled": "^11.8.1",
+    "@fortawesome/free-brands-svg-icons": "^6.1.1",
+    "@fortawesome/free-regular-svg-icons": "^6.1.0",
+    "@fortawesome/free-solid-svg-icons": "^6.1.0",
     "@js-modules/apps-dapp-store-redux": "^0.0.0",
     "@js-modules/common-react-hooks": "^0.0.0",
     "@js-modules/common-utils-general": "^0.0.0",
