@@ -1,0 +1,17 @@
+{
+  "private": true,
+  "name": "@js-modules/apps-segway-rental-utils",
+  "description": "Apps Segway Rental Utils",
+  "version": "0.0.0",
+  "license": "MIT",
+  "main": "build/index",
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "build": "tsc -b tsconfig.build.json"
+  },
+  "dependencies": {
+    "date-fns": "^2.28.0"
+  }
+}

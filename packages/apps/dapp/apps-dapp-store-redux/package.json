@@ -12,7 +12,7 @@
     "build": "tsc -b tsconfig.build.json"
   },
   "dependencies": {
-    "@js-modules/common-utils-general": "^0.0.0",
+    "@js-modules/common-utils-general": "workspace:^0.0.0",
     "@metamask/detect-provider": "^1.2.0",
     "@metamask/providers": "^8.1.1",
     "@types/lodash": "^4.14.178",

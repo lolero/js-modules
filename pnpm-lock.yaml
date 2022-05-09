@@ -70,6 +70,12 @@ importers:
       firebase-functions-test: 0.2.3_20edce376fdd3e6879cbafb55256cef4
       typescript: 3.9.10
 
+  packages/apps/apps-segway-rental/apps-segway-rental-utils:
+    specifiers:
+      date-fns: ^2.28.0
+    dependencies:
+      date-fns: 2.28.0
+
   packages/apps/dapp/apps-dapp-contracts:
     specifiers:
       '@nomiclabs/hardhat-ethers': ^2.0.5
@@ -113,7 +119,7 @@ importers:
 
   packages/apps/dapp/apps-dapp-store-redux:
     specifiers:
-      '@js-modules/common-utils-general': ^0.0.0
+      '@js-modules/common-utils-general': workspace:^0.0.0
       '@metamask/detect-provider': ^1.2.0
       '@metamask/providers': ^8.1.1
       '@types/lodash': ^4.14.178
@@ -154,12 +160,12 @@ importers:
       '@fortawesome/free-brands-svg-icons': ^6.1.1
       '@fortawesome/free-regular-svg-icons': ^6.1.0
       '@fortawesome/free-solid-svg-icons': ^6.1.0
-      '@js-modules/apps-dapp-store-redux': ^0.0.0
-      '@js-modules/common-react-hooks': ^0.0.0
-      '@js-modules/common-utils-general': ^0.0.0
-      '@js-modules/web-react-components': ^0.0.0
-      '@js-modules/web-react-hooks': 0.0.0
-      '@js-modules/web-styles-material-ui': ^0.0.0
+      '@js-modules/apps-dapp-store-redux': workspace:^0.0.0
+      '@js-modules/common-react-hooks': workspace:^0.0.0
+      '@js-modules/common-utils-general': workspace:^0.0.0
+      '@js-modules/web-react-components': workspace:^0.0.0
+      '@js-modules/web-react-hooks': workspace:^0.0.0
+      '@js-modules/web-styles-material-ui': workspace:^0.0.0
       '@mui/icons-material': ^5.5.0
       '@mui/material': ^5.4.2
       '@types/lodash': ^4.14.178
@@ -364,7 +370,7 @@ importers:
     specifiers:
       '@emotion/react': ^11.8.1
       '@emotion/styled': ^11.8.1
-      '@js-modules/common-react-hooks': ^0.0.0
+      '@js-modules/common-react-hooks': workspace:^0.0.0
       '@mui/material': ^5.4.2
       '@types/lodash': ^4.14.178
       '@types/react': ^17.0.39
@@ -7558,6 +7564,11 @@ packages:
     resolution: {integrity: sha512-OaIRmSJXifwEN21rMVVDs0Kz8uhJ3wWPYd86atkRiqN54liaMQYEbbrgjZQea75YXOBWL4ZFb3rG/waenw1TEg==}
     dev: false
     optional: true
+
+  /date-fns/2.28.0:
+    resolution: {integrity: sha512-8d35hViGYx/QH0icHYCeLmsLmMUheMmTyV9Fcm6gvNwdw31yXXH+O85sOBJ+OLnLQMKZowvpKb6FgMIQjcpvQw==}
+    engines: {node: '>=0.11'}
+    dev: false
 
   /dateformat/3.0.3:
     resolution: {integrity: sha512-jyCETtSl3VMZMWeRo7iY1FL19ges1t55hMo5yaam4Jrsm5EPL89UQkoQRyiI+Yf4k8r2ZpdngkV8hr1lIdjb3Q==}

@@ -12,4 +12,4 @@ app.use(bodyParser.json());
 app.use(cors());
 routesConfig(app);
 
-export const api = functions.https.onRequest(app);
+export const api = functions.region('europe-west3').https.onRequest(app);

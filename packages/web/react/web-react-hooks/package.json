@@ -13,7 +13,7 @@
   "dependencies": {
     "@emotion/react": "^11.8.1",
     "@emotion/styled": "^11.8.1",
-    "@js-modules/common-react-hooks": "^0.0.0",
+    "@js-modules/common-react-hooks": "workspace:^0.0.0",
     "@mui/material": "^5.4.2",
     "@types/lodash": "^4.14.178",
     "@types/react": "^17.0.39",
