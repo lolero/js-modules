@@ -1,0 +1,16 @@
+{
+  "extends": "../../../../tsconfig.build.json",
+  "compilerOptions": {
+    "composite": true,
+    "rootDir": "src",
+    "outDir": "build"
+  },
+  "include": ["./src"],
+  "references": [
+    {
+      "path": "../../../apps/segway-rental/apps-segway-rental-utils/tsconfig.build.json"
+    },
+    { "path": "../../../common/utils/common-utils-general/tsconfig.build.json" },
+    { "path": "../../../web/react/web-react-components/tsconfig.build.json" }
+  ]
+}
