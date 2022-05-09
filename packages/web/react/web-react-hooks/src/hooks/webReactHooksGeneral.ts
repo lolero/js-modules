@@ -1,12 +1,12 @@
 import { Ref, useCallback, useState } from 'react';
 
 export function useChildNodeSize<NodeT extends HTMLElement>(): {
-  nodeRef: Ref<NodeT>;
-  nodeWidth: string;
-  nodeHeight: string;
+  nodeRef: Ref<NodeT | null>;
+  nodeWidth: number;
+  nodeHeight: number;
 } {
-  const [nodeWidth, setNodeWidth] = useState<string>('0px');
-  const [nodeHeight, setNodeHeight] = useState<string>('0px');
+  const [nodeWidth, setNodeWidth] = useState<number>(0);
+  const [nodeHeight, setNodeHeight] = useState<number>(0);
 
   const nodeRef = useCallback((node: NodeT | null) => {
     if (!node) {
@@ -15,8 +15,8 @@ export function useChildNodeSize<NodeT extends HTMLElement>(): {
 
     const resizeObserver = new ResizeObserver((entries) => {
       if (entries[0]) {
-        setNodeWidth(`${entries[0].contentRect.width}px`);
-        setNodeHeight(`${entries[0].contentRect.height}px`);
+        setNodeWidth(entries[0].contentRect.width);
+        setNodeHeight(entries[0].contentRect.height);
       }
     });
     resizeObserver.observe(node);

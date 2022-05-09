@@ -6,6 +6,9 @@
       "@js-modules/apps-dapp-store-redux": [
         "apps/dapp/apps-dapp-store-redux/src"
       ],
+      "@js-modules/apps-segway-rental-mui-icons": [
+        "apps/segway-rental/apps-segway-rental-mui-icons/src"
+      ],
       "@js-modules/apps-segway-rental-store-redux": [
         "apps/segway-rental/apps-segway-rental-store-redux/src"
       ],
@@ -20,6 +23,8 @@
         "web/react/web-react-components/src"
       ],
       "@js-modules/web-react-hooks": ["web/react/web-react-hooks/src"],
+      "@js-modules/web-react-nav": ["web/react/web-react-nav/src"],
+      "@js-modules/web-react-utils": ["web/react/web-react-utils/src"],
       "@js-modules/web-styles-material-ui": [
         "web/styles/web-styles-material-ui/src"
       ]

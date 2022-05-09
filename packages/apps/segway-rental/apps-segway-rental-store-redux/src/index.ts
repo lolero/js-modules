@@ -9,6 +9,7 @@ import createSagaMiddleware from 'redux-saga';
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 
 import { initializeApp } from 'firebase/app';
+import { getAnalytics } from 'firebase/analytics';
 import { reducers } from './reducers/reducers.reducers';
 import { sagas } from './reducers/reducers.sagas';
 
@@ -29,7 +30,7 @@ export function createReduxStore(): Store<
   }>,
   ReducerHittingAction
 > {
-  initializeApp({
+  const firebaseApp = initializeApp({
     apiKey: 'AIzaSyAiOuMOVDxoDI8pbNAH9BFiTdmhtqrgHXw',
     authDomain: 'segway-rental.firebaseapp.com',
     projectId: 'segway-rental',
@@ -38,6 +39,7 @@ export function createReduxStore(): Store<
     appId: '1:83147887768:web:ed7eecd602cdf4fdb4aced',
     measurementId: 'G-G7FY1PS7B6',
   });
+  getAnalytics(firebaseApp);
 
   const reduxStore = legacy_createStore(
     reducers,

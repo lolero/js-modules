@@ -2,7 +2,7 @@ import { Entity, Reducer, ReducerMetadata } from 'normalized-reducers-utils';
 import { User } from 'firebase/auth';
 
 export enum UserRoles {
-  manager = 'manager',
+  admin = 'admin',
   user = 'user',
 }
 

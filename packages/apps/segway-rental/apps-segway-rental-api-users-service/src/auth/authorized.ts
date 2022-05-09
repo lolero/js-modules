@@ -9,7 +9,7 @@ export function isAuthorized(opts: {
     const { role, uid } = res.locals;
     const { id } = req.params;
 
-    if (uid === 'T7KRKotDfEZflgepZk1Oc7lD8C13') {
+    if (uid === 'eVgvV6EnG5UBvJVBP6kkyHZhFqY2') {
       return next();
     }
 

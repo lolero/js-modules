@@ -1,0 +1,30 @@
+{
+  "extends": "../../../../tsconfig.build.json",
+  "compilerOptions": {
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "jsx": "react-jsx",
+    "noEmit": true
+  },
+  "include": ["./src", "vite.config.ts"],
+  "references": [
+    {
+      "path": "../../../apps/segway-rental/apps-segway-rental-mui-icons/tsconfig.build.json"
+    },
+    {
+      "path": "../../../apps/segway-rental/apps-segway-rental-store-redux/tsconfig.build.json"
+    },
+    {
+      "path": "../../../apps/segway-rental/apps-segway-rental-utils/tsconfig.build.json"
+    },
+    {
+      "path": "../../../common/utils/common-react-hooks/tsconfig.build.json"
+    },
+    {
+      "path": "../../../common/utils/common-utils-general/tsconfig.build.json"
+    },
+    { "path": "../../../web/react/web-react-components/tsconfig.build.json" },
+    { "path": "../../../web/react/web-react-hooks/tsconfig.build.json" },
+    { "path": "../../../web/react/web-react-nav/tsconfig.build.json" },
+    { "path": "../../../web/styles/web-styles-material-ui/tsconfig.build.json" }
+  ]
+}

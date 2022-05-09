@@ -39,7 +39,7 @@ export const selectNodeReservationsDisplay = createSelector(
       nodeReservations,
     )
       .filter(([, nodeReservation]) => {
-        if (authUserRole === UserRoles.manager) {
+        if (authUserRole === UserRoles.admin) {
           return true;
         }
 

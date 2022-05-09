@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="128"
+   height="128"
+   viewBox="0 0 128 128"
+   version="1.1"
+   id="svg219"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   sodipodi:docname="segway-rental-logo.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview221"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="px"
+     showgrid="false"
+     units="px"
+     inkscape:zoom="6.1875"
+     inkscape:cx="60.929293"
+     inkscape:cy="62.707071"
+     inkscape:window-width="1920"
+     inkscape:window-height="1002"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g22783" />
+  <defs
+     id="defs216" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       id="g22783">
+      <path
+         id="path11558"
+         style="opacity:1;fill:#000000;stroke-width:11.4288;stroke-miterlimit:4;stroke-dasharray:none"
+         d="M 78 72 A 28 28 0 0 0 50 100 A 28 28 0 0 0 78 128 A 28 28 0 0 0 106 100 A 28 28 0 0 0 78 72 z M 78 78 A 21.999999 21.999999 0 0 1 100 100 A 21.999999 21.999999 0 0 1 78 122 A 21.999999 21.999999 0 0 1 56 100 A 21.999999 21.999999 0 0 1 78 78 z "
+         transform="scale(0.26458334)" />
+      <path
+         id="path12060"
+         style="opacity:1;fill:#000000;stroke-width:42.0692;stroke-miterlimit:4;stroke-dasharray:none"
+         d="M 78 86 A 14 14 0 0 0 64 100 A 14 14 0 0 0 78 114 A 14 14 0 0 0 92 100 A 14 14 0 0 0 78 86 z M 78 92 A 8.0000004 8.0000004 0 0 1 86 100 A 8.0000004 8.0000004 0 0 1 78 108 A 8.0000004 8.0000004 0 0 1 70 100 A 8.0000004 8.0000004 0 0 1 78 92 z "
+         transform="scale(0.26458334)" />
+      <path
+         style="fill:#0000ff;stroke:#000000;stroke-width:1.5875;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 4.7625,19.84375 h 7.420415"
+         id="path12869" />
+      <path
+         style="fill:#0000ff;stroke:#000000;stroke-width:1.5875;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 25.664584,0.79374999 h 7.420415"
+         id="path12869-5" />
+      <path
+         style="fill:#0000ff;stroke:#000000;stroke-width:1.58750002;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 5.473695,30.873695 h 5.957092"
+         id="path12869-3" />
+      <path
+         style="fill:#0000ff;stroke:#000000;stroke-width:1.5875;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="M 0.79374999,23.547917 H 8.6401223"
+         id="path12869-7" />
+      <path
+         style="fill:#0000ff;stroke:#000000;stroke-width:1.5875;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="M 2.9104167,27.252084 H 9.4129968"
+         id="path12869-7-5" />
+      <path
+         style="fill:none;stroke:#000001;stroke-width:1.5875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 27.252084,26.458334 h 1.852083 c 1.29721,0 1.906072,-1.069609 1.852083,-2.116667 -0.152763,-2.962681 -2.549186,-4.98595 -4.894791,-7.672917 -1.336377,-1.530864 0.117186,-3.912104 1.190625,-7.9374999 L 29.36875,0.79375001"
+         id="path13484"
+         sodipodi:nodetypes="cssssc" />
+    </g>
+  </g>
+</svg>
