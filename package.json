@@ -2,19 +2,20 @@
   "name": "js-modules",
   "private": true,
   "scripts": {
-    "clean:main": "rm -rf `find -type d -name 'node_modules'` `find -type d -name 'build'` `find -type d -name 'coverage'` `find -type f -name 'package-lock.json'` `find -type f -name 'pnpm-lock.yaml'` `find -type f -name 'yarn.lock'` .husky .eslintignore .prettierignore .solhintignore",
+    "clean:main": "rm -rf `find -type d -name 'node_modules'` `find -type d -name 'build'` `find -type d -name 'coverage'` .husky .eslintignore .prettierignore .solhintignore",
     "clean:tsbuildinfo": "rm -rf `find -type f -name '*.tsbuildinfo'`",
+    "clean:lockFiles": "rm -rf `find -type f -name 'package-lock.json'` `find -type f -name 'pnpm-lock.yaml'` `find -type f -name 'yarn.lock'`",
     "reset:clean": "pnpm clean:main && pnpm clean:tsbuildinfo",
     "reset:install": "ln -s .gitignore .eslintignore && ln -s .gitignore .prettierignore && ln -s .gitignore .solhintignore && pnpm install",
     "reset:reset": "pnpm reset:clean && pnpm reset:install",
     "git-hooks:clean": "git config --unset core.hooksPath",
     "git-hooks:set": " husky install && pnpm husky add .husky/pre-commit 'pnpm lint:fix' && pnpm husky add .husky/pre-commit 'pnpm commitlint --edit $1'",
     "git-hooks:reset": "pnpm git-hooks:clean && pnpm git-hooks:set",
-    "lint:check": "eslint       './**/*.{js,jsx,ts,tsx}' && prettier --list-different './**/*.{js,jsx,ts,tsx,css,scss,less,json,md,yml,yaml}' && prettier --config ./prettier-config-solidity.js --list-different './**/*.sol' && solhint       './**/*.sol'",
-    "lint:fix": "  eslint --fix './**/*.{js,jsx,ts,tsx}' && prettier --write          './**/*.{js,jsx,ts,tsx,css,scss,less,json,md,yml,yaml}' && prettier --config ./prettier-config-solidity.js --write          './**/*.sol' && solhint --fix './**/*.sol'",
     "test:test": "jest && lerna run test",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
+    "lint:check": "eslint       './**/*.{js,jsx,ts,tsx}' && prettier --list-different './**/*.{js,jsx,ts,tsx,css,scss,less,json,md,yml,yaml}' && prettier --config ./prettier-config-solidity.js --list-different './**/*.sol' && solhint       './**/*.sol'",
+    "lint:fix": "  eslint --fix './**/*.{js,jsx,ts,tsx}' && prettier --write          './**/*.{js,jsx,ts,tsx,css,scss,less,json,md,yml,yaml}' && prettier --config ./prettier-config-solidity.js --write          './**/*.sol' && solhint --fix './**/*.sol'",
     "lerna:build": "lerna run build",
     "dev:apps-dapp-web": "pnpm --filter @js-modules/apps-dapp-web dev",
     "prepublish": "pnpm lint:fix && pnpm test:coverage && pnpm lerna:build"
@@ -79,7 +80,7 @@
     },
     "collectCoverageFrom": [
       "packages/**/*.{js,jsx,ts,tsx}",
-      "!/node_modules/**",
+      "!/**/node_modules/**",
       "!packages/**/src/*",
       "!packages/**/*types.ts"
     ],

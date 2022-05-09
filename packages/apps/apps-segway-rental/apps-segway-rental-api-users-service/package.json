@@ -1,0 +1,35 @@
+{
+  "private": true,
+  "name": "@js-modules/apps-segway-rental-api-users-service",
+  "description": "Apps Segway Rental API Users Service",
+  "version": "0.0.0",
+  "license": "MIT",
+  "main": "build/index.js",
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "build": "tsc -b tsconfig.build.json",
+    "serve": "pnpm build && firebase emulators:start --only functions",
+    "shell": "pnpm build && firebase functions:shell",
+    "start": "pnpm shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "dependencies": {
+    "@types/cors": "^2.8.12",
+    "body-parser": "^1.19.1",
+    "cors": "^2.8.5",
+    "express": "^4.17.2",
+    "firebase-admin": "^9.8.0",
+    "firebase-functions": "^3.14.1",
+    "firebase-tools": "^10.5.0"
+  },
+  "devDependencies": {
+    "firebase-functions-test": "^0.2.0",
+    "typescript": "^3.8.0"
+  },
+  "engines": {
+    "node": "16"
+  }
+}

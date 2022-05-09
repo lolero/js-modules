@@ -6,6 +6,12 @@
       "@js-modules/apps-dapp-store-redux": [
         "apps/dapp/apps-dapp-store-redux/src"
       ],
+      "@js-modules/apps-segway-rental-store-redux": [
+        "apps/apps-segway-rental/apps-segway-rental-store-redux/src"
+      ],
+      "@js-modules/apps-segway-rental-utils": [
+        "apps/apps-segway-rental/apps-segway-rental-utils/src"
+      ],
       "@js-modules/common-react-hooks": ["common/react/common-react-hooks/src"],
       "@js-modules/common-utils-general": [
         "common/utils/common-utils-general/src"
