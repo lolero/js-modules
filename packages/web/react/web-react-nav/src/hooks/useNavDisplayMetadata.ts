@@ -2,8 +2,7 @@ import { TooltipProps } from '@mui/material/Tooltip';
 import { useCallback, useContext, useMemo } from 'react';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { WorkspaceBoxContext } from '../contexts/WorkspaceBoxContext';
-import { NavSideDrawerDisplayStatus } from '../contexts/NavSideDrawerDisplayStatusContext';
+import { NavContext, NavSideDrawerDisplayStatus } from '../contexts/NavContext';
 
 export type NavDisplayMetadata = {
   collapseNavDrawerCallback: () => void;
@@ -26,7 +25,7 @@ export type NavDisplayMetadata = {
 
 function useNavDisplayMetadata(): NavDisplayMetadata {
   const { navSideDrawerDisplayStatus, setNavSideDrawerDisplayStatus } =
-    useContext(WorkspaceBoxContext);
+    useContext(NavContext);
 
   const theme = useTheme();
 

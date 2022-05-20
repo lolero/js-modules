@@ -21,7 +21,7 @@ const appBoxSx = {
   left: 0,
 } as const;
 
-const MainRouterBox: React.FunctionComponent = () => {
+const MainRoutes: React.FunctionComponent = () => {
   const navigate = useNavigate();
 
   const { authUser, authUserRole } = useStateAuthReducerMetadata();
@@ -67,6 +67,4 @@ const MainRouterBox: React.FunctionComponent = () => {
   );
 };
 
-export const MainRouterBoxRaw = MainRouterBox;
-export const MainRouterBoxMemo = React.memo(MainRouterBoxRaw);
-export default MainRouterBoxMemo;
+export default MainRoutes;

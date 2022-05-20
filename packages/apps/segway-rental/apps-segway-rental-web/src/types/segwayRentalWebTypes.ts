@@ -5,3 +5,8 @@ export enum Modules {
   reservations = 'reservations',
   users = 'users',
 }
+
+export enum SubModulesLocations {
+  europe = 'europe',
+  america = 'america',
+}

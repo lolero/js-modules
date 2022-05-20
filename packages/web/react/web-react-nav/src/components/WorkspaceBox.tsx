@@ -10,10 +10,11 @@ import { useTheme } from '@mui/material/styles';
 import { useChildNodeSize } from '@js-modules/web-react-hooks';
 import { usePrevious } from '@js-modules/common-react-hooks';
 import { useNavigate } from 'react-router-dom';
-import WorkspaceBoxContext, {
+import {
+  WorkspaceContext,
   ScrollDirection,
-  WorkspaceBoxContextValue,
-} from '../contexts/WorkspaceBoxContext';
+  WorkspaceContextValue,
+} from '../contexts/WorkspaceContext';
 import WorkspaceToolbarBox from './WorkspaceToolbarBox';
 import {
   NAV_DRAWER_WIDTH_COLLAPSED_SPACING,
@@ -21,45 +22,33 @@ import {
 } from '../constants/navConstants';
 import NavTopBar from './NavTopBar';
 import NavSideDrawer from './NavSideDrawer';
-import {
-  NavSideDrawerDisplayStatus,
-  NavSideDrawerDisplayStatusContext,
-} from '../contexts/NavSideDrawerDisplayStatusContext';
+import { NavSideDrawerDisplayStatus, NavContext } from '../contexts/NavContext';
 import useNavDisplayMetadata from '../hooks/useNavDisplayMetadata';
 
 type Props = {
-  shortLogo: React.ReactNode;
-  longLogo: React.ReactNode;
-  homePath: string;
   topToolbar: React.ReactNode;
-  sideToolbar: React.ReactNode;
-  sideFooter: React.ReactNode;
   workspaceToolbar: React.ReactNode;
   workspaceContent: React.ReactNode;
   isAuthenticatedRequired?: boolean;
   getIsAuthenticatedCallback?: () => boolean;
-  nonAuthenticatedRedirectPath: string;
   contentSx?: BoxProps['sx'];
 };
 
 const WorkspaceBox: React.FunctionComponent<Props> = ({
-  shortLogo,
-  longLogo,
-  homePath,
   topToolbar,
-  sideToolbar,
-  sideFooter,
   workspaceToolbar,
   workspaceContent,
   isAuthenticatedRequired,
   getIsAuthenticatedCallback,
-  nonAuthenticatedRedirectPath,
   contentSx,
 }) => {
   const navigate = useNavigate();
 
-  const { navSideDrawerDisplayStatus, setNavSideDrawerDisplayStatus } =
-    useContext(NavSideDrawerDisplayStatusContext);
+  const {
+    nonAuthenticatedRedirectPath,
+    navSideDrawerDisplayStatus,
+    setNavSideDrawerDisplayStatus,
+  } = useContext(NavContext);
   const [contentScrollTop, setContentScrollTop] = useState<number>(0);
   const [contentScrollDirection, setContentScrollDirection] =
     useState<ScrollDirection>();
@@ -88,21 +77,17 @@ const WorkspaceBox: React.FunctionComponent<Props> = ({
     return `${navDrawerWidth}px`;
   }, [isMobile, isTablet, navDrawerWidth, theme]);
 
-  const workspaceBoxContextValue: WorkspaceBoxContextValue = useMemo(() => {
+  const workspaceContextValue: WorkspaceContextValue = useMemo(() => {
     return {
       navBarHeight,
       navDrawerWidth,
       workspaceMarginLeft,
-      navSideDrawerDisplayStatus,
-      setNavSideDrawerDisplayStatus,
       contentScrollDirection,
     };
   }, [
     navBarHeight,
     navDrawerWidth,
     workspaceMarginLeft,
-    navSideDrawerDisplayStatus,
-    setNavSideDrawerDisplayStatus,
     contentScrollDirection,
   ]);
 
@@ -142,19 +127,9 @@ const WorkspaceBox: React.FunctionComponent<Props> = ({
   }
 
   return (
-    <WorkspaceBoxContext.Provider value={workspaceBoxContextValue}>
-      <NavTopBar
-        ref={navBarRef}
-        shortLogo={shortLogo}
-        longLogo={longLogo}
-        homePath={homePath}
-        topToolbar={topToolbar}
-      />
-      <NavSideDrawer
-        ref={navDrawerRef}
-        sideToolbar={sideToolbar}
-        sideFooter={sideFooter}
-      />
+    <WorkspaceContext.Provider value={workspaceContextValue}>
+      <NavTopBar ref={navBarRef}>{topToolbar}</NavTopBar>
+      <NavSideDrawer ref={navDrawerRef} />
       <WorkspaceToolbarBox ref={workspaceToolbarRef}>
         {workspaceToolbar}
       </WorkspaceToolbarBox>
@@ -186,7 +161,7 @@ const WorkspaceBox: React.FunctionComponent<Props> = ({
           {workspaceContent}
         </Box>
       </Box>
-    </WorkspaceBoxContext.Provider>
+    </WorkspaceContext.Provider>
   );
 };
 

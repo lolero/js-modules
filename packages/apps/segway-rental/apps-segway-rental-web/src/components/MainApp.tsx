@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { createReduxStore } from '@js-modules/apps-segway-rental-store-redux';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
-import MainRouterSwitch from './MainRouterBox';
+import MainRoutes from './MainRoutes';
 import { lightTheme } from '../styles/segwayRentalMaterialUiTheme';
 
 /**
@@ -19,7 +19,7 @@ function initApp(): FunctionComponent {
         <ThemeProvider theme={lightTheme}>
           <CssBaseline />
           <BrowserRouter>
-            <MainRouterSwitch />
+            <MainRoutes />
           </BrowserRouter>
         </ThemeProvider>
       </Provider>
