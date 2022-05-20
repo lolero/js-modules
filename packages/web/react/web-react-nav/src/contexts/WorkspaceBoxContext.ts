@@ -1,27 +1,29 @@
 import React from 'react';
 import noop from 'lodash/noop';
 import { Theme } from '@mui/material/styles';
-import { NavDrawerDisplayStatus } from './NavDrawerDisplayStatusContext';
+import { NavSideDrawerDisplayStatus } from './NavSideDrawerDisplayStatusContext';
+
+export enum ScrollDirection {
+  down = 'down',
+  up = 'up',
+}
 
 export type WorkspaceBoxContextValue = {
-  isContentScroll: boolean;
   navBarHeight: number;
-  navDrawerDisplayStatus: NavDrawerDisplayStatus;
   navDrawerWidth: number;
-  setNavDrawerDisplayStatus: (
-    navDrawerDisplayStatus: NavDrawerDisplayStatus,
-  ) => void;
-
   workspaceMarginLeft: string | ((theme: Theme) => string);
+  navSideDrawerDisplayStatus: NavSideDrawerDisplayStatus;
+  setNavSideDrawerDisplayStatus: (
+    navDrawerDisplayStatus: NavSideDrawerDisplayStatus,
+  ) => void;
+  contentScrollDirection?: ScrollDirection;
 };
 
-const WorkspaceBoxContext = React.createContext<WorkspaceBoxContextValue>({
-  navDrawerDisplayStatus: NavDrawerDisplayStatus.Expanded,
-  setNavDrawerDisplayStatus: noop,
-  navDrawerWidth: 0,
-  navBarHeight: 0,
-  workspaceMarginLeft: '0',
-  isContentScroll: false,
-});
-
-export default WorkspaceBoxContext;
+export const WorkspaceBoxContext =
+  React.createContext<WorkspaceBoxContextValue>({
+    navBarHeight: 0,
+    navDrawerWidth: 0,
+    workspaceMarginLeft: '0',
+    navSideDrawerDisplayStatus: NavSideDrawerDisplayStatus.expanded,
+    setNavSideDrawerDisplayStatus: noop,
+  });

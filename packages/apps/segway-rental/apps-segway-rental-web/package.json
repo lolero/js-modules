@@ -27,7 +27,7 @@
     "@mui/icons-material": "^5.5.0",
     "@mui/lab": "^5.0.0-alpha.74",
     "@mui/material": "^5.4.2",
-    "@types/lodash": "^4.14.178",
+    "@types/lodash": "^4.14.182",
     "@types/react": "^17.0.39",
     "@types/react-dom": "^17.0.11",
     "@types/react-redux": "^7.1.22",

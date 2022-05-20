@@ -15,7 +15,7 @@
     "@js-modules/common-utils-general": "workspace:^0.0.0",
     "@metamask/detect-provider": "^1.2.0",
     "@metamask/providers": "^8.1.1",
-    "@types/lodash": "^4.14.178",
+    "@types/lodash": "^4.14.182",
     "@types/uuid": "^8.3.4",
     "axios": "^0.26.0",
     "ethers": "^5.5.4",

@@ -5,7 +5,7 @@ import { createReduxStore } from '@js-modules/apps-segway-rental-store-redux';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 import MainRouterSwitch from './MainRouterBox';
-import { segwayRentalMaterialUiTheme } from '../styles/segwayRentalMaterialUiTheme';
+import { lightTheme } from '../styles/segwayRentalMaterialUiTheme';
 
 /**
  *
@@ -16,7 +16,7 @@ function initApp(): FunctionComponent {
   const App: FunctionComponent = () => {
     return (
       <Provider store={reduxStore}>
-        <ThemeProvider theme={segwayRentalMaterialUiTheme}>
+        <ThemeProvider theme={lightTheme}>
           <CssBaseline />
           <BrowserRouter>
             <MainRouterSwitch />

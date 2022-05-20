@@ -5,12 +5,16 @@ import { useEffect, useRef } from 'react';
  *
  * @param {any} variable - Variable, whose previous value should be retrieved
  *
- * @returns {T} Previous value of variable
+ * @returns {VarialbeT} Previous value of variable
  */
-export function usePrevious<T>(variable: T): T {
-  const ref = useRef<T>();
+export function usePrevious<VarialbeT>(
+  variable: VarialbeT,
+): VarialbeT | undefined {
+  const ref = useRef<VarialbeT>();
+
   useEffect(() => {
     ref.current = variable;
   });
-  return ref.current as T;
+
+  return ref.current;
 }

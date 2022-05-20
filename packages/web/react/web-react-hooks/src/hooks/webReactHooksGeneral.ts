@@ -1,14 +1,14 @@
 import { Ref, useCallback, useState } from 'react';
 
 export function useChildNodeSize<NodeT extends HTMLElement>(): {
-  nodeRef: Ref<NodeT | null>;
+  nodeRef?: Ref<NodeT>;
   nodeWidth: number;
   nodeHeight: number;
 } {
   const [nodeWidth, setNodeWidth] = useState<number>(0);
   const [nodeHeight, setNodeHeight] = useState<number>(0);
 
-  const nodeRef = useCallback((node: NodeT | null) => {
+  const nodeRef = useCallback((node?: NodeT) => {
     if (!node) {
       return;
     }
@@ -20,7 +20,7 @@ export function useChildNodeSize<NodeT extends HTMLElement>(): {
       }
     });
     resizeObserver.observe(node);
-  }, []) as Ref<NodeT>;
+  }, []) as Ref<NodeT> | undefined;
 
   return {
     nodeRef,
