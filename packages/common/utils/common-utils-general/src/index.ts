@@ -1,2 +1,3 @@
-export * from './utils/commonUtilsAxios';
-export * from './utils/commonUtilsGeneral';
+export * from './utils/commonUtilsAxios/commonUtilsAxios.exports';
+export * from './utils/commonUtilsColor/commonUtilsColor.exports';
+export * from './utils/commonUtilsGeneral/commonUtilsGeneral.exports';

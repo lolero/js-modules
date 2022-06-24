@@ -9,7 +9,11 @@ const HomeRoutes: React.FunctionComponent = () => {
       <Route
         path="/"
         element={
-          <WorkspaceBox topToolbar={} workspaceToolbar={} workspaceContent={} />
+          <WorkspaceBox
+            topToolbar={<div />}
+            workspaceToolbar={<div />}
+            workspaceContent={<div />}
+          />
         }
       />
       <Route path="/*" element={<Navigate to={`/${Modules.home}`} replace />} />

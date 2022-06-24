@@ -24,7 +24,7 @@ function getIconNames(iconFileName: string): {
   };
 }
 
-export function generateMuiSvgIcons(
+function generateMuiSvgIcons(
   basePath: string,
   iconsDirPath: string,
   buildPath: string,
@@ -89,3 +89,5 @@ export function generateMuiSvgIcons(
 
   appendFileSync(iconsTsxPath, iconsTsx);
 }
+
+export default generateMuiSvgIcons;

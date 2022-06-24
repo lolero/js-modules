@@ -1,6 +1,6 @@
 import { addDays, lightFormat } from 'date-fns';
 
-export function getDaysArrayInTimestampRange(
+function getDaysArrayInTimestampRange(
   fromTimestamp: string,
   toTimestamp: string,
 ): string[] {
@@ -17,3 +17,5 @@ export function getDaysArrayInTimestampRange(
 
   return daysArray;
 }
+
+export default getDaysArrayInTimestampRange;

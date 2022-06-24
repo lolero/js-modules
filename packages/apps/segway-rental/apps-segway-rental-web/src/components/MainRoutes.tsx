@@ -12,6 +12,7 @@ import SegwaysWorkspace from './SegwaysWorkspace';
 import UsersWorkspace from './UsersWorkspace';
 import ReservationsWorkspace from './ReservationsWorkspace';
 import LocationsWorkspace from './LocationsWorkspace';
+import HomeRoutes from './HomeRoutes';
 
 const appBoxSx = {
   position: 'fixed',
@@ -36,7 +37,8 @@ const MainRoutes: React.FunctionComponent = () => {
   return (
     <Box sx={appBoxSx}>
       <Routes>
-        <Route path={`/${Modules.home}`} element={<HomeWorkspace />} />
+        <Route path={`/${Modules.home}`} element={<HomeRoutes />} />
+        {/* <Route path={`/${Modules.home}`} element={<HomeWorkspace />} /> */}
         <Route
           path={`/${Modules.locations}`}
           element={<LocationsWorkspace />}

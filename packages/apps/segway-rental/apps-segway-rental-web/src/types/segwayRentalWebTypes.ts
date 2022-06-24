@@ -1,9 +1,16 @@
 export enum Modules {
-  segways = 'segways',
   home = 'home',
   locations = 'locations',
-  reservations = 'reservations',
   users = 'users',
+  segways = 'segways',
+  reservations = 'reservations',
+  settings = 'settings',
+  help = 'help',
+}
+
+export enum SubModulesHome {
+  segways = 'segways',
+  locations = 'locations',
 }
 
 export enum SubModulesLocations {

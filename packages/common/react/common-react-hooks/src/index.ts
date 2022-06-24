@@ -1,1 +1,1 @@
-export * from './hooks/commonReactHooks';
+export * from './hooks/commonReactHooks/commonReactHooks.exports';

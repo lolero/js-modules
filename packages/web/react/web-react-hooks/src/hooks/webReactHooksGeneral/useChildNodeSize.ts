@@ -1,6 +1,6 @@
 import { Ref, useCallback, useState } from 'react';
 
-export function useChildNodeSize<NodeT extends HTMLElement>(): {
+function useChildNodeSize<NodeT extends HTMLElement>(): {
   nodeRef?: Ref<NodeT>;
   nodeWidth: number;
   nodeHeight: number;
@@ -28,3 +28,5 @@ export function useChildNodeSize<NodeT extends HTMLElement>(): {
     nodeHeight,
   };
 }
+
+export default useChildNodeSize;

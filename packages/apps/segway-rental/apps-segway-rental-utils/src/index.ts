@@ -1,2 +1,2 @@
-export * from './utils/segwayRentalUtils';
-export * from './types/segwayRentalTypes';
+export * from './types/segwayRentalUtils.types';
+export * from './utils/segwayRentalUtils/segwayRentalUtils.exports';

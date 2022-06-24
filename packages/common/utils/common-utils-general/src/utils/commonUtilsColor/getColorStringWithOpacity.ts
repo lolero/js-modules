@@ -34,7 +34,7 @@ function getColorRgbStringWithOpacity(
   return colorRgbStringWithOpacity;
 }
 
-export function getColorStringWithOpacity(
+function getColorStringWithOpacity(
   colorString: string,
   opacity: number,
 ): string {
@@ -50,3 +50,5 @@ export function getColorStringWithOpacity(
     "Invalid color string: Color string must be a valid color hex code starting with '#' of a valid rgb/rgba string",
   );
 }
+
+export default getColorStringWithOpacity;

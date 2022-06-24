@@ -1,1 +1,1 @@
-export * from './utils/webReactUtilsGenerateMuiSvgIcons';
+export * from './utils/webReactUtilsGenerateMuiSvgIcons/webReactUtilsGenerateMuiSvgIcons.exports';

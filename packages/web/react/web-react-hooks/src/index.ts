@@ -1,3 +1,3 @@
-export * from './hooks/webReactHooksGeneral';
-export * from './hooks/webReactHooksMaterialUi';
-export * from './hooks/webReactHooksReactRouter';
+export * from './hooks/webReactHooksGeneral/webReactHooksGeneral.exports';
+export * from './hooks/webReactHooksMaterialUi/webReactHooksMaterialUi.exports';
+export * from './hooks/webReactHooksReactRouter/webReactHooksReactRouter.exports';

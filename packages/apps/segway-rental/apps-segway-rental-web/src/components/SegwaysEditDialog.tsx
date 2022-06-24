@@ -8,6 +8,7 @@ import {
   useNodeSegwaysEntities,
   useNodeSegwaysRequest,
   useStateDialogsReducerMetadata,
+  useNodeReservationsRequest,
 } from '@js-modules/apps-segway-rental-store-redux';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';

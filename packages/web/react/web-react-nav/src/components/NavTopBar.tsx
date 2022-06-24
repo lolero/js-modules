@@ -34,7 +34,6 @@ const NavTopBar = forwardRef<HTMLDivElement, Props>(({ children }, ref) => {
 
   const {
     isMobile,
-    isDesktop,
     isNavDrawerHidden,
     isNavDrawerCollapsed,
     expandNavDrawerCallback,
@@ -58,12 +57,12 @@ const NavTopBar = forwardRef<HTMLDivElement, Props>(({ children }, ref) => {
   }, [contentScrollDirection, isMobile]);
 
   const logoBoxWidth = useMemo(() => {
-    if (!isDesktop || isNavDrawerCollapsed) {
+    if (isMobile || isNavDrawerCollapsed) {
       return theme.spacing(NAV_DRAWER_WIDTH_COLLAPSED_SPACING);
     }
 
     return theme.spacing(NAV_DRAWER_WIDTH_EXPANDED_SPACING);
-  }, [isDesktop, isNavDrawerCollapsed, theme]);
+  }, [isMobile, isNavDrawerCollapsed, theme]);
 
   return (
     <AppBar
@@ -78,7 +77,7 @@ const NavTopBar = forwardRef<HTMLDivElement, Props>(({ children }, ref) => {
       <Box
         sx={{
           width: logoBoxWidth,
-          height: `${navBarHeight}px`,
+          height: `calc(${navBarHeight}px - ${theme.spacing(1)})`,
           pr: theme.spacing(1),
         }}
         component={Link}

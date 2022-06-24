@@ -26,7 +26,7 @@ const BOX_SHADOW_HORIZONTAL: BoxShadow = {
   offsetY: '0px',
   blurRadius: '10px',
   spreadRadius: '0px',
-  color: 'rgb(0 0 0 / 16%)',
+  color: 'rgb(0 0 0 / 20%)',
 };
 
 const BOX_SHADOW_VERTICAL: BoxShadow = {
@@ -34,7 +34,7 @@ const BOX_SHADOW_VERTICAL: BoxShadow = {
   offsetY: '1px',
   blurRadius: '10px',
   spreadRadius: '0px',
-  color: 'rgb(0 0 0 / 16%)',
+  color: 'rgb(0 0 0 / 20%)',
 };
 
 export const NavBoxShadowHorizontalSx = {

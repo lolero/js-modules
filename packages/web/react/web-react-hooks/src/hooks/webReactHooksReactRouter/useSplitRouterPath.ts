@@ -6,7 +6,7 @@ import { useLocation } from 'react-router-dom';
  *
  * @returns {string[]} Array of router path parts
  */
-export function useSplitRouterPath(): string[] {
+function useSplitRouterPath(): string[] {
   const { pathname } = useLocation();
 
   const splitRouterPath = pathname.split('/').slice(1);
@@ -21,3 +21,5 @@ export function useSplitRouterPath(): string[] {
 
   return splitRouterPath;
 }
+
+export default useSplitRouterPath;
