@@ -6,7 +6,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 import {
   NavContextValue,
-  NavSideDrawerDisplayStatus,
+  NavDrawerDisplayStatus,
   NavContext,
 } from '@js-modules/web-react-nav';
 import MainRoutes from './MainRoutes';
@@ -22,7 +22,7 @@ function initApp(): FunctionComponent {
 
   const App: FunctionComponent = () => {
     const [navSideDrawerDisplayStatus, setNavSideDrawerDisplayStatus] =
-      useState<NavSideDrawerDisplayStatus>(NavSideDrawerDisplayStatus.expanded);
+      useState<NavDrawerDisplayStatus>(NavDrawerDisplayStatus.expanded);
 
     const navContextValue: NavContextValue = useMemo(() => {
       return {
@@ -32,8 +32,8 @@ function initApp(): FunctionComponent {
         sideToolbar: <MainNavSideToolbarBox />,
         sideFooter: <MainNavSideFooterBox />,
         nonAuthenticatedRedirectPath: '/',
-        navSideDrawerDisplayStatus,
-        setNavSideDrawerDisplayStatus,
+        navLeftDrawerDisplayStatus: navSideDrawerDisplayStatus,
+        setNavLeftDrawerDisplayStatus: setNavSideDrawerDisplayStatus,
       };
     }, [navSideDrawerDisplayStatus]);
 

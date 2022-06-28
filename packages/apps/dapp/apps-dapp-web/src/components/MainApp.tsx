@@ -1,29 +1,13 @@
-import React, { FunctionComponent } from 'react';
-import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
+import React from 'react';
 import { createReduxStore } from '@js-modules/apps-dapp-store-redux';
-import CssBaseline from '@mui/material/CssBaseline';
-import { ThemeProvider } from '@mui/material/styles';
-import MainRoutesBox from './MainRoutesBox';
-import { materialUiTheme } from '../styles/materialUiTheme';
+import { MainReduxProvider } from './MainReduxProvider';
 
-function initApp(): FunctionComponent {
+function initApp(): React.FC {
   const reduxStore = createReduxStore();
 
-  const App: FunctionComponent = () => {
-    return (
-      <Provider store={reduxStore}>
-        <ThemeProvider theme={materialUiTheme}>
-          <CssBaseline />
-          <BrowserRouter>
-            <MainRoutesBox />
-          </BrowserRouter>
-        </ThemeProvider>
-      </Provider>
-    );
-  };
+  const App: React.FC = () => <MainReduxProvider reduxStore={reduxStore} />;
 
   return App;
 }
 
-export default initApp();
+export const MainApp = initApp();

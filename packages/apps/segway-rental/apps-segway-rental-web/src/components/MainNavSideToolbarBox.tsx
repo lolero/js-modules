@@ -7,16 +7,18 @@ import Tooltip from '@mui/material/Tooltip';
 import { useTheme, Theme } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
 import {
-  useCloseNavSideDrawerCallback,
+  useCloseNavLeftDrawerCallback,
   useNavDisplayMetadata,
 } from '@js-modules/web-react-nav';
 import { MuiFaIcon } from '@js-modules/web-react-components';
 import { faHouse } from '@fortawesome/free-solid-svg-icons/faHouse';
 import { faMapLocationDot } from '@fortawesome/free-solid-svg-icons/faMapLocationDot';
-import { faBicycle } from '@fortawesome/free-solid-svg-icons/faBicycle';
+import { faUsers } from '@fortawesome/free-solid-svg-icons/faUsers';
 import { faCalendarDays } from '@fortawesome/free-solid-svg-icons/faCalendarDays';
 import { faGear } from '@fortawesome/free-solid-svg-icons/faGear';
 import { faCircleQuestion } from '@fortawesome/free-solid-svg-icons/faCircleQuestion';
+import { SegwayRentalLogoIcon } from '@js-modules/apps-segway-rental-mui-icons';
+import { NAV_DRAWER_WIDTH_COLLAPSED_SPACING } from '@js-modules/web-react-nav/src/constants/navConstants';
 import { Modules } from '../types/segwayRentalWebTypes';
 import useModule from '../hooks/useModule';
 
@@ -35,7 +37,7 @@ const dividerSx = {
 } as const;
 
 const MainNavSideToolbarBox: React.FunctionComponent = () => {
-  const { isNavDrawerExpanded, tooltipDisableListenersProps } =
+  const { isNavLeftDrawerExpanded, navLeftDrawerTooltipDisableListenersProps } =
     useNavDisplayMetadata();
 
   const module = useModule();
@@ -44,37 +46,35 @@ const MainNavSideToolbarBox: React.FunctionComponent = () => {
 
   const tabsSx = useMemo(() => {
     return {
-      // [`&.${tabsClasses.root}`]: {
-      //   borderRadius: 0,
-      //   backgroundColor: 'background.default',
-      // },
-      // [`& .${tabClasses.root}`]: {
-      //   display: 'flex',
-      //   justifyContent: 'start',
-      //   minHeight: 0,
-      //   height: `${theme.spacing(5)} !important`,
-      //   minWidth: 0,
-      //   maxWidth: theme.spacing(100),
-      //   width: isNavDrawerExpanded ? 'auto' : theme.spacing(7),
-      //   my: theme.spacing(1),
-      //   mx: theme.spacing(3.5),
-      //   pl: theme.spacing(2),
-      //   py: 0,
-      //   [`& .${tabClasses.iconWrapper}`]: {
-      //     mr: theme.spacing(3),
-      //   },
-      // },
+      [`&.${tabsClasses.root}`]: {
+        my: theme.spacing(1),
+      },
+      [`& .${tabClasses.root}`]: {
+        display: 'flex',
+        justifyContent: 'start',
+        minHeight: 0,
+        height: `${theme.spacing(4)} !important`,
+        minWidth: 0,
+        maxWidth: theme.spacing(100),
+        width: isNavLeftDrawerExpanded
+          ? 'auto'
+          : theme.spacing(NAV_DRAWER_WIDTH_COLLAPSED_SPACING - 2),
+        my: theme.spacing(1),
+        mx: theme.spacing(1),
+        [`& .${tabClasses.iconWrapper}`]: {
+          mr: theme.spacing(2),
+        },
+      },
     } as const;
-  }, [isNavDrawerExpanded, theme]);
+  }, [isNavLeftDrawerExpanded, theme]);
 
-  const closeNavSideDrawerCallback = useCloseNavSideDrawerCallback();
+  const closeNavSideDrawerCallback = useCloseNavLeftDrawerCallback();
 
   return (
     <Box>
       <Tabs
         sx={{
           ...tabsSx,
-          mb: theme.spacing(2),
         }}
         orientation="vertical"
         value={module}
@@ -82,14 +82,14 @@ const MainNavSideToolbarBox: React.FunctionComponent = () => {
         <Tab sx={{ display: 'none !important' }} value={module} />
         <Tab
           value={Modules.home}
-          label={isNavDrawerExpanded ? Modules.home : null}
+          label={isNavLeftDrawerExpanded ? Modules.home : null}
           component={Link}
           to={`/${Modules.home}`}
           onClick={closeNavSideDrawerCallback}
           icon={
             <Tooltip
               // eslint-disable-next-line react/jsx-props-no-spreading
-              {...tooltipDisableListenersProps}
+              {...navLeftDrawerTooltipDisableListenersProps}
               title={Modules.home}
               data-testid={MainNavSideToolbarBoxDataTestIds.homeTooltipTrigger}
             >
@@ -100,14 +100,14 @@ const MainNavSideToolbarBox: React.FunctionComponent = () => {
         />
         <Tab
           value={Modules.locations}
-          label={isNavDrawerExpanded ? Modules.locations : null}
+          label={isNavLeftDrawerExpanded ? Modules.locations : null}
           component={Link}
           to={`/${Modules.locations}`}
           onClick={closeNavSideDrawerCallback}
           icon={
             <Tooltip
               // eslint-disable-next-line react/jsx-props-no-spreading
-              {...tooltipDisableListenersProps}
+              {...navLeftDrawerTooltipDisableListenersProps}
               title={Modules.locations}
               data-testid={
                 MainNavSideToolbarBoxDataTestIds.locationsTooltipTrigger
@@ -120,52 +120,52 @@ const MainNavSideToolbarBox: React.FunctionComponent = () => {
         />
         <Tab
           value={Modules.users}
-          label={isNavDrawerExpanded ? Modules.users : null}
+          label={isNavLeftDrawerExpanded ? Modules.users : null}
           component={Link}
           to={`/${Modules.users}`}
           onClick={closeNavSideDrawerCallback}
           icon={
             <Tooltip
               // eslint-disable-next-line react/jsx-props-no-spreading
-              {...tooltipDisableListenersProps}
+              {...navLeftDrawerTooltipDisableListenersProps}
               title={Modules.users}
               data-testid={MainNavSideToolbarBoxDataTestIds.usersTooltipTrigger}
             >
-              <MuiFaIcon icon={faMapLocationDot} />
+              <MuiFaIcon icon={faUsers} />
             </Tooltip>
           }
           iconPosition="start"
         />
         <Tab
           value={Modules.segways}
-          label={isNavDrawerExpanded ? Modules.segways : null}
+          label={isNavLeftDrawerExpanded ? Modules.segways : null}
           component={Link}
           to={`/${Modules.segways}`}
           onClick={closeNavSideDrawerCallback}
           icon={
             <Tooltip
               // eslint-disable-next-line react/jsx-props-no-spreading
-              {...tooltipDisableListenersProps}
+              {...navLeftDrawerTooltipDisableListenersProps}
               title={Modules.segways}
               data-testid={
                 MainNavSideToolbarBoxDataTestIds.segwaysTooltipTrigger
               }
             >
-              <MuiFaIcon icon={faBicycle} />
+              <SegwayRentalLogoIcon />
             </Tooltip>
           }
           iconPosition="start"
         />
         <Tab
           value={Modules.reservations}
-          label={isNavDrawerExpanded ? Modules.reservations : null}
+          label={isNavLeftDrawerExpanded ? Modules.reservations : null}
           component={Link}
           to={`/${Modules.reservations}`}
           onClick={closeNavSideDrawerCallback}
           icon={
             <Tooltip
               // eslint-disable-next-line react/jsx-props-no-spreading
-              {...tooltipDisableListenersProps}
+              {...navLeftDrawerTooltipDisableListenersProps}
               title={Modules.reservations}
               data-testid={
                 MainNavSideToolbarBoxDataTestIds.reservationsTooltipTrigger
@@ -189,14 +189,14 @@ const MainNavSideToolbarBox: React.FunctionComponent = () => {
         <Tab sx={{ display: 'none !important' }} value={module} />
         <Tab
           value={Modules.settings}
-          label={isNavDrawerExpanded ? Modules.settings : null}
+          label={isNavLeftDrawerExpanded ? Modules.settings : null}
           component={Link}
           to={`/${Modules.settings}`}
           onClick={closeNavSideDrawerCallback}
           icon={
             <Tooltip
               // eslint-disable-next-line react/jsx-props-no-spreading
-              {...tooltipDisableListenersProps}
+              {...navLeftDrawerTooltipDisableListenersProps}
               title={Modules.settings}
               data-testid={
                 MainNavSideToolbarBoxDataTestIds.settingsTooltipTrigger
@@ -209,14 +209,14 @@ const MainNavSideToolbarBox: React.FunctionComponent = () => {
         />
         <Tab
           value={Modules.help}
-          label={isNavDrawerExpanded ? Modules.help : null}
+          label={isNavLeftDrawerExpanded ? Modules.help : null}
           component={Link}
           to={`/${Modules.help}`}
           onClick={closeNavSideDrawerCallback}
           icon={
             <Tooltip
               // eslint-disable-next-line react/jsx-props-no-spreading
-              {...tooltipDisableListenersProps}
+              {...navLeftDrawerTooltipDisableListenersProps}
               title={Modules.help}
               data-testid={MainNavSideToolbarBoxDataTestIds.helpTooltipTrigger}
             >

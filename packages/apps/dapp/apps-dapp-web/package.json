@@ -20,6 +20,7 @@
     "@js-modules/common-utils-general": "workspace:^0.0.0",
     "@js-modules/web-react-components": "workspace:^0.0.0",
     "@js-modules/web-react-hooks": "workspace:^0.0.0",
+    "@js-modules/web-react-nav": "workspace:^0.0.0",
     "@js-modules/web-styles-material-ui": "workspace:^0.0.0",
     "@mui/icons-material": "^5.5.0",
     "@mui/material": "^5.4.2",

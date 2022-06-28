@@ -15,13 +15,15 @@ export * from './reducers/reducers.exports';
 export * from './reducers/reducers.initialState';
 export * from './reducers/reducers.types';
 
-export function createReduxStore(): Store<
+export type ReduxStore = Store<
   CombinedState<{
     appState: CombinedState<AppStateReducers>;
     entityData: CombinedState<EntityDataReducers>;
   }>,
   ReducerHittingAction
-> {
+>;
+
+export function createReduxStore(): ReduxStore {
   const reduxStore = createStore(
     reducers,
     composeWithDevTools({

@@ -5,6 +5,6 @@ import { ReactComponent as SegwayRentalLogoIconSvg } from '../assets/segway-rent
 
 /* eslint-disable react/jsx-props-no-spreading, prettier/prettier */
 export const SegwayRentalLogoIcon: React.FunctionComponent<SvgIconProps> = (props) => (
-  <SvgIcon component={SegwayRentalLogoIconSvg} viewBox="0 0 128 128" {...props} />
+  <SvgIcon component={SegwayRentalLogoIconSvg} viewBox="0 0 34 34" {...props} />
 );
 /* eslint-enable react/jsx-props-no-spreading, prettier/prettier */

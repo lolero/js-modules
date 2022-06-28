@@ -1,32 +1,36 @@
 import React from 'react';
 import noop from 'lodash/noop';
 
-export enum NavSideDrawerDisplayStatus {
+export enum NavDrawerDisplayStatus {
   expanded = 'expanded',
   collapsed = 'collapsed',
   hidden = 'hidden',
 }
 
 export type NavContextValue = {
-  shortLogo: React.ReactNode;
-  longLogo: React.ReactNode;
-  homePath: string;
-  sideToolbar: React.ReactNode;
-  sideFooter: React.ReactNode;
   nonAuthenticatedRedirectPath: string;
-  navSideDrawerDisplayStatus: NavSideDrawerDisplayStatus;
-  setNavSideDrawerDisplayStatus: (
-    navDrawerDisplayStatus: NavSideDrawerDisplayStatus,
+  showNavLeftDrawerString: string;
+  hideNavLeftDrawerString: string;
+  showNavRightDrawerString: string;
+  hideNavRightDrawerString: string;
+  navLeftDrawerDisplayStatus: NavDrawerDisplayStatus;
+  setNavLeftDrawerDisplayStatus: (
+    navLeftDrawerDisplayStatus: NavDrawerDisplayStatus,
+  ) => void;
+  navRightDrawerDisplayStatus: NavDrawerDisplayStatus;
+  setNavRightDrawerDisplayStatus: (
+    navRightDrawerDisplayStatus: NavDrawerDisplayStatus,
   ) => void;
 };
 
 export const NavContext = React.createContext<NavContextValue>({
-  shortLogo: null,
-  longLogo: null,
-  homePath: '/',
-  sideToolbar: null,
-  sideFooter: null,
   nonAuthenticatedRedirectPath: '/',
-  navSideDrawerDisplayStatus: NavSideDrawerDisplayStatus.expanded,
-  setNavSideDrawerDisplayStatus: noop,
+  showNavLeftDrawerString: '',
+  hideNavLeftDrawerString: '',
+  showNavRightDrawerString: '',
+  hideNavRightDrawerString: '',
+  navLeftDrawerDisplayStatus: NavDrawerDisplayStatus.expanded,
+  setNavLeftDrawerDisplayStatus: noop,
+  navRightDrawerDisplayStatus: NavDrawerDisplayStatus.collapsed,
+  setNavRightDrawerDisplayStatus: noop,
 });

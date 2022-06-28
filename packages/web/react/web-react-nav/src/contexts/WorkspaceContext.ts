@@ -7,14 +7,22 @@ export enum ScrollDirection {
 }
 
 export type WorkspaceContextValue = {
-  navBarHeight: number;
-  navDrawerWidth: number;
+  navTopToolbarHeight: number;
+  navLeftDrawerWidth: number;
+  navRightDrawerWidth: number;
+  workspaceTopToolbarHeight: number;
   workspaceMarginLeft: string | ((theme: Theme) => string);
-  contentScrollDirection?: ScrollDirection;
+  workspaceMarginRight: string | ((theme: Theme) => string);
+  workspaceScrollTop: number;
+  workspaceScrollDirection?: ScrollDirection;
 };
 
 export const WorkspaceContext = React.createContext<WorkspaceContextValue>({
-  navBarHeight: 0,
-  navDrawerWidth: 0,
+  navTopToolbarHeight: 0,
+  navLeftDrawerWidth: 0,
+  navRightDrawerWidth: 0,
+  workspaceTopToolbarHeight: 0,
   workspaceMarginLeft: '0',
+  workspaceMarginRight: '0',
+  workspaceScrollTop: 0,
 });
