@@ -13,20 +13,20 @@
   },
   "dependencies": {
     "@js-modules/common-utils-general": "workspace:^0.0.0",
-    "@metamask/detect-provider": "^1.2.0",
-    "@metamask/providers": "^8.1.1",
-    "@types/lodash": "^4.14.182",
-    "@types/uuid": "^8.3.4",
-    "axios": "^0.26.0",
-    "ethers": "^5.5.4",
+    "@metamask/detect-provider": "^2.0.0",
+    "@metamask/providers": "^10.2.1",
+    "@types/lodash": "^4.14.191",
+    "@types/uuid": "^9.0.0",
+    "axios": "^1.2.6",
+    "ethers": "^5.7.2",
     "lodash": "^4.17.21",
-    "normalized-reducers-utils": "^1.1.15",
-    "react": "^17.0.2",
-    "react-redux": "^7.2.6",
-    "redux": "^4.1.2",
+    "normalized-reducers-utils": "^1.1.17",
+    "react": "^18.2.0",
+    "react-redux": "^8.0.5",
+    "redux": "^4.2.1",
     "redux-devtools-extension": "^2.13.9",
-    "redux-saga": "^1.1.3",
-    "reselect": "^4.1.5",
-    "uuid": "^8.3.2"
+    "redux-saga": "^1.2.2",
+    "reselect": "^4.1.7",
+    "uuid": "^9.0.0"
   }
 }

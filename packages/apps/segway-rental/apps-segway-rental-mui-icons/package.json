@@ -8,17 +8,17 @@
     "build"
   ],
   "scripts": {
-    "generate-icons":  "ts-node --project tsconfig.generate-icons.json -r tsconfig-paths/register src/utils/generateIcons.ts",
+    "generate-icons": "ts-node --project tsconfig.generate-icons.json -r tsconfig-paths/register src/utils/generateIcons.ts",
     "build": "pnpm generate-icons && tsc -b tsconfig.build.json"
   },
   "dependencies": {
     "@js-modules/web-react-utils": "workspace:^0.0.0",
-    "@types/react": "^17.0.39",
-    "@mui/material": "^5.4.2",
-    "react": "^17.0.2"
+    "@mui/material": "^5.11.6",
+    "@types/react": "^18.0.27",
+    "react": "^18.2.0"
   },
   "devDependencies": {
-    "ts-node": "^10.5.0",
-    "tsconfig-paths": "^4.0.0"
+    "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.1.2"
   }
 }
