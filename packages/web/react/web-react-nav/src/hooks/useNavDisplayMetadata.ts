@@ -1,16 +1,7 @@
-import { TooltipProps } from '@mui/material/Tooltip';
 import { useCallback, useContext, useMemo } from 'react';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { NavContext, NavDrawerDisplayStatus } from '../contexts/NavContext';
-
-type DrawerTooltipDisableListenersProps = Pick<
-  TooltipProps,
-  | 'disableInteractive'
-  | 'disableFocusListener'
-  | 'disableHoverListener'
-  | 'disableTouchListener'
->;
 
 export type NavDisplayMetadata = {
   isMobile: boolean;
@@ -22,14 +13,13 @@ export type NavDisplayMetadata = {
   hideNavLeftDrawerCallback: () => void;
   collapseNavLeftDrawerCallback: () => void;
   expandNavLeftDrawerCallback: () => void;
+  closeNavLeftDrawerCallback: () => void;
   isNavRightDrawerHidden: boolean;
   isNavRightDrawerCollapsed: boolean;
   isNavRightDrawerExpanded: boolean;
   hideNavRightDrawerCallback: () => void;
   collapseNavRightDrawerCallback: () => void;
   expandNavRightDrawerCallback: () => void;
-  navLeftDrawerTooltipDisableListenersProps: DrawerTooltipDisableListenersProps;
-  navRightDrawerTooltipDisableListenersProps: DrawerTooltipDisableListenersProps;
 };
 
 export function useNavDisplayMetadata(): NavDisplayMetadata {
@@ -81,26 +71,6 @@ export function useNavDisplayMetadata(): NavDisplayMetadata {
     [navRightDrawerDisplayStatus],
   );
 
-  const navLeftDrawerTooltipDisableListenersProps = useMemo(
-    () => ({
-      disableInteractive: true,
-      disableFocusListener: isNavLeftDrawerExpanded,
-      disableHoverListener: isNavLeftDrawerExpanded,
-      disableTouchListener: isNavLeftDrawerExpanded,
-    }),
-    [isNavLeftDrawerExpanded],
-  );
-
-  const navRightDrawerTooltipDisableListenersProps = useMemo(
-    () => ({
-      disableInteractive: true,
-      disableFocusListener: isNavRightDrawerExpanded,
-      disableHoverListener: isNavRightDrawerExpanded,
-      disableTouchListener: isNavRightDrawerExpanded,
-    }),
-    [isNavRightDrawerExpanded],
-  );
-
   const hideNavLeftDrawerCallback = useCallback(() => {
     setNavLeftDrawerDisplayStatus(NavDrawerDisplayStatus.hidden);
   }, [setNavLeftDrawerDisplayStatus]);
@@ -112,6 +82,21 @@ export function useNavDisplayMetadata(): NavDisplayMetadata {
   const expandNavLeftDrawerCallback = useCallback(() => {
     setNavLeftDrawerDisplayStatus(NavDrawerDisplayStatus.expanded);
   }, [setNavLeftDrawerDisplayStatus]);
+
+  const closeNavLeftDrawerCallback = useCallback(() => {
+    if (isNavLeftDrawerExpanded) {
+      if (isMobile) {
+        setNavLeftDrawerDisplayStatus(NavDrawerDisplayStatus.hidden);
+      } else if (isTablet) {
+        setNavLeftDrawerDisplayStatus(NavDrawerDisplayStatus.collapsed);
+      }
+    }
+  }, [
+    isMobile,
+    isNavLeftDrawerExpanded,
+    isTablet,
+    setNavLeftDrawerDisplayStatus,
+  ]);
 
   const hideNavRightDrawerCallback = useCallback(() => {
     setNavRightDrawerDisplayStatus(NavDrawerDisplayStatus.hidden);
@@ -135,13 +120,12 @@ export function useNavDisplayMetadata(): NavDisplayMetadata {
     hideNavLeftDrawerCallback,
     collapseNavLeftDrawerCallback,
     expandNavLeftDrawerCallback,
+    closeNavLeftDrawerCallback,
     isNavRightDrawerHidden,
     isNavRightDrawerCollapsed,
     isNavRightDrawerExpanded,
     hideNavRightDrawerCallback,
     collapseNavRightDrawerCallback,
     expandNavRightDrawerCallback,
-    navLeftDrawerTooltipDisableListenersProps,
-    navRightDrawerTooltipDisableListenersProps,
   };
 }

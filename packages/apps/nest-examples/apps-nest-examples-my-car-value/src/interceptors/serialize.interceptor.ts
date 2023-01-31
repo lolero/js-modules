@@ -8,7 +8,7 @@ import { map, Observable } from 'rxjs';
 import { ClassConstructor, plainToInstance } from 'class-transformer';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export class SerializeInterceptor<EntityT, DtoT extends ClassConstructor<any>>
+class SerializeInterceptor<EntityT, DtoT extends ClassConstructor<any>>
   implements NestInterceptor
 {
   constructor(private dto: DtoT) {}
@@ -18,8 +18,8 @@ export class SerializeInterceptor<EntityT, DtoT extends ClassConstructor<any>>
     next: CallHandler<EntityT>,
   ): Observable<DtoT> | Promise<Observable<DtoT>> {
     return next.handle().pipe(
-      map((data) => {
-        return plainToInstance<DtoT, EntityT>(this.dto, data, {
+      map((entity) => {
+        return plainToInstance<DtoT, EntityT>(this.dto, entity, {
           excludeExtraneousValues: true,
         });
       }),
@@ -29,6 +29,7 @@ export class SerializeInterceptor<EntityT, DtoT extends ClassConstructor<any>>
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function Serialize<EntityT, DtoT extends ClassConstructor<any>>(
+  entity: EntityT,
   dto: DtoT,
 ) {
   return UseInterceptors(new SerializeInterceptor<EntityT, DtoT>(dto));

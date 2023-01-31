@@ -1,3 +1,177 @@
+GET http://localhost:3000/messages/877
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Cookie: session=eyJjb2xvciI6InJlZCJ9; session.sig=pdNOno24VpG8stWBZ7Y5lhf1LYM
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-02-06T132959.200.json
+
+###
+
+GET http://localhost:3000/messages/748
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Cookie: session=eyJjb2xvciI6InJlZCJ9; session.sig=pdNOno24VpG8stWBZ7Y5lhf1LYM
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-02-06T132948.200.json
+
+###
+
+POST http://localhost:3000/messages
+content-type: application/json
+Content-Length: 30
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Cookie: session=eyJjb2xvciI6InJlZCJ9; session.sig=pdNOno24VpG8stWBZ7Y5lhf1LYM
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "content": "Hi there!!!"
+}
+
+###
+
+POST http://localhost:3000/messages
+content-type: application/json
+Content-Length: 28
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Cookie: session=eyJjb2xvciI6InJlZCJ9; session.sig=pdNOno24VpG8stWBZ7Y5lhf1LYM
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "content": "Hi there!"
+}
+
+###
+
+POST http://localhost:3000/messages
+content-type: application/json
+Content-Length: 28
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Cookie: session=eyJjb2xvciI6InJlZCJ9; session.sig=pdNOno24VpG8stWBZ7Y5lhf1LYM
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "content": "Hi there!"
+}
+
+###
+
+POST http://localhost:3000/messages
+content-type: application/json
+Content-Length: 18
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Cookie: session=eyJjb2xvciI6InJlZCJ9; session.sig=pdNOno24VpG8stWBZ7Y5lhf1LYM
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "content": 1
+}
+
+<> 2023-02-06T114733.400.json
+
+###
+
+POST http://localhost:3000/messages
+content-type: application/json
+Content-Length: 28
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Cookie: session=eyJjb2xvciI6InJlZCJ9; session.sig=pdNOno24VpG8stWBZ7Y5lhf1LYM
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "content": "Hi there!"
+}
+
+###
+
+POST http://localhost:3000/messages
+content-type: application/json
+Content-Length: 28
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Cookie: session=eyJjb2xvciI6InJlZCJ9; session.sig=pdNOno24VpG8stWBZ7Y5lhf1LYM
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "content": "Hi there!"
+}
+
+###
+
+GET http://localhost:3000/messages
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Cookie: session=eyJjb2xvciI6InJlZCJ9; session.sig=pdNOno24VpG8stWBZ7Y5lhf1LYM
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-02-05T154534.200.json
+
+###
+
+GET http://localhost:3000/messages
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Cookie: session=eyJjb2xvciI6InJlZCJ9; session.sig=pdNOno24VpG8stWBZ7Y5lhf1LYM
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-02-05T154408.200.json
+
+###
+
+POST http://localhost:3000/messages
+Content-Type: application/json
+Content-Length: 0
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Cookie: session=eyJjb2xvciI6InJlZCJ9; session.sig=pdNOno24VpG8stWBZ7Y5lhf1LYM
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-02-05T153040.400.json
+
+###
+
+POST http://localhost:3000/messages
+Content-Type: application/json
+Content-Length: 0
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Cookie: session=eyJjb2xvciI6InJlZCJ9; session.sig=pdNOno24VpG8stWBZ7Y5lhf1LYM
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-02-05T152951.400.json
+
+###
+
+POST http://localhost:3000/messages
+Content-Type: application/json
+Content-Length: 0
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Cookie: session=eyJjb2xvciI6InJlZCJ9; session.sig=pdNOno24VpG8stWBZ7Y5lhf1LYM
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-02-05T152940.400.json
+
+###
+
+POST http://localhost:3000/messages
+Content-Type: application/json
+Content-Length: 0
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Cookie: session=eyJjb2xvciI6InJlZCJ9; session.sig=pdNOno24VpG8stWBZ7Y5lhf1LYM
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-02-05T152637.400.json
+
+###
+
 GET http://localhost:3000/auth/whoami
 
 <> 2022-03-07T190826.403.json
@@ -256,122 +430,3 @@ GET http://localhost:3000/auth
 
 <> 2022-03-07T095801.200.json
 
-###
-
-GET http://localhost:3000/auth/signup
-Content-Type: application/json
-
-{
-  "email": "c@c.com",
-  "password": "1234"
-}
-
-<> 2022-03-07T095722.404.json
-
-###
-
-GET http://localhost:3000/auth/signup
-Content-Type: application/json
-
-{
-  "email": "c@c.com",
-  "password": "1234"
-}
-
-<> 2022-03-07T095620.404.json
-
-###
-
-GET http://localhost:3000/auth/signup
-Content-Type: application/json
-
-{
-  "email": "c@c.com",
-  "password": "1234"
-}
-
-<> 2022-03-07T095403.404.json
-
-###
-
-GET http://localhost:3000/auth
-
-<> 2022-03-07T095211.200.json
-
-###
-
-GET http://localhost:3000/auth
-
-<> 2022-03-07T094922.200.json
-
-###
-
-GET http://localhost:3000/auth/signup
-Content-Type: application/json
-
-{
-  "email": "c@c.com",
-  "password": "1234"
-}
-
-<> 2022-03-07T094856.404.json
-
-###
-
-GET http://localhost:3000/auth/signup
-Content-Type: application/json
-
-{
-  "email": "c@c.com",
-  "password": "1234"
-}
-
-<> 2022-03-07T094802.404.json
-
-###
-
-GET http://localhost:3000/auth/signup
-Content-Type: application/json
-
-{
-  "email": "c@c.com",
-  "password": "1234"
-}
-
-<> 2022-03-07T094745.404.json
-
-###
-
-GET http://localhost:3000/auth/signup
-Content-Type: application/json
-
-{
-  "email": "c@c.com",
-  "password": "1234"
-}
-
-<> 2022-03-07T094720.404.json
-
-###
-
-GET http://localhost:3000/auth
-
-<> 2022-03-07T094523.200.json
-
-###
-
-GET http://{{baseUri}}/auth
-
-###
-
-GET http://{{baseUri}}/auth
-
-###
-
-GET http://{{baseUri}}/auth/signup
-Content-Type: application/json
-
-{
-  "email": "c@c.com",
-  "password": "1234"
-}

@@ -11,8 +11,6 @@
     "build": "tsc -b tsconfig.build.json"
   },
   "dependencies": {
-    "@emotion/react": "^11.10.5",
-    "@emotion/styled": "^11.10.5",
     "@js-modules/common-react-hooks": "workspace:^0.0.0",
     "@mui/material": "^5.11.6",
     "@types/lodash": "^4.14.191",

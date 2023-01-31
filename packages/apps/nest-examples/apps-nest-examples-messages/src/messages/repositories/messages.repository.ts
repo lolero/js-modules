@@ -25,6 +25,6 @@ export class MessagesRepository {
       content,
     };
 
-    await writeFile('messages.json', JSON.stringify(messages));
+    await writeFile('messages.json', JSON.stringify(messages, null, 2));
   }
 }

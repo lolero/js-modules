@@ -1,9 +1,9 @@
 import React, { useMemo, useState } from 'react';
 import {
-  NavContext,
   NavContextValue,
   NavDrawerDisplayStatus,
-} from '@js-modules/web-react-nav';
+  NavContext,
+} from '../contexts/NavContext';
 
 export type NavContextProviderProps = {
   nonAuthenticatedRedirectPath: string;
@@ -11,6 +11,10 @@ export type NavContextProviderProps = {
   hideNavLeftDrawerString?: string;
   showNavRightDrawerString?: string;
   hideNavRightDrawerString?: string;
+  navLeftDrawerCollapsedWidth?: string;
+  navLeftDrawerExpandedWidth?: string;
+  workspaceTopToolbarPaddingYSpacing?: number;
+  workspacePaddingXSpacing?: number;
   children: React.ReactNode;
 };
 
@@ -20,6 +24,10 @@ export const NavContextProvider: React.FC<NavContextProviderProps> = ({
   hideNavLeftDrawerString = 'Hide Navigation Menu',
   showNavRightDrawerString = 'Show Workspace Toolbar',
   hideNavRightDrawerString = 'Hide Workspace Toolbar',
+  navLeftDrawerCollapsedWidth = '80px',
+  navLeftDrawerExpandedWidth = '240px',
+  workspaceTopToolbarPaddingYSpacing = 0.5,
+  workspacePaddingXSpacing = 2,
   children,
 }) => {
   const [navLeftDrawerDisplayStatus, setNavLeftDrawerDisplayStatus] =
@@ -38,15 +46,23 @@ export const NavContextProvider: React.FC<NavContextProviderProps> = ({
       setNavLeftDrawerDisplayStatus,
       navRightDrawerDisplayStatus,
       setNavRightDrawerDisplayStatus,
+      navLeftDrawerCollapsedWidth,
+      navLeftDrawerExpandedWidth,
+      workspaceTopToolbarPaddingYSpacing,
+      workspacePaddingXSpacing,
     };
   }, [
     hideNavLeftDrawerString,
     hideNavRightDrawerString,
+    navLeftDrawerCollapsedWidth,
     navLeftDrawerDisplayStatus,
+    navLeftDrawerExpandedWidth,
     navRightDrawerDisplayStatus,
     nonAuthenticatedRedirectPath,
     showNavLeftDrawerString,
     showNavRightDrawerString,
+    workspacePaddingXSpacing,
+    workspaceTopToolbarPaddingYSpacing,
   ]);
 
   return (

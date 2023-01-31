@@ -2,6 +2,8 @@ import { createTheme, Theme } from '@mui/material';
 
 const defaultTheme = createTheme();
 
+export type GetThemeComponents = (theme: Theme) => Theme['components'];
+
 function getThemeBreakpointValues(
   themeBreakpointValuesOverrides: Partial<Theme['breakpoints']['values']> = {},
 ): Theme['breakpoints']['values'] {
@@ -11,12 +13,10 @@ function getThemeBreakpointValues(
   };
 }
 
-export type GetThemeComponents = (theme: Theme) => Theme['components'];
-
 export function createMaterialUiTheme(
   paletteOverrides: Partial<Theme['palette']> = {},
-  themeBreakpointValuesOverrides: Partial<Theme['breakpoints']['values']> = {},
   getThemeComponents: GetThemeComponents = () => ({}),
+  themeBreakpointValuesOverrides: Partial<Theme['breakpoints']['values']> = {},
 ): Theme {
   const baseTheme: Theme = createTheme({
     palette: paletteOverrides,

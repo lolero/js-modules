@@ -5,15 +5,15 @@ import { MessagesRepository } from '../repositories/messages.repository';
 export class MessagesService {
   constructor(public messagesRepository: MessagesRepository) {}
 
-  async findMany() {
+  findMany() {
     return this.messagesRepository.findMany();
   }
 
-  async findOne(id: string) {
+  findOne(id: string) {
     return this.messagesRepository.findOne(id);
   }
 
-  async createOne(content: string) {
+  createOne(content: string) {
     return this.messagesRepository.createOne(content);
   }
 }

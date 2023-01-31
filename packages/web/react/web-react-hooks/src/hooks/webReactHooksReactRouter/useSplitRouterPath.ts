@@ -14,10 +14,15 @@ function useSplitRouterPath(): string[] {
     splitRouterPath.splice(-1);
   }
 
-  let lastPath = last(splitRouterPath)?.split('#')[0] ?? '';
-  splitRouterPath[splitRouterPath.length - 1] = lastPath;
-  lastPath = last(splitRouterPath)?.split('?')[0] ?? '';
-  splitRouterPath[splitRouterPath.length - 1] = lastPath;
+  let lastPath = last(splitRouterPath)?.split('#')[0] ?? null;
+  if (lastPath) {
+    splitRouterPath[splitRouterPath.length - 1] = lastPath;
+  }
+
+  lastPath = last(splitRouterPath)?.split('?')[0] ?? null;
+  if (lastPath) {
+    splitRouterPath[splitRouterPath.length - 1] = lastPath;
+  }
 
   return splitRouterPath;
 }

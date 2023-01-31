@@ -13,6 +13,7 @@ export type WorkspaceContextValue = {
   workspaceTopToolbarHeight: number;
   workspaceMarginLeft: string | ((theme: Theme) => string);
   workspaceMarginRight: string | ((theme: Theme) => string);
+  isWorkspaceScroll: boolean;
   workspaceScrollTop: number;
   workspaceScrollDirection?: ScrollDirection;
 };
@@ -24,5 +25,6 @@ export const WorkspaceContext = React.createContext<WorkspaceContextValue>({
   workspaceTopToolbarHeight: 0,
   workspaceMarginLeft: '0',
   workspaceMarginRight: '0',
+  isWorkspaceScroll: false,
   workspaceScrollTop: 0,
 });

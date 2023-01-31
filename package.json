@@ -18,7 +18,6 @@
     "lint:fix": "  eslint --fix './**/*.{js,jsx,ts,tsx}' && prettier --write          './**/*.{js,jsx,ts,tsx,css,scss,less,json,md,yml,yaml}' && prettier --config ./prettier-config-solidity.js --write          './**/*.sol' && solhint --fix './**/*.sol'",
     "lerna:build": "lerna run build",
     "dev:apps-dapp-web": "pnpm --filter @js-modules/apps-dapp-web dev",
-    "dev:apps-segway-rental-web": "pnpm --filter @js-modules/apps-segway-rental-web dev",
     "prepublish": "pnpm lint:fix && pnpm test:coverage && pnpm lerna:build"
   },
   "dependencies": {

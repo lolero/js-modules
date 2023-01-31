@@ -6,10 +6,7 @@ import Divider from '@mui/material/Divider';
 import Tooltip from '@mui/material/Tooltip';
 import { useTheme, Theme } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
-import {
-  useCloseNavLeftDrawerCallback,
-  useNavDisplayMetadata,
-} from '@js-modules/web-react-nav';
+import { useNavDisplayMetadata } from '@js-modules/web-react-nav';
 import { MuiFaIcon } from '@js-modules/web-react-components';
 import { faHouse } from '@fortawesome/free-solid-svg-icons/faHouse';
 import { faMapLocationDot } from '@fortawesome/free-solid-svg-icons/faMapLocationDot';
@@ -37,8 +34,11 @@ const dividerSx = {
 } as const;
 
 const MainNavSideToolbarBox: React.FunctionComponent = () => {
-  const { isNavLeftDrawerExpanded, navLeftDrawerTooltipDisableListenersProps } =
-    useNavDisplayMetadata();
+  const {
+    isNavLeftDrawerExpanded,
+    closeNavLeftDrawerCallback,
+    navLeftDrawerTooltipDisableListenersProps,
+  } = useNavDisplayMetadata();
 
   const module = useModule();
 
@@ -68,8 +68,6 @@ const MainNavSideToolbarBox: React.FunctionComponent = () => {
     } as const;
   }, [isNavLeftDrawerExpanded, theme]);
 
-  const closeNavSideDrawerCallback = useCloseNavLeftDrawerCallback();
-
   return (
     <Box>
       <Tabs
@@ -85,7 +83,7 @@ const MainNavSideToolbarBox: React.FunctionComponent = () => {
           label={isNavLeftDrawerExpanded ? Modules.home : null}
           component={Link}
           to={`/${Modules.home}`}
-          onClick={closeNavSideDrawerCallback}
+          onClick={closeNavLeftDrawerCallback}
           icon={
             <Tooltip
               // eslint-disable-next-line react/jsx-props-no-spreading
@@ -103,7 +101,7 @@ const MainNavSideToolbarBox: React.FunctionComponent = () => {
           label={isNavLeftDrawerExpanded ? Modules.locations : null}
           component={Link}
           to={`/${Modules.locations}`}
-          onClick={closeNavSideDrawerCallback}
+          onClick={closeNavLeftDrawerCallback}
           icon={
             <Tooltip
               // eslint-disable-next-line react/jsx-props-no-spreading
@@ -123,7 +121,7 @@ const MainNavSideToolbarBox: React.FunctionComponent = () => {
           label={isNavLeftDrawerExpanded ? Modules.users : null}
           component={Link}
           to={`/${Modules.users}`}
-          onClick={closeNavSideDrawerCallback}
+          onClick={closeNavLeftDrawerCallback}
           icon={
             <Tooltip
               // eslint-disable-next-line react/jsx-props-no-spreading
@@ -141,7 +139,7 @@ const MainNavSideToolbarBox: React.FunctionComponent = () => {
           label={isNavLeftDrawerExpanded ? Modules.segways : null}
           component={Link}
           to={`/${Modules.segways}`}
-          onClick={closeNavSideDrawerCallback}
+          onClick={closeNavLeftDrawerCallback}
           icon={
             <Tooltip
               // eslint-disable-next-line react/jsx-props-no-spreading
@@ -161,7 +159,7 @@ const MainNavSideToolbarBox: React.FunctionComponent = () => {
           label={isNavLeftDrawerExpanded ? Modules.reservations : null}
           component={Link}
           to={`/${Modules.reservations}`}
-          onClick={closeNavSideDrawerCallback}
+          onClick={closeNavLeftDrawerCallback}
           icon={
             <Tooltip
               // eslint-disable-next-line react/jsx-props-no-spreading
@@ -192,7 +190,7 @@ const MainNavSideToolbarBox: React.FunctionComponent = () => {
           label={isNavLeftDrawerExpanded ? Modules.settings : null}
           component={Link}
           to={`/${Modules.settings}`}
-          onClick={closeNavSideDrawerCallback}
+          onClick={closeNavLeftDrawerCallback}
           icon={
             <Tooltip
               // eslint-disable-next-line react/jsx-props-no-spreading
@@ -212,7 +210,7 @@ const MainNavSideToolbarBox: React.FunctionComponent = () => {
           label={isNavLeftDrawerExpanded ? Modules.help : null}
           component={Link}
           to={`/${Modules.help}`}
-          onClick={closeNavSideDrawerCallback}
+          onClick={closeNavLeftDrawerCallback}
           icon={
             <Tooltip
               // eslint-disable-next-line react/jsx-props-no-spreading

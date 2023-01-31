@@ -9,10 +9,6 @@ export enum NavDrawerDisplayStatus {
 
 export type NavContextValue = {
   nonAuthenticatedRedirectPath: string;
-  showNavLeftDrawerString: string;
-  hideNavLeftDrawerString: string;
-  showNavRightDrawerString: string;
-  hideNavRightDrawerString: string;
   navLeftDrawerDisplayStatus: NavDrawerDisplayStatus;
   setNavLeftDrawerDisplayStatus: (
     navLeftDrawerDisplayStatus: NavDrawerDisplayStatus,
@@ -21,16 +17,28 @@ export type NavContextValue = {
   setNavRightDrawerDisplayStatus: (
     navRightDrawerDisplayStatus: NavDrawerDisplayStatus,
   ) => void;
+  showNavLeftDrawerString: string;
+  hideNavLeftDrawerString: string;
+  showNavRightDrawerString: string;
+  hideNavRightDrawerString: string;
+  navLeftDrawerCollapsedWidth: string;
+  navLeftDrawerExpandedWidth: string;
+  workspaceTopToolbarPaddingYSpacing: number;
+  workspacePaddingXSpacing: number;
 };
 
 export const NavContext = React.createContext<NavContextValue>({
   nonAuthenticatedRedirectPath: '/',
-  showNavLeftDrawerString: '',
-  hideNavLeftDrawerString: '',
-  showNavRightDrawerString: '',
-  hideNavRightDrawerString: '',
   navLeftDrawerDisplayStatus: NavDrawerDisplayStatus.expanded,
   setNavLeftDrawerDisplayStatus: noop,
   navRightDrawerDisplayStatus: NavDrawerDisplayStatus.collapsed,
   setNavRightDrawerDisplayStatus: noop,
+  showNavLeftDrawerString: '',
+  hideNavLeftDrawerString: '',
+  showNavRightDrawerString: '',
+  hideNavRightDrawerString: '',
+  navLeftDrawerCollapsedWidth: '0',
+  navLeftDrawerExpandedWidth: '0',
+  workspaceTopToolbarPaddingYSpacing: 0,
+  workspacePaddingXSpacing: 0,
 });

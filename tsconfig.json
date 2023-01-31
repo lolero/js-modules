@@ -3,8 +3,26 @@
   "compilerOptions": {
     "baseUrl": "./packages",
     "paths": {
-      "@js-modules/apps-dapp-store-redux": [
-        "apps/dapp/apps-dapp-store-redux/src"
+      "@js-modules/apps-dapp-common-constants": [
+        "apps/dapp/apps-dapp-common-constants/src"
+      ],
+      "@js-modules/apps-dapp-common-stores-redux": [
+        "apps/dapp/apps-dapp-common-stores-redux/src"
+      ],
+      "@js-modules/apps-dapp-web-analytics": [
+        "apps/dapp/apps-dapp-web-analytics/src"
+      ],
+      "@js-modules/apps-dapp-web-components": [
+        "apps/dapp/apps-dapp-web-components/src"
+      ],
+      "@js-modules/apps-dapp-web-portfolio": [
+        "apps/dapp/apps-dapp-web-portfolio/src"
+      ],
+      "@js-modules/apps-dapp-web-tokens": [
+        "apps/dapp/apps-dapp-web-tokens/src"
+      ],
+      "@js-modules/apps-dapp-web-transactions": [
+        "apps/dapp/apps-dapp-web-transactions/src"
       ],
       "@js-modules/apps-segway-rental-mui-icons": [
         "apps/segway-rental/apps-segway-rental-mui-icons/src"

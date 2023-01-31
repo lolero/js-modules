@@ -27,7 +27,8 @@ export type ConfirmDialogProps = {
  * Generic confirmation dialog for operations on entities to be used in an
  * application that implements a normalized reducers architecture.
  *
- * @param {string} props.entityTypeName - The entity type name, e.g. user, bike,
+ * @param {string} props.entityTypeName - The entity type name, e.g. user,
+ * comment, task, etc.
  *        etc.
  * @param {string} props.entityName - The name of the entity record, e.g. John,
  *        Model BMX 1000, etc.

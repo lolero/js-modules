@@ -1,10 +1,10 @@
 {
   "extends": "../../../../tsconfig.build.json",
   "compilerOptions": {
+    "strictNullChecks": false,
     "rootDir": "src",
     "outDir": "build",
-    "module": "commonjs",
-    "strictNullChecks": false
+    "module": "commonjs"
   },
   "include": ["src"]
 }

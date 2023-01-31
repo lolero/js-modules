@@ -21,7 +21,7 @@ import { CurrentUser } from './users.decorators';
 import { AuthGuard } from '../guards/auth.guard';
 
 @Controller('auth')
-@Serialize<typeof UsersEntity, typeof UsersUserDto>(UsersUserDto)
+@Serialize(UsersEntity, UsersUserDto)
 export class UsersController {
   constructor(
     private usersService: UsersService,
@@ -46,12 +46,6 @@ export class UsersController {
     return user;
   }
 
-  @Get('/signout')
-  async usersSignout(@Session() session: any) {
-    delete session.userId;
-    // session.userId = null;
-  }
-
   @Post('/signin')
   async usersSignin(@Body() body: UsersCreateOneDto, @Session() session: any) {
     const user = await this.authService.signin(body.email, body.password);
@@ -59,6 +53,12 @@ export class UsersController {
     session.userId = user.id;
 
     return user;
+  }
+
+  @Get('/signout')
+  async usersSignout(@Session() session: any) {
+    delete session.userId;
+    // session.userId = null;
   }
 
   @Get()
@@ -81,6 +81,6 @@ export class UsersController {
 
   @Delete('/:id')
   usersRemoveOne(@Param('id') id: string) {
-    return this.usersService.remove(Number(id));
+    return this.usersService.removeOne(Number(id));
   }
 }

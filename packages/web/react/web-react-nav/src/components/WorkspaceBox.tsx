@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react';
-import { BoxProps } from '@mui/material/Box';
-import { useTheme } from '@mui/material/styles';
+import Box, { BoxProps } from '@mui/material/Box';
 import { useChildNodeSize } from '@js-modules/web-react-hooks';
 import { usePrevious } from '@js-modules/common-react-hooks';
 import { useNavigate } from 'react-router-dom';
@@ -9,13 +8,13 @@ import {
   ScrollDirection,
   WorkspaceContextValue,
 } from '../contexts/WorkspaceContext';
-import WorkspaceTopToolbarBox from './WorkspaceTopToolbarBox';
-import { NAV_DRAWER_WIDTH_COLLAPSED_SPACING } from '../constants/navConstants';
+import { WorkspaceTopToolbarBox } from './WorkspaceTopToolbarBox';
 import { NavTopAppbar } from './NavTopAppbar';
 import { NavLeftDrawer } from './NavLeftDrawer';
 import { NavDrawerDisplayStatus, NavContext } from '../contexts/NavContext';
 import { useNavDisplayMetadata } from '../hooks/useNavDisplayMetadata';
 import { WorkspaceContentBox } from './WorkspaceContentBox';
+import { NavRightDrawer } from './NavRightDrawer';
 
 export type WorkspaceBoxProps = {
   shortLogo: React.ReactNode;
@@ -33,7 +32,7 @@ export type WorkspaceBoxProps = {
   contentSx?: BoxProps['sx'];
 };
 
-export const WorkspaceBox: React.FunctionComponent<WorkspaceBoxProps> = ({
+export const WorkspaceBox: React.FC<WorkspaceBoxProps> = ({
   shortLogo,
   longLogo,
   homePath,
@@ -50,19 +49,21 @@ export const WorkspaceBox: React.FunctionComponent<WorkspaceBoxProps> = ({
 }) => {
   const navigate = useNavigate();
 
-  const { nonAuthenticatedRedirectPath, setNavLeftDrawerDisplayStatus } =
-    useContext(NavContext);
+  const {
+    nonAuthenticatedRedirectPath,
+    setNavLeftDrawerDisplayStatus,
+    navLeftDrawerCollapsedWidth,
+  } = useContext(NavContext);
+  const [isWorkspaceScroll, setIsWorkspaceScroll] = useState<boolean>(false);
   const [workspaceScrollTop, setWorkspaceScrollTop] = useState<number>(0);
   const [workspaceScrollDirection, setWorkspaceScrollDirection] =
     useState<ScrollDirection>();
 
-  const theme = useTheme();
-
+  const { nodeRef: navTopToolbarRef, nodeHeight: navTopToolbarHeight } =
+    useChildNodeSize<HTMLDivElement>();
   const { nodeRef: navLeftDrawerRef, nodeWidth: navLeftDrawerWidth } =
     useChildNodeSize<HTMLDivElement>();
   const { nodeRef: navRightDrawerRef, nodeWidth: navRightDrawerWidth } =
-    useChildNodeSize<HTMLDivElement>();
-  const { nodeRef: navTopToolbarRef, nodeHeight: navTopToolbarHeight } =
     useChildNodeSize<HTMLDivElement>();
   const {
     nodeRef: workspaceTopToolbarRef,
@@ -86,11 +87,11 @@ export const WorkspaceBox: React.FunctionComponent<WorkspaceBoxProps> = ({
     }
 
     if (isTablet) {
-      return theme.spacing(NAV_DRAWER_WIDTH_COLLAPSED_SPACING);
+      return navLeftDrawerCollapsedWidth;
     }
 
     return `${navLeftDrawerWidth}px`;
-  }, [isMobile, isTablet, navLeftDrawerWidth, theme]);
+  }, [isMobile, isTablet, navLeftDrawerCollapsedWidth, navLeftDrawerWidth]);
 
   const workspaceMarginRight = useMemo(() => {
     if (isMobile) {
@@ -98,11 +99,11 @@ export const WorkspaceBox: React.FunctionComponent<WorkspaceBoxProps> = ({
     }
 
     if (isTablet) {
-      return theme.spacing(NAV_DRAWER_WIDTH_COLLAPSED_SPACING);
+      return navLeftDrawerCollapsedWidth;
     }
 
     return `${navLeftDrawerWidth}px`;
-  }, [isMobile, isTablet, navLeftDrawerWidth, theme]);
+  }, [isMobile, isTablet, navLeftDrawerCollapsedWidth, navLeftDrawerWidth]);
 
   const workspaceContextValue: WorkspaceContextValue = useMemo(() => {
     return {
@@ -112,6 +113,7 @@ export const WorkspaceBox: React.FunctionComponent<WorkspaceBoxProps> = ({
       workspaceTopToolbarHeight,
       workspaceMarginLeft,
       workspaceMarginRight,
+      isWorkspaceScroll,
       workspaceScrollTop,
       workspaceScrollDirection,
     };
@@ -122,6 +124,7 @@ export const WorkspaceBox: React.FunctionComponent<WorkspaceBoxProps> = ({
     workspaceTopToolbarHeight,
     workspaceMarginLeft,
     workspaceMarginRight,
+    isWorkspaceScroll,
     workspaceScrollTop,
     workspaceScrollDirection,
   ]);
@@ -141,31 +144,50 @@ export const WorkspaceBox: React.FunctionComponent<WorkspaceBoxProps> = ({
 
   return (
     <WorkspaceContext.Provider value={workspaceContextValue}>
-      <NavTopAppbar
-        ref={navTopToolbarRef}
-        shortLogo={shortLogo}
-        longLogo={longLogo}
-        isNavLeftDrawerWithContent={
-          !!navLeftDrawerContent || !!navLeftDrawerFooter
-        }
-        homePath={homePath}
+      <Box
+        sx={{
+          position: 'fixed',
+          top: 0,
+          bottom: 0,
+          left: 0,
+          right: 0,
+        }}
       >
-        {navTopToolbar}
-      </NavTopAppbar>
-      {isNavLeftDrawerWithContent && <NavLeftDrawer ref={navLeftDrawerRef} />}
-      {isNavRightDrawerWithContent && (
-        <NavRightDrawer ref={navRightDrawerRef} />
-      )}
-      <WorkspaceTopToolbarBox ref={workspaceTopToolbarRef}>
-        {workspaceTopToolbar}
-      </WorkspaceTopToolbarBox>
-      <WorkspaceContentBox
-        setWorkspaceScrollTop={setWorkspaceScrollTop}
-        setWorkspaceScrollDirection={setWorkspaceScrollDirection}
-        contentSx={contentSx}
-      >
-        {workspaceContent}
-      </WorkspaceContentBox>
+        <NavTopAppbar
+          ref={navTopToolbarRef}
+          shortLogo={shortLogo}
+          longLogo={longLogo}
+          isNavLeftDrawerWithContent={isNavLeftDrawerWithContent}
+          homePath={homePath}
+        >
+          {navTopToolbar}
+        </NavTopAppbar>
+        {isNavLeftDrawerWithContent && (
+          <NavLeftDrawer
+            ref={navLeftDrawerRef}
+            navLeftDrawerContent={navLeftDrawerContent}
+            navLeftDrawerFooter={navLeftDrawerFooter}
+          />
+        )}
+        {isNavRightDrawerWithContent && (
+          <NavRightDrawer
+            ref={navRightDrawerRef}
+            navRightDrawerContent={navRightDrawerContent}
+            navRightDrawerFooter={navRightDrawerFooter}
+          />
+        )}
+        <WorkspaceTopToolbarBox ref={workspaceTopToolbarRef}>
+          {workspaceTopToolbar}
+        </WorkspaceTopToolbarBox>
+        <WorkspaceContentBox
+          setIsWorkspaceScroll={setIsWorkspaceScroll}
+          setWorkspaceScrollTop={setWorkspaceScrollTop}
+          setWorkspaceScrollDirection={setWorkspaceScrollDirection}
+          contentSx={contentSx}
+        >
+          {workspaceContent}
+        </WorkspaceContentBox>
+      </Box>
     </WorkspaceContext.Provider>
   );
 };

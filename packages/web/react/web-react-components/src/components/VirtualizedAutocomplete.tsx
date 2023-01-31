@@ -9,6 +9,7 @@ import Popper from '@mui/material/Popper';
 import { useTheme, styled } from '@mui/material/styles';
 import { VariableSizeList, ListChildComponentProps } from 'react-window';
 import Typography from '@mui/material/Typography';
+import { useCallback, useEffect } from 'react';
 
 function renderRow(props: ListChildComponentProps) {
   const { data, index, style } = props;
@@ -39,19 +40,46 @@ function renderRow(props: ListChildComponentProps) {
 
 const OuterElementContext = React.createContext({});
 
-const OuterElementType = React.forwardRef<HTMLDivElement>((props, ref) => {
-  const outerProps = React.useContext(OuterElementContext);
-  // eslint-disable-next-line react/jsx-props-no-spreading
-  return <div ref={ref} {...props} {...outerProps} />;
-});
+type OuterElementProps = {
+  onScroll?: (e: React.UIEvent<HTMLDivElement, UIEvent>) => void;
+};
+
+const OuterElement = React.forwardRef<HTMLDivElement, OuterElementProps>(
+  (props, ref) => {
+    const outerProps = React.useContext(
+      OuterElementContext,
+    ) as OuterElementProps;
+
+    const onScrollCallback = useCallback(
+      (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
+        outerProps.onScroll?.(e);
+        props.onScroll?.(e);
+      },
+      [outerProps, props],
+    );
+
+    return (
+      <div
+        ref={ref}
+        // eslint-disable-next-line react/jsx-props-no-spreading
+        {...props}
+        // eslint-disable-next-line react/jsx-props-no-spreading
+        {...outerProps}
+        onScroll={onScrollCallback}
+      />
+    );
+  },
+);
 
 function useResetCache(data: unknown) {
   const ref = React.useRef<VariableSizeList>(null);
-  React.useEffect(() => {
+
+  useEffect(() => {
     if (ref.current != null) {
       ref.current.resetAfterIndex(0, true);
     }
   }, [data]);
+
   return ref;
 }
 
@@ -91,6 +119,7 @@ const ListboxComponent = React.forwardRef<
     if (itemCount > 8) {
       return 8 * itemSize;
     }
+
     return itemData.map(getChildSize).reduce((a, b) => a + b, 0);
   };
 
@@ -104,7 +133,7 @@ const ListboxComponent = React.forwardRef<
           height={getHeight() + 2 * parseInt(theme.spacing(1), 10)}
           width="100%"
           ref={gridRef}
-          outerElementType={OuterElementType}
+          outerElementType={OuterElement}
           innerElementType="ul"
           itemSize={(index) => getChildSize(itemData[index])}
           overscanCount={overscanCount}

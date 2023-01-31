@@ -6,48 +6,49 @@ import { UsersEntity } from './users.entity';
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectRepository(UsersEntity) private repo: Repository<UsersEntity>,
+    @InjectRepository(UsersEntity)
+    private usersRepository: Repository<UsersEntity>,
   ) {}
 
   createOne(email: string, password: string) {
-    const user = this.repo.create({ email, password });
+    const userEntity = this.usersRepository.create({ email, password });
 
-    return this.repo.save(user);
+    return this.usersRepository.save(userEntity);
   }
 
   async findOne(id: number) {
-    const user = id ? await this.repo.findOne({ id }) : null;
+    const userEntity = id ? await this.usersRepository.findOneBy({ id }) : null;
 
-    if (!user) {
+    if (!userEntity) {
       throw new NotFoundException('user not found');
     }
 
-    return user;
+    return userEntity;
   }
 
   findMany(email: string) {
-    return this.repo.find(email ? { email } : undefined);
+    return this.usersRepository.find({ where: { email } });
   }
 
   async updateOnePartial(id: number, partialUserEntity: Partial<UsersEntity>) {
-    const user = await this.repo.findOneOrFail(id);
+    const userEntity = await this.usersRepository.findOneByOrFail({ id });
 
-    if (!user) {
+    if (!userEntity) {
       throw new NotFoundException('user not found');
     }
 
-    Object.assign(user, partialUserEntity);
+    Object.assign(userEntity, partialUserEntity);
 
-    return this.repo.save(user);
+    return this.usersRepository.save(userEntity);
   }
 
-  async remove(id: number) {
-    const user = await this.repo.findOneOrFail(id);
+  async removeOne(id: number) {
+    const userEntity = await this.usersRepository.findOneByOrFail({ id });
 
-    if (!user) {
+    if (!userEntity) {
       throw new NotFoundException('user not found');
     }
 
-    return this.repo.remove(user);
+    return this.usersRepository.remove(userEntity);
   }
 }

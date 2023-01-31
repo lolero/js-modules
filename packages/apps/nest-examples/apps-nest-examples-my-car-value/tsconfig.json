@@ -1,7 +1,6 @@
 {
   "extends": "../../../../tsconfig.json",
   "compilerOptions": {
-    "module": "commonjs",
     "strictNullChecks": false
   },
   "include": ["src"]

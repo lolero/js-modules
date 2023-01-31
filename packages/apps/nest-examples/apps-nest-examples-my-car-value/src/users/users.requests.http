@@ -1,8 +1,7 @@
 ###
-# @name AuthSignup
+# @name Auth Signup
 POST {{baseUri}}/auth/signup
 Content-Type: application/json
-
 
 {
   "email": "c@c.com",
@@ -10,7 +9,7 @@ Content-Type: application/json
 }
 
 ###
-# @name AuthSignin
+# @name Auth Signin
 POST {{baseUri}}/auth/signin
 Content-Type: application/json
 
@@ -20,23 +19,23 @@ Content-Type: application/json
 }
 
 ###
-# @name AuthSignout
+# @name Auth Signout
 GET {{baseUri}}/auth/signout
 
 ###
-# @name AuthWhoAmI
+# @name Auth Who Am I
 GET {{baseUri}}/auth/whoami
 
 ###
-# @name UsersGetMany
-GET {{baseUri}}/auth
+# @name Users Get Many
+GET {{baseUri}}/auth?id=1
 
 ###
-# @name UsersGetOne
+# @name Users Get One
 GET {{baseUri}}/auth/1
 
 ###
-# @name UsersUpdateOne
+# @name Users Update One Partial
 PATCH {{baseUri}}/auth/1
 Content-Type: application/json
 
