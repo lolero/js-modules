@@ -1,6 +1,6 @@
 import { Expose } from 'class-transformer';
 
-export class UsersUserDto {
+export class AuthDtoUsersPublic {
   @Expose()
   id: number;
 

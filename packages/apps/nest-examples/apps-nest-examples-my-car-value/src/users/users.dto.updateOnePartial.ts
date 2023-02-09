@@ -1,6 +1,6 @@
 import { IsEmail, IsOptional, IsString } from 'class-validator';
 
-export class UsersUpdateOnePartialDto {
+export class UsersDtoUpdateOnePartial {
   @IsEmail()
   @IsOptional()
   email: string;

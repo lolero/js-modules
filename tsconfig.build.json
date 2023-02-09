@@ -15,5 +15,5 @@
     "sourceMap": true,
     "skipLibCheck": true
   },
-  "exclude": ["**/*/node_modules", "**/*/build", "**/*/__tests__"]
+  "exclude": ["**/*/node_modules", "**/*/build", "**/*/__tests__", "**/*/__spec__"]
 }

@@ -1,19 +1,24 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { APP_INTERCEPTOR } from '@nestjs/core';
+import {
+  AuthInterceptorCurrentAuthenticatedUser,
+  getAuthUsersServiceProvider,
+} from '../api-nest-utils/src';
 import { UsersController } from './users.controller';
-import { UsersService } from './users.service';
 import { UsersEntity } from './users.entity';
-import { AuthService } from './auth.service';
-import { CurrentUserInterceptor } from './users.interceptors';
+import { UsersService } from './users.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([UsersEntity])],
   controllers: [UsersController],
   providers: [
     UsersService,
-    AuthService,
-    { provide: APP_INTERCEPTOR, useClass: CurrentUserInterceptor },
+    getAuthUsersServiceProvider(UsersService),
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: AuthInterceptorCurrentAuthenticatedUser,
+    },
   ],
   exports: [UsersService],
 })

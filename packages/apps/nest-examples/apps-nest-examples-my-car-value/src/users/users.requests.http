@@ -1,4 +1,8 @@
 ###
+# @name Users Hello World
+GET {{baseUri}}/users/hello-world
+
+###
 # @name Auth Signup
 POST {{baseUri}}/auth/signup
 Content-Type: application/json
@@ -28,7 +32,7 @@ GET {{baseUri}}/auth/whoami
 
 ###
 # @name Users Get Many
-GET {{baseUri}}/auth?id=1
+GET {{baseUri}}/users?email=c@c.com
 
 ###
 # @name Users Get One

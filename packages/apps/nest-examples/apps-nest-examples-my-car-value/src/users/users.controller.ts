@@ -5,60 +5,23 @@ import {
   Get,
   Param,
   Patch,
-  Post,
   Query,
-  Session,
-  UseGuards,
 } from '@nestjs/common';
-import { UsersCreateOneDto } from './dtos/users.createOne.dto';
+import { Serialize } from '../api-nest-utils/src';
 import { UsersService } from './users.service';
-import { UsersUpdateOnePartialDto } from './dtos/users.updateOnePartial.dto';
-import { Serialize } from '../interceptors/serialize.interceptor';
-import { UsersUserDto } from './dtos/users.user.dto';
 import { UsersEntity } from './users.entity';
-import { AuthService } from './auth.service';
-import { CurrentUser } from './users.decorators';
-import { AuthGuard } from '../guards/auth.guard';
+import { UsersDtoPublic } from './users.dto.public';
+import { UsersDtoUpdateOnePartial } from './users.dto.updateOnePartial';
 
-@Controller('auth')
-@Serialize(UsersEntity, UsersUserDto)
+@Controller('users')
+@Serialize<UsersEntity>(UsersDtoPublic)
 export class UsersController {
-  constructor(
-    private usersService: UsersService,
-    private authService: AuthService,
-  ) {}
+  constructor(private usersService: UsersService) {}
 
-  @Get('/whoami')
-  @UseGuards(AuthGuard)
-  whoAmI(@CurrentUser() user: UsersEntity | null) {
-    return user;
-  }
-
-  @Post('/signup')
-  async usersCreateOne(
-    @Body() body: UsersCreateOneDto,
-    @Session() session: any,
-  ) {
-    const user = await this.authService.signup(body.email, body.password);
-
-    session.userId = user.id;
-
-    return user;
-  }
-
-  @Post('/signin')
-  async usersSignin(@Body() body: UsersCreateOneDto, @Session() session: any) {
-    const user = await this.authService.signin(body.email, body.password);
-
-    session.userId = user.id;
-
-    return user;
-  }
-
-  @Get('/signout')
-  async usersSignout(@Session() session: any) {
-    delete session.userId;
-    // session.userId = null;
+  @Get('/hello-world')
+  usersHelloWorld() {
+    console.log('this is a hello world message');
+    return 'hello world';
   }
 
   @Get()
@@ -67,20 +30,20 @@ export class UsersController {
   }
 
   @Get('/:id')
-  usersFindOne(@Param('id') id: string) {
+  usersFindOne(@Param('id') id: string): Promise<UsersEntity> {
     return this.usersService.findOne(Number(id));
   }
 
   @Patch('/:id')
   usersUpdateOnePartial(
     @Param('id') id: string,
-    @Body() partialUserEntity: UsersUpdateOnePartialDto,
-  ) {
+    @Body() partialUserEntity: UsersDtoUpdateOnePartial,
+  ): Promise<UsersEntity> {
     return this.usersService.updateOnePartial(Number(id), partialUserEntity);
   }
 
   @Delete('/:id')
-  usersRemoveOne(@Param('id') id: string) {
+  usersRemoveOne(@Param('id') id: string): Promise<UsersEntity> {
     return this.usersService.removeOne(Number(id));
   }
 }

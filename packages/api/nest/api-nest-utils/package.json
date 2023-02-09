@@ -1,13 +1,14 @@
 {
-  "private": true,
-  "name": "@js-modules/apps-iterlog-api",
-  "description": "Apps Iterlog api",
+  "name": "@js-modules/api-nest-utils",
+  "description": "Api Nest Utils",
   "version": "0.0.0",
   "license": "MIT",
+  "main": "build/index",
+  "files": [
+    "build"
+  ],
   "scripts": {
-    "build": "nest build -p tsconfig.build.json",
-    "dev": "nest start --watch",
-    "prod": "node build/main"
+    "build": "tsc -b tsconfig.build.json"
   },
   "dependencies": {
     "@nestjs/common": "^9.2.1",
