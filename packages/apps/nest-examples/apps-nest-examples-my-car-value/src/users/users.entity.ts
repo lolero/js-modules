@@ -6,14 +6,29 @@ import {
   Entity,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { AuthUsersEntity } from '../api-nest-utils/src';
 
-@Entity()
-export class UsersEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
+@Entity('users')
+export class UsersEntity implements AuthUsersEntity {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-  @Column()
+  @Column({
+    unique: true,
+    nullable: true,
+  })
+  username: string;
+
+  @Column({
+    unique: true,
+  })
   email: string;
+
+  @Column({
+    unique: true,
+    nullable: true,
+  })
+  phoneNumber: string;
 
   @Column()
   password: string;

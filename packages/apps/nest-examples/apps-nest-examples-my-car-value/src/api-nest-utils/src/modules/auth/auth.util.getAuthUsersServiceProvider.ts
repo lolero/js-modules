@@ -1,14 +1,14 @@
 import { FactoryProvider } from '@nestjs/common/interfaces/modules/provider.interface';
 import { ClassConstructor } from 'class-transformer';
-import { UsersServiceType } from './auth.types';
+import { AuthUsersService } from './auth.types';
 import { USERS_SERVICE } from './auth.constants';
 
 export function getAuthUsersServiceProvider(
   usersService: ClassConstructor<any>,
-): FactoryProvider<UsersServiceType> {
-  const usersServiceProvider: FactoryProvider<UsersServiceType> = {
+): FactoryProvider<AuthUsersService> {
+  const usersServiceProvider: FactoryProvider<AuthUsersService> = {
     provide: USERS_SERVICE,
-    useFactory: (usersServiceInstance: UsersServiceType) =>
+    useFactory: (usersServiceInstance: AuthUsersService) =>
       usersServiceInstance,
     inject: [usersService],
   };

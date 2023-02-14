@@ -8,8 +8,10 @@ POST {{baseUri}}/auth/signup
 Content-Type: application/json
 
 {
-  "email": "c@c.com",
-  "password": "1234"
+  "username": "test_username",
+  "email": "test@email.com",
+  "phoneNumber": "+18001234567",
+  "password": "Test_Password1!"
 }
 
 ###
@@ -18,17 +20,18 @@ POST {{baseUri}}/auth/signin
 Content-Type: application/json
 
 {
-  "email": "c@c.com",
-  "password": "1234"
+  "uniqueKeyName": "email",
+  "uniqueKeyValue": "test@email.com",
+  "password": "Test_Password1!"
 }
-
-###
-# @name Auth Signout
-GET {{baseUri}}/auth/signout
 
 ###
 # @name Auth Who Am I
 GET {{baseUri}}/auth/whoami
+
+###
+# @name Auth Signout
+GET {{baseUri}}/auth/signout
 
 ###
 # @name Users Get Many
@@ -36,7 +39,7 @@ GET {{baseUri}}/users?email=c@c.com
 
 ###
 # @name Users Get One
-GET {{baseUri}}/auth/1
+GET {{baseUri}}/users/1f7b4ff4-68a0-4dfb-bbc1-8535167fbdd8
 
 ###
 # @name Users Update One Partial

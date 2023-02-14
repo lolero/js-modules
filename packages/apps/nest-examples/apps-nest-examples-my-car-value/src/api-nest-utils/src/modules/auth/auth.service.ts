@@ -7,9 +7,14 @@ import {
 import { promisify } from 'util';
 import { BinaryLike, randomBytes, scrypt as _scrypt } from 'crypto';
 import { USERS_SERVICE } from './auth.constants';
-import type { UsersEntityType, UsersServiceType } from './auth.types';
+import type { AuthUsersEntity, AuthUsersService } from './auth.types';
+import {
+  UsersUniqueKeyName,
+  UsersUniqueKeyValue,
+  UserWithoutId,
+} from './auth.types';
 
-const scrypt = promisify(_scrypt) as (
+export const scrypt = promisify(_scrypt) as (
   password: BinaryLike,
   salt: BinaryLike,
   keylen: number,
@@ -18,28 +23,31 @@ const scrypt = promisify(_scrypt) as (
 @Injectable()
 export class AuthService {
   constructor(
-    @Inject(USERS_SERVICE) private readonly usersService: UsersServiceType,
+    @Inject(USERS_SERVICE) private readonly usersService: AuthUsersService,
   ) {}
 
-  async signup(email: string, password: string): Promise<UsersEntityType> {
-    const users = await this.usersService.findMany(email);
-
-    if (users.length) {
-      throw new BadRequestException('email already in use');
-    }
-
+  async signup(userWithoutId: UserWithoutId): Promise<AuthUsersEntity> {
     const salt = randomBytes(8).toString('hex');
-    const hash = await scrypt(password, salt, 32);
+    const hash = await scrypt(userWithoutId.password, salt, 32);
 
     const result = `${salt}.${hash.toString('hex')}`;
+    const userWithoutIdHashed = {
+      ...userWithoutId,
+      password: result,
+    };
 
-    const user = await this.usersService.createOne(email, result);
+    const user = await this.usersService.createOne(userWithoutIdHashed);
 
     return user;
   }
 
-  async signin(email: string, password: string): Promise<UsersEntityType> {
-    const [user] = await this.usersService.findMany(email);
+  async signin(
+    uniqueKeyName: UsersUniqueKeyName,
+    uniqueKeyValue: UsersUniqueKeyValue,
+    password: string,
+  ): Promise<AuthUsersEntity> {
+    const user = await this.usersService.findOne(uniqueKeyName, uniqueKeyValue);
+
     if (!user) {
       throw new NotFoundException('user not found');
     }
@@ -47,9 +55,10 @@ export class AuthService {
     const [salt, storedHashStr] = user.password.split('.');
 
     const providedHash = await scrypt(password, salt, 32);
+    const providedHashStr = providedHash.toString('hex');
 
-    if (storedHashStr !== providedHash.toString('hex')) {
-      throw new BadRequestException('bad password');
+    if (storedHashStr !== providedHashStr) {
+      throw new BadRequestException('invalid password');
     }
 
     return user;

@@ -7,6 +7,10 @@ import {
   Patch,
   Query,
 } from '@nestjs/common';
+import type {
+  UsersUniqueKeyName,
+  UsersUniqueKeyValue,
+} from '../api-nest-utils/src';
 import { Serialize } from '../api-nest-utils/src';
 import { UsersService } from './users.service';
 import { UsersEntity } from './users.entity';
@@ -24,26 +28,32 @@ export class UsersController {
     return 'hello world';
   }
 
+  @Get('/:uniqueKeyValue')
+  usersFindOne(
+    @Param('uniqueKeyValue') uniqueKeyValue: UsersUniqueKeyValue,
+    @Query('uniqueKeyName') uniqueKeyName?: UsersUniqueKeyName,
+  ): Promise<UsersEntity> {
+    return this.usersService.findOne(uniqueKeyName ?? 'id', uniqueKeyValue);
+  }
+
   @Get()
   usersFindMany(@Query('email') email: string) {
     return this.usersService.findMany(email);
   }
 
-  @Get('/:id')
-  usersFindOne(@Param('id') id: string): Promise<UsersEntity> {
-    return this.usersService.findOne(Number(id));
+  // TODO: implement update many whole controller
+
+  @Patch()
+  usersUpdateManyPartial(
+    @Body()
+    partialEntities: Record<UsersEntity['id'], UsersDtoUpdateOnePartial>,
+  ): Promise<UsersEntity[]> {
+    return this.usersService.updateManyPartial(partialEntities);
   }
 
-  @Patch('/:id')
-  usersUpdateOnePartial(
-    @Param('id') id: string,
-    @Body() partialUserEntity: UsersDtoUpdateOnePartial,
-  ): Promise<UsersEntity> {
-    return this.usersService.updateOnePartial(Number(id), partialUserEntity);
-  }
-
+  // TODO: replace delete one with delete many controller
   @Delete('/:id')
-  usersRemoveOne(@Param('id') id: string): Promise<UsersEntity> {
-    return this.usersService.removeOne(Number(id));
+  usersDeleteOne(@Param('id') id: string): Promise<UsersEntity> {
+    return this.usersService.deleteOne(id);
   }
 }

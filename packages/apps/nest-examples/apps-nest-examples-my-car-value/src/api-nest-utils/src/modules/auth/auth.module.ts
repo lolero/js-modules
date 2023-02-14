@@ -2,14 +2,14 @@ import { DynamicModule, Module } from '@nestjs/common';
 import { FactoryProvider } from '@nestjs/common/interfaces/modules/provider.interface';
 import { ClassConstructor } from 'class-transformer';
 import { AuthService } from './auth.service';
-import { UsersServiceType } from './auth.types';
+import { AuthUsersService } from './auth.types';
 import { AuthController } from './auth.controller';
 
 @Module({})
 export class AuthModule {
   static register(
     usersModule: ClassConstructor<any>,
-    usersServiceProvider: FactoryProvider<UsersServiceType>,
+    usersServiceProvider: FactoryProvider<AuthUsersService>,
   ): DynamicModule {
     return {
       module: AuthModule,
