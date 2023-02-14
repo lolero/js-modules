@@ -26,9 +26,6 @@
   "devDependencies": {
     "@commitlint/cli": "^17.4.2",
     "@commitlint/config-angular": "^17.4.2",
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^14.4.3",
     "@types/jest": "^29.4.0",
     "eslint": "^8.33.0",
     "eslint-config-airbnb-typescript-prettier": "^5.0.0",
@@ -69,24 +66,5 @@
   "prettier": {
     "singleQuote": true,
     "trailingComma": "all"
-  },
-  "jest": {
-    "testEnvironment": "jsdom",
-    "setupFilesAfterEnv": [
-      "<rootDir>/jest-setup.ts"
-    ],
-    "transform": {
-      "^.+\\.(t|j)s$": "ts-jest"
-    },
-    "collectCoverageFrom": [
-      "packages/**/*.{js,jsx,ts,tsx}",
-      "!/**/node_modules/**",
-      "!packages/**/src/*",
-      "!packages/**/*types.ts"
-    ],
-    "coverageReporters": [
-      "html",
-      "text"
-    ]
   }
 }

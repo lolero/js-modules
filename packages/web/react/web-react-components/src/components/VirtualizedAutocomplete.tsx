@@ -166,7 +166,7 @@ export type VirtualizedAutocompleteProps<
   'disableListWrap' | 'ListboxComponent' | 'PopperComponent'
 >;
 
-function VirtualizedAutocomplete<
+export function VirtualizedAutocomplete<
   OptionT,
   MultipleT extends boolean | undefined = undefined,
   DisableClearableT extends boolean | undefined = undefined,
@@ -193,5 +193,3 @@ function VirtualizedAutocomplete<
     />
   );
 }
-
-export default VirtualizedAutocomplete;
