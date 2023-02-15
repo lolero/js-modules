@@ -8,6 +8,7 @@ importers:
       '@commitlint/config-angular': ^17.4.2
       '@types/jest': ^29.4.0
       '@types/node': ^18.11.18
+      cross-env: ^7.0.3
       eslint: ^8.33.0
       eslint-config-airbnb-typescript-prettier: ^5.0.0
       eslint-import-resolver-typescript: ^3.5.3
@@ -27,6 +28,7 @@ importers:
       '@commitlint/cli': 17.4.2
       '@commitlint/config-angular': 17.4.2
       '@types/jest': 29.4.0
+      cross-env: 7.0.3
       eslint: 8.33.0
       eslint-config-airbnb-typescript-prettier: 5.0.0_k6uatonj67wcw3szkkavot2mem
       eslint-import-resolver-typescript: 3.5.3_eslint@8.33.0
@@ -509,6 +511,7 @@ importers:
     specifiers:
       '@nestjs/cli': ^9.1.9
       '@nestjs/common': ^9.2.1
+      '@nestjs/config': ^2.3.1
       '@nestjs/core': ^9.2.1
       '@nestjs/platform-express': ^9.2.1
       '@nestjs/schematics': ^9.0.4
@@ -518,7 +521,6 @@ importers:
       '@types/express': ^4.17.16
       '@types/lodash': ^4.14.191
       '@types/supertest': ^2.0.12
-      '@types/uuid': ^9.0.0
       class-transformer: ^0.5.1
       class-validator: ^0.14.0
       cookie-session: ^2.0.0
@@ -531,9 +533,9 @@ importers:
       ts-loader: ^9.4.2
       ts-node: ^10.9.1
       typeorm: ^0.3.11
-      uuid: ^9.0.0
     dependencies:
       '@nestjs/common': 9.3.1_welcnyot5bzd5wa2aovbkxpi4i
+      '@nestjs/config': 2.3.1_fipbdz7qhdiauthzsrt4bq6tsq
       '@nestjs/core': 9.3.1_mxuzwgdlmkyxkz5qwd5xy75hm4
       '@nestjs/platform-express': 9.3.1_22j2lmearpmfr73ppsmjho62xq
       '@nestjs/testing': 9.3.1_lqms3jbt4jegwm4cog6ibtl4mu
@@ -541,7 +543,6 @@ importers:
       '@types/cookie-session': 2.0.44
       '@types/lodash': 4.14.191
       '@types/supertest': 2.0.12
-      '@types/uuid': 9.0.0
       class-transformer: 0.5.1
       class-validator: 0.14.0
       cookie-session: 2.0.0
@@ -550,7 +551,6 @@ importers:
       rxjs: 7.8.0
       sqlite3: 5.1.4
       typeorm: 0.3.11_h3l5zcb3i6sggvllyfknv6gs44
-      uuid: 9.0.0
     devDependencies:
       '@nestjs/cli': 9.1.9
       '@nestjs/schematics': 9.0.4
@@ -4646,6 +4646,22 @@ packages:
       uid: 2.0.1
     dev: false
 
+  /@nestjs/config/2.3.1_fipbdz7qhdiauthzsrt4bq6tsq:
+    resolution: {integrity: sha512-Ckzel0NZ9CWhNsLfE1hxfDuxJuEbhQvGxSlmZ1/X8awjRmAA/g3kT6M1+MO1SHj1wMtPyUfd9WpwkiqFbiwQgA==}
+    peerDependencies:
+      '@nestjs/common': ^7.0.0 || ^8.0.0 || ^9.0.0
+      reflect-metadata: ^0.1.13
+      rxjs: ^6.0.0 || ^7.2.0
+    dependencies:
+      '@nestjs/common': 9.3.1_welcnyot5bzd5wa2aovbkxpi4i
+      dotenv: 16.0.3
+      dotenv-expand: 10.0.0
+      lodash: 4.17.21
+      reflect-metadata: 0.1.13
+      rxjs: 7.8.0
+      uuid: 9.0.0
+    dev: false
+
   /@nestjs/core/9.3.1_mxuzwgdlmkyxkz5qwd5xy75hm4:
     resolution: {integrity: sha512-hLVfImzHu1vdcViEhIRnm7x3EBk+YiV7XVTJNz6n2Ly8a6t7IFBoJkGrZkE8ZTytnfbJZO0Vtp54ZBllxx3MwA==}
     requiresBuild: true
@@ -8541,6 +8557,14 @@ packages:
       cross-spawn: 6.0.5
     dev: false
 
+  /cross-env/7.0.3:
+    resolution: {integrity: sha512-+/HKd6EgcQCJGh2PSjZuUitQBQynKor4wrFbRg4DtAgS1aWO+gU52xpH7M9ScGgXSYmAVS9bIJ8EzuaGw0oNAw==}
+    engines: {node: '>=10.14', npm: '>=6', yarn: '>=1'}
+    hasBin: true
+    dependencies:
+      cross-spawn: 7.0.3
+    dev: true
+
   /cross-spawn/6.0.5:
     resolution: {integrity: sha512-eTVLrBSt7fjbDygz805pMnstIs2VTBNkRm0qxZd+M7A5XDdxVRWO5MxGBXZhjY4cqLYLdtrGqRf8mBPmzwSpWQ==}
     engines: {node: '>=4.8'}
@@ -8951,6 +8975,11 @@ packages:
     dependencies:
       is-obj: 2.0.0
     dev: true
+
+  /dotenv-expand/10.0.0:
+    resolution: {integrity: sha512-GopVGCpVS1UKH75VKHGuQFqS1Gusej0z4FyQkPdwjil2gNIv+LNsqBlboOzpJFZKVT95GkCyWJbBSdFEFUWI2A==}
+    engines: {node: '>=12'}
+    dev: false
 
   /dotenv/10.0.0:
     resolution: {integrity: sha512-rlBi9d8jpv9Sf1klPjNfFAuWDjKLwTIJJ/VxtoTwIR6hnZxcEOQCZg2oIL3MWBYw5GpUDKOEnND7LXTbIpQ03Q==}
