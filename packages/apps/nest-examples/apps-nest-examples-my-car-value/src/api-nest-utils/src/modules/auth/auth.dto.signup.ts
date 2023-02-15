@@ -5,6 +5,7 @@ import {
   IsStrongPassword,
   ValidateIf,
 } from 'class-validator';
+// eslint-disable-next-line import/no-cycle
 import { AuthUsersEntity } from './auth.types';
 
 export class AuthDtoSignup {

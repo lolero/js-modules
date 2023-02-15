@@ -8,11 +8,8 @@ import { promisify } from 'util';
 import { BinaryLike, randomBytes, scrypt as _scrypt } from 'crypto';
 import { USERS_SERVICE } from './auth.constants';
 import type { AuthUsersEntity, AuthUsersService } from './auth.types';
-import {
-  UsersUniqueKeyName,
-  UsersUniqueKeyValue,
-  UserWithoutId,
-} from './auth.types';
+import { UsersUniqueKeyName, UsersUniqueKeyValue } from './auth.types';
+import { AuthDtoSignup } from './auth.dto.signup';
 
 export const scrypt = promisify(_scrypt) as (
   password: BinaryLike,
@@ -26,17 +23,17 @@ export class AuthService {
     @Inject(USERS_SERVICE) private readonly usersService: AuthUsersService,
   ) {}
 
-  async signup(userWithoutId: UserWithoutId): Promise<AuthUsersEntity> {
+  async signup(authDtoSignup: AuthDtoSignup): Promise<AuthUsersEntity> {
     const salt = randomBytes(8).toString('hex');
-    const hash = await scrypt(userWithoutId.password, salt, 32);
+    const hash = await scrypt(authDtoSignup.password, salt, 32);
 
     const result = `${salt}.${hash.toString('hex')}`;
-    const userWithoutIdHashed = {
-      ...userWithoutId,
+    const authDtoSignupHashed = {
+      ...authDtoSignup,
       password: result,
     };
 
-    const user = await this.usersService.createOne(userWithoutIdHashed);
+    const user = await this.usersService.createOne(authDtoSignupHashed);
 
     return user;
   }

@@ -31,10 +31,10 @@ describe('UsersController', () => {
     expect(controller).toBeDefined();
   });
 
-  describe('usersFindOne', () => {
+  describe('findOne', () => {
     it('Should find one user by id if uniqueKeyName is undefined', async () => {
       const testUniqueKeyValue = 'test_unique_key';
-      await controller.usersFindOne(testUniqueKeyValue);
+      await controller.findOne(testUniqueKeyValue);
 
       expect(usersServiceFindOneMock).toHaveBeenNthCalledWith(
         1,
@@ -46,7 +46,7 @@ describe('UsersController', () => {
     it('Should find one user by uniqueKeyName when specified', async () => {
       const testUniqueKeyName: UsersUniqueKeyName = 'username';
       const testUniqueKeyValue = 'test_unique_key';
-      await controller.usersFindOne(testUniqueKeyValue, testUniqueKeyName);
+      await controller.findOne(testUniqueKeyValue, testUniqueKeyName);
 
       expect(usersServiceFindOneMock).toHaveBeenNthCalledWith(
         1,

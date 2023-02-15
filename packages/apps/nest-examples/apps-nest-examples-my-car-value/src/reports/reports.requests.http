@@ -1,0 +1,23 @@
+###
+# @name Reports Create One
+POST {{baseUri}}/reports/
+Content-Type: application/json
+
+{
+  "make": "toyota",
+  "model": "corolla",
+  "year": 1980,
+  "mileage": 100000,
+  "longitude": 0,
+  "latitude": 0,
+  "price": 50000
+}
+
+###
+# @name Reports Change Approval
+PATCH {{baseUri}}/reports/871afb4a-1a8d-4e52-8f7a-02cebcedacca
+Content-Type: application/json
+
+{
+  "isApproved": false
+}

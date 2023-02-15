@@ -3,7 +3,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { APP_PIPE } from '@nestjs/core';
 import cookieSession from 'cookie-session';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { AuthModule, getAuthUsersServiceProvider } from '../api-nest-utils/src';
+import {
+  AuthModule,
+  authUtilGetAuthUsersServiceProvider,
+} from '../api-nest-utils/src';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from '../users/users.module';
@@ -29,7 +32,10 @@ import { UsersService } from '../users/users.service';
         };
       },
     }),
-    AuthModule.register(UsersModule, getAuthUsersServiceProvider(UsersService)),
+    AuthModule.register(
+      UsersModule,
+      authUtilGetAuthUsersServiceProvider(UsersService),
+    ),
     ReportsModule,
     UsersModule,
   ],

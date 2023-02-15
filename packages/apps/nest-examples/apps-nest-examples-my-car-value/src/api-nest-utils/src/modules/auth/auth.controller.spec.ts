@@ -51,7 +51,7 @@ describe('AuthController', () => {
         id: testId,
       });
 
-      await controller.authSignup(testBody, testSession);
+      await controller.signup(testBody, testSession);
 
       expect(authServiceSignupMock).toHaveBeenNthCalledWith(1, testBody);
       expect(testSession.userId).toBe(testId);
@@ -76,7 +76,7 @@ describe('AuthController', () => {
 
       authServiceSigninMock.mockReturnValue(testUser);
 
-      await controller.authSignin(testBody, testSession);
+      await controller.signin(testBody, testSession);
 
       expect(authServiceSigninMock).toHaveBeenNthCalledWith(
         1,
@@ -85,6 +85,17 @@ describe('AuthController', () => {
         testBody.password,
       );
       expect(testSession.userId).toBe(testId);
+    });
+  });
+
+  describe('signout', () => {
+    it('Should delete the userId prop in the session', async () => {
+      const testId = 'test_id';
+      const testSession: { userId?: string } = { userId: testId };
+
+      await controller.signout(testSession);
+
+      expect(testSession.userId).toBeUndefined();
     });
   });
 });

@@ -1,9 +1,3 @@
-import { IsEmail, IsString } from 'class-validator';
+import { AuthDtoSignup } from '../api-nest-utils/src';
 
-export class UsersDtoCreateOne {
-  @IsEmail()
-  email: string;
-
-  @IsString()
-  password: string;
-}
+export class UsersDtoCreateOne extends AuthDtoSignup {}

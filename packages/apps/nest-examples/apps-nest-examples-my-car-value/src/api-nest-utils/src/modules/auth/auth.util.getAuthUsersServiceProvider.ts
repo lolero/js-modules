@@ -3,7 +3,7 @@ import { ClassConstructor } from 'class-transformer';
 import { AuthUsersService } from './auth.types';
 import { USERS_SERVICE } from './auth.constants';
 
-export function getAuthUsersServiceProvider(
+export function authUtilGetAuthUsersServiceProvider(
   usersService: ClassConstructor<any>,
 ): FactoryProvider<AuthUsersService> {
   const usersServiceProvider: FactoryProvider<AuthUsersService> = {

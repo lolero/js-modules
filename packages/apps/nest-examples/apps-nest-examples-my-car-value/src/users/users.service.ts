@@ -1,8 +1,4 @@
-import {
-  Injectable,
-  NotFoundException,
-  BadRequestException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { In, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import keys from 'lodash/keys';
@@ -11,9 +7,9 @@ import {
   AuthUsersService,
   UsersUniqueKeyName,
   UsersUniqueKeyValue,
-  UserWithoutId,
 } from '../api-nest-utils/src';
 import { UsersEntity } from './users.entity';
+import { UsersDtoCreateOne } from './users.dto.createOne';
 
 @Injectable()
 export class UsersService implements AuthUsersService {
@@ -22,21 +18,21 @@ export class UsersService implements AuthUsersService {
     private usersRepository: Repository<UsersEntity>,
   ) {}
 
-  async createOne(userWithoutId: UserWithoutId): Promise<UsersEntity> {
-    const entity = this.usersRepository.create(userWithoutId);
+  async createOne(usersDtoCreateOne: UsersDtoCreateOne): Promise<UsersEntity> {
+    const usersEntity = this.usersRepository.create(usersDtoCreateOne);
 
-    return this.usersRepository.save(entity);
+    return this.usersRepository.save(usersEntity);
   }
 
   async findOne(
     uniqueKeyName: UsersUniqueKeyName,
     uniqueKeyValue: UsersUniqueKeyValue,
   ): Promise<UsersEntity> {
-    const entity = await this.usersRepository.findOneBy({
+    const usersEntity = await this.usersRepository.findOneBy({
       [uniqueKeyName]: uniqueKeyValue,
     });
 
-    return entity;
+    return usersEntity;
   }
 
   findMany(email: string): Promise<UsersEntity[]> {
@@ -50,55 +46,55 @@ export class UsersService implements AuthUsersService {
     >,
   ): Promise<UsersEntity[]> {
     const ids = keys(partialEntities);
-    const entities = await this.usersRepository.findBy({
+    const usersEntities = await this.usersRepository.findBy({
       id: In(ids),
     });
 
-    if (entities.length < ids.length) {
-      const foundIds = entities.map((entity) => entity.id);
+    if (usersEntities.length < ids.length) {
+      const foundIds = usersEntities.map((entity) => entity.id);
       const missingIds = difference(ids, foundIds);
       throw new NotFoundException(
         `entities not found. missing ids: ${missingIds.join(', ')}`,
       );
     }
 
-    const updatedEntities = entities.map((entity) => {
+    const usersEntitiesUpdated = usersEntities.map((entity) => {
       return Object.assign(entity, partialEntities[entity.id]);
     });
 
-    return this.usersRepository.save(updatedEntities);
+    return this.usersRepository.save(usersEntitiesUpdated);
   }
 
   async updateManyPartialWithPattern(
     ids: UsersEntity['id'][],
     partialEntityPattern: Partial<Omit<UsersEntity, 'id'>>,
   ): Promise<UsersEntity[]> {
-    const entities = await this.usersRepository.findBy({
+    const usersEntities = await this.usersRepository.findBy({
       id: In(ids),
     });
 
-    if (entities.length < ids.length) {
-      const foundIds = entities.map((entity) => entity.id);
+    if (usersEntities.length < ids.length) {
+      const foundIds = usersEntities.map((entity) => entity.id);
       const missingIds = difference(ids, foundIds);
       throw new NotFoundException(
         `entities not found. missing ids: ${missingIds.join(', ')}`,
       );
     }
 
-    const updatedEntities = entities.map((entity) => {
+    const usersEntitiesUpdated = usersEntities.map((entity) => {
       return Object.assign(entity, partialEntityPattern);
     });
 
-    return this.usersRepository.save(updatedEntities);
+    return this.usersRepository.save(usersEntitiesUpdated);
   }
 
   async deleteOne(id: UsersEntity['id']): Promise<UsersEntity> {
-    const entity = await this.usersRepository.findOneByOrFail({ id });
+    const usersEntity = await this.usersRepository.findOneByOrFail({ id });
 
-    if (!entity) {
+    if (!usersEntity) {
       throw new NotFoundException('entity not found');
     }
 
-    return this.usersRepository.remove(entity);
+    return this.usersRepository.remove(usersEntity);
   }
 }

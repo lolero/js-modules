@@ -1,39 +1,4 @@
 ###
-# @name Users Hello World
-GET {{baseUri}}/users/hello-world
-
-###
-# @name Auth Signup
-POST {{baseUri}}/auth/signup
-Content-Type: application/json
-
-{
-  "username": "test_username",
-  "email": "test@email.com",
-  "phoneNumber": "+18001234567",
-  "password": "Test_Password1!"
-}
-
-###
-# @name Auth Signin
-POST {{baseUri}}/auth/signin
-Content-Type: application/json
-
-{
-  "uniqueKeyName": "email",
-  "uniqueKeyValue": "test@email.com",
-  "password": "Test_Password1!"
-}
-
-###
-# @name Auth Who Am I
-GET {{baseUri}}/auth/whoami
-
-###
-# @name Auth Signout
-GET {{baseUri}}/auth/signout
-
-###
 # @name Users Get Many
 GET {{baseUri}}/users?email=c@c.com
 
@@ -49,5 +14,3 @@ Content-Type: application/json
 {
   "password": "new password"
 }
-
-

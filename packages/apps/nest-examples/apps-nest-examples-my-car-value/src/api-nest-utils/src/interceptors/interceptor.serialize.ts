@@ -9,7 +9,7 @@ import { ClassConstructor, plainToInstance } from 'class-transformer';
 
 type Dto = ClassConstructor<any>;
 
-class InterceptorSerialize<EntityT> implements NestInterceptor {
+class Serialize<EntityT> implements NestInterceptor {
   constructor(private dto: Dto) {}
 
   intercept(
@@ -26,6 +26,6 @@ class InterceptorSerialize<EntityT> implements NestInterceptor {
   }
 }
 
-export function Serialize<EntityT>(dto: Dto) {
-  return UseInterceptors(new InterceptorSerialize<EntityT>(dto));
+export function InterceptorSerialize<EntityT>(dto: Dto) {
+  return UseInterceptors(new Serialize<EntityT>(dto));
 }

@@ -4,9 +4,11 @@ import {
   AfterUpdate,
   Column,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { AuthUsersEntity } from '../api-nest-utils/src';
+import { ReportsEntity } from '../reports/reports.entity'; // eslint-disable-line import/no-cycle
 
 @Entity('users')
 export class UsersEntity implements AuthUsersEntity {
@@ -32,6 +34,9 @@ export class UsersEntity implements AuthUsersEntity {
 
   @Column()
   password: string;
+
+  @OneToMany(() => ReportsEntity, (report) => report.user)
+  reports: ReportsEntity[];
 
   @AfterInsert()
   logInsert() {
