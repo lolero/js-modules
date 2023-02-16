@@ -1,9 +1,11 @@
 import {
   Body,
   Controller,
+  Get,
   Param,
   Patch,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { ReportsDtoCreateOne } from './reports.dto.createOne';
@@ -18,6 +20,7 @@ import { ReportsDtoPublic } from './reports.dto.public';
 import { ReportsEntity } from './reports.entity';
 import { ReportsDtoChangeApproval } from './reports.dto.changeApproval';
 import { UsersGuardIsAdmin } from '../users/users.guard.isAdmin';
+import { ReportsDtoGetEstimate } from './reports.dto.getEstimate';
 
 @Controller('reports')
 @UseGuards(AuthGuardIsUserAuthenticated)
@@ -40,5 +43,10 @@ export class ReportsController {
     @Body() body: ReportsDtoChangeApproval,
   ) {
     return this.reportsService.changeApproval(id, body.isApproved);
+  }
+
+  @Get()
+  getEstimate(@Query() query: ReportsDtoGetEstimate) {
+    console.log(query);
   }
 }

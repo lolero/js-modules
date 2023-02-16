@@ -10,9 +10,7 @@ import { USERS_SERVICE } from './auth.constants';
 import type { AuthUsersService } from './auth.types';
 
 @Injectable()
-export class AuthInterceptorCurrentAuthenticatedUser
-  implements NestInterceptor
-{
+export class AuthInterceptorCurrentUser implements NestInterceptor {
   constructor(@Inject(USERS_SERVICE) private usersService: AuthUsersService) {}
 
   async intercept(
