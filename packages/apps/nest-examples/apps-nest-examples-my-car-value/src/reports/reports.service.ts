@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { ReportsEntity } from './reports.entity';
 import { ReportsDtoCreateOne } from './reports.dto.createOne';
 import { UsersEntity } from '../users/users.entity';
+import { ReportsDtoGetEstimate } from './reports.dto.getEstimate';
 
 @Injectable()
 export class ReportsService {
@@ -36,5 +37,31 @@ export class ReportsService {
     reportsEntity.isApproved = isApproved;
 
     return this.reportsRepository.save(reportsEntity);
+  }
+
+  getEstimate({
+    make,
+    model,
+    latitude,
+    longitude,
+    year,
+    mileage,
+  }: ReportsDtoGetEstimate) {
+    return (
+      this.reportsRepository
+        .createQueryBuilder()
+        .select('AVG(price)', 'price')
+        .where('make = :make', { make })
+        .andWhere('model = :model', { model })
+        .andWhere('model = :model', { model })
+        .andWhere('latitude - :latitude BETWEEN -5 AND 5', { latitude })
+        .andWhere('longitude - :longitude BETWEEN -5 AND 5', { longitude })
+        .andWhere('year - :year BETWEEN -3 AND 3', { year })
+        // .andWhere('isApproved IS TRUE', { year })
+        .orderBy('ABS(mileage - :mileage)')
+        .setParameters({ mileage })
+        .limit(3)
+        .getRawOne()
+    );
   }
 }
