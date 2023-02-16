@@ -17,6 +17,7 @@ import { UsersEntity } from '../users/users.entity';
 import { ReportsDtoPublic } from './reports.dto.public';
 import { ReportsEntity } from './reports.entity';
 import { ReportsDtoChangeApproval } from './reports.dto.changeApproval';
+import { UsersGuardIsAdmin } from '../users/users.guard.isAdmin';
 
 @Controller('reports')
 @UseGuards(AuthGuardIsUserAuthenticated)
@@ -33,6 +34,7 @@ export class ReportsController {
   }
 
   @Patch('/:id')
+  @UseGuards(UsersGuardIsAdmin)
   changeApproval(
     @Param('id') id: string,
     @Body() body: ReportsDtoChangeApproval,

@@ -35,6 +35,9 @@ export class UsersEntity implements AuthUsersEntity {
   @Column()
   password: string;
 
+  @Column({ default: true })
+  isAdmin: boolean;
+
   @OneToMany(() => ReportsEntity, (report) => report.user)
   reports: ReportsEntity[];
 
