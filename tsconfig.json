@@ -3,9 +3,6 @@
   "compilerOptions": {
     "baseUrl": "./packages",
     "paths": {
-      "@js-modules/api-nest-utils": [
-        "api/nest/api-nest-utils/src"
-      ],
       "@js-modules/apps-dapp-common-constants": [
         "apps/dapp/apps-dapp-common-constants/src"
       ],

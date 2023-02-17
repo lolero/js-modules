@@ -433,6 +433,118 @@ importers:
       react-dom: 18.2.0_react@18.2.0
       react-router-dom: 6.8.0_biqbaboplfbrettd7655fr4n2y
 
+  packages/apps/itlib/apps-itlib-api:
+    specifiers:
+      '@nestjs/cli': ^9.1.9
+      '@nestjs/common': ^9.2.1
+      '@nestjs/config': ^2.3.1
+      '@nestjs/core': ^9.2.1
+      '@nestjs/platform-express': ^9.2.1
+      '@nestjs/schematics': ^9.0.4
+      '@nestjs/testing': ^9.2.1
+      '@nestjs/typeorm': ^9.0.1
+      '@types/cookie-session': ^2.0.44
+      '@types/express': ^4.17.16
+      '@types/lodash': ^4.14.191
+      '@types/supertest': ^2.0.12
+      class-transformer: ^0.5.1
+      class-validator: ^0.14.0
+      cookie-session: ^2.0.0
+      express: ^4.18.2
+      lodash: ^4.17.21
+      reflect-metadata: ^0.1.13
+      rxjs: ^7.8.0
+      source-map-support: ^0.5.21
+      sqlite3: ^5.1.4
+      supertest: ^6.3.3
+      ts-loader: ^9.4.2
+      ts-node: ^10.9.1
+      typeorm: ^0.3.11
+    dependencies:
+      '@nestjs/common': 9.3.1_welcnyot5bzd5wa2aovbkxpi4i
+      '@nestjs/config': 2.3.1_fipbdz7qhdiauthzsrt4bq6tsq
+      '@nestjs/core': 9.3.1_mxuzwgdlmkyxkz5qwd5xy75hm4
+      '@nestjs/platform-express': 9.3.1_22j2lmearpmfr73ppsmjho62xq
+      '@nestjs/testing': 9.3.1_lqms3jbt4jegwm4cog6ibtl4mu
+      '@nestjs/typeorm': 9.0.1_bupm2ki5yhdymdc7evmynhkzqe
+      '@types/cookie-session': 2.0.44
+      '@types/lodash': 4.14.191
+      '@types/supertest': 2.0.12
+      class-transformer: 0.5.1
+      class-validator: 0.14.0
+      cookie-session: 2.0.0
+      express: 4.18.2
+      lodash: 4.17.21
+      reflect-metadata: 0.1.13
+      rxjs: 7.8.0
+      sqlite3: 5.1.4
+      typeorm: 0.3.11_h3l5zcb3i6sggvllyfknv6gs44
+    devDependencies:
+      '@nestjs/cli': 9.1.9
+      '@nestjs/schematics': 9.0.4
+      '@types/express': 4.17.16
+      source-map-support: 0.5.21
+      supertest: 6.3.3
+      ts-loader: 9.4.2
+      ts-node: 10.9.1
+
+  packages/apps/itlib/apps-libit-api:
+    specifiers:
+      '@nestjs/cli': ^9.1.9
+      '@nestjs/common': ^9.2.1
+      '@nestjs/config': ^2.3.1
+      '@nestjs/core': ^9.2.1
+      '@nestjs/platform-express': ^9.2.1
+      '@nestjs/schematics': ^9.0.4
+      '@nestjs/testing': ^9.2.1
+      '@nestjs/typeorm': ^9.0.1
+      '@types/cookie-session': ^2.0.44
+      '@types/express': ^4.17.16
+      '@types/lodash': ^4.14.191
+      '@types/supertest': ^2.0.12
+      class-transformer: ^0.5.1
+      class-validator: ^0.14.0
+      cookie-session: ^2.0.0
+      express: ^4.18.2
+      lodash: ^4.17.21
+      pg: ^8.9.0
+      reflect-metadata: ^0.1.13
+      rxjs: ^7.8.0
+      source-map-support: ^0.5.21
+      sqlite3: ^5.1.4
+      supertest: ^6.3.3
+      ts-loader: ^9.4.2
+      ts-node: ^10.9.1
+      typeorm: ^0.3.11
+    dependencies:
+      '@nestjs/common': 9.3.1_welcnyot5bzd5wa2aovbkxpi4i
+      '@nestjs/config': 2.3.1_fipbdz7qhdiauthzsrt4bq6tsq
+      '@nestjs/core': 9.3.1_mxuzwgdlmkyxkz5qwd5xy75hm4
+      '@nestjs/platform-express': 9.3.1_22j2lmearpmfr73ppsmjho62xq
+      '@nestjs/testing': 9.3.1_lqms3jbt4jegwm4cog6ibtl4mu
+      '@nestjs/typeorm': 9.0.1_bupm2ki5yhdymdc7evmynhkzqe
+      '@types/cookie-session': 2.0.44
+      '@types/lodash': 4.14.191
+      '@types/supertest': 2.0.12
+      class-transformer: 0.5.1
+      class-validator: 0.14.0
+      cookie-session: 2.0.0
+      express: 4.18.2
+      lodash: 4.17.21
+      pg: 8.9.0
+      reflect-metadata: 0.1.13
+      rxjs: 7.8.0
+      sqlite3: 5.1.4
+      typeorm: 0.3.11_o7g77mox2w73lfzyynaupmt6wm
+    devDependencies:
+      '@nestjs/cli': 9.1.9
+      '@nestjs/schematics': 9.0.4
+      '@types/express': 4.17.16
+      source-map-support: 0.5.21
+      supertest: 6.3.3
+      ts-loader: 9.4.2
+      ts-node: 10.9.1
+
   packages/apps/nest-examples/apps-nest-examples-computer:
     specifiers:
       '@nestjs/cli': ^9.1.9
@@ -4775,7 +4887,7 @@ packages:
       '@nestjs/core': 9.3.1_mxuzwgdlmkyxkz5qwd5xy75hm4
       reflect-metadata: 0.1.13
       rxjs: 7.8.0
-      typeorm: 0.3.11_h3l5zcb3i6sggvllyfknv6gs44
+      typeorm: 0.3.11_o7g77mox2w73lfzyynaupmt6wm
       uuid: 8.3.2
     dev: false
 
@@ -7604,6 +7716,11 @@ packages:
   /buffer-indexof-polyfill/1.0.2:
     resolution: {integrity: sha512-I7wzHwA3t1/lwXQh+A5PbNvJxgfo5r3xulgpYDB5zckTu/Z9oUK9biouBKQUjEqzaz3HnAT6TYoovmE+GqSf7A==}
     engines: {node: '>=0.10'}
+    dev: false
+
+  /buffer-writer/2.0.0:
+    resolution: {integrity: sha512-a7ZpuTZU1TRtnwyCNW3I5dc0wWNC3VR9S++Ewyk2HHZdrO3CQJqSpd+95Us590V6AL7JqUAH2IwZ/398PmNFgw==}
+    engines: {node: '>=4'}
     dev: false
 
   /buffer-xor/1.0.3:
@@ -14939,6 +15056,10 @@ packages:
       netmask: 2.0.2
     dev: false
 
+  /packet-reader/1.0.0:
+    resolution: {integrity: sha512-HAKu/fG3HpHFO0AA8WE8q2g+gBJaZ9MG7fcKk+IJPLTGAD6Psw4443l+9DGRbOIh3/aXr7Phy0TjilYivJo5XQ==}
+    dev: false
+
   /pacote/13.6.2:
     resolution: {integrity: sha512-Gu8fU3GsvOPkak2CkbojR7vjs3k3P9cA6uazKTHdsdV0gpCEQq2opelnEv30KRQWgVzP5Vd/5umjcedma3MKtg==}
     engines: {node: ^12.13.0 || ^14.15.0 || >=16.0.0}
@@ -15113,6 +15234,62 @@ packages:
   /performance-now/2.1.0:
     resolution: {integrity: sha512-7EAHlyLHI56VEIdK57uwHdHKIaAGbnXPiw0yWbarQZOKaKpvUIgW0jWRVLiatnM+XXlSwsanIBH/hzGMJulMow==}
 
+  /pg-connection-string/2.5.0:
+    resolution: {integrity: sha512-r5o/V/ORTA6TmUnyWZR9nCj1klXCO2CEKNRlVuJptZe85QuhFayC7WeMic7ndayT5IRIR0S0xFxFi2ousartlQ==}
+    dev: false
+
+  /pg-int8/1.0.1:
+    resolution: {integrity: sha512-WCtabS6t3c8SkpDBUlb1kjOs7l66xsGdKpIPZsg4wR+B3+u9UAum2odSsF9tnvxg80h4ZxLWMy4pRjOsFIqQpw==}
+    engines: {node: '>=4.0.0'}
+    dev: false
+
+  /pg-pool/3.5.2_pg@8.9.0:
+    resolution: {integrity: sha512-His3Fh17Z4eg7oANLob6ZvH8xIVen3phEZh2QuyrIl4dQSDVEabNducv6ysROKpDNPSD+12tONZVWfSgMvDD9w==}
+    peerDependencies:
+      pg: '>=8.0'
+    dependencies:
+      pg: 8.9.0
+    dev: false
+
+  /pg-protocol/1.6.0:
+    resolution: {integrity: sha512-M+PDm637OY5WM307051+bsDia5Xej6d9IR4GwJse1qA1DIhiKlksvrneZOYQq42OM+spubpcNYEo2FcKQrDk+Q==}
+    dev: false
+
+  /pg-types/2.2.0:
+    resolution: {integrity: sha512-qTAAlrEsl8s4OiEQY69wDvcMIdQN6wdz5ojQiOy6YRMuynxenON0O5oCpJI6lshc6scgAY8qvJ2On/p+CXY0GA==}
+    engines: {node: '>=4'}
+    dependencies:
+      pg-int8: 1.0.1
+      postgres-array: 2.0.0
+      postgres-bytea: 1.0.0
+      postgres-date: 1.0.7
+      postgres-interval: 1.2.0
+    dev: false
+
+  /pg/8.9.0:
+    resolution: {integrity: sha512-ZJM+qkEbtOHRuXjmvBtOgNOXOtLSbxiMiUVMgE4rV6Zwocy03RicCVvDXgx8l4Biwo8/qORUnEqn2fdQzV7KCg==}
+    engines: {node: '>= 8.0.0'}
+    peerDependencies:
+      pg-native: '>=3.0.1'
+    peerDependenciesMeta:
+      pg-native:
+        optional: true
+    dependencies:
+      buffer-writer: 2.0.0
+      packet-reader: 1.0.0
+      pg-connection-string: 2.5.0
+      pg-pool: 3.5.2_pg@8.9.0
+      pg-protocol: 1.6.0
+      pg-types: 2.2.0
+      pgpass: 1.0.5
+    dev: false
+
+  /pgpass/1.0.5:
+    resolution: {integrity: sha512-FdW9r/jQZhSeohs1Z3sI1yxFQNFvMcnmfuj4WBMUTxOrAyLMaTcE1aAMBiTlbMNaXvBCQuVi0R7hd8udDSP7ug==}
+    dependencies:
+      split2: 4.1.0
+    dev: false
+
   /picocolors/1.0.0:
     resolution: {integrity: sha512-1fygroTLlHu66zi26VoTDv8yRgm0Fccecssto+MhsZ0D/DGW2sm8E8AjW7NU5VVTRt5GxbeZ5qBuJr+HyLYkjQ==}
 
@@ -15174,6 +15351,28 @@ packages:
       nanoid: 3.3.4
       picocolors: 1.0.0
       source-map-js: 1.0.2
+    dev: false
+
+  /postgres-array/2.0.0:
+    resolution: {integrity: sha512-VpZrUqU5A69eQyW2c5CA1jtLecCsN2U/bD6VilrFDWq5+5UIEVO7nazS3TEcHf1zuPYO/sqGvUvW62g86RXZuA==}
+    engines: {node: '>=4'}
+    dev: false
+
+  /postgres-bytea/1.0.0:
+    resolution: {integrity: sha512-xy3pmLuQqRBZBXDULy7KbaitYqLcmxigw14Q5sj8QBVLqEwXfeybIKVWiqAXTlcvdvb0+xkOtDbfQMOf4lST1w==}
+    engines: {node: '>=0.10.0'}
+    dev: false
+
+  /postgres-date/1.0.7:
+    resolution: {integrity: sha512-suDmjLVQg78nMK2UZ454hAG+OAW+HQPZ6n++TNDUX+L0+uUlLywnoxJKDou51Zm+zTCjrCl0Nq6J9C5hP9vK/Q==}
+    engines: {node: '>=0.10.0'}
+    dev: false
+
+  /postgres-interval/1.2.0:
+    resolution: {integrity: sha512-9ZhXKM/rw350N1ovuWHbGxnGh/SNJ4cnxHiM0rxE4VN41wsg8P8zWn9hv/buK00RP4WvlOyr/RBDiptyxVbkZQ==}
+    engines: {node: '>=0.10.0'}
+    dependencies:
+      xtend: 4.0.2
     dev: false
 
   /prelude-ls/1.1.2:
@@ -16795,6 +16994,11 @@ packages:
       readable-stream: 3.6.0
     dev: true
 
+  /split2/4.1.0:
+    resolution: {integrity: sha512-VBiJxFkxiXRlUIeyMQi8s4hgvKCSjtknJv/LVYbrgALPwf5zSKmEwV9Lst25AkvMDnvxODugjdl6KZgwKM1WYQ==}
+    engines: {node: '>= 10.x'}
+    dev: false
+
   /sprintf-js/1.0.3:
     resolution: {integrity: sha512-D9cPgkvLlV3t3IzL0D0YLvGA9Ahk4PcvVwUbN0dSGr1aP0Nrt4AEnTUbuGvquEC0mA64Gqt1fzirlRs5ibXx8g==}
 
@@ -17862,6 +18066,88 @@ packages:
       glob: 7.2.3
       js-yaml: 4.1.0
       mkdirp: 1.0.4
+      reflect-metadata: 0.1.13
+      sha.js: 2.4.11
+      sqlite3: 5.1.4
+      ts-node: 10.9.1
+      tslib: 2.5.0
+      uuid: 8.3.2
+      xml2js: 0.4.23
+      yargs: 17.6.2
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
+  /typeorm/0.3.11_o7g77mox2w73lfzyynaupmt6wm:
+    resolution: {integrity: sha512-pzdOyWbVuz/z8Ww6gqvBW4nylsM0KLdUCDExr2gR20/x1khGSVxQkjNV/3YqliG90jrWzrknYbYscpk8yxFJVg==}
+    engines: {node: '>= 12.9.0'}
+    hasBin: true
+    peerDependencies:
+      '@google-cloud/spanner': ^5.18.0
+      '@sap/hana-client': ^2.12.25
+      better-sqlite3: ^7.1.2 || ^8.0.0
+      hdb-pool: ^0.1.6
+      ioredis: ^5.0.4
+      mongodb: ^3.6.0
+      mssql: ^7.3.0
+      mysql2: ^2.2.5
+      oracledb: ^5.1.0
+      pg: ^8.5.1
+      pg-native: ^3.0.0
+      pg-query-stream: ^4.0.0
+      redis: ^3.1.1 || ^4.0.0
+      sql.js: ^1.4.0
+      sqlite3: ^5.0.3
+      ts-node: ^10.7.0
+      typeorm-aurora-data-api-driver: ^2.0.0
+    peerDependenciesMeta:
+      '@google-cloud/spanner':
+        optional: true
+      '@sap/hana-client':
+        optional: true
+      better-sqlite3:
+        optional: true
+      hdb-pool:
+        optional: true
+      ioredis:
+        optional: true
+      mongodb:
+        optional: true
+      mssql:
+        optional: true
+      mysql2:
+        optional: true
+      oracledb:
+        optional: true
+      pg:
+        optional: true
+      pg-native:
+        optional: true
+      pg-query-stream:
+        optional: true
+      redis:
+        optional: true
+      sql.js:
+        optional: true
+      sqlite3:
+        optional: true
+      ts-node:
+        optional: true
+      typeorm-aurora-data-api-driver:
+        optional: true
+    dependencies:
+      '@sqltools/formatter': 1.2.5
+      app-root-path: 3.1.0
+      buffer: 6.0.3
+      chalk: 4.1.2
+      cli-highlight: 2.1.11
+      date-fns: 2.29.3
+      debug: 4.3.4
+      dotenv: 16.0.3
+      glob: 7.2.3
+      js-yaml: 4.1.0
+      mkdirp: 1.0.4
+      pg: 8.9.0
       reflect-metadata: 0.1.13
       sha.js: 2.4.11
       sqlite3: 5.1.4

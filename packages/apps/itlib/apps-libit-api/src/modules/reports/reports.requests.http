@@ -1,0 +1,28 @@
+###
+# @name Reports Create One
+POST {{baseUri}}/reports/
+Content-Type: application/json
+
+{
+  "make": "ford",
+  "model": "mustang",
+  "year": 1982,
+  "mileage": 50000,
+  "longitude": 45,
+  "latitude": 45,
+  "price": 20000
+}
+
+###
+# @name Reports Change Approval
+PATCH {{baseUri}}/reports/231a2906-6e9c-42bf-ac8e-cd6cf172435f
+Content-Type: application/json
+
+{
+  "isApproved": true
+}
+
+###
+# @name Reports Get Estimate
+GET {{baseUri}}/reports?make=ford&model=mustang&latitude=45&longitude=45
+    &mileage=20000&year=1981
