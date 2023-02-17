@@ -7,7 +7,8 @@
   "scripts": {
     "build": "nest build -p tsconfig.build.json",
     "dev": "cross-env NODE_ENV=dev nest start --watch",
-    "prod": "node build/main"
+    "prod": "node build/main",
+    "typeorm": "pnpm build && cross-env NODE_ENV=dev typeorm -d build/app/app.config.typeormDataSource.js"
   },
   "dependencies": {
     "@nestjs/common": "^9.2.1",
