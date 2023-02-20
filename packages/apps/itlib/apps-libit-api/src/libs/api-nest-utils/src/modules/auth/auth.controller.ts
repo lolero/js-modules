@@ -20,6 +20,12 @@ import { AuthDecoratorCurrentAuthenticatedUser } from './auth.decorator.currentA
 export class AuthController {
   constructor(private authService: AuthService) {}
 
+  @Get('/hello-world')
+  usersHelloWorld() {
+    console.log('Hello world!');
+    return 'Hello world!';
+  }
+
   @Get('/whoami')
   @UseGuards(AuthGuardIsUserAuthenticated)
   whoAmI(
@@ -30,10 +36,10 @@ export class AuthController {
 
   @Post('/signup')
   async signup(
-    @Body() body: AuthDtoSignup,
+    @Body() authDtoSignup: AuthDtoSignup,
     @Session() session: { userId?: AuthUsersEntity['id'] },
   ): Promise<AuthUsersEntity> {
-    const user = await this.authService.signup(body);
+    const user = await this.authService.signup(authDtoSignup);
 
     session.userId = user.id;
 
@@ -42,14 +48,10 @@ export class AuthController {
 
   @Post('/signin')
   async signin(
-    @Body() body: AuthDtoSignin,
+    @Body() authDtoSignin: AuthDtoSignin,
     @Session() session: { userId?: AuthUsersEntity['id'] },
   ): Promise<AuthUsersEntity> {
-    const user = await this.authService.signin(
-      body.uniqueKeyName,
-      body.uniqueKeyValue,
-      body.password,
-    );
+    const user = await this.authService.signin(authDtoSignin);
 
     session.userId = user.id;
 

@@ -4,14 +4,19 @@ import { AuthService } from './auth.service';
 import { AuthDtoSignup } from './auth.dto.signup';
 import { AuthUsersEntity } from './auth.types';
 import { AuthDtoSignin } from './auth.dto.signin';
+import { getAuthUserEntityFixture } from './auth.utils.fixtures';
 
 describe('AuthController', () => {
-  let controller: AuthController;
+  let testAuthUserEntity: AuthUsersEntity;
+  let testSession: { userId?: AuthUsersEntity['id'] };
+  let authController: AuthController;
   let authServiceSignupMock: jest.Mock;
   let authServiceSigninMock: jest.Mock;
   let authServiceMock: Partial<AuthService>;
 
   beforeEach(async () => {
+    testAuthUserEntity = getAuthUserEntityFixture();
+    testSession = {};
     authServiceSignupMock = jest.fn();
     authServiceSigninMock = jest.fn();
     authServiceMock = {
@@ -29,71 +34,75 @@ describe('AuthController', () => {
       controllers: [AuthController],
     }).compile();
 
-    controller = module.get<AuthController>(AuthController);
+    authController = module.get<AuthController>(AuthController);
   });
 
   it('Should create an instance of UsersController', () => {
-    expect(controller).toBeDefined();
+    expect(authController).toBeDefined();
   });
 
   describe('signup', () => {
-    it('Should signup and set the userId prop in the session', async () => {
-      const testId = 'test_id';
-      const testPassword = 'test_password';
-      const testBody: AuthDtoSignup = {
-        email: 'test@email.com',
-        password: testPassword,
+    let testAuthDtoSignup: AuthDtoSignup;
+
+    beforeEach(() => {
+      testAuthDtoSignup = {
+        email: testAuthUserEntity.email,
+        password: testAuthUserEntity.password,
       };
-      const testSession: { userId?: string } = {};
+    });
 
-      authServiceSignupMock.mockReturnValue({
-        ...testBody,
-        id: testId,
-      });
+    it('Should call authService.signup, set the userId prop in the session, and return the signed up user', async () => {
+      authServiceSignupMock.mockReturnValue(testAuthUserEntity);
 
-      await controller.signup(testBody, testSession);
+      const authUsersEntity = await authController.signup(
+        testAuthDtoSignup,
+        testSession,
+      );
 
-      expect(authServiceSignupMock).toHaveBeenNthCalledWith(1, testBody);
-      expect(testSession.userId).toBe(testId);
+      expect(authServiceSignupMock).toHaveBeenNthCalledWith(
+        1,
+        testAuthDtoSignup,
+      );
+      expect(testSession.userId).toBe(testAuthUserEntity.id);
+      expect(authUsersEntity).toEqual(testAuthUserEntity);
     });
   });
 
   describe('signin', () => {
-    it('Should signin and set the userId prop in the session', async () => {
-      const testId = 'test_id';
-      const testPassword = 'test_password';
-      const testBody: AuthDtoSignin = {
+    let testAuthDtoSignin: AuthDtoSignin;
+
+    beforeEach(() => {
+      testAuthDtoSignin = {
         uniqueKeyName: 'id',
-        uniqueKeyValue: testId,
-        password: testPassword,
+        uniqueKeyValue: testAuthUserEntity.id,
+        password: testAuthUserEntity.password,
       };
-      const testUser: AuthUsersEntity = {
-        id: testBody.uniqueKeyValue,
-        email: 'test@email.com',
-        password: testPassword,
-      };
-      const testSession: { userId?: string } = {};
+    });
 
-      authServiceSigninMock.mockReturnValue(testUser);
+    it('Should call authService.signin, set the userId prop in the session, and return the authenticated user', async () => {
+      authServiceSigninMock.mockReturnValue(testAuthUserEntity);
 
-      await controller.signin(testBody, testSession);
+      const authUsersEntity = await authController.signin(
+        testAuthDtoSignin,
+        testSession,
+      );
 
       expect(authServiceSigninMock).toHaveBeenNthCalledWith(
         1,
-        testBody.uniqueKeyName,
-        testBody.uniqueKeyValue,
-        testBody.password,
+        testAuthDtoSignin,
       );
-      expect(testSession.userId).toBe(testId);
+      expect(testSession.userId).toBe(testAuthUserEntity.id);
+      expect(authUsersEntity).toEqual(testAuthUserEntity);
     });
   });
 
   describe('signout', () => {
     it('Should delete the userId prop in the session', async () => {
-      const testId = 'test_id';
-      const testSession: { userId?: string } = { userId: testId };
+      testSession = {
+        userId: testAuthUserEntity.id,
+      };
 
-      await controller.signout(testSession);
+      await authController.signout(testSession);
 
       expect(testSession.userId).toBeUndefined();
     });

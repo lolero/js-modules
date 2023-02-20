@@ -4,11 +4,10 @@ import {
   AfterUpdate,
   Column,
   Entity,
-  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { AuthUsersEntity } from '../../libs/api-nest-utils/src';
-import { ReportsEntity } from '../reports/reports.entity'; // eslint-disable-line import/no-cycle
+import { AuthUsersEntity } from '../../../../api-nest-utils/src';
+// import { ReportsEntity } from '../../../../modules/reports/reports.entity'; // eslint-disable-line import/no-cycle
 
 @Entity('users')
 export class UsersEntity implements AuthUsersEntity {
@@ -19,7 +18,7 @@ export class UsersEntity implements AuthUsersEntity {
     unique: true,
     nullable: true,
   })
-  username: string;
+  username?: string;
 
   @Column({
     unique: true,
@@ -30,13 +29,13 @@ export class UsersEntity implements AuthUsersEntity {
     unique: true,
     nullable: true,
   })
-  phoneNumber: string;
+  phoneNumber?: string;
 
   @Column()
   password: string;
 
-  @Column({ default: true })
-  isAdmin: boolean;
+  // @Column({ default: true })
+  // isAdmin: boolean;
 
   // @OneToMany(() => ReportsEntity, (report) => report.user)
   // reports: ReportsEntity[];

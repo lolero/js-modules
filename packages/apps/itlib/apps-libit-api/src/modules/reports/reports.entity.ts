@@ -1,5 +1,5 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { UsersEntity } from '../users/users.entity'; // eslint-disable-line import/no-cycle
+// import { UsersEntity } from '../../libs/apps-libit-api-users/src/users/users.entity'; // eslint-disable-line import/no-cycle
 
 @Entity('reports')
 export class ReportsEntity {

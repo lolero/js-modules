@@ -4,21 +4,24 @@ import { AuthService, scrypt } from './auth.service';
 import { AuthUsersEntity, AuthUsersService } from './auth.types';
 import { USERS_SERVICE } from './auth.constants';
 import { AuthDtoSignup } from './auth.dto.signup';
+import {
+  getAuthDtoSigninFixture,
+  getAuthDtoSignupFixture,
+  getAuthUserEntityFixture,
+} from './auth.utils.fixtures';
+import { AuthDtoSignin } from './auth.dto.signin';
 
 describe('AuthService', () => {
-  let service: AuthService;
-  const testUserId: AuthUsersEntity['id'] = 'test_id';
-  const testAuthDtoSignup: AuthDtoSignup = {
-    username: 'test_username',
-    email: 'test@test.com',
-    phoneNumber: '+18001234567',
-    password: 'test_password',
-  };
+  let testAuthUserEntity: AuthUsersEntity;
+  let testAuthDtoSignup: AuthDtoSignup;
+  let authService: AuthService;
   let usersServiceCreateOneMock: jest.Mock;
   let usersServiceFindOneMock: jest.Mock;
   let usersServiceMock: Partial<AuthUsersService>;
 
   beforeEach(async () => {
+    testAuthUserEntity = getAuthUserEntityFixture();
+    testAuthDtoSignup = getAuthDtoSignupFixture();
     usersServiceCreateOneMock = jest.fn();
     usersServiceFindOneMock = jest.fn();
     usersServiceMock = {
@@ -36,16 +39,18 @@ describe('AuthService', () => {
       ],
     }).compile();
 
-    service = module.get<AuthService>(AuthService);
+    authService = module.get<AuthService>(AuthService);
   });
 
   it('Should create an instance of AuthService', async () => {
-    expect(service).toBeDefined();
+    expect(authService).toBeDefined();
   });
 
   describe('signup', () => {
-    it('Should create a new user with a salted and hashed password', async () => {
-      await service.signup(testAuthDtoSignup);
+    it('Should call usersService.createOne, with a salted and hashed password, and return the created user', async () => {
+      usersServiceCreateOneMock.mockReturnValue(testAuthUserEntity);
+
+      const authUsersEntity = await authService.signup(testAuthDtoSignup);
 
       expect(usersServiceCreateOneMock).toHaveBeenNthCalledWith(1, {
         ...testAuthDtoSignup,
@@ -58,58 +63,76 @@ describe('AuthService', () => {
       const [salt, hash] = password.split('.');
       expect(salt).toBeDefined();
       expect(hash).toBeDefined();
+
+      expect(authUsersEntity).toEqual(testAuthUserEntity);
     });
   });
 
   describe('signin', () => {
-    it('Should throw an error if user signs in with unused unique key', async () => {
-      usersServiceFindOneMock.mockReturnValue(null);
+    const testSalt = 'test_salt';
+    let testAuthDtoSignin: AuthDtoSignin;
 
-      await expect(
-        service.signin('id', testUserId, testAuthDtoSignup.password),
-      ).rejects.toThrow(NotFoundException);
+    beforeEach(() => {
+      testAuthDtoSignin = getAuthDtoSigninFixture();
     });
 
-    it('Should return a user if the user signs in with existing unique key and valid password', async () => {
-      const testSalt = 'test_salt';
+    it('Should call usersService.findOne and throw an error if user is not found', async () => {
+      usersServiceFindOneMock.mockReturnValue(null);
+
+      await expect(authService.signin(testAuthDtoSignin)).rejects.toThrow(
+        NotFoundException,
+      );
+      expect(usersServiceFindOneMock).toHaveBeenNthCalledWith(
+        1,
+        'username',
+        testAuthUserEntity.username,
+      );
+    });
+
+    it('Should call usersService.findOne with an existing unique key, validate a correct password, and return the authenticated user', async () => {
       const testHash = (
-        await scrypt(testAuthDtoSignup.password, testSalt, 32)
+        await scrypt(testAuthDtoSignin.password, testSalt, 32)
       ).toString('hex');
       const passwordHashed = `${testSalt}.${testHash}`;
 
-      usersServiceFindOneMock.mockReturnValue({
+      const userEntityHashed = {
         ...testAuthDtoSignup,
-        id: testUserId,
+        id: testAuthUserEntity.id,
         password: passwordHashed,
-      });
+      };
 
-      const user = await service.signin(
+      usersServiceFindOneMock.mockReturnValue(userEntityHashed);
+
+      const authUsersEntity = await authService.signin(testAuthDtoSignin);
+
+      expect(usersServiceFindOneMock).toHaveBeenNthCalledWith(
+        1,
         'username',
-        testAuthDtoSignup.username,
-        testAuthDtoSignup.password,
+        testAuthUserEntity.username,
       );
-
-      expect(user).toBeDefined();
+      expect(authUsersEntity).toEqual(userEntityHashed);
     });
 
-    it('Should throw and error if the user signs in with existing unique key and invalid password', async () => {
-      const testSalt = 'test_salt';
+    it('Should call usersService.findOne with an existing unique key, invalidate an incorrect password, and throw an error', async () => {
       const testHash = 'test_incorrect_hash';
       const passwordHashed = `${testSalt}.${testHash}`;
 
-      usersServiceFindOneMock.mockReturnValue({
+      const userEntityHashed = {
         ...testAuthDtoSignup,
-        id: testUserId,
+        id: testAuthUserEntity.id,
         password: passwordHashed,
-      });
+      };
 
-      await expect(
-        service.signin(
-          'username',
-          testAuthDtoSignup.username,
-          'invalid_password',
-        ),
-      ).rejects.toThrow(BadRequestException);
+      usersServiceFindOneMock.mockReturnValue(userEntityHashed);
+
+      await expect(authService.signin(testAuthDtoSignin)).rejects.toThrow(
+        BadRequestException,
+      );
+      expect(usersServiceFindOneMock).toHaveBeenNthCalledWith(
+        1,
+        'username',
+        testAuthUserEntity.username,
+      );
     });
   });
 });

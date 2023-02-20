@@ -9,9 +9,11 @@ import {
 } from '../../libs/api-nest-utils/src';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { UsersModule } from '../users/users.module';
+import {
+  UsersModule,
+  UsersService,
+} from '../../libs/apps-libit-api-nest-modules/src';
 import { ReportsModule } from '../reports/reports.module';
-import { UsersService } from '../users/users.service';
 import { configTypeormDataSourceOptions } from '../../config/config.typeorm.dataSourceOptions';
 
 @Module({

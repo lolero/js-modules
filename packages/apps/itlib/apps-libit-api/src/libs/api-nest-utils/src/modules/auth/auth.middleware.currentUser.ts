@@ -16,22 +16,16 @@ declare global {
 export class AuthMiddlewareCurrentUser implements NestMiddleware {
   constructor(@Inject(USERS_SERVICE) private usersService: AuthUsersService) {}
 
-  async use(
-    req: Request<
-      { currentUser?: AuthUsersEntity },
-      { currentUser?: AuthUsersEntity },
-      { currentUser?: AuthUsersEntity },
-      { currentUser?: AuthUsersEntity },
-      { currentUser?: AuthUsersEntity }
-    >,
-    res: Response,
-    next: NextFunction,
-  ): Promise<void> {
+  async use(req: Request, res: Response, next: NextFunction): Promise<void> {
     const { userId } = req.session ?? {};
 
     if (userId) {
-      const currentUser = await this.usersService.findOne('id', userId);
-      req.currentUser = currentUser;
+      try {
+        const currentUser = await this.usersService.findOne('id', userId);
+        req.currentUser = currentUser;
+      } catch {
+        //
+      }
     }
 
     next();

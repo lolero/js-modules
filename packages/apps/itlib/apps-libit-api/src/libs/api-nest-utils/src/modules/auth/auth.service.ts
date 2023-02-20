@@ -8,8 +8,8 @@ import { promisify } from 'util';
 import { BinaryLike, randomBytes, scrypt as _scrypt } from 'crypto';
 import { USERS_SERVICE } from './auth.constants';
 import type { AuthUsersEntity, AuthUsersService } from './auth.types';
-import { UsersUniqueKeyName, UsersUniqueKeyValue } from './auth.types';
 import { AuthDtoSignup } from './auth.dto.signup';
+import { AuthDtoSignin } from './auth.dto.signin';
 
 export const scrypt = promisify(_scrypt) as (
   password: BinaryLike,
@@ -38,11 +38,9 @@ export class AuthService {
     return user;
   }
 
-  async signin(
-    uniqueKeyName: UsersUniqueKeyName,
-    uniqueKeyValue: UsersUniqueKeyValue,
-    password: string,
-  ): Promise<AuthUsersEntity> {
+  async signin(authDtoSignin: AuthDtoSignin): Promise<AuthUsersEntity> {
+    const { uniqueKeyName, uniqueKeyValue, password } = authDtoSignin;
+
     const user = await this.usersService.findOne(uniqueKeyName, uniqueKeyValue);
 
     if (!user) {

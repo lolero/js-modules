@@ -41,8 +41,6 @@ export class UsersController {
     return this.usersService.findMany(email);
   }
 
-  // TODO: implement update many whole controller
-
   @Patch()
   updateManyPartial(
     @Body()
@@ -51,7 +49,6 @@ export class UsersController {
     return this.usersService.updateManyPartial(partialEntities);
   }
 
-  // TODO: replace delete one with delete many controller
   @Delete('/:id')
   deleteOne(@Param('id') id: string): Promise<UsersEntity> {
     return this.usersService.deleteOne(id);

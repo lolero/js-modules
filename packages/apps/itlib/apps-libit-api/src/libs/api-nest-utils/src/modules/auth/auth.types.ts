@@ -9,16 +9,16 @@ export interface AuthUsersEntity {
   password: string;
 }
 
-export type UsersUniqueKeyName = keyof Pick<
+export type AuthUsersUniqueKeyName = keyof Pick<
   AuthUsersEntity,
   'id' | 'username' | 'email' | 'phoneNumber'
 >;
-export type UsersUniqueKeyValue = string | number;
+export type AuthUsersUniqueKeyValue = string | number;
 
 export interface AuthUsersService {
   createOne: (authDtoSignup: AuthDtoSignup) => Promise<AuthUsersEntity>;
   findOne: (
-    uniqueKeyName: UsersUniqueKeyName,
-    uniqueKeyValue: UsersUniqueKeyValue,
+    uniqueKeyName: AuthUsersUniqueKeyName,
+    uniqueKeyValue: AuthUsersUniqueKeyValue,
   ) => Promise<AuthUsersEntity>;
 }

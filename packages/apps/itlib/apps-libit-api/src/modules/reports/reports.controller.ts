@@ -15,11 +15,13 @@ import {
   AuthGuardIsUserAuthenticated,
   InterceptorSerialize,
 } from '../../libs/api-nest-utils/src';
-import { UsersEntity } from '../users/users.entity';
+import {
+  UsersEntity,
+  UsersGuardIsAdmin,
+} from '../../libs/apps-libit-api-nest-modules/src';
 import { ReportsDtoPublic } from './reports.dto.public';
 import { ReportsEntity } from './reports.entity';
 import { ReportsDtoChangeApproval } from './reports.dto.changeApproval';
-import { UsersGuardIsAdmin } from '../users/users.guard.isAdmin';
 import { ReportsDtoGetEstimate } from './reports.dto.getEstimate';
 
 @Controller('reports')

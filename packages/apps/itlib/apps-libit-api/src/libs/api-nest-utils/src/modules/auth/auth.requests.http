@@ -1,4 +1,8 @@
 ###
+# @name Hello world
+GET {{baseUri}}/auth/hello-world
+
+###
 # @name Auth Signup
 POST {{baseUri}}/auth/signup
 Content-Type: application/json

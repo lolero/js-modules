@@ -1,23 +1,23 @@
 import {
   IsEmail,
+  IsOptional,
   IsPhoneNumber,
   IsString,
   IsStrongPassword,
-  ValidateIf,
 } from 'class-validator';
 // eslint-disable-next-line import/no-cycle
 import { AuthUsersEntity } from './auth.types';
 
 export class AuthDtoSignup {
   @IsString()
-  @ValidateIf((object, value) => value !== null)
+  @IsOptional()
   username?: AuthUsersEntity['username'];
 
   @IsEmail()
   email: AuthUsersEntity['email'];
 
   @IsPhoneNumber()
-  @ValidateIf((object, value) => value !== null)
+  @IsOptional()
   phoneNumber?: AuthUsersEntity['phoneNumber'];
 
   @IsStrongPassword({

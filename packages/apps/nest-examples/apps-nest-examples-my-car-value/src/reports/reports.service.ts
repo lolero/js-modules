@@ -53,7 +53,6 @@ export class ReportsService {
         .select('AVG(price)', 'price')
         .where('make = :make', { make })
         .andWhere('model = :model', { model })
-        .andWhere('model = :model', { model })
         .andWhere('latitude - :latitude BETWEEN -5 AND 5', { latitude })
         .andWhere('longitude - :longitude BETWEEN -5 AND 5', { longitude })
         .andWhere('year - :year BETWEEN -3 AND 3', { year })
