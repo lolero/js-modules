@@ -2,12 +2,12 @@ version: '3'
 services:
     db:
         image: postgres
+        user: postgres
         restart: always
         ports:
             - '5432:5432'
         environment:
             POSTGRES_USER: postgres
-            POSTGRES_DATABASE: libit
             POSTGRES_DB: libit
             POSTGRES_PASSWORD: postgres
         command: ['postgres', '-c', 'log_statement=all', '-c', 'log_duration=on']

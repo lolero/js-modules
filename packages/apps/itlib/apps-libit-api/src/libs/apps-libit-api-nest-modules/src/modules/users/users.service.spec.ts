@@ -131,24 +131,29 @@ describe('UsersService', () => {
     expect(usersService).toBeDefined();
   });
 
-  describe('createOne', () => {
-    let usersDtoCreateOne: UsersDtoCreateOne;
+  describe('createMany', () => {
+    let usersDtoCreateOneArray: UsersDtoCreateOne[];
 
     beforeEach(() => {
-      usersDtoCreateOne = getUsersDtoCreateOneFixture();
+      usersDtoCreateOneArray = [
+        getUsersDtoCreateOneFixture(),
+        getUsersDtoCreateOneFixture(),
+      ];
     });
 
     it('Should call usersRepository.create with a UsersDtoCreateOne, usersRepository.save with the created user, and return the created user', async () => {
-      usersRepositoryCreateMock.mockReturnValue(testUsersEntity);
+      usersRepositoryCreateMock.mockReturnValue(testUsersEntities);
 
-      const usersEntity = await usersService.createOne(usersDtoCreateOne);
+      const usersEntities = await usersService.createMany(
+        usersDtoCreateOneArray,
+      );
 
       expect(usersRepositoryCreateMock).toHaveBeenNthCalledWith(
         1,
-        usersDtoCreateOne,
+        usersDtoCreateOneArray,
       );
-      expect(usersRepositorySaveMock).toHaveBeenNthCalledWith(1, usersEntity);
-      expect(usersEntity).toEqual(testUsersEntity);
+      expect(usersRepositorySaveMock).toHaveBeenNthCalledWith(1, usersEntities);
+      expect(usersEntities).toEqual(testUsersEntities);
     });
   });
 
@@ -451,10 +456,10 @@ describe('UsersService', () => {
         id: In(usersDtoUpdateOnePartialWithPattern.ids),
       });
       expect(usersEntities[0].username).toEqual(
-        usersDtoUpdateOnePartialWithPattern.usersDtoUpdateOnePartial.username,
+        usersDtoUpdateOnePartialWithPattern.dtoUpdateOnePartial.username,
       );
       expect(usersEntities[1].username).toEqual(
-        usersDtoUpdateOnePartialWithPattern.usersDtoUpdateOnePartial.username,
+        usersDtoUpdateOnePartialWithPattern.dtoUpdateOnePartial.username,
       );
     });
 

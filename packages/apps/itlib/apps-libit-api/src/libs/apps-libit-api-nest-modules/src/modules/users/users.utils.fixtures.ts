@@ -34,7 +34,9 @@ export function getUsersDtoCreateOneFixture(
 export function getUsersDtoFindManyFixture(
   overrides: Partial<UsersDtoFindMany> = {},
 ): UsersDtoFindMany {
-  return getRequestsDtoQueryParamsFindManyFixture(overrides);
+  return getRequestsDtoQueryParamsFindManyFixture<UsersDtoFindMany['sortBy']>(
+    overrides,
+  );
 }
 
 export function getUsersDtoUpdateOneWholeFixture(
@@ -61,14 +63,14 @@ export function getUsersDtoUpdateOnePartialFixture(
 export function getUsersDtoUpdateOnePartialWithPatternFixture(
   overrides: {
     ids?: UsersDtoUpdateOnePartialWithPattern['ids'];
-    usersDtoUpdateOnePartial?: UsersDtoUpdateOnePartialWithPattern['usersDtoUpdateOnePartial'];
+    dtoUpdateOnePartial?: UsersDtoUpdateOnePartialWithPattern['dtoUpdateOnePartial'];
   } = {},
 ): UsersDtoUpdateOnePartialWithPattern {
   const usersDtoUpdateOnePartialWithPattern: UsersDtoUpdateOnePartialWithPattern =
     {
       ids: overrides.ids ?? ['test_id_1', 'test_id_2'],
-      usersDtoUpdateOnePartial: getUsersDtoUpdateOnePartialFixture(
-        overrides.usersDtoUpdateOnePartial,
+      dtoUpdateOnePartial: getUsersDtoUpdateOnePartialFixture(
+        overrides.dtoUpdateOnePartial,
       ),
     };
 

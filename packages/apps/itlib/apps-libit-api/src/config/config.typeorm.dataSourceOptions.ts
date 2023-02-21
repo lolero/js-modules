@@ -1,6 +1,8 @@
 import { DataSourceOptions } from 'typeorm';
-import { ReportsEntity } from '../modules/reports/reports.entity';
-import { UsersEntity } from '../libs/apps-libit-api-nest-modules/src';
+import {
+  SystemRolesEntity,
+  UsersEntity,
+} from '../libs/apps-libit-api-nest-modules/src';
 
 type VariableProps = 'type' | 'database';
 
@@ -8,7 +10,7 @@ const configTypeormDataSourceOptionsBase: Omit<
   DataSourceOptions,
   VariableProps
 > = {
-  entities: [UsersEntity],
+  entities: [UsersEntity, SystemRolesEntity],
   synchronize: false,
   migrations: [`build/migrations/*.js`],
 };

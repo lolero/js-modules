@@ -1,22 +1,19 @@
 import { DynamicModule, MiddlewareConsumer, Module } from '@nestjs/common';
-import { FactoryProvider } from '@nestjs/common/interfaces/modules/provider.interface';
-import { ClassConstructor } from 'class-transformer';
 import { AuthService } from './auth.service';
-import { AuthUsersService } from './auth.types';
+import { AuthModuleMetadata, AuthUsersService } from './auth.types';
 import { AuthController } from './auth.controller';
 import { AuthMiddlewareCurrentUser } from './auth.middleware.currentUser';
 
 @Module({})
 export class AuthModule {
   static register(
-    usersModule: ClassConstructor<any>,
-    usersServiceProvider: FactoryProvider<AuthUsersService>,
+    usersModuleMetadata: AuthModuleMetadata<AuthUsersService>,
   ): DynamicModule {
     return {
       module: AuthModule,
-      imports: [usersModule],
+      imports: [usersModuleMetadata.module],
       controllers: [AuthController],
-      providers: [AuthService, usersServiceProvider],
+      providers: [AuthService, usersModuleMetadata.serviceProvider],
       exports: [AuthService],
     };
   }

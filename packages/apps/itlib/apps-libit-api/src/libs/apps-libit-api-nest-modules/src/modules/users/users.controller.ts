@@ -8,10 +8,7 @@ import {
   Put,
   Query,
 } from '@nestjs/common';
-import type {
-  AuthUsersUniqueKeyName,
-  AuthUsersUniqueKeyValue,
-} from '../../../../api-nest-utils/src';
+import type { EntityUniqueKeyValue } from '../../../../api-nest-utils/src';
 import { InterceptorSerialize } from '../../../../api-nest-utils/src';
 import { UsersService } from './users.service';
 import { UsersEntity } from './users.entity';
@@ -21,6 +18,7 @@ import { UsersDtoDeleteMany } from './users.dto.deleteMany';
 import { UsersDtoUpdateOnePartialWithPattern } from './users.dto.updateManyPartialWithPattern';
 import { UsersDtoFindMany } from './users.dto.findMany';
 import { UsersDtoUpdateOneWhole } from './users.dto.updateOneWhole';
+import type { UsersUniqueKeyName } from './users.types';
 
 @Controller('users')
 @InterceptorSerialize<UsersEntity>(UsersDtoPublic)
@@ -29,8 +27,8 @@ export class UsersController {
 
   @Get('/:uniqueKeyValue')
   findOne(
-    @Param('uniqueKeyValue') uniqueKeyValue: AuthUsersUniqueKeyValue,
-    @Query('uniqueKeyName') uniqueKeyName: AuthUsersUniqueKeyName = 'id',
+    @Param('uniqueKeyValue') uniqueKeyValue: EntityUniqueKeyValue,
+    @Query('uniqueKeyName') uniqueKeyName: UsersUniqueKeyName = 'id',
   ): Promise<UsersEntity> {
     return this.usersService.findOne(uniqueKeyName, uniqueKeyValue);
   }

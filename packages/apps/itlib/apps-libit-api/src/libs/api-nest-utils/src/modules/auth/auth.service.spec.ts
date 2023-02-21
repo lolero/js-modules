@@ -15,17 +15,17 @@ describe('AuthService', () => {
   let testAuthUserEntity: AuthUsersEntity;
   let testAuthDtoSignup: AuthDtoSignup;
   let authService: AuthService;
-  let usersServiceCreateOneMock: jest.Mock;
+  let usersServiceCreateManyMock: jest.Mock;
   let usersServiceFindOneMock: jest.Mock;
   let usersServiceMock: Partial<AuthUsersService>;
 
   beforeEach(async () => {
     testAuthUserEntity = getAuthUserEntityFixture();
     testAuthDtoSignup = getAuthDtoSignupFixture();
-    usersServiceCreateOneMock = jest.fn();
+    usersServiceCreateManyMock = jest.fn();
     usersServiceFindOneMock = jest.fn();
     usersServiceMock = {
-      createOne: usersServiceCreateOneMock,
+      createMany: usersServiceCreateManyMock,
       findOne: usersServiceFindOneMock,
     };
 
@@ -47,17 +47,17 @@ describe('AuthService', () => {
   });
 
   describe('signup', () => {
-    it('Should call usersService.createOne, with a salted and hashed password, and return the created user', async () => {
-      usersServiceCreateOneMock.mockReturnValue(testAuthUserEntity);
+    it('Should call usersService.createMany, with a salted and hashed password, and return the created user', async () => {
+      usersServiceCreateManyMock.mockReturnValue(testAuthUserEntity);
 
       const authUsersEntity = await authService.signup(testAuthDtoSignup);
 
-      expect(usersServiceCreateOneMock).toHaveBeenNthCalledWith(1, {
+      expect(usersServiceCreateManyMock).toHaveBeenNthCalledWith(1, {
         ...testAuthDtoSignup,
         password: expect.anything(),
       });
 
-      const { password } = usersServiceCreateOneMock.mock.calls[0][0];
+      const { password } = usersServiceCreateManyMock.mock.calls[0][0];
       expect(password).not.toBe(testAuthDtoSignup.password);
 
       const [salt, hash] = password.split('.');

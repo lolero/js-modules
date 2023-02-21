@@ -12,6 +12,7 @@ import { AppService } from './app.service';
 import {
   UsersModule,
   UsersService,
+  SystemRolesModule,
 } from '../../libs/apps-libit-api-nest-modules/src';
 import { ReportsModule } from '../reports/reports.module';
 import { configTypeormDataSourceOptions } from '../../config/config.typeorm.dataSourceOptions';
@@ -23,12 +24,13 @@ import { configTypeormDataSourceOptions } from '../../config/config.typeorm.data
       envFilePath: `.env.${process.env.NODE_ENV}`,
     }),
     TypeOrmModule.forRoot(configTypeormDataSourceOptions),
-    AuthModule.register(
-      UsersModule,
-      authUtilGetAuthUsersServiceProvider(UsersService),
-    ),
+    AuthModule.register({
+      module: UsersModule,
+      serviceProvider: authUtilGetAuthUsersServiceProvider(UsersService),
+    }),
     ReportsModule,
     UsersModule,
+    SystemRolesModule,
   ],
   controllers: [AppController],
   providers: [

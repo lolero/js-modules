@@ -1,5 +1,5 @@
-import { Expose } from 'class-transformer';
-import { AuthUsersEntity } from './auth.types';
+import { Expose, Transform } from 'class-transformer';
+import { AuthSystemRolesEntity, AuthUsersEntity } from './auth.types';
 
 export class AuthDtoPublicUser {
   @Expose()
@@ -13,4 +13,12 @@ export class AuthDtoPublicUser {
 
   @Expose()
   phoneNumber: AuthUsersEntity['phoneNumber'];
+
+  @Transform(({ obj }) =>
+    obj.systemRoles.map(
+      (systemRolesEntity: AuthSystemRolesEntity) => systemRolesEntity.name,
+    ),
+  )
+  @Expose()
+  systemRoles: AuthSystemRolesEntity['name'];
 }

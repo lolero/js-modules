@@ -10,8 +10,7 @@ import difference from 'lodash/difference';
 import upperCase from 'lodash/upperCase';
 import {
   AuthUsersService,
-  AuthUsersUniqueKeyName,
-  AuthUsersUniqueKeyValue,
+  EntityUniqueKeyValue,
 } from '../../../../api-nest-utils/src';
 import { UsersEntity } from './users.entity';
 import { UsersDtoCreateOne } from './users.dto.createOne';
@@ -20,6 +19,7 @@ import { UsersDtoUpdateOnePartialWithPattern } from './users.dto.updateManyParti
 import { UsersDtoDeleteMany } from './users.dto.deleteMany';
 import { UsersDtoFindMany } from './users.dto.findMany';
 import { UsersDtoUpdateOneWhole } from './users.dto.updateOneWhole';
+import { UsersUniqueKeyName } from './users.types';
 
 @Injectable()
 export class UsersService implements AuthUsersService {
@@ -28,15 +28,17 @@ export class UsersService implements AuthUsersService {
     private usersRepository: Repository<UsersEntity>,
   ) {}
 
-  async createOne(usersDtoCreateOne: UsersDtoCreateOne): Promise<UsersEntity> {
-    const usersEntity = this.usersRepository.create(usersDtoCreateOne);
+  async createMany(
+    usersDtoCreateOneArray: UsersDtoCreateOne[],
+  ): Promise<UsersEntity[]> {
+    const usersEntities = this.usersRepository.create(usersDtoCreateOneArray);
 
-    return this.usersRepository.save(usersEntity);
+    return this.usersRepository.save(usersEntities);
   }
 
   async findOne(
-    uniqueKeyName: AuthUsersUniqueKeyName,
-    uniqueKeyValue: AuthUsersUniqueKeyValue,
+    uniqueKeyName: UsersUniqueKeyName,
+    uniqueKeyValue: EntityUniqueKeyValue,
   ): Promise<UsersEntity> {
     const usersEntity = await this.usersRepository.findOneBy({
       [uniqueKeyName]: uniqueKeyValue,
@@ -152,8 +154,7 @@ export class UsersService implements AuthUsersService {
   async updateManyPartialWithPattern(
     usersDtoUpdateOnePartialWithPattern: UsersDtoUpdateOnePartialWithPattern,
   ): Promise<UsersEntity[]> {
-    const { ids, usersDtoUpdateOnePartial } =
-      usersDtoUpdateOnePartialWithPattern;
+    const { ids, dtoUpdateOnePartial } = usersDtoUpdateOnePartialWithPattern;
     const usersEntities = await this.usersRepository.findBy({
       id: In(ids),
     });
@@ -167,7 +168,7 @@ export class UsersService implements AuthUsersService {
     }
 
     const usersEntitiesUpdated = usersEntities.map((usersEntity) => {
-      return Object.assign(usersEntity, usersDtoUpdateOnePartial);
+      return Object.assign(usersEntity, dtoUpdateOnePartial);
     });
 
     return this.usersRepository.save(usersEntitiesUpdated);

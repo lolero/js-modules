@@ -33,21 +33,26 @@ export class AuthService {
       password: result,
     };
 
-    const user = await this.usersService.createOne(authDtoSignupHashed);
+    const authUsersEntities = await this.usersService.createMany([
+      authDtoSignupHashed,
+    ]);
 
-    return user;
+    return authUsersEntities[0];
   }
 
   async signin(authDtoSignin: AuthDtoSignin): Promise<AuthUsersEntity> {
     const { uniqueKeyName, uniqueKeyValue, password } = authDtoSignin;
 
-    const user = await this.usersService.findOne(uniqueKeyName, uniqueKeyValue);
+    const authUsersEntity = await this.usersService.findOne(
+      uniqueKeyName,
+      uniqueKeyValue,
+    );
 
-    if (!user) {
+    if (!authUsersEntity) {
       throw new NotFoundException('user not found');
     }
 
-    const [salt, storedHashStr] = user.password.split('.');
+    const [salt, storedHashStr] = authUsersEntity.password.split('.');
 
     const providedHash = await scrypt(password, salt, 32);
     const providedHashStr = providedHash.toString('hex');
@@ -56,6 +61,6 @@ export class AuthService {
       throw new BadRequestException('invalid password');
     }
 
-    return user;
+    return authUsersEntity;
   }
 }

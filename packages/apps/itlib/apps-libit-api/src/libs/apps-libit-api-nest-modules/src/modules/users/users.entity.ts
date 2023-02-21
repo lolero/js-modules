@@ -4,10 +4,12 @@ import {
   AfterUpdate,
   Column,
   Entity,
+  JoinTable,
+  ManyToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { AuthUsersEntity } from '../../../../api-nest-utils/src';
-// import { ReportsEntity } from '../../../../modules/reports/reports.entity'; // eslint-disable-line import/no-cycle
+import { SystemRolesEntity } from '../systemRoles/systemRoles.entity';
 
 @Entity('users')
 export class UsersEntity implements AuthUsersEntity {
@@ -34,11 +36,19 @@ export class UsersEntity implements AuthUsersEntity {
   @Column()
   password: string;
 
-  // @Column({ default: true })
-  // isAdmin: boolean;
-
-  // @OneToMany(() => ReportsEntity, (report) => report.user)
-  // reports: ReportsEntity[];
+  @ManyToMany(() => SystemRolesEntity, {
+    eager: true,
+  })
+  @JoinTable({
+    name: 'users__system_roles',
+    joinColumn: {
+      name: 'userId',
+    },
+    inverseJoinColumn: {
+      name: 'systemRoleId',
+    },
+  })
+  systemRoles: SystemRolesEntity[];
 
   @AfterInsert()
   logInsert() {

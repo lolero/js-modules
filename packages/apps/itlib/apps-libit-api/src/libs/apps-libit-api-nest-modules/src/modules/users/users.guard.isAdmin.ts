@@ -1,5 +1,6 @@
 import { CanActivate, ExecutionContext } from '@nestjs/common';
 import { Observable } from 'rxjs';
+import { SystemRolesNames } from '../systemRoles/systemRoles.types';
 
 export class UsersGuardIsAdmin implements CanActivate {
   canActivate(
@@ -11,6 +12,6 @@ export class UsersGuardIsAdmin implements CanActivate {
       return false;
     }
 
-    return request.currentUser.isAdmin;
+    return request.currentUser.systemRoles.includes(SystemRolesNames.ADMIN);
   }
 }

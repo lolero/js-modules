@@ -16,7 +16,7 @@ describe('UsersController', () => {
   let testUsersEntity: UsersDtoUpdateOneWhole;
   let testUsersEntities: UsersDtoUpdateOneWhole[];
   let usersController: UsersController;
-  let usersServiceCreateOneMock: jest.Mock;
+  let usersServiceCreateManyMock: jest.Mock;
   let usersServiceFindOneMock: jest.Mock;
   let usersServiceFindManyMock: jest.Mock;
   let usersServiceUpdateManyWholeMock: jest.Mock;
@@ -28,7 +28,7 @@ describe('UsersController', () => {
   beforeEach(async () => {
     testUsersEntity = getUsersEntityFixture();
     testUsersEntities = [testUsersEntity, testUsersEntity];
-    usersServiceCreateOneMock = jest.fn();
+    usersServiceCreateManyMock = jest.fn();
     usersServiceFindOneMock = jest.fn();
     usersServiceFindManyMock = jest.fn();
     usersServiceUpdateManyWholeMock = jest.fn();
@@ -36,7 +36,7 @@ describe('UsersController', () => {
     usersServiceUpdateManyPartialWithPatternMock = jest.fn();
     usersServiceDeleteManyMock = jest.fn();
     usersServiceMock = {
-      createOne: usersServiceCreateOneMock,
+      createMany: usersServiceCreateManyMock,
       findOne: usersServiceFindOneMock,
       findMany: usersServiceFindManyMock,
       updateManyWhole: usersServiceUpdateManyWholeMock,
@@ -196,7 +196,7 @@ describe('UsersController', () => {
     beforeEach(() => {
       usersDtoUpdateOnePartialWithPattern = {
         ids: [testUsersEntity.id, testUsersEntity.id],
-        usersDtoUpdateOnePartial: testUsersEntity,
+        dtoUpdateOnePartial: testUsersEntity,
       };
     });
 
