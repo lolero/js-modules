@@ -8,21 +8,25 @@ import { UsersDtoCreateOne } from './users.dto.createOne';
 import { UsersDtoUpdateOnePartial } from './users.dto.updateOnePartial';
 import { UsersDtoUpdateOnePartialWithPattern } from './users.dto.updateManyPartialWithPattern';
 import { UsersDtoDeleteMany } from './users.dto.deleteMany';
+import { UsersEntity } from './users.entity';
+import { getSystemRolesEntityFixture } from '../systemRoles/systemRoles.utils.fixtures';
+import { UsersEntityType } from './users.types';
 
 export function getUsersEntityFixture(
-  overrides: Partial<UsersDtoUpdateOneWhole> = {},
-): UsersDtoUpdateOneWhole {
-  const usersEntityDefault: UsersDtoUpdateOneWhole = {
-    id: 'test_id',
+  overrides: Partial<UsersEntityType> = {},
+): UsersEntity {
+  const usersEntityDefault: UsersEntityType = {
+    id: 1,
     username: 'test_username',
     email: 'test@email.com',
     phoneNumber: '+18001234567',
     password: 'test_password',
+    systemRoles: [getSystemRolesEntityFixture()],
   };
 
   const usersEntity = Object.assign(usersEntityDefault, overrides);
 
-  return usersEntity;
+  return usersEntity as UsersEntity;
 }
 
 export function getUsersDtoCreateOneFixture(
@@ -42,7 +46,20 @@ export function getUsersDtoFindManyFixture(
 export function getUsersDtoUpdateOneWholeFixture(
   overrides: Partial<UsersDtoUpdateOneWhole> = {},
 ): UsersDtoUpdateOneWhole {
-  return getUsersEntityFixture(overrides);
+  const usersDtoUpdateOneWholeDefault: UsersDtoUpdateOneWhole = {
+    id: 1,
+    username: 'test_username',
+    email: 'test@email.com',
+    phoneNumber: '+18001234567',
+    password: 'test_password',
+  };
+
+  const usersDtoUpdateOneWhole = Object.assign(
+    usersDtoUpdateOneWholeDefault,
+    overrides,
+  );
+
+  return usersDtoUpdateOneWhole;
 }
 
 export function getUsersDtoUpdateOnePartialFixture(
@@ -68,7 +85,7 @@ export function getUsersDtoUpdateOnePartialWithPatternFixture(
 ): UsersDtoUpdateOnePartialWithPattern {
   const usersDtoUpdateOnePartialWithPattern: UsersDtoUpdateOnePartialWithPattern =
     {
-      ids: overrides.ids ?? ['test_id_1', 'test_id_2'],
+      ids: overrides.ids ?? [1, 2],
       dtoUpdateOnePartial: getUsersDtoUpdateOnePartialFixture(
         overrides.dtoUpdateOnePartial,
       ),
@@ -81,7 +98,7 @@ export function getUsersDtoDeleteManyFixture(
   overrides: Partial<UsersDtoDeleteMany> = {},
 ): UsersDtoDeleteMany {
   const usersDtoDeleteManyDefault: UsersDtoDeleteMany = {
-    ids: ['test_id_1', 'test_id_2'],
+    ids: [1, 2],
   };
 
   const usersDtoDeleteMany = Object.assign(

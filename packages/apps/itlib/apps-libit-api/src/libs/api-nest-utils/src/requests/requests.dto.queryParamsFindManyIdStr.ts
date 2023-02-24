@@ -1,10 +1,10 @@
 import { IsInt, IsOptional, IsString, Min } from 'class-validator';
 import type { SortOrder } from './requests.types';
 
-export class RequestsDtoQueryParamsFindMany<SortByT> {
+export class RequestsDtoQueryParamsFindManyIdStr<SortByT> {
   @IsString({ each: true })
   @IsOptional()
-  ids?: (string | number)[];
+  ids?: string[];
 
   @IsString()
   @IsOptional()

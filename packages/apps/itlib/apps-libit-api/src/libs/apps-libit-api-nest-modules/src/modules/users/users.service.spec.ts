@@ -21,17 +21,16 @@ import { UsersDtoCreateOne } from './users.dto.createOne';
 import { UsersDtoUpdateOnePartial } from './users.dto.updateOnePartial';
 import { UsersDtoUpdateOnePartialWithPattern } from './users.dto.updateManyPartialWithPattern';
 import { UsersDtoDeleteMany } from './users.dto.deleteMany';
+import { SystemRolesService } from '../systemRoles/systemRoles.service';
+import { SystemRolesDtoUpdateOneWhole } from '../systemRoles/systemRoles.dto.updateOneWhole';
+import { getSystemRolesEntityFixture } from '../systemRoles/systemRoles.utils.fixtures';
+import { UsersEntityType } from './users.types';
 
 describe('UsersService', () => {
-  let testUsersEntity: UsersDtoUpdateOneWhole;
-  let testUsersEntities: UsersDtoUpdateOneWhole[];
-  let usersService: UsersService;
-  let usersRepositoryCreateMock: jest.Mock;
-  let usersRepositoryFindOneByMock: jest.Mock;
-  let usersRepositoryFindByMock: jest.Mock;
-  let usersRepositorySaveMock: jest.Mock;
-  let usersRepositoryRemoveMock: jest.Mock;
-  let testUsersRepositoryQueryBuilder: Partial<SelectQueryBuilder<UsersEntity>>;
+  let testUsersEntity: UsersEntity;
+  let testUsersEntities: UsersEntity[];
+  let testSystemRolesEntity: SystemRolesDtoUpdateOneWhole;
+
   let usersRepositoryCreateQueryBuilderMock: jest.Mock;
   let usersRepositoryQueryBuilderSelectMock: jest.Mock;
   let usersRepositoryQueryBuilderWhereMock: jest.Mock;
@@ -41,23 +40,28 @@ describe('UsersService', () => {
   let usersRepositoryQueryBuilderSkipMock: jest.Mock;
   let usersRepositoryQueryBuilderTakeMock: jest.Mock;
   let usersRepositoryQueryBuilderGetRawManyMock: jest.Mock;
+  let usersRepositoryQueryBuilderMock: Partial<SelectQueryBuilder<UsersEntity>>;
+  let usersRepositoryCreateMock: jest.Mock;
+  let usersRepositoryFindOneByMock: jest.Mock;
+  let usersRepositoryFindByMock: jest.Mock;
+  let usersRepositorySaveMock: jest.Mock;
+  let usersRepositoryRemoveMock: jest.Mock;
   let usersRepositoryMock: Partial<Repository<UsersEntity>>;
-  let usersRepositoryMockFactory: () => Partial<Repository<UsersEntity>>;
+
+  let systemRolesServiceFindOneMock: jest.Mock;
+  let systemRolesServiceMock: Partial<SystemRolesService>;
+
+  let usersService: UsersService;
 
   beforeEach(async () => {
     testUsersEntity = getUsersEntityFixture();
     testUsersEntities = [
-      getUsersEntityFixture({ id: 'test_id_1' }),
-      getUsersEntityFixture({ id: 'test_id_2' }),
+      getUsersEntityFixture({ id: 1 }),
+      getUsersEntityFixture({ id: 2 }),
     ];
-    usersRepositoryCreateMock = jest.fn();
-    usersRepositoryFindOneByMock = jest.fn();
-    usersRepositoryFindByMock = jest.fn();
-    usersRepositoryRemoveMock = jest.fn();
-    usersRepositorySaveMock = jest
-      .fn()
-      .mockImplementation((usersEntities) => usersEntities);
-    testUsersRepositoryQueryBuilder = {
+    testSystemRolesEntity = getSystemRolesEntityFixture();
+
+    usersRepositoryQueryBuilderMock = {
       select: jest.fn(),
       where: jest.fn(),
       andWhere: jest.fn(),
@@ -69,32 +73,30 @@ describe('UsersService', () => {
     };
     usersRepositoryCreateQueryBuilderMock = jest
       .fn()
-      .mockReturnValue(testUsersRepositoryQueryBuilder);
+      .mockReturnValue(usersRepositoryQueryBuilderMock);
     usersRepositoryQueryBuilderSelectMock = jest
       .fn()
-      .mockReturnValue(testUsersRepositoryQueryBuilder);
+      .mockReturnValue(usersRepositoryQueryBuilderMock);
     usersRepositoryQueryBuilderWhereMock = jest
       .fn()
-      .mockReturnValue(testUsersRepositoryQueryBuilder);
+      .mockReturnValue(usersRepositoryQueryBuilderMock);
     usersRepositoryQueryBuilderAndWhereMock = jest
       .fn()
-      .mockReturnValue(testUsersRepositoryQueryBuilder);
+      .mockReturnValue(usersRepositoryQueryBuilderMock);
     usersRepositoryQueryBuilderOrderByMock = jest
       .fn()
-      .mockReturnValue(testUsersRepositoryQueryBuilder);
+      .mockReturnValue(usersRepositoryQueryBuilderMock);
     usersRepositoryQueryBuilderSetParametersMock = jest
       .fn()
-      .mockReturnValue(testUsersRepositoryQueryBuilder);
+      .mockReturnValue(usersRepositoryQueryBuilderMock);
     usersRepositoryQueryBuilderSkipMock = jest
       .fn()
-      .mockReturnValue(testUsersRepositoryQueryBuilder);
+      .mockReturnValue(usersRepositoryQueryBuilderMock);
     usersRepositoryQueryBuilderTakeMock = jest
       .fn()
-      .mockReturnValue(testUsersRepositoryQueryBuilder);
-    usersRepositoryQueryBuilderGetRawManyMock = jest
-      .fn()
-      .mockReturnValue(testUsersEntities);
-    Object.assign(testUsersRepositoryQueryBuilder, {
+      .mockReturnValue(usersRepositoryQueryBuilderMock);
+    usersRepositoryQueryBuilderGetRawManyMock = jest.fn();
+    Object.assign(usersRepositoryQueryBuilderMock, {
       select: usersRepositoryQueryBuilderSelectMock,
       where: usersRepositoryQueryBuilderWhereMock,
       andWhere: usersRepositoryQueryBuilderAndWhereMock,
@@ -104,6 +106,13 @@ describe('UsersService', () => {
       take: usersRepositoryQueryBuilderTakeMock,
       getRawMany: usersRepositoryQueryBuilderGetRawManyMock,
     });
+    usersRepositoryCreateMock = jest.fn();
+    usersRepositoryFindOneByMock = jest.fn();
+    usersRepositoryFindByMock = jest.fn();
+    usersRepositorySaveMock = jest
+      .fn()
+      .mockImplementation((usersEntities) => usersEntities);
+    usersRepositoryRemoveMock = jest.fn();
     usersRepositoryMock = {
       create: usersRepositoryCreateMock,
       createQueryBuilder: usersRepositoryCreateQueryBuilderMock,
@@ -112,14 +121,22 @@ describe('UsersService', () => {
       remove: usersRepositoryRemoveMock,
       save: usersRepositorySaveMock,
     };
-    usersRepositoryMockFactory = () => usersRepositoryMock;
+
+    systemRolesServiceFindOneMock = jest.fn();
+    systemRolesServiceMock = {
+      findOne: systemRolesServiceFindOneMock,
+    };
 
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         UsersService,
         {
           provide: getRepositoryToken(UsersEntity),
-          useFactory: usersRepositoryMockFactory,
+          useFactory: () => usersRepositoryMock,
+        },
+        {
+          provide: SystemRolesService,
+          useValue: systemRolesServiceMock,
         },
       ],
     }).compile();
@@ -142,6 +159,7 @@ describe('UsersService', () => {
     });
 
     it('Should call usersRepository.create with a UsersDtoCreateOne, usersRepository.save with the created user, and return the created user', async () => {
+      systemRolesServiceFindOneMock.mockReturnValue(testSystemRolesEntity);
       usersRepositoryCreateMock.mockReturnValue(testUsersEntities);
 
       const usersEntities = await usersService.createMany(
@@ -181,6 +199,10 @@ describe('UsersService', () => {
     });
 
     it('Should create a query builder, select all records, and return the found users', async () => {
+      usersRepositoryQueryBuilderGetRawManyMock.mockReturnValue(
+        testUsersEntities,
+      );
+
       const usersEntities = await usersService.findMany(usersDtoFindMany);
 
       expect(usersRepositoryCreateQueryBuilderMock).toHaveBeenNthCalledWith(1);
@@ -341,8 +363,8 @@ describe('UsersService', () => {
 
     beforeEach(() => {
       usersDtoUpdateOneWholeArray = [
-        getUsersDtoUpdateOneWholeFixture({ id: 'test_id_1' }),
-        getUsersDtoUpdateOneWholeFixture({ id: 'test_id_2' }),
+        getUsersDtoUpdateOneWholeFixture({ id: 1 }),
+        getUsersDtoUpdateOneWholeFixture({ id: 2 }),
       ];
     });
 
@@ -367,7 +389,15 @@ describe('UsersService', () => {
           usersDtoUpdateOneWholeArray.map((usersEntity) => usersEntity.id),
         ),
       });
-      expect(usersEntities).toEqual(usersDtoUpdateOneWholeArray);
+      expect(usersEntities).toEqual(
+        usersDtoUpdateOneWholeArray.map((usersDtoUpdateOneWhole) => {
+          const usersEntity: UsersEntityType = {
+            ...usersDtoUpdateOneWhole,
+            systemRoles: testUsersEntity.systemRoles,
+          };
+          return usersEntity;
+        }),
+      );
     });
 
     it('Should throw an error if all users to be updated dont exist', async () => {
@@ -409,7 +439,7 @@ describe('UsersService', () => {
       );
 
       expect(usersRepositoryFindByMock).toHaveBeenNthCalledWith(1, {
-        id: In(keys(usersDtoUpdateManyPartialObject)),
+        id: In(keys(usersDtoUpdateManyPartialObject).map((id) => Number(id))),
       });
       expect(usersEntities[0].username).toEqual(
         usersDtoUpdateManyPartialObject[testUsersEntities[0].id].username,

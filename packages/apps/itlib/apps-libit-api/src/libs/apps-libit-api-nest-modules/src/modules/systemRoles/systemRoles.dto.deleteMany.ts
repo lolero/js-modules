@@ -1,3 +1,3 @@
-import { RequestsDtoBodyDeleteMany } from '../../../../api-nest-utils/src';
+import { RequestsDtoBodyDeleteManyIdInt } from '../../../../api-nest-utils/src';
 
-export class SystemRolesDtoDeleteMany extends RequestsDtoBodyDeleteMany {}
+export class SystemRolesDtoDeleteMany extends RequestsDtoBodyDeleteManyIdInt {}

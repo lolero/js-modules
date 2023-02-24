@@ -13,9 +13,8 @@ import { UsersDtoUpdateOnePartialWithPattern } from './users.dto.updateManyParti
 import { UsersDtoDeleteMany } from './users.dto.deleteMany';
 
 describe('UsersController', () => {
-  let testUsersEntity: UsersDtoUpdateOneWhole;
-  let testUsersEntities: UsersDtoUpdateOneWhole[];
-  let usersController: UsersController;
+  let testUsersEntity: UsersEntity;
+  let testUsersEntities: UsersEntity[];
   let usersServiceCreateManyMock: jest.Mock;
   let usersServiceFindOneMock: jest.Mock;
   let usersServiceFindManyMock: jest.Mock;
@@ -24,6 +23,7 @@ describe('UsersController', () => {
   let usersServiceUpdateManyPartialWithPatternMock: jest.Mock;
   let usersServiceDeleteManyMock: jest.Mock;
   let usersServiceMock: Partial<UsersService>;
+  let usersController: UsersController;
 
   beforeEach(async () => {
     testUsersEntity = getUsersEntityFixture();

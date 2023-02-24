@@ -1,8 +1,8 @@
-import { IsString, IsUUID } from 'class-validator';
+import { IsString, IsInt } from 'class-validator';
 import { SystemRolesEntity } from './systemRoles.entity';
 
 export class SystemRolesDtoUpdateOneWhole {
-  @IsUUID()
+  @IsInt()
   id: SystemRolesEntity['id'];
 
   @IsString()

@@ -137,7 +137,9 @@ export class SystemRolesService {
       SystemRolesDtoUpdateOnePartial
     >,
   ): Promise<SystemRolesEntity[]> {
-    const ids = keys(systemRolesDtoUpdateManyPartialObject);
+    const ids = keys(systemRolesDtoUpdateManyPartialObject).map((id) =>
+      Number(id),
+    );
     const systemRolesEntities = await this.systemRolesRepository.findBy({
       id: In(ids),
     });

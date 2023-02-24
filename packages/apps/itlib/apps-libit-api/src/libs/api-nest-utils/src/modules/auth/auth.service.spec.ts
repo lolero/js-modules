@@ -2,7 +2,7 @@ import { Test } from '@nestjs/testing';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { AuthService, scrypt } from './auth.service';
 import { AuthUsersEntity, AuthUsersService } from './auth.types';
-import { USERS_SERVICE } from './auth.constants';
+import { AUTH_USERS_SERVICE } from './auth.constants';
 import { AuthDtoSignup } from './auth.dto.signup';
 import {
   getAuthDtoSigninFixture,
@@ -14,27 +14,30 @@ import { AuthDtoSignin } from './auth.dto.signin';
 describe('AuthService', () => {
   let testAuthUserEntity: AuthUsersEntity;
   let testAuthDtoSignup: AuthDtoSignup;
+
+  let authUsersServiceCreateManyMock: jest.Mock;
+  let authUsersServiceFindOneMock: jest.Mock;
+  let authUsersServiceMock: Partial<AuthUsersService>;
+
   let authService: AuthService;
-  let usersServiceCreateManyMock: jest.Mock;
-  let usersServiceFindOneMock: jest.Mock;
-  let usersServiceMock: Partial<AuthUsersService>;
 
   beforeEach(async () => {
     testAuthUserEntity = getAuthUserEntityFixture();
     testAuthDtoSignup = getAuthDtoSignupFixture();
-    usersServiceCreateManyMock = jest.fn();
-    usersServiceFindOneMock = jest.fn();
-    usersServiceMock = {
-      createMany: usersServiceCreateManyMock,
-      findOne: usersServiceFindOneMock,
+
+    authUsersServiceCreateManyMock = jest.fn();
+    authUsersServiceFindOneMock = jest.fn();
+    authUsersServiceMock = {
+      createMany: authUsersServiceCreateManyMock,
+      findOne: authUsersServiceFindOneMock,
     };
 
     const module = await Test.createTestingModule({
       providers: [
         AuthService,
         {
-          provide: USERS_SERVICE,
-          useValue: usersServiceMock,
+          provide: AUTH_USERS_SERVICE,
+          useValue: authUsersServiceMock,
         },
       ],
     }).compile();
@@ -48,16 +51,18 @@ describe('AuthService', () => {
 
   describe('signup', () => {
     it('Should call usersService.createMany, with a salted and hashed password, and return the created user', async () => {
-      usersServiceCreateManyMock.mockReturnValue(testAuthUserEntity);
+      authUsersServiceCreateManyMock.mockReturnValue([testAuthUserEntity]);
 
       const authUsersEntity = await authService.signup(testAuthDtoSignup);
 
-      expect(usersServiceCreateManyMock).toHaveBeenNthCalledWith(1, {
-        ...testAuthDtoSignup,
-        password: expect.anything(),
-      });
+      expect(authUsersServiceCreateManyMock).toHaveBeenNthCalledWith(1, [
+        {
+          ...testAuthDtoSignup,
+          password: expect.anything(),
+        },
+      ]);
 
-      const { password } = usersServiceCreateManyMock.mock.calls[0][0];
+      const { password } = authUsersServiceCreateManyMock.mock.calls[0][0][0];
       expect(password).not.toBe(testAuthDtoSignup.password);
 
       const [salt, hash] = password.split('.');
@@ -77,12 +82,12 @@ describe('AuthService', () => {
     });
 
     it('Should call usersService.findOne and throw an error if user is not found', async () => {
-      usersServiceFindOneMock.mockReturnValue(null);
+      authUsersServiceFindOneMock.mockReturnValue(null);
 
       await expect(authService.signin(testAuthDtoSignin)).rejects.toThrow(
         NotFoundException,
       );
-      expect(usersServiceFindOneMock).toHaveBeenNthCalledWith(
+      expect(authUsersServiceFindOneMock).toHaveBeenNthCalledWith(
         1,
         'username',
         testAuthUserEntity.username,
@@ -101,11 +106,11 @@ describe('AuthService', () => {
         password: passwordHashed,
       };
 
-      usersServiceFindOneMock.mockReturnValue(userEntityHashed);
+      authUsersServiceFindOneMock.mockReturnValue(userEntityHashed);
 
       const authUsersEntity = await authService.signin(testAuthDtoSignin);
 
-      expect(usersServiceFindOneMock).toHaveBeenNthCalledWith(
+      expect(authUsersServiceFindOneMock).toHaveBeenNthCalledWith(
         1,
         'username',
         testAuthUserEntity.username,
@@ -123,12 +128,12 @@ describe('AuthService', () => {
         password: passwordHashed,
       };
 
-      usersServiceFindOneMock.mockReturnValue(userEntityHashed);
+      authUsersServiceFindOneMock.mockReturnValue(userEntityHashed);
 
       await expect(authService.signin(testAuthDtoSignin)).rejects.toThrow(
         BadRequestException,
       );
-      expect(usersServiceFindOneMock).toHaveBeenNthCalledWith(
+      expect(authUsersServiceFindOneMock).toHaveBeenNthCalledWith(
         1,
         'username',
         testAuthUserEntity.username,

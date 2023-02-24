@@ -1,3 +1,4 @@
+export * from './auth.constants';
 export * from './auth.decorator.currentAuthenticatedUser';
 export * from './auth.dto.signup';
 export * from './auth.guard.isUserAuthenticated';

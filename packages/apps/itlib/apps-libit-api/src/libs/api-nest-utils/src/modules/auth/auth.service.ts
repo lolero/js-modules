@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { promisify } from 'util';
 import { BinaryLike, randomBytes, scrypt as _scrypt } from 'crypto';
-import { USERS_SERVICE } from './auth.constants';
+import { AUTH_USERS_SERVICE } from './auth.constants';
 import type { AuthUsersEntity, AuthUsersService } from './auth.types';
 import { AuthDtoSignup } from './auth.dto.signup';
 import { AuthDtoSignin } from './auth.dto.signin';
@@ -20,7 +20,7 @@ export const scrypt = promisify(_scrypt) as (
 @Injectable()
 export class AuthService {
   constructor(
-    @Inject(USERS_SERVICE) private readonly usersService: AuthUsersService,
+    @Inject(AUTH_USERS_SERVICE) private readonly usersService: AuthUsersService,
   ) {}
 
   async signup(authDtoSignup: AuthDtoSignup): Promise<AuthUsersEntity> {

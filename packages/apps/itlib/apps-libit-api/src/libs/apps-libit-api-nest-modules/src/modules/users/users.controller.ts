@@ -25,6 +25,8 @@ import type { UsersUniqueKeyName } from './users.types';
 export class UsersController {
   constructor(private usersService: UsersService) {}
 
+  // TODO: We need a controller in all entities to update non-required
+  //  entity edges, which takes ids to add and ids to remove separately!
   @Get('/:uniqueKeyValue')
   findOne(
     @Param('uniqueKeyValue') uniqueKeyValue: EntityUniqueKeyValue,

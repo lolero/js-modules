@@ -1,13 +1,20 @@
 import { DataSourceOptions } from 'typeorm';
+import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
 import {
   SystemRolesEntity,
   UsersEntity,
 } from '../libs/apps-libit-api-nest-modules/src';
 
-type VariableProps = 'type' | 'database';
+type VariableProps =
+  | 'type'
+  | 'host'
+  | 'port'
+  | 'username'
+  | 'password'
+  | 'database';
 
 const configTypeormDataSourceOptionsBase: Omit<
-  DataSourceOptions,
+  PostgresConnectionOptions,
   VariableProps
 > = {
   entities: [UsersEntity, SystemRolesEntity],
@@ -16,24 +23,28 @@ const configTypeormDataSourceOptionsBase: Omit<
 };
 
 let configTypeormDataSourceOptionsVariable: Pick<
-  DataSourceOptions,
+  PostgresConnectionOptions,
   VariableProps
 > = {
-  type: 'sqlite',
-  database: 'db-dev.sqlite',
+  type: 'postgres',
+  host: 'localhost',
+  port: 5432,
+  username: 'postgres',
+  password: 'postgres',
+  database: 'libit',
 };
 
 switch (process.env.NODE_ENV) {
   case 'dev':
-    configTypeormDataSourceOptionsVariable = {
-      type: 'sqlite',
-      database: 'db-dev.sqlite',
-    };
     break;
   case 'test':
     configTypeormDataSourceOptionsVariable = {
-      type: 'sqlite',
-      database: 'db-test.sqlite',
+      type: 'postgres',
+      host: 'localhost',
+      port: 5432,
+      username: 'postgres',
+      password: 'postgres',
+      database: 'libit',
     };
     break;
   case 'prod':

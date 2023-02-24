@@ -10,30 +10,52 @@ import {
 } from 'typeorm';
 import { AuthUsersEntity } from '../../../../api-nest-utils/src';
 import { SystemRolesEntity } from '../systemRoles/systemRoles.entity';
+import {
+  USERS_EMAIL_MAX_LENGTH,
+  USERS_PASSWORD_MAX_LENGTH,
+  USERS_PHONE_NUMBER_MAX_LENGTH,
+  USERS_USERNAME_MAX_LENGTH,
+} from './users.constants';
 
 @Entity('users')
 export class UsersEntity implements AuthUsersEntity {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn({
+    name: 'id',
+    type: 'int',
+  })
+  id: number;
 
   @Column({
-    unique: true,
+    name: 'username',
+    type: 'varchar',
+    length: USERS_USERNAME_MAX_LENGTH,
     nullable: true,
+    unique: true,
   })
   username?: string;
 
   @Column({
+    name: 'email',
+    type: 'varchar',
+    length: USERS_EMAIL_MAX_LENGTH,
     unique: true,
   })
   email: string;
 
   @Column({
-    unique: true,
+    name: 'phone_number',
+    type: 'varchar',
+    length: USERS_PHONE_NUMBER_MAX_LENGTH,
     nullable: true,
+    unique: true,
   })
   phoneNumber?: string;
 
-  @Column()
+  @Column({
+    name: 'password',
+    type: 'varchar',
+    length: USERS_PASSWORD_MAX_LENGTH,
+  })
   password: string;
 
   @ManyToMany(() => SystemRolesEntity, {
@@ -42,10 +64,10 @@ export class UsersEntity implements AuthUsersEntity {
   @JoinTable({
     name: 'users__system_roles',
     joinColumn: {
-      name: 'userId',
+      name: 'user_id',
     },
     inverseJoinColumn: {
-      name: 'systemRoleId',
+      name: 'system_role_id',
     },
   })
   systemRoles: SystemRolesEntity[];

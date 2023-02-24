@@ -1,11 +1,11 @@
-import { RequestsDtoQueryParamsFindMany } from './requests.dto.queryParamsFindMany';
+import { RequestsDtoQueryParamsFindManyIdInt } from './requests.dto.queryParamsFindManyIdInt';
 
 export function getRequestsDtoQueryParamsFindManyFixture<SortByT>(
-  overrides: Partial<RequestsDtoQueryParamsFindMany<SortByT>> = {},
-): RequestsDtoQueryParamsFindMany<SortByT> {
-  const requestsDtoQueryParamsFindManyDefault: RequestsDtoQueryParamsFindMany<SortByT> =
+  overrides: Partial<RequestsDtoQueryParamsFindManyIdInt<SortByT>> = {},
+): RequestsDtoQueryParamsFindManyIdInt<SortByT> {
+  const requestsDtoQueryParamsFindManyDefault: RequestsDtoQueryParamsFindManyIdInt<SortByT> =
     {
-      ids: ['test_id_1', 'test_id_2'],
+      ids: [1, 2],
       search: 'test_search',
       sortBy: 'test_sort_by' as SortByT,
       sortOrder: 'desc',

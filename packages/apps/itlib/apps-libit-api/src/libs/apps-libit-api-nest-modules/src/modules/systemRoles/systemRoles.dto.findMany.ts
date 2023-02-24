@@ -1,6 +1,6 @@
-import { RequestsDtoQueryParamsFindMany } from '../../../../api-nest-utils/src';
+import { RequestsDtoQueryParamsFindManyIdInt } from '../../../../api-nest-utils/src';
 import { SystemRolesEntity } from './systemRoles.entity';
 
-export class SystemRolesDtoFindMany extends RequestsDtoQueryParamsFindMany<
+export class SystemRolesDtoFindMany extends RequestsDtoQueryParamsFindManyIdInt<
   keyof SystemRolesEntity
 > {}

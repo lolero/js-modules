@@ -6,18 +6,20 @@ import { SystemRolesDtoCreateOne } from './systemRoles.dto.createOne';
 import { SystemRolesDtoUpdateOnePartial } from './systemRoles.dto.updateOnePartial';
 import { SystemRolesDtoUpdateOnePartialWithPattern } from './systemRoles.dto.updateManyPartialWithPattern';
 import { SystemRolesDtoDeleteMany } from './systemRoles.dto.deleteMany';
+import { SystemRolesEntityType, SystemRolesName } from './systemRoles.types';
+import { SystemRolesEntity } from './systemRoles.entity';
 
 export function getSystemRolesEntityFixture(
-  overrides: Partial<SystemRolesDtoUpdateOneWhole> = {},
-): SystemRolesDtoUpdateOneWhole {
-  const systemRolesEntityDefault: SystemRolesDtoUpdateOneWhole = {
-    id: 'test_id',
-    name: 'test_name',
+  overrides: Partial<SystemRolesEntityType> = {},
+): SystemRolesEntity {
+  const systemRolesEntityDefault: SystemRolesEntityType = {
+    id: 1,
+    name: SystemRolesName.USER,
   };
 
   const systemRolesEntity = Object.assign(systemRolesEntityDefault, overrides);
 
-  return systemRolesEntity;
+  return systemRolesEntity as SystemRolesEntity;
 }
 
 export function getSystemRolesDtoCreateOneFixture(
@@ -49,7 +51,17 @@ export function getSystemRolesDtoFindManyFixture(
 export function getSystemRolesDtoUpdateOneWholeFixture(
   overrides: Partial<SystemRolesDtoUpdateOneWhole> = {},
 ): SystemRolesDtoUpdateOneWhole {
-  return getSystemRolesEntityFixture(overrides);
+  const systemRolesDtoUpdateOneWholeDefault: SystemRolesDtoUpdateOneWhole = {
+    id: 1,
+    name: SystemRolesName.USER,
+  };
+
+  const systemRolesDtoUpdateOneWhole = Object.assign(
+    systemRolesDtoUpdateOneWholeDefault,
+    overrides,
+  );
+
+  return systemRolesDtoUpdateOneWhole;
 }
 
 export function getSystemRolesDtoUpdateOnePartialFixture(
@@ -57,7 +69,7 @@ export function getSystemRolesDtoUpdateOnePartialFixture(
 ): SystemRolesDtoUpdateOnePartial {
   const systemRolesDtoUpdateOnePartialDefault: SystemRolesDtoUpdateOnePartial =
     {
-      name: 'test_name_new',
+      name: SystemRolesName.ADMIN,
     };
 
   const systemRolesDtoUpdateOnePartial = Object.assign(
@@ -76,7 +88,7 @@ export function getSystemRolesDtoUpdateOnePartialWithPatternFixture(
 ): SystemRolesDtoUpdateOnePartialWithPattern {
   const systemRolesDtoUpdateOnePartialWithPattern: SystemRolesDtoUpdateOnePartialWithPattern =
     {
-      ids: overrides.ids ?? ['test_id_1', 'test_id_2'],
+      ids: overrides.ids ?? [1, 2],
       dtoUpdateOnePartial: getSystemRolesDtoUpdateOnePartialFixture(
         overrides.dtoUpdateOnePartial,
       ),
@@ -89,7 +101,7 @@ export function getSystemRolesDtoDeleteManyFixture(
   overrides: Partial<SystemRolesDtoDeleteMany> = {},
 ): SystemRolesDtoDeleteMany {
   const systemRolesDtoDeleteManyDefault: SystemRolesDtoDeleteMany = {
-    ids: ['test_id_1', 'test_id_2'],
+    ids: [1, 2],
   };
 
   const systemRolesDtoDeleteMany = Object.assign(

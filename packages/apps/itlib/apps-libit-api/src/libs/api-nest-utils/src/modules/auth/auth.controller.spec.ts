@@ -9,10 +9,10 @@ import { getAuthUserEntityFixture } from './auth.utils.fixtures';
 describe('AuthController', () => {
   let testAuthUserEntity: AuthUsersEntity;
   let testSession: { userId?: AuthUsersEntity['id'] };
-  let authController: AuthController;
   let authServiceSignupMock: jest.Mock;
   let authServiceSigninMock: jest.Mock;
   let authServiceMock: Partial<AuthService>;
+  let authController: AuthController;
 
   beforeEach(async () => {
     testAuthUserEntity = getAuthUserEntityFixture();

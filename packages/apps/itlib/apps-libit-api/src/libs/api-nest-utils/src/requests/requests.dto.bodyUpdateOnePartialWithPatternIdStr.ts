@@ -1,11 +1,10 @@
 import { IsString } from 'class-validator';
 
-export class RequestsDtoBodyUpdateOnePartialWithPattern<
-  EntityTypeT extends { id: number | string },
+export class RequestsDtoBodyUpdateOnePartialWithPatternIdStr<
   DtoUpdateOnePartialT,
 > {
   @IsString({ each: true })
-  ids: EntityTypeT['id'][];
+  ids: string[];
 
   dtoUpdateOnePartial: DtoUpdateOnePartialT;
 }

@@ -14,11 +14,11 @@ export class AuthDtoPublicUser {
   @Expose()
   phoneNumber: AuthUsersEntity['phoneNumber'];
 
-  @Transform(({ obj }) =>
-    obj.systemRoles.map(
+  @Transform(({ obj }) => {
+    return obj.systemRoles.map(
       (systemRolesEntity: AuthSystemRolesEntity) => systemRolesEntity.name,
-    ),
-  )
+    );
+  })
   @Expose()
   systemRoles: AuthSystemRolesEntity['name'];
 }

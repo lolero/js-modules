@@ -20,18 +20,35 @@ import { UsersDtoDeleteMany } from './users.dto.deleteMany';
 import { UsersDtoFindMany } from './users.dto.findMany';
 import { UsersDtoUpdateOneWhole } from './users.dto.updateOneWhole';
 import { UsersUniqueKeyName } from './users.types';
+import { SystemRolesName } from '../systemRoles/systemRoles.types';
+import { SystemRolesService } from '../systemRoles/systemRoles.service';
 
 @Injectable()
 export class UsersService implements AuthUsersService {
   constructor(
     @InjectRepository(UsersEntity)
     private usersRepository: Repository<UsersEntity>,
+    private systemRolesService: SystemRolesService,
   ) {}
 
   async createMany(
     usersDtoCreateOneArray: UsersDtoCreateOne[],
   ): Promise<UsersEntity[]> {
-    const usersEntities = this.usersRepository.create(usersDtoCreateOneArray);
+    const systemRolesUser = await this.systemRolesService.findOne(
+      'name',
+      SystemRolesName.USER,
+    );
+
+    const usersEntities = this.usersRepository
+      .create(usersDtoCreateOneArray)
+      .map((userEntity) => {
+        const userEntityWithSystemRoles = {
+          ...userEntity,
+          systemRoles: [systemRolesUser],
+        };
+
+        return userEntityWithSystemRoles;
+      });
 
     return this.usersRepository.save(usersEntities);
   }
@@ -86,6 +103,9 @@ export class UsersService implements AuthUsersService {
     return query.getRawMany();
   }
 
+  // TODO: write logic to prevent users from updating sensitive information
+  //  without a valid current password, e.g. email, phonenumber, username,
+  //  roles.
   async updateManyWhole(
     usersDtoUpdateOneWholeArray: UsersDtoUpdateOneWhole[],
   ): Promise<UsersEntity[]> {
@@ -128,7 +148,7 @@ export class UsersService implements AuthUsersService {
       UsersDtoUpdateOnePartial
     >,
   ): Promise<UsersEntity[]> {
-    const ids = keys(usersDtoUpdateManyPartialObject);
+    const ids = keys(usersDtoUpdateManyPartialObject).map((id) => Number(id));
     const usersEntities = await this.usersRepository.findBy({
       id: In(ids),
     });

@@ -1,6 +1,6 @@
 import { Inject, Injectable, NestMiddleware } from '@nestjs/common';
 import { NextFunction, Request, Response } from 'express';
-import { USERS_SERVICE } from './auth.constants';
+import { AUTH_USERS_SERVICE } from './auth.constants';
 import type { AuthUsersEntity, AuthUsersService } from './auth.types';
 
 declare global {
@@ -14,18 +14,16 @@ declare global {
 
 @Injectable()
 export class AuthMiddlewareCurrentUser implements NestMiddleware {
-  constructor(@Inject(USERS_SERVICE) private usersService: AuthUsersService) {}
+  constructor(
+    @Inject(AUTH_USERS_SERVICE) private usersService: AuthUsersService,
+  ) {}
 
   async use(req: Request, res: Response, next: NextFunction): Promise<void> {
     const { userId } = req.session ?? {};
 
     if (userId) {
-      try {
-        const currentUser = await this.usersService.findOne('id', userId);
-        req.currentUser = currentUser;
-      } catch {
-        //
-      }
+      const currentUser = await this.usersService.findOne('id', userId);
+      req.currentUser = currentUser;
     }
 
     next();
