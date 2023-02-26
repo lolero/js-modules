@@ -1,14 +1,12 @@
-import {
-  Injectable,
-  NotFoundException,
-  InternalServerErrorException,
-} from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { In, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import keys from 'lodash/keys';
-import difference from 'lodash/difference';
 import upperCase from 'lodash/upperCase';
-import { EntityUniqueKeyValue } from '../../../../api-nest-utils/src';
+import {
+  EntityUniqueKeyValue,
+  requestsUtilCrossCheckIds,
+} from '../../../../api-nest-utils/src';
 import { SystemRolesEntity } from './systemRoles.entity';
 import { SystemRolesDtoCreateOne } from './systemRoles.dto.createOne';
 import { SystemRolesDtoUpdateOnePartial } from './systemRoles.dto.updateOnePartial';
@@ -100,15 +98,7 @@ export class SystemRolesService {
       id: In(ids),
     });
 
-    if (systemRolesEntities.length < ids.length) {
-      const foundIds = systemRolesEntities.map(
-        (systemRolesEntity) => systemRolesEntity.id,
-      );
-      const missingIds = difference(ids, foundIds);
-      throw new NotFoundException(
-        `systemRoles not found. missing ids: ${missingIds.join(', ')}`,
-      );
-    }
+    requestsUtilCrossCheckIds(ids, systemRolesEntities);
 
     const systemRolesEntitiesUpdated = systemRolesEntities.map(
       (systemRolesEntity, systemRolesEntityIndex) => {
@@ -121,10 +111,10 @@ export class SystemRolesService {
           );
         }
 
-        return Object.assign(
-          systemRolesEntity,
-          systemRolesDtoUpdateOneWholeArray[systemRolesEntityIndex],
-        );
+        return {
+          ...systemRolesEntity,
+          ...systemRolesDtoUpdateOneWholeArray[systemRolesEntityIndex],
+        };
       },
     );
 
@@ -144,22 +134,14 @@ export class SystemRolesService {
       id: In(ids),
     });
 
-    if (systemRolesEntities.length < ids.length) {
-      const foundIds = systemRolesEntities.map(
-        (systemRolesEntity) => systemRolesEntity.id,
-      );
-      const missingIds = difference(ids, foundIds);
-      throw new NotFoundException(
-        `systemRoles not found. missing ids: ${missingIds.join(', ')}`,
-      );
-    }
+    requestsUtilCrossCheckIds(ids, systemRolesEntities);
 
     const systemRolesEntitiesUpdated = systemRolesEntities.map(
       (systemRolesEntity) => {
-        return Object.assign(
-          systemRolesEntity,
-          systemRolesDtoUpdateManyPartialObject[systemRolesEntity.id],
-        );
+        return {
+          ...systemRolesEntity,
+          ...systemRolesDtoUpdateManyPartialObject[systemRolesEntity.id],
+        };
       },
     );
 
@@ -175,19 +157,11 @@ export class SystemRolesService {
       id: In(ids),
     });
 
-    if (systemRolesEntities.length < ids.length) {
-      const foundIds = systemRolesEntities.map(
-        (systemRolesEntity) => systemRolesEntity.id,
-      );
-      const missingIds = difference(ids, foundIds);
-      throw new NotFoundException(
-        `systemRoles not found. missing ids: ${missingIds.join(', ')}`,
-      );
-    }
+    requestsUtilCrossCheckIds(ids, systemRolesEntities);
 
     const systemRolesEntitiesUpdated = systemRolesEntities.map(
       (systemRolesEntity) => {
-        return Object.assign(systemRolesEntity, dtoUpdateOnePartial);
+        return { ...systemRolesEntity, ...dtoUpdateOnePartial };
       },
     );
 
@@ -202,15 +176,7 @@ export class SystemRolesService {
       id: In(ids),
     });
 
-    if (systemRolesEntities.length < ids.length) {
-      const foundIds = systemRolesEntities.map(
-        (systemRolesEntity) => systemRolesEntity.id,
-      );
-      const missingIds = difference(ids, foundIds);
-      throw new NotFoundException(
-        `systemRoles not found. missing ids: ${missingIds.join(', ')}`,
-      );
-    }
+    requestsUtilCrossCheckIds(ids, systemRolesEntities);
 
     await this.systemRolesRepository.remove(systemRolesEntities);
   }

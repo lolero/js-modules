@@ -3,6 +3,8 @@ import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 import {
   getUsersDtoFindManyFixture,
+  getUsersDtoUpdateOnePartialFixture,
+  getUsersDtoUpdateOneWholeFixture,
   getUsersEntityFixture,
 } from './users.utils.fixtures';
 import { UsersDtoUpdateOneWhole } from './users.dto.updateOneWhole';
@@ -13,8 +15,6 @@ import { UsersDtoUpdateOnePartialWithPattern } from './users.dto.updateManyParti
 import { UsersDtoDeleteMany } from './users.dto.deleteMany';
 
 describe('UsersController', () => {
-  let testUsersEntity: UsersEntity;
-  let testUsersEntities: UsersEntity[];
   let usersServiceCreateManyMock: jest.Mock;
   let usersServiceFindOneMock: jest.Mock;
   let usersServiceFindManyMock: jest.Mock;
@@ -26,8 +26,6 @@ describe('UsersController', () => {
   let usersController: UsersController;
 
   beforeEach(async () => {
-    testUsersEntity = getUsersEntityFixture();
-    testUsersEntities = [testUsersEntity, testUsersEntity];
     usersServiceCreateManyMock = jest.fn();
     usersServiceFindOneMock = jest.fn();
     usersServiceFindManyMock = jest.fn();
@@ -64,48 +62,60 @@ describe('UsersController', () => {
   });
 
   describe('findOne', () => {
-    it('Should call usersService.findOne, with id as uniqueKeyName when none is passed as query param, and return the found user', async () => {
-      usersServiceFindOneMock.mockReturnValue(testUsersEntity);
+    let usersServiceFindOneMockReturnValue: UsersEntity;
 
-      const usersEntity = await usersController.findOne(testUsersEntity.id);
+    it('Should call usersService.findOne, with id as uniqueKeyName when none is passed as query param, and return the found user', async () => {
+      usersServiceFindOneMockReturnValue = getUsersEntityFixture();
+      usersServiceFindOneMock.mockReturnValue(
+        usersServiceFindOneMockReturnValue,
+      );
+
+      const usersEntity = await usersController.findOne(
+        usersServiceFindOneMockReturnValue.id,
+      );
 
       expect(usersServiceFindOneMock).toHaveBeenNthCalledWith(
         1,
         'id',
-        testUsersEntity.id,
+        usersServiceFindOneMockReturnValue.id,
       );
-
-      expect(usersEntity).toEqual(testUsersEntity);
+      expect(usersEntity).toEqual(usersServiceFindOneMockReturnValue);
     });
 
     it('Should call usersService.findOne, with passed uniqueKeyName param, and return the found user', async () => {
-      usersServiceFindOneMock.mockReturnValue(testUsersEntity);
+      usersServiceFindOneMockReturnValue = getUsersEntityFixture();
+      usersServiceFindOneMock.mockReturnValue(
+        usersServiceFindOneMockReturnValue,
+      );
 
       const usersEntity = await usersController.findOne(
-        testUsersEntity.username,
+        usersServiceFindOneMockReturnValue.username,
         'username',
       );
 
       expect(usersServiceFindOneMock).toHaveBeenNthCalledWith(
         1,
         'username',
-        testUsersEntity.username,
+        usersServiceFindOneMockReturnValue.username,
       );
-
-      expect(usersEntity).toEqual(testUsersEntity);
+      expect(usersEntity).toEqual(usersServiceFindOneMockReturnValue);
     });
   });
 
   describe('findMany', () => {
+    let usersServiceFindManyMockReturnValue: UsersEntity[];
     let testUsersDtoFindMany: UsersDtoFindMany;
 
-    beforeEach(() => {
-      testUsersDtoFindMany = getUsersDtoFindManyFixture();
-    });
-
     it('Should call usersService.findMany, with filter and search metadata, and return the found users', async () => {
-      usersServiceFindManyMock.mockReturnValue(testUsersEntities);
+      usersServiceFindManyMockReturnValue = [
+        getUsersEntityFixture(),
+        getUsersEntityFixture(),
+      ];
+      usersServiceFindManyMock.mockReturnValue(
+        usersServiceFindManyMockReturnValue,
+      );
 
+      testUsersDtoFindMany = getUsersDtoFindManyFixture();
       const usersEntities = await usersController.findMany(
         testUsersDtoFindMany,
       );
@@ -114,20 +124,27 @@ describe('UsersController', () => {
         1,
         testUsersDtoFindMany,
       );
-      expect(usersEntities).toEqual(testUsersEntities);
+      expect(usersEntities).toEqual(usersServiceFindManyMockReturnValue);
     });
   });
 
   describe('updateManyWhole', () => {
+    let usersServiceUpdateManyWholeMockReturnValue: UsersEntity[];
     let usersDtoUpdateOneWholeArray: UsersDtoUpdateOneWhole[];
 
-    beforeEach(() => {
-      usersDtoUpdateOneWholeArray = [testUsersEntity, testUsersEntity];
-    });
-
     it('Should call usersService.updateManyWhole, with array of users to update, and return the updated users', async () => {
-      usersServiceUpdateManyWholeMock.mockReturnValue(testUsersEntities);
+      usersServiceUpdateManyWholeMockReturnValue = [
+        getUsersEntityFixture(),
+        getUsersEntityFixture(),
+      ];
+      usersServiceUpdateManyWholeMock.mockReturnValue(
+        usersServiceUpdateManyWholeMockReturnValue,
+      );
 
+      usersDtoUpdateOneWholeArray = [
+        getUsersDtoUpdateOneWholeFixture(),
+        getUsersDtoUpdateOneWholeFixture(),
+      ];
       const usersEntities = await usersController.updateManyWhole(
         usersDtoUpdateOneWholeArray,
       );
@@ -136,48 +153,58 @@ describe('UsersController', () => {
         1,
         usersDtoUpdateOneWholeArray,
       );
-      expect(usersEntities).toEqual(testUsersEntities);
+      expect(usersEntities).toEqual(usersServiceUpdateManyWholeMockReturnValue);
     });
   });
 
   describe('updateOnePartial', () => {
-    let usersDtoUpdateOnePartial: UsersDtoUpdateOneWhole;
-
-    beforeEach(() => {
-      usersDtoUpdateOnePartial = testUsersEntity;
-    });
+    let usersServiceUpdateManyPartialMockReturnValue: UsersEntity[];
+    let usersDtoUpdateOnePartial: UsersDtoUpdateOnePartial;
 
     it('Should call usersService.updateManyPartial, with an object of partial users indexed by id, and return the updated user', async () => {
-      usersServiceUpdateManyPartialMock.mockReturnValue([testUsersEntity]);
+      usersServiceUpdateManyPartialMockReturnValue = [getUsersEntityFixture()];
+      usersServiceUpdateManyPartialMock.mockReturnValue(
+        usersServiceUpdateManyPartialMockReturnValue,
+      );
 
+      usersDtoUpdateOnePartial = getUsersDtoUpdateOnePartialFixture();
       const usersEntity = await usersController.updateOnePartial(
-        testUsersEntity.id,
+        usersServiceUpdateManyPartialMockReturnValue[0].id,
         usersDtoUpdateOnePartial,
       );
 
       expect(usersServiceUpdateManyPartialMock).toHaveBeenNthCalledWith(1, {
-        [testUsersEntity.id]: usersDtoUpdateOnePartial,
+        [usersServiceUpdateManyPartialMockReturnValue[0].id]:
+          usersDtoUpdateOnePartial,
       });
-      expect(usersEntity).toEqual(testUsersEntity);
+      expect(usersEntity).toEqual(
+        usersServiceUpdateManyPartialMockReturnValue[0],
+      );
     });
   });
 
   describe('updateManyPartial', () => {
+    const testUserId1 = 1;
+    const testUserId2 = 2;
+    let usersServiceUpdateManyPartialMockReturnValue: UsersEntity[];
     let usersDtoUpdateManyPartialObject: Record<
       UsersEntity['id'],
       UsersDtoUpdateOnePartial
     >;
 
-    beforeEach(() => {
-      usersDtoUpdateManyPartialObject = {
-        [testUsersEntity.id]: testUsersEntity,
-        [testUsersEntity.id]: testUsersEntity,
-      };
-    });
-
     it('Should call usersService.updateManyPartial, with an object of partial users indexed by id, and return the updated users', async () => {
-      usersServiceUpdateManyPartialMock.mockReturnValue(testUsersEntities);
+      usersServiceUpdateManyPartialMockReturnValue = [
+        getUsersEntityFixture({ id: testUserId1 }),
+        getUsersEntityFixture({ id: testUserId2 }),
+      ];
+      usersServiceUpdateManyPartialMock.mockReturnValue(
+        usersServiceUpdateManyPartialMockReturnValue,
+      );
 
+      usersDtoUpdateManyPartialObject = {
+        [testUserId1]: getUsersDtoUpdateOnePartialFixture(),
+        [testUserId2]: getUsersDtoUpdateOnePartialFixture(),
+      };
       const usersEntities = await usersController.updateManyPartial(
         usersDtoUpdateManyPartialObject,
       );
@@ -186,25 +213,31 @@ describe('UsersController', () => {
         1,
         usersDtoUpdateManyPartialObject,
       );
-      expect(usersEntities).toEqual(testUsersEntities);
+      expect(usersEntities).toEqual(
+        usersServiceUpdateManyPartialMockReturnValue,
+      );
     });
   });
 
   describe('updateManyPartialWithPattern', () => {
+    const testUserId1 = 1;
+    const testUserId2 = 2;
+    let usersServiceUpdateManyPartialWithPatternMockReturnValue: UsersEntity[];
     let usersDtoUpdateOnePartialWithPattern: UsersDtoUpdateOnePartialWithPattern;
 
-    beforeEach(() => {
-      usersDtoUpdateOnePartialWithPattern = {
-        ids: [testUsersEntity.id, testUsersEntity.id],
-        dtoUpdateOnePartial: testUsersEntity,
-      };
-    });
-
     it('Should call usersService.updateManyPartialWithPattern, with an array of user ids and a partial user pattern, and return the updated users', async () => {
+      usersServiceUpdateManyPartialWithPatternMockReturnValue = [
+        getUsersEntityFixture({ id: testUserId1 }),
+        getUsersEntityFixture({ id: testUserId2 }),
+      ];
       usersServiceUpdateManyPartialWithPatternMock.mockReturnValue(
-        testUsersEntities,
+        usersServiceUpdateManyPartialWithPatternMockReturnValue,
       );
 
+      usersDtoUpdateOnePartialWithPattern = {
+        ids: [testUserId1, testUserId2],
+        dtoUpdateOnePartial: getUsersDtoUpdateOnePartialFixture(),
+      };
       const usersEntities = await usersController.updateManyPartialWithPattern(
         usersDtoUpdateOnePartialWithPattern,
       );
@@ -212,16 +245,20 @@ describe('UsersController', () => {
       expect(
         usersServiceUpdateManyPartialWithPatternMock,
       ).toHaveBeenNthCalledWith(1, usersDtoUpdateOnePartialWithPattern);
-      expect(usersEntities).toEqual(testUsersEntities);
+      expect(usersEntities).toEqual(
+        usersServiceUpdateManyPartialWithPatternMockReturnValue,
+      );
     });
   });
 
   describe('deleteOne', () => {
+    const testUserId = 1;
+
     it('Should call usersService.deleteMany, with an array of user ids', async () => {
-      await usersController.deleteOne(testUsersEntity.id);
+      await usersController.deleteOne(testUserId);
 
       expect(usersServiceDeleteManyMock).toHaveBeenNthCalledWith(1, {
-        ids: [testUsersEntity.id],
+        ids: [testUserId],
       });
     });
   });
@@ -229,13 +266,10 @@ describe('UsersController', () => {
   describe('deleteMany', () => {
     let usersDtoDeleteMany: UsersDtoDeleteMany;
 
-    beforeEach(() => {
-      usersDtoDeleteMany = {
-        ids: [testUsersEntity.id, testUsersEntity.id],
-      };
-    });
-
     it('Should call usersService.deleteMany, with an array of user ids', async () => {
+      usersDtoDeleteMany = {
+        ids: [1, 2],
+      };
       await usersController.deleteMany(usersDtoDeleteMany);
 
       expect(usersServiceDeleteManyMock).toHaveBeenNthCalledWith(

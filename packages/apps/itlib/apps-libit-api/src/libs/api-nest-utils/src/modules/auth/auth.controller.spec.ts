@@ -7,7 +7,6 @@ import { AuthDtoSignin } from './auth.dto.signin';
 import { getAuthUserEntityFixture } from './auth.utils.fixtures';
 
 describe('AuthController', () => {
-  let testAuthUserEntity: AuthUsersEntity;
   let testSession: { userId?: AuthUsersEntity['id'] };
   let authServiceSignupMock: jest.Mock;
   let authServiceSigninMock: jest.Mock;
@@ -15,8 +14,6 @@ describe('AuthController', () => {
   let authController: AuthController;
 
   beforeEach(async () => {
-    testAuthUserEntity = getAuthUserEntityFixture();
-    testSession = {};
     authServiceSignupMock = jest.fn();
     authServiceSigninMock = jest.fn();
     authServiceMock = {
@@ -42,18 +39,18 @@ describe('AuthController', () => {
   });
 
   describe('signup', () => {
+    let authServiceSignupMockReturnValue: AuthUsersEntity;
     let testAuthDtoSignup: AuthDtoSignup;
 
-    beforeEach(() => {
-      testAuthDtoSignup = {
-        email: testAuthUserEntity.email,
-        password: testAuthUserEntity.password,
-      };
-    });
-
     it('Should call authService.signup, set the userId prop in the session, and return the signed up user', async () => {
-      authServiceSignupMock.mockReturnValue(testAuthUserEntity);
+      authServiceSignupMockReturnValue = getAuthUserEntityFixture();
+      authServiceSignupMock.mockReturnValue(authServiceSignupMockReturnValue);
 
+      testAuthDtoSignup = {
+        email: authServiceSignupMockReturnValue.email,
+        password: authServiceSignupMockReturnValue.password,
+      };
+      testSession = {};
       const authUsersEntity = await authController.signup(
         testAuthDtoSignup,
         testSession,
@@ -63,25 +60,24 @@ describe('AuthController', () => {
         1,
         testAuthDtoSignup,
       );
-      expect(testSession.userId).toBe(testAuthUserEntity.id);
-      expect(authUsersEntity).toEqual(testAuthUserEntity);
+      expect(testSession.userId).toBe(authServiceSignupMockReturnValue.id);
+      expect(authUsersEntity).toEqual(authServiceSignupMockReturnValue);
     });
   });
 
   describe('signin', () => {
+    let authServiceSigninMockReturnValue: AuthUsersEntity;
     let testAuthDtoSignin: AuthDtoSignin;
 
-    beforeEach(() => {
+    it('Should call authService.signin, set the userId prop in the session, and return the authenticated user', async () => {
+      authServiceSigninMockReturnValue = getAuthUserEntityFixture();
+      authServiceSigninMock.mockReturnValue(authServiceSigninMockReturnValue);
+
       testAuthDtoSignin = {
         uniqueKeyName: 'id',
-        uniqueKeyValue: testAuthUserEntity.id,
-        password: testAuthUserEntity.password,
+        uniqueKeyValue: authServiceSigninMockReturnValue.id,
+        password: authServiceSigninMockReturnValue.password,
       };
-    });
-
-    it('Should call authService.signin, set the userId prop in the session, and return the authenticated user', async () => {
-      authServiceSigninMock.mockReturnValue(testAuthUserEntity);
-
       const authUsersEntity = await authController.signin(
         testAuthDtoSignin,
         testSession,
@@ -91,15 +87,15 @@ describe('AuthController', () => {
         1,
         testAuthDtoSignin,
       );
-      expect(testSession.userId).toBe(testAuthUserEntity.id);
-      expect(authUsersEntity).toEqual(testAuthUserEntity);
+      expect(testSession.userId).toBe(authServiceSigninMockReturnValue.id);
+      expect(authUsersEntity).toEqual(authServiceSigninMockReturnValue);
     });
   });
 
   describe('signout', () => {
     it('Should delete the userId prop in the session', async () => {
       testSession = {
-        userId: testAuthUserEntity.id,
+        userId: getAuthUserEntityFixture().id,
       };
 
       await authController.signout(testSession);

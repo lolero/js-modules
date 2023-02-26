@@ -1,16 +1,12 @@
-import {
-  Injectable,
-  NotFoundException,
-  InternalServerErrorException,
-} from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { In, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import keys from 'lodash/keys';
-import difference from 'lodash/difference';
 import upperCase from 'lodash/upperCase';
 import {
   AuthUsersService,
   EntityUniqueKeyValue,
+  requestsUtilCrossCheckIds,
 } from '../../../../api-nest-utils/src';
 import { UsersEntity } from './users.entity';
 import { UsersDtoCreateOne } from './users.dto.createOne';
@@ -116,13 +112,7 @@ export class UsersService implements AuthUsersService {
       id: In(ids),
     });
 
-    if (usersEntities.length < ids.length) {
-      const foundIds = usersEntities.map((usersEntity) => usersEntity.id);
-      const missingIds = difference(ids, foundIds);
-      throw new NotFoundException(
-        `users not found. missing ids: ${missingIds.join(', ')}`,
-      );
-    }
+    requestsUtilCrossCheckIds(ids, usersEntities);
 
     const usersEntitiesUpdated = usersEntities.map(
       (usersEntity, usersEntityIndex) => {
@@ -132,10 +122,10 @@ export class UsersService implements AuthUsersService {
           throw new InternalServerErrorException('user indexes dont match');
         }
 
-        return Object.assign(
-          usersEntity,
-          usersDtoUpdateOneWholeArray[usersEntityIndex],
-        );
+        return {
+          ...usersEntity,
+          ...usersDtoUpdateOneWholeArray[usersEntityIndex],
+        };
       },
     );
 
@@ -153,19 +143,13 @@ export class UsersService implements AuthUsersService {
       id: In(ids),
     });
 
-    if (usersEntities.length < ids.length) {
-      const foundIds = usersEntities.map((usersEntity) => usersEntity.id);
-      const missingIds = difference(ids, foundIds);
-      throw new NotFoundException(
-        `users not found. missing ids: ${missingIds.join(', ')}`,
-      );
-    }
+    requestsUtilCrossCheckIds(ids, usersEntities);
 
     const usersEntitiesUpdated = usersEntities.map((usersEntity) => {
-      return Object.assign(
-        usersEntity,
-        usersDtoUpdateManyPartialObject[usersEntity.id],
-      );
+      return {
+        ...usersEntity,
+        ...usersDtoUpdateManyPartialObject[usersEntity.id],
+      };
     });
 
     return this.usersRepository.save(usersEntitiesUpdated);
@@ -179,16 +163,10 @@ export class UsersService implements AuthUsersService {
       id: In(ids),
     });
 
-    if (usersEntities.length < ids.length) {
-      const foundIds = usersEntities.map((usersEntity) => usersEntity.id);
-      const missingIds = difference(ids, foundIds);
-      throw new NotFoundException(
-        `users not found. missing ids: ${missingIds.join(', ')}`,
-      );
-    }
+    requestsUtilCrossCheckIds(ids, usersEntities);
 
     const usersEntitiesUpdated = usersEntities.map((usersEntity) => {
-      return Object.assign(usersEntity, dtoUpdateOnePartial);
+      return { ...usersEntity, ...dtoUpdateOnePartial };
     });
 
     return this.usersRepository.save(usersEntitiesUpdated);
@@ -200,13 +178,7 @@ export class UsersService implements AuthUsersService {
       id: In(ids),
     });
 
-    if (usersEntities.length < ids.length) {
-      const foundIds = usersEntities.map((usersEntity) => usersEntity.id);
-      const missingIds = difference(ids, foundIds);
-      throw new NotFoundException(
-        `users not found. missing ids: ${missingIds.join(', ')}`,
-      );
-    }
+    requestsUtilCrossCheckIds(ids, usersEntities);
 
     await this.usersRepository.remove(usersEntities);
   }

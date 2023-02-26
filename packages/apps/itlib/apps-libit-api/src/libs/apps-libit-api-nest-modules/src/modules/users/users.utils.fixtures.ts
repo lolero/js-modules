@@ -17,10 +17,10 @@ export function getUsersEntityFixture(
 ): UsersEntity {
   const usersEntityDefault: UsersEntityType = {
     id: 1,
-    username: 'test_username',
-    email: 'test@email.com',
-    phoneNumber: '+18001234567',
-    password: 'test_password',
+    username: 'test_username_1',
+    email: 'test_1@email.com',
+    phoneNumber: '+18001111111',
+    password: 'test_password_1',
     systemRoles: [getSystemRolesEntityFixture()],
   };
 
