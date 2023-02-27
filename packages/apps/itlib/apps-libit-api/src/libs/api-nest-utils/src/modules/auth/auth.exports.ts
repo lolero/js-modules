@@ -5,4 +5,4 @@ export * from './auth.guard.isUserAuthenticated';
 export * from './auth.module';
 export * from './auth.types';
 export * from './auth.utils.fixtures';
-export * from './auth.utils.serviceProviderFactories';
+export * from './auth.util.getAuthUsersServiceProvider';

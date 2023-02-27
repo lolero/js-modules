@@ -4,18 +4,13 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { promisify } from 'util';
-import { BinaryLike, randomBytes, scrypt as _scrypt } from 'crypto';
+import { randomBytes } from 'crypto';
 import { AUTH_USERS_SERVICE } from './auth.constants';
 import type { AuthUsersEntity, AuthUsersService } from './auth.types';
 import { AuthDtoSignup } from './auth.dto.signup';
 import { AuthDtoSignin } from './auth.dto.signin';
-
-export const scrypt = promisify(_scrypt) as (
-  password: BinaryLike,
-  salt: BinaryLike,
-  keylen: number,
-) => Promise<Buffer>;
+import { authUtilValidatePassword } from './auth.util.validatePassword';
+import { authUtilScrypt } from './auth.util.scrypt';
 
 @Injectable()
 export class AuthService {
@@ -25,7 +20,7 @@ export class AuthService {
 
   async signup(authDtoSignup: AuthDtoSignup): Promise<AuthUsersEntity> {
     const salt = randomBytes(8).toString('hex');
-    const hash = await scrypt(authDtoSignup.password, salt, 32);
+    const hash = await authUtilScrypt(authDtoSignup.password, salt, 32);
 
     const result = `${salt}.${hash.toString('hex')}`;
     const authDtoSignupHashed = {
@@ -52,12 +47,12 @@ export class AuthService {
       throw new NotFoundException('user not found');
     }
 
-    const [salt, storedHashStr] = authUsersEntity.password.split('.');
+    const isPasswordValid = await authUtilValidatePassword(
+      password,
+      authUsersEntity.password,
+    );
 
-    const providedHash = await scrypt(password, salt, 32);
-    const providedHashStr = providedHash.toString('hex');
-
-    if (storedHashStr !== providedHashStr) {
+    if (!isPasswordValid) {
       throw new BadRequestException('invalid password');
     }
 
