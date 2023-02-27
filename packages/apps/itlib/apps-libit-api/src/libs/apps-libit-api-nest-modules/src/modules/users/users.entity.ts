@@ -12,6 +12,9 @@ import { AuthUsersEntity } from '../../../../api-nest-utils/src';
 import { SystemRolesEntity } from '../systemRoles/systemRoles.entity';
 import {
   USERS_EMAIL_MAX_LENGTH,
+  USERS_FIRST_NAME_MAX_LENGTH,
+  USERS_LAST_NAME_MAX_LENGTH,
+  USERS_MIDDLE_NAME_MAX_LENGTH,
   USERS_PASSWORD_MAX_LENGTH,
   USERS_PHONE_NUMBER_MAX_LENGTH,
   USERS_USERNAME_MAX_LENGTH,
@@ -57,6 +60,30 @@ export class UsersEntity implements AuthUsersEntity {
     length: USERS_PASSWORD_MAX_LENGTH,
   })
   password: string;
+
+  @Column({
+    name: 'first_name',
+    type: 'varchar',
+    length: USERS_FIRST_NAME_MAX_LENGTH,
+    nullable: true,
+  })
+  firstName?: string;
+
+  @Column({
+    name: 'middle_name',
+    type: 'varchar',
+    length: USERS_MIDDLE_NAME_MAX_LENGTH,
+    nullable: true,
+  })
+  middleName?: string;
+
+  @Column({
+    name: 'last_name',
+    type: 'varchar',
+    length: USERS_LAST_NAME_MAX_LENGTH,
+    nullable: true,
+  })
+  lastName?: string;
 
   @ManyToMany(() => SystemRolesEntity, {
     eager: true,

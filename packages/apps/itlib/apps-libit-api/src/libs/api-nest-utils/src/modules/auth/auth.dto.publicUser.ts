@@ -14,6 +14,15 @@ export class AuthDtoPublicUser {
   @Expose()
   phoneNumber: AuthUsersEntity['phoneNumber'];
 
+  @Expose()
+  firstName: AuthUsersEntity['firstName'];
+
+  @Expose()
+  middleName: AuthUsersEntity['middleName'];
+
+  @Expose()
+  lastName: AuthUsersEntity['lastName'];
+
   @Transform(({ obj }) => {
     return obj.systemRoles.map(
       (systemRolesEntity: AuthSystemRolesEntity) => systemRolesEntity.name,

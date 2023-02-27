@@ -10,6 +10,9 @@ export interface AuthUsersEntity {
   email: string;
   phoneNumber?: string | null;
   password: string;
+  firstName?: string | null;
+  middleName?: string | null;
+  lastName?: string | null;
 }
 
 export type AuthUsersUniqueKeyName = EntityUniqueKeyName<

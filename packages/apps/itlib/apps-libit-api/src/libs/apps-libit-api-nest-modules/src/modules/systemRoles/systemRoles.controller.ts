@@ -24,6 +24,8 @@ import { SystemRolesDtoUpdateOneWhole } from './systemRoles.dto.updateOneWhole';
 import type { SystemRolesUniqueKeyName } from './systemRoles.types';
 import { UsersGuardIsAdmin } from '../users/users.guard.isAdmin';
 
+// TODO: Update systemRoles' controller and service to adhere to the general
+//  pattern followed by users and their updateManyPartial service method
 @Controller('systemRoles')
 @UseGuards(UsersGuardIsAdmin)
 @InterceptorSerialize<SystemRolesEntity>(SystemRolesDtoPublic)

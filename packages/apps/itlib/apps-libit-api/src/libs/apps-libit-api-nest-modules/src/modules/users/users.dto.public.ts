@@ -1,9 +1,3 @@
-import { Expose } from 'class-transformer';
+import { AuthDtoPublicUser } from '../../../../api-nest-utils/src';
 
-export class UsersDtoPublic {
-  @Expose()
-  email: string;
-
-  @Expose()
-  password: string;
-}
+export class UsersDtoPublic extends AuthDtoPublicUser {}

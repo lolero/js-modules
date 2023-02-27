@@ -1,5 +1,6 @@
 export * from './auth.constants';
-export * from './auth.decorator.currentAuthenticatedUser';
+export * from './auth.decorator.currentUser';
+export * from './auth.dto.publicUser';
 export * from './auth.dto.signup';
 export * from './auth.guard.isUserAuthenticated';
 export * from './auth.module';

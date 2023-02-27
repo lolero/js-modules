@@ -1,3 +1,4 @@
+import isEmpty from 'lodash/isEmpty';
 import { UsersDtoUpdateOneWhole } from './users.dto.updateOneWhole';
 import { UsersDtoFindMany } from './users.dto.findMany';
 import {
@@ -65,16 +66,15 @@ export function getUsersDtoUpdateOneWholeFixture(
 export function getUsersDtoUpdateOnePartialFixture(
   overrides: Partial<UsersDtoUpdateOnePartial> = {},
 ): UsersDtoUpdateOnePartial {
+  if (!isEmpty(overrides)) {
+    return overrides;
+  }
+
   const usersDtoUpdateOnePartialDefault: UsersDtoUpdateOnePartial = {
     username: 'test_username_new',
   };
 
-  const usersDtoUpdateOnePartial = Object.assign(
-    usersDtoUpdateOnePartialDefault,
-    overrides,
-  );
-
-  return usersDtoUpdateOnePartial;
+  return usersDtoUpdateOnePartialDefault;
 }
 
 export function getUsersDtoUpdateOnePartialWithPatternFixture(

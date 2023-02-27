@@ -13,7 +13,7 @@ import { AuthDtoPublicUser } from './auth.dto.publicUser';
 import type { AuthUsersEntity } from './auth.types';
 import { InterceptorSerialize } from '../../interceptors/interceptor.serialize';
 import { AuthGuardIsUserAuthenticated } from './auth.guard.isUserAuthenticated';
-import { AuthDecoratorCurrentAuthenticatedUser } from './auth.decorator.currentAuthenticatedUser';
+import { AuthDecoratorCurrentUser } from './auth.decorator.currentUser';
 
 @Controller('auth')
 @InterceptorSerialize<AuthUsersEntity>(AuthDtoPublicUser)
@@ -29,9 +29,9 @@ export class AuthController {
   @Get('/whoami')
   @UseGuards(AuthGuardIsUserAuthenticated)
   whoAmI(
-    @AuthDecoratorCurrentAuthenticatedUser() user: AuthUsersEntity | null,
+    @AuthDecoratorCurrentUser() currentUser?: AuthUsersEntity,
   ): AuthUsersEntity | null {
-    return user;
+    return currentUser;
   }
 
   @Post('/signup')

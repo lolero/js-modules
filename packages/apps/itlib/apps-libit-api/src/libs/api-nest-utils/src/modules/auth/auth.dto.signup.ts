@@ -10,6 +10,9 @@ import {
 import { AuthUsersEntity } from './auth.types';
 import {
   AUTH_USERS_EMAIL_MAX_LENGTH,
+  AUTH_USERS_FIRST_NAME_MAX_LENGTH,
+  AUTH_USERS_LAST_NAME_MAX_LENGTH,
+  AUTH_USERS_MIDDLE_NAME_MAX_LENGTH,
   AUTH_USERS_PASSWORD_MAX_LENGTH,
   AUTH_USERS_PHONE_NUMBER_MAX_LENGTH,
   AUTH_USERS_USERNAME_MAX_LENGTH,
@@ -39,4 +42,19 @@ export class AuthDtoSignup {
   })
   @Length(1, AUTH_USERS_PASSWORD_MAX_LENGTH)
   password: AuthUsersEntity['password'];
+
+  @IsString()
+  @Length(1, AUTH_USERS_FIRST_NAME_MAX_LENGTH)
+  @IsOptional()
+  firstName?: AuthUsersEntity['firstName'];
+
+  @IsString()
+  @Length(1, AUTH_USERS_MIDDLE_NAME_MAX_LENGTH)
+  @IsOptional()
+  middleName?: AuthUsersEntity['middleName'];
+
+  @IsString()
+  @Length(1, AUTH_USERS_LAST_NAME_MAX_LENGTH)
+  @IsOptional()
+  lastName?: AuthUsersEntity['lastName'];
 }

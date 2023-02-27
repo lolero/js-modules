@@ -11,7 +11,7 @@ import {
 import { ReportsDtoCreateOne } from './reports.dto.createOne';
 import { ReportsService } from './reports.service';
 import {
-  AuthDecoratorCurrentAuthenticatedUser,
+  AuthDecoratorCurrentUser,
   AuthGuardIsUserAuthenticated,
   InterceptorSerialize,
 } from '../../libs/api-nest-utils/src';
@@ -33,7 +33,7 @@ export class ReportsController {
   @InterceptorSerialize<ReportsEntity>(ReportsDtoPublic)
   createOne(
     @Body() body: ReportsDtoCreateOne,
-    @AuthDecoratorCurrentAuthenticatedUser() user: UsersEntity,
+    @AuthDecoratorCurrentUser() user: UsersEntity,
   ) {
     return this.reportsService.createOne(body, user);
   }

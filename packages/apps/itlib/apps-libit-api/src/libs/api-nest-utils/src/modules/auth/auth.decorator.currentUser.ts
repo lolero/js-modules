@@ -1,7 +1,7 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 import { AuthUsersEntity } from './auth.types';
 
-export const AuthDecoratorCurrentAuthenticatedUser = createParamDecorator<
+export const AuthDecoratorCurrentUser = createParamDecorator<
   never,
   ExecutionContext,
   AuthUsersEntity

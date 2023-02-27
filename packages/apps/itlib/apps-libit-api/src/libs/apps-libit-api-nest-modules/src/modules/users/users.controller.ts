@@ -8,8 +8,14 @@ import {
   Put,
   Query,
 } from '@nestjs/common';
-import type { EntityUniqueKeyValue } from '../../../../api-nest-utils/src';
-import { InterceptorSerialize } from '../../../../api-nest-utils/src';
+import type {
+  EntityUniqueKeyValue,
+  UpdateManyEntitiesObjectDto,
+} from '../../../../api-nest-utils/src';
+import {
+  AuthDecoratorCurrentUser,
+  InterceptorSerialize,
+} from '../../../../api-nest-utils/src';
 import { UsersService } from './users.service';
 import { UsersEntity } from './users.entity';
 import { UsersDtoPublic } from './users.dto.public';
@@ -25,8 +31,6 @@ import type { UsersUniqueKeyName } from './users.types';
 export class UsersController {
   constructor(private usersService: UsersService) {}
 
-  // TODO: We need a controller in all entities to update non-required
-  //  entity edges, which takes ids to add and ids to remove separately!
   @Get('/:uniqueKeyValue')
   findOne(
     @Param('uniqueKeyValue') uniqueKeyValue: EntityUniqueKeyValue,
@@ -41,57 +45,136 @@ export class UsersController {
   }
 
   @Put()
-  updateManyWhole(
-    @Body() usersDtoUpdateOneWholeArray: UsersDtoUpdateOneWhole[],
+  async updateManyWhole(
+    @Body('data')
+    usersDtoUpdateOneWholeArray: UsersDtoUpdateOneWhole[],
+    @AuthDecoratorCurrentUser() currentUser?: UsersEntity,
+    @Body('currentPassword')
+    currentPassword?: string,
   ): Promise<UsersEntity[]> {
-    return this.usersService.updateManyWhole(usersDtoUpdateOneWholeArray);
+    const usersDtoUpdateManyPartialObject = usersDtoUpdateOneWholeArray.reduce(
+      (
+        usersDtoUpdateManyPartialObjectTemp: UpdateManyEntitiesObjectDto<
+          UsersEntity,
+          UsersDtoUpdateOnePartial
+        >,
+        usersDtoUpdateOneWhole,
+      ) => {
+        const usersDtoUpdateManyPartialObjectTempNew: UpdateManyEntitiesObjectDto<
+          UsersEntity,
+          UsersDtoUpdateOnePartial
+        > = {
+          ...usersDtoUpdateManyPartialObjectTemp,
+          [usersDtoUpdateOneWhole.id]: usersDtoUpdateOneWhole,
+        };
+
+        return usersDtoUpdateManyPartialObjectTempNew;
+      },
+      {},
+    );
+
+    const usersEntities = await this.usersService.updateManyPartial(
+      usersDtoUpdateManyPartialObject,
+      currentUser,
+      currentPassword,
+    );
+    return usersEntities;
   }
 
   @Patch('/:id')
   async updateOnePartial(
     @Param('id') id: UsersEntity['id'],
-    @Body() usersDtoUpdateOnePartial: UsersDtoUpdateOnePartial,
+    @Body('data')
+    usersDtoUpdateOnePartial: UsersDtoUpdateOnePartial,
+    @AuthDecoratorCurrentUser() currentUser?: UsersEntity,
+    @Body('currentPassword')
+    currentPassword?: string,
   ): Promise<UsersEntity> {
-    const usersEntities = await this.usersService.updateManyPartial({
+    const usersDtoUpdateManyPartialObject: UpdateManyEntitiesObjectDto<
+      UsersEntity,
+      UsersDtoUpdateOnePartial
+    > = {
       [id]: usersDtoUpdateOnePartial,
-    });
+    };
 
+    const usersEntities = await this.usersService.updateManyPartial(
+      usersDtoUpdateManyPartialObject,
+      currentUser,
+      currentPassword,
+    );
     return usersEntities[0];
   }
 
-  // TODO: test this format of DTO. namely, make sure validation works for
-  //  values of DTO objects.
   @Patch()
-  updateManyPartial(
-    @Body()
-    usersDtoUpdateManyPartialObject: Record<
-      UsersEntity['id'],
+  async updateManyPartial(
+    @Body('data')
+    usersDtoUpdateManyPartialObject: UpdateManyEntitiesObjectDto<
+      UsersEntity,
       UsersDtoUpdateOnePartial
     >,
+    @AuthDecoratorCurrentUser() currentUser?: UsersEntity,
+    @Body('currentPassword')
+    currentPassword?: string,
   ): Promise<UsersEntity[]> {
-    return this.usersService.updateManyPartial(usersDtoUpdateManyPartialObject);
+    const usersEntities = await this.usersService.updateManyPartial(
+      usersDtoUpdateManyPartialObject,
+      currentUser,
+      currentPassword,
+    );
+    return usersEntities;
   }
 
   @Patch('/pattern')
-  updateManyPartialWithPattern(
+  async updateManyPartialWithPattern(
     @Body()
     usersDtoUpdateOnePartialWithPattern: UsersDtoUpdateOnePartialWithPattern,
+    @AuthDecoratorCurrentUser() currentUser?: UsersEntity,
   ): Promise<UsersEntity[]> {
-    return this.usersService.updateManyPartialWithPattern(
-      usersDtoUpdateOnePartialWithPattern,
+    const usersDtoUpdateManyPartialObject =
+      usersDtoUpdateOnePartialWithPattern.ids.reduce(
+        (
+          usersDtoUpdateManyPartialObjectTemp: UpdateManyEntitiesObjectDto<
+            UsersEntity,
+            UsersDtoUpdateOnePartial
+          >,
+          id,
+        ) => {
+          const usersDtoUpdateManyPartialObjectTempNew: UpdateManyEntitiesObjectDto<
+            UsersEntity,
+            UsersDtoUpdateOnePartial
+          > = {
+            ...usersDtoUpdateManyPartialObjectTemp,
+            [id]: usersDtoUpdateOnePartialWithPattern.dtoUpdateOnePartial,
+          };
+
+          return usersDtoUpdateManyPartialObjectTempNew;
+        },
+        {},
+      );
+
+    const usersEntities = await this.usersService.updateManyPartial(
+      usersDtoUpdateManyPartialObject,
+      currentUser,
     );
+    return usersEntities;
   }
 
   @Delete('/:id')
-  deleteOne(@Param('id') id: UsersEntity['id']): Promise<void> {
-    return this.usersService.deleteMany({ ids: [id] });
+  deleteOne(
+    @Param('id') id: UsersEntity['id'],
+    @AuthDecoratorCurrentUser() currentUser?: UsersEntity,
+    @Body('currentPassword')
+    currentPassword?: string,
+  ): Promise<void> {
+    return this.usersService.deleteMany([id], currentUser, currentPassword);
   }
 
   @Delete()
   deleteMany(
-    @Body()
+    @Body('data')
     usersDtoDeleteMany: UsersDtoDeleteMany,
+    @AuthDecoratorCurrentUser() currentUser?: UsersEntity,
   ): Promise<void> {
-    return this.usersService.deleteMany(usersDtoDeleteMany);
+    return this.usersService.deleteMany(usersDtoDeleteMany.ids, currentUser);
   }
 }

@@ -1,29 +1,34 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { In, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import keys from 'lodash/keys';
 import upperCase from 'lodash/upperCase';
+import keys from 'lodash/keys';
+import isEmpty from 'lodash/isEmpty';
 import {
   AuthUsersService,
   EntityUniqueKeyValue,
   requestsUtilCrossCheckIds,
+  UpdateManyEntitiesObjectDto,
 } from '../../../../api-nest-utils/src';
 import { UsersEntity } from './users.entity';
 import { UsersDtoCreateOne } from './users.dto.createOne';
-import { UsersDtoUpdateOnePartial } from './users.dto.updateOnePartial';
-import { UsersDtoUpdateOnePartialWithPattern } from './users.dto.updateManyPartialWithPattern';
-import { UsersDtoDeleteMany } from './users.dto.deleteMany';
 import { UsersDtoFindMany } from './users.dto.findMany';
-import { UsersDtoUpdateOneWhole } from './users.dto.updateOneWhole';
 import { UsersUniqueKeyName } from './users.types';
 import { SystemRolesName } from '../systemRoles/systemRoles.types';
 import { SystemRolesService } from '../systemRoles/systemRoles.service';
+import { UsersDtoUpdateOnePartial } from './users.dto.updateOnePartial';
+import { UsersServiceValidator } from './users.service.validator';
 
 @Injectable()
 export class UsersService implements AuthUsersService {
   constructor(
     @InjectRepository(UsersEntity)
     private usersRepository: Repository<UsersEntity>,
+    private usersServiceValidator: UsersServiceValidator,
     private systemRolesService: SystemRolesService,
   ) {}
 
@@ -99,86 +104,157 @@ export class UsersService implements AuthUsersService {
     return query.getRawMany();
   }
 
-  // TODO: write logic to prevent users from updating sensitive information
-  //  without a valid current password, e.g. email, phonenumber, username,
-  //  roles.
-  async updateManyWhole(
-    usersDtoUpdateOneWholeArray: UsersDtoUpdateOneWhole[],
-  ): Promise<UsersEntity[]> {
-    const ids = usersDtoUpdateOneWholeArray.map(
-      (userEntityWhole) => userEntityWhole.id,
-    );
-    const usersEntities = await this.usersRepository.findBy({
-      id: In(ids),
-    });
-
-    requestsUtilCrossCheckIds(ids, usersEntities);
-
-    const usersEntitiesUpdated = usersEntities.map(
-      (usersEntity, usersEntityIndex) => {
-        if (
-          usersEntity.id !== usersDtoUpdateOneWholeArray[usersEntityIndex].id
-        ) {
-          throw new InternalServerErrorException('user indexes dont match');
-        }
-
-        return {
-          ...usersEntity,
-          ...usersDtoUpdateOneWholeArray[usersEntityIndex],
-        };
-      },
-    );
-
-    return this.usersRepository.save(usersEntitiesUpdated);
-  }
-
+  // TODO: Implement updating of entity's edges as well as permission checks
+  //  for the case of users' systemRoles
   async updateManyPartial(
-    usersDtoUpdateManyPartialObject: Record<
-      UsersEntity['id'],
+    usersUpdateManyPartialObject: UpdateManyEntitiesObjectDto<
+      UsersEntity,
       UsersDtoUpdateOnePartial
     >,
+    currentUser?: UsersEntity,
+    currentPassword?: string,
   ): Promise<UsersEntity[]> {
-    const ids = keys(usersDtoUpdateManyPartialObject).map((id) => Number(id));
+    const ids = keys(usersUpdateManyPartialObject).map((id) => Number(id));
     const usersEntities = await this.usersRepository.findBy({
       id: In(ids),
     });
 
     requestsUtilCrossCheckIds(ids, usersEntities);
 
-    const usersEntitiesUpdated = usersEntities.map((usersEntity) => {
-      return {
+    const usersEntitiesUpdated: UsersEntity[] = [];
+    // eslint-disable-next-line no-restricted-syntax
+    for (const usersEntity of usersEntities) {
+      if (isEmpty(usersUpdateManyPartialObject[usersEntity.id])) {
+        // eslint-disable-next-line no-continue
+        continue;
+      }
+
+      const usersDtoUpdateOne = usersUpdateManyPartialObject[usersEntity.id];
+      const usersEntityUpdated = {
         ...usersEntity,
-        ...usersDtoUpdateManyPartialObject[usersEntity.id],
-      };
-    });
+      } as UsersEntity;
+
+      const isValidUpdateCredentialsPermissions =
+        // eslint-disable-next-line no-await-in-loop
+        await this.usersServiceValidator.validateElevatedPermissions(
+          usersEntity,
+          currentUser,
+          currentPassword,
+        );
+
+      if (
+        (usersDtoUpdateOne.username ||
+          usersDtoUpdateOne.email ||
+          usersDtoUpdateOne.phoneNumber ||
+          usersDtoUpdateOne.password) &&
+        !isValidUpdateCredentialsPermissions
+      ) {
+        throw new UnauthorizedException(
+          `user is not authorized to update credentials of user id: ${usersEntity.id}`,
+        );
+      }
+
+      if (usersDtoUpdateOne.username) {
+        const isUsernameValid =
+          // eslint-disable-next-line no-await-in-loop
+          await this.usersServiceValidator.validateUsername(
+            usersDtoUpdateOne.username,
+          );
+
+        if (isUsernameValid) {
+          usersEntityUpdated.username = usersDtoUpdateOne.username;
+        } else {
+          throw new BadRequestException(
+            `invalid username: ${usersDtoUpdateOne.username}`,
+          );
+        }
+      }
+
+      if (usersDtoUpdateOne.email) {
+        const isEmailValid =
+          // eslint-disable-next-line no-await-in-loop
+          await this.usersServiceValidator.validateEmail(
+            usersDtoUpdateOne.email,
+          );
+
+        if (isEmailValid) {
+          usersEntityUpdated.email = usersDtoUpdateOne.email;
+        } else {
+          throw new BadRequestException(
+            `invalid email: ${usersDtoUpdateOne.email}`,
+          );
+        }
+      }
+
+      if (usersDtoUpdateOne.phoneNumber) {
+        const isPhoneNumberValid =
+          // eslint-disable-next-line no-await-in-loop
+          await this.usersServiceValidator.validatePhoneNumber(
+            usersDtoUpdateOne.phoneNumber,
+          );
+
+        if (isPhoneNumberValid) {
+          usersEntityUpdated.phoneNumber = usersDtoUpdateOne.phoneNumber;
+        } else {
+          throw new BadRequestException(
+            `invalid phoneNumber: ${usersDtoUpdateOne.phoneNumber}`,
+          );
+        }
+      }
+
+      if (usersDtoUpdateOne.firstName) {
+        usersEntityUpdated.firstName = usersDtoUpdateOne.firstName;
+      }
+
+      if (usersDtoUpdateOne.lastName) {
+        usersEntityUpdated.lastName = usersDtoUpdateOne.lastName;
+      }
+
+      if (usersDtoUpdateOne.middleName) {
+        usersEntityUpdated.middleName = usersDtoUpdateOne.middleName;
+      }
+
+      usersEntitiesUpdated.push(usersEntityUpdated);
+    }
+
+    return usersEntitiesUpdated;
 
     return this.usersRepository.save(usersEntitiesUpdated);
   }
 
-  async updateManyPartialWithPattern(
-    usersDtoUpdateOnePartialWithPattern: UsersDtoUpdateOnePartialWithPattern,
-  ): Promise<UsersEntity[]> {
-    const { ids, dtoUpdateOnePartial } = usersDtoUpdateOnePartialWithPattern;
+  async deleteMany(
+    ids: number[],
+    currentUser?: UsersEntity,
+    currentPassword?: string,
+  ): Promise<void> {
     const usersEntities = await this.usersRepository.findBy({
       id: In(ids),
     });
 
     requestsUtilCrossCheckIds(ids, usersEntities);
 
-    const usersEntitiesUpdated = usersEntities.map((usersEntity) => {
-      return { ...usersEntity, ...dtoUpdateOnePartial };
-    });
+    // eslint-disable-next-line no-restricted-syntax
+    for (const usersEntity of usersEntities) {
+      const isValidDeletePermissions =
+        // eslint-disable-next-line no-await-in-loop
+        await this.usersServiceValidator.validateElevatedPermissions(
+          usersEntity,
+          currentUser,
+          currentPassword,
+        );
 
-    return this.usersRepository.save(usersEntitiesUpdated);
-  }
+      if (!isValidDeletePermissions) {
+        throw new UnauthorizedException(
+          `user is not authorized to delete user id: ${usersEntity.id}`,
+        );
+      }
 
-  async deleteMany(usersDtoDeleteMany: UsersDtoDeleteMany): Promise<void> {
-    const { ids } = usersDtoDeleteMany;
-    const usersEntities = await this.usersRepository.findBy({
-      id: In(ids),
-    });
-
-    requestsUtilCrossCheckIds(ids, usersEntities);
+      if (ids.length > 1 && usersEntity.id === currentUser.id) {
+        throw new BadRequestException(
+          'user cannot to delete their own account in a bulk operation',
+        );
+      }
+    }
 
     await this.usersRepository.remove(usersEntities);
   }
