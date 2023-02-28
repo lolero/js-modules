@@ -1,17 +1,23 @@
-import { RequestsDtoQueryParamsFindManyIdInt } from './requests.dto.queryParamsFindManyIdInt';
+import { RequestsDtoQueryParamsFindMany } from './requests.dto.queryParamsFindMany';
 
-export function getRequestsDtoQueryParamsFindManyFixture<SortByT>(
-  overrides: Partial<RequestsDtoQueryParamsFindManyIdInt<SortByT>> = {},
-): RequestsDtoQueryParamsFindManyIdInt<SortByT> {
-  const requestsDtoQueryParamsFindManyDefault: RequestsDtoQueryParamsFindManyIdInt<SortByT> =
-    {
-      ids: [1, 2],
-      search: 'test_search',
-      sortBy: 'test_sort_by' as SortByT,
-      sortOrder: 'desc',
-      page: 3,
-      resultsPerPage: 10,
-    };
+export function getRequestsDtoQueryParamsFindManyFixture<
+  FindManyUniqueKeysDtoT,
+  SortByT,
+>(
+  overrides: Partial<
+    RequestsDtoQueryParamsFindMany<FindManyUniqueKeysDtoT, SortByT>
+  > = {},
+): RequestsDtoQueryParamsFindMany<FindManyUniqueKeysDtoT, SortByT> {
+  const requestsDtoQueryParamsFindManyDefault: RequestsDtoQueryParamsFindMany<
+    FindManyUniqueKeysDtoT,
+    SortByT
+  > = {
+    search: 'test_search',
+    sortBy: 'test_sort_by' as SortByT,
+    sortOrder: 'desc',
+    page: 3,
+    resultsPerPage: 10,
+  };
 
   const requestsDtoQueryParamsFindMany = Object.assign(
     requestsDtoQueryParamsFindManyDefault,

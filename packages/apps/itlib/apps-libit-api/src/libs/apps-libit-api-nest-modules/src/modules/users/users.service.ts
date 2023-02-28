@@ -3,7 +3,7 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { In, Repository } from 'typeorm';
+import { Brackets, In, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import upperCase from 'lodash/upperCase';
 import keys from 'lodash/keys';
@@ -12,6 +12,7 @@ import {
   AuthUsersService,
   EntityUniqueKeyValue,
   requestsUtilCrossCheckIds,
+  requestsUtilGetUniqueKeysWhereFactory,
   UpdateManyEntitiesObjectDto,
 } from '../../../../api-nest-utils/src';
 import { UsersEntity } from './users.entity';
@@ -65,11 +66,17 @@ export class UsersService implements AuthUsersService {
     return usersEntity;
   }
 
+  // TODO: Add createdAtRange, updatedAtRange, and think of a way to add a
+  //  relations param, in order to be able to search within the entities
+  //  table, but only look for records with a given set of relationships.
   findMany(usersDtoFindMany: UsersDtoFindMany): Promise<UsersEntity[]> {
     const query = this.usersRepository.createQueryBuilder().select('*');
 
-    if (usersDtoFindMany.ids) {
-      query.where('id = :id', { id: In(usersDtoFindMany.ids) });
+    if (usersDtoFindMany.uniqueKeys && !isEmpty(usersDtoFindMany.uniqueKeys)) {
+      const whereFactory = requestsUtilGetUniqueKeysWhereFactory(
+        usersDtoFindMany.uniqueKeys,
+      );
+      query.where(new Brackets(whereFactory));
     }
 
     if (usersDtoFindMany.search) {
@@ -77,8 +84,17 @@ export class UsersService implements AuthUsersService {
         username: usersDtoFindMany.search,
       });
       query.andWhere('email = :email', { email: usersDtoFindMany.search });
-      query.andWhere('phoneNumber = :phoneNumber', {
+      query.andWhere('phone_number = :phoneNumber', {
         phoneNumber: usersDtoFindMany.search,
+      });
+      query.andWhere('first_name = :firstName', {
+        firstName: usersDtoFindMany.search,
+      });
+      query.andWhere('middle_name = :middleName', {
+        middleName: usersDtoFindMany.search,
+      });
+      query.andWhere('last_name = :lastName', {
+        lastName: usersDtoFindMany.search,
       });
     }
 
@@ -104,8 +120,6 @@ export class UsersService implements AuthUsersService {
     return query.getRawMany();
   }
 
-  // TODO: Implement updating of entity's edges as well as permission checks
-  //  for the case of users' systemRoles
   async updateManyPartial(
     usersUpdateManyPartialObject: UpdateManyEntitiesObjectDto<
       UsersEntity,
@@ -134,7 +148,7 @@ export class UsersService implements AuthUsersService {
         ...usersEntity,
       } as UsersEntity;
 
-      const isValidUpdateCredentialsPermissions =
+      const isValidElevatedPermissions =
         // eslint-disable-next-line no-await-in-loop
         await this.usersServiceValidator.validateElevatedPermissions(
           usersEntity,
@@ -147,10 +161,16 @@ export class UsersService implements AuthUsersService {
           usersDtoUpdateOne.email ||
           usersDtoUpdateOne.phoneNumber ||
           usersDtoUpdateOne.password) &&
-        !isValidUpdateCredentialsPermissions
+        !isValidElevatedPermissions
       ) {
         throw new UnauthorizedException(
           `user is not authorized to update credentials of user id: ${usersEntity.id}`,
+        );
+      }
+
+      if (usersDtoUpdateOne.systemRolesNames && !isValidElevatedPermissions) {
+        throw new UnauthorizedException(
+          `user is not authorized to update system roles of user id: ${usersEntity.id}`,
         );
       }
 
@@ -214,10 +234,18 @@ export class UsersService implements AuthUsersService {
         usersEntityUpdated.middleName = usersDtoUpdateOne.middleName;
       }
 
+      // TODO: Implement updating of entity's edges as well as permission checks
+      //  for the case of users' systemRoles
+      if (usersDtoUpdateOne.systemRolesNames) {
+        if (usersEntity.id === currentUser.id) {
+          throw new UnauthorizedException(
+            'user is not authorized to update their own system roles',
+          );
+        }
+      }
+
       usersEntitiesUpdated.push(usersEntityUpdated);
     }
-
-    return usersEntitiesUpdated;
 
     return this.usersRepository.save(usersEntitiesUpdated);
   }

@@ -18,8 +18,8 @@ import { UpdateManyEntitiesObjectDto } from '../../../../api-nest-utils/src';
 describe('UsersController', () => {
   const currentUser = getUsersEntityFixture();
   const currentPassword = 'current_password';
-  const testUserId1 = 1;
-  const testUserId2 = 2;
+  let usersEntities: UsersEntity[];
+  let usersEntity: UsersEntity;
   let usersServiceUpdateManyPartialMockReturnValue: UsersEntity[];
   let usersDtoUpdateManyPartialObject: UpdateManyEntitiesObjectDto<
     UsersEntity,
@@ -74,7 +74,7 @@ describe('UsersController', () => {
         usersServiceFindOneMockReturnValue,
       );
 
-      const usersEntity = await usersController.findOne(
+      usersEntity = await usersController.findOne(
         usersServiceFindOneMockReturnValue.id,
       );
 
@@ -92,7 +92,7 @@ describe('UsersController', () => {
         usersServiceFindOneMockReturnValue,
       );
 
-      const usersEntity = await usersController.findOne(
+      usersEntity = await usersController.findOne(
         usersServiceFindOneMockReturnValue.username,
         'username',
       );
@@ -120,9 +120,7 @@ describe('UsersController', () => {
       );
 
       testUsersDtoFindMany = getUsersDtoFindManyFixture();
-      const usersEntities = await usersController.findMany(
-        testUsersDtoFindMany,
-      );
+      usersEntities = await usersController.findMany(testUsersDtoFindMany);
 
       expect(usersServiceFindManyMock).toHaveBeenNthCalledWith(
         1,
@@ -137,8 +135,8 @@ describe('UsersController', () => {
 
     it('Should call usersService.updateManyPartial, with an object of partial users indexed by id, and return the updated user', async () => {
       usersServiceUpdateManyPartialMockReturnValue = [
-        getUsersEntityFixture({ id: testUserId1 }),
-        getUsersEntityFixture({ id: testUserId2 }),
+        getUsersEntityFixture({ id: 1 }),
+        getUsersEntityFixture({ id: 2 }),
       ];
       usersServiceUpdateManyPartialMock.mockReturnValue(
         usersServiceUpdateManyPartialMockReturnValue,
@@ -152,7 +150,7 @@ describe('UsersController', () => {
           id: usersServiceUpdateManyPartialMockReturnValue[1].id,
         }),
       ];
-      const usersEntities = await usersController.updateManyWhole(
+      usersEntities = await usersController.updateManyWhole(
         usersDtoUpdateOneWholeArray,
         currentUser,
         currentPassword,
@@ -179,7 +177,7 @@ describe('UsersController', () => {
 
     it('Should call usersService.updateManyPartial, with an object of partial users indexed by id, and return the updated user', async () => {
       usersServiceUpdateManyPartialMockReturnValue = [
-        getUsersEntityFixture({ id: testUserId1 }),
+        getUsersEntityFixture({ id: 1 }),
       ];
       usersServiceUpdateManyPartialMock.mockReturnValue(
         usersServiceUpdateManyPartialMockReturnValue,
@@ -187,7 +185,7 @@ describe('UsersController', () => {
 
       const userId = usersServiceUpdateManyPartialMockReturnValue[0].id;
       usersDtoUpdateOnePartial = getUsersDtoUpdateOnePartialFixture();
-      const usersEntity = await usersController.updateOnePartial(
+      usersEntity = await usersController.updateOnePartial(
         userId,
         usersDtoUpdateOnePartial,
         currentUser,
@@ -212,18 +210,20 @@ describe('UsersController', () => {
   describe('updateManyPartial', () => {
     it('Should call usersService.updateManyPartial, with an object of partial users indexed by id, and return the updated users', async () => {
       usersServiceUpdateManyPartialMockReturnValue = [
-        getUsersEntityFixture({ id: testUserId1 }),
-        getUsersEntityFixture({ id: testUserId2 }),
+        getUsersEntityFixture({ id: 1 }),
+        getUsersEntityFixture({ id: 2 }),
       ];
       usersServiceUpdateManyPartialMock.mockReturnValue(
         usersServiceUpdateManyPartialMockReturnValue,
       );
 
       usersDtoUpdateManyPartialObject = {
-        [testUserId1]: getUsersDtoUpdateOnePartialFixture(),
-        [testUserId2]: getUsersDtoUpdateOnePartialFixture(),
+        [usersServiceUpdateManyPartialMockReturnValue[0].id]:
+          getUsersDtoUpdateOnePartialFixture(),
+        [usersServiceUpdateManyPartialMockReturnValue[1].id]:
+          getUsersDtoUpdateOnePartialFixture(),
       };
-      const usersEntities = await usersController.updateManyPartial(
+      usersEntities = await usersController.updateManyPartial(
         usersDtoUpdateManyPartialObject,
         currentUser,
         currentPassword,
@@ -246,8 +246,8 @@ describe('UsersController', () => {
 
     it('Should call usersService.updateManyPartial, with an object of partial users indexed by id, and return the updated users', async () => {
       usersServiceUpdateManyPartialMockReturnValue = [
-        getUsersEntityFixture({ id: testUserId1 }),
-        getUsersEntityFixture({ id: testUserId2 }),
+        getUsersEntityFixture({ id: 1 }),
+        getUsersEntityFixture({ id: 2 }),
       ];
       usersServiceUpdateManyPartialMock.mockReturnValue(
         usersServiceUpdateManyPartialMockReturnValue,
@@ -260,7 +260,7 @@ describe('UsersController', () => {
         ],
         dtoUpdateOnePartial: getUsersDtoUpdateOnePartialFixture(),
       };
-      const usersEntities = await usersController.updateManyPartialWithPattern(
+      usersEntities = await usersController.updateManyPartialWithPattern(
         usersDtoUpdateOnePartialWithPattern,
         currentUser,
       );
@@ -284,6 +284,7 @@ describe('UsersController', () => {
 
   describe('deleteOne', () => {
     it('Should call usersService.deleteMany, with an array of user ids', async () => {
+      const testUserId1 = 1;
       await usersController.deleteOne(
         testUserId1,
         currentUser,

@@ -12,6 +12,7 @@ import { UsersDtoDeleteMany } from './users.dto.deleteMany';
 import { UsersEntity } from './users.entity';
 import { getSystemRolesEntityFixture } from '../systemRoles/systemRoles.utils.fixtures';
 import { UsersEntityType } from './users.types';
+import { UsersDtoFindManyUniqueKeys } from './users.dto.findManyUniqueKeys';
 
 export function getUsersEntityFixture(
   overrides: Partial<UsersEntityType> = {},
@@ -39,9 +40,10 @@ export function getUsersDtoCreateOneFixture(
 export function getUsersDtoFindManyFixture(
   overrides: Partial<UsersDtoFindMany> = {},
 ): UsersDtoFindMany {
-  return getRequestsDtoQueryParamsFindManyFixture<UsersDtoFindMany['sortBy']>(
-    overrides,
-  );
+  return getRequestsDtoQueryParamsFindManyFixture<
+    UsersDtoFindManyUniqueKeys,
+    UsersDtoFindMany['sortBy']
+  >(overrides);
 }
 
 export function getUsersDtoUpdateOneWholeFixture(

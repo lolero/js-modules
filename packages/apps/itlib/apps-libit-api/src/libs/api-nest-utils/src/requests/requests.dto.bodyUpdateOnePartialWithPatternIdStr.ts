@@ -1,4 +1,4 @@
-import { IsString } from 'class-validator';
+import { IsString, ValidateNested } from 'class-validator';
 
 export class RequestsDtoBodyUpdateOnePartialWithPatternIdStr<
   DtoUpdateOnePartialT,
@@ -6,5 +6,6 @@ export class RequestsDtoBodyUpdateOnePartialWithPatternIdStr<
   @IsString({ each: true })
   ids: string[];
 
+  @ValidateNested()
   dtoUpdateOnePartial: DtoUpdateOnePartialT;
 }

@@ -1,9 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { In, Repository, SelectQueryBuilder } from 'typeorm';
+import { Brackets, In, Repository, SelectQueryBuilder } from 'typeorm';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import upperCase from 'lodash/upperCase';
 import keys from 'lodash/keys';
 import { BadRequestException, UnauthorizedException } from '@nestjs/common';
+import noop from 'lodash/noop';
 import { UsersService } from './users.service';
 import { UsersEntity } from './users.entity';
 import {
@@ -20,9 +21,12 @@ import { getSystemRolesEntityFixture } from '../systemRoles/systemRoles.utils.fi
 import {
   requestsUtilCrossCheckIds,
   UpdateManyEntitiesObjectDto,
+  requestsUtilGetUniqueKeysWhereFactory,
 } from '../../../../api-nest-utils/src';
 import { SystemRolesEntity } from '../systemRoles/systemRoles.entity';
 import { UsersServiceValidator } from './users.service.validator';
+import { UsersEntityType } from './users.types';
+import { SystemRolesName } from '../systemRoles/systemRoles.types';
 
 jest.mock('../../../../api-nest-utils/src', () => {
   const originalModule = jest.requireActual('../../../../api-nest-utils/src');
@@ -32,14 +36,19 @@ jest.mock('../../../../api-nest-utils/src', () => {
     ...originalModule,
     default: jest.fn(),
     requestsUtilCrossCheckIds: jest.fn(),
+    requestsUtilGetUniqueKeysWhereFactory: jest.fn(),
   };
 });
 
 describe('UsersService', () => {
-  const currentUser = getUsersEntityFixture();
+  const currentUser = getUsersEntityFixture({ id: 10000000 });
   const currentPassword = 'current_password';
+  let usersEntities: UsersEntity[];
 
   const requestsUtilCrossCheckIdsMock = jest.mocked(requestsUtilCrossCheckIds);
+  const requestsUtilGetUniqueKeysWhereFactoryMock = jest.mocked(
+    requestsUtilGetUniqueKeysWhereFactory,
+  );
 
   let usersRepositoryCreateQueryBuilderMock: jest.Mock;
   let usersRepositoryQueryBuilderSelectMock: jest.Mock;
@@ -120,7 +129,7 @@ describe('UsersService', () => {
     usersRepositoryFindByMock = jest.fn();
     usersRepositorySaveMock = jest
       .fn()
-      .mockImplementation((usersEntities) => usersEntities);
+      .mockImplementation((usersEntitiesToSave) => usersEntitiesToSave);
     usersRepositoryRemoveMock = jest.fn();
     usersRepositoryMock = {
       create: usersRepositoryCreateMock,
@@ -171,6 +180,7 @@ describe('UsersService', () => {
 
   afterEach(() => {
     requestsUtilCrossCheckIdsMock.mockRestore();
+    requestsUtilGetUniqueKeysWhereFactoryMock.mockRestore();
   });
 
   it('Should create an instance of UsersService', () => {
@@ -200,9 +210,7 @@ describe('UsersService', () => {
         getUsersDtoCreateOneFixture(),
         getUsersDtoCreateOneFixture(),
       ];
-      const usersEntities = await usersService.createMany(
-        usersDtoCreateOneArray,
-      );
+      usersEntities = await usersService.createMany(usersDtoCreateOneArray);
 
       expect(usersRepositoryCreateMock).toHaveBeenNthCalledWith(
         1,
@@ -253,7 +261,7 @@ describe('UsersService', () => {
       );
 
       usersDtoFindMany = getUsersDtoFindManyFixture();
-      const usersEntities = await usersService.findMany(usersDtoFindMany);
+      usersEntities = await usersService.findMany(usersDtoFindMany);
 
       expect(usersRepositoryCreateQueryBuilderMock).toHaveBeenNthCalledWith(1);
       expect(usersRepositoryQueryBuilderSelectMock).toHaveBeenNthCalledWith(
@@ -263,25 +271,50 @@ describe('UsersService', () => {
       expect(usersEntities).toEqual(testUsersEntities);
     });
 
-    it('Should filter the query by ids when the ids param is passed', async () => {
-      usersDtoFindMany = getUsersDtoFindManyFixture();
+    it('Should call requestsUtilGetUniqueKeysWhereFactory with the passed uniqueKeys, if it is defined and not empty, and filter the query with the resulting Brackets', async () => {
+      const requestsUtilGetUniqueKeysWhereFactoryMockReturnValue = noop;
+      requestsUtilGetUniqueKeysWhereFactoryMock.mockReturnValue(
+        requestsUtilGetUniqueKeysWhereFactoryMockReturnValue,
+      );
+
+      usersDtoFindMany = getUsersDtoFindManyFixture({
+        uniqueKeys: {
+          id: [1, 2, 3],
+        },
+      });
       await usersService.findMany(usersDtoFindMany);
 
+      expect(requestsUtilGetUniqueKeysWhereFactoryMock).toHaveBeenNthCalledWith(
+        1,
+        usersDtoFindMany.uniqueKeys,
+      );
       expect(usersRepositoryQueryBuilderWhereMock).toHaveBeenNthCalledWith(
         1,
-        'id = :id',
-        { id: In(usersDtoFindMany.ids) },
+        new Brackets(requestsUtilGetUniqueKeysWhereFactoryMockReturnValue),
       );
     });
 
-    it('Should not filter the query by ids if no ids param is passed', async () => {
-      usersDtoFindMany = getUsersDtoFindManyFixture({ ids: undefined });
+    it('Should not call requestsUtilGetUniqueKeysWhereFactory or filter the query by uniqueKeys if the passed uniqueKeys is not defined', async () => {
+      usersDtoFindMany = getUsersDtoFindManyFixture({
+        uniqueKeys: undefined,
+      });
       await usersService.findMany(usersDtoFindMany);
 
+      expect(requestsUtilGetUniqueKeysWhereFactoryMock).not.toHaveBeenCalled();
       expect(usersRepositoryQueryBuilderWhereMock).not.toHaveBeenCalled();
     });
 
-    it('Should filter the query by username, email, and phoneNumber when the search param is passed', async () => {
+    it('Should not call requestsUtilGetUniqueKeysWhereFactory or filter the query by uniqueKeys if the passed uniqueKeys is empty', async () => {
+      usersDtoFindMany = getUsersDtoFindManyFixture({
+        uniqueKeys: {},
+      });
+      await usersService.findMany(usersDtoFindMany);
+
+      expect(requestsUtilGetUniqueKeysWhereFactoryMock).not.toHaveBeenCalled();
+      expect(usersRepositoryQueryBuilderWhereMock).not.toHaveBeenCalled();
+    });
+
+    it('Should filter the query by username, email, phoneNumber, firstName, middleName and lastName when the search param is passed', async () => {
       usersDtoFindMany = getUsersDtoFindManyFixture();
       await usersService.findMany(usersDtoFindMany);
 
@@ -299,9 +332,30 @@ describe('UsersService', () => {
       );
       expect(usersRepositoryQueryBuilderAndWhereMock).toHaveBeenNthCalledWith(
         3,
-        'phoneNumber = :phoneNumber',
+        'phone_number = :phoneNumber',
         {
           phoneNumber: usersDtoFindMany.search,
+        },
+      );
+      expect(usersRepositoryQueryBuilderAndWhereMock).toHaveBeenNthCalledWith(
+        4,
+        'first_name = :firstName',
+        {
+          firstName: usersDtoFindMany.search,
+        },
+      );
+      expect(usersRepositoryQueryBuilderAndWhereMock).toHaveBeenNthCalledWith(
+        5,
+        'middle_name = :middleName',
+        {
+          middleName: usersDtoFindMany.search,
+        },
+      );
+      expect(usersRepositoryQueryBuilderAndWhereMock).toHaveBeenNthCalledWith(
+        6,
+        'last_name = :lastName',
+        {
+          lastName: usersDtoFindMany.search,
         },
       );
     });
@@ -416,8 +470,7 @@ describe('UsersService', () => {
   });
 
   describe('updateManyPartial', () => {
-    const testUserId1 = 1;
-    const testUserId2 = 2;
+    let usersEntitiesUpdated: UsersEntityType[];
     let usersRepositoryFindByMockReturnValue: UsersEntity[];
     let usersServiceValidatorValidateElevatedPermissionsMockReturnValue: Promise<boolean>;
     let usersServiceValidatorValidateUsernameMockReturnValue: Promise<boolean>;
@@ -428,10 +481,9 @@ describe('UsersService', () => {
       UsersDtoUpdateOnePartial
     >;
 
-    it('Should call usersRepository.findBy with ids of the passed partial users, requestsUtilCrossCheckIds with the requested ids and found users, and return the updated users', async () => {
+    it('Should call usersRepository.findBy with ids of the passed partial users, requestsUtilCrossCheckIds with the requested ids and found users, usersRepository.save with the updated users, and return the updated users', async () => {
       usersRepositoryFindByMockReturnValue = [
         getUsersEntityFixture({
-          id: testUserId1,
           firstName: 'old_first_name',
         }),
       ];
@@ -443,13 +495,21 @@ describe('UsersService', () => {
         [usersRepositoryFindByMockReturnValue[0].id]:
           getUsersDtoUpdateOnePartialFixture({ firstName: 'new_first_name' }),
       };
-      const usersEntities = await usersService.updateManyPartial(
+      usersEntities = await usersService.updateManyPartial(
         usersDtoUpdateManyPartialObject,
       );
 
       const requestedIds = keys(usersDtoUpdateManyPartialObject).map((id) =>
         Number(id),
       );
+      usersEntitiesUpdated = [
+        {
+          ...usersRepositoryFindByMockReturnValue[0],
+          ...usersDtoUpdateManyPartialObject[
+            usersRepositoryFindByMockReturnValue[0].id
+          ],
+        },
+      ];
       expect(usersRepositoryFindByMock).toHaveBeenNthCalledWith(1, {
         id: In(requestedIds),
       });
@@ -458,24 +518,21 @@ describe('UsersService', () => {
         requestedIds,
         usersRepositoryFindByMockReturnValue,
       );
-      expect(usersEntities).toEqual([
-        {
-          ...usersRepositoryFindByMockReturnValue[0],
-          ...usersDtoUpdateManyPartialObject[
-            usersRepositoryFindByMockReturnValue[0].id
-          ],
-        },
-      ]);
+      expect(usersRepositorySaveMock).toHaveBeenNthCalledWith(
+        1,
+        usersEntitiesUpdated,
+      );
+      expect(usersEntities).toEqual(usersEntitiesUpdated);
     });
 
-    it('Should call validateElevatedPermissions for every user that gets an update and return the updated users', async () => {
+    it('Should call validateElevatedPermissions for every user that gets an update, usersRepository.save with the updated users, and return the updated users', async () => {
       usersRepositoryFindByMockReturnValue = [
         getUsersEntityFixture({
-          id: testUserId1,
+          id: 1,
           firstName: 'old_first_name',
         }),
         getUsersEntityFixture({
-          id: testUserId2,
+          id: 2,
           firstName: 'old_first_name',
           middleName: 'old_middle_name',
           lastName: 'old_last_name',
@@ -495,12 +552,26 @@ describe('UsersService', () => {
             lastName: 'new_last_name',
           }),
       };
-      const usersEntities = await usersService.updateManyPartial(
+      usersEntities = await usersService.updateManyPartial(
         usersDtoUpdateManyPartialObject,
         currentUser,
         currentPassword,
       );
 
+      usersEntitiesUpdated = [
+        {
+          ...usersRepositoryFindByMockReturnValue[0],
+          ...usersDtoUpdateManyPartialObject[
+            usersRepositoryFindByMockReturnValue[0].id
+          ],
+        },
+        {
+          ...usersRepositoryFindByMockReturnValue[1],
+          ...usersDtoUpdateManyPartialObject[
+            usersRepositoryFindByMockReturnValue[1].id
+          ],
+        },
+      ];
       expect(
         usersServiceValidatorValidateElevatedPermissionsMock,
       ).toHaveBeenNthCalledWith(
@@ -517,26 +588,16 @@ describe('UsersService', () => {
         currentUser,
         currentPassword,
       );
-      expect(usersEntities).toEqual([
-        {
-          ...usersRepositoryFindByMockReturnValue[0],
-          ...usersDtoUpdateManyPartialObject[
-            usersRepositoryFindByMockReturnValue[0].id
-          ],
-        },
-        {
-          ...usersRepositoryFindByMockReturnValue[1],
-          ...usersDtoUpdateManyPartialObject[
-            usersRepositoryFindByMockReturnValue[1].id
-          ],
-        },
-      ]);
+      expect(usersRepositorySaveMock).toHaveBeenNthCalledWith(
+        1,
+        usersEntitiesUpdated,
+      );
+      expect(usersEntities).toEqual(usersEntitiesUpdated);
     });
 
-    it('Should not throw an error if validateElevatedPermissions returns false but the users username, email, phoneNumber and password are not being updated', async () => {
+    it('Should not throw an error if validateElevatedPermissions returns false but the users username, email, phoneNumber, password, and systemRoles are not being updated', async () => {
       usersRepositoryFindByMockReturnValue = [
         getUsersEntityFixture({
-          id: testUserId1,
           firstName: 'old_first_name',
         }),
       ];
@@ -565,7 +626,6 @@ describe('UsersService', () => {
     it('Should throw an error if a username is updated but validateElevatedPermissions returns false', async () => {
       usersRepositoryFindByMockReturnValue = [
         getUsersEntityFixture({
-          id: testUserId1,
           username: 'old_username',
         }),
       ];
@@ -594,7 +654,6 @@ describe('UsersService', () => {
     it('Should throw an error if an email is updated but validateElevatedPermissions returns false', async () => {
       usersRepositoryFindByMockReturnValue = [
         getUsersEntityFixture({
-          id: testUserId1,
           email: 'test-old@email.com',
         }),
       ];
@@ -623,7 +682,6 @@ describe('UsersService', () => {
     it('Should throw an error if a phoneNumber is updated but validateElevatedPermissions returns false', async () => {
       usersRepositoryFindByMockReturnValue = [
         getUsersEntityFixture({
-          id: testUserId1,
           phoneNumber: '+18001111110',
         }),
       ];
@@ -649,14 +707,44 @@ describe('UsersService', () => {
       ).rejects.toThrow(UnauthorizedException);
     });
 
-    it('Should call validateUsername, update the users usernames, and return the updated users', async () => {
+    it('Should throw an error if systemRoles are updated but validateElevatedPermissions returns false', async () => {
       usersRepositoryFindByMockReturnValue = [
         getUsersEntityFixture({
-          id: testUserId1,
+          systemRoles: [getSystemRolesEntityFixture()],
+        }),
+      ];
+      usersRepositoryFindByMock.mockReturnValue(
+        usersRepositoryFindByMockReturnValue,
+      );
+      usersServiceValidatorValidateElevatedPermissionsMockReturnValue =
+        Promise.resolve(false);
+      usersServiceValidatorValidateElevatedPermissionsMock.mockReturnValue(
+        usersServiceValidatorValidateElevatedPermissionsMockReturnValue,
+      );
+
+      usersDtoUpdateManyPartialObject = {
+        [usersRepositoryFindByMockReturnValue[0].id]:
+          getUsersDtoUpdateOnePartialFixture({
+            systemRolesNames: [SystemRolesName.ADMIN],
+          }),
+      };
+      await expect(
+        usersService.updateManyPartial(
+          usersDtoUpdateManyPartialObject,
+          currentUser,
+          currentPassword,
+        ),
+      ).rejects.toThrow(UnauthorizedException);
+    });
+
+    it('Should call validateUsername, update the users usernames, usersRepository.save with the updated users, and return the updated users', async () => {
+      usersRepositoryFindByMockReturnValue = [
+        getUsersEntityFixture({
+          id: 1,
           username: 'old_username_1',
         }),
         getUsersEntityFixture({
-          id: testUserId2,
+          id: 2,
           username: 'old_username_2',
         }),
       ];
@@ -680,25 +768,13 @@ describe('UsersService', () => {
         [usersRepositoryFindByMockReturnValue[1].id]:
           getUsersDtoUpdateOnePartialFixture({ username: 'new_username_2' }),
       };
-      const usersEntities = await usersService.updateManyPartial(
+      usersEntities = await usersService.updateManyPartial(
         usersDtoUpdateManyPartialObject,
         currentUser,
         currentPassword,
       );
 
-      expect(usersServiceValidatorValidateUsernameMock).toHaveBeenNthCalledWith(
-        1,
-        usersDtoUpdateManyPartialObject[
-          usersRepositoryFindByMockReturnValue[0].id
-        ].username,
-      );
-      expect(usersServiceValidatorValidateUsernameMock).toHaveBeenNthCalledWith(
-        2,
-        usersDtoUpdateManyPartialObject[
-          usersRepositoryFindByMockReturnValue[1].id
-        ].username,
-      );
-      expect(usersEntities).toEqual([
+      usersEntitiesUpdated = [
         {
           ...usersRepositoryFindByMockReturnValue[0],
           ...usersDtoUpdateManyPartialObject[
@@ -711,13 +787,29 @@ describe('UsersService', () => {
             usersRepositoryFindByMockReturnValue[1].id
           ],
         },
-      ]);
+      ];
+      expect(usersServiceValidatorValidateUsernameMock).toHaveBeenNthCalledWith(
+        1,
+        usersDtoUpdateManyPartialObject[
+          usersRepositoryFindByMockReturnValue[0].id
+        ].username,
+      );
+      expect(usersServiceValidatorValidateUsernameMock).toHaveBeenNthCalledWith(
+        2,
+        usersDtoUpdateManyPartialObject[
+          usersRepositoryFindByMockReturnValue[1].id
+        ].username,
+      );
+      expect(usersRepositorySaveMock).toHaveBeenNthCalledWith(
+        1,
+        usersEntitiesUpdated,
+      );
+      expect(usersEntities).toEqual(usersEntitiesUpdated);
     });
 
     it('Should throw an error if a username is updated but validateUsername returns false', async () => {
       usersRepositoryFindByMockReturnValue = [
         getUsersEntityFixture({
-          id: testUserId1,
           username: 'old_username_1',
         }),
       ];
@@ -748,14 +840,14 @@ describe('UsersService', () => {
       ).rejects.toThrow(BadRequestException);
     });
 
-    it('Should call validateEmail, update the users emails, and return the updated users', async () => {
+    it('Should call validateEmail, update the users emails, usersRepository.save with the updated users, and return the updated users', async () => {
       usersRepositoryFindByMockReturnValue = [
         getUsersEntityFixture({
-          id: testUserId1,
+          id: 1,
           email: 'test-old-1@email.com',
         }),
         getUsersEntityFixture({
-          id: testUserId2,
+          id: 2,
           email: 'test-old-2@email.com',
         }),
       ];
@@ -778,25 +870,13 @@ describe('UsersService', () => {
         [usersRepositoryFindByMockReturnValue[1].id]:
           getUsersDtoUpdateOnePartialFixture({ email: 'test-new-2@email.com' }),
       };
-      const usersEntities = await usersService.updateManyPartial(
+      usersEntities = await usersService.updateManyPartial(
         usersDtoUpdateManyPartialObject,
         currentUser,
         currentPassword,
       );
 
-      expect(usersServiceValidatorValidateEmailMock).toHaveBeenNthCalledWith(
-        1,
-        usersDtoUpdateManyPartialObject[
-          usersRepositoryFindByMockReturnValue[0].id
-        ].email,
-      );
-      expect(usersServiceValidatorValidateEmailMock).toHaveBeenNthCalledWith(
-        2,
-        usersDtoUpdateManyPartialObject[
-          usersRepositoryFindByMockReturnValue[1].id
-        ].email,
-      );
-      expect(usersEntities).toEqual([
+      usersEntitiesUpdated = [
         {
           ...usersRepositoryFindByMockReturnValue[0],
           ...usersDtoUpdateManyPartialObject[
@@ -809,13 +889,29 @@ describe('UsersService', () => {
             usersRepositoryFindByMockReturnValue[1].id
           ],
         },
-      ]);
+      ];
+      expect(usersServiceValidatorValidateEmailMock).toHaveBeenNthCalledWith(
+        1,
+        usersDtoUpdateManyPartialObject[
+          usersRepositoryFindByMockReturnValue[0].id
+        ].email,
+      );
+      expect(usersServiceValidatorValidateEmailMock).toHaveBeenNthCalledWith(
+        2,
+        usersDtoUpdateManyPartialObject[
+          usersRepositoryFindByMockReturnValue[1].id
+        ].email,
+      );
+      expect(usersRepositorySaveMock).toHaveBeenNthCalledWith(
+        1,
+        usersEntitiesUpdated,
+      );
+      expect(usersEntities).toEqual(usersEntitiesUpdated);
     });
 
     it('Should throw an error if a email is updated but validateEmail returns false', async () => {
       usersRepositoryFindByMockReturnValue = [
         getUsersEntityFixture({
-          id: testUserId1,
           email: 'test-old-1@email.com',
         }),
       ];
@@ -846,14 +942,14 @@ describe('UsersService', () => {
       ).rejects.toThrow(BadRequestException);
     });
 
-    it('Should call validatePhoneNumber, update the users phoneNumbers, and return the updated users', async () => {
+    it('Should call validatePhoneNumber, update the users phoneNumbers, usersRepository.save with the updated users, and return the updated users', async () => {
       usersRepositoryFindByMockReturnValue = [
         getUsersEntityFixture({
-          id: testUserId1,
+          id: 1,
           phoneNumber: '+18001111110',
         }),
         getUsersEntityFixture({
-          id: testUserId2,
+          id: 2,
           phoneNumber: '+18002222220',
         }),
       ];
@@ -877,12 +973,26 @@ describe('UsersService', () => {
         [usersRepositoryFindByMockReturnValue[1].id]:
           getUsersDtoUpdateOnePartialFixture({ phoneNumber: '+18002222221' }),
       };
-      const usersEntities = await usersService.updateManyPartial(
+      usersEntities = await usersService.updateManyPartial(
         usersDtoUpdateManyPartialObject,
         currentUser,
         currentPassword,
       );
 
+      usersEntitiesUpdated = [
+        {
+          ...usersRepositoryFindByMockReturnValue[0],
+          ...usersDtoUpdateManyPartialObject[
+            usersRepositoryFindByMockReturnValue[0].id
+          ],
+        },
+        {
+          ...usersRepositoryFindByMockReturnValue[1],
+          ...usersDtoUpdateManyPartialObject[
+            usersRepositoryFindByMockReturnValue[1].id
+          ],
+        },
+      ];
       expect(
         usersServiceValidatorValidatePhoneNumberMock,
       ).toHaveBeenNthCalledWith(
@@ -899,26 +1009,16 @@ describe('UsersService', () => {
           usersRepositoryFindByMockReturnValue[1].id
         ].phoneNumber,
       );
-      expect(usersEntities).toEqual([
-        {
-          ...usersRepositoryFindByMockReturnValue[0],
-          ...usersDtoUpdateManyPartialObject[
-            usersRepositoryFindByMockReturnValue[0].id
-          ],
-        },
-        {
-          ...usersRepositoryFindByMockReturnValue[1],
-          ...usersDtoUpdateManyPartialObject[
-            usersRepositoryFindByMockReturnValue[1].id
-          ],
-        },
-      ]);
+      expect(usersRepositorySaveMock).toHaveBeenNthCalledWith(
+        1,
+        usersEntitiesUpdated,
+      );
+      expect(usersEntities).toEqual(usersEntitiesUpdated);
     });
 
     it('Should throw an error if a phoneNumber is updated but validatePhoneNumber returns false', async () => {
       usersRepositoryFindByMockReturnValue = [
         getUsersEntityFixture({
-          id: testUserId1,
           phoneNumber: '+18001111110',
         }),
       ];
@@ -950,18 +1050,123 @@ describe('UsersService', () => {
         ),
       ).rejects.toThrow(BadRequestException);
     });
+
+    it('Should update the users firstName, middleName, lastname, call usersRepository.save with the updated users, and return the updated users', async () => {
+      usersRepositoryFindByMockReturnValue = [
+        getUsersEntityFixture({
+          id: 1,
+          firstName: 'old_first_name',
+          middleName: 'old_middle_name',
+          lastName: 'old_last_name',
+        }),
+        getUsersEntityFixture({
+          id: 2,
+          firstName: 'old_first_name',
+          middleName: 'old_middle_name',
+          lastName: 'old_last_name',
+        }),
+      ];
+      usersRepositoryFindByMock.mockReturnValue(
+        usersRepositoryFindByMockReturnValue,
+      );
+
+      usersDtoUpdateManyPartialObject = {
+        [usersRepositoryFindByMockReturnValue[0].id]:
+          getUsersDtoUpdateOnePartialFixture({
+            firstName: 'new_first_name',
+            middleName: 'new_middle_name',
+            lastName: 'new_last_name',
+          }),
+        [usersRepositoryFindByMockReturnValue[1].id]:
+          getUsersDtoUpdateOnePartialFixture({
+            firstName: 'new_first_name',
+            middleName: 'new_middle_name',
+            lastName: 'new_last_name',
+          }),
+      };
+      usersEntities = await usersService.updateManyPartial(
+        usersDtoUpdateManyPartialObject,
+        currentUser,
+        currentPassword,
+      );
+
+      usersEntitiesUpdated = [
+        {
+          ...usersRepositoryFindByMockReturnValue[0],
+          ...usersDtoUpdateManyPartialObject[
+            usersRepositoryFindByMockReturnValue[0].id
+          ],
+        },
+        {
+          ...usersRepositoryFindByMockReturnValue[1],
+          ...usersDtoUpdateManyPartialObject[
+            usersRepositoryFindByMockReturnValue[1].id
+          ],
+        },
+      ];
+      expect(
+        usersServiceValidatorValidateElevatedPermissionsMock,
+      ).toHaveBeenNthCalledWith(
+        1,
+        usersRepositoryFindByMockReturnValue[0],
+        currentUser,
+        currentPassword,
+      );
+      expect(
+        usersServiceValidatorValidateElevatedPermissionsMock,
+      ).toHaveBeenNthCalledWith(
+        2,
+        usersRepositoryFindByMockReturnValue[1],
+        currentUser,
+        currentPassword,
+      );
+      expect(usersRepositorySaveMock).toHaveBeenNthCalledWith(
+        1,
+        usersEntitiesUpdated,
+      );
+      expect(usersEntities).toEqual(usersEntitiesUpdated);
+    });
+
+    it('Should throw an error if a user updates their own systemRoles', async () => {
+      usersRepositoryFindByMockReturnValue = [
+        getUsersEntityFixture({
+          id: currentUser.id,
+          systemRoles: [getSystemRolesEntityFixture()],
+        }),
+      ];
+      usersRepositoryFindByMock.mockReturnValue(
+        usersRepositoryFindByMockReturnValue,
+      );
+      usersServiceValidatorValidateElevatedPermissionsMockReturnValue =
+        Promise.resolve(true);
+      usersServiceValidatorValidateElevatedPermissionsMock.mockReturnValue(
+        usersServiceValidatorValidateElevatedPermissionsMockReturnValue,
+      );
+
+      usersDtoUpdateManyPartialObject = {
+        [usersRepositoryFindByMockReturnValue[0].id]:
+          getUsersDtoUpdateOnePartialFixture({
+            systemRolesNames: [SystemRolesName.ADMIN],
+          }),
+      };
+      await expect(
+        usersService.updateManyPartial(
+          usersDtoUpdateManyPartialObject,
+          currentUser,
+          currentPassword,
+        ),
+      ).rejects.toThrow(UnauthorizedException);
+    });
   });
 
   describe('deleteMany', () => {
-    const testUserId1 = 11;
-    const testUserId2 = 12;
     let usersRepositoryFindByMockReturnValue: UsersEntity[];
     let usersServiceValidatorValidateElevatedPermissionsMockReturnValue: Promise<boolean>;
 
     it('Should call usersRepository.findBy with the passed ids, requestsUtilCrossCheckIds with the requested ids and found users, and usersRepository.remove with the found users', async () => {
       usersRepositoryFindByMockReturnValue = [
-        getUsersEntityFixture({ id: testUserId1 }),
-        getUsersEntityFixture({ id: testUserId2 }),
+        getUsersEntityFixture({ id: 1 }),
+        getUsersEntityFixture({ id: 1 }),
       ];
       usersRepositoryFindByMock.mockReturnValue(
         usersRepositoryFindByMockReturnValue,
@@ -992,9 +1197,7 @@ describe('UsersService', () => {
     });
 
     it('Should throw an error if validateElevatedPermissions returns false', async () => {
-      usersRepositoryFindByMockReturnValue = [
-        getUsersEntityFixture({ id: testUserId1 }),
-      ];
+      usersRepositoryFindByMockReturnValue = [getUsersEntityFixture()];
       usersRepositoryFindByMock.mockReturnValue(
         usersRepositoryFindByMockReturnValue,
       );
@@ -1014,7 +1217,7 @@ describe('UsersService', () => {
 
     it('Should throw an error if user tries to delete their own account in a bulk operation', async () => {
       usersRepositoryFindByMockReturnValue = [
-        getUsersEntityFixture({ id: testUserId1 }),
+        getUsersEntityFixture({ id: 1 }),
         getUsersEntityFixture({ id: currentUser.id }),
       ];
       usersRepositoryFindByMock.mockReturnValue(

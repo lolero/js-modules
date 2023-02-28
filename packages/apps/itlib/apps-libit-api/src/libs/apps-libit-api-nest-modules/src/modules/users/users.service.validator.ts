@@ -5,6 +5,7 @@ import { UsersEntity } from './users.entity';
 import { authUtilValidatePassword } from '../../../../api-nest-utils/src/modules/auth/auth.util.validatePassword';
 import { SystemRolesName } from '../systemRoles/systemRoles.types';
 
+// TODO: write unit tests
 @Injectable()
 export class UsersServiceValidator {
   constructor(

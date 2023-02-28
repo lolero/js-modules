@@ -8,6 +8,7 @@ import { SystemRolesDtoUpdateOnePartialWithPattern } from './systemRoles.dto.upd
 import { SystemRolesDtoDeleteMany } from './systemRoles.dto.deleteMany';
 import { SystemRolesEntityType, SystemRolesName } from './systemRoles.types';
 import { SystemRolesEntity } from './systemRoles.entity';
+import { SystemRolesDtoFindManyUniqueKeys } from './systemRoles.dto.findManyUniqueKeys';
 
 export function getSystemRolesEntityFixture(
   overrides: Partial<SystemRolesEntityType> = {},
@@ -44,6 +45,7 @@ export function getSystemRolesDtoFindManyFixture(
   overrides: Partial<SystemRolesDtoFindMany> = {},
 ): SystemRolesDtoFindMany {
   return getRequestsDtoQueryParamsFindManyFixture<
+    SystemRolesDtoFindManyUniqueKeys,
     SystemRolesDtoFindMany['sortBy']
   >(overrides);
 }
