@@ -104,7 +104,7 @@ describe('AuthService', () => {
       );
 
       testAuthDtoSignin = getAuthDtoSigninFixture();
-      await expect(authService.signin(testAuthDtoSignin)).rejects.toThrow(
+      await expect(() => authService.signin(testAuthDtoSignin)).rejects.toThrow(
         NotFoundException,
       );
       expect(authUsersServiceFindOneMock).toHaveBeenNthCalledWith(
@@ -165,7 +165,7 @@ describe('AuthService', () => {
       );
 
       testAuthDtoSignin = getAuthDtoSigninFixture();
-      await expect(authService.signin(testAuthDtoSignin)).rejects.toThrow(
+      await expect(() => authService.signin(testAuthDtoSignin)).rejects.toThrow(
         BadRequestException,
       );
       expect(authUsersServiceFindOneMock).toHaveBeenNthCalledWith(

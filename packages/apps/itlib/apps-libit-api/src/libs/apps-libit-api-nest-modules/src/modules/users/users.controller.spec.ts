@@ -219,9 +219,9 @@ describe('UsersController', () => {
 
       usersDtoUpdateManyPartialObject = {
         [usersServiceUpdateManyPartialMockReturnValue[0].id]:
-          getUsersDtoUpdateOnePartialFixture(),
+          getUsersDtoUpdateOnePartialFixture({ username: 'test_username_1' }),
         [usersServiceUpdateManyPartialMockReturnValue[1].id]:
-          getUsersDtoUpdateOnePartialFixture(),
+          getUsersDtoUpdateOnePartialFixture({ username: 'test_username_2' }),
       };
       usersEntities = await usersController.updateManyPartial(
         usersDtoUpdateManyPartialObject,
@@ -258,7 +258,9 @@ describe('UsersController', () => {
           usersServiceUpdateManyPartialMockReturnValue[0].id,
           usersServiceUpdateManyPartialMockReturnValue[1].id,
         ],
-        dtoUpdateOnePartial: getUsersDtoUpdateOnePartialFixture(),
+        dtoUpdateOnePartial: getUsersDtoUpdateOnePartialFixture({
+          username: 'test_username',
+        }),
       };
       usersEntities = await usersController.updateManyPartialWithPattern(
         usersDtoUpdateOnePartialWithPattern,

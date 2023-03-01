@@ -8,8 +8,12 @@ import { InjectRepository } from '@nestjs/typeorm';
 import upperCase from 'lodash/upperCase';
 import keys from 'lodash/keys';
 import isEmpty from 'lodash/isEmpty';
+import keyBy from 'lodash/keyBy';
+import values from 'lodash/values';
+import pick from 'lodash/pick';
 import {
   AuthUsersService,
+  authUtilValidatePassword,
   EntityUniqueKeyValue,
   requestsUtilCrossCheckIds,
   requestsUtilGetUniqueKeysWhereFactory,
@@ -23,6 +27,7 @@ import { SystemRolesName } from '../systemRoles/systemRoles.types';
 import { SystemRolesService } from '../systemRoles/systemRoles.service';
 import { UsersDtoUpdateOnePartial } from './users.dto.updateOnePartial';
 import { UsersServiceValidator } from './users.service.validator';
+import { UsersDtoUpdateOneWhole } from './users.dto.updateOneWhole';
 
 @Injectable()
 export class UsersService implements AuthUsersService {
@@ -69,10 +74,16 @@ export class UsersService implements AuthUsersService {
   // TODO: Add createdAtRange, updatedAtRange, and think of a way to add a
   //  relations param, in order to be able to search within the entities
   //  table, but only look for records with a given set of relationships.
-  findMany(usersDtoFindMany: UsersDtoFindMany): Promise<UsersEntity[]> {
+  async findMany(usersDtoFindMany: UsersDtoFindMany): Promise<UsersEntity[]> {
     const query = this.usersRepository.createQueryBuilder().select('*');
 
     if (usersDtoFindMany.uniqueKeys && !isEmpty(usersDtoFindMany.uniqueKeys)) {
+      if (usersDtoFindMany.search) {
+        throw new BadRequestException(
+          'filtering by unique keys is only supported on its own. this request also included a search term',
+        );
+      }
+
       const whereFactory = requestsUtilGetUniqueKeysWhereFactory(
         usersDtoFindMany.uniqueKeys,
       );
@@ -123,7 +134,7 @@ export class UsersService implements AuthUsersService {
   async updateManyPartial(
     usersUpdateManyPartialObject: UpdateManyEntitiesObjectDto<
       UsersEntity,
-      UsersDtoUpdateOnePartial
+      UsersDtoUpdateOnePartial | UsersDtoUpdateOneWhole
     >,
     currentUser?: UsersEntity,
     currentPassword?: string,
@@ -134,6 +145,31 @@ export class UsersService implements AuthUsersService {
     });
 
     requestsUtilCrossCheckIds(ids, usersEntities);
+
+    const systemRolesEntities = await this.systemRolesService.findMany({});
+    const systemRolesByRoleName = keyBy(systemRolesEntities, 'name');
+    const isCurrentUserSystemRole = {
+      [SystemRolesName.SUPER_ADMIN]:
+        this.usersServiceValidator.validateCurrentUserSystemRoles(
+          [SystemRolesName.SUPER_ADMIN],
+          currentUser,
+        ),
+      [SystemRolesName.ADMIN]:
+        this.usersServiceValidator.validateCurrentUserSystemRoles(
+          [SystemRolesName.ADMIN],
+          currentUser,
+        ),
+      [SystemRolesName.USER]:
+        this.usersServiceValidator.validateCurrentUserSystemRoles(
+          [SystemRolesName.USER],
+          currentUser,
+        ),
+    };
+
+    const isCurrentUserPasswordValid = await authUtilValidatePassword(
+      currentPassword,
+      currentUser?.password,
+    );
 
     const usersEntitiesUpdated: UsersEntity[] = [];
     // eslint-disable-next-line no-restricted-syntax
@@ -148,30 +184,27 @@ export class UsersService implements AuthUsersService {
         ...usersEntity,
       } as UsersEntity;
 
-      const isValidElevatedPermissions =
-        // eslint-disable-next-line no-await-in-loop
-        await this.usersServiceValidator.validateElevatedPermissions(
-          usersEntity,
-          currentUser,
-          currentPassword,
-        );
+      // eslint-disable-next-line no-await-in-loop
+      const isUsersEntityPasswordValid = await authUtilValidatePassword(
+        currentPassword,
+        usersEntity?.password,
+      );
 
-      if (
-        (usersDtoUpdateOne.username ||
-          usersDtoUpdateOne.email ||
-          usersDtoUpdateOne.phoneNumber ||
-          usersDtoUpdateOne.password) &&
-        !isValidElevatedPermissions
-      ) {
-        throw new UnauthorizedException(
-          `user is not authorized to update credentials of user id: ${usersEntity.id}`,
-        );
-      }
-
-      if (usersDtoUpdateOne.systemRolesNames && !isValidElevatedPermissions) {
-        throw new UnauthorizedException(
-          `user is not authorized to update system roles of user id: ${usersEntity.id}`,
-        );
+      const isSensitiveCredentialsUpdated =
+        !!usersDtoUpdateOne.username ||
+        !!usersDtoUpdateOne.email ||
+        !!usersDtoUpdateOne.phoneNumber ||
+        !!usersDtoUpdateOne.password;
+      if (isSensitiveCredentialsUpdated) {
+        const isValidUpdateSensitiveCredentialsPermissions =
+          (isCurrentUserSystemRole[SystemRolesName.SUPER_ADMIN] &&
+            isCurrentUserPasswordValid) ||
+          isUsersEntityPasswordValid;
+        if (!isValidUpdateSensitiveCredentialsPermissions) {
+          throw new UnauthorizedException(
+            `user is not authorized to update sensitive credentials of user id: ${usersEntity.id}`,
+          );
+        }
       }
 
       if (usersDtoUpdateOne.username) {
@@ -234,14 +267,26 @@ export class UsersService implements AuthUsersService {
         usersEntityUpdated.middleName = usersDtoUpdateOne.middleName;
       }
 
-      // TODO: Implement updating of entity's edges as well as permission checks
-      //  for the case of users' systemRoles
       if (usersDtoUpdateOne.systemRolesNames) {
         if (usersEntity.id === currentUser.id) {
           throw new UnauthorizedException(
             'user is not authorized to update their own system roles',
           );
         }
+
+        const systemRolesNamesUpdated =
+          this.usersServiceValidator.getSystemRolesNamesUpdated(
+            systemRolesByRoleName,
+            usersDtoUpdateOne,
+            isCurrentUserSystemRole,
+            isCurrentUserPasswordValid,
+            usersEntity,
+          );
+
+        const systemRolesUpdated = values(
+          pick(systemRolesByRoleName, systemRolesNamesUpdated),
+        );
+        usersEntityUpdated.systemRoles = systemRolesUpdated;
       }
 
       usersEntitiesUpdated.push(usersEntityUpdated);
@@ -261,15 +306,27 @@ export class UsersService implements AuthUsersService {
 
     requestsUtilCrossCheckIds(ids, usersEntities);
 
+    const isCurrentUserSuperAdmin =
+      this.usersServiceValidator.validateCurrentUserSystemRoles(
+        [SystemRolesName.SUPER_ADMIN],
+        currentUser,
+      );
+    const isCurrentUserPasswordValid = await authUtilValidatePassword(
+      currentPassword,
+      currentUser?.password,
+    );
+
     // eslint-disable-next-line no-restricted-syntax
     for (const usersEntity of usersEntities) {
+      // eslint-disable-next-line no-await-in-loop
+      const isUsersEntityPasswordValid = await authUtilValidatePassword(
+        currentPassword,
+        usersEntity?.password,
+      );
+
       const isValidDeletePermissions =
-        // eslint-disable-next-line no-await-in-loop
-        await this.usersServiceValidator.validateElevatedPermissions(
-          usersEntity,
-          currentUser,
-          currentPassword,
-        );
+        (isCurrentUserSuperAdmin && isCurrentUserPasswordValid) ||
+        isUsersEntityPasswordValid;
 
       if (!isValidDeletePermissions) {
         throw new UnauthorizedException(

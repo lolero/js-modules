@@ -68,15 +68,7 @@ export function getUsersDtoUpdateOneWholeFixture(
 export function getUsersDtoUpdateOnePartialFixture(
   overrides: Partial<UsersDtoUpdateOnePartial> = {},
 ): UsersDtoUpdateOnePartial {
-  if (!isEmpty(overrides)) {
-    return overrides;
-  }
-
-  const usersDtoUpdateOnePartialDefault: UsersDtoUpdateOnePartial = {
-    username: 'test_username_new',
-  };
-
-  return usersDtoUpdateOnePartialDefault;
+  return overrides;
 }
 
 export function getUsersDtoUpdateOnePartialWithPatternFixture(

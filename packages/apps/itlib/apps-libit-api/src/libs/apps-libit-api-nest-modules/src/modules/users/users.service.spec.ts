@@ -5,13 +5,17 @@ import upperCase from 'lodash/upperCase';
 import keys from 'lodash/keys';
 import { BadRequestException, UnauthorizedException } from '@nestjs/common';
 import noop from 'lodash/noop';
+import omit from 'lodash/omit';
+import values from 'lodash/values';
+import pick from 'lodash/pick';
+import keyBy from 'lodash/keyBy';
 import { UsersService } from './users.service';
 import { UsersEntity } from './users.entity';
 import {
   getUsersDtoCreateOneFixture,
   getUsersDtoFindManyFixture,
-  getUsersEntityFixture,
   getUsersDtoUpdateOnePartialFixture,
+  getUsersEntityFixture,
 } from './users.utils.fixtures';
 import { UsersDtoFindMany } from './users.dto.findMany';
 import { UsersDtoCreateOne } from './users.dto.createOne';
@@ -19,9 +23,10 @@ import { UsersDtoUpdateOnePartial } from './users.dto.updateOnePartial';
 import { SystemRolesService } from '../systemRoles/systemRoles.service';
 import { getSystemRolesEntityFixture } from '../systemRoles/systemRoles.utils.fixtures';
 import {
+  authUtilValidatePassword,
   requestsUtilCrossCheckIds,
-  UpdateManyEntitiesObjectDto,
   requestsUtilGetUniqueKeysWhereFactory,
+  UpdateManyEntitiesObjectDto,
 } from '../../../../api-nest-utils/src';
 import { SystemRolesEntity } from '../systemRoles/systemRoles.entity';
 import { UsersServiceValidator } from './users.service.validator';
@@ -35,6 +40,7 @@ jest.mock('../../../../api-nest-utils/src', () => {
     __esModule: true,
     ...originalModule,
     default: jest.fn(),
+    authUtilValidatePassword: jest.fn(),
     requestsUtilCrossCheckIds: jest.fn(),
     requestsUtilGetUniqueKeysWhereFactory: jest.fn(),
   };
@@ -45,6 +51,7 @@ describe('UsersService', () => {
   const currentPassword = 'current_password';
   let usersEntities: UsersEntity[];
 
+  const authUtilValidatePasswordMock = jest.mocked(authUtilValidatePassword);
   const requestsUtilCrossCheckIdsMock = jest.mocked(requestsUtilCrossCheckIds);
   const requestsUtilGetUniqueKeysWhereFactoryMock = jest.mocked(
     requestsUtilGetUniqueKeysWhereFactory,
@@ -67,13 +74,15 @@ describe('UsersService', () => {
   let usersRepositoryRemoveMock: jest.Mock;
   let usersRepositoryMock: Partial<Repository<UsersEntity>>;
 
-  let usersServiceValidatorValidateElevatedPermissionsMock: jest.Mock;
+  let usersServiceValidatorValidateCurrentUserSystemRolesMock: jest.Mock;
   let usersServiceValidatorValidateUsernameMock: jest.Mock;
   let usersServiceValidatorValidateEmailMock: jest.Mock;
   let usersServiceValidatorValidatePhoneNumberMock: jest.Mock;
+  let usersServiceValidatorGetSystemRolesNamesUpdatedMock: jest.Mock;
   let usersServiceValidatorMock: Partial<UsersServiceValidator>;
 
   let systemRolesServiceFindOneMock: jest.Mock;
+  let systemRolesServiceFindManyMock: jest.Mock;
   let systemRolesServiceMock: Partial<SystemRolesService>;
 
   let usersService: UsersService;
@@ -140,21 +149,26 @@ describe('UsersService', () => {
       save: usersRepositorySaveMock,
     };
 
-    usersServiceValidatorValidateElevatedPermissionsMock = jest.fn();
+    usersServiceValidatorValidateCurrentUserSystemRolesMock = jest.fn();
     usersServiceValidatorValidateUsernameMock = jest.fn();
     usersServiceValidatorValidateEmailMock = jest.fn();
     usersServiceValidatorValidatePhoneNumberMock = jest.fn();
+    usersServiceValidatorGetSystemRolesNamesUpdatedMock = jest.fn();
     usersServiceValidatorMock = {
-      validateElevatedPermissions:
-        usersServiceValidatorValidateElevatedPermissionsMock,
+      validateCurrentUserSystemRoles:
+        usersServiceValidatorValidateCurrentUserSystemRolesMock,
       validateUsername: usersServiceValidatorValidateUsernameMock,
       validateEmail: usersServiceValidatorValidateEmailMock,
       validatePhoneNumber: usersServiceValidatorValidatePhoneNumberMock,
+      getSystemRolesNamesUpdated:
+        usersServiceValidatorGetSystemRolesNamesUpdatedMock,
     };
 
     systemRolesServiceFindOneMock = jest.fn();
+    systemRolesServiceFindManyMock = jest.fn();
     systemRolesServiceMock = {
       findOne: systemRolesServiceFindOneMock,
+      findMany: systemRolesServiceFindManyMock,
     };
 
     const module: TestingModule = await Test.createTestingModule({
@@ -179,6 +193,7 @@ describe('UsersService', () => {
   });
 
   afterEach(() => {
+    authUtilValidatePasswordMock.mockRestore();
     requestsUtilCrossCheckIdsMock.mockRestore();
     requestsUtilGetUniqueKeysWhereFactoryMock.mockRestore();
   });
@@ -281,6 +296,7 @@ describe('UsersService', () => {
         uniqueKeys: {
           id: [1, 2, 3],
         },
+        search: undefined,
       });
       await usersService.findMany(usersDtoFindMany);
 
@@ -312,6 +328,18 @@ describe('UsersService', () => {
 
       expect(requestsUtilGetUniqueKeysWhereFactoryMock).not.toHaveBeenCalled();
       expect(usersRepositoryQueryBuilderWhereMock).not.toHaveBeenCalled();
+    });
+
+    it('Should throw an error if a non empty uniqueKeys is passed, as well as a search term', async () => {
+      usersDtoFindMany = getUsersDtoFindManyFixture({
+        uniqueKeys: {
+          id: [1, 2, 3],
+        },
+        search: 'test_search',
+      });
+      await expect(usersService.findMany(usersDtoFindMany)).rejects.toThrow(
+        BadRequestException,
+      );
     });
 
     it('Should filter the query by username, email, phoneNumber, firstName, middleName and lastName when the search param is passed', async () => {
@@ -470,18 +498,30 @@ describe('UsersService', () => {
   });
 
   describe('updateManyPartial', () => {
+    const testSystemRolesEntities = values(SystemRolesName).map(
+      (systemRolesName) =>
+        getSystemRolesEntityFixture({
+          name: systemRolesName,
+        }),
+    );
+
+    let isCurrentUserSystemRole: Record<SystemRolesName, boolean>;
+    let systemRolesUpdated: SystemRolesEntity[][];
     let usersEntitiesUpdated: UsersEntityType[];
     let usersRepositoryFindByMockReturnValue: UsersEntity[];
-    let usersServiceValidatorValidateElevatedPermissionsMockReturnValue: Promise<boolean>;
-    let usersServiceValidatorValidateUsernameMockReturnValue: Promise<boolean>;
-    let usersServiceValidatorValidateEmailMockReturnValue: Promise<boolean>;
-    let usersServiceValidatorValidatePhoneNumberMockReturnValue: Promise<boolean>;
+    let systemRolesServiceFindManyMockReturnValue: SystemRolesEntity[];
+    let usersServiceValidatorValidateCurrentUserSystemRolesMockReturnValues: boolean[];
+    let authUtilValidatePasswordMockReturnValues: boolean[];
+    let usersServiceValidatorValidateUsernameMockReturnValue: boolean;
+    let usersServiceValidatorValidateEmailMockReturnValue: boolean;
+    let usersServiceValidatorValidatePhoneNumberMockReturnValue: boolean;
+    let usersServiceValidatorGetSystemRolesNamesUpdatedMockReturnValues: SystemRolesName[][];
     let usersDtoUpdateManyPartialObject: UpdateManyEntitiesObjectDto<
       UsersEntity,
       UsersDtoUpdateOnePartial
     >;
 
-    it('Should call usersRepository.findBy with ids of the passed partial users, requestsUtilCrossCheckIds with the requested ids and found users, usersRepository.save with the updated users, and return the updated users', async () => {
+    it('Should call usersRepository.findBy with ids of the passed partial users, requestsUtilCrossCheckIds with the requested ids and found users, systemRolesService.findMany, validateCurrentUserSystemRoles with SUPER_ADMIN, validateCurrentUserSystemRoles with ADMIN, validateCurrentUserSystemRoles with USER, authUtilValidatePassword for the currentUser, authUtilValidatePassword for the user being updated, usersRepository.save with the updated users, and return the updated users', async () => {
       usersRepositoryFindByMockReturnValue = [
         getUsersEntityFixture({
           firstName: 'old_first_name',
@@ -490,6 +530,10 @@ describe('UsersService', () => {
       usersRepositoryFindByMock.mockReturnValue(
         usersRepositoryFindByMockReturnValue,
       );
+      systemRolesServiceFindManyMockReturnValue = testSystemRolesEntities;
+      systemRolesServiceFindManyMock.mockReturnValue(
+        systemRolesServiceFindManyMockReturnValue,
+      );
 
       usersDtoUpdateManyPartialObject = {
         [usersRepositoryFindByMockReturnValue[0].id]:
@@ -497,6 +541,8 @@ describe('UsersService', () => {
       };
       usersEntities = await usersService.updateManyPartial(
         usersDtoUpdateManyPartialObject,
+        currentUser,
+        currentPassword,
       );
 
       const requestedIds = keys(usersDtoUpdateManyPartialObject).map((id) =>
@@ -513,10 +559,30 @@ describe('UsersService', () => {
       expect(usersRepositoryFindByMock).toHaveBeenNthCalledWith(1, {
         id: In(requestedIds),
       });
+      expect(systemRolesServiceFindManyMock).toHaveBeenNthCalledWith(1, {});
       expect(requestsUtilCrossCheckIdsMock).toHaveBeenNthCalledWith(
         1,
         requestedIds,
         usersRepositoryFindByMockReturnValue,
+      );
+      expect(
+        usersServiceValidatorValidateCurrentUserSystemRolesMock,
+      ).toHaveBeenNthCalledWith(1, [SystemRolesName.SUPER_ADMIN], currentUser);
+      expect(
+        usersServiceValidatorValidateCurrentUserSystemRolesMock,
+      ).toHaveBeenNthCalledWith(2, [SystemRolesName.ADMIN], currentUser);
+      expect(
+        usersServiceValidatorValidateCurrentUserSystemRolesMock,
+      ).toHaveBeenNthCalledWith(3, [SystemRolesName.USER], currentUser);
+      expect(authUtilValidatePasswordMock).toHaveBeenNthCalledWith(
+        1,
+        currentPassword,
+        currentUser.password,
+      );
+      expect(authUtilValidatePasswordMock).toHaveBeenNthCalledWith(
+        2,
+        currentPassword,
+        usersRepositoryFindByMockReturnValue[0].password,
       );
       expect(usersRepositorySaveMock).toHaveBeenNthCalledWith(
         1,
@@ -525,14 +591,9 @@ describe('UsersService', () => {
       expect(usersEntities).toEqual(usersEntitiesUpdated);
     });
 
-    it('Should call validateElevatedPermissions for every user that gets an update, usersRepository.save with the updated users, and return the updated users', async () => {
+    it('Should call usersRepository.save with the updated users and return the updated users if all validateCurrentUserSystemRoles and authUtilValidatePassword calls return false but no sensitive credentials are updated', async () => {
       usersRepositoryFindByMockReturnValue = [
         getUsersEntityFixture({
-          id: 1,
-          firstName: 'old_first_name',
-        }),
-        getUsersEntityFixture({
-          id: 2,
           firstName: 'old_first_name',
           middleName: 'old_middle_name',
           lastName: 'old_last_name',
@@ -544,8 +605,6 @@ describe('UsersService', () => {
 
       usersDtoUpdateManyPartialObject = {
         [usersRepositoryFindByMockReturnValue[0].id]:
-          getUsersDtoUpdateOnePartialFixture({ firstName: 'new_first_name' }),
-        [usersRepositoryFindByMockReturnValue[1].id]:
           getUsersDtoUpdateOnePartialFixture({
             firstName: 'new_first_name',
             middleName: 'new_middle_name',
@@ -565,29 +624,7 @@ describe('UsersService', () => {
             usersRepositoryFindByMockReturnValue[0].id
           ],
         },
-        {
-          ...usersRepositoryFindByMockReturnValue[1],
-          ...usersDtoUpdateManyPartialObject[
-            usersRepositoryFindByMockReturnValue[1].id
-          ],
-        },
       ];
-      expect(
-        usersServiceValidatorValidateElevatedPermissionsMock,
-      ).toHaveBeenNthCalledWith(
-        1,
-        usersRepositoryFindByMockReturnValue[0],
-        currentUser,
-        currentPassword,
-      );
-      expect(
-        usersServiceValidatorValidateElevatedPermissionsMock,
-      ).toHaveBeenNthCalledWith(
-        2,
-        usersRepositoryFindByMockReturnValue[1],
-        currentUser,
-        currentPassword,
-      );
       expect(usersRepositorySaveMock).toHaveBeenNthCalledWith(
         1,
         usersEntitiesUpdated,
@@ -595,35 +632,7 @@ describe('UsersService', () => {
       expect(usersEntities).toEqual(usersEntitiesUpdated);
     });
 
-    it('Should not throw an error if validateElevatedPermissions returns false but the users username, email, phoneNumber, password, and systemRoles are not being updated', async () => {
-      usersRepositoryFindByMockReturnValue = [
-        getUsersEntityFixture({
-          firstName: 'old_first_name',
-        }),
-      ];
-      usersRepositoryFindByMock.mockReturnValue(
-        usersRepositoryFindByMockReturnValue,
-      );
-      usersServiceValidatorValidateElevatedPermissionsMockReturnValue =
-        Promise.resolve(false);
-      usersServiceValidatorValidateElevatedPermissionsMock.mockReturnValue(
-        usersServiceValidatorValidateElevatedPermissionsMockReturnValue,
-      );
-
-      usersDtoUpdateManyPartialObject = {
-        [usersRepositoryFindByMockReturnValue[0].id]:
-          getUsersDtoUpdateOnePartialFixture({ firstName: 'new_first_name' }),
-      };
-      await expect(
-        usersService.updateManyPartial(
-          usersDtoUpdateManyPartialObject,
-          currentUser,
-          currentPassword,
-        ),
-      ).resolves.not.toThrow();
-    });
-
-    it('Should throw an error if a username is updated but validateElevatedPermissions returns false', async () => {
+    it('Should throw an error if a username is updated and both validateCurrentUserSystemRoles with SUPER_ADMIN, and authUtilValidatePassword for the user being updated, return false', async () => {
       usersRepositoryFindByMockReturnValue = [
         getUsersEntityFixture({
           username: 'old_username',
@@ -632,17 +641,25 @@ describe('UsersService', () => {
       usersRepositoryFindByMock.mockReturnValue(
         usersRepositoryFindByMockReturnValue,
       );
-      usersServiceValidatorValidateElevatedPermissionsMockReturnValue =
-        Promise.resolve(false);
-      usersServiceValidatorValidateElevatedPermissionsMock.mockReturnValue(
-        usersServiceValidatorValidateElevatedPermissionsMockReturnValue,
+      usersServiceValidatorValidateCurrentUserSystemRolesMockReturnValues = [
+        false,
+      ];
+      usersServiceValidatorValidateCurrentUserSystemRolesMock.mockReturnValueOnce(
+        usersServiceValidatorValidateCurrentUserSystemRolesMockReturnValues[0],
+      );
+      authUtilValidatePasswordMockReturnValues = [true, false];
+      authUtilValidatePasswordMock.mockReturnValueOnce(
+        Promise.resolve(authUtilValidatePasswordMockReturnValues[0]),
+      );
+      authUtilValidatePasswordMock.mockReturnValueOnce(
+        Promise.resolve(authUtilValidatePasswordMockReturnValues[1]),
       );
 
       usersDtoUpdateManyPartialObject = {
         [usersRepositoryFindByMockReturnValue[0].id]:
           getUsersDtoUpdateOnePartialFixture({ username: 'new_username' }),
       };
-      await expect(
+      await expect(() =>
         usersService.updateManyPartial(
           usersDtoUpdateManyPartialObject,
           currentUser,
@@ -651,7 +668,43 @@ describe('UsersService', () => {
       ).rejects.toThrow(UnauthorizedException);
     });
 
-    it('Should throw an error if an email is updated but validateElevatedPermissions returns false', async () => {
+    it('Should throw an error if a username is updated and both authUtilValidatePassword for the currentUser, and authUtilValidatePassword for the user being updated, return false', async () => {
+      usersRepositoryFindByMockReturnValue = [
+        getUsersEntityFixture({
+          username: 'old_username',
+        }),
+      ];
+      usersRepositoryFindByMock.mockReturnValue(
+        usersRepositoryFindByMockReturnValue,
+      );
+      usersServiceValidatorValidateCurrentUserSystemRolesMockReturnValues = [
+        true,
+      ];
+      usersServiceValidatorValidateCurrentUserSystemRolesMock.mockReturnValueOnce(
+        usersServiceValidatorValidateCurrentUserSystemRolesMockReturnValues[0],
+      );
+      authUtilValidatePasswordMockReturnValues = [false, false];
+      authUtilValidatePasswordMock.mockReturnValueOnce(
+        Promise.resolve(authUtilValidatePasswordMockReturnValues[0]),
+      );
+      authUtilValidatePasswordMock.mockReturnValueOnce(
+        Promise.resolve(authUtilValidatePasswordMockReturnValues[1]),
+      );
+
+      usersDtoUpdateManyPartialObject = {
+        [usersRepositoryFindByMockReturnValue[0].id]:
+          getUsersDtoUpdateOnePartialFixture({ username: 'new_username' }),
+      };
+      await expect(() =>
+        usersService.updateManyPartial(
+          usersDtoUpdateManyPartialObject,
+          currentUser,
+          currentPassword,
+        ),
+      ).rejects.toThrow(UnauthorizedException);
+    });
+
+    it('Should throw an error if an email is updated and both validateCurrentUserSystemRoles with SUPER_ADMIN, and authUtilValidatePassword for the user being updated, return false', async () => {
       usersRepositoryFindByMockReturnValue = [
         getUsersEntityFixture({
           email: 'test-old@email.com',
@@ -660,17 +713,25 @@ describe('UsersService', () => {
       usersRepositoryFindByMock.mockReturnValue(
         usersRepositoryFindByMockReturnValue,
       );
-      usersServiceValidatorValidateElevatedPermissionsMockReturnValue =
-        Promise.resolve(false);
-      usersServiceValidatorValidateElevatedPermissionsMock.mockReturnValue(
-        usersServiceValidatorValidateElevatedPermissionsMockReturnValue,
+      usersServiceValidatorValidateCurrentUserSystemRolesMockReturnValues = [
+        false,
+      ];
+      usersServiceValidatorValidateCurrentUserSystemRolesMock.mockReturnValueOnce(
+        usersServiceValidatorValidateCurrentUserSystemRolesMockReturnValues[0],
+      );
+      authUtilValidatePasswordMockReturnValues = [true, false];
+      authUtilValidatePasswordMock.mockReturnValueOnce(
+        Promise.resolve(authUtilValidatePasswordMockReturnValues[0]),
+      );
+      authUtilValidatePasswordMock.mockReturnValueOnce(
+        Promise.resolve(authUtilValidatePasswordMockReturnValues[1]),
       );
 
       usersDtoUpdateManyPartialObject = {
         [usersRepositoryFindByMockReturnValue[0].id]:
           getUsersDtoUpdateOnePartialFixture({ email: 'test-new@email.com' }),
       };
-      await expect(
+      await expect(() =>
         usersService.updateManyPartial(
           usersDtoUpdateManyPartialObject,
           currentUser,
@@ -679,7 +740,79 @@ describe('UsersService', () => {
       ).rejects.toThrow(UnauthorizedException);
     });
 
-    it('Should throw an error if a phoneNumber is updated but validateElevatedPermissions returns false', async () => {
+    it('Should throw an error if an email is updated and both authUtilValidatePassword for the currentUser, and authUtilValidatePassword for the user being updated, return false', async () => {
+      usersRepositoryFindByMockReturnValue = [
+        getUsersEntityFixture({
+          email: 'test-old@email.com',
+        }),
+      ];
+      usersRepositoryFindByMock.mockReturnValue(
+        usersRepositoryFindByMockReturnValue,
+      );
+      usersServiceValidatorValidateCurrentUserSystemRolesMockReturnValues = [
+        true,
+      ];
+      usersServiceValidatorValidateCurrentUserSystemRolesMock.mockReturnValueOnce(
+        usersServiceValidatorValidateCurrentUserSystemRolesMockReturnValues[0],
+      );
+      authUtilValidatePasswordMockReturnValues = [false, false];
+      authUtilValidatePasswordMock.mockReturnValueOnce(
+        Promise.resolve(authUtilValidatePasswordMockReturnValues[0]),
+      );
+      authUtilValidatePasswordMock.mockReturnValueOnce(
+        Promise.resolve(authUtilValidatePasswordMockReturnValues[1]),
+      );
+
+      usersDtoUpdateManyPartialObject = {
+        [usersRepositoryFindByMockReturnValue[0].id]:
+          getUsersDtoUpdateOnePartialFixture({ email: 'test-new@email.com' }),
+      };
+      await expect(() =>
+        usersService.updateManyPartial(
+          usersDtoUpdateManyPartialObject,
+          currentUser,
+          currentPassword,
+        ),
+      ).rejects.toThrow(UnauthorizedException);
+    });
+
+    it('Should throw an error if a phoneNumber is updated and both validateCurrentUserSystemRoles with SUPER_ADMIN, and authUtilValidatePassword for the user being updated, return false', async () => {
+      usersRepositoryFindByMockReturnValue = [
+        getUsersEntityFixture({
+          phoneNumber: '+18001111111',
+        }),
+      ];
+      usersRepositoryFindByMock.mockReturnValue(
+        usersRepositoryFindByMockReturnValue,
+      );
+      usersServiceValidatorValidateCurrentUserSystemRolesMockReturnValues = [
+        false,
+      ];
+      usersServiceValidatorValidateCurrentUserSystemRolesMock.mockReturnValueOnce(
+        usersServiceValidatorValidateCurrentUserSystemRolesMockReturnValues[0],
+      );
+      authUtilValidatePasswordMockReturnValues = [true, false];
+      authUtilValidatePasswordMock.mockReturnValueOnce(
+        Promise.resolve(authUtilValidatePasswordMockReturnValues[0]),
+      );
+      authUtilValidatePasswordMock.mockReturnValueOnce(
+        Promise.resolve(authUtilValidatePasswordMockReturnValues[1]),
+      );
+
+      usersDtoUpdateManyPartialObject = {
+        [usersRepositoryFindByMockReturnValue[0].id]:
+          getUsersDtoUpdateOnePartialFixture({ phoneNumber: '+18001111111' }),
+      };
+      await expect(() =>
+        usersService.updateManyPartial(
+          usersDtoUpdateManyPartialObject,
+          currentUser,
+          currentPassword,
+        ),
+      ).rejects.toThrow(UnauthorizedException);
+    });
+
+    it('Should throw an error if a phoneNumber is updated and both authUtilValidatePassword for the currentUser, and authUtilValidatePassword for the user being updated, return false', async () => {
       usersRepositoryFindByMockReturnValue = [
         getUsersEntityFixture({
           phoneNumber: '+18001111110',
@@ -688,17 +821,25 @@ describe('UsersService', () => {
       usersRepositoryFindByMock.mockReturnValue(
         usersRepositoryFindByMockReturnValue,
       );
-      usersServiceValidatorValidateElevatedPermissionsMockReturnValue =
-        Promise.resolve(false);
-      usersServiceValidatorValidateElevatedPermissionsMock.mockReturnValue(
-        usersServiceValidatorValidateElevatedPermissionsMockReturnValue,
+      usersServiceValidatorValidateCurrentUserSystemRolesMockReturnValues = [
+        true,
+      ];
+      usersServiceValidatorValidateCurrentUserSystemRolesMock.mockReturnValueOnce(
+        usersServiceValidatorValidateCurrentUserSystemRolesMockReturnValues[0],
+      );
+      authUtilValidatePasswordMockReturnValues = [false, false];
+      authUtilValidatePasswordMock.mockReturnValueOnce(
+        Promise.resolve(authUtilValidatePasswordMockReturnValues[0]),
+      );
+      authUtilValidatePasswordMock.mockReturnValueOnce(
+        Promise.resolve(authUtilValidatePasswordMockReturnValues[1]),
       );
 
       usersDtoUpdateManyPartialObject = {
         [usersRepositoryFindByMockReturnValue[0].id]:
           getUsersDtoUpdateOnePartialFixture({ phoneNumber: '+18001111111' }),
       };
-      await expect(
+      await expect(() =>
         usersService.updateManyPartial(
           usersDtoUpdateManyPartialObject,
           currentUser,
@@ -707,37 +848,7 @@ describe('UsersService', () => {
       ).rejects.toThrow(UnauthorizedException);
     });
 
-    it('Should throw an error if systemRoles are updated but validateElevatedPermissions returns false', async () => {
-      usersRepositoryFindByMockReturnValue = [
-        getUsersEntityFixture({
-          systemRoles: [getSystemRolesEntityFixture()],
-        }),
-      ];
-      usersRepositoryFindByMock.mockReturnValue(
-        usersRepositoryFindByMockReturnValue,
-      );
-      usersServiceValidatorValidateElevatedPermissionsMockReturnValue =
-        Promise.resolve(false);
-      usersServiceValidatorValidateElevatedPermissionsMock.mockReturnValue(
-        usersServiceValidatorValidateElevatedPermissionsMockReturnValue,
-      );
-
-      usersDtoUpdateManyPartialObject = {
-        [usersRepositoryFindByMockReturnValue[0].id]:
-          getUsersDtoUpdateOnePartialFixture({
-            systemRolesNames: [SystemRolesName.ADMIN],
-          }),
-      };
-      await expect(
-        usersService.updateManyPartial(
-          usersDtoUpdateManyPartialObject,
-          currentUser,
-          currentPassword,
-        ),
-      ).rejects.toThrow(UnauthorizedException);
-    });
-
-    it('Should call validateUsername, update the users usernames, usersRepository.save with the updated users, and return the updated users', async () => {
+    it('Should call validateUsername, update the users usernames, call usersRepository.save with the updated users, and return the updated users', async () => {
       usersRepositoryFindByMockReturnValue = [
         getUsersEntityFixture({
           id: 1,
@@ -751,15 +862,19 @@ describe('UsersService', () => {
       usersRepositoryFindByMock.mockReturnValue(
         usersRepositoryFindByMockReturnValue,
       );
-      usersServiceValidatorValidateElevatedPermissionsMockReturnValue =
-        Promise.resolve(true);
-      usersServiceValidatorValidateElevatedPermissionsMock.mockReturnValue(
-        usersServiceValidatorValidateElevatedPermissionsMockReturnValue,
+      usersServiceValidatorValidateCurrentUserSystemRolesMockReturnValues = [
+        true,
+      ];
+      usersServiceValidatorValidateCurrentUserSystemRolesMock.mockReturnValueOnce(
+        usersServiceValidatorValidateCurrentUserSystemRolesMockReturnValues[0],
       );
-      usersServiceValidatorValidateUsernameMockReturnValue =
-        Promise.resolve(true);
+      authUtilValidatePasswordMockReturnValues = [true];
+      authUtilValidatePasswordMock.mockReturnValueOnce(
+        Promise.resolve(authUtilValidatePasswordMockReturnValues[0]),
+      );
+      usersServiceValidatorValidateUsernameMockReturnValue = true;
       usersServiceValidatorValidateUsernameMock.mockReturnValue(
-        usersServiceValidatorValidateUsernameMockReturnValue,
+        Promise.resolve(usersServiceValidatorValidateUsernameMockReturnValue),
       );
 
       usersDtoUpdateManyPartialObject = {
@@ -816,22 +931,26 @@ describe('UsersService', () => {
       usersRepositoryFindByMock.mockReturnValue(
         usersRepositoryFindByMockReturnValue,
       );
-      usersServiceValidatorValidateElevatedPermissionsMockReturnValue =
-        Promise.resolve(true);
-      usersServiceValidatorValidateElevatedPermissionsMock.mockReturnValue(
-        usersServiceValidatorValidateElevatedPermissionsMockReturnValue,
+      usersServiceValidatorValidateCurrentUserSystemRolesMockReturnValues = [
+        true,
+      ];
+      usersServiceValidatorValidateCurrentUserSystemRolesMock.mockReturnValueOnce(
+        usersServiceValidatorValidateCurrentUserSystemRolesMockReturnValues[0],
       );
-      usersServiceValidatorValidateUsernameMockReturnValue =
-        Promise.resolve(false);
+      authUtilValidatePasswordMockReturnValues = [true];
+      authUtilValidatePasswordMock.mockReturnValueOnce(
+        Promise.resolve(authUtilValidatePasswordMockReturnValues[0]),
+      );
+      usersServiceValidatorValidateUsernameMockReturnValue = false;
       usersServiceValidatorValidateUsernameMock.mockReturnValue(
-        usersServiceValidatorValidateUsernameMockReturnValue,
+        Promise.resolve(usersServiceValidatorValidateUsernameMockReturnValue),
       );
 
       usersDtoUpdateManyPartialObject = {
         [usersRepositoryFindByMockReturnValue[0].id]:
           getUsersDtoUpdateOnePartialFixture({ username: 'new_username_1' }),
       };
-      await expect(
+      await expect(() =>
         usersService.updateManyPartial(
           usersDtoUpdateManyPartialObject,
           currentUser,
@@ -840,7 +959,7 @@ describe('UsersService', () => {
       ).rejects.toThrow(BadRequestException);
     });
 
-    it('Should call validateEmail, update the users emails, usersRepository.save with the updated users, and return the updated users', async () => {
+    it('Should call validateEmail, update the users emails, call usersRepository.save with the updated users, and return the updated users', async () => {
       usersRepositoryFindByMockReturnValue = [
         getUsersEntityFixture({
           id: 1,
@@ -854,14 +973,19 @@ describe('UsersService', () => {
       usersRepositoryFindByMock.mockReturnValue(
         usersRepositoryFindByMockReturnValue,
       );
-      usersServiceValidatorValidateElevatedPermissionsMockReturnValue =
-        Promise.resolve(true);
-      usersServiceValidatorValidateElevatedPermissionsMock.mockReturnValue(
-        usersServiceValidatorValidateElevatedPermissionsMockReturnValue,
+      usersServiceValidatorValidateCurrentUserSystemRolesMockReturnValues = [
+        true,
+      ];
+      usersServiceValidatorValidateCurrentUserSystemRolesMock.mockReturnValueOnce(
+        usersServiceValidatorValidateCurrentUserSystemRolesMockReturnValues[0],
       );
-      usersServiceValidatorValidateEmailMockReturnValue = Promise.resolve(true);
+      authUtilValidatePasswordMockReturnValues = [true];
+      authUtilValidatePasswordMock.mockReturnValueOnce(
+        Promise.resolve(authUtilValidatePasswordMockReturnValues[0]),
+      );
+      usersServiceValidatorValidateEmailMockReturnValue = true;
       usersServiceValidatorValidateEmailMock.mockReturnValue(
-        usersServiceValidatorValidateEmailMockReturnValue,
+        Promise.resolve(usersServiceValidatorValidateEmailMockReturnValue),
       );
 
       usersDtoUpdateManyPartialObject = {
@@ -918,22 +1042,26 @@ describe('UsersService', () => {
       usersRepositoryFindByMock.mockReturnValue(
         usersRepositoryFindByMockReturnValue,
       );
-      usersServiceValidatorValidateElevatedPermissionsMockReturnValue =
-        Promise.resolve(true);
-      usersServiceValidatorValidateElevatedPermissionsMock.mockReturnValue(
-        usersServiceValidatorValidateElevatedPermissionsMockReturnValue,
+      usersServiceValidatorValidateCurrentUserSystemRolesMockReturnValues = [
+        true,
+      ];
+      usersServiceValidatorValidateCurrentUserSystemRolesMock.mockReturnValueOnce(
+        usersServiceValidatorValidateCurrentUserSystemRolesMockReturnValues[0],
       );
-      usersServiceValidatorValidateEmailMockReturnValue =
-        Promise.resolve(false);
+      authUtilValidatePasswordMockReturnValues = [true];
+      authUtilValidatePasswordMock.mockReturnValueOnce(
+        Promise.resolve(authUtilValidatePasswordMockReturnValues[0]),
+      );
+      usersServiceValidatorValidateEmailMockReturnValue = false;
       usersServiceValidatorValidateEmailMock.mockReturnValue(
-        usersServiceValidatorValidateEmailMockReturnValue,
+        Promise.resolve(usersServiceValidatorValidateEmailMockReturnValue),
       );
 
       usersDtoUpdateManyPartialObject = {
         [usersRepositoryFindByMockReturnValue[0].id]:
           getUsersDtoUpdateOnePartialFixture({ email: 'test-new-1@email.com' }),
       };
-      await expect(
+      await expect(() =>
         usersService.updateManyPartial(
           usersDtoUpdateManyPartialObject,
           currentUser,
@@ -942,7 +1070,7 @@ describe('UsersService', () => {
       ).rejects.toThrow(BadRequestException);
     });
 
-    it('Should call validatePhoneNumber, update the users phoneNumbers, usersRepository.save with the updated users, and return the updated users', async () => {
+    it('Should call validatePhoneNumber, update the users phoneNumbers, call usersRepository.save with the updated users, and return the updated users', async () => {
       usersRepositoryFindByMockReturnValue = [
         getUsersEntityFixture({
           id: 1,
@@ -956,15 +1084,21 @@ describe('UsersService', () => {
       usersRepositoryFindByMock.mockReturnValue(
         usersRepositoryFindByMockReturnValue,
       );
-      usersServiceValidatorValidateElevatedPermissionsMockReturnValue =
-        Promise.resolve(true);
-      usersServiceValidatorValidateElevatedPermissionsMock.mockReturnValue(
-        usersServiceValidatorValidateElevatedPermissionsMockReturnValue,
+      usersServiceValidatorValidateCurrentUserSystemRolesMockReturnValues = [
+        true,
+      ];
+      usersServiceValidatorValidateCurrentUserSystemRolesMock.mockReturnValueOnce(
+        usersServiceValidatorValidateCurrentUserSystemRolesMockReturnValues[0],
       );
-      usersServiceValidatorValidatePhoneNumberMockReturnValue =
-        Promise.resolve(true);
+      authUtilValidatePasswordMockReturnValues = [true];
+      authUtilValidatePasswordMock.mockReturnValueOnce(
+        Promise.resolve(authUtilValidatePasswordMockReturnValues[0]),
+      );
+      usersServiceValidatorValidatePhoneNumberMockReturnValue = true;
       usersServiceValidatorValidatePhoneNumberMock.mockReturnValue(
-        usersServiceValidatorValidatePhoneNumberMockReturnValue,
+        Promise.resolve(
+          usersServiceValidatorValidatePhoneNumberMockReturnValue,
+        ),
       );
 
       usersDtoUpdateManyPartialObject = {
@@ -1025,15 +1159,21 @@ describe('UsersService', () => {
       usersRepositoryFindByMock.mockReturnValue(
         usersRepositoryFindByMockReturnValue,
       );
-      usersServiceValidatorValidateElevatedPermissionsMockReturnValue =
-        Promise.resolve(true);
-      usersServiceValidatorValidateElevatedPermissionsMock.mockReturnValue(
-        usersServiceValidatorValidateElevatedPermissionsMockReturnValue,
+      usersServiceValidatorValidateCurrentUserSystemRolesMockReturnValues = [
+        true,
+      ];
+      usersServiceValidatorValidateCurrentUserSystemRolesMock.mockReturnValueOnce(
+        usersServiceValidatorValidateCurrentUserSystemRolesMockReturnValues[0],
       );
-      usersServiceValidatorValidatePhoneNumberMockReturnValue =
-        Promise.resolve(false);
+      authUtilValidatePasswordMockReturnValues = [true];
+      authUtilValidatePasswordMock.mockReturnValueOnce(
+        Promise.resolve(authUtilValidatePasswordMockReturnValues[0]),
+      );
+      usersServiceValidatorValidatePhoneNumberMockReturnValue = false;
       usersServiceValidatorValidatePhoneNumberMock.mockReturnValue(
-        usersServiceValidatorValidatePhoneNumberMockReturnValue,
+        Promise.resolve(
+          usersServiceValidatorValidatePhoneNumberMockReturnValue,
+        ),
       );
 
       usersDtoUpdateManyPartialObject = {
@@ -1042,7 +1182,7 @@ describe('UsersService', () => {
             phoneNumber: '+18001111111',
           }),
       };
-      await expect(
+      await expect(() =>
         usersService.updateManyPartial(
           usersDtoUpdateManyPartialObject,
           currentUser,
@@ -1104,21 +1244,159 @@ describe('UsersService', () => {
           ],
         },
       ];
-      expect(
-        usersServiceValidatorValidateElevatedPermissionsMock,
-      ).toHaveBeenNthCalledWith(
+      expect(usersRepositorySaveMock).toHaveBeenNthCalledWith(
         1,
-        usersRepositoryFindByMockReturnValue[0],
+        usersEntitiesUpdated,
+      );
+      expect(usersEntities).toEqual(usersEntitiesUpdated);
+    });
+
+    it('Should call getSystemRolesNamesUpdated, update the users systemRoles, call usersRepository.save with the updated users, and return the updated users', async () => {
+      usersRepositoryFindByMockReturnValue = [
+        getUsersEntityFixture({
+          id: 1,
+          systemRoles: [
+            getSystemRolesEntityFixture({ name: SystemRolesName.USER }),
+            getSystemRolesEntityFixture({ name: SystemRolesName.USER }),
+          ],
+        }),
+        getUsersEntityFixture({
+          id: 2,
+          systemRoles: [
+            getSystemRolesEntityFixture({ name: SystemRolesName.ADMIN }),
+            getSystemRolesEntityFixture({ name: SystemRolesName.ADMIN }),
+          ],
+        }),
+      ];
+      usersRepositoryFindByMock.mockReturnValue(
+        usersRepositoryFindByMockReturnValue,
+      );
+      systemRolesServiceFindManyMockReturnValue = testSystemRolesEntities;
+      systemRolesServiceFindManyMock.mockReturnValue(
+        systemRolesServiceFindManyMockReturnValue,
+      );
+      usersServiceValidatorValidateCurrentUserSystemRolesMockReturnValues = [
+        false,
+        false,
+        true,
+      ];
+      usersServiceValidatorValidateCurrentUserSystemRolesMock.mockReturnValueOnce(
+        usersServiceValidatorValidateCurrentUserSystemRolesMockReturnValues[0],
+      );
+      usersServiceValidatorValidateCurrentUserSystemRolesMock.mockReturnValueOnce(
+        usersServiceValidatorValidateCurrentUserSystemRolesMockReturnValues[1],
+      );
+      usersServiceValidatorValidateCurrentUserSystemRolesMock.mockReturnValueOnce(
+        usersServiceValidatorValidateCurrentUserSystemRolesMockReturnValues[2],
+      );
+      authUtilValidatePasswordMockReturnValues = [false, false, true];
+      authUtilValidatePasswordMock.mockReturnValueOnce(
+        Promise.resolve(authUtilValidatePasswordMockReturnValues[0]),
+      );
+      authUtilValidatePasswordMock.mockReturnValueOnce(
+        Promise.resolve(authUtilValidatePasswordMockReturnValues[1]),
+      );
+      authUtilValidatePasswordMock.mockReturnValueOnce(
+        Promise.resolve(authUtilValidatePasswordMockReturnValues[2]),
+      );
+      usersServiceValidatorGetSystemRolesNamesUpdatedMockReturnValues = [
+        [SystemRolesName.ADMIN, SystemRolesName.ADMIN],
+        [SystemRolesName.SUPER_ADMIN, SystemRolesName.SUPER_ADMIN],
+      ];
+      usersServiceValidatorGetSystemRolesNamesUpdatedMock.mockReturnValueOnce(
+        usersServiceValidatorGetSystemRolesNamesUpdatedMockReturnValues[0],
+      );
+      usersServiceValidatorGetSystemRolesNamesUpdatedMock.mockReturnValueOnce(
+        usersServiceValidatorGetSystemRolesNamesUpdatedMockReturnValues[1],
+      );
+
+      usersDtoUpdateManyPartialObject = {
+        [usersRepositoryFindByMockReturnValue[0].id]:
+          getUsersDtoUpdateOnePartialFixture({
+            systemRolesNames: [],
+          }),
+        [usersRepositoryFindByMockReturnValue[1].id]:
+          getUsersDtoUpdateOnePartialFixture({
+            systemRolesNames: [],
+          }),
+      };
+      usersEntities = await usersService.updateManyPartial(
+        usersDtoUpdateManyPartialObject,
         currentUser,
         currentPassword,
       );
+
+      isCurrentUserSystemRole = {
+        [SystemRolesName.SUPER_ADMIN]:
+          usersServiceValidatorValidateCurrentUserSystemRolesMockReturnValues[0],
+        [SystemRolesName.ADMIN]:
+          usersServiceValidatorValidateCurrentUserSystemRolesMockReturnValues[1],
+        [SystemRolesName.USER]:
+          usersServiceValidatorValidateCurrentUserSystemRolesMockReturnValues[2],
+      };
+      const systemRolesByRoleName = keyBy(
+        systemRolesServiceFindManyMockReturnValue,
+        'name',
+      );
+      systemRolesUpdated = [
+        values(
+          pick(
+            systemRolesByRoleName,
+            usersServiceValidatorGetSystemRolesNamesUpdatedMockReturnValues[0],
+          ),
+        ),
+        values(
+          pick(
+            systemRolesByRoleName,
+            usersServiceValidatorGetSystemRolesNamesUpdatedMockReturnValues[1],
+          ),
+        ),
+      ];
+      usersEntitiesUpdated = [
+        {
+          ...usersRepositoryFindByMockReturnValue[0],
+          ...omit(
+            usersDtoUpdateManyPartialObject[
+              usersRepositoryFindByMockReturnValue[0].id
+            ],
+            'systemRolesNames',
+          ),
+          systemRoles: systemRolesUpdated[0],
+        },
+        {
+          ...usersRepositoryFindByMockReturnValue[1],
+          ...omit(
+            usersDtoUpdateManyPartialObject[
+              usersRepositoryFindByMockReturnValue[1].id
+            ],
+            'systemRolesNames',
+          ),
+          systemRoles: systemRolesUpdated[1],
+        },
+      ];
       expect(
-        usersServiceValidatorValidateElevatedPermissionsMock,
+        usersServiceValidatorGetSystemRolesNamesUpdatedMock,
+      ).toHaveBeenNthCalledWith(
+        1,
+        expect.anything(),
+        usersDtoUpdateManyPartialObject[
+          usersRepositoryFindByMockReturnValue[0].id
+        ],
+        isCurrentUserSystemRole,
+        authUtilValidatePasswordMockReturnValues[0],
+        usersRepositoryFindByMockReturnValue[0],
+      );
+      expect(
+        usersServiceValidatorGetSystemRolesNamesUpdatedMock,
       ).toHaveBeenNthCalledWith(
         2,
+        expect.anything(),
+        usersDtoUpdateManyPartialObject[
+          usersRepositoryFindByMockReturnValue[1].id
+        ],
+        isCurrentUserSystemRole,
+        authUtilValidatePasswordMockReturnValues[0],
         usersRepositoryFindByMockReturnValue[1],
-        currentUser,
-        currentPassword,
       );
       expect(usersRepositorySaveMock).toHaveBeenNthCalledWith(
         1,
@@ -1131,25 +1409,19 @@ describe('UsersService', () => {
       usersRepositoryFindByMockReturnValue = [
         getUsersEntityFixture({
           id: currentUser.id,
-          systemRoles: [getSystemRolesEntityFixture()],
         }),
       ];
       usersRepositoryFindByMock.mockReturnValue(
         usersRepositoryFindByMockReturnValue,
       );
-      usersServiceValidatorValidateElevatedPermissionsMockReturnValue =
-        Promise.resolve(true);
-      usersServiceValidatorValidateElevatedPermissionsMock.mockReturnValue(
-        usersServiceValidatorValidateElevatedPermissionsMockReturnValue,
-      );
 
       usersDtoUpdateManyPartialObject = {
         [usersRepositoryFindByMockReturnValue[0].id]:
           getUsersDtoUpdateOnePartialFixture({
-            systemRolesNames: [SystemRolesName.ADMIN],
+            systemRolesNames: [],
           }),
       };
-      await expect(
+      await expect(() =>
         usersService.updateManyPartial(
           usersDtoUpdateManyPartialObject,
           currentUser,
@@ -1161,20 +1433,30 @@ describe('UsersService', () => {
 
   describe('deleteMany', () => {
     let usersRepositoryFindByMockReturnValue: UsersEntity[];
-    let usersServiceValidatorValidateElevatedPermissionsMockReturnValue: Promise<boolean>;
+    let usersServiceValidatorValidateCurrentUserSystemRolesMockReturnValue: boolean;
+    let authUtilValidatePasswordMockReturnValues: boolean[];
 
-    it('Should call usersRepository.findBy with the passed ids, requestsUtilCrossCheckIds with the requested ids and found users, and usersRepository.remove with the found users', async () => {
+    it('Should call usersRepository.findBy with the passed ids, requestsUtilCrossCheckIds with the requested ids and found users, validateCurrentUserSystemRoles with SUPER_ADMIN, authUtilValidatePassword for the currentUser, authUtilValidatePassword for the user being updated, and usersRepository.remove with the found users', async () => {
       usersRepositoryFindByMockReturnValue = [
-        getUsersEntityFixture({ id: 1 }),
-        getUsersEntityFixture({ id: 1 }),
+        getUsersEntityFixture({ id: 1, password: 'test_password_1' }),
+        getUsersEntityFixture({ id: 2, password: 'test_password_2' }),
       ];
       usersRepositoryFindByMock.mockReturnValue(
         usersRepositoryFindByMockReturnValue,
       );
-      usersServiceValidatorValidateElevatedPermissionsMockReturnValue =
-        Promise.resolve(true);
-      usersServiceValidatorValidateElevatedPermissionsMock.mockReturnValue(
-        usersServiceValidatorValidateElevatedPermissionsMockReturnValue,
+      usersServiceValidatorValidateCurrentUserSystemRolesMockReturnValue = true;
+      usersServiceValidatorValidateCurrentUserSystemRolesMock.mockReturnValue(
+        usersServiceValidatorValidateCurrentUserSystemRolesMockReturnValue,
+      );
+      authUtilValidatePasswordMockReturnValues = [true, true, true];
+      authUtilValidatePasswordMock.mockReturnValueOnce(
+        Promise.resolve(authUtilValidatePasswordMockReturnValues[0]),
+      );
+      authUtilValidatePasswordMock.mockReturnValueOnce(
+        Promise.resolve(authUtilValidatePasswordMockReturnValues[1]),
+      );
+      authUtilValidatePasswordMock.mockReturnValueOnce(
+        Promise.resolve(authUtilValidatePasswordMockReturnValues[2]),
       );
 
       const requestedIds = usersRepositoryFindByMockReturnValue.map(
@@ -1190,27 +1472,134 @@ describe('UsersService', () => {
         requestedIds,
         usersRepositoryFindByMockReturnValue,
       );
+      expect(
+        usersServiceValidatorValidateCurrentUserSystemRolesMock,
+      ).toHaveBeenNthCalledWith(1, [SystemRolesName.SUPER_ADMIN], currentUser);
+      expect(authUtilValidatePasswordMock).toHaveBeenNthCalledWith(
+        1,
+        currentPassword,
+        currentUser.password,
+      );
+      expect(authUtilValidatePasswordMock).toHaveBeenNthCalledWith(
+        2,
+        currentPassword,
+        usersRepositoryFindByMockReturnValue[0].password,
+      );
+      expect(authUtilValidatePasswordMock).toHaveBeenNthCalledWith(
+        3,
+        currentPassword,
+        usersRepositoryFindByMockReturnValue[1].password,
+      );
       expect(usersRepositoryRemoveMock).toHaveBeenNthCalledWith(
         1,
         usersRepositoryFindByMockReturnValue,
       );
     });
 
-    it('Should throw an error if validateElevatedPermissions returns false', async () => {
+    it('Should call usersRepository.remove with the found users if validateCurrentUserSystemRoles with SUPER_ADMIN and authUtilValidatePassword for the current user both return true', async () => {
       usersRepositoryFindByMockReturnValue = [getUsersEntityFixture()];
       usersRepositoryFindByMock.mockReturnValue(
         usersRepositoryFindByMockReturnValue,
       );
-      usersServiceValidatorValidateElevatedPermissionsMockReturnValue =
-        Promise.resolve(false);
-      usersServiceValidatorValidateElevatedPermissionsMock.mockReturnValue(
-        usersServiceValidatorValidateElevatedPermissionsMockReturnValue,
+      usersServiceValidatorValidateCurrentUserSystemRolesMockReturnValue = true;
+      usersServiceValidatorValidateCurrentUserSystemRolesMock.mockReturnValue(
+        usersServiceValidatorValidateCurrentUserSystemRolesMockReturnValue,
+      );
+      authUtilValidatePasswordMockReturnValues = [true, false];
+      authUtilValidatePasswordMock.mockReturnValueOnce(
+        Promise.resolve(authUtilValidatePasswordMockReturnValues[0]),
+      );
+      authUtilValidatePasswordMock.mockReturnValueOnce(
+        Promise.resolve(authUtilValidatePasswordMockReturnValues[1]),
       );
 
       const requestedIds = usersRepositoryFindByMockReturnValue.map(
         (usersEntity) => usersEntity.id,
       );
-      await expect(
+      await usersService.deleteMany(requestedIds, currentUser, currentPassword);
+
+      expect(usersRepositoryRemoveMock).toHaveBeenNthCalledWith(
+        1,
+        usersRepositoryFindByMockReturnValue,
+      );
+    });
+
+    it('Should call usersRepository.remove with the found users if authUtilValidatePassword for the user being updated returns true', async () => {
+      usersRepositoryFindByMockReturnValue = [getUsersEntityFixture()];
+      usersRepositoryFindByMock.mockReturnValue(
+        usersRepositoryFindByMockReturnValue,
+      );
+      usersServiceValidatorValidateCurrentUserSystemRolesMockReturnValue =
+        false;
+      usersServiceValidatorValidateCurrentUserSystemRolesMock.mockReturnValue(
+        usersServiceValidatorValidateCurrentUserSystemRolesMockReturnValue,
+      );
+      authUtilValidatePasswordMockReturnValues = [false, true];
+      authUtilValidatePasswordMock.mockReturnValueOnce(
+        Promise.resolve(authUtilValidatePasswordMockReturnValues[0]),
+      );
+      authUtilValidatePasswordMock.mockReturnValueOnce(
+        Promise.resolve(authUtilValidatePasswordMockReturnValues[1]),
+      );
+
+      const requestedIds = usersRepositoryFindByMockReturnValue.map(
+        (usersEntity) => usersEntity.id,
+      );
+      await usersService.deleteMany(requestedIds, currentUser, currentPassword);
+
+      expect(usersRepositoryRemoveMock).toHaveBeenNthCalledWith(
+        1,
+        usersRepositoryFindByMockReturnValue,
+      );
+    });
+
+    it('Should throw an error if validateCurrentUserSystemRoles with SUPER_ADMIN and authUtilValidatePassword for the user being updated both return false', async () => {
+      usersRepositoryFindByMockReturnValue = [getUsersEntityFixture()];
+      usersRepositoryFindByMock.mockReturnValue(
+        usersRepositoryFindByMockReturnValue,
+      );
+      usersServiceValidatorValidateCurrentUserSystemRolesMockReturnValue =
+        false;
+      usersServiceValidatorValidateCurrentUserSystemRolesMock.mockReturnValue(
+        usersServiceValidatorValidateCurrentUserSystemRolesMockReturnValue,
+      );
+      authUtilValidatePasswordMockReturnValues = [true, false];
+      authUtilValidatePasswordMock.mockReturnValueOnce(
+        Promise.resolve(authUtilValidatePasswordMockReturnValues[0]),
+      );
+      authUtilValidatePasswordMock.mockReturnValueOnce(
+        Promise.resolve(authUtilValidatePasswordMockReturnValues[1]),
+      );
+
+      const requestedIds = usersRepositoryFindByMockReturnValue.map(
+        (usersEntity) => usersEntity.id,
+      );
+      await expect(() =>
+        usersService.deleteMany(requestedIds, currentUser, currentPassword),
+      ).rejects.toThrow(UnauthorizedException);
+    });
+
+    it('Should throw an error if authUtilValidatePassword for the current user and authUtilValidatePassword for the user being updated both return false', async () => {
+      usersRepositoryFindByMockReturnValue = [getUsersEntityFixture()];
+      usersRepositoryFindByMock.mockReturnValue(
+        usersRepositoryFindByMockReturnValue,
+      );
+      usersServiceValidatorValidateCurrentUserSystemRolesMockReturnValue = true;
+      usersServiceValidatorValidateCurrentUserSystemRolesMock.mockReturnValue(
+        usersServiceValidatorValidateCurrentUserSystemRolesMockReturnValue,
+      );
+      authUtilValidatePasswordMockReturnValues = [false, false];
+      authUtilValidatePasswordMock.mockReturnValueOnce(
+        Promise.resolve(authUtilValidatePasswordMockReturnValues[0]),
+      );
+      authUtilValidatePasswordMock.mockReturnValueOnce(
+        Promise.resolve(authUtilValidatePasswordMockReturnValues[1]),
+      );
+
+      const requestedIds = usersRepositoryFindByMockReturnValue.map(
+        (usersEntity) => usersEntity.id,
+      );
+      await expect(() =>
         usersService.deleteMany(requestedIds, currentUser, currentPassword),
       ).rejects.toThrow(UnauthorizedException);
     });
@@ -1223,16 +1612,25 @@ describe('UsersService', () => {
       usersRepositoryFindByMock.mockReturnValue(
         usersRepositoryFindByMockReturnValue,
       );
-      usersServiceValidatorValidateElevatedPermissionsMockReturnValue =
-        Promise.resolve(true);
-      usersServiceValidatorValidateElevatedPermissionsMock.mockReturnValue(
-        usersServiceValidatorValidateElevatedPermissionsMockReturnValue,
+      usersServiceValidatorValidateCurrentUserSystemRolesMockReturnValue = true;
+      usersServiceValidatorValidateCurrentUserSystemRolesMock.mockReturnValue(
+        usersServiceValidatorValidateCurrentUserSystemRolesMockReturnValue,
+      );
+      authUtilValidatePasswordMockReturnValues = [true, true, true];
+      authUtilValidatePasswordMock.mockReturnValueOnce(
+        Promise.resolve(authUtilValidatePasswordMockReturnValues[0]),
+      );
+      authUtilValidatePasswordMock.mockReturnValueOnce(
+        Promise.resolve(authUtilValidatePasswordMockReturnValues[1]),
+      );
+      authUtilValidatePasswordMock.mockReturnValueOnce(
+        Promise.resolve(authUtilValidatePasswordMockReturnValues[2]),
       );
 
       const requestedIds = usersRepositoryFindByMockReturnValue.map(
         (usersEntity) => usersEntity.id,
       );
-      await expect(
+      await expect(() =>
         usersService.deleteMany(requestedIds, currentUser, currentPassword),
       ).rejects.toThrow(BadRequestException);
     });
