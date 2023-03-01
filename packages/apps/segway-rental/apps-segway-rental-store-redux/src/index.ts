@@ -31,7 +31,7 @@ export function createReduxStore(): Store<
   ReducerHittingAction
 > {
   const firebaseApp = initializeApp({
-    apiKey: 'AIzaSyAiOuMOVDxoDI8pbNAH9BFiTdmhtqrgHXw',
+    apiKey: '',
     authDomain: 'segway-rental.firebaseapp.com',
     projectId: 'segway-rental',
     storageBucket: 'segway-rental.appspot.com',

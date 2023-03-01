@@ -46,7 +46,7 @@ export type ConfirmDialogProps = {
  *
  * @returns {React.FunctionComponent} ConfirmDialog React component
  */
-const ConfirmDialog: React.FunctionComponent<ConfirmDialogProps> = ({
+export const ConfirmDialog: React.FunctionComponent<ConfirmDialogProps> = ({
   entityTypeName,
   entityName,
   actionName,
@@ -111,7 +111,3 @@ const ConfirmDialog: React.FunctionComponent<ConfirmDialogProps> = ({
     </Dialog>
   );
 };
-
-export const ConfirmDialogRaw = ConfirmDialog;
-export const ConfirmDialogMemo = React.memo(ConfirmDialogRaw);
-export default ConfirmDialogMemo;
