@@ -29,6 +29,8 @@ import { UsersDtoUpdateOnePartial } from './users.dto.updateOnePartial';
 import { UsersServiceValidator } from './users.service.validator';
 import { UsersDtoUpdateOneWhole } from './users.dto.updateOneWhole';
 
+// TODO: Add checks so that private information only gets back to
+//  authenticated users or systemRoles with elevated permissions.
 @Injectable()
 export class UsersService implements AuthUsersService {
   constructor(
@@ -71,10 +73,11 @@ export class UsersService implements AuthUsersService {
     return usersEntity;
   }
 
-  // TODO: Add createdAtRange, updatedAtRange, and think of a way to add a
-  //  relations param, in order to be able to search within the entities
-  //  table, but only look for records with a given set of relationships.
-  async findMany(usersDtoFindMany: UsersDtoFindMany): Promise<UsersEntity[]> {
+  async findMany(
+    usersDtoFindMany: UsersDtoFindMany,
+    currentUser?: UsersEntity,
+    currentPassword?: string,
+  ): Promise<UsersEntity[]> {
     const query = this.usersRepository.createQueryBuilder().select('*');
 
     if (usersDtoFindMany.uniqueKeys && !isEmpty(usersDtoFindMany.uniqueKeys)) {
@@ -88,6 +91,45 @@ export class UsersService implements AuthUsersService {
         usersDtoFindMany.uniqueKeys,
       );
       query.where(new Brackets(whereFactory));
+    }
+
+    if (usersDtoFindMany.createdAtRange) {
+      const createdAtRange = this.usersServiceValidator.getFilterDateRange(
+        usersDtoFindMany.createdAtRange[0],
+        usersDtoFindMany.createdAtRange[1],
+      );
+      query.andWhere('created_at >= :createdAtFrom', {
+        createdAtFrom: createdAtRange[0],
+      });
+      query.andWhere('created_at <= :createdAtTo', {
+        createdAtTo: createdAtRange[1],
+      });
+    }
+
+    if (usersDtoFindMany.updatedAtRange) {
+      const updatedAtRange = this.usersServiceValidator.getFilterDateRange(
+        usersDtoFindMany.updatedAtRange[0],
+        usersDtoFindMany.updatedAtRange[1],
+      );
+      query.andWhere('updated_at >= :updatedAtFrom', {
+        updatedAtFrom: updatedAtRange[0],
+      });
+      query.andWhere('updated_at <= :updatedAtTo', {
+        updatedAtTo: updatedAtRange[1],
+      });
+    }
+
+    if (usersDtoFindMany.deletedAtRange) {
+      const deletedAtRange = this.usersServiceValidator.getFilterDateRange(
+        usersDtoFindMany.deletedAtRange[0],
+        usersDtoFindMany.deletedAtRange[1],
+      );
+      query.andWhere('deleted_at >= :deletedAtFrom', {
+        deletedAtFrom: deletedAtRange[0],
+      });
+      query.andWhere('deleted_at <= :deletedAtTo', {
+        deletedAtTo: deletedAtRange[1],
+      });
     }
 
     if (usersDtoFindMany.search) {
@@ -341,6 +383,6 @@ export class UsersService implements AuthUsersService {
       }
     }
 
-    await this.usersRepository.remove(usersEntities);
+    await this.usersRepository.softRemove(usersEntities);
   }
 }

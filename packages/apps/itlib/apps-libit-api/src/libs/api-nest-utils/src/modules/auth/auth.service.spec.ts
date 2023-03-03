@@ -116,10 +116,13 @@ describe('AuthService', () => {
 
     it('Should call usersService.findOne with an existing unique key, validate a correct password, and return the authenticated user', async () => {
       const testAuthUserEntity = getAuthUserEntityFixture();
-      const userEntityHashed = {
+      const userEntityHashed: AuthUsersEntity = {
         ...getAuthDtoSignupFixture(),
         id: testAuthUserEntity.id,
         password: 'password_hashed',
+        createdAt: testAuthUserEntity.createdAt,
+        updatedAt: testAuthUserEntity.updatedAt,
+        systemRoles: testAuthUserEntity.systemRoles,
       };
       authUsersServiceFindOneMockReturnValue = userEntityHashed;
       authUsersServiceFindOneMock.mockReturnValue(
@@ -149,10 +152,13 @@ describe('AuthService', () => {
 
     it('Should call usersService.findOne with an existing unique key, invalidate an incorrect password, and throw an error', async () => {
       const testAuthUserEntity = getAuthUserEntityFixture();
-      const userEntityHashed = {
+      const userEntityHashed: AuthUsersEntity = {
         ...getAuthDtoSignupFixture(),
         id: testAuthUserEntity.id,
         password: 'password_hashed',
+        createdAt: testAuthUserEntity.createdAt,
+        updatedAt: testAuthUserEntity.updatedAt,
+        systemRoles: testAuthUserEntity.systemRoles,
       };
       authUsersServiceFindOneMockReturnValue = userEntityHashed;
       authUsersServiceFindOneMock.mockReturnValue(

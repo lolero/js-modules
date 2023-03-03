@@ -1,9 +1,10 @@
-import isEmpty from 'lodash/isEmpty';
+import omit from 'lodash/omit';
 import { UsersDtoUpdateOneWhole } from './users.dto.updateOneWhole';
 import { UsersDtoFindMany } from './users.dto.findMany';
 import {
   getRequestsDtoQueryParamsFindManyFixture,
   getAuthDtoSignupFixture,
+  getAuthUserEntityFixture,
 } from '../../../../api-nest-utils/src';
 import { UsersDtoCreateOne } from './users.dto.createOne';
 import { UsersDtoUpdateOnePartial } from './users.dto.updateOnePartial';
@@ -18,11 +19,9 @@ export function getUsersEntityFixture(
   overrides: Partial<UsersEntityType> = {},
 ): UsersEntity {
   const usersEntityDefault: UsersEntityType = {
+    ...omit(getAuthUserEntityFixture(), 'id'),
     id: 1,
-    username: 'test_username_1',
-    email: 'test_1@email.com',
-    phoneNumber: '+18001111111',
-    password: 'test_password_1',
+    deletedAt: null,
     systemRoles: [getSystemRolesEntityFixture()],
   };
 

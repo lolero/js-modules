@@ -7,11 +7,14 @@ export function getAuthUserEntityFixture(
   overrides: Partial<AuthUsersEntity> = {},
 ): AuthUsersEntity {
   const authUserEntityDefault: AuthUsersEntity = {
-    id: 'test_id',
-    username: 'test_username',
-    email: 'test@email.com',
-    phoneNumber: '+18001234567',
-    password: 'test_password',
+    id: 1,
+    username: 'test_username_1',
+    email: 'test_1@email.com',
+    phoneNumber: '+18001111111',
+    password: 'test_password_1',
+    createdAt: new Date('2000-01-01T00:00:00.000Z'),
+    updatedAt: new Date('2000-01-01T00:00:00.000Z'),
+    systemRoles: [],
   };
 
   const authUserEntity = Object.assign(authUserEntityDefault, overrides);
@@ -24,7 +27,12 @@ export function getAuthDtoSignupFixture(
 ): AuthDtoSignup {
   const authUserEntity = getAuthUserEntityFixture();
 
-  const authDtoSignupDefault: AuthDtoSignup = omit(authUserEntity, 'id');
+  const authDtoSignupDefault: AuthDtoSignup = omit(
+    authUserEntity,
+    'id',
+    'createdAt',
+    'updatedAt',
+  );
 
   const authDtoSignup = Object.assign(authDtoSignupDefault, overrides);
 

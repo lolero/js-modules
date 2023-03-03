@@ -13,6 +13,9 @@ export interface AuthUsersEntity {
   firstName?: string | null;
   middleName?: string | null;
   lastName?: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+  systemRoles: AuthSystemRolesEntity[];
 }
 
 export type AuthUsersUniqueKeyName = EntityUniqueKeyName<

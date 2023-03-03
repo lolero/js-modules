@@ -12,7 +12,6 @@ export function getRequestsDtoQueryParamsFindManyFixture<
     FindManyUniqueKeysDtoT,
     SortByT
   > = {
-    search: 'test_search',
     sortBy: 'test_sort_by' as SortByT,
     sortOrder: 'desc',
     page: 3,

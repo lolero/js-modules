@@ -388,6 +388,7 @@ importers:
 
   packages/apps/itlib/apps-libit-api:
     specifiers:
+      '@js-modules/common-utils-general': workspace:^0.0.0
       '@nestjs/cli': ^9.1.9
       '@nestjs/common': ^9.2.1
       '@nestjs/config': ^2.3.1
@@ -416,6 +417,7 @@ importers:
       ts-node: ^10.9.1
       typeorm: ^0.3.11
     dependencies:
+      '@js-modules/common-utils-general': link:../../../common/utils/common-utils-general
       '@nestjs/common': 9.3.1_welcnyot5bzd5wa2aovbkxpi4i
       '@nestjs/config': 2.3.1_fipbdz7qhdiauthzsrt4bq6tsq
       '@nestjs/core': 9.3.1_mxuzwgdlmkyxkz5qwd5xy75hm4

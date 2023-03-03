@@ -23,7 +23,19 @@ export class AuthDtoPublicUser {
   @Expose()
   lastName: AuthUsersEntity['lastName'];
 
-  @Transform(({ obj }) => {
+  @Expose()
+  @Transform(({ obj }: { obj: Date }) => {
+    return obj.toISOString();
+  })
+  createdAt: string;
+
+  @Expose()
+  @Transform(({ obj }: { obj: Date }) => {
+    return obj.toISOString();
+  })
+  updatedAt: string;
+
+  @Transform(({ obj }: { obj: AuthUsersEntity }) => {
     return obj.systemRoles.map(
       (systemRolesEntity: AuthSystemRolesEntity) => systemRolesEntity.name,
     );

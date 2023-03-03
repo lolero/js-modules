@@ -3,9 +3,11 @@ import {
   IsOptional,
   IsString,
   Min,
+  Validate,
   ValidateNested,
 } from 'class-validator';
 import type { SortOrder } from './requests.types';
+import { ValidatorIsNumberStringOrNull } from '../validators/validator.isNumberStringOrNull';
 
 export class RequestsDtoQueryParamsFindMany<FindManyUniqueKeysDtoT, SortByT> {
   @ValidateNested()
@@ -14,6 +16,18 @@ export class RequestsDtoQueryParamsFindMany<FindManyUniqueKeysDtoT, SortByT> {
   @IsString()
   @IsOptional()
   search?: string;
+
+  @Validate(ValidatorIsNumberStringOrNull, { each: true })
+  @IsOptional()
+  createdAtRange?: [number | string | null, number | string | null];
+
+  @Validate(ValidatorIsNumberStringOrNull, { each: true })
+  @IsOptional()
+  updatedAtRange?: [number | string | null, number | string | null];
+
+  @Validate(ValidatorIsNumberStringOrNull, { each: true })
+  @IsOptional()
+  deletedAtRange?: [number | string | null, number | string | null];
 
   @IsString()
   @IsOptional()

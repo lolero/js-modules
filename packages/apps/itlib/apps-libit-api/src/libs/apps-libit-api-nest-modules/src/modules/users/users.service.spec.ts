@@ -71,7 +71,7 @@ describe('UsersService', () => {
   let usersRepositoryFindOneByMock: jest.Mock;
   let usersRepositoryFindByMock: jest.Mock;
   let usersRepositorySaveMock: jest.Mock;
-  let usersRepositoryRemoveMock: jest.Mock;
+  let usersRepositorySoftRemoveMock: jest.Mock;
   let usersRepositoryMock: Partial<Repository<UsersEntity>>;
 
   let usersServiceValidatorValidateCurrentUserSystemRolesMock: jest.Mock;
@@ -79,6 +79,7 @@ describe('UsersService', () => {
   let usersServiceValidatorValidateEmailMock: jest.Mock;
   let usersServiceValidatorValidatePhoneNumberMock: jest.Mock;
   let usersServiceValidatorGetSystemRolesNamesUpdatedMock: jest.Mock;
+  let usersServiceValidatorGetFilterDateRangeMock: jest.Mock;
   let usersServiceValidatorMock: Partial<UsersServiceValidator>;
 
   let systemRolesServiceFindOneMock: jest.Mock;
@@ -139,13 +140,13 @@ describe('UsersService', () => {
     usersRepositorySaveMock = jest
       .fn()
       .mockImplementation((usersEntitiesToSave) => usersEntitiesToSave);
-    usersRepositoryRemoveMock = jest.fn();
+    usersRepositorySoftRemoveMock = jest.fn();
     usersRepositoryMock = {
       create: usersRepositoryCreateMock,
       createQueryBuilder: usersRepositoryCreateQueryBuilderMock,
       findOneBy: usersRepositoryFindOneByMock,
       findBy: usersRepositoryFindByMock,
-      remove: usersRepositoryRemoveMock,
+      softRemove: usersRepositorySoftRemoveMock,
       save: usersRepositorySaveMock,
     };
 
@@ -154,6 +155,7 @@ describe('UsersService', () => {
     usersServiceValidatorValidateEmailMock = jest.fn();
     usersServiceValidatorValidatePhoneNumberMock = jest.fn();
     usersServiceValidatorGetSystemRolesNamesUpdatedMock = jest.fn();
+    usersServiceValidatorGetFilterDateRangeMock = jest.fn();
     usersServiceValidatorMock = {
       validateCurrentUserSystemRoles:
         usersServiceValidatorValidateCurrentUserSystemRolesMock,
@@ -162,6 +164,7 @@ describe('UsersService', () => {
       validatePhoneNumber: usersServiceValidatorValidatePhoneNumberMock,
       getSystemRolesNamesUpdated:
         usersServiceValidatorGetSystemRolesNamesUpdatedMock,
+      getFilterDateRange: usersServiceValidatorGetFilterDateRangeMock,
     };
 
     systemRolesServiceFindOneMock = jest.fn();
@@ -262,6 +265,7 @@ describe('UsersService', () => {
   });
 
   describe('findMany', () => {
+    let usersServiceValidatorGetFilterDateRangeMockReturnValue: [Date, Date];
     let usersRepositoryQueryBuilderGetRawManyMockReturnValue: UsersEntity[];
     let usersDtoFindMany: UsersDtoFindMany;
 
@@ -342,8 +346,163 @@ describe('UsersService', () => {
       );
     });
 
+    it('Should call getFilterDateRange with the passed createdAtRange, if it is defined, and filter the query by the resulting createdAt dates', async () => {
+      usersServiceValidatorGetFilterDateRangeMockReturnValue = [
+        new Date('2000-01-01'),
+        new Date('2001-01-01'),
+      ];
+      usersServiceValidatorGetFilterDateRangeMock.mockReturnValue(
+        usersServiceValidatorGetFilterDateRangeMockReturnValue,
+      );
+
+      usersDtoFindMany = getUsersDtoFindManyFixture({
+        createdAtRange: ['testFrom', 'testTo'],
+      });
+      await usersService.findMany(usersDtoFindMany);
+
+      expect(
+        usersServiceValidatorGetFilterDateRangeMock,
+      ).toHaveBeenNthCalledWith(
+        1,
+        usersDtoFindMany.createdAtRange[0],
+        usersDtoFindMany.createdAtRange[1],
+      );
+      expect(usersRepositoryQueryBuilderAndWhereMock).toHaveBeenNthCalledWith(
+        1,
+        'created_at >= :createdAtFrom',
+        {
+          createdAtFrom:
+            usersServiceValidatorGetFilterDateRangeMockReturnValue[0],
+        },
+      );
+      expect(usersRepositoryQueryBuilderAndWhereMock).toHaveBeenNthCalledWith(
+        2,
+        'created_at <= :createdAtTo',
+        {
+          createdAtTo:
+            usersServiceValidatorGetFilterDateRangeMockReturnValue[1],
+        },
+      );
+    });
+
+    it('Should not call getFilterDateRange or filter the query by createdAt dates if the createdAtRange param is not defined', async () => {
+      usersDtoFindMany = getUsersDtoFindManyFixture({
+        createdAtRange: undefined,
+      });
+      await usersService.findMany(usersDtoFindMany);
+
+      expect(
+        usersServiceValidatorGetFilterDateRangeMock,
+      ).not.toHaveBeenCalled();
+      expect(usersRepositoryQueryBuilderAndWhereMock).not.toHaveBeenCalled();
+    });
+
+    it('Should call getFilterDateRange with the passed updatedAtRange, if it is defined, and filter the query by the resulting updatedAt dates', async () => {
+      usersServiceValidatorGetFilterDateRangeMockReturnValue = [
+        new Date('2000-01-01'),
+        new Date('2001-01-01'),
+      ];
+      usersServiceValidatorGetFilterDateRangeMock.mockReturnValue(
+        usersServiceValidatorGetFilterDateRangeMockReturnValue,
+      );
+
+      usersDtoFindMany = getUsersDtoFindManyFixture({
+        updatedAtRange: ['testFrom', 'testTo'],
+      });
+      await usersService.findMany(usersDtoFindMany);
+
+      expect(
+        usersServiceValidatorGetFilterDateRangeMock,
+      ).toHaveBeenNthCalledWith(
+        1,
+        usersDtoFindMany.updatedAtRange[0],
+        usersDtoFindMany.updatedAtRange[1],
+      );
+      expect(usersRepositoryQueryBuilderAndWhereMock).toHaveBeenNthCalledWith(
+        1,
+        'updated_at >= :updatedAtFrom',
+        {
+          updatedAtFrom:
+            usersServiceValidatorGetFilterDateRangeMockReturnValue[0],
+        },
+      );
+      expect(usersRepositoryQueryBuilderAndWhereMock).toHaveBeenNthCalledWith(
+        2,
+        'updated_at <= :updatedAtTo',
+        {
+          updatedAtTo:
+            usersServiceValidatorGetFilterDateRangeMockReturnValue[1],
+        },
+      );
+    });
+
+    it('Should not call getFilterDateRange or filter the query by updatedAt dates if the updatedAtRange param is not defined', async () => {
+      usersDtoFindMany = getUsersDtoFindManyFixture({
+        updatedAtRange: undefined,
+      });
+      await usersService.findMany(usersDtoFindMany);
+
+      expect(
+        usersServiceValidatorGetFilterDateRangeMock,
+      ).not.toHaveBeenCalled();
+      expect(usersRepositoryQueryBuilderAndWhereMock).not.toHaveBeenCalled();
+    });
+
+    it('Should call getFilterDateRange with the passed deletedAtRange, if it is defined, and filter the query by the resulting deletedAt dates', async () => {
+      usersServiceValidatorGetFilterDateRangeMockReturnValue = [
+        new Date('2000-01-01'),
+        new Date('2001-01-01'),
+      ];
+      usersServiceValidatorGetFilterDateRangeMock.mockReturnValue(
+        usersServiceValidatorGetFilterDateRangeMockReturnValue,
+      );
+
+      usersDtoFindMany = getUsersDtoFindManyFixture({
+        deletedAtRange: ['testFrom', 'testTo'],
+      });
+      await usersService.findMany(usersDtoFindMany);
+
+      expect(
+        usersServiceValidatorGetFilterDateRangeMock,
+      ).toHaveBeenNthCalledWith(
+        1,
+        usersDtoFindMany.deletedAtRange[0],
+        usersDtoFindMany.deletedAtRange[1],
+      );
+      expect(usersRepositoryQueryBuilderAndWhereMock).toHaveBeenNthCalledWith(
+        1,
+        'deleted_at >= :deletedAtFrom',
+        {
+          deletedAtFrom:
+            usersServiceValidatorGetFilterDateRangeMockReturnValue[0],
+        },
+      );
+      expect(usersRepositoryQueryBuilderAndWhereMock).toHaveBeenNthCalledWith(
+        2,
+        'deleted_at <= :deletedAtTo',
+        {
+          deletedAtTo:
+            usersServiceValidatorGetFilterDateRangeMockReturnValue[1],
+        },
+      );
+    });
+
+    it('Should not call getFilterDateRange or filter the query by deletedAt dates if the deletedAtRange param is not defined', async () => {
+      usersDtoFindMany = getUsersDtoFindManyFixture({
+        deletedAtRange: undefined,
+      });
+      await usersService.findMany(usersDtoFindMany);
+
+      expect(
+        usersServiceValidatorGetFilterDateRangeMock,
+      ).not.toHaveBeenCalled();
+      expect(usersRepositoryQueryBuilderAndWhereMock).not.toHaveBeenCalled();
+    });
+
     it('Should filter the query by username, email, phoneNumber, firstName, middleName and lastName when the search param is passed', async () => {
-      usersDtoFindMany = getUsersDtoFindManyFixture();
+      usersDtoFindMany = getUsersDtoFindManyFixture({
+        search: 'test_search_term',
+      });
       await usersService.findMany(usersDtoFindMany);
 
       expect(usersRepositoryQueryBuilderAndWhereMock).toHaveBeenNthCalledWith(
@@ -396,7 +555,10 @@ describe('UsersService', () => {
     });
 
     it('Should sort the query by the sortBy param if one is passed', async () => {
-      usersDtoFindMany = getUsersDtoFindManyFixture();
+      usersDtoFindMany = getUsersDtoFindManyFixture({
+        sortBy: 'test_sort_by',
+        sortOrder: 'desc',
+      });
       await usersService.findMany(usersDtoFindMany);
 
       expect(usersRepositoryQueryBuilderOrderByMock).toHaveBeenNthCalledWith(
@@ -424,7 +586,10 @@ describe('UsersService', () => {
     });
 
     it('Should order the query in the sortOrder param order if one is passed', async () => {
-      usersDtoFindMany = getUsersDtoFindManyFixture();
+      usersDtoFindMany = getUsersDtoFindManyFixture({
+        sortBy: 'test_sort_by',
+        sortOrder: 'desc',
+      });
       await usersService.findMany(usersDtoFindMany);
 
       expect(usersRepositoryQueryBuilderOrderByMock).toHaveBeenNthCalledWith(
@@ -447,7 +612,10 @@ describe('UsersService', () => {
     });
 
     it('Should skip and take records from the query according to the page and resultsPerPage params if they are passed', async () => {
-      usersDtoFindMany = getUsersDtoFindManyFixture();
+      usersDtoFindMany = getUsersDtoFindManyFixture({
+        page: 3,
+        resultsPerPage: 10,
+      });
       await usersService.findMany(usersDtoFindMany);
 
       expect(usersRepositoryQueryBuilderSkipMock).toHaveBeenNthCalledWith(
@@ -486,7 +654,10 @@ describe('UsersService', () => {
     });
 
     it('Should not skip any- but take records from the query, according to the if the resultsPerPage param, if the page param is 1', async () => {
-      usersDtoFindMany = getUsersDtoFindManyFixture({ page: 1 });
+      usersDtoFindMany = getUsersDtoFindManyFixture({
+        page: 1,
+        resultsPerPage: 10,
+      });
       await usersService.findMany(usersDtoFindMany);
 
       expect(usersRepositoryQueryBuilderSkipMock).toHaveBeenNthCalledWith(1, 0);
@@ -1436,7 +1607,7 @@ describe('UsersService', () => {
     let usersServiceValidatorValidateCurrentUserSystemRolesMockReturnValue: boolean;
     let authUtilValidatePasswordMockReturnValues: boolean[];
 
-    it('Should call usersRepository.findBy with the passed ids, requestsUtilCrossCheckIds with the requested ids and found users, validateCurrentUserSystemRoles with SUPER_ADMIN, authUtilValidatePassword for the currentUser, authUtilValidatePassword for the user being updated, and usersRepository.remove with the found users', async () => {
+    it('Should call usersRepository.findBy with the passed ids, requestsUtilCrossCheckIds with the requested ids and found users, validateCurrentUserSystemRoles with SUPER_ADMIN, authUtilValidatePassword for the currentUser, authUtilValidatePassword for the user being updated, and usersRepository.softRemove with the found users', async () => {
       usersRepositoryFindByMockReturnValue = [
         getUsersEntityFixture({ id: 1, password: 'test_password_1' }),
         getUsersEntityFixture({ id: 2, password: 'test_password_2' }),
@@ -1490,13 +1661,13 @@ describe('UsersService', () => {
         currentPassword,
         usersRepositoryFindByMockReturnValue[1].password,
       );
-      expect(usersRepositoryRemoveMock).toHaveBeenNthCalledWith(
+      expect(usersRepositorySoftRemoveMock).toHaveBeenNthCalledWith(
         1,
         usersRepositoryFindByMockReturnValue,
       );
     });
 
-    it('Should call usersRepository.remove with the found users if validateCurrentUserSystemRoles with SUPER_ADMIN and authUtilValidatePassword for the current user both return true', async () => {
+    it('Should call usersRepository.softRemove with the found users if validateCurrentUserSystemRoles with SUPER_ADMIN and authUtilValidatePassword for the current user both return true', async () => {
       usersRepositoryFindByMockReturnValue = [getUsersEntityFixture()];
       usersRepositoryFindByMock.mockReturnValue(
         usersRepositoryFindByMockReturnValue,
@@ -1518,13 +1689,13 @@ describe('UsersService', () => {
       );
       await usersService.deleteMany(requestedIds, currentUser, currentPassword);
 
-      expect(usersRepositoryRemoveMock).toHaveBeenNthCalledWith(
+      expect(usersRepositorySoftRemoveMock).toHaveBeenNthCalledWith(
         1,
         usersRepositoryFindByMockReturnValue,
       );
     });
 
-    it('Should call usersRepository.remove with the found users if authUtilValidatePassword for the user being updated returns true', async () => {
+    it('Should call usersRepository.softRemove with the found users if authUtilValidatePassword for the user being updated returns true', async () => {
       usersRepositoryFindByMockReturnValue = [getUsersEntityFixture()];
       usersRepositoryFindByMock.mockReturnValue(
         usersRepositoryFindByMockReturnValue,
@@ -1547,7 +1718,7 @@ describe('UsersService', () => {
       );
       await usersService.deleteMany(requestedIds, currentUser, currentPassword);
 
-      expect(usersRepositoryRemoveMock).toHaveBeenNthCalledWith(
+      expect(usersRepositorySoftRemoveMock).toHaveBeenNthCalledWith(
         1,
         usersRepositoryFindByMockReturnValue,
       );

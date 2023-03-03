@@ -3,10 +3,13 @@ import {
   AfterRemove,
   AfterUpdate,
   Column,
+  CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   JoinTable,
   ManyToMany,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { AuthUsersEntity } from '../../../../api-nest-utils/src';
 import { SystemRolesEntity } from '../systemRoles/systemRoles.entity';
@@ -84,6 +87,21 @@ export class UsersEntity implements AuthUsersEntity {
     nullable: true,
   })
   lastName?: string;
+
+  @CreateDateColumn({
+    name: 'created_at',
+  })
+  createdAt: Date;
+
+  @UpdateDateColumn({
+    name: 'updated_at',
+  })
+  updatedAt: Date;
+
+  @DeleteDateColumn({
+    name: 'deleted_at',
+  })
+  deletedAt?: Date;
 
   @ManyToMany(() => SystemRolesEntity, {
     eager: true,

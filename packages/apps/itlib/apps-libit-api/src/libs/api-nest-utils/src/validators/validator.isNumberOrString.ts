@@ -13,6 +13,6 @@ export class ValidatorIsNumberOrString implements ValidatorConstraintInterface {
   }
 
   defaultMessage() {
-    return '($value) must be number or string';
+    return '($value) must be a number or a string';
   }
 }
