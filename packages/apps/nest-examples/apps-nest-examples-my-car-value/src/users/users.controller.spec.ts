@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { AuthUsersUniqueKeyName } from '@js-modules/apps-nest-module-auth';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
-import { UsersUniqueKeyName } from '../api-nest-utils/src';
 
 describe('UsersController', () => {
   let controller: UsersController;
@@ -44,7 +44,7 @@ describe('UsersController', () => {
     });
 
     it('Should find one user by uniqueKeyName when specified', async () => {
-      const testUniqueKeyName: UsersUniqueKeyName = 'username';
+      const testUniqueKeyName: AuthUsersUniqueKeyName = 'username';
       const testUniqueKeyValue = 'test_unique_key';
       await controller.findOne(testUniqueKeyValue, testUniqueKeyName);
 

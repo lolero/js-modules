@@ -4,11 +4,17 @@ import { authUtilGetAuthUsersServiceProvider } from '@js-modules/apps-nest-modul
 import { UsersController } from './users.controller';
 import { UsersEntity } from './users.entity';
 import { UsersService } from './users.service';
+import { SystemRolesModule } from '../systemRoles/systemRoles.module';
+import { UsersServiceValidator } from './users.service.validator';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UsersEntity])],
+  imports: [TypeOrmModule.forFeature([UsersEntity]), SystemRolesModule],
   controllers: [UsersController],
-  providers: [UsersService, authUtilGetAuthUsersServiceProvider(UsersService)],
+  providers: [
+    UsersService,
+    authUtilGetAuthUsersServiceProvider(UsersService),
+    UsersServiceValidator,
+  ],
   exports: [UsersService],
 })
 export class UsersModule {}

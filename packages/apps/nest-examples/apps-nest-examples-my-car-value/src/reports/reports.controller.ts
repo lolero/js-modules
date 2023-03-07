@@ -8,13 +8,13 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
+import {
+  AuthDecoratorCurrentUser,
+  AuthGuardIsUserAuthenticated,
+} from '@js-modules/apps-nest-module-auth';
+import { InterceptorSerialize } from '@js-modules/apps-nest-utils';
 import { ReportsDtoCreateOne } from './reports.dto.createOne';
 import { ReportsService } from './reports.service';
-import {
-  AuthDecoratorCurrentAuthenticatedUser,
-  AuthGuardIsUserAuthenticated,
-  InterceptorSerialize,
-} from '../api-nest-utils/src';
 import { UsersEntity } from '../users/users.entity';
 import { ReportsDtoPublic } from './reports.dto.public';
 import { ReportsEntity } from './reports.entity';
@@ -31,7 +31,7 @@ export class ReportsController {
   @InterceptorSerialize<ReportsEntity>(ReportsDtoPublic)
   createOne(
     @Body() body: ReportsDtoCreateOne,
-    @AuthDecoratorCurrentAuthenticatedUser() user: UsersEntity,
+    @AuthDecoratorCurrentUser() user: UsersEntity,
   ) {
     return this.reportsService.createOne(body, user);
   }

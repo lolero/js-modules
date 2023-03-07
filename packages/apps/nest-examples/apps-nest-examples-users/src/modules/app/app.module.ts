@@ -9,10 +9,12 @@ import {
 } from '@js-modules/apps-nest-module-auth';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { UsersModule } from '../users/users.module';
-import { ReportsModule } from '../reports/reports.module';
-import { UsersService } from '../users/users.service';
-import { appConfigTypeormDataSourceOptions } from './app.config.typeormDataSourceOptions';
+import {
+  UsersModule,
+  UsersService,
+  SystemRolesModule,
+} from '../../libs/apps-nest-examples-users-modules/src';
+import { configTypeormDataSourceOptions } from '../../config/config.typeorm.dataSourceOptions';
 
 @Module({
   imports: [
@@ -20,13 +22,13 @@ import { appConfigTypeormDataSourceOptions } from './app.config.typeormDataSourc
       isGlobal: true,
       envFilePath: `.env.${process.env.NODE_ENV}`,
     }),
-    TypeOrmModule.forRoot(appConfigTypeormDataSourceOptions),
+    TypeOrmModule.forRoot(configTypeormDataSourceOptions),
     AuthModule.register({
       module: UsersModule,
       serviceProvider: authUtilGetAuthUsersServiceProvider(UsersService),
     }),
-    ReportsModule,
     UsersModule,
+    SystemRolesModule,
   ],
   controllers: [AppController],
   providers: [

@@ -8,10 +8,10 @@ import {
   Query,
 } from '@nestjs/common';
 import type {
-  UsersUniqueKeyName,
-  UsersUniqueKeyValue,
-} from '../api-nest-utils/src';
-import { InterceptorSerialize } from '../api-nest-utils/src';
+  AuthUsersUniqueKeyName,
+  AuthUsersUniqueKeyValue,
+} from '@js-modules/apps-nest-module-auth';
+import { InterceptorSerialize } from '@js-modules/apps-nest-utils';
 import { UsersService } from './users.service';
 import { UsersEntity } from './users.entity';
 import { UsersDtoPublic } from './users.dto.public';
@@ -30,8 +30,8 @@ export class UsersController {
 
   @Get('/:uniqueKeyValue')
   findOne(
-    @Param('uniqueKeyValue') uniqueKeyValue: UsersUniqueKeyValue,
-    @Query('uniqueKeyName') uniqueKeyName?: UsersUniqueKeyName,
+    @Param('uniqueKeyValue') uniqueKeyValue: AuthUsersUniqueKeyValue,
+    @Query('uniqueKeyName') uniqueKeyName?: AuthUsersUniqueKeyName,
   ): Promise<UsersEntity> {
     return this.usersService.findOne(uniqueKeyName ?? 'id', uniqueKeyValue);
   }

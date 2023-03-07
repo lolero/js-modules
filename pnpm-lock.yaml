@@ -43,6 +43,96 @@ importers:
       ts-jest: 29.0.5_wrz2f4catxnbofknv5bs36jgqa
       typescript: 4.9.5
 
+  packages/api/nest/api-nest-module-auth:
+    specifiers:
+      '@js-modules/apps-nest-utils': workspace:^0.0.0
+      '@js-modules/common-utils-general': workspace:^0.0.0
+      '@nestjs/common': ^9.2.1
+      '@nestjs/config': ^2.3.1
+      '@nestjs/core': ^9.2.1
+      '@nestjs/platform-express': ^9.2.1
+      '@nestjs/swagger': ^6.2.1
+      '@nestjs/testing': ^9.2.1
+      '@nestjs/typeorm': ^9.0.1
+      '@types/cookie-session': ^2.0.44
+      '@types/express': ^4.17.16
+      '@types/lodash': ^4.14.191
+      '@types/supertest': ^2.0.12
+      class-transformer: ^0.5.1
+      class-validator: ^0.14.0
+      express: ^4.18.2
+      lodash: ^4.17.21
+      reflect-metadata: ^0.1.13
+      rxjs: ^7.8.0
+      typeorm: ^0.3.11
+    dependencies:
+      '@js-modules/apps-nest-utils': link:../api-nest-utils
+      '@js-modules/common-utils-general': link:../../../common/utils/common-utils-general
+      '@nestjs/common': 9.3.1_welcnyot5bzd5wa2aovbkxpi4i
+      '@nestjs/config': 2.3.1_fipbdz7qhdiauthzsrt4bq6tsq
+      '@nestjs/core': 9.3.1_mxuzwgdlmkyxkz5qwd5xy75hm4
+      '@nestjs/platform-express': 9.3.1_22j2lmearpmfr73ppsmjho62xq
+      '@nestjs/swagger': 6.2.1_25mb2iazsxw3kxf3c5hxmogl5q
+      '@nestjs/testing': 9.3.1_lqms3jbt4jegwm4cog6ibtl4mu
+      '@nestjs/typeorm': 9.0.1_bupm2ki5yhdymdc7evmynhkzqe
+      '@types/cookie-session': 2.0.44
+      '@types/express': 4.17.16
+      '@types/lodash': 4.14.191
+      '@types/supertest': 2.0.12
+      class-transformer: 0.5.1
+      class-validator: 0.14.0
+      express: 4.18.2
+      lodash: 4.17.21
+      reflect-metadata: 0.1.13
+      rxjs: 7.8.0
+      typeorm: 0.3.11
+
+  packages/api/nest/api-nest-utils:
+    specifiers:
+      '@js-modules/common-utils-general': workspace:^0.0.0
+      '@nestjs/common': ^9.2.1
+      '@nestjs/config': ^2.3.1
+      '@nestjs/core': ^9.2.1
+      '@nestjs/platform-express': ^9.2.1
+      '@nestjs/swagger': ^6.2.1
+      '@nestjs/testing': ^9.2.1
+      '@nestjs/typeorm': ^9.0.1
+      '@types/cookie-session': ^2.0.44
+      '@types/lodash': ^4.14.191
+      '@types/supertest': ^2.0.12
+      class-transformer: ^0.5.1
+      class-validator: ^0.14.0
+      cookie-session: ^2.0.0
+      express: ^4.18.2
+      lodash: ^4.17.21
+      pg: ^8.9.0
+      reflect-metadata: ^0.1.13
+      rxjs: ^7.8.0
+      sqlite3: ^5.1.4
+      typeorm: ^0.3.11
+    dependencies:
+      '@js-modules/common-utils-general': link:../../../common/utils/common-utils-general
+      '@nestjs/common': 9.3.1_welcnyot5bzd5wa2aovbkxpi4i
+      '@nestjs/config': 2.3.1_fipbdz7qhdiauthzsrt4bq6tsq
+      '@nestjs/core': 9.3.1_mxuzwgdlmkyxkz5qwd5xy75hm4
+      '@nestjs/platform-express': 9.3.1_22j2lmearpmfr73ppsmjho62xq
+      '@nestjs/swagger': 6.2.1_25mb2iazsxw3kxf3c5hxmogl5q
+      '@nestjs/testing': 9.3.1_lqms3jbt4jegwm4cog6ibtl4mu
+      '@nestjs/typeorm': 9.0.1_bupm2ki5yhdymdc7evmynhkzqe
+      '@types/cookie-session': 2.0.44
+      '@types/lodash': 4.14.191
+      '@types/supertest': 2.0.12
+      class-transformer: 0.5.1
+      class-validator: 0.14.0
+      cookie-session: 2.0.0
+      express: 4.18.2
+      lodash: 4.17.21
+      pg: 8.9.0
+      reflect-metadata: 0.1.13
+      rxjs: 7.8.0
+      sqlite3: 5.1.4
+      typeorm: 0.3.11_pg@8.9.0+sqlite3@5.1.4
+
   packages/apps/dapp/apps-dapp-common-constants:
     specifiers:
       '@js-modules/common-utils-general': workspace:^0.0.0
@@ -386,67 +476,6 @@ importers:
       react-dom: 18.2.0_react@18.2.0
       react-router-dom: 6.8.0_biqbaboplfbrettd7655fr4n2y
 
-  packages/apps/itlib/apps-libit-api:
-    specifiers:
-      '@js-modules/common-utils-general': workspace:^0.0.0
-      '@nestjs/cli': ^9.1.9
-      '@nestjs/common': ^9.2.1
-      '@nestjs/config': ^2.3.1
-      '@nestjs/core': ^9.2.1
-      '@nestjs/platform-express': ^9.2.1
-      '@nestjs/schematics': ^9.0.4
-      '@nestjs/swagger': ^6.2.1
-      '@nestjs/testing': ^9.2.1
-      '@nestjs/typeorm': ^9.0.1
-      '@types/cookie-session': ^2.0.44
-      '@types/express': ^4.17.16
-      '@types/lodash': ^4.14.191
-      '@types/supertest': ^2.0.12
-      class-transformer: ^0.5.1
-      class-validator: ^0.14.0
-      cookie-session: ^2.0.0
-      express: ^4.18.2
-      lodash: ^4.17.21
-      pg: ^8.9.0
-      reflect-metadata: ^0.1.13
-      rxjs: ^7.8.0
-      source-map-support: ^0.5.21
-      sqlite3: ^5.1.4
-      supertest: ^6.3.3
-      ts-loader: ^9.4.2
-      ts-node: ^10.9.1
-      typeorm: ^0.3.11
-    dependencies:
-      '@js-modules/common-utils-general': link:../../../common/utils/common-utils-general
-      '@nestjs/common': 9.3.1_welcnyot5bzd5wa2aovbkxpi4i
-      '@nestjs/config': 2.3.1_fipbdz7qhdiauthzsrt4bq6tsq
-      '@nestjs/core': 9.3.1_mxuzwgdlmkyxkz5qwd5xy75hm4
-      '@nestjs/platform-express': 9.3.1_22j2lmearpmfr73ppsmjho62xq
-      '@nestjs/swagger': 6.2.1_25mb2iazsxw3kxf3c5hxmogl5q
-      '@nestjs/testing': 9.3.1_lqms3jbt4jegwm4cog6ibtl4mu
-      '@nestjs/typeorm': 9.0.1_bupm2ki5yhdymdc7evmynhkzqe
-      '@types/cookie-session': 2.0.44
-      '@types/lodash': 4.14.191
-      '@types/supertest': 2.0.12
-      class-transformer: 0.5.1
-      class-validator: 0.14.0
-      cookie-session: 2.0.0
-      express: 4.18.2
-      lodash: 4.17.21
-      pg: 8.9.0
-      reflect-metadata: 0.1.13
-      rxjs: 7.8.0
-      sqlite3: 5.1.4
-      typeorm: 0.3.11_o7g77mox2w73lfzyynaupmt6wm
-    devDependencies:
-      '@nestjs/cli': 9.1.9
-      '@nestjs/schematics': 9.0.4
-      '@types/express': 4.17.16
-      source-map-support: 0.5.21
-      supertest: 6.3.3
-      ts-loader: 9.4.2
-      ts-node: 10.9.1
-
   packages/apps/nest-examples/apps-nest-examples-computer:
     specifiers:
       '@nestjs/cli': ^9.1.9
@@ -523,6 +552,8 @@ importers:
 
   packages/apps/nest-examples/apps-nest-examples-my-car-value:
     specifiers:
+      '@js-modules/apps-nest-module-auth': workspace:^0.0.0
+      '@js-modules/apps-nest-utils': workspace:^0.0.0
       '@nestjs/cli': ^9.1.9
       '@nestjs/common': ^9.2.1
       '@nestjs/config': ^2.3.1
@@ -549,6 +580,8 @@ importers:
       ts-node: ^10.9.1
       typeorm: ^0.3.11
     dependencies:
+      '@js-modules/apps-nest-module-auth': link:../../../api/nest/api-nest-module-auth
+      '@js-modules/apps-nest-utils': link:../../../api/nest/api-nest-utils
       '@nestjs/common': 9.3.1_welcnyot5bzd5wa2aovbkxpi4i
       '@nestjs/config': 2.3.1_fipbdz7qhdiauthzsrt4bq6tsq
       '@nestjs/core': 9.3.1_mxuzwgdlmkyxkz5qwd5xy75hm4
@@ -567,6 +600,71 @@ importers:
       rxjs: 7.8.0
       sqlite3: 5.1.4
       typeorm: 0.3.11_h3l5zcb3i6sggvllyfknv6gs44
+    devDependencies:
+      '@nestjs/cli': 9.1.9
+      '@nestjs/schematics': 9.0.4
+      '@types/express': 4.17.16
+      source-map-support: 0.5.21
+      supertest: 6.3.3
+      ts-loader: 9.4.2
+      ts-node: 10.9.1
+
+  packages/apps/nest-examples/apps-nest-examples-users:
+    specifiers:
+      '@js-modules/apps-nest-module-auth': workspace:^0.0.0
+      '@js-modules/apps-nest-utils': workspace:^0.0.0
+      '@js-modules/common-utils-general': workspace:^0.0.0
+      '@nestjs/cli': ^9.1.9
+      '@nestjs/common': ^9.2.1
+      '@nestjs/config': ^2.3.1
+      '@nestjs/core': ^9.2.1
+      '@nestjs/platform-express': ^9.2.1
+      '@nestjs/schematics': ^9.0.4
+      '@nestjs/swagger': ^6.2.1
+      '@nestjs/testing': ^9.2.1
+      '@nestjs/typeorm': ^9.0.1
+      '@types/cookie-session': ^2.0.44
+      '@types/express': ^4.17.16
+      '@types/lodash': ^4.14.191
+      '@types/supertest': ^2.0.12
+      class-transformer: ^0.5.1
+      class-validator: ^0.14.0
+      cookie-session: ^2.0.0
+      express: ^4.18.2
+      lodash: ^4.17.21
+      pg: ^8.9.0
+      reflect-metadata: ^0.1.13
+      rxjs: ^7.8.0
+      source-map-support: ^0.5.21
+      sqlite3: ^5.1.4
+      supertest: ^6.3.3
+      ts-loader: ^9.4.2
+      ts-node: ^10.9.1
+      typeorm: ^0.3.11
+    dependencies:
+      '@js-modules/apps-nest-module-auth': link:../../../api/nest/api-nest-module-auth
+      '@js-modules/apps-nest-utils': link:../../../api/nest/api-nest-utils
+      '@js-modules/common-utils-general': link:../../../common/utils/common-utils-general
+      '@nestjs/common': 9.3.1_welcnyot5bzd5wa2aovbkxpi4i
+      '@nestjs/config': 2.3.1_fipbdz7qhdiauthzsrt4bq6tsq
+      '@nestjs/core': 9.3.1_mxuzwgdlmkyxkz5qwd5xy75hm4
+      '@nestjs/platform-express': 9.3.1_22j2lmearpmfr73ppsmjho62xq
+      '@nestjs/swagger': 6.2.1_25mb2iazsxw3kxf3c5hxmogl5q
+      '@nestjs/testing': 9.3.1_lqms3jbt4jegwm4cog6ibtl4mu
+      '@nestjs/typeorm': 9.0.1_bupm2ki5yhdymdc7evmynhkzqe
+      '@types/cookie-session': 2.0.44
+      '@types/lodash': 4.14.191
+      '@types/supertest': 2.0.12
+      class-transformer: 0.5.1
+      class-validator: 0.14.0
+      cookie-session: 2.0.0
+      express: 4.18.2
+      lodash: 4.17.21
+      pg: 8.9.0
+      reflect-metadata: 0.1.13
+      rxjs: 7.8.0
+      sqlite3: 5.1.4
+      typeorm: 0.3.11_o7g77mox2w73lfzyynaupmt6wm
     devDependencies:
       '@nestjs/cli': 9.1.9
       '@nestjs/schematics': 9.0.4
@@ -4838,7 +4936,7 @@ packages:
       '@nestjs/core': 9.3.1_mxuzwgdlmkyxkz5qwd5xy75hm4
       reflect-metadata: 0.1.13
       rxjs: 7.8.0
-      typeorm: 0.3.11_o7g77mox2w73lfzyynaupmt6wm
+      typeorm: 0.3.11
       uuid: 8.3.2
     dev: false
 
@@ -17952,6 +18050,85 @@ packages:
   /typedarray/0.0.6:
     resolution: {integrity: sha512-/aCDEGatGvZ2BIk+HmLf4ifCJFwvKFNb9/JeZPMulfgFracn9QFcAf5GO8B/mweUjSoblS5In0cWhqpfs/5PQA==}
 
+  /typeorm/0.3.11:
+    resolution: {integrity: sha512-pzdOyWbVuz/z8Ww6gqvBW4nylsM0KLdUCDExr2gR20/x1khGSVxQkjNV/3YqliG90jrWzrknYbYscpk8yxFJVg==}
+    engines: {node: '>= 12.9.0'}
+    hasBin: true
+    peerDependencies:
+      '@google-cloud/spanner': ^5.18.0
+      '@sap/hana-client': ^2.12.25
+      better-sqlite3: ^7.1.2 || ^8.0.0
+      hdb-pool: ^0.1.6
+      ioredis: ^5.0.4
+      mongodb: ^3.6.0
+      mssql: ^7.3.0
+      mysql2: ^2.2.5
+      oracledb: ^5.1.0
+      pg: ^8.5.1
+      pg-native: ^3.0.0
+      pg-query-stream: ^4.0.0
+      redis: ^3.1.1 || ^4.0.0
+      sql.js: ^1.4.0
+      sqlite3: ^5.0.3
+      ts-node: ^10.7.0
+      typeorm-aurora-data-api-driver: ^2.0.0
+    peerDependenciesMeta:
+      '@google-cloud/spanner':
+        optional: true
+      '@sap/hana-client':
+        optional: true
+      better-sqlite3:
+        optional: true
+      hdb-pool:
+        optional: true
+      ioredis:
+        optional: true
+      mongodb:
+        optional: true
+      mssql:
+        optional: true
+      mysql2:
+        optional: true
+      oracledb:
+        optional: true
+      pg:
+        optional: true
+      pg-native:
+        optional: true
+      pg-query-stream:
+        optional: true
+      redis:
+        optional: true
+      sql.js:
+        optional: true
+      sqlite3:
+        optional: true
+      ts-node:
+        optional: true
+      typeorm-aurora-data-api-driver:
+        optional: true
+    dependencies:
+      '@sqltools/formatter': 1.2.5
+      app-root-path: 3.1.0
+      buffer: 6.0.3
+      chalk: 4.1.2
+      cli-highlight: 2.1.11
+      date-fns: 2.29.3
+      debug: 4.3.4
+      dotenv: 16.0.3
+      glob: 7.2.3
+      js-yaml: 4.1.0
+      mkdirp: 1.0.4
+      reflect-metadata: 0.1.13
+      sha.js: 2.4.11
+      tslib: 2.5.0
+      uuid: 8.3.2
+      xml2js: 0.4.23
+      yargs: 17.6.2
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
   /typeorm/0.3.11_h3l5zcb3i6sggvllyfknv6gs44:
     resolution: {integrity: sha512-pzdOyWbVuz/z8Ww6gqvBW4nylsM0KLdUCDExr2gR20/x1khGSVxQkjNV/3YqliG90jrWzrknYbYscpk8yxFJVg==}
     engines: {node: '>= 12.9.0'}
@@ -18107,6 +18284,87 @@ packages:
       sha.js: 2.4.11
       sqlite3: 5.1.4
       ts-node: 10.9.1
+      tslib: 2.5.0
+      uuid: 8.3.2
+      xml2js: 0.4.23
+      yargs: 17.6.2
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
+  /typeorm/0.3.11_pg@8.9.0+sqlite3@5.1.4:
+    resolution: {integrity: sha512-pzdOyWbVuz/z8Ww6gqvBW4nylsM0KLdUCDExr2gR20/x1khGSVxQkjNV/3YqliG90jrWzrknYbYscpk8yxFJVg==}
+    engines: {node: '>= 12.9.0'}
+    hasBin: true
+    peerDependencies:
+      '@google-cloud/spanner': ^5.18.0
+      '@sap/hana-client': ^2.12.25
+      better-sqlite3: ^7.1.2 || ^8.0.0
+      hdb-pool: ^0.1.6
+      ioredis: ^5.0.4
+      mongodb: ^3.6.0
+      mssql: ^7.3.0
+      mysql2: ^2.2.5
+      oracledb: ^5.1.0
+      pg: ^8.5.1
+      pg-native: ^3.0.0
+      pg-query-stream: ^4.0.0
+      redis: ^3.1.1 || ^4.0.0
+      sql.js: ^1.4.0
+      sqlite3: ^5.0.3
+      ts-node: ^10.7.0
+      typeorm-aurora-data-api-driver: ^2.0.0
+    peerDependenciesMeta:
+      '@google-cloud/spanner':
+        optional: true
+      '@sap/hana-client':
+        optional: true
+      better-sqlite3:
+        optional: true
+      hdb-pool:
+        optional: true
+      ioredis:
+        optional: true
+      mongodb:
+        optional: true
+      mssql:
+        optional: true
+      mysql2:
+        optional: true
+      oracledb:
+        optional: true
+      pg:
+        optional: true
+      pg-native:
+        optional: true
+      pg-query-stream:
+        optional: true
+      redis:
+        optional: true
+      sql.js:
+        optional: true
+      sqlite3:
+        optional: true
+      ts-node:
+        optional: true
+      typeorm-aurora-data-api-driver:
+        optional: true
+    dependencies:
+      '@sqltools/formatter': 1.2.5
+      app-root-path: 3.1.0
+      buffer: 6.0.3
+      chalk: 4.1.2
+      cli-highlight: 2.1.11
+      date-fns: 2.29.3
+      debug: 4.3.4
+      dotenv: 16.0.3
+      glob: 7.2.3
+      js-yaml: 4.1.0
+      mkdirp: 1.0.4
+      pg: 8.9.0
+      reflect-metadata: 0.1.13
+      sha.js: 2.4.11
+      sqlite3: 5.1.4
       tslib: 2.5.0
       uuid: 8.3.2
       xml2js: 0.4.23

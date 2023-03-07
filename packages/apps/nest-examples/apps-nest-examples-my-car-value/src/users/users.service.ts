@@ -5,9 +5,9 @@ import keys from 'lodash/keys';
 import difference from 'lodash/difference';
 import {
   AuthUsersService,
-  UsersUniqueKeyName,
-  UsersUniqueKeyValue,
-} from '../api-nest-utils/src';
+  AuthUsersUniqueKeyName,
+  AuthUsersUniqueKeyValue,
+} from '@js-modules/apps-nest-module-auth';
 import { UsersEntity } from './users.entity';
 import { UsersDtoCreateOne } from './users.dto.createOne';
 
@@ -24,9 +24,13 @@ export class UsersService implements AuthUsersService {
     return this.usersRepository.save(usersEntity);
   }
 
+  async createMany(): Promise<UsersEntity[]> {
+    return [];
+  }
+
   async findOne(
-    uniqueKeyName: UsersUniqueKeyName,
-    uniqueKeyValue: UsersUniqueKeyValue,
+    uniqueKeyName: AuthUsersUniqueKeyName,
+    uniqueKeyValue: AuthUsersUniqueKeyValue,
   ): Promise<UsersEntity> {
     const usersEntity = await this.usersRepository.findOneBy({
       [uniqueKeyName]: uniqueKeyValue,

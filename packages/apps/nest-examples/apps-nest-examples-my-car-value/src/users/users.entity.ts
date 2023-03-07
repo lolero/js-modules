@@ -6,8 +6,11 @@ import {
   Entity,
   OneToMany,
   PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  DeleteDateColumn,
 } from 'typeorm';
-import { AuthUsersEntity } from '../api-nest-utils/src';
+import { AuthUsersEntity } from '@js-modules/apps-nest-module-auth';
 import { ReportsEntity } from '../reports/reports.entity'; // eslint-disable-line import/no-cycle
 
 @Entity('users')
@@ -40,6 +43,21 @@ export class UsersEntity implements AuthUsersEntity {
 
   @OneToMany(() => ReportsEntity, (report) => report.user)
   reports: ReportsEntity[];
+
+  @CreateDateColumn({
+    name: 'created_at',
+  })
+  createdAt: Date;
+
+  @UpdateDateColumn({
+    name: 'updated_at',
+  })
+  updatedAt: Date;
+
+  @DeleteDateColumn({
+    name: 'deleted_at',
+  })
+  deletedAt?: Date;
 
   @AfterInsert()
   logInsert() {

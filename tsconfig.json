@@ -6,6 +6,9 @@
       "@js-modules/apps-dapp-common-constants": [
         "apps/dapp/apps-dapp-common-constants/src"
       ],
+      "@js-modules/apps-dapp-common-constants": [
+        "apps/dapp/apps-dapp-common-constants/src"
+      ],
       "@js-modules/apps-dapp-common-stores-redux": [
         "apps/dapp/apps-dapp-common-stores-redux/src"
       ],

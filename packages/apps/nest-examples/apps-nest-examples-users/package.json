@@ -1,22 +1,24 @@
 {
   "private": true,
-  "name": "@js-modules/apps-nest-examples-my-car-value",
-  "description": "Apps Nest Examples My Car Value",
+  "name": "@js-modules/apps-nest-examples-users",
+  "description": "Apps Nest Examples Users",
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
     "build": "nest build -p tsconfig.build.json",
     "dev": "cross-env NODE_ENV=dev nest start --watch",
     "prod": "node build/main",
-    "typeorm": "pnpm build && cross-env NODE_ENV=dev typeorm -d build/app/app.config.typeormDataSource.js"
+    "typeorm": "pnpm build && cross-env NODE_ENV=dev typeorm -d build/config/config.typeorm.dataSource.js"
   },
   "dependencies": {
     "@js-modules/apps-nest-module-auth": "workspace:^0.0.0",
     "@js-modules/apps-nest-utils": "workspace:^0.0.0",
+    "@js-modules/common-utils-general": "workspace:^0.0.0",
     "@nestjs/common": "^9.2.1",
     "@nestjs/config": "^2.3.1",
     "@nestjs/core": "^9.2.1",
     "@nestjs/platform-express": "^9.2.1",
+    "@nestjs/swagger": "^6.2.1",
     "@nestjs/testing": "^9.2.1",
     "@nestjs/typeorm": "^9.0.1",
     "@types/cookie-session": "^2.0.44",
@@ -27,6 +29,7 @@
     "cookie-session": "^2.0.0",
     "express": "^4.18.2",
     "lodash": "^4.17.21",
+    "pg": "^8.9.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.0",
     "sqlite3": "^5.1.4",
