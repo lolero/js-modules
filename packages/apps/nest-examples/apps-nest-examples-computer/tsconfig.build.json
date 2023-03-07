@@ -3,8 +3,7 @@
   "compilerOptions": {
     "strictNullChecks": false,
     "rootDir": "src",
-    "outDir": "build",
-    "module": "commonjs"
+    "outDir": "build"
   },
   "include": ["src"]
 }
