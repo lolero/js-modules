@@ -1,9 +1,6 @@
 import { DataSourceOptions } from 'typeorm';
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
-import {
-  SystemRolesEntity,
-  UsersEntity,
-} from '../libs/apps-nest-examples-users-modules/src';
+import { UsersEntity } from '../modules/users/users.entity';
 
 type VariableProps =
   | 'type'
@@ -17,7 +14,7 @@ const configTypeormDataSourceOptionsBase: Omit<
   PostgresConnectionOptions,
   VariableProps
 > = {
-  entities: [UsersEntity, SystemRolesEntity],
+  entities: [UsersEntity],
   synchronize: false,
   migrations: [`build/migrations/*.js`],
 };

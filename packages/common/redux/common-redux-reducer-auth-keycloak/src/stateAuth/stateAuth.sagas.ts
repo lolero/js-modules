@@ -5,9 +5,9 @@ import {
   takeEvery,
   call,
   CallEffect,
+  fork,
 } from 'redux-saga/effects';
 import Keycloak from 'keycloak-js';
-import { keycloakConfig } from '../config/keycloakConfig';
 import {
   StateAuthActionTypes,
   StateAuthLoginRequestAction,
@@ -28,11 +28,13 @@ export function* stateAuthInitSaga(): Generator<
   void,
   boolean
 > {
-  const keycloak = new Keycloak(keycloakConfig);
+  const keycloak = new Keycloak('/keycloak.json');
 
   try {
     const isAuthenticated = yield call<typeof keycloak.init>(keycloak.init, {
       onLoad: 'check-sso',
+      // silentCheckSsoRedirectUri: `${window.location.origin}/silent-check-sso.html`,
+      // pkceMethod: 'S256',
     });
 
     if (isAuthenticated) {
@@ -41,6 +43,8 @@ export function* stateAuthInitSaga(): Generator<
           token: keycloak.token,
         }),
       );
+    } else {
+      keycloak.login();
     }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err: any) {
@@ -116,6 +120,7 @@ export function* stateAuthLogoutSaga({
 }
 
 export function* stateAuthSagas(): Generator<ForkEffect, void, void> {
+  yield fork(stateAuthInitSaga);
   yield takeEvery(
     StateAuthActionTypes.STATE_AUTH_UPDATE_PARTIAL_REDUCER_METADATA_REQUEST,
     stateAuthUpdatePartialReducerMetadataSaga,

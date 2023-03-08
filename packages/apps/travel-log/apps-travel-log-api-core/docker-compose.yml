@@ -1,0 +1,68 @@
+version: '3'
+
+volumes:
+  volume_auth_data:
+    driver: local
+
+networks:
+  network_auth:
+    driver: bridge
+
+services:
+  db-main:
+    image: postgres
+    command: ['postgres']
+    restart: always
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_DB: main
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+  db-auth:
+    image: postgres
+    command: ['postgres']
+    restart: always
+    ports:
+      - '5433:5432'
+    environment:
+      POSTGRES_DB: auth
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    networks:
+      - network_auth
+    volumes:
+      - volume_auth_data:/var/lib/postgresql/data
+  auth:
+    image: quay.io/keycloak/keycloak
+    command: ['start-dev']
+    restart: always
+    ports:
+      - '8080:8080'
+      - '8443:8443'
+    environment:
+      KC_DB: postgres
+      KC_DB_URL_HOST: db-auth
+      KC_DB_URL_DATABASE: auth
+      KC_DB_USERNAME: postgres
+      KC_DB_PASSWORD: postgres
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+#      https://www.youtube.com/watch?v=G6h3eVNZFg8&list=PLQZfys2xO5kgpa9-qpJly78d-t7_Fnjec&index=4
+#      https://letsencrypt.org/docs/certificates-for-localhost/
+      KC_HTTPS_CERTIFICATE_FILE: /opt/keycloak/certificates/localhostcert.pem
+      KC_HTTPS_CERTIFICATE_KEY_FILE: /opt/keycloak/certificates/localhostkey.pem
+    depends_on:
+      - db-auth
+    networks:
+      - network_auth
+    volumes:
+      - ./certificates:/opt/keycloak/certificates
+  mailhog:
+    image: mailhog/mailhog
+    restart: always
+    ports:
+      - 1025:1025
+      - 8025:8025
+    networks:
+      - network_auth
