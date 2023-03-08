@@ -11,7 +11,7 @@ import {
   StateAuthReducerHittingAction,
 } from './stateAuth.actionsTypes';
 
-function stateAuthReducer(
+export function stateAuthReducer(
   // eslint-disable-next-line default-param-last
   state: StateAuthReducer = stateAuthInitialState,
   action: StateAuthReducerHittingAction,
@@ -39,5 +39,3 @@ function stateAuthReducer(
       return state;
   }
 }
-
-export default stateAuthReducer;

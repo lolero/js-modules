@@ -5,7 +5,7 @@ import {
   SavePartialReducerMetadataAction,
   UpdatePartialReducerMetadataRequestMetadata,
 } from 'normalized-reducers-utils';
-import { AuthMethods, StateAuthReducer } from './stateAuth.types';
+import { StateAuthReducer } from './stateAuth.types';
 
 export enum StateAuthActionTypes {
   STATE_AUTH_UPDATE_PARTIAL_REDUCER_METADATA_REQUEST = 'STATE_AUTH_UPDATE_PARTIAL_REDUCER_METADATA_REQUEST',
@@ -35,7 +35,7 @@ export type StateAuthUpdatePartialReducerMetadataFailAction =
 
 export type StateAuthLoginRequestAction = RequestAction<
   StateAuthActionTypes.STATE_AUTH_LOGIN_REQUEST,
-  { loginMethod: AuthMethods }
+  { loginMethod: string }
 >;
 
 export type StateAuthLoginSuccessAction =
