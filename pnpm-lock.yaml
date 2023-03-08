@@ -832,6 +832,40 @@ importers:
       '@types/react': 18.0.27
       react: 18.2.0
 
+  packages/common/redux/common-redux-reducer-auth:
+    specifiers:
+      '@js-modules/common-utils-general': workspace:^0.0.0
+      '@js-modules/web-react-components': workspace:^0.0.0
+      '@types/lodash': ^4.14.191
+      '@types/uuid': ^9.0.0
+      axios: ^1.2.6
+      keycloak-js: ^21.0.1
+      lodash: ^4.17.21
+      normalized-reducers-utils: ^1.1.17
+      react: ^18.2.0
+      react-redux: ^8.0.5
+      redux: ^4.2.1
+      redux-devtools-extension: ^2.13.9
+      redux-saga: ^1.2.2
+      reselect: ^4.1.7
+      uuid: ^9.0.0
+    dependencies:
+      '@js-modules/common-utils-general': link:../../utils/common-utils-general
+      '@js-modules/web-react-components': link:../../../web/react/web-react-components
+      '@types/lodash': 4.14.191
+      '@types/uuid': 9.0.0
+      axios: 1.3.0
+      keycloak-js: 21.0.1
+      lodash: 4.17.21
+      normalized-reducers-utils: 1.1.17_redux@4.2.1
+      react: 18.2.0
+      react-redux: 8.0.5_react@18.2.0+redux@4.2.1
+      redux: 4.2.1
+      redux-devtools-extension: 2.13.9_redux@4.2.1
+      redux-saga: 1.2.2
+      reselect: 4.1.7
+      uuid: 9.0.0
+
   packages/common/utils/common-utils-general:
     specifiers:
       '@types/lodash': ^4.14.191
@@ -7436,7 +7470,7 @@ packages:
   /axios/1.3.0:
     resolution: {integrity: sha512-oCye5nHhTypzkdLIvF9SaHfr8UAquqCn1KY3j8vsrjeol8yohAdGxIpRPbF1bOLsx33HOAatdfMX1yzsj2cHwg==}
     dependencies:
-      follow-redirects: 1.15.2_debug@4.3.4
+      follow-redirects: 1.15.2
       form-data: 4.0.0
       proxy-from-env: 1.1.0
     transitivePeerDependencies:
@@ -10716,7 +10750,7 @@ packages:
     resolution: {integrity: sha512-GRnmB5gPyJpAhTQdSZTSp9uaPSvl09KoYcMQtsB9rQoOmzs9dH6ffeccH+Z+cv6P68Hu5bC6JjRh4Ah/mHSNRw==}
     dev: false
 
-  /follow-redirects/1.15.2_debug@4.3.4:
+  /follow-redirects/1.15.2:
     resolution: {integrity: sha512-VQLG33o04KaQ8uYi2tVNbdrWp1QWxNNea+nmIB4EVM28v0hmP17z7aG1+wAkNzVq4KeXTq3221ye5qTJP91JwA==}
     engines: {node: '>=4.0'}
     peerDependencies:
@@ -10724,8 +10758,6 @@ packages:
     peerDependenciesMeta:
       debug:
         optional: true
-    dependencies:
-      debug: 4.3.4
 
   /for-each/0.3.3:
     resolution: {integrity: sha512-jqYfLp7mo9vIyQf8ykW2v7A+2N4QjeCeI5+Dz9XraiO1ign81wjiH7Fb9vSOWvQfNtmSa4H2RoQTrrXivdUZmw==}
@@ -12926,6 +12958,10 @@ packages:
     resolution: {integrity: sha512-mifzlm2+5nZ+lEcLJMoBK0/IH/bDg8XnJfd/Wq6IP+xoCjLZsTOnV2QpxlVbX9bMnkl5PdEjNtBJ9Cj1NjifhQ==}
     dev: true
 
+  /js-sha256/0.9.0:
+    resolution: {integrity: sha512-sga3MHh9sgQN2+pJ9VYZ+1LPwXOxuBJBA5nrR5/ofPfuiJBE2hnjsaN8se8JznOmGLN2p49Pe5U/ttafcs/apA==}
+    dev: false
+
   /js-sha3/0.5.7:
     resolution: {integrity: sha512-GII20kjaPX0zJ8wzkTbNDYMY7msuZcTWk8S5UOh6806Jq/wz1J8/bnr8uGU0DAUmYDjj2Mr4X1cW8v/GLYnR+g==}
     dev: false
@@ -13236,6 +13272,13 @@ packages:
       node-addon-api: 2.0.2
       node-gyp-build: 4.6.0
       readable-stream: 3.6.0
+
+  /keycloak-js/21.0.1:
+    resolution: {integrity: sha512-ot0KW4qyDHl5AyDZNV0CkEkuvIZi+37y3BReNvqqfag7wqJeV13R/PcgECvbbd05+0NSOQjhBL8S+a4A++vNQw==}
+    dependencies:
+      base64-js: 1.5.1
+      js-sha256: 0.9.0
+    dev: false
 
   /keygrip/1.1.0:
     resolution: {integrity: sha512-iYSchDJ+liQ8iwbSI2QqsQOvqv58eJCEanyJPJi+Khyu8smkcKSFUCbPwzFcL7YVtZ6eONjqRX/38caJ7QjRAQ==}
@@ -16864,7 +16907,7 @@ packages:
     dependencies:
       command-exists: 1.2.9
       commander: 3.0.2
-      follow-redirects: 1.15.2_debug@4.3.4
+      follow-redirects: 1.15.2
       fs-extra: 0.30.0
       js-sha3: 0.8.0
       memorystream: 0.3.1
@@ -16882,7 +16925,7 @@ packages:
     dependencies:
       command-exists: 1.2.9
       commander: 8.3.0
-      follow-redirects: 1.15.2_debug@4.3.4
+      follow-redirects: 1.15.2
       js-sha3: 0.8.0
       memorystream: 0.3.1
       semver: 5.7.1

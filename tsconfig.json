@@ -37,6 +37,7 @@
         "apps/segway-rental/apps-segway-rental-utils/src"
       ],
       "@js-modules/common-react-hooks": ["common/react/common-react-hooks/src"],
+      "@js-modules/common-redux-reducer-auth-keycloak": ["common/redux/common-redux-reducer-auth-keycloak/src"],
       "@js-modules/common-utils-general": [
         "common/utils/common-utils-general/src"
       ],
