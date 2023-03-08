@@ -2,7 +2,7 @@ import {
   createMaterialUiTheme,
   GetThemeComponents,
 } from '@js-modules/web-styles-material-ui';
-import { ThemePalette } from '@js-modules/apps-dapp-common-stores-redux';
+import { ThemePalette } from '@js-modules/apps-travel-log-common-store-redux';
 import { Theme } from '@mui/material/styles';
 import { tabClasses } from '@mui/material/Tab';
 

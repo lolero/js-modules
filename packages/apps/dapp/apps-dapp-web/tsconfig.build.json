@@ -8,7 +8,7 @@
   "include": ["./src", "vite.config.ts"],
   "references": [
     {
-      "path": "../../../apps/dapp/apps-dapp-common-stores-redux/tsconfig.build.json"
+      "path": "../../../apps/dapp/apps-dapp-common-store-redux/tsconfig.build.json"
     },
     {
       "path": "../../../common/utils/common-utils-general/tsconfig.build.json"

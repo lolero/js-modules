@@ -1,6 +1,6 @@
 import { createReducerSelectors, Entity } from 'normalized-reducers-utils';
 import { StateAuthReducer } from './stateAuth.types';
-import stateAuthReducerPath from './stateAuth.reducerPath';
+import { stateAuthReducerPath } from './stateAuth.reducerPath';
 
 type ReduxState = {
   appState: {

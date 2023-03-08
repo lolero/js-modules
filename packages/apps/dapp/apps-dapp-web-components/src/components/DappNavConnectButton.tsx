@@ -5,7 +5,7 @@ import {
   selectStateWeb3Metadata,
   selectStateWeb3Requests,
   WalletType,
-} from '@js-modules/apps-dapp-common-stores-redux';
+} from '@js-modules/apps-dapp-common-store-redux';
 import { useDispatch, useSelector } from 'react-redux';
 import { MuiFaIcon } from '@js-modules/web-react-components';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons/faCircleNotch';

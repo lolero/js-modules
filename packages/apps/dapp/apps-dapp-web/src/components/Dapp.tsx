@@ -1,5 +1,5 @@
 import React from 'react';
-import { createReduxStore } from '@js-modules/apps-dapp-common-stores-redux';
+import { createReduxStore } from '@js-modules/apps-dapp-common-store-redux';
 import { DappReduxProvider } from './DappReduxProvider';
 
 function initApp(): React.FC {

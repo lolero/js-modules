@@ -143,7 +143,7 @@ importers:
       '@types/lodash': 4.14.191
       lodash: 4.17.21
 
-  packages/apps/dapp/apps-dapp-common-stores-redux:
+  packages/apps/dapp/apps-dapp-common-store-redux:
     specifiers:
       '@js-modules/common-utils-general': workspace:^0.0.0
       '@metamask/detect-provider': ^2.0.0
@@ -228,7 +228,7 @@ importers:
       '@fortawesome/free-regular-svg-icons': ^6.2.1
       '@fortawesome/free-solid-svg-icons': ^6.2.1
       '@js-modules/apps-dapp-common-constants': workspace:^0.0.0
-      '@js-modules/apps-dapp-common-stores-redux': workspace:^0.0.0
+      '@js-modules/apps-dapp-common-store-redux': workspace:^0.0.0
       '@js-modules/apps-dapp-web-analytics': workspace:^0.0.0
       '@js-modules/apps-dapp-web-portfolio': workspace:^0.0.0
       '@js-modules/apps-dapp-web-tokens': workspace:^0.0.0
@@ -260,7 +260,7 @@ importers:
       '@fortawesome/free-regular-svg-icons': 6.2.1
       '@fortawesome/free-solid-svg-icons': 6.2.1
       '@js-modules/apps-dapp-common-constants': link:../apps-dapp-common-constants
-      '@js-modules/apps-dapp-common-stores-redux': link:../apps-dapp-common-stores-redux
+      '@js-modules/apps-dapp-common-store-redux': link:../apps-dapp-common-store-redux
       '@js-modules/apps-dapp-web-analytics': link:../apps-dapp-web-analytics
       '@js-modules/apps-dapp-web-portfolio': link:../apps-dapp-web-portfolio
       '@js-modules/apps-dapp-web-tokens': link:../apps-dapp-web-tokens
@@ -325,7 +325,7 @@ importers:
       '@fortawesome/free-regular-svg-icons': ^6.2.1
       '@fortawesome/free-solid-svg-icons': ^6.2.1
       '@js-modules/apps-dapp-common-constants': workspace:^0.0.0
-      '@js-modules/apps-dapp-common-stores-redux': workspace:^0.0.0
+      '@js-modules/apps-dapp-common-store-redux': workspace:^0.0.0
       '@js-modules/web-react-components': workspace:^0.0.0
       '@js-modules/web-react-hooks': workspace:^0.0.0
       '@js-modules/web-react-nav': workspace:^0.0.0
@@ -345,7 +345,7 @@ importers:
       '@fortawesome/free-regular-svg-icons': 6.2.1
       '@fortawesome/free-solid-svg-icons': 6.2.1
       '@js-modules/apps-dapp-common-constants': link:../apps-dapp-common-constants
-      '@js-modules/apps-dapp-common-stores-redux': link:../apps-dapp-common-stores-redux
+      '@js-modules/apps-dapp-common-store-redux': link:../apps-dapp-common-store-redux
       '@js-modules/web-react-components': link:../../../web/react/web-react-components
       '@js-modules/web-react-hooks': link:../../../web/react/web-react-hooks
       '@js-modules/web-react-nav': link:../../../web/react/web-react-nav
@@ -366,7 +366,7 @@ importers:
       '@fortawesome/free-regular-svg-icons': ^6.2.1
       '@fortawesome/free-solid-svg-icons': ^6.2.1
       '@js-modules/apps-dapp-common-constants': workspace:^0.0.0
-      '@js-modules/apps-dapp-common-stores-redux': workspace:^0.0.0
+      '@js-modules/apps-dapp-common-store-redux': workspace:^0.0.0
       '@js-modules/apps-dapp-web-components': workspace:^0.0.0
       '@js-modules/apps-dapp-web-tokens': workspace:^0.0.0
       '@js-modules/apps-dapp-web-transactions': workspace:^0.0.0
@@ -384,7 +384,7 @@ importers:
       '@fortawesome/free-regular-svg-icons': 6.2.1
       '@fortawesome/free-solid-svg-icons': 6.2.1
       '@js-modules/apps-dapp-common-constants': link:../apps-dapp-common-constants
-      '@js-modules/apps-dapp-common-stores-redux': link:../apps-dapp-common-stores-redux
+      '@js-modules/apps-dapp-common-store-redux': link:../apps-dapp-common-store-redux
       '@js-modules/apps-dapp-web-components': link:../apps-dapp-web-components
       '@js-modules/apps-dapp-web-tokens': link:../apps-dapp-web-tokens
       '@js-modules/apps-dapp-web-transactions': link:../apps-dapp-web-transactions
@@ -404,7 +404,7 @@ importers:
       '@fortawesome/free-regular-svg-icons': ^6.2.1
       '@fortawesome/free-solid-svg-icons': ^6.2.1
       '@js-modules/apps-dapp-common-constants': workspace:^0.0.0
-      '@js-modules/apps-dapp-common-stores-redux': workspace:^0.0.0
+      '@js-modules/apps-dapp-common-store-redux': workspace:^0.0.0
       '@js-modules/apps-dapp-web-components': workspace:^0.0.0
       '@js-modules/common-react-hooks': workspace:^0.0.0
       '@js-modules/web-react-components': workspace:^0.0.0
@@ -425,7 +425,7 @@ importers:
       '@fortawesome/free-regular-svg-icons': 6.2.1
       '@fortawesome/free-solid-svg-icons': 6.2.1
       '@js-modules/apps-dapp-common-constants': link:../apps-dapp-common-constants
-      '@js-modules/apps-dapp-common-stores-redux': link:../apps-dapp-common-stores-redux
+      '@js-modules/apps-dapp-common-store-redux': link:../apps-dapp-common-store-redux
       '@js-modules/apps-dapp-web-components': link:../apps-dapp-web-components
       '@js-modules/common-react-hooks': link:../../../common/react/common-react-hooks
       '@js-modules/web-react-components': link:../../../web/react/web-react-components
@@ -448,7 +448,7 @@ importers:
       '@fortawesome/free-regular-svg-icons': ^6.2.1
       '@fortawesome/free-solid-svg-icons': ^6.2.1
       '@js-modules/apps-dapp-common-constants': workspace:^0.0.0
-      '@js-modules/apps-dapp-common-stores-redux': workspace:^0.0.0
+      '@js-modules/apps-dapp-common-store-redux': workspace:^0.0.0
       '@js-modules/apps-dapp-web-components': workspace:^0.0.0
       '@js-modules/web-react-nav': workspace:^0.0.0
       '@mui/material': ^5.11.6
@@ -464,7 +464,7 @@ importers:
       '@fortawesome/free-regular-svg-icons': 6.2.1
       '@fortawesome/free-solid-svg-icons': 6.2.1
       '@js-modules/apps-dapp-common-constants': link:../apps-dapp-common-constants
-      '@js-modules/apps-dapp-common-stores-redux': link:../apps-dapp-common-stores-redux
+      '@js-modules/apps-dapp-common-store-redux': link:../apps-dapp-common-store-redux
       '@js-modules/apps-dapp-web-components': link:../apps-dapp-web-components
       '@js-modules/web-react-nav': link:../../../web/react/web-react-nav
       '@mui/material': 5.11.7_5ndqzdd6t4rivxsukjv3i3ak2q
@@ -824,6 +824,16 @@ importers:
       vite-plugin-svgr: 2.4.0_vite@4.0.4
       vite-tsconfig-paths: 4.0.5
 
+  packages/apps/travel-log/apps-travel-log-common-constants:
+    specifiers:
+      '@js-modules/common-utils-general': workspace:^0.0.0
+      '@types/lodash': ^4.14.191
+      lodash: ^4.17.21
+    dependencies:
+      '@js-modules/common-utils-general': link:../../../common/utils/common-utils-general
+      '@types/lodash': 4.14.191
+      lodash: 4.17.21
+
   packages/apps/travel-log/apps-travel-log-common-store-redux:
     specifiers:
       '@js-modules/common-redux-reducer-auth-keycloak': workspace:^0.0.0
@@ -863,7 +873,9 @@ importers:
       '@fortawesome/free-brands-svg-icons': ^6.2.1
       '@fortawesome/free-regular-svg-icons': ^6.2.1
       '@fortawesome/free-solid-svg-icons': ^6.2.1
+      '@js-modules/apps-travel-log-common-constants': workspace:^0.0.0
       '@js-modules/apps-travel-log-common-store-redux': workspace:^0.0.0
+      '@js-modules/apps-travel-log-web-components': workspace:^0.0.0
       '@js-modules/common-react-hooks': workspace:^0.0.0
       '@js-modules/common-utils-general': workspace:^0.0.0
       '@js-modules/web-react-components': workspace:^0.0.0
@@ -890,7 +902,9 @@ importers:
       '@fortawesome/free-brands-svg-icons': 6.2.1
       '@fortawesome/free-regular-svg-icons': 6.2.1
       '@fortawesome/free-solid-svg-icons': 6.2.1
+      '@js-modules/apps-travel-log-common-constants': link:../apps-travel-log-common-constants
       '@js-modules/apps-travel-log-common-store-redux': link:../apps-travel-log-common-store-redux
+      '@js-modules/apps-travel-log-web-components': link:../apps-travel-log-web-components
       '@js-modules/common-react-hooks': link:../../../common/react/common-react-hooks
       '@js-modules/common-utils-general': link:../../../common/utils/common-utils-general
       '@js-modules/web-react-components': link:../../../web/react/web-react-components
@@ -911,6 +925,48 @@ importers:
       react-router-dom: 6.8.0_biqbaboplfbrettd7655fr4n2y
       vite: 4.0.4
       vite-tsconfig-paths: 4.0.5
+
+  packages/apps/travel-log/apps-travel-log-web-components:
+    specifiers:
+      '@fortawesome/fontawesome-svg-core': ^6.2.1
+      '@fortawesome/free-brands-svg-icons': ^6.2.1
+      '@fortawesome/free-regular-svg-icons': ^6.2.1
+      '@fortawesome/free-solid-svg-icons': ^6.2.1
+      '@js-modules/apps-travel-log-common-constants': workspace:^0.0.0
+      '@js-modules/apps-travel-log-common-store-redux': workspace:^0.0.0
+      '@js-modules/web-react-components': workspace:^0.0.0
+      '@js-modules/web-react-hooks': workspace:^0.0.0
+      '@js-modules/web-react-nav': workspace:^0.0.0
+      '@mui/material': ^5.11.6
+      '@types/lodash': ^4.14.191
+      '@types/react': ^18.0.27
+      '@types/react-dom': ^18.0.10
+      '@types/react-redux': ^7.1.25
+      lodash: ^4.17.21
+      react: ^18.2.0
+      react-dom: ^18.2.0
+      react-redux: ^8.0.5
+      react-router-dom: ^6.8.0
+    dependencies:
+      '@fortawesome/fontawesome-svg-core': 6.2.1
+      '@fortawesome/free-brands-svg-icons': 6.2.1
+      '@fortawesome/free-regular-svg-icons': 6.2.1
+      '@fortawesome/free-solid-svg-icons': 6.2.1
+      '@js-modules/apps-travel-log-common-constants': link:../apps-travel-log-common-constants
+      '@js-modules/apps-travel-log-common-store-redux': link:../apps-travel-log-common-store-redux
+      '@js-modules/web-react-components': link:../../../web/react/web-react-components
+      '@js-modules/web-react-hooks': link:../../../web/react/web-react-hooks
+      '@js-modules/web-react-nav': link:../../../web/react/web-react-nav
+      '@mui/material': 5.11.7_5ndqzdd6t4rivxsukjv3i3ak2q
+      '@types/lodash': 4.14.191
+      '@types/react': 18.0.27
+      '@types/react-dom': 18.0.10
+      '@types/react-redux': 7.1.25
+      lodash: 4.17.21
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-redux: 8.0.5_fxtgt6bjwd6p4cwoordejim2zi
+      react-router-dom: 6.8.0_biqbaboplfbrettd7655fr4n2y
 
   packages/common/react/common-react-hooks:
     specifiers:

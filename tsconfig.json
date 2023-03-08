@@ -6,11 +6,8 @@
       "@js-modules/apps-dapp-common-constants": [
         "apps/dapp/apps-dapp-common-constants/src"
       ],
-      "@js-modules/apps-dapp-common-constants": [
-        "apps/dapp/apps-dapp-common-constants/src"
-      ],
-      "@js-modules/apps-dapp-common-stores-redux": [
-        "apps/dapp/apps-dapp-common-stores-redux/src"
+      "@js-modules/apps-dapp-common-store-redux": [
+        "apps/dapp/apps-dapp-common-store-redux/src"
       ],
       "@js-modules/apps-dapp-web-analytics": [
         "apps/dapp/apps-dapp-web-analytics/src"
@@ -35,6 +32,15 @@
       ],
       "@js-modules/apps-segway-rental-utils": [
         "apps/segway-rental/apps-segway-rental-utils/src"
+      ],
+      "@js-modules/apps-travel-log-common-constants": [
+        "apps/travel-log/apps-travel-log-common-constants/src"
+      ],
+      "@js-modules/apps-travel-log-common-store-redux": [
+        "apps/travel-log/apps-travel-log-common-store-redux/src"
+      ],
+      "@js-modules/apps-travel-log-web-components": [
+        "apps/travel-log/apps-travel-log-web-components/src"
       ],
       "@js-modules/common-react-hooks": ["common/react/common-react-hooks/src"],
       "@js-modules/common-redux-reducer-auth-keycloak": ["common/redux/common-redux-reducer-auth-keycloak/src"],

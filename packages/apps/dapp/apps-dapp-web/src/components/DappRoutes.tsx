@@ -5,7 +5,7 @@ import {
   createNodeChainsGetManyRequestAction,
   createStateMainUpdatePartialReducerMetadataRequestAction,
   selectStateMainMetadata,
-} from '@js-modules/apps-dapp-common-stores-redux';
+} from '@js-modules/apps-dapp-common-store-redux';
 import { Modules } from '@js-modules/apps-dapp-common-constants';
 import { WebPortfolioRoutes } from '@js-modules/apps-dapp-web-portfolio';
 import { WebAnalyticsRoutes } from '@js-modules/apps-dapp-web-analytics';

@@ -10,7 +10,7 @@ import {
   NodeChain,
   selectNodeChainsData,
   useGetNodeChainsRequest,
-} from '@js-modules/apps-dapp-common-stores-redux';
+} from '@js-modules/apps-dapp-common-store-redux';
 import { usePrevious } from '@js-modules/common-react-hooks';
 import ArrowDropDown from '@mui/icons-material/ArrowDropDown';
 import orderBy from 'lodash/orderBy';
