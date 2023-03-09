@@ -137,8 +137,18 @@ export const WorkspaceBox: React.FC<WorkspaceBoxProps> = ({
     }
   }, [isMobile, isMobilePrevious, setNavLeftDrawerDisplayStatus]);
 
+  useEffect(() => {
+    if (isAuthenticatedRequired && !getIsAuthenticatedCallback?.()) {
+      navigate(nonAuthenticatedRedirectPath, { replace: true });
+    }
+  }, [
+    getIsAuthenticatedCallback,
+    isAuthenticatedRequired,
+    navigate,
+    nonAuthenticatedRedirectPath,
+  ]);
+
   if (isAuthenticatedRequired && !getIsAuthenticatedCallback?.()) {
-    navigate(nonAuthenticatedRedirectPath);
     return null;
   }
 

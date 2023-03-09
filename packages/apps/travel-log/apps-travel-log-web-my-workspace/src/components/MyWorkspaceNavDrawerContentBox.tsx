@@ -1,11 +1,11 @@
 import React from 'react';
 import Tabs from '@mui/material/Tabs';
 import { useNavLeftDrawerTabs } from '@js-modules/web-react-nav';
-import { travelLogNavDrawerTabsMetadata } from '../constants/travelLogNavTabs.constants';
+import { myWorkspaceNavDrawerTabsMetadata } from '../constants/myWorkspace.constants';
 
-export const TravelLogNavDrawerContentBox: React.FunctionComponent = () => {
+export const MyWorkspaceNavDrawerContentBox: React.FunctionComponent = () => {
   const { tabsValue, tabs } = useNavLeftDrawerTabs(
-    travelLogNavDrawerTabsMetadata,
+    myWorkspaceNavDrawerTabsMetadata,
   );
 
   return (

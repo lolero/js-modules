@@ -1,8 +1,0 @@
-{
-  "realm": "travel-log",
-  "auth-server-url": "https://localhost:8443/",
-  "ssl-required": "external",
-  "resource": "travel-log-web",
-  "public-client": true,
-  "confidential-port": 0
-}

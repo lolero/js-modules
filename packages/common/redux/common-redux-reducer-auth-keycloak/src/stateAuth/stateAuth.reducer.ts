@@ -23,17 +23,17 @@ export function stateAuthReducer(
       return handleSavePartialReducerMetadata(state, action);
     case StateAuthActionTypes.STATE_AUTH_UPDATE_PARTIAL_REDUCER_METADATA_FAIL:
       return handleFail(state, action);
-    case StateAuthActionTypes.STATE_AUTH_LOGIN_REQUEST:
+    case StateAuthActionTypes.STATE_AUTH_SIGNIN_REQUEST:
       return handleRequest(state, action);
-    case StateAuthActionTypes.STATE_AUTH_LOGIN_SUCCESS:
+    case StateAuthActionTypes.STATE_AUTH_SIGNIN_SUCCESS:
       return handleSaveNothing(state, action);
-    case StateAuthActionTypes.STATE_AUTH_LOGIN_FAIL:
+    case StateAuthActionTypes.STATE_AUTH_SIGNIN_FAIL:
       return handleFail(state, action);
-    case StateAuthActionTypes.STATE_AUTH_LOGOUT_REQUEST:
+    case StateAuthActionTypes.STATE_AUTH_SIGNOUT_REQUEST:
       return handleRequest(state, action);
-    case StateAuthActionTypes.STATE_AUTH_LOGOUT_SUCCESS:
+    case StateAuthActionTypes.STATE_AUTH_SIGNOUT_SUCCESS:
       return handleSavePartialReducerMetadata(state, action);
-    case StateAuthActionTypes.STATE_AUTH_LOGOUT_FAIL:
+    case StateAuthActionTypes.STATE_AUTH_SIGNOUT_FAIL:
       return handleFail(state, action);
     default:
       return state;

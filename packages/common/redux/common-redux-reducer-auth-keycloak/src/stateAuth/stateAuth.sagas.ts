@@ -1,57 +1,62 @@
 import {
+  call,
+  CallEffect,
+  fork,
   ForkEffect,
   put,
   PutEffect,
   takeEvery,
-  call,
-  CallEffect,
-  fork,
 } from 'redux-saga/effects';
-import Keycloak from 'keycloak-js';
+import Keycloak, { KeycloakConfig } from 'keycloak-js';
 import {
   StateAuthActionTypes,
-  StateAuthLoginRequestAction,
-  StateAuthLogoutRequestAction,
+  StateAuthSigninRequestAction,
+  StateAuthSignoutRequestAction,
   StateAuthUpdatePartialReducerMetadataRequestAction,
 } from './stateAuth.actionsTypes';
 import {
-  createStateAuthLoginFailAction,
-  createStateAuthLoginSuccessAction,
-  createStateAuthLogoutFailAction,
-  createStateAuthLogoutSuccessAction,
-  createStateAuthUpdatePartialReducerMetadataFailAction,
+  createStateAuthSigninFailAction,
+  createStateAuthSigninSuccessAction,
+  createStateAuthSignoutFailAction,
+  createStateAuthSignoutSuccessAction,
   createStateAuthUpdatePartialReducerMetadataSuccessAction,
 } from './stateAuth.actionsCreators';
+import { SigninAction, StateAuthReducer } from './stateAuth.types';
+
+const keycloakConfig: KeycloakConfig = {
+  url: 'https://localhost:8443/',
+  realm: 'travel-log',
+  clientId: 'travel-log-web',
+};
+let keycloak: Keycloak;
 
 export function* stateAuthInitSaga(): Generator<
   CallEffect | PutEffect,
   void,
   boolean
 > {
-  const keycloak = new Keycloak('/keycloak.json');
+  keycloak = new Keycloak(keycloakConfig);
 
-  try {
-    const isAuthenticated = yield call<typeof keycloak.init>(keycloak.init, {
-      onLoad: 'check-sso',
-      // silentCheckSsoRedirectUri: `${window.location.origin}/silent-check-sso.html`,
-      // pkceMethod: 'S256',
-    });
+  const isAuthenticated = yield call<typeof keycloak.init>(keycloak.init, {
+    onLoad: 'check-sso',
+    // silentCheckSsoRedirectUri: `${window.location.origin}/silent-check-sso.html`,
+  });
 
-    if (isAuthenticated) {
-      yield put(
-        createStateAuthUpdatePartialReducerMetadataSuccessAction({
-          token: keycloak.token,
-        }),
-      );
-    } else {
-      keycloak.login();
-    }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (err: any) {
-    yield put(
-      createStateAuthUpdatePartialReducerMetadataFailAction(err.message, ''),
-    );
+  const partialStateAuthReducerMetadata: Partial<StateAuthReducer['metadata']> =
+    {
+      isKeycloakReady: true,
+      isAuthenticated,
+    };
+
+  if (isAuthenticated) {
+    partialStateAuthReducerMetadata.token = keycloak.token;
   }
+
+  yield put(
+    createStateAuthUpdatePartialReducerMetadataSuccessAction(
+      partialStateAuthReducerMetadata,
+    ),
+  );
 }
 
 export function* stateAuthUpdatePartialReducerMetadataSaga({
@@ -72,51 +77,66 @@ export function* stateAuthUpdatePartialReducerMetadataSaga({
   );
 }
 
-export function* stateAuthLoginSaga({
+export function* stateAuthSigninSaga({
   requestMetadata,
   requestId,
-}: StateAuthLoginRequestAction): Generator<CallEffect | PutEffect, void, void> {
-  // try {
-  //   const { loginMethod } = requestMetadata;
-  //
-  //   switch (loginMethod) {
-  //     default:
-  //       yield call(signInWithPopup, getAuth(), new GoogleAuthProvider());
-  //   }
-  //
-  //   yield put(createStateAuthLoginSuccessAction(requestId));
-  //   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  // } catch (err: any) {
-  //   yield put(createStateAuthLoginFailAction(err.message, requestId));
-  // }
-}
-
-export function* stateAuthLogoutSaga({
-  requestId,
-}: StateAuthLogoutRequestAction): Generator<
-  Promise<void> | PutEffect,
+}: StateAuthSigninRequestAction): Generator<
+  CallEffect | PutEffect,
   void,
   void
 > {
-  // try {
-  //   yield getAuth().signOut();
-  //
-  //   yield put(
-  //     createStateAuthLogoutSuccessAction(
-  //       {
-  //         authUser: null,
-  //         authUserRole: null,
-  //         authError: null,
-  //       },
-  //       requestId,
-  //     ),
-  //   );
-  //   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  // } catch (err: any) {
-  //   // eslint-disable-next-line no-console
-  //   console.error(err.message);
-  //   yield put(createStateAuthLogoutFailAction(err.message, requestId));
-  // }
+  try {
+    const { signinAction, redirectUri } = requestMetadata;
+
+    switch (signinAction) {
+      case SigninAction.signup:
+        yield call(keycloak.register, { redirectUri });
+        break;
+      case SigninAction.login:
+        yield call(keycloak.login, { redirectUri });
+        break;
+      default:
+        throw new Error('Unknown signin action');
+    }
+
+    yield put(
+      createStateAuthSigninSuccessAction(
+        {
+          isAuthenticated: true,
+          token: keycloak.token,
+        },
+        requestId,
+      ),
+    );
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (err: any) {
+    yield put(createStateAuthSigninFailAction(err.message, requestId));
+  }
+}
+
+export function* stateAuthSignoutSaga({
+  requestId,
+}: StateAuthSignoutRequestAction): Generator<
+  CallEffect | PutEffect,
+  void,
+  void
+> {
+  try {
+    yield call(keycloak.logout);
+
+    yield put(
+      createStateAuthSignoutSuccessAction(
+        {
+          isAuthenticated: false,
+          token: null,
+        },
+        requestId,
+      ),
+    );
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (err: any) {
+    yield put(createStateAuthSignoutFailAction(err.message, requestId));
+  }
 }
 
 export function* stateAuthSagas(): Generator<ForkEffect, void, void> {
@@ -126,11 +146,11 @@ export function* stateAuthSagas(): Generator<ForkEffect, void, void> {
     stateAuthUpdatePartialReducerMetadataSaga,
   );
   yield takeEvery(
-    StateAuthActionTypes.STATE_AUTH_LOGIN_REQUEST,
-    stateAuthLoginSaga,
+    StateAuthActionTypes.STATE_AUTH_SIGNIN_REQUEST,
+    stateAuthSigninSaga,
   );
   yield takeEvery(
-    StateAuthActionTypes.STATE_AUTH_LOGOUT_REQUEST,
-    stateAuthLogoutSaga,
+    StateAuthActionTypes.STATE_AUTH_SIGNOUT_REQUEST,
+    stateAuthSignoutSaga,
   );
 }

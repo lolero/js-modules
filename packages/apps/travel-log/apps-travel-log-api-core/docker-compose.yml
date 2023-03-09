@@ -35,7 +35,7 @@ services:
       - volume_auth_data:/var/lib/postgresql/data
   auth:
     image: quay.io/keycloak/keycloak
-    command: ['start-dev']
+    command: ['start-dev', '--import-realm']
     restart: always
     ports:
       - '8080:8080'
@@ -48,7 +48,7 @@ services:
       KC_DB_PASSWORD: postgres
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
-#      https://www.youtube.com/watch?v=G6h3eVNZFg8&list=PLQZfys2xO5kgpa9-qpJly78d-t7_Fnjec&index=4
+      #      https://www.youtube.com/watch?v=G6h3eVNZFg8&list=PLQZfys2xO5kgpa9-qpJly78d-t7_Fnjec&index=4
 #      https://letsencrypt.org/docs/certificates-for-localhost/
       KC_HTTPS_CERTIFICATE_FILE: /opt/keycloak/certificates/localhostcert.pem
       KC_HTTPS_CERTIFICATE_KEY_FILE: /opt/keycloak/certificates/localhostkey.pem
@@ -57,7 +57,8 @@ services:
     networks:
       - network_auth
     volumes:
-      - ./certificates:/opt/keycloak/certificates
+      - ./keycloak/certificates:/opt/keycloak/certificates
+      - ./keycloak/backup:/opt/keycloak/data/import
   mailhog:
     image: mailhog/mailhog
     restart: always

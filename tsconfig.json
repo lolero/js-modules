@@ -42,6 +42,15 @@
       "@js-modules/apps-travel-log-web-components": [
         "apps/travel-log/apps-travel-log-web-components/src"
       ],
+      "@js-modules/apps-travel-log-web-my-feeds": [
+        "apps/travel-log/apps-travel-log-web-my-feeds/src"
+      ],
+      "@js-modules/apps-travel-log-web-my-workspace": [
+        "apps/travel-log/apps-travel-log-web-my-workspace/src"
+      ],
+      "@js-modules/apps-travel-log-web-site": [
+        "apps/travel-log/apps-travel-log-web-site/src"
+      ],
       "@js-modules/common-react-hooks": ["common/react/common-react-hooks/src"],
       "@js-modules/common-redux-reducer-auth-keycloak": ["common/redux/common-redux-reducer-auth-keycloak/src"],
       "@js-modules/common-utils-general": [

@@ -1,12 +1,12 @@
 import { v4 as uuidv4 } from 'uuid';
 import {
   StateAuthActionTypes,
-  StateAuthLoginFailAction,
-  StateAuthLoginRequestAction,
-  StateAuthLoginSuccessAction,
-  StateAuthLogoutFailAction,
-  StateAuthLogoutRequestAction,
-  StateAuthLogoutSuccessAction,
+  StateAuthSigninFailAction,
+  StateAuthSigninRequestAction,
+  StateAuthSigninSuccessAction,
+  StateAuthSignoutFailAction,
+  StateAuthSignoutRequestAction,
+  StateAuthSignoutSuccessAction,
   StateAuthUpdatePartialReducerMetadataFailAction,
   StateAuthUpdatePartialReducerMetadataRequestAction,
   StateAuthUpdatePartialReducerMetadataSuccessAction,
@@ -46,63 +46,67 @@ export function createStateAuthUpdatePartialReducerMetadataFailAction(
   };
 }
 
-export function createStateAuthLoginRequestAction(
-  loginMethod: StateAuthLoginRequestAction['requestMetadata']['loginMethod'],
-): StateAuthLoginRequestAction {
+export function createStateAuthSigninRequestAction(
+  signinAction: StateAuthSigninRequestAction['requestMetadata']['signinAction'],
+  redirectUri?: StateAuthSigninRequestAction['requestMetadata']['redirectUri'],
+): StateAuthSigninRequestAction {
   return {
-    type: StateAuthActionTypes.STATE_AUTH_LOGIN_REQUEST,
+    type: StateAuthActionTypes.STATE_AUTH_SIGNIN_REQUEST,
     requestMetadata: {
-      loginMethod,
+      signinAction,
+      redirectUri,
     },
     requestId: uuidv4(),
   };
 }
 
-export function createStateAuthLoginSuccessAction(
+export function createStateAuthSigninSuccessAction(
+  partialStateAuthReducerMetadata: StateAuthUpdatePartialReducerMetadataSuccessAction['partialReducerMetadata'],
   requestId: string,
-): StateAuthLoginSuccessAction {
+): StateAuthSigninSuccessAction {
   return {
-    type: StateAuthActionTypes.STATE_AUTH_LOGIN_SUCCESS,
-    requestId,
-  };
-}
-
-export function createStateAuthLoginFailAction(
-  error: string,
-  requestId: string,
-): StateAuthLoginFailAction {
-  return {
-    type: StateAuthActionTypes.STATE_AUTH_LOGIN_FAIL,
-    error,
-    requestId,
-  };
-}
-
-export function createStateAuthLogoutRequestAction(): StateAuthLogoutRequestAction {
-  return {
-    type: StateAuthActionTypes.STATE_AUTH_LOGOUT_REQUEST,
-    requestMetadata: {},
-    requestId: uuidv4(),
-  };
-}
-
-export function createStateAuthLogoutSuccessAction(
-  partialStateAuthReducerMetadata: StateAuthLogoutSuccessAction['partialReducerMetadata'],
-  requestId: string,
-): StateAuthLogoutSuccessAction {
-  return {
-    type: StateAuthActionTypes.STATE_AUTH_LOGOUT_SUCCESS,
+    type: StateAuthActionTypes.STATE_AUTH_SIGNIN_SUCCESS,
     partialReducerMetadata: partialStateAuthReducerMetadata,
     requestId,
   };
 }
 
-export function createStateAuthLogoutFailAction(
+export function createStateAuthSigninFailAction(
   error: string,
   requestId: string,
-): StateAuthLogoutFailAction {
+): StateAuthSigninFailAction {
   return {
-    type: StateAuthActionTypes.STATE_AUTH_LOGOUT_FAIL,
+    type: StateAuthActionTypes.STATE_AUTH_SIGNIN_FAIL,
+    error,
+    requestId,
+  };
+}
+
+export function createStateAuthSignoutRequestAction(): StateAuthSignoutRequestAction {
+  return {
+    type: StateAuthActionTypes.STATE_AUTH_SIGNOUT_REQUEST,
+    requestMetadata: {},
+    requestId: uuidv4(),
+  };
+}
+
+export function createStateAuthSignoutSuccessAction(
+  partialStateAuthReducerMetadata: StateAuthSignoutSuccessAction['partialReducerMetadata'],
+  requestId: string,
+): StateAuthSignoutSuccessAction {
+  return {
+    type: StateAuthActionTypes.STATE_AUTH_SIGNOUT_SUCCESS,
+    partialReducerMetadata: partialStateAuthReducerMetadata,
+    requestId,
+  };
+}
+
+export function createStateAuthSignoutFailAction(
+  error: string,
+  requestId: string,
+): StateAuthSignoutFailAction {
+  return {
+    type: StateAuthActionTypes.STATE_AUTH_SIGNOUT_FAIL,
     error,
     requestId,
   };
