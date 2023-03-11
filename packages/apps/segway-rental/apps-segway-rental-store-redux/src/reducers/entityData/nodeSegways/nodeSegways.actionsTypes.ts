@@ -8,7 +8,7 @@ import {
   SaveNothingAction,
   SaveWholeEntitiesAction,
   UpdateOneWholeEntityRequestMetadata,
-} from 'normalized-reducers-utils';
+} from '@js-modules/common-redux-utils-normalized-reducers';
 import { NodeSegway, NodeSegwaysReducer } from './nodeSegways.types';
 
 export enum NodeSegwaysActionTypes {

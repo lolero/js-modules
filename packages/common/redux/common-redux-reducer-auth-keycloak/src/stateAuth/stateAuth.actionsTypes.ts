@@ -4,7 +4,7 @@ import {
   SaveNothingAction,
   SavePartialReducerMetadataAction,
   UpdatePartialReducerMetadataRequestMetadata,
-} from 'normalized-reducers-utils';
+} from '@js-modules/common-redux-utils-normalized-reducers';
 import { SigninAction, StateAuthReducer } from './stateAuth.types';
 
 export enum StateAuthActionTypes {

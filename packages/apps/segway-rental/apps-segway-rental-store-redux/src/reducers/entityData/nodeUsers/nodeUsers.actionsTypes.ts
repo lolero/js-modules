@@ -7,7 +7,7 @@ import {
   RequestAction,
   SavePartialEntitiesAction,
   SaveWholeEntitiesAction,
-} from 'normalized-reducers-utils';
+} from '@js-modules/common-redux-utils-normalized-reducers';
 import { NodeUser, NodeUsersReducer } from './nodeUsers.types';
 import { UserRoles } from '../../appState/stateAuth/stateAuth.types';
 

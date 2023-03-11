@@ -1,4 +1,7 @@
-import { createInitialState, Entity } from 'normalized-reducers-utils';
+import {
+  createInitialState,
+  Entity,
+} from '@js-modules/common-redux-utils-normalized-reducers';
 import { StateMainReducer, ThemePalette } from './stateMain.types';
 
 const stateMainReducerMetadataInitialState: StateMainReducer['metadata'] = {

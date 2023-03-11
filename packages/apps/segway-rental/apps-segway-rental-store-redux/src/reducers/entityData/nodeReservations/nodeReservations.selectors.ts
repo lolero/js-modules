@@ -1,4 +1,4 @@
-import { createReducerSelectors } from 'normalized-reducers-utils';
+import { createReducerSelectors } from '@js-modules/common-redux-utils-normalized-reducers';
 import { createSelector } from 'reselect';
 import { entries } from 'lodash';
 import {

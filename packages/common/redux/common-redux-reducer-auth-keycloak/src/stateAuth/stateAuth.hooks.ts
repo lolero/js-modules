@@ -2,14 +2,10 @@ import {
   createReducerHooks,
   Request,
   RequestMetadata,
-} from 'normalized-reducers-utils';
-import { useDispatch, useSelector } from 'react-redux';
+} from '@js-modules/common-redux-utils-normalized-reducers';
+import { useDispatch } from 'react-redux';
 import { useCallback, useState } from 'react';
-import {
-  selectStateAuthMetadata,
-  selectStateAuthRequests,
-  stateAuthSelectors,
-} from './stateAuth.selectors';
+import { stateAuthSelectors } from './stateAuth.selectors';
 import {
   createStateAuthSigninRequestAction,
   createStateAuthSignoutRequestAction,
@@ -31,10 +27,8 @@ export function useSignup(redirectUri?: string): {
   authMetadata: StateAuthReducer['metadata'];
 } {
   const dispatch = useDispatch();
-  // const stateAuthReducerMetadata = useStateAuthReducerMetadata();
-  // const stateAuthRequests = useStateAuthRequests();
-  const stateAuthReducerMetadata = useSelector(selectStateAuthMetadata);
-  const stateAuthRequests = useSelector(selectStateAuthRequests);
+  const stateAuthReducerMetadata = useStateAuthReducerMetadata();
+  const stateAuthRequests = useStateAuthRequests();
   const [signupRequestId, setSignupRequestId] = useState('');
   const signupRequest = stateAuthRequests[signupRequestId];
 
@@ -60,10 +54,8 @@ export function useLogin(redirectUri?: string): {
   authMetadata: StateAuthReducer['metadata'];
 } {
   const dispatch = useDispatch();
-  // const stateAuthReducerMetadata = useStateAuthReducerMetadata();
-  // const stateAuthRequests = useStateAuthRequests();
-  const stateAuthReducerMetadata = useSelector(selectStateAuthMetadata);
-  const stateAuthRequests = useSelector(selectStateAuthRequests);
+  const stateAuthReducerMetadata = useStateAuthReducerMetadata();
+  const stateAuthRequests = useStateAuthRequests();
   const [loginRequestId, setLoginRequestId] = useState('');
   const loginRequest = stateAuthRequests[loginRequestId];
 
@@ -89,10 +81,8 @@ export function useLogout(): {
   authMetadata: StateAuthReducer['metadata'];
 } {
   const dispatch = useDispatch();
-  // const stateAuthReducerMetadata = useStateAuthReducerMetadata();
-  // const stateAuthRequests = useStateAuthRequests();
-  const stateAuthReducerMetadata = useSelector(selectStateAuthMetadata);
-  const stateAuthRequests = useSelector(selectStateAuthRequests);
+  const stateAuthReducerMetadata = useStateAuthReducerMetadata();
+  const stateAuthRequests = useStateAuthRequests();
   const [logoutRequestId, setLogoutRequestId] = useState('');
   const logoutRequest = stateAuthRequests[logoutRequestId];
 

@@ -1,4 +1,4 @@
-import { createReducerPkUtils } from 'normalized-reducers-utils';
+import { createReducerPkUtils } from '@js-modules/common-redux-utils-normalized-reducers';
 import {
   NodeReservation,
   nodeReservationsPkSchema,

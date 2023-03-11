@@ -10,13 +10,10 @@ import {
   HomeWorkspaceBox,
   PurposeWorkspaceBox,
 } from '@js-modules/apps-travel-log-web-site';
-import { useSelector } from 'react-redux';
-import { selectStateAuthMetadata } from '@js-modules/apps-travel-log-common-store-redux';
+import { useStateAuthReducerMetadata } from '@js-modules/apps-travel-log-common-store-redux';
 
 export const TravelLogRoutes: React.FunctionComponent = () => {
-  const { isKeycloakReady, isAuthenticated } = useSelector(
-    selectStateAuthMetadata,
-  );
+  const { isKeycloakReady, isAuthenticated } = useStateAuthReducerMetadata();
 
   if (!isKeycloakReady) {
     // TODO: create loading workspace with skeletons instead of this ugly

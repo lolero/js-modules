@@ -3,7 +3,7 @@ import {
   handleRequest,
   handleSaveNothing,
   handleSavePartialReducerMetadata,
-} from 'normalized-reducers-utils';
+} from '@js-modules/common-redux-utils-normalized-reducers';
 import { StateAuthReducer } from './stateAuth.types';
 import { stateAuthInitialState } from './stateAuth.initialState';
 import {

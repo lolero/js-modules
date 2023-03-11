@@ -14,6 +14,7 @@
     "@fortawesome/fontawesome-svg-core": "^6.2.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@js-modules/common-react-hooks": "workspace:^0.0.0",
+    "@js-modules/common-redux-utils-normalized-reducers": "workspace:^0.0.0",
     "@js-modules/web-styles-material-ui": "workspace:^0.0.0",
     "@mui/material": "^5.11.6",
     "@testing-library/jest-dom": "^5.16.5",
@@ -26,7 +27,6 @@
     "@types/testing-library__jest-dom": "^5.14.5",
     "clsx": "^1.2.1",
     "lodash": "^4.17.21",
-    "normalized-reducers-utils": "^1.1.17",
     "react": "^18.2.0",
     "react-redux": "^8.0.5",
     "react-window": "^1.8.8"

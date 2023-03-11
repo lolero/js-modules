@@ -3,7 +3,7 @@ import {
   GetManyEntitiesRequestMetadata,
   RequestAction,
   SaveWholeEntitiesAction,
-} from 'normalized-reducers-utils';
+} from '@js-modules/common-redux-utils-normalized-reducers';
 import { NodeChain, NodeChainsReducer } from './nodeChains.types';
 
 export enum NodeChainsActionTypes {

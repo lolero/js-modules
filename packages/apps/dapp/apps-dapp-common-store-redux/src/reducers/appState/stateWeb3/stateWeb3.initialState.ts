@@ -1,4 +1,7 @@
-import { createInitialState, Entity } from 'normalized-reducers-utils';
+import {
+  createInitialState,
+  Entity,
+} from '@js-modules/common-redux-utils-normalized-reducers';
 import { StateWeb3Reducer } from './stateWeb3.types';
 
 const stateWeb3ReducerMetadataInitialState: StateWeb3Reducer['metadata'] = {

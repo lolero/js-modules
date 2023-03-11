@@ -1,4 +1,7 @@
-import { createReducerSelectors, Entity } from 'normalized-reducers-utils';
+import {
+  createReducerSelectors,
+  Entity,
+} from '@js-modules/common-redux-utils-normalized-reducers';
 import { StateAuthReducer } from './stateAuth.types';
 import { stateAuthReducerPath } from './stateAuth.reducerPath';
 

@@ -12,12 +12,12 @@
   },
   "dependencies": {
     "@js-modules/common-react-hooks": "workspace:^0.0.0",
+    "@js-modules/common-redux-utils-normalized-reducers": "workspace:^0.0.0",
     "@mui/material": "^5.11.6",
     "@types/lodash": "^4.14.191",
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
     "lodash": "^4.17.21",
-    "normalized-reducers-utils": "^1.1.17",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.8.0"

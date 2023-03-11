@@ -2,7 +2,7 @@ import {
   handleFail,
   handleRequest,
   handleSavePartialReducerMetadata,
-} from 'normalized-reducers-utils';
+} from '@js-modules/common-redux-utils-normalized-reducers';
 import { StateMainReducer } from './stateMain.types';
 import { stateMainInitialState } from './stateMain.initialState';
 import {

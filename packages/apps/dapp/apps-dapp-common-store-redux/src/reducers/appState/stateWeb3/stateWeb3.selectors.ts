@@ -1,4 +1,7 @@
-import { createReducerSelectors, Entity } from 'normalized-reducers-utils';
+import {
+  createReducerSelectors,
+  Entity,
+} from '@js-modules/common-redux-utils-normalized-reducers';
 import { StateWeb3Reducer } from './stateWeb3.types';
 import { ReduxState } from '../../reducers.types';
 import { stateWeb3ReducerPath } from './stateWeb3.reducerPath';

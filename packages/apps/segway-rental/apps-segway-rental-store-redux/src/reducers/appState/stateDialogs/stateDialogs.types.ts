@@ -1,4 +1,8 @@
-import { Entity, Reducer, ReducerMetadata } from 'normalized-reducers-utils';
+import {
+  Entity,
+  Reducer,
+  ReducerMetadata,
+} from '@js-modules/common-redux-utils-normalized-reducers';
 import { ConfirmDialogProps } from '@js-modules/web-react-components';
 
 interface StateDialogsReducerMetadata extends ReducerMetadata {

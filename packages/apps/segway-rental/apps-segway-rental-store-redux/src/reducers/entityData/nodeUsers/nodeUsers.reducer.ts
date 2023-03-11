@@ -4,7 +4,7 @@ import {
   handleRequest,
   handleSavePartialEntities,
   handleSaveWholeEntities,
-} from 'normalized-reducers-utils';
+} from '@js-modules/common-redux-utils-normalized-reducers';
 import { NodeUsersReducer } from './nodeUsers.types';
 import { nodeUsersInitialState } from './nodeUsers.initialState';
 import {

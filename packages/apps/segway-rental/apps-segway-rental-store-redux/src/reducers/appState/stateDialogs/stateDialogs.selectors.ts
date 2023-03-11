@@ -1,4 +1,7 @@
-import { createReducerSelectors, Entity } from 'normalized-reducers-utils';
+import {
+  createReducerSelectors,
+  Entity,
+} from '@js-modules/common-redux-utils-normalized-reducers';
 import { StateDialogsReducer } from './stateDialogs.types';
 import { ReduxState } from '../../reducers.types';
 import stateDialogsReducerPath from './stateDialogs.reducerPath';

@@ -2,7 +2,7 @@ import {
   handleFail,
   handleRequest,
   handleSavePartialReducerMetadata,
-} from 'normalized-reducers-utils';
+} from '@js-modules/common-redux-utils-normalized-reducers';
 import { StateWeb3Reducer } from './stateWeb3.types';
 import { stateWeb3InitialState } from './stateWeb3.initialState';
 import {

@@ -1,4 +1,4 @@
-import { createReducerSelectors } from 'normalized-reducers-utils';
+import { createReducerSelectors } from '@js-modules/common-redux-utils-normalized-reducers';
 import { NodeUser, NodeUsersReducer } from './nodeUsers.types';
 import { ReduxState } from '../../reducers.types';
 import nodeUsersReducerPath from './nodeUsers.reducerPath';

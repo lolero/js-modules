@@ -4,7 +4,7 @@ import {
   handleRequest,
   handleSaveNothing,
   handleSaveWholeEntities,
-} from 'normalized-reducers-utils';
+} from '@js-modules/common-redux-utils-normalized-reducers';
 import { NodeSegwaysReducer } from './nodeSegways.types';
 import { nodeSegwaysInitialState } from './nodeSegways.initialState';
 import {

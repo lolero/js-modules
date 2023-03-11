@@ -1,4 +1,4 @@
-import { createInitialState } from 'normalized-reducers-utils';
+import { createInitialState } from '@js-modules/common-redux-utils-normalized-reducers';
 import {
   NodeReservation,
   NodeReservationsReducer,

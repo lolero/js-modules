@@ -2,7 +2,7 @@ import {
   handleFail,
   handleRequest,
   handleSaveWholeEntities,
-} from 'normalized-reducers-utils';
+} from '@js-modules/common-redux-utils-normalized-reducers';
 import { NodeTransactionsReducer } from './nodeTransactions.types';
 import { nodeTransactionsInitialState } from './nodeTransactions.initialState';
 import {

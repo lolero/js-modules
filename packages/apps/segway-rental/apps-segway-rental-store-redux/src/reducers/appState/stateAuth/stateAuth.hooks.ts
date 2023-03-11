@@ -1,4 +1,4 @@
-import { createReducerHooks } from 'normalized-reducers-utils';
+import { createReducerHooks } from '@js-modules/common-redux-utils-normalized-reducers';
 import { stateAuthSelectors } from './stateAuth.selectors';
 
 export const stateAuthHooks = createReducerHooks(stateAuthSelectors);

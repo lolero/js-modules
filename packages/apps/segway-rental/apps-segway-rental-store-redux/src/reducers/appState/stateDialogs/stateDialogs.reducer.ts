@@ -3,7 +3,7 @@ import {
   handleRequest,
   handleSaveWholeReducerMetadata,
   handleSavePartialReducerMetadata,
-} from 'normalized-reducers-utils';
+} from '@js-modules/common-redux-utils-normalized-reducers';
 import { StateDialogsReducer } from './stateDialogs.types';
 import { stateDialogsInitialState } from './stateDialogs.initialState';
 import {

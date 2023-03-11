@@ -6,8 +6,7 @@ import {
   TravelLogNavDrawerFooterBox,
   TravelLogNavToolbar,
 } from '@js-modules/apps-travel-log-web-components';
-import { useSelector } from 'react-redux';
-import { selectStateAuthMetadata } from '@js-modules/apps-travel-log-common-store-redux';
+import { useStateAuthReducerMetadata } from '@js-modules/apps-travel-log-common-store-redux';
 import { MyWorkspaceNavDrawerContentBox } from './MyWorkspaceNavDrawerContentBox';
 import { MyWorkspaceNavToolbarActionsBox } from './MyWorkspaceNavToolbarActionsBox';
 
@@ -24,7 +23,7 @@ export const MyWorkspaceBox: React.FunctionComponent<MyWorkspaceBoxProps> = ({
   workspaceContent,
   contentSx,
 }) => {
-  const { isAuthenticated } = useSelector(selectStateAuthMetadata);
+  const { isAuthenticated } = useStateAuthReducerMetadata();
 
   const getIsAuthenticatedCallback = useCallback(() => {
     return isAuthenticated;

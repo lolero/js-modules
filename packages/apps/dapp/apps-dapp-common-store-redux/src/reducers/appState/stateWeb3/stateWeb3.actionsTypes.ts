@@ -3,7 +3,7 @@ import {
   RequestAction,
   SavePartialReducerMetadataAction,
   UpdatePartialReducerMetadataRequestMetadata,
-} from 'normalized-reducers-utils';
+} from '@js-modules/common-redux-utils-normalized-reducers';
 import { StateWeb3Reducer, WalletType } from './stateWeb3.types';
 
 export enum StateWeb3ActionTypes {

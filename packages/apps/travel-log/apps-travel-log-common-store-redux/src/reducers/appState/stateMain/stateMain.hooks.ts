@@ -1,5 +1,8 @@
 import { useSelector } from 'react-redux';
-import { Request, RequestMetadata } from 'normalized-reducers-utils';
+import {
+  Request,
+  RequestMetadata,
+} from '@js-modules/common-redux-utils-normalized-reducers';
 import { selectNodeChainsRequests } from '../../entityData/nodeChains/nodeChains.selectors';
 import { selectStateMainMetadata } from './stateMain.selectors';
 

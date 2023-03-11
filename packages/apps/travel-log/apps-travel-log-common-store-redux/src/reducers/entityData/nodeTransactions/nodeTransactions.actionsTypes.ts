@@ -4,7 +4,7 @@ import {
   GetOneEntityRequestMetadata,
   RequestAction,
   SaveWholeEntitiesAction,
-} from 'normalized-reducers-utils';
+} from '@js-modules/common-redux-utils-normalized-reducers';
 import {
   NodeTransaction,
   NodeTransactionsReducer,

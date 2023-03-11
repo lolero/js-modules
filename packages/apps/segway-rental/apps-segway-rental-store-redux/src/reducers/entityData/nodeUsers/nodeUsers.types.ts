@@ -4,7 +4,7 @@ import {
   Reducer,
   ReducerEdges,
   ReducerMetadata,
-} from 'normalized-reducers-utils';
+} from '@js-modules/common-redux-utils-normalized-reducers';
 import { UserRoles } from '../../appState/stateAuth/stateAuth.types';
 import nodeReservationsReducerPath from '../nodeReservations/nodeReservations.reducerPath';
 

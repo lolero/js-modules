@@ -4,7 +4,7 @@ import {
   handleRequest,
   handleSaveNothing,
   handleSaveWholeEntities,
-} from 'normalized-reducers-utils';
+} from '@js-modules/common-redux-utils-normalized-reducers';
 import { NodeReservationsReducer } from './nodeReservations.types';
 import { nodeReservationsInitialState } from './nodeReservations.initialState';
 import {

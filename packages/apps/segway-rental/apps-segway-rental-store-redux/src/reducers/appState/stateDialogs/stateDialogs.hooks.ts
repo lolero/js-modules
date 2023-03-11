@@ -1,4 +1,4 @@
-import { createReducerHooks } from 'normalized-reducers-utils';
+import { createReducerHooks } from '@js-modules/common-redux-utils-normalized-reducers';
 import { stateDialogsSelectors } from './stateDialogs.selectors';
 
 export const stateDialogsHooks = createReducerHooks(stateDialogsSelectors);

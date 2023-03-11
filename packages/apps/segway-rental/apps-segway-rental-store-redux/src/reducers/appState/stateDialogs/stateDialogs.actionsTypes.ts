@@ -5,7 +5,7 @@ import {
   SavePartialReducerMetadataAction,
   UpdateWholeReducerMetadataRequestMetadata,
   UpdatePartialReducerMetadataRequestMetadata,
-} from 'normalized-reducers-utils';
+} from '@js-modules/common-redux-utils-normalized-reducers';
 import { StateDialogsReducer } from './stateDialogs.types';
 
 export enum StateDialogsActionTypes {

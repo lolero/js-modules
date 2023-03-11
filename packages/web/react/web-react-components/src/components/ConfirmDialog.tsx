@@ -9,7 +9,11 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
 import { noop, upperFirst } from 'lodash';
-import { Entity, Reducer, ReducerMetadata } from 'normalized-reducers-utils';
+import {
+  Entity,
+  Reducer,
+  ReducerMetadata,
+} from '@js-modules/common-redux-utils-normalized-reducers';
 import { usePrevious } from '@js-modules/common-react-hooks';
 
 export type ConfirmDialogProps = {

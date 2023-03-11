@@ -3,7 +3,7 @@ import {
   RequestAction,
   SavePartialReducerMetadataAction,
   UpdatePartialReducerMetadataRequestMetadata,
-} from 'normalized-reducers-utils';
+} from '@js-modules/common-redux-utils-normalized-reducers';
 import { StateMainReducer } from './stateMain.types';
 
 export enum StateMainActionTypes {

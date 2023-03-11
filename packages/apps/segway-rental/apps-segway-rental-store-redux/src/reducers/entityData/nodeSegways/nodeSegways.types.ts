@@ -4,7 +4,7 @@ import {
   Reducer,
   ReducerEdges,
   ReducerMetadata,
-} from 'normalized-reducers-utils';
+} from '@js-modules/common-redux-utils-normalized-reducers';
 import nodeReservationsReducerPath from '../nodeReservations/nodeReservations.reducerPath';
 
 export type NodeSegwayRaw = {

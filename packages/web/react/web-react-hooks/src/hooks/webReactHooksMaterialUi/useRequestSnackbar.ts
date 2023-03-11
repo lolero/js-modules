@@ -2,7 +2,7 @@ import {
   ReducerMetadata,
   Request,
   RequestMetadata,
-} from 'normalized-reducers-utils';
+} from '@js-modules/common-redux-utils-normalized-reducers';
 import React, { useEffect } from 'react';
 import { usePrevious } from '@js-modules/common-react-hooks';
 import { SnackbarMessageMetadata } from './useSnackPackUtils';

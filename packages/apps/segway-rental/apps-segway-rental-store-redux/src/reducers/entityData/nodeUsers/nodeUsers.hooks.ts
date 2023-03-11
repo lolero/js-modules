@@ -1,4 +1,4 @@
-import { createReducerHooks } from 'normalized-reducers-utils';
+import { createReducerHooks } from '@js-modules/common-redux-utils-normalized-reducers';
 import { nodeUsersSelectors } from './nodeUsers.selectors';
 
 export const nodeUsersHooks = createReducerHooks(nodeUsersSelectors);
