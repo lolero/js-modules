@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { AuthUsersUniqueKeyName } from '@js-modules/apps-nest-module-auth';
+import { AuthUsersUniqueKeyName } from '@js-modules/api-nest-module-auth-basic';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 

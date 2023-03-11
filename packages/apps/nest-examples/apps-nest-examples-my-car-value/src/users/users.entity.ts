@@ -10,7 +10,7 @@ import {
   UpdateDateColumn,
   DeleteDateColumn,
 } from 'typeorm';
-import { AuthUsersEntity } from '@js-modules/apps-nest-module-auth';
+import { AuthUsersEntity } from '@js-modules/api-nest-module-auth-basic';
 import { ReportsEntity } from '../reports/reports.entity'; // eslint-disable-line import/no-cycle
 
 @Entity('users')

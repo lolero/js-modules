@@ -1,7 +1,7 @@
 {
   "private": true,
-  "name": "@js-modules/apps-nest-utils",
-  "description": "Apps Nest Utils",
+  "name": "@js-modules/api-nest-utils",
+  "description": "Api Nest Utils",
   "version": "0.0.0",
   "license": "MIT",
   "main": "build/index",

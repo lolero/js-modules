@@ -1,4 +1,4 @@
-import { RequestsDtoQueryParamsFindMany } from '@js-modules/apps-nest-utils';
+import { RequestsDtoQueryParamsFindMany } from '@js-modules/api-nest-utils';
 import { UsersEntity } from './users.entity';
 import { UsersDtoFindManyUniqueKeys } from './users.dto.findManyUniqueKeys';
 

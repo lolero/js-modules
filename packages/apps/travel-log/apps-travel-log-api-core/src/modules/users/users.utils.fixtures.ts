@@ -1,4 +1,4 @@
-import { getRequestsDtoQueryParamsFindManyFixture } from '@js-modules/apps-nest-utils';
+import { getRequestsDtoQueryParamsFindManyFixture } from '@js-modules/api-nest-utils';
 import omit from 'lodash/omit';
 import { UsersDtoUpdateOneWhole } from './users.dto.updateOneWhole';
 import { UsersDtoFindMany } from './users.dto.findMany';

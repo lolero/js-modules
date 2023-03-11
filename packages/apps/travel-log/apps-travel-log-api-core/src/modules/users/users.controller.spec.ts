@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { UpdateManyEntitiesObjectDto } from '@js-modules/apps-nest-utils';
+import { UpdateManyEntitiesObjectDto } from '@js-modules/api-nest-utils';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 import {

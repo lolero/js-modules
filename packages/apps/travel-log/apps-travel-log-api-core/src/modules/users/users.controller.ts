@@ -11,9 +11,9 @@ import {
 import type {
   EntityUniqueKeyValue,
   UpdateManyEntitiesObjectDto,
-} from '@js-modules/apps-nest-utils';
-import { InterceptorSerialize } from '@js-modules/apps-nest-utils';
-import { AuthDecoratorCurrentUser } from '@js-modules/apps-nest-module-auth';
+} from '@js-modules/api-nest-utils';
+import { InterceptorSerialize } from '@js-modules/api-nest-utils';
+import { AuthDecoratorCurrentUser } from '@js-modules/api-nest-module-auth-basic';
 import { UsersService } from './users.service';
 import { UsersEntity } from './users.entity';
 import { UsersDtoPublic } from './users.dto.public';

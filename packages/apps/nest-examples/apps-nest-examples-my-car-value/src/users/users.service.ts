@@ -7,7 +7,7 @@ import {
   AuthUsersService,
   AuthUsersUniqueKeyName,
   AuthUsersUniqueKeyValue,
-} from '@js-modules/apps-nest-module-auth';
+} from '@js-modules/api-nest-module-auth-basic';
 import { UsersEntity } from './users.entity';
 import { UsersDtoCreateOne } from './users.dto.createOne';
 

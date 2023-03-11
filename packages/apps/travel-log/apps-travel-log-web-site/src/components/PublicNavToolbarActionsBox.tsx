@@ -13,6 +13,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { Link } from 'react-router-dom';
 import {
+  BASE_URI,
   MyModules,
   myModulesPaths,
 } from '@js-modules/apps-travel-log-common-constants';
@@ -29,10 +30,11 @@ export const PublicNavToolbarActionsBox: React.FC = () => {
   const {
     signupCallback,
     authMetadata: { isAuthenticated },
-  } = useSignup(`http://localhost:5173${myModulesPaths[MyModules.myFeeds]}`);
+  } = useSignup(BASE_URI, myModulesPaths[MyModules.myFeeds]);
 
   const { loginCallback } = useLogin(
-    `http://localhost:5173${myModulesPaths[MyModules.myFeeds]}`,
+    BASE_URI,
+    myModulesPaths[MyModules.myFeeds],
   );
 
   return (

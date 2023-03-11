@@ -9,11 +9,19 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import { MuiFaIcon } from '@js-modules/web-react-components';
 import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons/faRightFromBracket';
 import { useLogout } from '@js-modules/apps-travel-log-common-store-redux';
+import {
+  BASE_URI,
+  PublicModules,
+  publicModulesPaths,
+} from '@js-modules/apps-travel-log-common-constants';
 
 export const MyWorkspaceAccountMenu: React.FC = () => {
   const { menuAnchor, openMenuCallback, closeMenuCallback } = useMenuUtils();
 
-  const { logoutCallback } = useLogout();
+  const { logoutCallback } = useLogout(
+    BASE_URI,
+    publicModulesPaths[PublicModules.home],
+  );
 
   return (
     <>

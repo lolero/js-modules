@@ -16,11 +16,11 @@ import {
   requestsUtilCrossCheckIds,
   requestsUtilGetUniqueKeysWhereFactory,
   UpdateManyEntitiesObjectDto,
-} from '@js-modules/apps-nest-utils';
+} from '@js-modules/api-nest-utils';
 import {
   AuthUsersService,
   authUtilValidatePassword,
-} from '@js-modules/apps-nest-module-auth';
+} from '@js-modules/api-nest-module-auth-basic';
 import { UsersEntity } from './users.entity';
 import { UsersDtoCreateOne } from './users.dto.createOne';
 import { UsersDtoFindMany } from './users.dto.findMany';

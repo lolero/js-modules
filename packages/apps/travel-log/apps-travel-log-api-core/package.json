@@ -11,7 +11,7 @@
     "typeorm": "pnpm build && cross-env NODE_ENV=dev typeorm -d build/config/config.typeorm.dataSource.js"
   },
   "dependencies": {
-    "@js-modules/apps-nest-utils": "workspace:^0.0.0",
+    "@js-modules/api-nest-utils": "workspace:^0.0.0",
     "@js-modules/common-utils-general": "workspace:^0.0.0",
     "@nestjs/common": "^9.2.1",
     "@nestjs/config": "^2.3.1",

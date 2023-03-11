@@ -29,6 +29,7 @@ export type WorkspaceBoxProps = {
   workspaceContent: React.ReactNode;
   isAuthenticatedRequired?: boolean;
   getIsAuthenticatedCallback?: () => boolean;
+  onNotAuthenticatedCallback?: () => void;
   contentSx?: BoxProps['sx'];
 };
 
@@ -45,6 +46,7 @@ export const WorkspaceBox: React.FC<WorkspaceBoxProps> = ({
   workspaceContent,
   isAuthenticatedRequired,
   getIsAuthenticatedCallback,
+  onNotAuthenticatedCallback,
   contentSx,
 }) => {
   const navigate = useNavigate();
@@ -139,13 +141,18 @@ export const WorkspaceBox: React.FC<WorkspaceBoxProps> = ({
 
   useEffect(() => {
     if (isAuthenticatedRequired && !getIsAuthenticatedCallback?.()) {
-      navigate(nonAuthenticatedRedirectPath, { replace: true });
+      if (onNotAuthenticatedCallback) {
+        onNotAuthenticatedCallback();
+      } else {
+        navigate(nonAuthenticatedRedirectPath, { replace: true });
+      }
     }
   }, [
     getIsAuthenticatedCallback,
     isAuthenticatedRequired,
     navigate,
     nonAuthenticatedRedirectPath,
+    onNotAuthenticatedCallback,
   ]);
 
   if (isAuthenticatedRequired && !getIsAuthenticatedCallback?.()) {

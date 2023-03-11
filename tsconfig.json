@@ -3,6 +3,15 @@
   "compilerOptions": {
     "baseUrl": "./packages",
     "paths": {
+      "@js-modules/api-nest-module-auth-basic": [
+        "api/nest/api-nest-module-auth-basic/src"
+      ],
+      "@js-modules/api-nest-module-auth-keycloak": [
+        "api/nest/api-nest-module-auth-keycloak/src"
+      ],
+      "@js-modules/api-nest-utils": [
+        "api/nest/api-nest-utils/src"
+      ],
       "@js-modules/apps-dapp-common-constants": [
         "apps/dapp/apps-dapp-common-constants/src"
       ],
@@ -24,6 +33,9 @@
       "@js-modules/apps-dapp-web-transactions": [
         "apps/dapp/apps-dapp-web-transactions/src"
       ],
+      "@js-modules/apps-nest-examples-users-modules": [
+        "apps/nest-examples/apps-nest-examples-users-modules/src"
+      ],
       "@js-modules/apps-segway-rental-mui-icons": [
         "apps/segway-rental/apps-segway-rental-mui-icons/src"
       ],
@@ -32,6 +44,9 @@
       ],
       "@js-modules/apps-segway-rental-utils": [
         "apps/segway-rental/apps-segway-rental-utils/src"
+      ],
+      "@js-modules/apps-travel-log-api-core-modules": [
+        "apps/travel-log/apps-travel-log-api-core-modules/src"
       ],
       "@js-modules/apps-travel-log-common-constants": [
         "apps/travel-log/apps-travel-log-common-constants/src"

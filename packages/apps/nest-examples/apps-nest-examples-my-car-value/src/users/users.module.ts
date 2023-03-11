@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { authUtilGetAuthUsersServiceProvider } from '@js-modules/apps-nest-module-auth';
+import { authUtilGetAuthUsersServiceProvider } from '@js-modules/api-nest-module-auth-basic';
 import { UsersController } from './users.controller';
 import { UsersEntity } from './users.entity';
 import { UsersService } from './users.service';

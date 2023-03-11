@@ -21,7 +21,10 @@ export const {
   useReducerConfig: useStateAuthReducerConfig,
 } = stateAuthHooks;
 
-export function useSignup(redirectUri?: string): {
+export function useSignup(
+  redirectBaseUri: string,
+  redirectPath: string,
+): {
   signupCallback: () => void;
   signupRequest?: Request<RequestMetadata>;
   authMetadata: StateAuthReducer['metadata'];
@@ -35,11 +38,11 @@ export function useSignup(redirectUri?: string): {
   const signupCallback = useCallback(() => {
     const signupAction = createStateAuthSigninRequestAction(
       SigninAction.signup,
-      redirectUri,
+      `${redirectBaseUri}${redirectPath}`,
     );
     setSignupRequestId(signupAction.requestId);
     dispatch(signupAction);
-  }, [dispatch, redirectUri]);
+  }, [redirectBaseUri, dispatch, redirectPath]);
 
   return {
     signupCallback,
@@ -48,7 +51,10 @@ export function useSignup(redirectUri?: string): {
   };
 }
 
-export function useLogin(redirectUri?: string): {
+export function useLogin(
+  redirectBaseUri: string,
+  redirectPath: string,
+): {
   loginCallback: () => void;
   loginRequest?: Request<RequestMetadata>;
   authMetadata: StateAuthReducer['metadata'];
@@ -62,11 +68,11 @@ export function useLogin(redirectUri?: string): {
   const loginCallback = useCallback(() => {
     const loginAction = createStateAuthSigninRequestAction(
       SigninAction.login,
-      redirectUri,
+      `${redirectBaseUri}${redirectPath}`,
     );
     setLoginRequestId(loginAction.requestId);
     dispatch(loginAction);
-  }, [dispatch, redirectUri]);
+  }, [redirectBaseUri, dispatch, redirectPath]);
 
   return {
     loginCallback,
@@ -75,7 +81,10 @@ export function useLogin(redirectUri?: string): {
   };
 }
 
-export function useLogout(): {
+export function useLogout(
+  redirectBaseUri: string,
+  redirectPath: string,
+): {
   logoutCallback: () => void;
   logoutRequest?: Request<RequestMetadata>;
   authMetadata: StateAuthReducer['metadata'];
@@ -87,10 +96,12 @@ export function useLogout(): {
   const logoutRequest = stateAuthRequests[logoutRequestId];
 
   const logoutCallback = useCallback(() => {
-    const logoutAction = createStateAuthSignoutRequestAction();
+    const logoutAction = createStateAuthSignoutRequestAction(
+      `${redirectBaseUri}${redirectPath}`,
+    );
     setLogoutRequestId(logoutAction.requestId);
     dispatch(logoutAction);
-  }, [dispatch]);
+  }, [redirectBaseUri, dispatch, redirectPath]);
 
   return {
     logoutCallback,

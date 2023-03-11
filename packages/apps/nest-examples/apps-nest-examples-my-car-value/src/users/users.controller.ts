@@ -10,8 +10,8 @@ import {
 import type {
   AuthUsersUniqueKeyName,
   AuthUsersUniqueKeyValue,
-} from '@js-modules/apps-nest-module-auth';
-import { InterceptorSerialize } from '@js-modules/apps-nest-utils';
+} from '@js-modules/api-nest-module-auth-basic';
+import { InterceptorSerialize } from '@js-modules/api-nest-utils';
 import { UsersService } from './users.service';
 import { UsersEntity } from './users.entity';
 import { UsersDtoPublic } from './users.dto.public';

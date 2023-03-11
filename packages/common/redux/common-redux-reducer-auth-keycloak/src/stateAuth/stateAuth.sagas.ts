@@ -37,26 +37,32 @@ export function* stateAuthInitSaga(): Generator<
 > {
   keycloak = new Keycloak(keycloakConfig);
 
-  const isAuthenticated = yield call<typeof keycloak.init>(keycloak.init, {
-    onLoad: 'check-sso',
-    // silentCheckSsoRedirectUri: `${window.location.origin}/silent-check-sso.html`,
-  });
+  try {
+    const isAuthenticated = yield call<typeof keycloak.init>(keycloak.init, {
+      onLoad: 'check-sso',
+      // silentCheckSsoRedirectUri: `${window.location.origin}/silent-check-sso.html`,
+      checkLoginIframe: false,
+    });
 
-  const partialStateAuthReducerMetadata: Partial<StateAuthReducer['metadata']> =
-    {
+    const partialStateAuthReducerMetadata: Partial<
+      StateAuthReducer['metadata']
+    > = {
       isKeycloakReady: true,
       isAuthenticated,
     };
 
-  if (isAuthenticated) {
-    partialStateAuthReducerMetadata.token = keycloak.token;
-  }
+    if (isAuthenticated) {
+      partialStateAuthReducerMetadata.token = keycloak.token;
+    }
 
-  yield put(
-    createStateAuthUpdatePartialReducerMetadataSuccessAction(
-      partialStateAuthReducerMetadata,
-    ),
-  );
+    yield put(
+      createStateAuthSigninSuccessAction(partialStateAuthReducerMetadata, ''),
+    );
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (err: any) {
+    console.error('error: ', err);
+  }
 }
 
 export function* stateAuthUpdatePartialReducerMetadataSaga({
@@ -115,6 +121,7 @@ export function* stateAuthSigninSaga({
 }
 
 export function* stateAuthSignoutSaga({
+  requestMetadata,
   requestId,
 }: StateAuthSignoutRequestAction): Generator<
   CallEffect | PutEffect,
@@ -122,7 +129,9 @@ export function* stateAuthSignoutSaga({
   void
 > {
   try {
-    yield call(keycloak.logout);
+    const { redirectUri } = requestMetadata;
+
+    yield call(keycloak.logout, { redirectUri });
 
     yield put(
       createStateAuthSignoutSuccessAction(

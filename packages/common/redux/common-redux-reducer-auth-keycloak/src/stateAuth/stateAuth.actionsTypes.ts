@@ -1,7 +1,6 @@
 import {
   FailAction,
   RequestAction,
-  SaveNothingAction,
   SavePartialReducerMetadataAction,
   UpdatePartialReducerMetadataRequestMetadata,
 } from '@js-modules/common-redux-utils-normalized-reducers';
@@ -51,7 +50,9 @@ export type StateAuthSigninFailAction =
 
 export type StateAuthSignoutRequestAction = RequestAction<
   StateAuthActionTypes.STATE_AUTH_SIGNOUT_REQUEST,
-  Record<string, never>
+  {
+    redirectUri?: string;
+  }
 >;
 
 export type StateAuthSignoutSuccessAction = SavePartialReducerMetadataAction<

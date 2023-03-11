@@ -13,8 +13,8 @@ import {
   requestsUtilCrossCheckIds,
   requestsUtilGetUniqueKeysWhereFactory,
   UpdateManyEntitiesObjectDto,
-} from '@js-modules/apps-nest-utils';
-import { authUtilValidatePassword } from '@js-modules/apps-nest-module-auth';
+} from '@js-modules/api-nest-utils';
+import { authUtilValidatePassword } from '@js-modules/api-nest-module-auth-basic';
 import { UsersService } from './users.service';
 import { UsersEntity } from './users.entity';
 import {
@@ -33,9 +33,9 @@ import { UsersServiceValidator } from './users.service.validator';
 import { UsersEntityType } from './users.types';
 import { SystemRolesName } from '../systemRoles/systemRoles.types';
 
-jest.mock('@js-modules/apps-nest-module-auth', () => {
+jest.mock('@js-modules/api-nest-module-auth-basic', () => {
   const originalModule = jest.requireActual(
-    '@js-modules/apps-nest-module-auth',
+    '@js-modules/api-nest-module-auth-basic',
   );
 
   return {
@@ -46,8 +46,10 @@ jest.mock('@js-modules/apps-nest-module-auth', () => {
   };
 });
 
-jest.mock('@js-modules/apps-nest-utils', () => {
-  const originalModule = jest.requireActual('@js-modules/apps-nest-utils');
+jest.mock('@js-modules/apps-nest-examples-users-modules', () => {
+  const originalModule = jest.requireActual(
+    '@js-modules/apps-nest-examples-users-modules',
+  );
 
   return {
     __esModule: true,

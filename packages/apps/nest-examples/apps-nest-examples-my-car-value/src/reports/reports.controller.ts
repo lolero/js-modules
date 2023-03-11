@@ -11,8 +11,8 @@ import {
 import {
   AuthDecoratorCurrentUser,
   AuthGuardIsUserAuthenticated,
-} from '@js-modules/apps-nest-module-auth';
-import { InterceptorSerialize } from '@js-modules/apps-nest-utils';
+} from '@js-modules/api-nest-module-auth-basic';
+import { InterceptorSerialize } from '@js-modules/api-nest-utils';
 import { ReportsDtoCreateOne } from './reports.dto.createOne';
 import { ReportsService } from './reports.service';
 import { UsersEntity } from '../users/users.entity';

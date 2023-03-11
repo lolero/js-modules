@@ -3,7 +3,7 @@ import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConne
 import {
   SystemRolesEntity,
   UsersEntity,
-} from '../libs/apps-nest-examples-users-modules/src';
+} from '@js-modules/apps-nest-examples-users-modules';
 
 type VariableProps =
   | 'type'

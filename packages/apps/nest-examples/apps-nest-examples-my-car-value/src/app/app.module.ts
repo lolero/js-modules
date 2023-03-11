@@ -6,7 +6,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import {
   AuthModule,
   authUtilGetAuthUsersServiceProvider,
-} from '@js-modules/apps-nest-module-auth';
+} from '@js-modules/api-nest-module-auth-basic';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from '../users/users.module';

@@ -82,10 +82,14 @@ export function createStateAuthSigninFailAction(
   };
 }
 
-export function createStateAuthSignoutRequestAction(): StateAuthSignoutRequestAction {
+export function createStateAuthSignoutRequestAction(
+  redirectUri?: StateAuthSignoutRequestAction['requestMetadata']['redirectUri'],
+): StateAuthSignoutRequestAction {
   return {
     type: StateAuthActionTypes.STATE_AUTH_SIGNOUT_REQUEST,
-    requestMetadata: {},
+    requestMetadata: {
+      redirectUri,
+    },
     requestId: uuidv4(),
   };
 }

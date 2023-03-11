@@ -43,9 +43,9 @@ importers:
       ts-jest: 29.0.5_wrz2f4catxnbofknv5bs36jgqa
       typescript: 4.9.5
 
-  packages/api/nest/api-nest-module-auth:
+  packages/api/nest/api-nest-module-auth-basic:
     specifiers:
-      '@js-modules/apps-nest-utils': workspace:^0.0.0
+      '@js-modules/api-nest-utils': workspace:^0.0.0
       '@js-modules/common-utils-general': workspace:^0.0.0
       '@nestjs/common': ^9.2.1
       '@nestjs/config': ^2.3.1
@@ -66,7 +66,7 @@ importers:
       rxjs: ^7.8.0
       typeorm: ^0.3.11
     dependencies:
-      '@js-modules/apps-nest-utils': link:../api-nest-utils
+      '@js-modules/api-nest-utils': link:../api-nest-utils
       '@js-modules/common-utils-general': link:../../../common/utils/common-utils-general
       '@nestjs/common': 9.3.1_welcnyot5bzd5wa2aovbkxpi4i
       '@nestjs/config': 2.3.1_fipbdz7qhdiauthzsrt4bq6tsq
@@ -83,6 +83,52 @@ importers:
       class-validator: 0.14.0
       express: 4.18.2
       lodash: 4.17.21
+      reflect-metadata: 0.1.13
+      rxjs: 7.8.0
+      typeorm: 0.3.11
+
+  packages/api/nest/api-nest-module-auth-keycloak:
+    specifiers:
+      '@js-modules/api-nest-utils': workspace:^0.0.0
+      '@js-modules/common-utils-general': workspace:^0.0.0
+      '@nestjs/common': ^9.2.1
+      '@nestjs/config': ^2.3.1
+      '@nestjs/core': ^9.2.1
+      '@nestjs/platform-express': ^9.2.1
+      '@nestjs/swagger': ^6.2.1
+      '@nestjs/testing': ^9.2.1
+      '@nestjs/typeorm': ^9.0.1
+      '@types/cookie-session': ^2.0.44
+      '@types/express': ^4.17.16
+      '@types/lodash': ^4.14.191
+      '@types/supertest': ^2.0.12
+      class-transformer: ^0.5.1
+      class-validator: ^0.14.0
+      express: ^4.18.2
+      lodash: ^4.17.21
+      nest-keycloak-connect: ^1.9.1
+      reflect-metadata: ^0.1.13
+      rxjs: ^7.8.0
+      typeorm: ^0.3.11
+    dependencies:
+      '@js-modules/api-nest-utils': link:../api-nest-utils
+      '@js-modules/common-utils-general': link:../../../common/utils/common-utils-general
+      '@nestjs/common': 9.3.1_welcnyot5bzd5wa2aovbkxpi4i
+      '@nestjs/config': 2.3.1_fipbdz7qhdiauthzsrt4bq6tsq
+      '@nestjs/core': 9.3.1_mxuzwgdlmkyxkz5qwd5xy75hm4
+      '@nestjs/platform-express': 9.3.1_22j2lmearpmfr73ppsmjho62xq
+      '@nestjs/swagger': 6.2.1_25mb2iazsxw3kxf3c5hxmogl5q
+      '@nestjs/testing': 9.3.1_lqms3jbt4jegwm4cog6ibtl4mu
+      '@nestjs/typeorm': 9.0.1_bupm2ki5yhdymdc7evmynhkzqe
+      '@types/cookie-session': 2.0.44
+      '@types/express': 4.17.16
+      '@types/lodash': 4.14.191
+      '@types/supertest': 2.0.12
+      class-transformer: 0.5.1
+      class-validator: 0.14.0
+      express: 4.18.2
+      lodash: 4.17.21
+      nest-keycloak-connect: 1.9.1_22j2lmearpmfr73ppsmjho62xq
       reflect-metadata: 0.1.13
       rxjs: 7.8.0
       typeorm: 0.3.11
@@ -552,8 +598,8 @@ importers:
 
   packages/apps/nest-examples/apps-nest-examples-my-car-value:
     specifiers:
-      '@js-modules/apps-nest-module-auth': workspace:^0.0.0
-      '@js-modules/apps-nest-utils': workspace:^0.0.0
+      '@js-modules/api-nest-module-auth-basic': workspace:^0.0.0
+      '@js-modules/api-nest-utils': workspace:^0.0.0
       '@nestjs/cli': ^9.1.9
       '@nestjs/common': ^9.2.1
       '@nestjs/config': ^2.3.1
@@ -580,8 +626,8 @@ importers:
       ts-node: ^10.9.1
       typeorm: ^0.3.11
     dependencies:
-      '@js-modules/apps-nest-module-auth': link:../../../api/nest/api-nest-module-auth
-      '@js-modules/apps-nest-utils': link:../../../api/nest/api-nest-utils
+      '@js-modules/api-nest-module-auth-basic': link:../../../api/nest/api-nest-module-auth-basic
+      '@js-modules/api-nest-utils': link:../../../api/nest/api-nest-utils
       '@nestjs/common': 9.3.1_welcnyot5bzd5wa2aovbkxpi4i
       '@nestjs/config': 2.3.1_fipbdz7qhdiauthzsrt4bq6tsq
       '@nestjs/core': 9.3.1_mxuzwgdlmkyxkz5qwd5xy75hm4
@@ -611,8 +657,9 @@ importers:
 
   packages/apps/nest-examples/apps-nest-examples-users:
     specifiers:
-      '@js-modules/apps-nest-module-auth': workspace:^0.0.0
-      '@js-modules/apps-nest-utils': workspace:^0.0.0
+      '@js-modules/api-nest-module-auth-basic': workspace:^0.0.0
+      '@js-modules/api-nest-utils': workspace:^0.0.0
+      '@js-modules/apps-nest-examples-users-modules': workspace:^0.0.0
       '@js-modules/common-utils-general': workspace:^0.0.0
       '@nestjs/cli': ^9.1.9
       '@nestjs/common': ^9.2.1
@@ -642,8 +689,9 @@ importers:
       ts-node: ^10.9.1
       typeorm: ^0.3.11
     dependencies:
-      '@js-modules/apps-nest-module-auth': link:../../../api/nest/api-nest-module-auth
-      '@js-modules/apps-nest-utils': link:../../../api/nest/api-nest-utils
+      '@js-modules/api-nest-module-auth-basic': link:../../../api/nest/api-nest-module-auth-basic
+      '@js-modules/api-nest-utils': link:../../../api/nest/api-nest-utils
+      '@js-modules/apps-nest-examples-users-modules': link:../apps-nest-examples-users-modules
       '@js-modules/common-utils-general': link:../../../common/utils/common-utils-general
       '@nestjs/common': 9.3.1_welcnyot5bzd5wa2aovbkxpi4i
       '@nestjs/config': 2.3.1_fipbdz7qhdiauthzsrt4bq6tsq
@@ -673,6 +721,52 @@ importers:
       supertest: 6.3.3
       ts-loader: 9.4.2
       ts-node: 10.9.1
+
+  packages/apps/nest-examples/apps-nest-examples-users-modules:
+    specifiers:
+      '@js-modules/api-nest-module-auth-basic': workspace:^0.0.0
+      '@js-modules/api-nest-utils': workspace:^0.0.0
+      '@js-modules/common-utils-general': workspace:^0.0.0
+      '@nestjs/common': ^9.2.1
+      '@nestjs/config': ^2.3.1
+      '@nestjs/core': ^9.2.1
+      '@nestjs/platform-express': ^9.2.1
+      '@nestjs/swagger': ^6.2.1
+      '@nestjs/testing': ^9.2.1
+      '@nestjs/typeorm': ^9.0.1
+      '@types/cookie-session': ^2.0.44
+      '@types/express': ^4.17.16
+      '@types/lodash': ^4.14.191
+      '@types/supertest': ^2.0.12
+      class-transformer: ^0.5.1
+      class-validator: ^0.14.0
+      express: ^4.18.2
+      lodash: ^4.17.21
+      reflect-metadata: ^0.1.13
+      rxjs: ^7.8.0
+      typeorm: ^0.3.11
+    dependencies:
+      '@js-modules/api-nest-module-auth-basic': link:../../../api/nest/api-nest-module-auth-basic
+      '@js-modules/api-nest-utils': link:../../../api/nest/api-nest-utils
+      '@js-modules/common-utils-general': link:../../../common/utils/common-utils-general
+      '@nestjs/common': 9.3.1_welcnyot5bzd5wa2aovbkxpi4i
+      '@nestjs/config': 2.3.1_fipbdz7qhdiauthzsrt4bq6tsq
+      '@nestjs/core': 9.3.1_mxuzwgdlmkyxkz5qwd5xy75hm4
+      '@nestjs/platform-express': 9.3.1_22j2lmearpmfr73ppsmjho62xq
+      '@nestjs/swagger': 6.2.1_25mb2iazsxw3kxf3c5hxmogl5q
+      '@nestjs/testing': 9.3.1_lqms3jbt4jegwm4cog6ibtl4mu
+      '@nestjs/typeorm': 9.0.1_bupm2ki5yhdymdc7evmynhkzqe
+      '@types/cookie-session': 2.0.44
+      '@types/express': 4.17.16
+      '@types/lodash': 4.14.191
+      '@types/supertest': 2.0.12
+      class-transformer: 0.5.1
+      class-validator: 0.14.0
+      express: 4.18.2
+      lodash: 4.17.21
+      reflect-metadata: 0.1.13
+      rxjs: 7.8.0
+      typeorm: 0.3.11
 
   packages/apps/segway-rental/apps-segway-rental-api-users-service:
     specifiers:
@@ -826,7 +920,7 @@ importers:
 
   packages/apps/travel-log/apps-travel-log-api-core:
     specifiers:
-      '@js-modules/apps-nest-utils': workspace:^0.0.0
+      '@js-modules/api-nest-utils': workspace:^0.0.0
       '@js-modules/common-utils-general': workspace:^0.0.0
       '@nestjs/cli': ^9.1.9
       '@nestjs/common': ^9.2.1
@@ -856,7 +950,7 @@ importers:
       ts-node: ^10.9.1
       typeorm: ^0.3.11
     dependencies:
-      '@js-modules/apps-nest-utils': link:../../../api/nest/api-nest-utils
+      '@js-modules/api-nest-utils': link:../../../api/nest/api-nest-utils
       '@js-modules/common-utils-general': link:../../../common/utils/common-utils-general
       '@nestjs/common': 9.3.1_welcnyot5bzd5wa2aovbkxpi4i
       '@nestjs/config': 2.3.1_fipbdz7qhdiauthzsrt4bq6tsq
@@ -14805,6 +14899,21 @@ packages:
 
   /neo-async/2.6.2:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
+
+  /nest-keycloak-connect/1.9.1_22j2lmearpmfr73ppsmjho62xq:
+    resolution: {integrity: sha512-IZPq2zEm3MwjX3IqOS607cJMOomF6vg+uKI8D0AipPVN7JzX55Q4B8/3h+OfJWzcfAnpgpeDvkufY/9f4wZUxw==}
+    peerDependencies:
+      '@nestjs/common': '>=6.0.0 <10.0.0'
+      '@nestjs/core': '>=6.0.0 <10.0.0'
+      '@nestjs/graphql': '>=6'
+      keycloak-connect: '>=10.0.0 <21.0.0'
+    peerDependenciesMeta:
+      '@nestjs/graphql':
+        optional: true
+    dependencies:
+      '@nestjs/common': 9.3.1_welcnyot5bzd5wa2aovbkxpi4i
+      '@nestjs/core': 9.3.1_mxuzwgdlmkyxkz5qwd5xy75hm4
+    dev: false
 
   /netmask/2.0.2:
     resolution: {integrity: sha512-dBpDMdxv9Irdq66304OLfEmQ9tbNRFnFTuZiLo+bD+r332bBmMJ8GBLXklIXXgxd3+v9+KUnZaUR5PJMa75Gsg==}
