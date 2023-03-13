@@ -1,8 +1,8 @@
 import { Test } from '@nestjs/testing';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
+import { AUTH_USERS_SERVICE } from '@js-modules/api-nest-utils';
 import { AuthService } from './auth.service';
 import { AuthUsersEntity, AuthUsersService } from './auth.types';
-import { AUTH_USERS_SERVICE } from './auth.constants';
 import { AuthDtoSignup } from './auth.dto.signup';
 import {
   getAuthDtoSigninFixture,

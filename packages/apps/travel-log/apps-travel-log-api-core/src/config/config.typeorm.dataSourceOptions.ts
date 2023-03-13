@@ -28,7 +28,7 @@ let configTypeormDataSourceOptionsVariable: Pick<
   port: 5432,
   username: 'postgres',
   password: 'postgres',
-  database: 'users',
+  database: 'main',
 };
 
 switch (process.env.NODE_ENV) {
@@ -41,7 +41,7 @@ switch (process.env.NODE_ENV) {
       port: 5432,
       username: 'postgres',
       password: 'postgres',
-      database: 'users',
+      database: 'main',
     };
     break;
   case 'prod':

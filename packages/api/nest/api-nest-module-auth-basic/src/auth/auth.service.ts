@@ -5,7 +5,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { randomBytes } from 'crypto';
-import { AUTH_USERS_SERVICE } from './auth.constants';
+import { AUTH_USERS_SERVICE } from '@js-modules/api-nest-utils';
 import type { AuthUsersEntity, AuthUsersService } from './auth.types';
 import { AuthDtoSignup } from './auth.dto.signup';
 import { AuthDtoSignin } from './auth.dto.signin';

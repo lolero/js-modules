@@ -1,7 +1,5 @@
-import { ClassConstructor } from 'class-transformer';
-import { FactoryProvider } from '@nestjs/common/interfaces/modules/provider.interface';
-// eslint-disable-next-line import/no-cycle
 import { EntityUniqueKeyName } from '@js-modules/api-nest-utils';
+// eslint-disable-next-line import/no-cycle
 import { AuthDtoSignup } from './auth.dto.signup';
 
 export interface AuthUsersEntity {
@@ -38,8 +36,3 @@ export interface AuthSystemRolesEntity {
   id: string | number;
   name: string;
 }
-
-export type AuthModuleMetadata<ServiceT> = {
-  module: ClassConstructor<any>;
-  serviceProvider: FactoryProvider<ServiceT>;
-};

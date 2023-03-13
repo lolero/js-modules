@@ -1,4 +1,4 @@
-import { Expose } from 'class-transformer';
+import { Expose, Transform } from 'class-transformer';
 import { UsersEntity } from './users.entity';
 
 export class UsersDtoPublic {
@@ -6,16 +6,7 @@ export class UsersDtoPublic {
   id: UsersEntity['id'];
 
   @Expose()
-  keycloakId: UsersEntity['keycloakId'];
-
-  @Expose()
   username: UsersEntity['username'];
-
-  @Expose()
-  email: UsersEntity['email'];
-
-  @Expose()
-  phoneNumber: UsersEntity['phoneNumber'];
 
   @Expose()
   firstName: UsersEntity['firstName'];
@@ -25,4 +16,10 @@ export class UsersDtoPublic {
 
   @Expose()
   lastName: UsersEntity['lastName'];
+
+  @Expose()
+  @Transform(({ obj }: { obj: Date }) => {
+    return obj?.toISOString();
+  })
+  createdAt: string;
 }

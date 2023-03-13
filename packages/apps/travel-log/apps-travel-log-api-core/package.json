@@ -11,6 +11,7 @@
     "typeorm": "pnpm build && cross-env NODE_ENV=dev typeorm -d build/config/config.typeorm.dataSource.js"
   },
   "dependencies": {
+    "@js-modules/api-nest-module-auth-keycloak": "workspace:^0.0.0",
     "@js-modules/api-nest-utils": "workspace:^0.0.0",
     "@js-modules/common-utils-general": "workspace:^0.0.0",
     "@nestjs/common": "^9.2.1",
@@ -27,7 +28,10 @@
     "class-validator": "^0.14.0",
     "cookie-session": "^2.0.0",
     "express": "^4.18.2",
+    "keycloak-connect": "^21.0.1",
+    "keycloak-js": "^21.0.1",
     "lodash": "^4.17.21",
+    "nest-keycloak-connect": "^1.9.1",
     "pg": "^8.9.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.0",

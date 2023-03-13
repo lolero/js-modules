@@ -3,10 +3,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { APP_PIPE } from '@nestjs/core';
 import cookieSession from 'cookie-session';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { PolicyEnforcementMode, TokenValidation } from 'nest-keycloak-connect';
+import { AuthModule } from '@js-modules/api-nest-module-auth-keycloak';
+import { utilGetAuthUsersServiceProvider } from '@js-modules/api-nest-utils';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { configTypeormDataSourceOptions } from '../../config/config.typeorm.dataSourceOptions';
 import { UsersModule } from '../users/users.module';
+import { UsersService } from '../users/users.service';
 
 @Module({
   imports: [
@@ -15,6 +19,20 @@ import { UsersModule } from '../users/users.module';
       envFilePath: `.env.${process.env.NODE_ENV}`,
     }),
     TypeOrmModule.forRoot(configTypeormDataSourceOptions),
+    AuthModule.register(
+      {
+        authServerUrl: 'http://localhost:8080/',
+        realm: 'travel-log',
+        clientId: 'travel-log-api-core',
+        secret: 'YBUw3LqVtN50DTcKi00c4oyNjYf2AssY',
+        policyEnforcement: PolicyEnforcementMode.PERMISSIVE,
+        tokenValidation: TokenValidation.ONLINE,
+      },
+      {
+        module: UsersModule,
+        serviceProvider: utilGetAuthUsersServiceProvider(UsersService),
+      },
+    ),
     UsersModule,
   ],
   controllers: [AppController],

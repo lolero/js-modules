@@ -6,7 +6,7 @@ import {
   NestInterceptor,
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
-import { AUTH_USERS_SERVICE } from './auth.constants';
+import { AUTH_USERS_SERVICE } from '@js-modules/api-nest-utils';
 import type { AuthUsersService } from './auth.types';
 
 @Injectable()

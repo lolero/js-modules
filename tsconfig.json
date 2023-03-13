@@ -45,9 +45,6 @@
       "@js-modules/apps-segway-rental-utils": [
         "apps/segway-rental/apps-segway-rental-utils/src"
       ],
-      "@js-modules/apps-travel-log-api-core-modules": [
-        "apps/travel-log/apps-travel-log-api-core-modules/src"
-      ],
       "@js-modules/apps-travel-log-common-constants": [
         "apps/travel-log/apps-travel-log-common-constants/src"
       ],

@@ -21,10 +21,14 @@ import {
   createStateAuthSignoutSuccessAction,
   createStateAuthUpdatePartialReducerMetadataSuccessAction,
 } from './stateAuth.actionsCreators';
-import { SigninAction, StateAuthReducer } from './stateAuth.types';
+import {
+  KeycloakTokens,
+  SigninAction,
+  StateAuthReducer,
+} from './stateAuth.types';
 
 const keycloakConfig: KeycloakConfig = {
-  url: 'https://localhost:8443/',
+  url: 'http://localhost:8080/',
   realm: 'travel-log',
   clientId: 'travel-log-web',
 };
@@ -52,7 +56,21 @@ export function* stateAuthInitSaga(): Generator<
     };
 
     if (isAuthenticated) {
-      partialStateAuthReducerMetadata.token = keycloak.token;
+      const keycloakTokens: KeycloakTokens = {
+        bearer: {
+          token: keycloak.token!,
+          metadata: keycloak.tokenParsed!,
+        },
+        id: {
+          token: keycloak.idToken!,
+          metadata: keycloak.idTokenParsed!,
+        },
+        refresh: {
+          token: keycloak.refreshToken!,
+          metadata: keycloak.refreshTokenParsed!,
+        },
+      };
+      partialStateAuthReducerMetadata.tokens = keycloakTokens;
     }
 
     yield put(
@@ -105,11 +123,25 @@ export function* stateAuthSigninSaga({
         throw new Error('Unknown signin action');
     }
 
+    const keycloakTokens: KeycloakTokens = {
+      bearer: {
+        token: keycloak.token!,
+        metadata: keycloak.tokenParsed!,
+      },
+      id: {
+        token: keycloak.idToken!,
+        metadata: keycloak.idTokenParsed!,
+      },
+      refresh: {
+        token: keycloak.refreshToken!,
+        metadata: keycloak.refreshTokenParsed!,
+      },
+    };
     yield put(
       createStateAuthSigninSuccessAction(
         {
           isAuthenticated: true,
-          token: keycloak.token,
+          tokens: keycloakTokens,
         },
         requestId,
       ),
@@ -137,7 +169,7 @@ export function* stateAuthSignoutSaga({
       createStateAuthSignoutSuccessAction(
         {
           isAuthenticated: false,
-          token: null,
+          tokens: null,
         },
         requestId,
       ),

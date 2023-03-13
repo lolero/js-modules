@@ -31,8 +31,6 @@ import { UsersDtoUpdateOnePartial } from './users.dto.updateOnePartial';
 import { UsersServiceValidator } from './users.service.validator';
 import { UsersDtoUpdateOneWhole } from './users.dto.updateOneWhole';
 
-// TODO: Add checks so that private information only gets back to
-//  authenticated users or systemRoles with elevated permissions.
 @Injectable()
 export class UsersService implements AuthUsersService {
   constructor(

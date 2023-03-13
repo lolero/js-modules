@@ -24,8 +24,12 @@ export class UsersService implements AuthUsersService {
     return this.usersRepository.save(usersEntity);
   }
 
-  async createMany(): Promise<UsersEntity[]> {
-    return [];
+  async createMany(
+    usersDtoCreateOneArray: UsersDtoCreateOne[],
+  ): Promise<UsersEntity[]> {
+    const usersEntities = this.usersRepository.create(usersDtoCreateOneArray);
+
+    return this.usersRepository.save(usersEntities);
   }
 
   async findOne(

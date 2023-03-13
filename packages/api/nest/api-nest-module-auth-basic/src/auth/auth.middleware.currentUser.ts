@@ -1,6 +1,6 @@
 import { Inject, Injectable, NestMiddleware } from '@nestjs/common';
 import { NextFunction, Request, Response } from 'express';
-import { AUTH_USERS_SERVICE } from './auth.constants';
+import { AUTH_USERS_SERVICE } from '@js-modules/api-nest-utils';
 import type { AuthUsersEntity, AuthUsersService } from './auth.types';
 
 declare global {

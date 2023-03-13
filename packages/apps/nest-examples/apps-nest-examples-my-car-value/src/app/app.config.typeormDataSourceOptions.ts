@@ -9,7 +9,7 @@ const appConfigTypeormDataSourceBaseOptions: Omit<
   VariableProps
 > = {
   entities: [ReportsEntity, UsersEntity],
-  synchronize: false,
+  synchronize: true,
   migrations: ['migrations/*.js'],
 };
 

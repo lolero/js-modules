@@ -3,10 +3,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { APP_PIPE } from '@nestjs/core';
 import cookieSession from 'cookie-session';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import {
-  AuthModule,
-  authUtilGetAuthUsersServiceProvider,
-} from '@js-modules/api-nest-module-auth-basic';
+import { AuthModule } from '@js-modules/api-nest-module-auth-basic';
+import { utilGetAuthUsersServiceProvider } from '@js-modules/api-nest-utils';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from '../users/users.module';
@@ -23,7 +21,7 @@ import { appConfigTypeormDataSourceOptions } from './app.config.typeormDataSourc
     TypeOrmModule.forRoot(appConfigTypeormDataSourceOptions),
     AuthModule.register({
       module: UsersModule,
-      serviceProvider: authUtilGetAuthUsersServiceProvider(UsersService),
+      serviceProvider: utilGetAuthUsersServiceProvider(UsersService),
     }),
     ReportsModule,
     UsersModule,

@@ -7,7 +7,7 @@ import { StateAuthReducer } from './stateAuth.types';
 const stateAuthReducerMetadataInitialState: StateAuthReducer['metadata'] = {
   isKeycloakReady: false,
   isAuthenticated: false,
-  token: null,
+  tokens: null,
 };
 
 const stateAuthReducerDataInitialState: StateAuthReducer['data'] = {};

@@ -4,7 +4,7 @@ GET {{baseUri}}/users?email=c@c.com
 
 ###
 # @name Users Get One
-GET {{baseUri}}/users/1f7b4ff4-68a0-4dfb-bbc1-8535167fbdd8
+GET {{baseUri}}/users/044ccd72-d9aa-4b13-ae08-b70f3be7bd18
 
 ###
 # @name Users Update One Partial

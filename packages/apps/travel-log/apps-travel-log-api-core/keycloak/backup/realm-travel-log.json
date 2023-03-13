@@ -29,12 +29,12 @@
   "sslRequired": "external",
   "registrationAllowed": true,
   "registrationEmailAsUsername": false,
-  "rememberMe": false,
+  "rememberMe": true,
   "verifyEmail": true,
   "loginWithEmailAllowed": true,
   "duplicateEmailsAllowed": false,
   "resetPasswordAllowed": true,
-  "editUsernameAllowed": false,
+  "editUsernameAllowed": true,
   "bruteForceProtected": false,
   "permanentLockout": false,
   "maxFailureWaitSeconds": 900,
@@ -513,9 +513,13 @@
     "clientRole": false,
     "containerId": "d2c9c086-c18b-4f4f-8fd3-f0c475beb108"
   },
+  "defaultGroups": [
+    "/travel-log-group-user"
+  ],
   "requiredCredentials": [
     "password"
   ],
+  "passwordPolicy": "length(8) and lowerCase(1) and upperCase(1) and digits(1) and specialChars(1)",
   "otpPolicyType": "totp",
   "otpPolicyAlgorithm": "HmacSHA1",
   "otpPolicyInitialCounter": 0,
@@ -524,9 +528,9 @@
   "otpPolicyPeriod": 30,
   "otpPolicyCodeReusable": false,
   "otpSupportedApplications": [
+    "totpAppFreeOTPName",
     "totpAppGoogleName",
-    "totpAppMicrosoftAuthenticatorName",
-    "totpAppFreeOTPName"
+    "totpAppMicrosoftAuthenticatorName"
   ],
   "webAuthnPolicyRpEntityName": "keycloak",
   "webAuthnPolicySignatureAlgorithms": [
@@ -1540,21 +1544,6 @@
         }
       },
       {
-        "id": "6acebe0c-fc50-409f-a40a-ab05908bcc60",
-        "name": "Trusted Hosts",
-        "providerId": "trusted-hosts",
-        "subType": "anonymous",
-        "subComponents": {},
-        "config": {
-          "host-sending-registration-request-must-match": [
-            "true"
-          ],
-          "client-uris-must-match": [
-            "true"
-          ]
-        }
-      },
-      {
         "id": "856041ca-6daf-430a-855a-5a5b250ea256",
         "name": "Consent Required",
         "providerId": "consent-required",
@@ -1582,18 +1571,6 @@
         }
       },
       {
-        "id": "4d1cc4f2-c32b-43c2-a7e2-505bd1c2eb03",
-        "name": "Max Clients Limit",
-        "providerId": "max-clients",
-        "subType": "anonymous",
-        "subComponents": {},
-        "config": {
-          "max-clients": [
-            "200"
-          ]
-        }
-      },
-      {
         "id": "2e1592a6-d904-48ed-ab26-72ef47616fb7",
         "name": "Allowed Client Scopes",
         "providerId": "allowed-client-templates",
@@ -1606,14 +1583,6 @@
         }
       },
       {
-        "id": "32ceaae4-40c7-487a-adb0-475d377f768a",
-        "name": "Full Scope Disabled",
-        "providerId": "scope",
-        "subType": "anonymous",
-        "subComponents": {},
-        "config": {}
-      },
-      {
         "id": "f30eba58-8bf2-4d69-8cc7-58736aecdd3c",
         "name": "Allowed Client Scopes",
         "providerId": "allowed-client-templates",
@@ -1624,6 +1593,49 @@
             "true"
           ]
         }
+      },
+      {
+        "id": "6acebe0c-fc50-409f-a40a-ab05908bcc60",
+        "name": "Trusted Hosts",
+        "providerId": "trusted-hosts",
+        "subType": "anonymous",
+        "subComponents": {},
+        "config": {
+          "host-sending-registration-request-must-match": [
+            "true"
+          ],
+          "client-uris-must-match": [
+            "true"
+          ]
+        }
+      },
+      {
+        "id": "4d1cc4f2-c32b-43c2-a7e2-505bd1c2eb03",
+        "name": "Max Clients Limit",
+        "providerId": "max-clients",
+        "subType": "anonymous",
+        "subComponents": {},
+        "config": {
+          "max-clients": [
+            "200"
+          ]
+        }
+      },
+      {
+        "id": "32ceaae4-40c7-487a-adb0-475d377f768a",
+        "name": "Full Scope Disabled",
+        "providerId": "scope",
+        "subType": "anonymous",
+        "subComponents": {},
+        "config": {}
+      }
+    ],
+    "org.keycloak.userprofile.UserProfileProvider": [
+      {
+        "id": "06c8e793-688c-461a-b052-cff0a8836b9b",
+        "providerId": "declarative-user-profile",
+        "subComponents": {},
+        "config": {}
       }
     ],
     "org.keycloak.keys.KeyProvider": [
@@ -2372,8 +2384,8 @@
     "cibaExpiresIn": "120",
     "cibaAuthRequestedUserHint": "login_hint",
     "oauth2DeviceCodeLifespan": "600",
-    "clientOfflineSessionMaxLifespan": "0",
     "oauth2DevicePollingInterval": "5",
+    "clientOfflineSessionMaxLifespan": "0",
     "clientSessionIdleTimeout": "0",
     "parRequestUriLifespan": "60",
     "clientSessionMaxLifespan": "0",
