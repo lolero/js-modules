@@ -59,6 +59,7 @@ services:
     volumes:
       - ./keycloak/certificates:/opt/keycloak/certificates
       - ./keycloak/backup:/opt/keycloak/data/import
+      - ./node_modules/@js-modules/apps-travel-log-web-keycloak-theme/build_keycloak/target:/opt/keycloak/providers
   mailhog:
     image: mailhog/mailhog
     restart: always

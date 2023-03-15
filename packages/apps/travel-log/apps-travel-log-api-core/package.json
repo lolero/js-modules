@@ -13,6 +13,7 @@
   "dependencies": {
     "@js-modules/api-nest-module-auth-keycloak": "workspace:^0.0.0",
     "@js-modules/api-nest-utils": "workspace:^0.0.0",
+    "@js-modules/apps-travel-log-web-keycloak-theme": "workspace:^0.0.0",
     "@js-modules/common-utils-general": "workspace:^0.0.0",
     "@nestjs/common": "^9.2.1",
     "@nestjs/config": "^2.3.1",
