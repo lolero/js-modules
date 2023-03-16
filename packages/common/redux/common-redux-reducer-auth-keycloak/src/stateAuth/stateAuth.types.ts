@@ -16,8 +16,8 @@ type KeycloakToken = {
 };
 
 export type KeycloakTokens = {
-  bearer: KeycloakToken;
   id: KeycloakToken;
+  access: KeycloakToken;
   refresh: KeycloakToken;
 };
 

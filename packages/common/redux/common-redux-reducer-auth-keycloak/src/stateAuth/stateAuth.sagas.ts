@@ -30,7 +30,7 @@ import {
 const keycloakConfig: KeycloakConfig = {
   url: 'http://localhost:8080/',
   realm: 'travel-log',
-  clientId: 'travel-log-web',
+  clientId: 'client-web',
 };
 let keycloak: Keycloak;
 
@@ -57,13 +57,13 @@ export function* stateAuthInitSaga(): Generator<
 
     if (isAuthenticated) {
       const keycloakTokens: KeycloakTokens = {
-        bearer: {
-          token: keycloak.token!,
-          metadata: keycloak.tokenParsed!,
-        },
         id: {
           token: keycloak.idToken!,
           metadata: keycloak.idTokenParsed!,
+        },
+        access: {
+          token: keycloak.token!,
+          metadata: keycloak.tokenParsed!,
         },
         refresh: {
           token: keycloak.refreshToken!,
@@ -124,13 +124,13 @@ export function* stateAuthSigninSaga({
     }
 
     const keycloakTokens: KeycloakTokens = {
-      bearer: {
-        token: keycloak.token!,
-        metadata: keycloak.tokenParsed!,
-      },
       id: {
         token: keycloak.idToken!,
         metadata: keycloak.idTokenParsed!,
+      },
+      access: {
+        token: keycloak.token!,
+        metadata: keycloak.tokenParsed!,
       },
       refresh: {
         token: keycloak.refreshToken!,
