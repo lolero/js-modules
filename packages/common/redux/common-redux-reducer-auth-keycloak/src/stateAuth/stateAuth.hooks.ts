@@ -4,9 +4,11 @@ import {
   RequestMetadata,
 } from '@js-modules/common-redux-utils-normalized-reducers';
 import { useDispatch } from 'react-redux';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { KeycloakConfig } from 'keycloak-js';
 import { stateAuthSelectors } from './stateAuth.selectors';
 import {
+  createStateAuthInitializeRequestAction,
   createStateAuthSigninRequestAction,
   createStateAuthSignoutRequestAction,
 } from './stateAuth.actionsCreators';
@@ -20,6 +22,29 @@ export const {
   useReducerMetadata: useStateAuthReducerMetadata,
   useReducerConfig: useStateAuthReducerConfig,
 } = stateAuthHooks;
+
+export function useInitializeKeycloak(keycloakConfig: KeycloakConfig): {
+  initializeRequest?: Request<RequestMetadata>;
+  authMetadata: StateAuthReducer['metadata'];
+} {
+  const dispatch = useDispatch();
+  const stateAuthReducerMetadata = useStateAuthReducerMetadata();
+  const stateAuthRequests = useStateAuthRequests();
+  const [initializeRequestId, setInitializeRequestId] = useState('');
+  const initializeRequest = stateAuthRequests[initializeRequestId];
+
+  useEffect(() => {
+    const initializeAction =
+      createStateAuthInitializeRequestAction(keycloakConfig);
+    setInitializeRequestId(initializeAction.requestId);
+    dispatch(initializeAction);
+  }, [dispatch, keycloakConfig]);
+
+  return {
+    initializeRequest,
+    authMetadata: stateAuthReducerMetadata,
+  };
+}
 
 export function useSignup(
   redirectBaseUri: string,

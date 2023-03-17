@@ -1,20 +1,22 @@
 import {
   call,
   CallEffect,
-  fork,
   ForkEffect,
   put,
   PutEffect,
   takeEvery,
 } from 'redux-saga/effects';
-import Keycloak, { KeycloakConfig } from 'keycloak-js';
+import Keycloak from 'keycloak-js';
 import {
   StateAuthActionTypes,
+  StateAuthInitializeRequestAction,
   StateAuthSigninRequestAction,
   StateAuthSignoutRequestAction,
   StateAuthUpdatePartialReducerMetadataRequestAction,
 } from './stateAuth.actionsTypes';
 import {
+  createStateAuthInitializeFailAction,
+  createStateAuthInitializeSuccessAction,
   createStateAuthSigninFailAction,
   createStateAuthSigninSuccessAction,
   createStateAuthSignoutFailAction,
@@ -27,18 +29,36 @@ import {
   StateAuthReducer,
 } from './stateAuth.types';
 
-const keycloakConfig: KeycloakConfig = {
-  url: 'http://localhost:8080/',
-  realm: 'travel-log',
-  clientId: 'client-web',
-};
 let keycloak: Keycloak;
 
-export function* stateAuthInitSaga(): Generator<
+export function* stateAuthUpdatePartialReducerMetadataSaga({
+  requestMetadata,
+  requestId,
+}: StateAuthUpdatePartialReducerMetadataRequestAction): Generator<
+  PutEffect,
+  void,
+  void
+> {
+  const { partialReducerMetadata } = requestMetadata;
+
+  yield put(
+    createStateAuthUpdatePartialReducerMetadataSuccessAction(
+      partialReducerMetadata,
+      requestId,
+    ),
+  );
+}
+
+export function* stateAuthInitializeSaga({
+  requestMetadata,
+  requestId,
+}: StateAuthInitializeRequestAction): Generator<
   CallEffect | PutEffect,
   void,
   boolean
 > {
+  const { keycloakConfig } = requestMetadata;
+
   keycloak = new Keycloak(keycloakConfig);
 
   try {
@@ -74,31 +94,16 @@ export function* stateAuthInitSaga(): Generator<
     }
 
     yield put(
-      createStateAuthSigninSuccessAction(partialStateAuthReducerMetadata, ''),
+      createStateAuthInitializeSuccessAction(
+        partialStateAuthReducerMetadata,
+        requestId,
+      ),
     );
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err: any) {
-    console.error('error: ', err);
+    yield put(createStateAuthInitializeFailAction(err, requestId));
   }
-}
-
-export function* stateAuthUpdatePartialReducerMetadataSaga({
-  requestMetadata,
-  requestId,
-}: StateAuthUpdatePartialReducerMetadataRequestAction): Generator<
-  PutEffect,
-  void,
-  void
-> {
-  const { partialReducerMetadata } = requestMetadata;
-
-  yield put(
-    createStateAuthUpdatePartialReducerMetadataSuccessAction(
-      partialReducerMetadata,
-      requestId,
-    ),
-  );
 }
 
 export function* stateAuthSigninSaga({
@@ -109,9 +114,9 @@ export function* stateAuthSigninSaga({
   void,
   void
 > {
-  try {
-    const { signinAction, redirectUri } = requestMetadata;
+  const { signinAction, redirectUri } = requestMetadata;
 
+  try {
     switch (signinAction) {
       case SigninAction.signup:
         yield call(keycloak.register, { redirectUri });
@@ -148,7 +153,7 @@ export function* stateAuthSigninSaga({
     );
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err: any) {
-    yield put(createStateAuthSigninFailAction(err.message, requestId));
+    yield put(createStateAuthSigninFailAction(err, requestId));
   }
 }
 
@@ -160,9 +165,9 @@ export function* stateAuthSignoutSaga({
   void,
   void
 > {
-  try {
-    const { redirectUri } = requestMetadata;
+  const { redirectUri } = requestMetadata;
 
+  try {
     yield call(keycloak.logout, { redirectUri });
 
     yield put(
@@ -176,15 +181,18 @@ export function* stateAuthSignoutSaga({
     );
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err: any) {
-    yield put(createStateAuthSignoutFailAction(err.message, requestId));
+    yield put(createStateAuthSignoutFailAction(err, requestId));
   }
 }
 
 export function* stateAuthSagas(): Generator<ForkEffect, void, void> {
-  yield fork(stateAuthInitSaga);
   yield takeEvery(
     StateAuthActionTypes.STATE_AUTH_UPDATE_PARTIAL_REDUCER_METADATA_REQUEST,
     stateAuthUpdatePartialReducerMetadataSaga,
+  );
+  yield takeEvery(
+    StateAuthActionTypes.STATE_AUTH_INITIALIZE_REQUEST,
+    stateAuthInitializeSaga,
   );
   yield takeEvery(
     StateAuthActionTypes.STATE_AUTH_SIGNIN_REQUEST,

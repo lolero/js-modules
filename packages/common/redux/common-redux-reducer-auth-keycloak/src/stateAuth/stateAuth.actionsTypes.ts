@@ -4,12 +4,16 @@ import {
   SavePartialReducerMetadataAction,
   UpdatePartialReducerMetadataRequestMetadata,
 } from '@js-modules/common-redux-utils-normalized-reducers';
+import { KeycloakConfig } from 'keycloak-js';
 import { SigninAction, StateAuthReducer } from './stateAuth.types';
 
 export enum StateAuthActionTypes {
   STATE_AUTH_UPDATE_PARTIAL_REDUCER_METADATA_REQUEST = 'STATE_AUTH_UPDATE_PARTIAL_REDUCER_METADATA_REQUEST',
   STATE_AUTH_UPDATE_PARTIAL_REDUCER_METADATA_SUCCESS = 'STATE_AUTH_UPDATE_PARTIAL_REDUCER_METADATA_SUCCESS',
   STATE_AUTH_UPDATE_PARTIAL_REDUCER_METADATA_FAIL = 'STATE_AUTH_UPDATE_PARTIAL_REDUCER_METADATA_FAIL',
+  STATE_AUTH_INITIALIZE_REQUEST = 'STATE_AUTH_INITIALIZE_REQUEST',
+  STATE_AUTH_INITIALIZE_SUCCESS = 'STATE_AUTH_INITIALIZE_SUCCESS',
+  STATE_AUTH_INITIALIZE_FAIL = 'STATE_AUTH_INITIALIZE_FAIL',
   STATE_AUTH_SIGNIN_REQUEST = 'STATE_AUTH_SIGNIN_REQUEST',
   STATE_AUTH_SIGNIN_SUCCESS = 'STATE_AUTH_SIGNIN_SUCCESS',
   STATE_AUTH_SIGNIN_FAIL = 'STATE_AUTH_SIGNIN_FAIL',
@@ -31,6 +35,21 @@ export type StateAuthUpdatePartialReducerMetadataSuccessAction =
 
 export type StateAuthUpdatePartialReducerMetadataFailAction =
   FailAction<StateAuthActionTypes.STATE_AUTH_UPDATE_PARTIAL_REDUCER_METADATA_FAIL>;
+
+export type StateAuthInitializeRequestAction = RequestAction<
+  StateAuthActionTypes.STATE_AUTH_INITIALIZE_REQUEST,
+  {
+    keycloakConfig: KeycloakConfig;
+  }
+>;
+
+export type StateAuthInitializeSuccessAction = SavePartialReducerMetadataAction<
+  StateAuthActionTypes.STATE_AUTH_INITIALIZE_SUCCESS,
+  StateAuthReducer['metadata']
+>;
+
+export type StateAuthInitializeFailAction =
+  FailAction<StateAuthActionTypes.STATE_AUTH_INITIALIZE_FAIL>;
 
 export type StateAuthSigninRequestAction = RequestAction<
   StateAuthActionTypes.STATE_AUTH_SIGNIN_REQUEST,
@@ -67,6 +86,9 @@ export type StateAuthReducerHittingAction =
   | StateAuthUpdatePartialReducerMetadataRequestAction
   | StateAuthUpdatePartialReducerMetadataSuccessAction
   | StateAuthUpdatePartialReducerMetadataFailAction
+  | StateAuthInitializeRequestAction
+  | StateAuthInitializeSuccessAction
+  | StateAuthInitializeFailAction
   | StateAuthSigninRequestAction
   | StateAuthSigninSuccessAction
   | StateAuthSigninFailAction

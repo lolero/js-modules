@@ -10,10 +10,19 @@ import {
   HomeWorkspaceBox,
   PurposeWorkspaceBox,
 } from '@js-modules/apps-travel-log-web-site';
-import { useStateAuthReducerMetadata } from '@js-modules/apps-travel-log-common-store-redux';
+import { useInitializeKeycloak } from '@js-modules/apps-travel-log-common-store-redux';
+import { KeycloakConfig } from 'keycloak-js';
+
+const keycloakConfig: KeycloakConfig = {
+  url: 'http://localhost:8080/',
+  realm: 'travel-log',
+  clientId: 'client-web',
+};
 
 export const TravelLogRoutes: React.FunctionComponent = () => {
-  const { isKeycloakReady, isAuthenticated } = useStateAuthReducerMetadata();
+  const {
+    authMetadata: { isKeycloakReady, isAuthenticated },
+  } = useInitializeKeycloak(keycloakConfig);
 
   if (!isKeycloakReady) {
     // TODO: create loading workspace with skeletons instead of this ugly

@@ -23,8 +23,8 @@ import { UsersService } from '../users/users.service';
       {
         authServerUrl: 'http://localhost:8080/',
         realm: 'travel-log',
-        clientId: 'travel-log-api-core',
-        secret: 'YBUw3LqVtN50DTcKi00c4oyNjYf2AssY',
+        clientId: 'client-api-core',
+        secret: 'w5uGUrBBWvW9rLRGn0cuhzWTK28k1RhB',
         policyEnforcement: PolicyEnforcementMode.PERMISSIVE,
         tokenValidation: TokenValidation.ONLINE,
       },

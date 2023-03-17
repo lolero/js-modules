@@ -3,6 +3,7 @@ export * from '@js-modules/common-redux-reducer-auth-keycloak/src/stateAuth/stat
 
 export {
   createStateAuthUpdatePartialReducerMetadataRequestAction,
+  createStateAuthInitializeRequestAction,
   createStateAuthSigninRequestAction,
   createStateAuthSignoutRequestAction,
 } from '@js-modules/common-redux-reducer-auth-keycloak/src/stateAuth/stateAuth.actionsCreators';

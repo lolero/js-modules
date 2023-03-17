@@ -1,6 +1,10 @@
 import { v4 as uuidv4 } from 'uuid';
+import { KeycloakConfig } from 'keycloak-js';
 import {
   StateAuthActionTypes,
+  StateAuthInitializeFailAction,
+  StateAuthInitializeRequestAction,
+  StateAuthInitializeSuccessAction,
   StateAuthSigninFailAction,
   StateAuthSigninRequestAction,
   StateAuthSigninSuccessAction,
@@ -41,6 +45,40 @@ export function createStateAuthUpdatePartialReducerMetadataFailAction(
 ): StateAuthUpdatePartialReducerMetadataFailAction {
   return {
     type: StateAuthActionTypes.STATE_AUTH_UPDATE_PARTIAL_REDUCER_METADATA_FAIL,
+    error,
+    requestId,
+  };
+}
+
+export function createStateAuthInitializeRequestAction(
+  keycloakConfig: KeycloakConfig,
+): StateAuthInitializeRequestAction {
+  return {
+    type: StateAuthActionTypes.STATE_AUTH_INITIALIZE_REQUEST,
+    requestMetadata: {
+      keycloakConfig,
+    },
+    requestId: uuidv4(),
+  };
+}
+
+export function createStateAuthInitializeSuccessAction(
+  partialStateAuthReducerMetadata: StateAuthUpdatePartialReducerMetadataSuccessAction['partialReducerMetadata'],
+  requestId: string,
+): StateAuthInitializeSuccessAction {
+  return {
+    type: StateAuthActionTypes.STATE_AUTH_INITIALIZE_SUCCESS,
+    partialReducerMetadata: partialStateAuthReducerMetadata,
+    requestId,
+  };
+}
+
+export function createStateAuthInitializeFailAction(
+  error: string,
+  requestId: string,
+): StateAuthInitializeFailAction {
+  return {
+    type: StateAuthActionTypes.STATE_AUTH_INITIALIZE_FAIL,
     error,
     requestId,
   };
