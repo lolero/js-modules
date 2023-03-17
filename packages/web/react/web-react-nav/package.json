@@ -15,7 +15,6 @@
     "@fortawesome/free-brands-svg-icons": "^6.2.1",
     "@fortawesome/free-regular-svg-icons": "^6.2.1",
     "@fortawesome/free-solid-svg-icons": "^6.2.1",
-    "@js-modules/apps-dapp-common-constants": "workspace:^0.0.0",
     "@js-modules/common-react-hooks": "workspace:^0.0.0",
     "@js-modules/web-react-components": "workspace:^0.0.0",
     "@js-modules/web-react-hooks": "workspace:^0.0.0",

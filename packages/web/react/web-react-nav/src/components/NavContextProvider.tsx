@@ -37,7 +37,7 @@ export const NavContextProvider: React.FC<NavContextProviderProps> = ({
 
   const navContextValue: NavContextValue = useMemo(() => {
     return {
-      nonAuthenticatedRedirectPath,
+      nonAuthorizedRedirectPath: nonAuthenticatedRedirectPath,
       showNavLeftDrawerString,
       hideNavLeftDrawerString,
       showNavRightDrawerString,

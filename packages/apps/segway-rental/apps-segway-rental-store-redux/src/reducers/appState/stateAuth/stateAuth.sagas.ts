@@ -72,7 +72,7 @@ export function* stateAuthEventListenerSaga(): Generator<
     if (authUser) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      axiosRequestSetAuthHeader(authUser.accessToken);
+      axiosRequestSetAuthHeader(authUser.accessToken ?? null);
 
       const { data: nodeUserRaw } = (yield call(
         nodeUsersGetOneService,

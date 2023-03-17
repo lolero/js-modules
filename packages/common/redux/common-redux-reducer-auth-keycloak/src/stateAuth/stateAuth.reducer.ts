@@ -17,29 +17,29 @@ export function stateAuthReducer(
   action: StateAuthReducerHittingAction,
 ): StateAuthReducer {
   switch (action.type) {
-    case StateAuthActionTypes.STATE_AUTH_UPDATE_PARTIAL_REDUCER_METADATA_REQUEST:
+    case StateAuthActionTypes.STATE_AUTH__INITIALIZE__REQUEST:
       return handleRequest(state, action);
-    case StateAuthActionTypes.STATE_AUTH_UPDATE_PARTIAL_REDUCER_METADATA_SUCCESS:
-      return handleSavePartialReducerMetadata(state, action);
-    case StateAuthActionTypes.STATE_AUTH_UPDATE_PARTIAL_REDUCER_METADATA_FAIL:
-      return handleFail(state, action);
-    case StateAuthActionTypes.STATE_AUTH_INITIALIZE_REQUEST:
-      return handleRequest(state, action);
-    case StateAuthActionTypes.STATE_AUTH_INITIALIZE_SUCCESS:
+    case StateAuthActionTypes.STATE_AUTH__INITIALIZE__SUCCESS:
       return handleSaveNothing(state, action);
-    case StateAuthActionTypes.STATE_AUTH_INITIALIZE_FAIL:
+    case StateAuthActionTypes.STATE_AUTH__INITIALIZE__FAIL:
       return handleFail(state, action);
-    case StateAuthActionTypes.STATE_AUTH_SIGNIN_REQUEST:
+    case StateAuthActionTypes.STATE_AUTH__SIGNIN__REQUEST:
       return handleRequest(state, action);
-    case StateAuthActionTypes.STATE_AUTH_SIGNIN_SUCCESS:
+    case StateAuthActionTypes.STATE_AUTH__SIGNIN__SUCCESS:
       return handleSaveNothing(state, action);
-    case StateAuthActionTypes.STATE_AUTH_SIGNIN_FAIL:
+    case StateAuthActionTypes.STATE_AUTH__SIGNIN__FAIL:
       return handleFail(state, action);
-    case StateAuthActionTypes.STATE_AUTH_SIGNOUT_REQUEST:
+    case StateAuthActionTypes.STATE_AUTH__SIGNOUT__REQUEST:
       return handleRequest(state, action);
-    case StateAuthActionTypes.STATE_AUTH_SIGNOUT_SUCCESS:
+    case StateAuthActionTypes.STATE_AUTH__SIGNOUT__SUCCESS:
+      return handleSaveNothing(state, action);
+    case StateAuthActionTypes.STATE_AUTH__SIGNOUT__FAIL:
+      return handleFail(state, action);
+    case StateAuthActionTypes.STATE_AUTH__UPDATE_PARTIAL_REDUCER_METADATA__REQUEST:
+      return handleRequest(state, action);
+    case StateAuthActionTypes.STATE_AUTH__UPDATE_PARTIAL_REDUCER_METADATA__SUCCESS:
       return handleSavePartialReducerMetadata(state, action);
-    case StateAuthActionTypes.STATE_AUTH_SIGNOUT_FAIL:
+    case StateAuthActionTypes.STATE_AUTH__UPDATE_PARTIAL_REDUCER_METADATA__FAIL:
       return handleFail(state, action);
     default:
       return state;

@@ -12,6 +12,10 @@
     "build": "tsc -b tsconfig.build.json"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.2.1",
+    "@fortawesome/free-brands-svg-icons": "^6.2.1",
+    "@fortawesome/free-regular-svg-icons": "^6.2.1",
+    "@fortawesome/free-solid-svg-icons": "^6.2.1",
     "@js-modules/common-utils-general": "workspace:^0.0.0",
     "@types/lodash": "^4.14.191",
     "lodash": "^4.17.21"

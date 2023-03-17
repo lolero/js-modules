@@ -1,12 +1,12 @@
 import React from 'react';
 import Tabs from '@mui/material/Tabs';
 import { useNavLeftDrawerTabs } from '@js-modules/web-react-nav';
-import { publicWorkspaceNavDrawerTabsMetadata } from '../constants/publicWorkspace.constants';
+import { publicModulesRoutesMetadata } from '@js-modules/apps-travel-log-common-constants';
 
 export const PublicWorkspaceNavDrawerContentBox: React.FunctionComponent =
   () => {
     const { tabsValue, tabs } = useNavLeftDrawerTabs(
-      publicWorkspaceNavDrawerTabsMetadata,
+      publicModulesRoutesMetadata,
     );
 
     return (

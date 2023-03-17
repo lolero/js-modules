@@ -9,13 +9,11 @@ import {
 import type { SortOrder } from './requests.types';
 import { ValidatorIsNumberStringOrNull } from '../validators/validator.isNumberStringOrNull';
 
+// TODO: add FindManyForeignKeysDtoT, FindManyNumberRangesDtoT,
+//  FindManyDateRangesDtoT,
 export class RequestsDtoQueryParamsFindMany<FindManyUniqueKeysDtoT, SortByT> {
   @ValidateNested()
   uniqueKeys?: FindManyUniqueKeysDtoT;
-
-  @IsString()
-  @IsOptional()
-  search?: string;
 
   @Validate(ValidatorIsNumberStringOrNull, { each: true })
   @IsOptional()
@@ -28,6 +26,10 @@ export class RequestsDtoQueryParamsFindMany<FindManyUniqueKeysDtoT, SortByT> {
   @Validate(ValidatorIsNumberStringOrNull, { each: true })
   @IsOptional()
   deletedAtRange?: [number | string | null, number | string | null];
+
+  @IsString()
+  @IsOptional()
+  search?: string;
 
   @IsString()
   @IsOptional()

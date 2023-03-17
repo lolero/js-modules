@@ -18,10 +18,10 @@ export function getRequestsDtoQueryParamsFindManyFixture<
     resultsPerPage: 10,
   };
 
-  const requestsDtoQueryParamsFindMany = Object.assign(
-    requestsDtoQueryParamsFindManyDefault,
-    overrides,
-  );
+  const requestsDtoQueryParamsFindMany: RequestsDtoQueryParamsFindMany<
+    FindManyUniqueKeysDtoT,
+    SortByT
+  > = Object.assign(requestsDtoQueryParamsFindManyDefault, overrides);
 
   return requestsDtoQueryParamsFindMany;
 }

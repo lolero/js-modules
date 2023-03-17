@@ -1,0 +1,42 @@
+###
+# @name Users Hello World!
+GET {{baseUri}}/users/hello-world
+
+###
+# @name Users Get My Balance
+GET {{baseUri}}/users/my-balance
+Authorization: Bearer {{bearerToken}}
+
+###
+# @name Users Deposit
+POST {{baseUri}}/users/deposit
+Authorization: Bearer {{bearerToken}}
+Content-Type: application/json
+
+{
+  "amount": 10
+}
+
+###
+# @name Users Deposit
+POST {{baseUri}}/users/purchase
+Authorization: Bearer {{bearerToken}}
+Content-Type: application/json
+
+{
+  "purchases": {
+    "1": {
+      "productId": 1,
+      "quantity": 2
+    },
+    "2": {
+      "productId": 2,
+      "quantity": 2
+    }
+  }
+}
+
+###
+# @name Users Reset
+GET {{baseUri}}/users
+Authorization: Bearer {{bearerToken}}

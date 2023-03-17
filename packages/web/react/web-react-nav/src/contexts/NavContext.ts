@@ -8,7 +8,7 @@ export enum NavDrawerDisplayStatus {
 }
 
 export type NavContextValue = {
-  nonAuthenticatedRedirectPath: string;
+  nonAuthorizedRedirectPath: string;
   navLeftDrawerDisplayStatus: NavDrawerDisplayStatus;
   setNavLeftDrawerDisplayStatus: (
     navLeftDrawerDisplayStatus: NavDrawerDisplayStatus,
@@ -28,7 +28,7 @@ export type NavContextValue = {
 };
 
 export const NavContext = React.createContext<NavContextValue>({
-  nonAuthenticatedRedirectPath: '/',
+  nonAuthorizedRedirectPath: '/',
   navLeftDrawerDisplayStatus: NavDrawerDisplayStatus.expanded,
   setNavLeftDrawerDisplayStatus: noop,
   navRightDrawerDisplayStatus: NavDrawerDisplayStatus.collapsed,

@@ -2,27 +2,30 @@ import React from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 import {
+  AUTH_BASE_URI,
   MyModules,
+  myModulesRoutesMetadata,
   PublicModules,
+  publicModulesRoutesMetadata,
 } from '@js-modules/apps-travel-log-common-constants';
 import { MyFeedsRoutes } from '@js-modules/apps-travel-log-web-my-feeds';
 import {
   HomeWorkspaceBox,
   PurposeWorkspaceBox,
 } from '@js-modules/apps-travel-log-web-site';
-import { useInitializeKeycloak } from '@js-modules/apps-travel-log-common-store-redux';
+import { useStateAuthInitializeKeycloak } from '@js-modules/apps-travel-log-common-store-redux';
 import { KeycloakConfig } from 'keycloak-js';
 
 const keycloakConfig: KeycloakConfig = {
-  url: 'http://localhost:8080/',
+  url: AUTH_BASE_URI,
   realm: 'travel-log',
   clientId: 'client-web',
 };
 
 export const TravelLogRoutes: React.FunctionComponent = () => {
   const {
-    authMetadata: { isKeycloakReady, isAuthenticated },
-  } = useInitializeKeycloak(keycloakConfig);
+    reducerMetadata: { isKeycloakReady, isAuthenticated },
+  } = useStateAuthInitializeKeycloak(keycloakConfig);
 
   if (!isKeycloakReady) {
     // TODO: create loading workspace with skeletons instead of this ugly
@@ -31,8 +34,8 @@ export const TravelLogRoutes: React.FunctionComponent = () => {
   }
 
   const rootPath = !isAuthenticated
-    ? `/${PublicModules.home}`
-    : `/${MyModules.myFeeds}`;
+    ? publicModulesRoutesMetadata[PublicModules.home].path
+    : myModulesRoutesMetadata[MyModules.myFeeds].path;
 
   return (
     <Routes>

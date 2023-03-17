@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import {
-  modulePaths,
+  dappRoutesMetadata,
   Modules,
   SubModulesAnalytics,
 } from '@js-modules/apps-dapp-common-constants';
@@ -26,7 +26,9 @@ export const WebAnalyticsRoutes: React.FunctionComponent = () => {
       />
       <Route
         path="*"
-        element={<Navigate replace to={modulePaths[Modules.analytics]} />}
+        element={
+          <Navigate replace to={dappRoutesMetadata[Modules.analytics].path} />
+        }
       />
     </Routes>
   );

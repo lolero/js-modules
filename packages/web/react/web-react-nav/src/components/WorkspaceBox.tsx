@@ -27,9 +27,9 @@ export type WorkspaceBoxProps = {
   navRightDrawerFooter?: React.ReactNode;
   workspaceTopToolbar: React.ReactNode;
   workspaceContent: React.ReactNode;
-  isAuthenticatedRequired?: boolean;
-  getIsAuthenticatedCallback?: () => boolean;
-  onNotAuthenticatedCallback?: () => void;
+  isAuthorizedRequired?: boolean;
+  getIsAuthorizedCallback?: () => boolean;
+  onNotAuthorizedCallback?: () => void;
   contentSx?: BoxProps['sx'];
 };
 
@@ -44,15 +44,15 @@ export const WorkspaceBox: React.FC<WorkspaceBoxProps> = ({
   navRightDrawerFooter,
   workspaceTopToolbar,
   workspaceContent,
-  isAuthenticatedRequired,
-  getIsAuthenticatedCallback,
-  onNotAuthenticatedCallback,
+  isAuthorizedRequired,
+  getIsAuthorizedCallback,
+  onNotAuthorizedCallback,
   contentSx,
 }) => {
   const navigate = useNavigate();
 
   const {
-    nonAuthenticatedRedirectPath,
+    nonAuthorizedRedirectPath,
     setNavLeftDrawerDisplayStatus,
     navLeftDrawerCollapsedWidth,
   } = useContext(NavContext);
@@ -140,22 +140,22 @@ export const WorkspaceBox: React.FC<WorkspaceBoxProps> = ({
   }, [isMobile, isMobilePrevious, setNavLeftDrawerDisplayStatus]);
 
   useEffect(() => {
-    if (isAuthenticatedRequired && !getIsAuthenticatedCallback?.()) {
-      if (onNotAuthenticatedCallback) {
-        onNotAuthenticatedCallback();
+    if (isAuthorizedRequired && !getIsAuthorizedCallback?.()) {
+      if (onNotAuthorizedCallback) {
+        onNotAuthorizedCallback();
       } else {
-        navigate(nonAuthenticatedRedirectPath, { replace: true });
+        navigate(nonAuthorizedRedirectPath, { replace: true });
       }
     }
   }, [
-    getIsAuthenticatedCallback,
-    isAuthenticatedRequired,
+    getIsAuthorizedCallback,
+    isAuthorizedRequired,
     navigate,
-    nonAuthenticatedRedirectPath,
-    onNotAuthenticatedCallback,
+    nonAuthorizedRedirectPath,
+    onNotAuthorizedCallback,
   ]);
 
-  if (isAuthenticatedRequired && !getIsAuthenticatedCallback?.()) {
+  if (isAuthorizedRequired && !getIsAuthorizedCallback?.()) {
     return null;
   }
 

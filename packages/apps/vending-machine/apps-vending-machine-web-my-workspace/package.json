@@ -1,0 +1,36 @@
+{
+  "private": true,
+  "name": "@js-modules/apps-vending-machine-web-my-workspace",
+  "description": "Apps Vending Machine Web My Workspace",
+  "version": "0.0.0",
+  "license": "MIT",
+  "main": "build/index",
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "build": "tsc -b tsconfig.build.json"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.2.1",
+    "@fortawesome/free-brands-svg-icons": "^6.2.1",
+    "@fortawesome/free-regular-svg-icons": "^6.2.1",
+    "@fortawesome/free-solid-svg-icons": "^6.2.1",
+    "@js-modules/apps-vending-machine-common-constants": "workspace:^0.0.0",
+    "@js-modules/apps-vending-machine-common-store-redux": "workspace:^0.0.0",
+    "@js-modules/apps-vending-machine-web-components": "workspace:^0.0.0",
+    "@js-modules/web-react-components": "workspace:^0.0.0",
+    "@js-modules/web-react-hooks": "workspace:^0.0.0",
+    "@js-modules/web-react-nav": "workspace:^0.0.0",
+    "@mui/material": "^5.11.6",
+    "@types/lodash": "^4.14.191",
+    "@types/react": "^18.0.27",
+    "@types/react-dom": "^18.0.10",
+    "@types/react-redux": "^7.1.25",
+    "lodash": "^4.17.21",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-redux": "^8.0.5",
+    "react-router-dom": "^6.8.0"
+  }
+}

@@ -1,0 +1,48 @@
+###
+# @name Products Hello World!
+GET {{baseUri}}/products/hello-world
+
+###
+# @name Products Create One Product
+POST {{baseUri}}/products
+Authorization: Bearer {{bearerToken}}
+Content-Type: application/json
+
+{
+  "name": "product test",
+  "cost": 1,
+  "amountAvailable": 10
+}
+
+###
+# @name Products Get My Products
+GET {{baseUri}}/products/my-products
+Authorization: Bearer {{bearerToken}}
+
+###
+# @name Products Get One
+GET {{baseUri}}/products/1
+Authorization: Bearer {{bearerToken}}
+
+###
+# @name Products Get Many
+GET {{baseUri}}/products
+Authorization: Bearer {{bearerToken}}
+
+###
+# @name Products Create One Product
+PUT {{baseUri}}/products
+Authorization: Bearer {{bearerToken}}
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "product test update",
+  "cost": 1,
+  "amountAvailable": 10
+}
+
+###
+# @name Products Delete One
+DELETE {{baseUri}}/products/5
+Authorization: Bearer {{bearerToken}}

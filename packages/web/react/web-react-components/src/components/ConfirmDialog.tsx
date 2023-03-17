@@ -4,7 +4,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import Icon from '@mui/material/Icon';
+import CircularProgress from '@mui/material/CircularProgress';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
@@ -105,7 +105,12 @@ export const ConfirmDialog: React.FunctionComponent<ConfirmDialogProps> = ({
           onClick={onSubmit}
           endIcon={
             actionRequest?.isPending && (
-              <Icon className="fas fa-circle-notch fa-spin" color="inherit" />
+              <CircularProgress
+                sx={{
+                  color: 'primary.contrastText',
+                }}
+                size={20}
+              />
             )
           }
         >

@@ -1,7 +1,8 @@
 import React from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import {
-  modulePaths,
+  dappRoutesMetadata,
+  Modules,
   SubModulesPortfolio,
 } from '@js-modules/apps-dapp-common-constants';
 import { WebTransactionsWorkspaceBox } from './WebTransactionsWorkspaceBox';
@@ -15,7 +16,11 @@ export const WebTransactionsRoutes: React.FunctionComponent = () => {
         element={
           <Navigate
             replace
-            to={modulePaths[SubModulesPortfolio.transactions]}
+            to={
+              dappRoutesMetadata[Modules.portfolio].subRoutes![
+                SubModulesPortfolio.transactions
+              ].path
+            }
           />
         }
       />

@@ -17,8 +17,8 @@ type NavRightDrawerProps = {
   navRightDrawerFooter?: React.ReactNode;
 };
 
-export const NavRightDrawer = forwardRef<HTMLDivElement, NavLeftDrawerProps>(
-  ({ navLeftDrawerContent, navLeftDrawerFooter }, ref) => {
+export const NavRightDrawer = forwardRef<HTMLDivElement, NavRightDrawerProps>(
+  ({ navRightDrawerContent, navRightDrawerFooter }, ref) => {
     return <div>right drawer</div>;
   },
 );

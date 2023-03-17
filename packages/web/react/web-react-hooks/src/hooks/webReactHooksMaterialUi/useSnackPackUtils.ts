@@ -23,7 +23,7 @@ function useSnackPackUtils(autoHideDuration = 5000): SnackPackUtils {
     useState<SnackbarMessageMetadata | null>(null);
   const [isSnackbarOpen, setIsSnackbarOpen] = useState<boolean>(false);
 
-  const closeSnackbarCallback = useCallback((e, reason?: string) => {
+  const closeSnackbarCallback = useCallback((e: any, reason?: string) => {
     if (reason === 'clickaway') {
       return;
     }

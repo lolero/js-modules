@@ -7,11 +7,11 @@ import {
   TravelLogNavToolbar,
 } from '@js-modules/apps-travel-log-web-components';
 import {
-  useLogin,
+  useStateAuthLogin,
   useStateAuthReducerMetadata,
 } from '@js-modules/apps-travel-log-common-store-redux';
 import { useLocation } from 'react-router-dom';
-import { BASE_URI } from '@js-modules/apps-travel-log-common-constants';
+import { WEB_CLIENT_BASE_URI } from '@js-modules/apps-travel-log-common-constants';
 import { MyWorkspaceNavDrawerContentBox } from './MyWorkspaceNavDrawerContentBox';
 import { MyWorkspaceNavToolbarActionsBox } from './MyWorkspaceNavToolbarActionsBox';
 
@@ -31,9 +31,12 @@ export const MyWorkspaceBox: React.FunctionComponent<MyWorkspaceBoxProps> = ({
   const { pathname } = useLocation();
   const { isAuthenticated } = useStateAuthReducerMetadata();
 
-  const { loginCallback } = useLogin(BASE_URI, pathname);
+  const { callback: loginCallback } = useStateAuthLogin(
+    WEB_CLIENT_BASE_URI,
+    pathname,
+  );
 
-  const getIsAuthenticatedCallback = useCallback(() => {
+  const getIsAuthorizedCallback = useCallback(() => {
     return isAuthenticated;
   }, [isAuthenticated]);
 
@@ -54,9 +57,9 @@ export const MyWorkspaceBox: React.FunctionComponent<MyWorkspaceBoxProps> = ({
       navRightDrawerFooter={null}
       workspaceTopToolbar={workspaceTopToolbar}
       workspaceContent={workspaceContent}
-      isAuthenticatedRequired
-      getIsAuthenticatedCallback={getIsAuthenticatedCallback}
-      onNotAuthenticatedCallback={loginCallback}
+      isAuthorizedRequired
+      getIsAuthorizedCallback={getIsAuthorizedCallback}
+      onNotAuthorizedCallback={loginCallback}
       contentSx={contentSx}
     />
   );

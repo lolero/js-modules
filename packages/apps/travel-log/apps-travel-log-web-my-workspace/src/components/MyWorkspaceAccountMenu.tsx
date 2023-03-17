@@ -8,19 +8,19 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import { MuiFaIcon } from '@js-modules/web-react-components';
 import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons/faRightFromBracket';
-import { useLogout } from '@js-modules/apps-travel-log-common-store-redux';
+import { useStateAuthLogout } from '@js-modules/apps-travel-log-common-store-redux';
 import {
-  BASE_URI,
+  WEB_CLIENT_BASE_URI,
   PublicModules,
-  publicModulesPaths,
+  publicModulesRoutesMetadata,
 } from '@js-modules/apps-travel-log-common-constants';
 
 export const MyWorkspaceAccountMenu: React.FC = () => {
   const { menuAnchor, openMenuCallback, closeMenuCallback } = useMenuUtils();
 
-  const { logoutCallback } = useLogout(
-    BASE_URI,
-    publicModulesPaths[PublicModules.home],
+  const { callback: logoutCallback } = useStateAuthLogout(
+    WEB_CLIENT_BASE_URI,
+    publicModulesRoutesMetadata[PublicModules.home].path,
   );
 
   return (

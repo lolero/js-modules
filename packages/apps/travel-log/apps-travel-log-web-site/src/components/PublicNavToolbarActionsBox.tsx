@@ -13,13 +13,13 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { Link } from 'react-router-dom';
 import {
-  BASE_URI,
+  WEB_CLIENT_BASE_URI,
   MyModules,
-  myModulesPaths,
+  myModulesRoutesMetadata,
 } from '@js-modules/apps-travel-log-common-constants';
 import {
-  useLogin,
-  useSignup,
+  useStateAuthLogin,
+  useStateAuthSignup,
 } from '@js-modules/apps-travel-log-common-store-redux';
 
 export const PublicNavToolbarActionsBox: React.FC = () => {
@@ -28,13 +28,16 @@ export const PublicNavToolbarActionsBox: React.FC = () => {
   const { menuAnchor, openMenuCallback, closeMenuCallback } = useMenuUtils();
 
   const {
-    signupCallback,
-    authMetadata: { isAuthenticated },
-  } = useSignup(BASE_URI, myModulesPaths[MyModules.myFeeds]);
+    reducerMetadata: { isAuthenticated },
+    callback: signupCallback,
+  } = useStateAuthSignup(
+    WEB_CLIENT_BASE_URI,
+    myModulesRoutesMetadata[MyModules.myFeeds].path,
+  );
 
-  const { loginCallback } = useLogin(
-    BASE_URI,
-    myModulesPaths[MyModules.myFeeds],
+  const { callback: loginCallback } = useStateAuthLogin(
+    WEB_CLIENT_BASE_URI,
+    myModulesRoutesMetadata[MyModules.myFeeds].path,
   );
 
   return (
@@ -42,7 +45,7 @@ export const PublicNavToolbarActionsBox: React.FC = () => {
       {isAuthenticated && (
         <Button
           component={Link}
-          to={myModulesPaths[MyModules.myFeeds]}
+          to={myModulesRoutesMetadata[MyModules.myFeeds].path}
           size="small"
         >
           Enter app

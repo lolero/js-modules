@@ -6,6 +6,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { PolicyEnforcementMode, TokenValidation } from 'nest-keycloak-connect';
 import { AuthModule } from '@js-modules/api-nest-module-auth-keycloak';
 import { utilGetAuthUsersServiceProvider } from '@js-modules/api-nest-utils';
+import { AUTH_BASE_URI } from '@js-modules/apps-travel-log-common-constants';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { configTypeormDataSourceOptions } from '../../config/config.typeorm.dataSourceOptions';
@@ -21,7 +22,7 @@ import { UsersService } from '../users/users.service';
     TypeOrmModule.forRoot(configTypeormDataSourceOptions),
     AuthModule.register(
       {
-        authServerUrl: 'http://localhost:8080/',
+        authServerUrl: AUTH_BASE_URI,
         realm: 'travel-log',
         clientId: 'client-api-core',
         secret: 'w5uGUrBBWvW9rLRGn0cuhzWTK28k1RhB',

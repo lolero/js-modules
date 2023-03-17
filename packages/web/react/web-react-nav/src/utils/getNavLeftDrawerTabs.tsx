@@ -7,64 +7,79 @@ import Tooltip from '@mui/material/Tooltip';
 import { MuiFaIcon } from '@js-modules/web-react-components';
 import { Link } from 'react-router-dom';
 import isEqual from 'lodash/isEqual';
-import { NavLeftDrawerTabsMetadata } from '../types/navLeftDrawerTabs.types';
+import intersection from 'lodash/intersection';
+import { RoutesMetadata } from '../types/routes.types';
 
 /**
  * Get array of Material UI vertical <Tab />s to populate the <NavLeftDrawer/>,
  * through the 'navLeftDrawerContent' prop of <WorkspaceBox />
  *
- * @param {NavLeftDrawerTabsMetadata} tabsMetadata - The metadata for the
+ * @param {RoutesMetadata} routesMetadata - The metadata for the
  * navigation's <Tab /> tree
  * @param {number} depthLevel - The navigation tree's depth level for which tabs
  * are being retrieved in the function call
  * @param {string} tabsValue - The selected tab's value
- * @param {boolean} isExpanded - Whether or not the <NavLeftDrawer /> is
+ * @param {boolean} isNavLeftDrawerExpanded - Whether or not the <NavLeftDrawer /> is
  * expanded
+ * @param {string[]} userRoles - Access roles of the current authenticated user
  * @param {function} onClickCallback - Callback function to close the
  * <NavLeftDrawer /> when navigation to a tab's path occurs
  *
  * @returns {React.ReactNode[]} Array of <Tab />s
  */
 export function getNavLeftDrawerTabs(
-  tabsMetadata: NavLeftDrawerTabsMetadata,
+  routesMetadata: RoutesMetadata,
   depthLevel: number,
   tabsValue: string,
-  isExpanded: boolean,
+  isNavLeftDrawerExpanded: boolean,
+  userRoles: string[],
   onClickCallback: () => void,
 ): React.ReactNode[] {
   const splitTabValue = tabsValue.split('/').slice(1);
 
   const modulesUpToDepthLevel = splitTabValue.slice(0, depthLevel + 1);
 
-  const tabs = values(tabsMetadata).map((tabMetadata) => {
+  const tabs = values(routesMetadata).map((routeMetadata) => {
+    if (routeMetadata.isHidden && routeMetadata.roles) {
+      return null;
+    }
+    if (routeMetadata.roles) {
+      const rolesIntersection = intersection(userRoles, routeMetadata.roles);
+      const isUserAuthorized = rolesIntersection.length > 0;
+      if (!isUserAuthorized) {
+        return null;
+      }
+    }
+
     let icon: React.ReactNode = null;
-    if (isExpanded) {
-      icon = <MuiFaIcon icon={tabMetadata.icon} />;
+    if (isNavLeftDrawerExpanded) {
+      icon = <MuiFaIcon icon={routeMetadata.icon} />;
     } else {
       icon = (
-        <Tooltip title={tabMetadata.label} disableInteractive>
-          <MuiFaIcon icon={tabMetadata.icon} />
+        <Tooltip title={routeMetadata.label} disableInteractive>
+          <MuiFaIcon icon={routeMetadata.icon} />
         </Tooltip>
       );
     }
 
     let label: React.ReactNode = null;
-    if (isExpanded) {
-      label = <Typography variant="body1">{tabMetadata.label}</Typography>;
+    if (isNavLeftDrawerExpanded) {
+      label = <Typography variant="body1">{routeMetadata.label}</Typography>;
     }
 
     let subTabs: React.ReactNode[] = [];
-    if (tabMetadata.subTabs) {
+    if (routeMetadata.subRoutes) {
       subTabs = getNavLeftDrawerTabs(
-        tabMetadata.subTabs,
+        routeMetadata.subRoutes,
         depthLevel + 1,
         tabsValue,
-        isExpanded,
+        isNavLeftDrawerExpanded,
+        userRoles,
         onClickCallback,
       );
     }
 
-    const splitTabPath = tabMetadata.tabPath.split('/').slice(1);
+    const splitTabPath = routeMetadata.path.split('/').slice(1);
     const tabModulesUpToDepthLevel = splitTabPath.slice(0, depthLevel + 1);
     const isSelectedParentTabSx = isEqual(
       tabModulesUpToDepthLevel,
@@ -81,16 +96,16 @@ export function getNavLeftDrawerTabs(
 
     return [
       <Tab
-        key={tabMetadata.tabPath}
+        key={routeMetadata.path}
         sx={{
           ml: 2 * depthLevel,
           ...selectedParentTabSx,
         }}
-        value={tabMetadata.tabPath}
+        value={routeMetadata.path}
         icon={icon}
         label={label}
         component={Link}
-        to={tabMetadata.tabPath}
+        to={routeMetadata.path}
         onClick={onClickCallback}
         iconPosition="start"
       />,

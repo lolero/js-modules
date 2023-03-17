@@ -4,7 +4,10 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import upperCase from 'lodash/upperCase';
 import { BadRequestException } from '@nestjs/common';
 import noop from 'lodash/noop';
-import { requestsUtilGetUniqueKeysWhereFactory } from '@js-modules/api-nest-utils';
+import {
+  requestsUtilGetUniqueKeysWhereFactory,
+  utilsGetFilterDateRange,
+} from '@js-modules/api-nest-utils';
 import { UsersService } from './users.service';
 import { UsersEntity } from './users.entity';
 import {
@@ -22,6 +25,7 @@ jest.mock('@js-modules/api-nest-utils', () => {
     ...originalModule,
     default: jest.fn(),
     requestsUtilGetUniqueKeysWhereFactory: jest.fn(),
+    utilsGetFilterDateRange: jest.fn(),
   };
 });
 
@@ -31,6 +35,7 @@ describe('UsersService', () => {
   const requestsUtilGetUniqueKeysWhereFactoryMock = jest.mocked(
     requestsUtilGetUniqueKeysWhereFactory,
   );
+  const utilsGetFilterDateRangeMock = jest.mocked(utilsGetFilterDateRange);
 
   let usersRepositoryCreateQueryBuilderMock: jest.Mock;
   let usersRepositoryQueryBuilderSelectMock: jest.Mock;
@@ -48,7 +53,6 @@ describe('UsersService', () => {
   let usersRepositorySaveMock: jest.Mock;
   let usersRepositoryMock: Partial<Repository<UsersEntity>>;
 
-  let usersServiceValidatorGetFilterDateRangeMock: jest.Mock;
   let usersServiceValidatorMock: Partial<UsersServiceValidator>;
 
   let usersService: UsersService;
@@ -113,10 +117,7 @@ describe('UsersService', () => {
       save: usersRepositorySaveMock,
     };
 
-    usersServiceValidatorGetFilterDateRangeMock = jest.fn();
-    usersServiceValidatorMock = {
-      getFilterDateRange: usersServiceValidatorGetFilterDateRangeMock,
-    };
+    usersServiceValidatorMock = {};
 
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -137,6 +138,7 @@ describe('UsersService', () => {
 
   afterEach(() => {
     requestsUtilGetUniqueKeysWhereFactoryMock.mockRestore();
+    utilsGetFilterDateRangeMock.mockRestore();
   });
 
   it('Should create an instance of UsersService', () => {
@@ -171,7 +173,7 @@ describe('UsersService', () => {
   });
 
   describe('findMany', () => {
-    let usersServiceValidatorGetFilterDateRangeMockReturnValue: [Date, Date];
+    let utilsGetFilterDateRangeMockReturnValue: [Date, Date];
     let usersRepositoryQueryBuilderGetRawManyMockReturnValue: UsersEntity[];
     let usersDtoFindMany: UsersDtoFindMany;
 
@@ -252,13 +254,13 @@ describe('UsersService', () => {
       );
     });
 
-    it('Should call getFilterDateRange with the passed createdAtRange, if it is defined, and filter the query by the resulting createdAt dates', async () => {
-      usersServiceValidatorGetFilterDateRangeMockReturnValue = [
+    it('Should call utilsGetFilterDateRangeMock with the passed createdAtRange, if it is defined, and filter the query by the resulting createdAt dates', async () => {
+      utilsGetFilterDateRangeMockReturnValue = [
         new Date('2000-01-01'),
         new Date('2001-01-01'),
       ];
-      usersServiceValidatorGetFilterDateRangeMock.mockReturnValue(
-        usersServiceValidatorGetFilterDateRangeMockReturnValue,
+      utilsGetFilterDateRangeMock.mockReturnValue(
+        utilsGetFilterDateRangeMockReturnValue,
       );
 
       usersDtoFindMany = getUsersDtoFindManyFixture({
@@ -266,9 +268,7 @@ describe('UsersService', () => {
       });
       await usersService.findMany(usersDtoFindMany);
 
-      expect(
-        usersServiceValidatorGetFilterDateRangeMock,
-      ).toHaveBeenNthCalledWith(
+      expect(utilsGetFilterDateRangeMock).toHaveBeenNthCalledWith(
         1,
         (usersDtoFindMany.createdAtRange ?? [])[0],
         (usersDtoFindMany.createdAtRange ?? [])[1],
@@ -277,39 +277,35 @@ describe('UsersService', () => {
         1,
         'created_at >= :createdAtFrom',
         {
-          createdAtFrom:
-            usersServiceValidatorGetFilterDateRangeMockReturnValue[0],
+          createdAtFrom: utilsGetFilterDateRangeMockReturnValue[0],
         },
       );
       expect(usersRepositoryQueryBuilderAndWhereMock).toHaveBeenNthCalledWith(
         2,
         'created_at <= :createdAtTo',
         {
-          createdAtTo:
-            usersServiceValidatorGetFilterDateRangeMockReturnValue[1],
+          createdAtTo: utilsGetFilterDateRangeMockReturnValue[1],
         },
       );
     });
 
-    it('Should not call getFilterDateRange or filter the query by createdAt dates if the createdAtRange param is not defined', async () => {
+    it('Should not call utilsGetFilterDateRangeMock or filter the query by createdAt dates if the createdAtRange param is not defined', async () => {
       usersDtoFindMany = getUsersDtoFindManyFixture({
         createdAtRange: undefined,
       });
       await usersService.findMany(usersDtoFindMany);
 
-      expect(
-        usersServiceValidatorGetFilterDateRangeMock,
-      ).not.toHaveBeenCalled();
+      expect(utilsGetFilterDateRangeMock).not.toHaveBeenCalled();
       expect(usersRepositoryQueryBuilderAndWhereMock).not.toHaveBeenCalled();
     });
 
-    it('Should call getFilterDateRange with the passed updatedAtRange, if it is defined, and filter the query by the resulting updatedAt dates', async () => {
-      usersServiceValidatorGetFilterDateRangeMockReturnValue = [
+    it('Should call utilsGetFilterDateRangeMock with the passed updatedAtRange, if it is defined, and filter the query by the resulting updatedAt dates', async () => {
+      utilsGetFilterDateRangeMockReturnValue = [
         new Date('2000-01-01'),
         new Date('2001-01-01'),
       ];
-      usersServiceValidatorGetFilterDateRangeMock.mockReturnValue(
-        usersServiceValidatorGetFilterDateRangeMockReturnValue,
+      utilsGetFilterDateRangeMock.mockReturnValue(
+        utilsGetFilterDateRangeMockReturnValue,
       );
 
       usersDtoFindMany = getUsersDtoFindManyFixture({
@@ -317,9 +313,7 @@ describe('UsersService', () => {
       });
       await usersService.findMany(usersDtoFindMany);
 
-      expect(
-        usersServiceValidatorGetFilterDateRangeMock,
-      ).toHaveBeenNthCalledWith(
+      expect(utilsGetFilterDateRangeMock).toHaveBeenNthCalledWith(
         1,
         (usersDtoFindMany.updatedAtRange ?? [])[0],
         (usersDtoFindMany.updatedAtRange ?? [])[1],
@@ -328,39 +322,35 @@ describe('UsersService', () => {
         1,
         'updated_at >= :updatedAtFrom',
         {
-          updatedAtFrom:
-            usersServiceValidatorGetFilterDateRangeMockReturnValue[0],
+          updatedAtFrom: utilsGetFilterDateRangeMockReturnValue[0],
         },
       );
       expect(usersRepositoryQueryBuilderAndWhereMock).toHaveBeenNthCalledWith(
         2,
         'updated_at <= :updatedAtTo',
         {
-          updatedAtTo:
-            usersServiceValidatorGetFilterDateRangeMockReturnValue[1],
+          updatedAtTo: utilsGetFilterDateRangeMockReturnValue[1],
         },
       );
     });
 
-    it('Should not call getFilterDateRange or filter the query by updatedAt dates if the updatedAtRange param is not defined', async () => {
+    it('Should not call utilsGetFilterDateRangeMock or filter the query by updatedAt dates if the updatedAtRange param is not defined', async () => {
       usersDtoFindMany = getUsersDtoFindManyFixture({
         updatedAtRange: undefined,
       });
       await usersService.findMany(usersDtoFindMany);
 
-      expect(
-        usersServiceValidatorGetFilterDateRangeMock,
-      ).not.toHaveBeenCalled();
+      expect(utilsGetFilterDateRangeMock).not.toHaveBeenCalled();
       expect(usersRepositoryQueryBuilderAndWhereMock).not.toHaveBeenCalled();
     });
 
-    it('Should call getFilterDateRange with the passed deletedAtRange, if it is defined, and filter the query by the resulting deletedAt dates', async () => {
-      usersServiceValidatorGetFilterDateRangeMockReturnValue = [
+    it('Should call utilsGetFilterDateRangeMock with the passed deletedAtRange, if it is defined, and filter the query by the resulting deletedAt dates', async () => {
+      utilsGetFilterDateRangeMockReturnValue = [
         new Date('2000-01-01'),
         new Date('2001-01-01'),
       ];
-      usersServiceValidatorGetFilterDateRangeMock.mockReturnValue(
-        usersServiceValidatorGetFilterDateRangeMockReturnValue,
+      utilsGetFilterDateRangeMock.mockReturnValue(
+        utilsGetFilterDateRangeMockReturnValue,
       );
 
       usersDtoFindMany = getUsersDtoFindManyFixture({
@@ -368,9 +358,7 @@ describe('UsersService', () => {
       });
       await usersService.findMany(usersDtoFindMany);
 
-      expect(
-        usersServiceValidatorGetFilterDateRangeMock,
-      ).toHaveBeenNthCalledWith(
+      expect(utilsGetFilterDateRangeMock).toHaveBeenNthCalledWith(
         1,
         (usersDtoFindMany.deletedAtRange ?? [])[0],
         (usersDtoFindMany.deletedAtRange ?? [])[1],
@@ -379,29 +367,25 @@ describe('UsersService', () => {
         1,
         'deleted_at >= :deletedAtFrom',
         {
-          deletedAtFrom:
-            usersServiceValidatorGetFilterDateRangeMockReturnValue[0],
+          deletedAtFrom: utilsGetFilterDateRangeMockReturnValue[0],
         },
       );
       expect(usersRepositoryQueryBuilderAndWhereMock).toHaveBeenNthCalledWith(
         2,
         'deleted_at <= :deletedAtTo',
         {
-          deletedAtTo:
-            usersServiceValidatorGetFilterDateRangeMockReturnValue[1],
+          deletedAtTo: utilsGetFilterDateRangeMockReturnValue[1],
         },
       );
     });
 
-    it('Should not call getFilterDateRange or filter the query by deletedAt dates if the deletedAtRange param is not defined', async () => {
+    it('Should not call utilsGetFilterDateRangeMock or filter the query by deletedAt dates if the deletedAtRange param is not defined', async () => {
       usersDtoFindMany = getUsersDtoFindManyFixture({
         deletedAtRange: undefined,
       });
       await usersService.findMany(usersDtoFindMany);
 
-      expect(
-        usersServiceValidatorGetFilterDateRangeMock,
-      ).not.toHaveBeenCalled();
+      expect(utilsGetFilterDateRangeMock).not.toHaveBeenCalled();
       expect(usersRepositoryQueryBuilderAndWhereMock).not.toHaveBeenCalled();
     });
 

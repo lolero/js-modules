@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import {
-  modulePaths,
+  dappRoutesMetadata,
   Modules,
   SubModulesPortfolio,
 } from '@js-modules/apps-dapp-common-constants';
@@ -23,7 +23,9 @@ export const WebPortfolioRoutes: React.FunctionComponent = () => {
       />
       <Route
         path="*"
-        element={<Navigate replace to={modulePaths[Modules.portfolio]} />}
+        element={
+          <Navigate replace to={dappRoutesMetadata[Modules.portfolio].path} />
+        }
       />
     </Routes>
   );

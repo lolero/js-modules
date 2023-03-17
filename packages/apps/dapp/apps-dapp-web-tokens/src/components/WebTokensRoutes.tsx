@@ -1,7 +1,8 @@
 import React from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import {
-  modulePaths,
+  dappRoutesMetadata,
+  Modules,
   SubModulesPortfolio,
 } from '@js-modules/apps-dapp-common-constants';
 import { WebTokensWorkspaceBox } from './WebTokensWorkspaceBox';
@@ -13,7 +14,14 @@ export const WebTokensRoutes: React.FunctionComponent = () => {
       <Route
         path="*"
         element={
-          <Navigate replace to={modulePaths[SubModulesPortfolio.tokens]} />
+          <Navigate
+            replace
+            to={
+              dappRoutesMetadata[Modules.portfolio].subRoutes![
+                SubModulesPortfolio.tokens
+              ].path
+            }
+          />
         }
       />
     </Routes>

@@ -63,6 +63,33 @@
       "@js-modules/apps-travel-log-web-site": [
         "apps/travel-log/apps-travel-log-web-site/src"
       ],
+      "@js-modules/apps-vending-machine-api-core-modules": [
+        "apps/vending-machine/apps-vending-machine-api-core-modules/src"
+      ],
+      "@js-modules/apps-vending-machine-common-constants": [
+        "apps/vending-machine/apps-vending-machine-common-constants/src"
+      ],
+      "@js-modules/apps-vending-machine-common-store-redux": [
+        "apps/vending-machine/apps-vending-machine-common-store-redux/src"
+      ],
+      "@js-modules/apps-vending-machine-web-my-products": [
+        "apps/vending-machine/apps-vending-machine-web-my-products/src"
+      ],
+      "@js-modules/apps-vending-machine-web-my-workspace": [
+        "apps/vending-machine/apps-vending-machine-web-my-workspace/src"
+      ],
+      "@js-modules/apps-vending-machine-web-shopping-cart": [
+        "apps/vending-machine/apps-vending-machine-web-shopping-cart/src"
+      ],
+      "@js-modules/apps-vending-machine-web-site": [
+        "apps/vending-machine/apps-vending-machine-web-site/src"
+      ],
+      "@js-modules/apps-vending-machine-web-store": [
+        "apps/vending-machine/apps-vending-machine-web-store/src"
+      ],
+      "@js-modules/apps-vending-machine-web-components": [
+        "apps/vending-machine/apps-vending-machine-web-components/src"
+      ],
       "@js-modules/common-react-hooks": ["common/react/common-react-hooks/src"],
       "@js-modules/common-redux-reducer-auth-keycloak": ["common/redux/common-redux-reducer-auth-keycloak/src"],
       "@js-modules/common-redux-utils-normalized-reducers": ["common/redux/common-redux-utils-normalized-reducers/src"],

@@ -12,7 +12,7 @@ export type DappWorkspaceBoxProps = {
   WorkspaceBoxProps,
   | 'workspaceTopToolbar'
   | 'workspaceContent'
-  | 'isAuthenticatedRequired'
+  | 'isAuthorizedRequired'
   | 'contentSx'
 >;
 
@@ -22,7 +22,7 @@ export const DappWorkspaceBox: React.FunctionComponent<
   title,
   workspaceTopToolbar,
   workspaceContent,
-  isAuthenticatedRequired,
+  isAuthorizedRequired,
   contentSx,
 }) => {
   return (
@@ -37,8 +37,8 @@ export const DappWorkspaceBox: React.FunctionComponent<
       navRightDrawerFooter={null}
       workspaceTopToolbar={workspaceTopToolbar}
       workspaceContent={workspaceContent}
-      isAuthenticatedRequired={isAuthenticatedRequired}
-      getIsAuthenticatedCallback={() => true}
+      isAuthorizedRequired={isAuthorizedRequired}
+      getIsAuthorizedCallback={() => true}
       contentSx={contentSx}
     />
   );

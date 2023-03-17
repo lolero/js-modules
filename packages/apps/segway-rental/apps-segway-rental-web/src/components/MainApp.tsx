@@ -31,7 +31,7 @@ function initApp(): FunctionComponent {
         homePath: '/',
         sideToolbar: <MainNavSideToolbarBox />,
         sideFooter: <MainNavSideFooterBox />,
-        nonAuthenticatedRedirectPath: '/',
+        nonAuthorizedRedirectPath: '/',
         navLeftDrawerDisplayStatus: navSideDrawerDisplayStatus,
         setNavLeftDrawerDisplayStatus: setNavSideDrawerDisplayStatus,
       };

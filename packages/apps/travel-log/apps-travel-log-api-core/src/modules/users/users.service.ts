@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import {
   EntityUniqueKeyValue,
   requestsUtilGetUniqueKeysWhereFactory,
+  utilsGetFilterDateRange,
 } from '@js-modules/api-nest-utils';
 import { AuthUsersService } from '@js-modules/api-nest-module-auth-keycloak';
 import { KeycloakTokenParsed } from 'keycloak-js';
@@ -100,7 +101,7 @@ export class UsersService implements AuthUsersService {
     }
 
     if (usersDtoFindMany.createdAtRange) {
-      const createdAtRange = this.usersServiceValidator.getFilterDateRange(
+      const createdAtRange = utilsGetFilterDateRange(
         usersDtoFindMany.createdAtRange[0],
         usersDtoFindMany.createdAtRange[1],
       );
@@ -113,7 +114,7 @@ export class UsersService implements AuthUsersService {
     }
 
     if (usersDtoFindMany.updatedAtRange) {
-      const updatedAtRange = this.usersServiceValidator.getFilterDateRange(
+      const updatedAtRange = utilsGetFilterDateRange(
         usersDtoFindMany.updatedAtRange[0],
         usersDtoFindMany.updatedAtRange[1],
       );
@@ -126,7 +127,7 @@ export class UsersService implements AuthUsersService {
     }
 
     if (usersDtoFindMany.deletedAtRange) {
-      const deletedAtRange = this.usersServiceValidator.getFilterDateRange(
+      const deletedAtRange = utilsGetFilterDateRange(
         usersDtoFindMany.deletedAtRange[0],
         usersDtoFindMany.deletedAtRange[1],
       );

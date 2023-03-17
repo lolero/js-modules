@@ -6,7 +6,6 @@ import difference from 'lodash/difference';
 import sortedUniq from 'lodash/sortedUniq';
 import sortBy from 'lodash/sortBy';
 import pull from 'lodash/pull';
-import { MAX_DATE_MILLISECONDS } from '@js-modules/common-utils-general';
 import { UsersEntity } from './users.entity';
 import { SystemRolesName } from '../systemRoles/systemRoles.types';
 import { SystemRolesEntity } from '../systemRoles/systemRoles.entity';
@@ -145,14 +144,5 @@ export class UsersServiceValidator {
       sortBy(systemRolesNamesUpdated),
     );
     return systemRolesNamesUpdatedSortedUniq;
-  }
-
-  getFilterDateRange(
-    from: number | string | null,
-    to: number | string | null,
-  ): [Date, Date] {
-    const dateFrom = new Date(from ?? 0);
-    const dateTo = new Date(to ?? MAX_DATE_MILLISECONDS);
-    return [dateFrom, dateTo];
   }
 }
