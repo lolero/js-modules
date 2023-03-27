@@ -1,25 +1,25 @@
 ###
 # @name Users Hello World!
-GET {{baseUri}}/users/hello-world
+GET {{baseUriApiCore}}/users/hello-world
 
 ###
 # @name Users Get My Balance
-GET {{baseUri}}/users/my-balance
+GET {{baseUriApiCore}}/users/my-balance
 Authorization: Bearer {{bearerToken}}
 
 ###
 # @name Users Deposit
-POST {{baseUri}}/users/deposit
+POST {{baseUriApiCore}}/users/deposit
 Authorization: Bearer {{bearerToken}}
 Content-Type: application/json
 
 {
-  "amount": 10
+  "amount": 15
 }
 
 ###
-# @name Users Deposit
-POST {{baseUri}}/users/purchase
+# @name Users Purchase
+POST {{baseUriApiCore}}/users/purchase
 Authorization: Bearer {{bearerToken}}
 Content-Type: application/json
 
@@ -38,5 +38,5 @@ Content-Type: application/json
 
 ###
 # @name Users Reset
-GET {{baseUri}}/users
+POST {{baseUriApiCore}}/users/reset
 Authorization: Bearer {{bearerToken}}

@@ -1,4 +1,6 @@
 import {
+  registerDecorator,
+  ValidationOptions,
   ValidatorConstraint,
   ValidatorConstraintInterface,
 } from 'class-validator';
@@ -7,7 +9,7 @@ import {
   name: 'ValidatorIsNumberOrString',
   async: false,
 })
-export class ValidatorIsNumberOrString implements ValidatorConstraintInterface {
+class ValidatorIsNumberOrString implements ValidatorConstraintInterface {
   validate(value: any) {
     return typeof value === 'number' || typeof value === 'string';
   }
@@ -15,4 +17,16 @@ export class ValidatorIsNumberOrString implements ValidatorConstraintInterface {
   defaultMessage() {
     return '($value) must be a number or a string';
   }
+}
+
+export function isNumberOrString(validationOptions?: ValidationOptions) {
+  return function (object: Object, propertyName: string) {
+    registerDecorator({
+      target: object.constructor,
+      propertyName,
+      options: validationOptions,
+      constraints: [],
+      validator: ValidatorIsNumberOrString,
+    });
+  };
 }

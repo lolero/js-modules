@@ -1,4 +1,4 @@
 ###
 # @name Users Get One
-GET {{baseUri}}/users/1
+GET {{baseUriApiCore}}/users/1
 Authorization: Bearer {{bearerToken}}

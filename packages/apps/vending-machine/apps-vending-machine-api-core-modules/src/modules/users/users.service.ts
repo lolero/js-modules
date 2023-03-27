@@ -25,7 +25,7 @@ export class UsersService implements AuthUsersService {
   async checkIn(
     keycloakTokenParsed: KeycloakTokenParsed,
   ): Promise<UsersEntity> {
-    const usersEntityWithoutId: Omit<
+    const userKeycloak: Omit<
       UsersEntityType,
       'id' | 'balance' | 'createdAt' | 'updatedAt' | 'products'
     > = {
@@ -39,37 +39,35 @@ export class UsersService implements AuthUsersService {
     let usersEntity: UsersEntity | null;
 
     usersEntity = await this.usersRepository.findOneBy({
-      keycloakId: usersEntityWithoutId.keycloakId,
+      keycloakId: userKeycloak.keycloakId,
     });
 
     if (!usersEntity) {
-      const userToCreate = {
-        ...usersEntityWithoutId,
+      const usersEntityWithoutId = {
+        ...userKeycloak,
         balance: 0,
       };
-      usersEntity = await this.usersRepository.create(userToCreate);
+      usersEntity = await this.usersRepository.create(usersEntityWithoutId);
 
       usersEntity = await this.usersRepository.save(usersEntity);
       await usersEntity.products;
       return usersEntity;
     }
 
-    let isUsersEntityFieldChanged = false;
-    keys(usersEntityWithoutId).forEach((key) => {
-      const usersEntityPropKey = key as keyof typeof usersEntityWithoutId;
+    let isKeycloakFieldChanged = false;
+    keys(userKeycloak).forEach((key) => {
+      const usersEntityPropKey = key as keyof typeof userKeycloak;
       if (
-        usersEntityWithoutId[usersEntityPropKey] !==
-        usersEntity![usersEntityPropKey]
+        userKeycloak[usersEntityPropKey] !== usersEntity![usersEntityPropKey]
       ) {
-        isUsersEntityFieldChanged = true;
+        isKeycloakFieldChanged = true;
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        usersEntity[usersEntityPropKey] =
-          usersEntityWithoutId[usersEntityPropKey];
+        usersEntity[usersEntityPropKey] = userKeycloak[usersEntityPropKey];
       }
     });
 
-    if (isUsersEntityFieldChanged) {
+    if (isKeycloakFieldChanged) {
       usersEntity = await this.usersRepository.save(usersEntity);
     }
 

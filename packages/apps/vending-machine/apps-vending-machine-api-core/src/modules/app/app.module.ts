@@ -28,7 +28,7 @@ import { configTypeormDataSourceOptions } from '../../config/config.typeorm.data
         authServerUrl: AUTH_BASE_URI,
         realm: 'vending-machine',
         clientId: 'client-api-core',
-        secret: 'a7FalSm2W4THdER6IqrtRJxuubO8vAgv',
+        secret: 'uoItDdPaliri190tg3Dn9gaaokYbHkpU',
         policyEnforcement: PolicyEnforcementMode.PERMISSIVE,
         tokenValidation: TokenValidation.ONLINE,
       },

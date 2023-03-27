@@ -1,20 +1,19 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
-import { Brackets, Repository } from 'typeorm';
+import { Injectable } from '@nestjs/common';
+import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
   EntityUniqueKeyValue,
-  requestsUtilGetUniqueKeysWhereFactory,
-  utilsGetFilterDateRange,
+  utilApplyFindManyFiltersToQuery,
+  utilApplyFindManySortingAndPaginationToQuery,
 } from '@js-modules/api-nest-utils';
 import { AuthUsersService } from '@js-modules/api-nest-module-auth-keycloak';
 import { KeycloakTokenParsed } from 'keycloak-js';
 import keys from 'lodash/keys';
-import isEmpty from 'lodash/isEmpty';
-import upperCase from 'lodash/upperCase';
 import { UsersEntity } from './users.entity';
 import { UsersEntityType, UsersUniqueKeyName } from './users.types';
 import { UsersDtoFindMany } from './users.dto.findMany';
 import { UsersServiceValidator } from './users.service.validator';
+import { UsersDtoUpdateOnePartial } from './users.dto.updateOnePartial';
 
 @Injectable()
 export class UsersService implements AuthUsersService {
@@ -27,7 +26,7 @@ export class UsersService implements AuthUsersService {
   async checkIn(
     keycloakTokenParsed: KeycloakTokenParsed,
   ): Promise<UsersEntity | null> {
-    const usersEntityWithoutId: Omit<
+    const userKeycloak: Omit<
       UsersEntityType,
       'id' | 'createdAt' | 'updatedAt' | 'deletedAt'
     > = {
@@ -43,30 +42,31 @@ export class UsersService implements AuthUsersService {
     let usersEntity: UsersEntity;
 
     usersEntity = await this.usersRepository.findOneBy({
-      keycloakId: usersEntityWithoutId.keycloakId,
+      keycloakId: userKeycloak.keycloakId,
     });
 
     if (!usersEntity) {
+      const usersEntityWithoutId = {
+        ...userKeycloak,
+      };
       usersEntity = await this.usersRepository.create(usersEntityWithoutId);
 
       usersEntity = await this.usersRepository.save(usersEntity);
       return usersEntity;
     }
 
-    let isUsersEntityFieldChanged = false;
-    keys(usersEntityWithoutId).forEach((key) => {
-      const usersEntityPropKey = key as keyof typeof usersEntityWithoutId;
+    let isKeycloakFieldChanged = false;
+    keys(userKeycloak).forEach((key) => {
+      const usersEntityPropKey = key as keyof typeof userKeycloak;
       if (
-        usersEntityWithoutId[usersEntityPropKey] !==
-        usersEntity[usersEntityPropKey]
+        userKeycloak[usersEntityPropKey] !== usersEntity[usersEntityPropKey]
       ) {
-        isUsersEntityFieldChanged = true;
-        usersEntity[usersEntityPropKey] =
-          usersEntityWithoutId[usersEntityPropKey];
+        isKeycloakFieldChanged = true;
+        usersEntity[usersEntityPropKey] = userKeycloak[usersEntityPropKey];
       }
     });
 
-    if (isUsersEntityFieldChanged) {
+    if (isKeycloakFieldChanged) {
       usersEntity = await this.usersRepository.save(usersEntity);
     }
 
@@ -85,102 +85,60 @@ export class UsersService implements AuthUsersService {
   }
 
   async findMany(usersDtoFindMany: UsersDtoFindMany): Promise<UsersEntity[]> {
-    const query = this.usersRepository.createQueryBuilder().select('*');
+    const query = this.usersRepository.createQueryBuilder();
 
-    if (usersDtoFindMany.uniqueKeys && !isEmpty(usersDtoFindMany.uniqueKeys)) {
-      if (usersDtoFindMany.search) {
-        throw new BadRequestException(
-          'filtering by unique keys is only supported on its own. this request also included a search term',
-        );
-      }
+    const queryFiltered = utilApplyFindManyFiltersToQuery<UsersEntity>(
+      query,
+      usersDtoFindMany,
+    );
 
-      const whereFactory = requestsUtilGetUniqueKeysWhereFactory(
-        usersDtoFindMany.uniqueKeys,
+    const querySortedAndPaginated =
+      utilApplyFindManySortingAndPaginationToQuery<UsersEntity>(
+        queryFiltered,
+        usersDtoFindMany,
       );
-      query.where(new Brackets(whereFactory));
-    }
 
-    if (usersDtoFindMany.createdAtRange) {
-      const createdAtRange = utilsGetFilterDateRange(
-        usersDtoFindMany.createdAtRange[0],
-        usersDtoFindMany.createdAtRange[1],
+    return querySortedAndPaginated.getRawMany();
+  }
+
+  async updateOnePartial(
+    usersDtoUpdateOnePartial: UsersDtoUpdateOnePartial,
+    usersEntityCurrent: UsersEntity,
+    currentPassword?: string,
+  ): Promise<UsersEntity> {
+    const query = this.usersRepository.createQueryBuilder();
+
+    const queryFiltered = utilApplyFindManyFiltersToQuery<UsersEntity>(
+      query,
+      usersDtoFindMany,
+    );
+
+    const querySortedAndPaginated =
+      utilApplyFindManySortingAndPaginationToQuery<UsersEntity>(
+        queryFiltered,
+        usersDtoFindMany,
       );
-      query.andWhere('created_at >= :createdAtFrom', {
-        createdAtFrom: createdAtRange[0],
-      });
-      query.andWhere('created_at <= :createdAtTo', {
-        createdAtTo: createdAtRange[1],
-      });
-    }
 
-    if (usersDtoFindMany.updatedAtRange) {
-      const updatedAtRange = utilsGetFilterDateRange(
-        usersDtoFindMany.updatedAtRange[0],
-        usersDtoFindMany.updatedAtRange[1],
+    return querySortedAndPaginated.getRawMany();
+  }
+
+  async deleteOne(
+    usersEntityCurrent: UsersEntity,
+    currentPassword?: string,
+  ): Promise<UsersEntity> {
+    const query = this.usersRepository.createQueryBuilder();
+
+    const queryFiltered = utilApplyFindManyFiltersToQuery<UsersEntity>(
+      query,
+      usersDtoFindMany,
+    );
+
+    const querySortedAndPaginated =
+      utilApplyFindManySortingAndPaginationToQuery<UsersEntity>(
+        queryFiltered,
+        usersDtoFindMany,
       );
-      query.andWhere('updated_at >= :updatedAtFrom', {
-        updatedAtFrom: updatedAtRange[0],
-      });
-      query.andWhere('updated_at <= :updatedAtTo', {
-        updatedAtTo: updatedAtRange[1],
-      });
-    }
 
-    if (usersDtoFindMany.deletedAtRange) {
-      const deletedAtRange = utilsGetFilterDateRange(
-        usersDtoFindMany.deletedAtRange[0],
-        usersDtoFindMany.deletedAtRange[1],
-      );
-      query.andWhere('deleted_at >= :deletedAtFrom', {
-        deletedAtFrom: deletedAtRange[0],
-      });
-      query.andWhere('deleted_at <= :deletedAtTo', {
-        deletedAtTo: deletedAtRange[1],
-      });
-    }
-
-    if (usersDtoFindMany.search) {
-      query.andWhere('username = :username', {
-        username: usersDtoFindMany.search,
-      });
-      query.andWhere('email = :email', { email: usersDtoFindMany.search });
-      query.andWhere('phone_number = :phoneNumber', {
-        phoneNumber: usersDtoFindMany.search,
-      });
-      query.andWhere('first_name = :firstName', {
-        firstName: usersDtoFindMany.search,
-      });
-      query.andWhere('middle_name = :middleName', {
-        middleName: usersDtoFindMany.search,
-      });
-      query.andWhere('last_name = :lastName', {
-        lastName: usersDtoFindMany.search,
-      });
-    }
-
-    let skip = 0;
-    if (
-      usersDtoFindMany.resultsPerPage &&
-      usersDtoFindMany.page &&
-      usersDtoFindMany.page > 1
-    ) {
-      skip = usersDtoFindMany.resultsPerPage * (usersDtoFindMany.page - 1);
-    }
-
-    let take = Infinity;
-    if (usersDtoFindMany.resultsPerPage) {
-      take = usersDtoFindMany.resultsPerPage;
-    }
-
-    query
-      .orderBy(
-        ':sortBy',
-        upperCase(usersDtoFindMany.sortOrder ?? 'asc') as 'ASC' | 'DESC',
-      )
-      .setParameters({ sortBy: usersDtoFindMany.sortBy ?? 'username' })
-      .skip(skip)
-      .take(take);
-
-    return query.getRawMany();
+    return querySortedAndPaginated.getRawMany();
   }
 }

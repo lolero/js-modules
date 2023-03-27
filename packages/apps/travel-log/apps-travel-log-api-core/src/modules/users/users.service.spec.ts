@@ -5,8 +5,8 @@ import upperCase from 'lodash/upperCase';
 import { BadRequestException } from '@nestjs/common';
 import noop from 'lodash/noop';
 import {
-  requestsUtilGetUniqueKeysWhereFactory,
-  utilsGetFilterDateRange,
+  utilGetFindManyUniqueKeysWhereFactory,
+  utilGetFindManyDateRange,
 } from '@js-modules/api-nest-utils';
 import { UsersService } from './users.service';
 import { UsersEntity } from './users.entity';
@@ -33,9 +33,9 @@ describe('UsersService', () => {
   let usersEntities: UsersEntity[];
 
   const requestsUtilGetUniqueKeysWhereFactoryMock = jest.mocked(
-    requestsUtilGetUniqueKeysWhereFactory,
+    utilGetFindManyUniqueKeysWhereFactory,
   );
-  const utilsGetFilterDateRangeMock = jest.mocked(utilsGetFilterDateRange);
+  const utilsGetFilterDateRangeMock = jest.mocked(utilGetFindManyDateRange);
 
   let usersRepositoryCreateQueryBuilderMock: jest.Mock;
   let usersRepositoryQueryBuilderSelectMock: jest.Mock;

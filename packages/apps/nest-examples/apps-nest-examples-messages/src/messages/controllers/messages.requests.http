@@ -1,14 +1,14 @@
 ###
 # @name Messages Get Many
-GET {{baseUri}}/messages
+GET {{baseUriApiCore}}/messages
 
 ###
 # @name Messages Get One
-GET {{baseUri}}/messages/877
+GET {{baseUriApiCore}}/messages/877
 
 ###
 # @name Messages Create One
-POST {{baseUri}}/messages
+POST {{baseUriApiCore}}/messages
 content-type: application/json
 
 {

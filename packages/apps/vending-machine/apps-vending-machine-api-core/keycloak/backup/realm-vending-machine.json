@@ -1869,7 +1869,7 @@
     "port": "1025",
     "host": "mailhog",
     "replyTo": "",
-    "from": "from-vending-machine-realm@mail.com",
+    "from": "from-realm-vending-machine@mail.com",
     "fromDisplayName": "",
     "envelopeFrom": "",
     "ssl": "false"

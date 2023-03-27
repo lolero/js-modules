@@ -1,9 +1,9 @@
 ###
 # @name App Hello world
-GET {{baseUri}}/hello-world
+GET {{baseUriApiCore}}/hello-world
 
 
 ###
 # @name App Who Am I
-GET {{baseUri}}/who-am-i
+GET {{baseUriApiCore}}/who-am-i
 Authorization: Bearer {{bearerToken}}

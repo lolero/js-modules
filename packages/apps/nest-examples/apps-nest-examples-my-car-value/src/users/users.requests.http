@@ -1,14 +1,14 @@
 ###
 # @name Users Get Many
-GET {{baseUri}}/users?email=c@c.com
+GET {{baseUriApiCore}}/users?email=c@c.com
 
 ###
 # @name Users Get One
-GET {{baseUri}}/users/044ccd72-d9aa-4b13-ae08-b70f3be7bd18
+GET {{baseUriApiCore}}/users/044ccd72-d9aa-4b13-ae08-b70f3be7bd18
 
 ###
 # @name Users Update One Partial
-PATCH {{baseUri}}/auth/1
+PATCH {{baseUriApiCore}}/auth/1
 Content-Type: application/json
 
 {

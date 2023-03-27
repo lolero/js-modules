@@ -1,10 +1,10 @@
 ###
 # @name Products Hello World!
-GET {{baseUri}}/products/hello-world
+GET {{baseUriApiCore}}/products/hello-world
 
 ###
 # @name Products Create One Product
-POST {{baseUri}}/products
+POST {{baseUriApiCore}}/products
 Authorization: Bearer {{bearerToken}}
 Content-Type: application/json
 
@@ -16,22 +16,22 @@ Content-Type: application/json
 
 ###
 # @name Products Get My Products
-GET {{baseUri}}/products/my-products
+GET {{baseUriApiCore}}/products/my-products
 Authorization: Bearer {{bearerToken}}
 
 ###
 # @name Products Get One
-GET {{baseUri}}/products/1
+GET {{baseUriApiCore}}/products/1
 Authorization: Bearer {{bearerToken}}
 
 ###
 # @name Products Get Many
-GET {{baseUri}}/products
+GET {{baseUriApiCore}}/products
 Authorization: Bearer {{bearerToken}}
 
 ###
-# @name Products Create One Product
-PUT {{baseUri}}/products
+# @name Products Update One Product
+PUT {{baseUriApiCore}}/products
 Authorization: Bearer {{bearerToken}}
 Content-Type: application/json
 
@@ -44,5 +44,5 @@ Content-Type: application/json
 
 ###
 # @name Products Delete One
-DELETE {{baseUri}}/products/5
+DELETE {{baseUriApiCore}}/products/5
 Authorization: Bearer {{bearerToken}}

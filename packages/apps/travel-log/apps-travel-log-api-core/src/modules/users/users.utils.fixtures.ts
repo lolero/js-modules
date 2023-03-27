@@ -1,4 +1,4 @@
-import { getRequestsDtoQueryParamsFindManyFixture } from '@js-modules/api-nest-utils';
+import { utilGetDtoFindManyFixture } from '@js-modules/api-nest-utils';
 import omit from 'lodash/omit';
 import { UsersDtoUpdateOneWhole } from './users.dto.updateOneWhole';
 import { UsersDtoFindMany } from './users.dto.findMany';
@@ -52,7 +52,7 @@ export function getUsersDtoCreateOneFixture(
 export function getUsersDtoFindManyFixture(
   overrides: Partial<UsersDtoFindMany> = {},
 ): UsersDtoFindMany {
-  return getRequestsDtoQueryParamsFindManyFixture<
+  return utilGetDtoFindManyFixture<
     UsersDtoFindManyUniqueKeys,
     UsersDtoFindMany['sortBy']
   >(overrides);

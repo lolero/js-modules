@@ -1,0 +1,16 @@
+###
+# @name Users Get Many
+GET {{baseUriApiCore}}/users?email=c@c.com
+
+###
+# @name Users Get One
+GET {{baseUriApiCore}}/users/1f7b4ff4-68a0-4dfb-bbc1-8535167fbdd8
+
+###
+# @name Users Update One Partial
+PATCH {{baseUriApiCore}}/auth/1
+Content-Type: application/json
+
+{
+  "password": "new password"
+}

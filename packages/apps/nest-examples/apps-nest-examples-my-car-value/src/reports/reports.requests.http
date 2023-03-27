@@ -1,6 +1,6 @@
 ###
 # @name Reports Create One
-POST {{baseUri}}/reports/
+POST {{baseUriApiCore}}/reports/
 Content-Type: application/json
 
 {
@@ -15,7 +15,7 @@ Content-Type: application/json
 
 ###
 # @name Reports Change Approval
-PATCH {{baseUri}}/reports/231a2906-6e9c-42bf-ac8e-cd6cf172435f
+PATCH {{baseUriApiCore}}/reports/231a2906-6e9c-42bf-ac8e-cd6cf172435f
 Content-Type: application/json
 
 {
@@ -24,5 +24,5 @@ Content-Type: application/json
 
 ###
 # @name Reports Get Estimate
-GET {{baseUri}}/reports?make=ford&model=mustang&latitude=45&longitude=45
+GET {{baseUriApiCore}}/reports?make=ford&model=mustang&latitude=45&longitude=45
     &mileage=20000&year=1981

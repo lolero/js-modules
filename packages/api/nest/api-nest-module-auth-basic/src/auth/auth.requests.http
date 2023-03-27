@@ -1,10 +1,10 @@
 ###
 # @name Hello world
-GET {{baseUri}}/auth/hello-world
+GET {{baseUriApiCore}}/auth/hello-world
 
 ###
 # @name Auth Signup
-POST {{baseUri}}/auth/signup
+POST {{baseUriApiCore}}/auth/signup
 Content-Type: application/json
 
 {
@@ -16,7 +16,7 @@ Content-Type: application/json
 
 ###
 # @name Auth Signin
-POST {{baseUri}}/auth/signin
+POST {{baseUriApiCore}}/auth/signin
 Content-Type: application/json
 
 {
@@ -27,8 +27,8 @@ Content-Type: application/json
 
 ###
 # @name Auth Signout
-GET {{baseUri}}/auth/signout
+GET {{baseUriApiCore}}/auth/signout
 
 ###
 # @name Auth Who Am I
-GET {{baseUri}}/auth/whoami
+GET {{baseUriApiCore}}/auth/whoami

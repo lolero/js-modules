@@ -20,7 +20,7 @@ export const StoreWorkspaceContentBox: React.FC = () => {
     <Box
       sx={{
         display: 'flex',
-        flexWrap: 'wrap',
+        flexDirection: 'column',
         gap: 2,
       }}
     >
@@ -34,8 +34,12 @@ export const StoreWorkspaceContentBox: React.FC = () => {
         >
           <Typography>You got change!</Typography>
           {change.map((value, index) => {
-            // eslint-disable-next-line react/no-array-index-key
-            return <Avatar key={`${index}-${value}`}>${value}</Avatar>;
+            return (
+              // eslint-disable-next-line react/no-array-index-key
+              <Avatar key={`${index}-${value}`} sx={{ fontSize: '16px' }}>
+                ${value}
+              </Avatar>
+            );
           })}
         </Box>
       )}
@@ -45,12 +49,24 @@ export const StoreWorkspaceContentBox: React.FC = () => {
           <Skeleton variant="rectangular" width={600} height={60} />
         </>
       )}
-      {values(nodeProducts).map((nodeProduct) => {
-        const nodeProductPk = getPkOfNodeProduct(nodeProduct!);
-        return (
-          <StoreProductCard key={nodeProductPk} nodeProductPk={nodeProductPk} />
-        );
-      })}
+
+      <Box
+        sx={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: 2,
+        }}
+      >
+        {values(nodeProducts).map((nodeProduct) => {
+          const nodeProductPk = getPkOfNodeProduct(nodeProduct!);
+          return (
+            <StoreProductCard
+              key={nodeProductPk}
+              nodeProductPk={nodeProductPk}
+            />
+          );
+        })}
+      </Box>
     </Box>
   );
 };

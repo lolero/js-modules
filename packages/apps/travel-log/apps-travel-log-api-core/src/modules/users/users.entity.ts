@@ -9,9 +9,10 @@ import {
   Entity,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { RequestEntity } from '@js-modules/api-nest-utils';
 
 @Entity('users')
-export class UsersEntity {
+export class UsersEntity implements RequestEntity {
   @PrimaryGeneratedColumn({
     name: 'id',
     type: 'int',

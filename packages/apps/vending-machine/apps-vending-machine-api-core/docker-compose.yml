@@ -9,14 +9,14 @@ networks:
     driver: bridge
 
 services:
-  db-main:
+  db-core:
     image: postgres
     command: ['postgres']
     restart: always
     ports:
       - '5432:5432'
     environment:
-      POSTGRES_DB: main
+      POSTGRES_DB: core
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
   db-auth:
