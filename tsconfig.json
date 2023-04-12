@@ -3,6 +3,9 @@
   "compilerOptions": {
     "baseUrl": "./packages",
     "paths": {
+      "@js-modules/api-nest-keycloak-admin-client-cjs": [
+        "api/nest/api-nest-keycloak-admin-client-cjs/src"
+      ],
       "@js-modules/api-nest-module-auth-basic": [
         "api/nest/api-nest-module-auth-basic/src"
       ],

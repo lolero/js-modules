@@ -35,7 +35,7 @@ services:
       - volume_auth_data:/var/lib/postgresql/data
   auth:
     image: quay.io/keycloak/keycloak
-    command: ['start-dev', '--import-realm']
+    command: ['start-dev', '--import-realm', '--log-level=INFO,org.keycloak.services:DEBUG']
     restart: always
     ports:
       - '8080:8080'

@@ -1,0 +1,20 @@
+{
+  "private": true,
+  "name": "@js-modules/api-nest-keycloak-admin-client-cjs",
+  "description": "Api Nest Keycloak Admin Client Cjs",
+  "version": "0.0.0",
+  "license": "MIT",
+  "main": "build/index",
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "build": "tsc -b tsconfig.build.json && esbuild src/index.ts --platform=node --bundle --format=cjs --outfile=build/index.js"
+  },
+  "dependencies": {
+    "@keycloak/keycloak-admin-client": "^21.0.2"
+  },
+  "devDependencies": {
+    "esbuild": "^0.17.16"
+  }
+}

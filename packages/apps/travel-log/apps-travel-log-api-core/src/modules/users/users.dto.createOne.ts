@@ -9,7 +9,6 @@ import { UsersEntity } from './users.entity';
 
 export class UsersDtoCreateOne {
   @IsUUID()
-  @IsOptional()
   keycloakId: UsersEntity['keycloakId'];
 
   @IsString()

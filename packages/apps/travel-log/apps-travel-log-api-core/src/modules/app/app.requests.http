@@ -7,3 +7,33 @@ GET {{baseUriApiCore}}/hello-world
 # @name App Who Am I
 GET {{baseUriApiCore}}/who-am-i
 Authorization: Bearer {{bearerToken}}
+
+
+###
+# @name Auth public
+POST {{baseUriApiAuthPublic}}/travel-log/protocol/openid-connect/auth
+Content-Type: application/json
+
+{
+  "username": "user1",
+  "password": "Password0!"
+}
+
+
+###
+# @name Auth Admin
+POST {{baseUriApiAuthAdmin}}/travel-log/protocol/openid-connect/token
+Content-Type: application/json
+
+{
+  "grant_type": "client_credentials",
+  "client_id": "client-api-core",
+  "client_secret": "ii0vJvq1eKz8S1vn9sDtmmc2oCHm6zj4",
+  //  "grant_type": "password",
+  //  "username": "admin",
+  //  "password": "admin"
+}
+
+###
+# @name Auth Users
+GET {{baseUriApiAuthAdmin}}/travel-log/users

@@ -23,7 +23,7 @@ import { configTypeormDataSourceOptions } from '../../config/config.typeorm.data
       envFilePath: `.env.${process.env.NODE_ENV}`,
     }),
     TypeOrmModule.forRoot(configTypeormDataSourceOptions),
-    AuthModule.register(
+    AuthModule.registerAsync(
       {
         authServerUrl: AUTH_BASE_URI,
         realm: 'vending-machine',
@@ -31,6 +31,17 @@ import { configTypeormDataSourceOptions } from '../../config/config.typeorm.data
         secret: 'uoItDdPaliri190tg3Dn9gaaokYbHkpU',
         policyEnforcement: PolicyEnforcementMode.PERMISSIVE,
         tokenValidation: TokenValidation.ONLINE,
+      },
+      {
+        connectionConfig: {
+          baseUrl: AUTH_BASE_URI,
+          realmName: 'vending-machine',
+        },
+        credentials: {
+          grantType: 'client_credentials',
+          clientId: 'admin-cli',
+          clientSecret: 'vUb6oPXZD2AmQb2dsKGWmWKpLL3KQTIj',
+        },
       },
       {
         module: UsersModule,

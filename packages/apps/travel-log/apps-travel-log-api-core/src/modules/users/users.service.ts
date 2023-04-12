@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
@@ -6,8 +6,12 @@ import {
   utilApplyFindManyFiltersToQuery,
   utilApplyFindManySortingAndPaginationToQuery,
 } from '@js-modules/api-nest-utils';
-import { AuthUsersService } from '@js-modules/api-nest-module-auth-keycloak';
+import {
+  AuthUsersService,
+  KEYCLOAK_ADMIN_CLIENT,
+} from '@js-modules/api-nest-module-auth-keycloak';
 import { KeycloakTokenParsed } from 'keycloak-js';
+import { KeycloakAdminClient } from '@js-modules/api-nest-keycloak-admin-client-cjs';
 import keys from 'lodash/keys';
 import { UsersEntity } from './users.entity';
 import { UsersEntityType, UsersUniqueKeyName } from './users.types';
@@ -21,6 +25,8 @@ export class UsersService implements AuthUsersService {
     @InjectRepository(UsersEntity)
     private usersRepository: Repository<UsersEntity>,
     private usersServiceValidator: UsersServiceValidator,
+    @Inject(KEYCLOAK_ADMIN_CLIENT)
+    private keycloakAdminClient: KeycloakAdminClient,
   ) {}
 
   async checkIn(
@@ -98,7 +104,10 @@ export class UsersService implements AuthUsersService {
         usersDtoFindMany,
       );
 
-    return querySortedAndPaginated.getRawMany();
+    const usersEntities =
+      await querySortedAndPaginated.getRawMany<UsersEntity>();
+
+    return usersEntities;
   }
 
   async updateOnePartial(
@@ -106,39 +115,18 @@ export class UsersService implements AuthUsersService {
     usersEntityCurrent: UsersEntity,
     currentPassword?: string,
   ): Promise<UsersEntity> {
-    const query = this.usersRepository.createQueryBuilder();
+    const user = await this.keycloakAdminClient.users.findOne({
+      id: usersEntityCurrent.keycloakId,
+    });
 
-    const queryFiltered = utilApplyFindManyFiltersToQuery<UsersEntity>(
-      query,
-      usersDtoFindMany,
-    );
-
-    const querySortedAndPaginated =
-      utilApplyFindManySortingAndPaginationToQuery<UsersEntity>(
-        queryFiltered,
-        usersDtoFindMany,
-      );
-
-    return querySortedAndPaginated.getRawMany();
+    return null as UsersEntity;
   }
 
   async deleteOne(
     usersEntityCurrent: UsersEntity,
     currentPassword?: string,
   ): Promise<UsersEntity> {
-    const query = this.usersRepository.createQueryBuilder();
-
-    const queryFiltered = utilApplyFindManyFiltersToQuery<UsersEntity>(
-      query,
-      usersDtoFindMany,
-    );
-
-    const querySortedAndPaginated =
-      utilApplyFindManySortingAndPaginationToQuery<UsersEntity>(
-        queryFiltered,
-        usersDtoFindMany,
-      );
-
-    return querySortedAndPaginated.getRawMany();
+    await Promise.resolve();
+    return null as UsersEntity;
   }
 }

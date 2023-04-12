@@ -9,6 +9,11 @@ import { UsersDtoDeleteMany } from './users.dto.deleteMany';
 import { UsersEntity } from './users.entity';
 import { UsersEntityType } from './users.types';
 import { UsersDtoFindManyUniqueKeys } from './users.dto.findManyUniqueKeys';
+import { UsersDtoFindManySearch } from './users.dto.findManySearch';
+import { UsersDtoFindManyRelations } from './users.dto.findManyRelations';
+import { UsersDtoFindManyRangesDates } from './users.dto.findManyRangesDates';
+import { UsersDtoFindManyRangesNumber } from './users.dto.findManyRangesNumber';
+import { UsersDtoFindManyRangesString } from './users.dto.findManyRangesString';
 
 export function getUsersEntityFixture(
   overrides: Partial<UsersEntityType> = {},
@@ -53,8 +58,13 @@ export function getUsersDtoFindManyFixture(
   overrides: Partial<UsersDtoFindMany> = {},
 ): UsersDtoFindMany {
   return utilGetDtoFindManyFixture<
+    UsersEntity,
     UsersDtoFindManyUniqueKeys,
-    UsersDtoFindMany['sortBy']
+    UsersDtoFindManySearch,
+    UsersDtoFindManyRelations,
+    UsersDtoFindManyRangesDates,
+    UsersDtoFindManyRangesNumber,
+    UsersDtoFindManyRangesString
   >(overrides);
 }
 

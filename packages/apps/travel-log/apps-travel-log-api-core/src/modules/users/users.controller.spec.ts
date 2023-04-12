@@ -145,8 +145,6 @@ describe('UsersController', () => {
   });
 
   describe('deleteOne', () => {
-    let usersServiceDeleteOneMockReturnValue: UsersEntity;
-
     it('Should call usersService.deleteOne with the currentUser and the submitted currentPassword', async () => {
       await usersController.deleteOne(currentUser, currentPassword);
 
@@ -155,7 +153,6 @@ describe('UsersController', () => {
         currentUser,
         currentPassword,
       );
-      expect(usersEntity).toEqual(usersServiceDeleteOneMockReturnValue);
     });
   });
 });

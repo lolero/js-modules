@@ -18,8 +18,8 @@ export class UsersDtoPublic {
   lastName: UsersEntity['lastName'];
 
   @Expose()
-  @Transform(({ obj }: { obj: Date }) => {
-    return obj?.toISOString();
+  @Transform(({ obj }: { obj: UsersEntity }) => {
+    return obj.createdAt.toISOString();
   })
   createdAt: string;
 }

@@ -12,6 +12,7 @@
     "build": "tsc -b tsconfig.build.json"
   },
   "dependencies": {
+    "@js-modules/api-nest-keycloak-admin-client-cjs": "workspace:^0.0.0",
     "@js-modules/api-nest-utils": "workspace:^0.0.0",
     "@nestjs/common": "^9.2.1",
     "@nestjs/config": "^2.3.1",

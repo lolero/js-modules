@@ -1,21 +1,23 @@
 import { DynamicModule, Global, Module } from '@nestjs/common';
-import { APP_GUARD } from '@nestjs/core';
-import {
-  AuthGuard,
-  KeycloakConnectModule,
-  ResourceGuard,
-  RoleGuard,
-} from 'nest-keycloak-connect';
+import { KeycloakConnectModule } from 'nest-keycloak-connect';
 import { KeycloakConnectOptions } from 'nest-keycloak-connect/interface/keycloak-connect-options.interface';
 import { AuthModuleMetadata } from '@js-modules/api-nest-utils';
-import { AuthUsersService } from './auth.types';
-import { AuthGuardUsersEntityCurrent } from './auth.guard.usersEntityCurrent';
+import { AuthUsersService, KeycloakAdminClientConfig } from './auth.types';
+import {
+  authProviderKeycloakAdminClient,
+  authProviderAuthGuard,
+  authProviderAuthGuardUsersEntityCurrent,
+  authProviderResourceGuard,
+  authProviderRoleGuard,
+  getAuthProviderAdminClientCredentials,
+} from './auth.providers';
 
 @Global()
 @Module({})
 export class AuthModule {
-  static register(
+  static registerAsync(
     keycloakConnectOptions: KeycloakConnectOptions,
+    keycloakAdminClientConfig: KeycloakAdminClientConfig,
     usersModuleMetadata: AuthModuleMetadata<AuthUsersService>,
   ): DynamicModule {
     return {
@@ -25,24 +27,15 @@ export class AuthModule {
         usersModuleMetadata.module,
       ],
       providers: [
-        {
-          provide: APP_GUARD,
-          useClass: AuthGuard,
-        },
-        {
-          provide: APP_GUARD,
-          useClass: ResourceGuard,
-        },
-        {
-          provide: APP_GUARD,
-          useClass: RoleGuard,
-        },
-        {
-          provide: APP_GUARD,
-          useClass: AuthGuardUsersEntityCurrent,
-        },
+        getAuthProviderAdminClientCredentials(keycloakAdminClientConfig),
+        authProviderKeycloakAdminClient,
+        authProviderAuthGuard,
+        authProviderResourceGuard,
+        authProviderRoleGuard,
+        authProviderAuthGuardUsersEntityCurrent,
         usersModuleMetadata.serviceProvider,
       ],
+      exports: [authProviderKeycloakAdminClient],
     };
   }
 }

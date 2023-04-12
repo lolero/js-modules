@@ -2,3 +2,16 @@
 # @name Users Get One
 GET {{baseUriApiCore}}/users/1
 Authorization: Bearer {{bearerToken}}
+
+###
+# @name Users Update One Partial
+PATCH {{baseUriApiCore}}/users
+Authorization: Bearer {{bearerToken}}
+Content-Type: application/json
+
+{
+  "data": {
+    "firstName": "new name"
+  },
+  "currentPassword":  "test_current_password"
+}

@@ -20,14 +20,25 @@ import { UsersService } from '../users/users.service';
       envFilePath: `.env.${process.env.NODE_ENV}`,
     }),
     TypeOrmModule.forRoot(configTypeormDataSourceOptions),
-    AuthModule.register(
+    AuthModule.registerAsync(
       {
         authServerUrl: AUTH_BASE_URI,
         realm: 'travel-log',
         clientId: 'client-api-core',
-        secret: 'w5uGUrBBWvW9rLRGn0cuhzWTK28k1RhB',
+        secret: 'ii0vJvq1eKz8S1vn9sDtmmc2oCHm6zj4',
         policyEnforcement: PolicyEnforcementMode.PERMISSIVE,
         tokenValidation: TokenValidation.ONLINE,
+      },
+      {
+        connectionConfig: {
+          baseUrl: AUTH_BASE_URI,
+          realmName: 'travel-log',
+        },
+        credentials: {
+          grantType: 'client_credentials',
+          clientId: 'admin-cli',
+          clientSecret: 'lp3kus0cbqjcQyPve3k3VBqguALkXWkw',
+        },
       },
       {
         module: UsersModule,
