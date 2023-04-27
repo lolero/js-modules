@@ -12,13 +12,13 @@ import { UsersUpdateOnePartialDto } from './dtos/users.updateOnePartial.dto';
 
 describe('UsersController', () => {
   const currentUser = getUsersEntityFixture({ id: 1000 });
-  const currentPassword = 'test_current_password';
   let usersEntities: UsersEntity[];
   let usersEntity: UsersEntity | null;
 
   let usersServiceFindOneMock: jest.Mock;
   let usersServiceFindManyMock: jest.Mock;
   let usersServiceUpdateOnePartialMock: jest.Mock;
+  let usersServiceResetPasswordMock: jest.Mock;
   let usersServiceDeleteOneMock: jest.Mock;
   let usersServiceMock: Partial<UsersService>;
   let usersController: UsersController;
@@ -27,11 +27,13 @@ describe('UsersController', () => {
     usersServiceFindOneMock = jest.fn();
     usersServiceFindManyMock = jest.fn();
     usersServiceUpdateOnePartialMock = jest.fn();
+    usersServiceResetPasswordMock = jest.fn();
     usersServiceDeleteOneMock = jest.fn();
     usersServiceMock = {
       findOne: usersServiceFindOneMock,
       findMany: usersServiceFindManyMock,
       updateOnePartial: usersServiceUpdateOnePartialMock,
+      resetPassword: usersServiceResetPasswordMock,
       deleteOne: usersServiceDeleteOneMock,
     };
 
@@ -117,42 +119,47 @@ describe('UsersController', () => {
     });
   });
 
-  // describe('updateOnePartial', () => {
-  //   let usersServiceUpdateOnePartialMockReturnValue: UsersEntity;
-  //   let testUsersUpdateOnePartialDto: UsersUpdateOnePartialDto;
-  //
-  //   it('Should call usersService.updateOnePartial with a UsersUpdateOnePartialDto, the currentUser, and the submitted currentPassword, and return the updated users', async () => {
-  //     usersServiceUpdateOnePartialMockReturnValue = getUsersEntityFixture();
-  //     usersServiceUpdateOnePartialMock.mockReturnValue(
-  //       usersServiceUpdateOnePartialMockReturnValue,
-  //     );
-  //
-  //     testUsersUpdateOnePartialDto = getUsersUpdateOnePartialDtoFixture();
-  //     usersEntity = await usersController.updateOnePartial(
-  //       testUsersUpdateOnePartialDto,
-  //       currentUser,
-  //       currentPassword,
-  //     );
-  //
-  //     expect(usersServiceUpdateOnePartialMock).toHaveBeenNthCalledWith(
-  //       1,
-  //       testUsersUpdateOnePartialDto,
-  //       currentUser,
-  //       currentPassword,
-  //     );
-  //     expect(usersEntity).toEqual(usersServiceUpdateOnePartialMockReturnValue);
-  //   });
-  // });
+  describe('updateOnePartial', () => {
+    let usersServiceUpdateOnePartialMockReturnValue: UsersEntity;
+    let testUsersUpdateOnePartialDto: UsersUpdateOnePartialDto;
 
-  describe('deleteOne', () => {
-    it('Should call usersService.deleteOne with the currentUser and the submitted currentPassword', async () => {
-      await usersController.deleteOne(currentUser, currentPassword);
+    it('Should call usersService.updateOnePartial with a UsersUpdateOnePartialDto, the currentUser, and return the updated users', async () => {
+      usersServiceUpdateOnePartialMockReturnValue = getUsersEntityFixture();
+      usersServiceUpdateOnePartialMock.mockReturnValue(
+        usersServiceUpdateOnePartialMockReturnValue,
+      );
 
-      expect(usersServiceDeleteOneMock).toHaveBeenNthCalledWith(
+      testUsersUpdateOnePartialDto = getUsersUpdateOnePartialDtoFixture();
+      usersEntity = await usersController.updateOnePartial(
+        testUsersUpdateOnePartialDto,
+        currentUser,
+      );
+
+      expect(usersServiceUpdateOnePartialMock).toHaveBeenNthCalledWith(
+        1,
+        testUsersUpdateOnePartialDto,
+        currentUser,
+      );
+      expect(usersEntity).toEqual(usersServiceUpdateOnePartialMockReturnValue);
+    });
+  });
+
+  describe('resetPassword', () => {
+    it('Should call usersService.resetPassword with the currentUser', async () => {
+      await usersController.resetPassword(currentUser);
+
+      expect(usersServiceResetPasswordMock).toHaveBeenNthCalledWith(
         1,
         currentUser,
-        currentPassword,
       );
+    });
+  });
+
+  describe('deleteOne', () => {
+    it('Should call usersService.deleteOne with the currentUser', async () => {
+      await usersController.deleteOne(currentUser);
+
+      expect(usersServiceDeleteOneMock).toHaveBeenNthCalledWith(1, currentUser);
     });
   });
 });

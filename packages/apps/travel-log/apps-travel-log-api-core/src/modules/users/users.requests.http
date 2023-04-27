@@ -10,8 +10,10 @@ Authorization: Bearer {{bearerToken}}
 Content-Type: application/json
 
 {
-  "data": {
-    "firstName": "new name"
-  },
-  "currentPassword":  "test_current_password"
+  "firstName": "user1 first"
 }
+
+###
+# @name Users Reset Password
+POST {{baseUriApiCore}}/users/reset-password
+Authorization: Bearer {{bearerToken}}

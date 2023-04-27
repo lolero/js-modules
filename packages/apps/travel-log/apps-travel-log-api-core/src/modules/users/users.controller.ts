@@ -5,6 +5,7 @@ import {
   Get,
   Param,
   Patch,
+  Post,
   Query,
 } from '@nestjs/common';
 import {
@@ -48,30 +49,32 @@ export class UsersController {
 
   @Patch()
   async updateOnePartial(
-    @Body('data')
+    @Body()
     usersUpdateOnePartialDto: UsersUpdateOnePartialDto,
     @AuthDecoratorUsersEntityCurrent()
     usersEntityCurrent: UsersEntity,
-    @Body('currentPassword')
-    currentPassword?: string,
-  ): Promise<boolean> {
-    return true;
-    // const usersEntity = await this.usersService.updateOnePartial(
-    //   usersUpdateOnePartialDto,
-    //   usersEntityCurrent,
-    //   currentPassword,
-    // );
-    //
-    // return usersEntity;
+  ): Promise<UsersEntity> {
+    const usersEntity = await this.usersService.updateOnePartial(
+      usersUpdateOnePartialDto,
+      usersEntityCurrent,
+    );
+
+    return usersEntity;
+  }
+
+  @Post('/reset-password')
+  async resetPassword(
+    @AuthDecoratorUsersEntityCurrent()
+    usersEntityCurrent: UsersEntity,
+  ): Promise<void> {
+    await this.usersService.resetPassword(usersEntityCurrent);
   }
 
   @Delete()
   async deleteOne(
     @AuthDecoratorUsersEntityCurrent()
     usersEntityCurrent: UsersEntity,
-    @Body('currentPassword')
-    currentPassword?: string,
   ): Promise<void> {
-    await this.usersService.deleteOne(usersEntityCurrent, currentPassword);
+    await this.usersService.deleteOne(usersEntityCurrent);
   }
 }

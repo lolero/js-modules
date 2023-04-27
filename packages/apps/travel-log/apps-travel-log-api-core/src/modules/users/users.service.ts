@@ -113,20 +113,35 @@ export class UsersService implements AuthUsersService {
   async updateOnePartial(
     usersUpdateOnePartialDto: UsersUpdateOnePartialDto,
     usersEntityCurrent: UsersEntity,
-    currentPassword?: string,
   ): Promise<UsersEntity> {
-    const user = await this.keycloakAdminClient.users.findOne({
+    const userRepresentation = await this.keycloakAdminClient.users.findOne({
       id: usersEntityCurrent.keycloakId,
     });
 
-    return null as UsersEntity;
+    userRepresentation.firstName = usersUpdateOnePartialDto.firstName;
+    usersEntityCurrent.firstName = usersUpdateOnePartialDto.firstName;
+
+    await this.keycloakAdminClient.users.update(
+      {
+        id: usersEntityCurrent.keycloakId,
+      },
+      userRepresentation,
+    );
+    const usersEntityUpdated = await this.usersRepository.save(
+      usersEntityCurrent,
+    );
+
+    return usersEntityUpdated;
   }
 
-  async deleteOne(
-    usersEntityCurrent: UsersEntity,
-    currentPassword?: string,
-  ): Promise<UsersEntity> {
+  async resetPassword(usersEntityCurrent: UsersEntity): Promise<void> {
+    await this.keycloakAdminClient.users.executeActionsEmail({
+      id: usersEntityCurrent.keycloakId,
+      actions: ['UPDATE_PASSWORD'],
+    });
+  }
+
+  async deleteOne(usersEntityCurrent: UsersEntity): Promise<void> {
     await Promise.resolve();
-    return null as UsersEntity;
   }
 }

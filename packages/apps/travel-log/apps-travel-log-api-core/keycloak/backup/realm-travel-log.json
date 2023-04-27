@@ -82,6 +82,22 @@
         "attributes": {}
       },
       {
+        "id": "cd55f3df-1b1e-4fa6-825c-ff8d595bfe55",
+        "name": "realm-role-admin-cli-manage-users",
+        "description": "",
+        "composite": true,
+        "composites": {
+          "client": {
+            "realm-management": [
+              "manage-users"
+            ]
+          }
+        },
+        "clientRole": false,
+        "containerId": "4218f2b7-4a1e-4077-9ff3-df583068df6b",
+        "attributes": {}
+      },
+      {
         "id": "276f23bf-1929-49ad-bbf7-9051150a385b",
         "name": "default-roles-travel-log",
         "description": "${role_default-roles}",
@@ -524,9 +540,9 @@
   "otpPolicyPeriod": 30,
   "otpPolicyCodeReusable": false,
   "otpSupportedApplications": [
+    "totpAppGoogleName",
     "totpAppMicrosoftAuthenticatorName",
-    "totpAppFreeOTPName",
-    "totpAppGoogleName"
+    "totpAppFreeOTPName"
   ],
   "webAuthnPolicyRpEntityName": "keycloak",
   "webAuthnPolicySignatureAlgorithms": [
@@ -564,6 +580,7 @@
       "disableableCredentialTypes": [],
       "requiredActions": [],
       "realmRoles": [
+        "realm-role-admin-cli-manage-users",
         "default-roles-travel-log"
       ],
       "notBefore": 0,
