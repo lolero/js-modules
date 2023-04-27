@@ -1,19 +1,19 @@
 import { utilGetDtoFindManyFixture } from '@js-modules/api-nest-utils';
 import omit from 'lodash/omit';
-import { UsersDtoUpdateOneWhole } from './users.dto.updateOneWhole';
-import { UsersDtoFindMany } from './users.dto.findMany';
-import { UsersDtoCreateOne } from './users.dto.createOne';
-import { UsersDtoUpdateOnePartial } from './users.dto.updateOnePartial';
-import { UsersDtoUpdateOnePartialWithPattern } from './users.dto.updateManyPartialWithPattern';
-import { UsersDtoDeleteMany } from './users.dto.deleteMany';
+import { UsersUpdateOneWholeDto } from './dtos/users.updateOneWhole.dto';
+import { UsersFindManyDto } from './dtos/users.findMany.dto';
+import { UsersCreateOneDto } from './dtos/users.createOne.dto';
+import { UsersUpdateOnePartialDto } from './dtos/users.updateOnePartial.dto';
+import { UsersUpdateManyPartialWithPatternDto } from './dtos/users.updateManyPartialWithPattern.dto';
+import { UsersDeleteManyDto } from './dtos/users.deleteMany.dto';
 import { UsersEntity } from './users.entity';
 import { UsersEntityType } from './users.types';
-import { UsersDtoFindManyUniqueKeys } from './users.dto.findManyUniqueKeys';
-import { UsersDtoFindManySearch } from './users.dto.findManySearch';
-import { UsersDtoFindManyRelations } from './users.dto.findManyRelations';
-import { UsersDtoFindManyRangesDates } from './users.dto.findManyRangesDates';
-import { UsersDtoFindManyRangesNumber } from './users.dto.findManyRangesNumber';
-import { UsersDtoFindManyRangesString } from './users.dto.findManyRangesString';
+import { UsersFindManyUniqueKeysDto } from './dtos/users.findManyUniqueKeys.dto';
+import { UsersFindManySearchDto } from './dtos/users.findManySearch.dto';
+import { UsersFindManyRelationsDto } from './dtos/users.findManyRelations.dto';
+import { UsersFindManyRangesDatesDto } from './dtos/users.findManyRangesDates.dto';
+import { UsersFindManyRangesNumberDto } from './dtos/users.findManyRangesNumber.dto';
+import { UsersFindManyRangesStringDto } from './dtos/users.findManyRangesString.dto';
 
 export function getUsersEntityFixture(
   overrides: Partial<UsersEntityType> = {},
@@ -36,12 +36,12 @@ export function getUsersEntityFixture(
   return usersEntity as UsersEntity;
 }
 
-export function getUsersDtoCreateOneFixture(
-  overrides: Partial<UsersDtoCreateOne> = {},
-): UsersDtoCreateOne {
+export function getUsersCreateOneDtoFixture(
+  overrides: Partial<UsersCreateOneDto> = {},
+): UsersCreateOneDto {
   const userEntity = getUsersEntityFixture();
 
-  const usersDtoCreateOneDefault: UsersDtoCreateOne = omit(
+  const usersCreateOneDtoDefault: UsersCreateOneDto = omit(
     userEntity,
     'id',
     'createdAt',
@@ -49,29 +49,29 @@ export function getUsersDtoCreateOneFixture(
     'deletedAt',
   );
 
-  const usersDtoCreateOne = Object.assign(usersDtoCreateOneDefault, overrides);
+  const usersCreateOneDto = Object.assign(usersCreateOneDtoDefault, overrides);
 
-  return usersDtoCreateOne;
+  return usersCreateOneDto;
 }
 
-export function getUsersDtoFindManyFixture(
-  overrides: Partial<UsersDtoFindMany> = {},
-): UsersDtoFindMany {
+export function getUsersFindManyDtoFixture(
+  overrides: Partial<UsersFindManyDto> = {},
+): UsersFindManyDto {
   return utilGetDtoFindManyFixture<
     UsersEntity,
-    UsersDtoFindManyUniqueKeys,
-    UsersDtoFindManySearch,
-    UsersDtoFindManyRelations,
-    UsersDtoFindManyRangesDates,
-    UsersDtoFindManyRangesNumber,
-    UsersDtoFindManyRangesString
+    UsersFindManyUniqueKeysDto,
+    UsersFindManySearchDto,
+    UsersFindManyRelationsDto,
+    UsersFindManyRangesDatesDto,
+    UsersFindManyRangesNumberDto,
+    UsersFindManyRangesStringDto
   >(overrides);
 }
 
-export function getUsersDtoUpdateOneWholeFixture(
-  overrides: Partial<UsersDtoUpdateOneWhole> = {},
-): UsersDtoUpdateOneWhole {
-  const usersDtoUpdateOneWholeDefault: UsersDtoUpdateOneWhole = {
+export function getUsersUpdateOneWholeDtoFixture(
+  overrides: Partial<UsersUpdateOneWholeDto> = {},
+): UsersUpdateOneWholeDto {
+  const usersUpdateOneWholeDtoDefault: UsersUpdateOneWholeDto = {
     id: 1,
     keycloakId: 'test_keycloak_id',
     username: 'test_username_1',
@@ -82,48 +82,48 @@ export function getUsersDtoUpdateOneWholeFixture(
     lastName: 'test_last_name',
   };
 
-  const usersDtoUpdateOneWhole = Object.assign(
-    usersDtoUpdateOneWholeDefault,
+  const usersUpdateOneWholeDto = Object.assign(
+    usersUpdateOneWholeDtoDefault,
     overrides,
   );
 
-  return usersDtoUpdateOneWhole;
+  return usersUpdateOneWholeDto;
 }
 
-export function getUsersDtoUpdateOnePartialFixture(
-  overrides: Partial<UsersDtoUpdateOnePartial> = {},
-): UsersDtoUpdateOnePartial {
+export function getUsersUpdateOnePartialDtoFixture(
+  overrides: Partial<UsersUpdateOnePartialDto> = {},
+): UsersUpdateOnePartialDto {
   return overrides;
 }
 
-export function getUsersDtoUpdateOnePartialWithPatternFixture(
+export function getUsersUpdateOnePartialWithPatternDtoFixture(
   overrides: {
-    ids?: UsersDtoUpdateOnePartialWithPattern['ids'];
-    dtoUpdateOnePartial?: UsersDtoUpdateOnePartialWithPattern['dtoUpdateOnePartial'];
+    ids?: UsersUpdateManyPartialWithPatternDto['ids'];
+    updateOnePartialDto?: UsersUpdateManyPartialWithPatternDto['dtoUpdateOnePartial'];
   } = {},
-): UsersDtoUpdateOnePartialWithPattern {
-  const usersDtoUpdateOnePartialWithPattern: UsersDtoUpdateOnePartialWithPattern =
+): UsersUpdateManyPartialWithPatternDto {
+  const usersUpdateOnePartialWithPatternDto: UsersUpdateManyPartialWithPatternDto =
     {
       ids: overrides.ids ?? [1, 2],
-      dtoUpdateOnePartial: getUsersDtoUpdateOnePartialFixture(
-        overrides.dtoUpdateOnePartial,
+      dtoUpdateOnePartial: getUsersUpdateOnePartialDtoFixture(
+        overrides.updateOnePartialDto,
       ),
     };
 
-  return usersDtoUpdateOnePartialWithPattern;
+  return usersUpdateOnePartialWithPatternDto;
 }
 
-export function getUsersDtoDeleteManyFixture(
-  overrides: Partial<UsersDtoDeleteMany> = {},
-): UsersDtoDeleteMany {
-  const usersDtoDeleteManyDefault: UsersDtoDeleteMany = {
+export function getUsersDeleteManyDtoFixture(
+  overrides: Partial<UsersDeleteManyDto> = {},
+): UsersDeleteManyDto {
+  const usersDeleteManyDtoDefault: UsersDeleteManyDto = {
     ids: [1, 2],
   };
 
-  const usersDtoDeleteMany = Object.assign(
-    usersDtoDeleteManyDefault,
+  const usersDeleteManyDto = Object.assign(
+    usersDeleteManyDtoDefault,
     overrides,
   );
 
-  return usersDtoDeleteMany;
+  return usersDeleteManyDto;
 }

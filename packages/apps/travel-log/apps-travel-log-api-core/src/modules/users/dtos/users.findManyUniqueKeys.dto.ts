@@ -1,8 +1,8 @@
 import { IsInt, IsOptional, IsString } from 'class-validator';
 import { FindManyUniqueKeysDto } from '@js-modules/api-nest-utils';
-import { UsersEntity } from './users.entity';
+import { UsersEntity } from '../users.entity';
 
-export class UsersDtoFindManyUniqueKeys
+export class UsersFindManyUniqueKeysDto
   implements FindManyUniqueKeysDto<UsersEntity>
 {
   @IsInt({ each: true })

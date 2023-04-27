@@ -15,9 +15,9 @@ import { KeycloakAdminClient } from '@js-modules/api-nest-keycloak-admin-client-
 import keys from 'lodash/keys';
 import { UsersEntity } from './users.entity';
 import { UsersEntityType, UsersUniqueKeyName } from './users.types';
-import { UsersDtoFindMany } from './users.dto.findMany';
+import { UsersFindManyDto } from './dtos/users.findMany.dto';
 import { UsersServiceValidator } from './users.service.validator';
-import { UsersDtoUpdateOnePartial } from './users.dto.updateOnePartial';
+import { UsersUpdateOnePartialDto } from './dtos/users.updateOnePartial.dto';
 
 @Injectable()
 export class UsersService implements AuthUsersService {
@@ -90,18 +90,18 @@ export class UsersService implements AuthUsersService {
     return usersEntity;
   }
 
-  async findMany(usersDtoFindMany: UsersDtoFindMany): Promise<UsersEntity[]> {
+  async findMany(usersFindManyDto: UsersFindManyDto): Promise<UsersEntity[]> {
     const query = this.usersRepository.createQueryBuilder();
 
     const queryFiltered = utilApplyFindManyFiltersToQuery<UsersEntity>(
       query,
-      usersDtoFindMany,
+      usersFindManyDto,
     );
 
     const querySortedAndPaginated =
       utilApplyFindManySortingAndPaginationToQuery<UsersEntity>(
         queryFiltered,
-        usersDtoFindMany,
+        usersFindManyDto,
       );
 
     const usersEntities =
@@ -111,7 +111,7 @@ export class UsersService implements AuthUsersService {
   }
 
   async updateOnePartial(
-    usersDtoUpdateOnePartial: UsersDtoUpdateOnePartial,
+    usersUpdateOnePartialDto: UsersUpdateOnePartialDto,
     usersEntityCurrent: UsersEntity,
     currentPassword?: string,
   ): Promise<UsersEntity> {

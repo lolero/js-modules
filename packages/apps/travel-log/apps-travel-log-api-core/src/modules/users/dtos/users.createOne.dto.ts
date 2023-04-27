@@ -5,9 +5,9 @@ import {
   IsString,
   IsUUID,
 } from 'class-validator';
-import { UsersEntity } from './users.entity';
+import { UsersEntity } from '../users.entity';
 
-export class UsersDtoCreateOne {
+export class UsersCreateOneDto {
   @IsUUID()
   keycloakId: UsersEntity['keycloakId'];
 

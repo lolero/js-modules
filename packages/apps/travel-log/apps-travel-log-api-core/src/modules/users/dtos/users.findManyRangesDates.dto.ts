@@ -4,9 +4,9 @@ import {
   FindManyRange,
   isFindManyRange,
 } from '@js-modules/api-nest-utils';
-import { UsersEntity } from './users.entity';
+import { UsersEntity } from '../users.entity';
 
-export class UsersDtoFindManyRangesDates
+export class UsersFindManyRangesDatesDto
   implements FindManyRangesDto<UsersEntity>
 {
   @isFindManyRange()

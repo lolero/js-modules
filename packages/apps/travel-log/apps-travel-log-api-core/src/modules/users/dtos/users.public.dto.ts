@@ -1,7 +1,7 @@
 import { Expose, Transform } from 'class-transformer';
-import { UsersEntity } from './users.entity';
+import { UsersEntity } from '../users.entity';
 
-export class UsersDtoPublic {
+export class UsersPublicDto {
   @Expose()
   id: UsersEntity['id'];
 

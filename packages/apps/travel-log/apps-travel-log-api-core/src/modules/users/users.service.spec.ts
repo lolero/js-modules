@@ -11,10 +11,10 @@ import { KEYCLOAK_ADMIN_CLIENT } from '@js-modules/api-nest-module-auth-keycloak
 import { UsersService } from './users.service';
 import { UsersEntity } from './users.entity';
 import {
-  getUsersDtoFindManyFixture,
+  getUsersFindManyDtoFixture,
   getUsersEntityFixture,
 } from './users.utils.fixtures';
-import { UsersDtoFindMany } from './users.dto.findMany';
+import { UsersFindManyDto } from './dtos/users.findMany.dto';
 import { UsersServiceValidator } from './users.service.validator';
 
 jest.mock('@js-modules/api-nest-utils', () => {
@@ -143,9 +143,9 @@ describe('UsersService', () => {
 
   describe('findMany', () => {
     let usersRepositoryQueryBuilderGetRawManyMockReturnValue: UsersEntity[];
-    let usersDtoFindMany: UsersDtoFindMany;
+    let usersFindManyDto: UsersFindManyDto;
 
-    it('Should create a query builder, call utilApplyFindManyFiltersToQuery with the query builder and the passed UsersDtoFindMany, call utilApplyFindManySortingAndPaginationToQuery with the updated query builder and the passed UsersDtoFindMany, and return the found users', async () => {
+    it('Should create a query builder, call utilApplyFindManyFiltersToQuery with the query builder and the passed UsersFindManyDto, call utilApplyFindManySortingAndPaginationToQuery with the updated query builder and the passed UsersFindManyDto, and return the found users', async () => {
       const testUsersEntities = [
         getUsersEntityFixture(),
         getUsersEntityFixture(),
@@ -155,21 +155,21 @@ describe('UsersService', () => {
         usersRepositoryQueryBuilderGetRawManyMockReturnValue,
       );
 
-      usersDtoFindMany = getUsersDtoFindManyFixture();
-      usersEntities = await usersService.findMany(usersDtoFindMany);
+      usersFindManyDto = getUsersFindManyDtoFixture();
+      usersEntities = await usersService.findMany(usersFindManyDto);
 
       expect(usersRepositoryCreateQueryBuilderMock).toHaveBeenNthCalledWith(1);
       expect(utilApplyFindManyFiltersToQueryMock).toHaveBeenNthCalledWith(
         1,
         usersRepositoryQueryBuilderMock,
-        usersDtoFindMany,
+        usersFindManyDto,
       );
       expect(
         utilApplyFindManySortingAndPaginationToQueryMock,
       ).toHaveBeenNthCalledWith(
         1,
         usersRepositoryQueryBuilderMock,
-        usersDtoFindMany,
+        usersFindManyDto,
       );
       expect(usersRepositoryQueryBuilderGetRawManyMock).toHaveBeenNthCalledWith(
         1,

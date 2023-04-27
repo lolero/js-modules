@@ -14,13 +14,13 @@ import {
 import { AuthDecoratorUsersEntityCurrent } from '@js-modules/api-nest-module-auth-keycloak';
 import { UsersService } from './users.service';
 import { UsersEntity } from './users.entity';
-import { UsersDtoPublic } from './users.dto.public';
+import { UsersPublicDto } from './dtos/users.public.dto';
 import { UsersUniqueKeyName } from './users.types';
-import { UsersDtoFindMany } from './users.dto.findMany';
-import { UsersDtoUpdateOnePartial } from './users.dto.updateOnePartial';
+import { UsersFindManyDto } from './dtos/users.findMany.dto';
+import { UsersUpdateOnePartialDto } from './dtos/users.updateOnePartial.dto';
 
 @Controller('users')
-@InterceptorSerialize<UsersEntity>(UsersDtoPublic)
+@InterceptorSerialize<UsersEntity>(UsersPublicDto)
 export class UsersController {
   constructor(private usersService: UsersService) {}
 
@@ -39,9 +39,9 @@ export class UsersController {
 
   @Get()
   async findMany(
-    @Query() usersDtoFindMany: UsersDtoFindMany,
+    @Query() usersFindManyDto: UsersFindManyDto,
   ): Promise<UsersEntity[]> {
-    const usersEntities = await this.usersService.findMany(usersDtoFindMany);
+    const usersEntities = await this.usersService.findMany(usersFindManyDto);
 
     return usersEntities;
   }
@@ -49,19 +49,20 @@ export class UsersController {
   @Patch()
   async updateOnePartial(
     @Body('data')
-    usersDtoUpdateOnePartial: UsersDtoUpdateOnePartial,
+    usersUpdateOnePartialDto: UsersUpdateOnePartialDto,
     @AuthDecoratorUsersEntityCurrent()
     usersEntityCurrent: UsersEntity,
     @Body('currentPassword')
     currentPassword?: string,
-  ): Promise<UsersEntity> {
-    const usersEntity = await this.usersService.updateOnePartial(
-      usersDtoUpdateOnePartial,
-      usersEntityCurrent,
-      currentPassword,
-    );
-
-    return usersEntity;
+  ): Promise<boolean> {
+    return true;
+    // const usersEntity = await this.usersService.updateOnePartial(
+    //   usersUpdateOnePartialDto,
+    //   usersEntityCurrent,
+    //   currentPassword,
+    // );
+    //
+    // return usersEntity;
   }
 
   @Delete()
