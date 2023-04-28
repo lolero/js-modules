@@ -19,6 +19,12 @@ import { UsersFindManyDto } from './dtos/users.findMany.dto';
 import { UsersServiceValidator } from './users.service.validator';
 import { UsersUpdateOnePartialDto } from './dtos/users.updateOnePartial.dto';
 
+// TODO: Create user page in order to consume the findOne endpoint and test
+//  guards, checkin, etc.
+// TODO: Add logic to allow the modification/override of user metadata or to
+//  fallback to the existing user metada, stored in the identity provider.
+// TODO: Figure out a way of adding token claims containing the identity
+//  provider aliases which the user has linked to their account.
 @Injectable()
 export class UsersService implements AuthUsersService {
   constructor(

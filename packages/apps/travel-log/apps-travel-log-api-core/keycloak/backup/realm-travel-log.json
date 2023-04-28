@@ -540,9 +540,9 @@
   "otpPolicyPeriod": 30,
   "otpPolicyCodeReusable": false,
   "otpSupportedApplications": [
+    "totpAppFreeOTPName",
     "totpAppGoogleName",
-    "totpAppMicrosoftAuthenticatorName",
-    "totpAppFreeOTPName"
+    "totpAppMicrosoftAuthenticatorName"
   ],
   "webAuthnPolicyRpEntityName": "keycloak",
   "webAuthnPolicySignatureAlgorithms": [
@@ -929,8 +929,11 @@
       "defaultClientScopes": [
         "web-origins",
         "acr",
+        "client-scope-id",
         "roles",
         "profile",
+        "client-scope-profile",
+        "client-scope-access",
         "email"
       ],
       "optionalClientScopes": [
@@ -982,8 +985,11 @@
       "defaultClientScopes": [
         "web-origins",
         "acr",
+        "client-scope-id",
         "roles",
         "profile",
+        "client-scope-profile",
+        "client-scope-access",
         "email"
       ],
       "optionalClientScopes": [
@@ -1178,7 +1184,7 @@
       "description": "",
       "protocol": "openid-connect",
       "attributes": {
-        "include.in.token.scope": "false",
+        "include.in.token.scope": "true",
         "display.on.consent.screen": "true",
         "gui.order": "",
         "consent.screen.text": ""
@@ -1195,7 +1201,7 @@
             "user.attribute": "email",
             "id.token.claim": "true",
             "access.token.claim": "true",
-            "claim.name": "id.email",
+            "claim.name": "client_scope.id.email",
             "jsonType.label": "String"
           }
         },
@@ -1212,7 +1218,7 @@
             "user.attribute": "phoneNumber",
             "id.token.claim": "true",
             "access.token.claim": "true",
-            "claim.name": "id.phoneNumber",
+            "claim.name": "client_scope.id.phoneNumber",
             "jsonType.label": "String"
           }
         },
@@ -1229,7 +1235,7 @@
             "user.attribute": "phoneNumberVerified",
             "id.token.claim": "true",
             "access.token.claim": "true",
-            "claim.name": "id.isPhoneNumberVerified",
+            "claim.name": "client_scope.id.isPhoneNumberVerified",
             "jsonType.label": "boolean"
           }
         },
@@ -1244,7 +1250,7 @@
             "user.attribute": "emailVerified",
             "id.token.claim": "true",
             "access.token.claim": "true",
-            "claim.name": "id.isEmailVerified",
+            "claim.name": "client_scope.id.isEmailVerified",
             "jsonType.label": "boolean"
           }
         },
@@ -1259,7 +1265,7 @@
             "user.attribute": "username",
             "id.token.claim": "true",
             "access.token.claim": "true",
-            "claim.name": "id.username",
+            "claim.name": "client_scope.id.username",
             "jsonType.label": "String"
           }
         }
@@ -1324,7 +1330,7 @@
       "description": "",
       "protocol": "openid-connect",
       "attributes": {
-        "include.in.token.scope": "false",
+        "include.in.token.scope": "true",
         "display.on.consent.screen": "false",
         "gui.order": "",
         "consent.screen.text": ""
@@ -1340,7 +1346,7 @@
             "full.path": "false",
             "id.token.claim": "true",
             "access.token.claim": "true",
-            "claim.name": "groups",
+            "claim.name": "client_scope.access.groups",
             "userinfo.token.claim": "false"
           }
         },
@@ -1356,7 +1362,7 @@
             "user.attribute": "foo",
             "id.token.claim": "true",
             "access.token.claim": "true",
-            "claim.name": "roles.client.${client_id}",
+            "claim.name": "client_scope.access.roles.client.${client_id}",
             "jsonType.label": "String"
           }
         },
@@ -1372,7 +1378,7 @@
             "user.attribute": "foo",
             "id.token.claim": "true",
             "access.token.claim": "true",
-            "claim.name": "roles.realm",
+            "claim.name": "client_scope.access.roles.realm",
             "jsonType.label": "String"
           }
         }
@@ -1499,7 +1505,7 @@
             "user.attribute": "lastName",
             "id.token.claim": "true",
             "access.token.claim": "true",
-            "claim.name": "profile.lastName",
+            "claim.name": "client_scope.profile.lastName",
             "jsonType.label": "String"
           }
         },
@@ -1510,15 +1516,15 @@
           "protocolMapper": "oidc-address-mapper",
           "consentRequired": false,
           "config": {
-            "user.attribute.formatted": "profile.address.addressStr",
-            "user.attribute.country": "profile.address.country",
-            "user.attribute.postal_code": "profile.address.postalCode",
+            "user.attribute.formatted": "client_scope.profile.address.addressStr",
+            "user.attribute.country": "client_scope.profile.address.country",
+            "user.attribute.postal_code": "client_scope.profile.address.postalCode",
             "userinfo.token.claim": "true",
-            "user.attribute.street": "profile.address.street",
+            "user.attribute.street": "client_scope.profile.address.street",
             "id.token.claim": "true",
-            "user.attribute.region": "profile.address.region",
+            "user.attribute.region": "client_scope.profile.address.region",
             "access.token.claim": "true",
-            "user.attribute.locality": "profile.address.city"
+            "user.attribute.locality": "client_scope.profile.address.city"
           }
         },
         {
@@ -1534,7 +1540,7 @@
             "user.attribute": "birthdate",
             "id.token.claim": "true",
             "access.token.claim": "true",
-            "claim.name": "profile.dateOfBirth",
+            "claim.name": "client_scope.profile.dateOfBirth",
             "jsonType.label": "String"
           }
         },
@@ -1551,7 +1557,7 @@
             "user.attribute": "middleName",
             "id.token.claim": "true",
             "access.token.claim": "true",
-            "claim.name": "profile.middleName",
+            "claim.name": "client_scope.profile.middleName",
             "jsonType.label": "String"
           }
         },
@@ -1566,7 +1572,7 @@
             "user.attribute": "firstName",
             "id.token.claim": "true",
             "access.token.claim": "true",
-            "claim.name": "profile.firstName",
+            "claim.name": "client_scope.profile.firstName",
             "jsonType.label": "String"
           }
         },
@@ -1583,7 +1589,7 @@
             "user.attribute": "picture",
             "id.token.claim": "true",
             "access.token.claim": "true",
-            "claim.name": "profile.picture",
+            "claim.name": "client_scope.profile.picture",
             "jsonType.label": "String"
           }
         }
@@ -1916,7 +1922,46 @@
   "enabledEventTypes": [],
   "adminEventsEnabled": false,
   "adminEventsDetailsEnabled": false,
-  "identityProviders": [],
+  "identityProviders": [
+    {
+      "alias": "linkedin",
+      "internalId": "760dc773-75e1-40ef-8d53-402245a41909",
+      "providerId": "linkedin",
+      "enabled": true,
+      "updateProfileFirstLoginMode": "on",
+      "trustEmail": false,
+      "storeToken": false,
+      "addReadTokenRoleOnCreate": false,
+      "authenticateByDefault": false,
+      "linkOnly": false,
+      "firstBrokerLoginFlowAlias": "first broker login",
+      "config": {
+        "hideOnLoginPage": "false",
+        "clientId": "",
+        "acceptsPromptNoneForwardFromClient": "false",
+        "disableUserInfo": "false",
+        "syncMode": "IMPORT",
+        "clientSecret": ""
+      }
+    },
+    {
+      "alias": "github",
+      "internalId": "fba9899b-79eb-4767-a23d-e7abc3f787fc",
+      "providerId": "github",
+      "enabled": true,
+      "updateProfileFirstLoginMode": "on",
+      "trustEmail": false,
+      "storeToken": false,
+      "addReadTokenRoleOnCreate": false,
+      "authenticateByDefault": false,
+      "linkOnly": false,
+      "firstBrokerLoginFlowAlias": "first broker login",
+      "config": {
+        "clientSecret": "",
+        "clientId": ""
+      }
+    }
+  ],
   "identityProviderMappers": [],
   "components": {
     "org.keycloak.services.clientregistration.policy.ClientRegistrationPolicy": [
@@ -2603,7 +2648,7 @@
           "authenticatorConfig": "realm-recaptcha-registration",
           "authenticator": "registration-recaptcha-action",
           "authenticatorFlow": false,
-          "requirement": "REQUIRED",
+          "requirement": "DISABLED",
           "priority": 60,
           "autheticatorFlow": false,
           "userSetupAllowed": false
