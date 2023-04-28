@@ -1893,7 +1893,7 @@
     "xContentTypeOptions": "nosniff",
     "xRobotsTag": "none",
     "xFrameOptions": "SAMEORIGIN",
-    "contentSecurityPolicy": "frame-src 'self'; frame-ancestors 'self'; object-src 'none';",
+    "contentSecurityPolicy": "frame-src 'self' https://www.google.com/; frame-ancestors 'self'; object-src 'none';",
     "xXSSProtection": "1; mode=block",
     "strictTransportSecurity": "max-age=31536000; includeSubDomains"
   },
@@ -2028,7 +2028,7 @@
     ],
     "org.keycloak.userprofile.UserProfileProvider": [
       {
-        "id": "bb99b419-0731-419a-8b0a-a7a483893481",
+        "id": "85cdd45b-fb10-4b06-acc7-91a33ae9be89",
         "providerId": "declarative-user-profile",
         "subComponents": {},
         "config": {}
@@ -2600,9 +2600,10 @@
           "userSetupAllowed": false
         },
         {
+          "authenticatorConfig": "realm-recaptcha-registration",
           "authenticator": "registration-recaptcha-action",
           "authenticatorFlow": false,
-          "requirement": "DISABLED",
+          "requirement": "REQUIRED",
           "priority": 60,
           "autheticatorFlow": false,
           "userSetupAllowed": false
@@ -2676,6 +2677,15 @@
       "alias": "create unique user config",
       "config": {
         "require.password.update.after.registration": "false"
+      }
+    },
+    {
+      "id": "7b875c9e-990f-43e7-a9ad-b5ca23816220",
+      "alias": "realm-recaptcha-registration",
+      "config": {
+        "useRecaptchaNet": "false",
+        "secret": "",
+        "site.key": ""
       }
     },
     {
@@ -2780,8 +2790,8 @@
     "cibaExpiresIn": "120",
     "cibaAuthRequestedUserHint": "login_hint",
     "oauth2DeviceCodeLifespan": "600",
-    "clientOfflineSessionMaxLifespan": "0",
     "oauth2DevicePollingInterval": "5",
+    "clientOfflineSessionMaxLifespan": "0",
     "clientSessionIdleTimeout": "0",
     "parRequestUriLifespan": "60",
     "clientSessionMaxLifespan": "0",
