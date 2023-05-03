@@ -1,11 +1,11 @@
 import { useDispatch } from 'react-redux';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import {
   createReducerHooks,
   Request,
-  UseRequestCallback,
   UseRequestEntities,
   UseRequestEntity,
+  UseRequestVoid,
 } from '@js-modules/common-redux-utils-normalized-reducers';
 import { useStateAuthReducerMetadata } from '../../appState/stateAuth/stateAuth.exports';
 import { NodeProduct, NodeProductsReducer } from './nodeProducts.types';
@@ -39,7 +39,7 @@ export const {
   useReducerConfig: useNodeProductsReducerConfig,
 } = nodeProductsHooks;
 
-export function useNodeProductsCreateOne(): UseRequestCallback<
+export function useNodeProductsCreateOne(): UseRequestEntity<
   NodeProductsCreateOneRequestAction['requestMetadata'],
   NodeProductsReducer['metadata'],
   NodeProduct,
@@ -49,13 +49,15 @@ export function useNodeProductsCreateOne(): UseRequestCallback<
 > {
   const dispatch = useDispatch();
   const nodeProductsReducerMetadata = useNodeProductsReducerMetadata();
-  const nodeProducts = useNodeProductsEntities();
   const nodeProductsRequests = useNodeProductsRequests();
   const [nodeProductsCreateOneRequestId, setNodeProductsCreateOneRequestId] =
     useState('');
   const nodeProductsCreateOneRequest = nodeProductsRequests[
     nodeProductsCreateOneRequestId
   ] as Request<NodeProductsCreateOneRequestAction['requestMetadata']>;
+  const nodeProducts = useNodeProductsEntities();
+  const nodeProductPkCreated = nodeProductsCreateOneRequest?.entityPks?.[0];
+  const nodeProductCreated = nodeProducts[nodeProductPkCreated ?? ''];
 
   const nodeProductsCreateOneCallback = useCallback(
     (
@@ -72,7 +74,7 @@ export function useNodeProductsCreateOne(): UseRequestCallback<
   return {
     request: nodeProductsCreateOneRequest,
     reducerMetadata: nodeProductsReducerMetadata,
-    entities: nodeProducts,
+    entity: nodeProductCreated,
     callback: nodeProductsCreateOneCallback,
   };
 }
@@ -82,7 +84,8 @@ export function useNodeProductsGetOne(
 ): UseRequestEntity<
   NodeProductsGetOneRequestAction['requestMetadata'],
   NodeProductsReducer['metadata'],
-  NodeProduct
+  NodeProduct,
+  () => void
 > {
   const dispatch = useDispatch();
   const nodeProductsReducerMetadata = useNodeProductsReducerMetadata();
@@ -95,7 +98,7 @@ export function useNodeProductsGetOne(
     nodeProductsGetOneRequestId
   ] as Request<NodeProductsGetOneRequestAction['requestMetadata']>;
 
-  useEffect(() => {
+  const nodeProductsGetOneCallback = useCallback(() => {
     if (nodeProduct || nodeProductsGetOneRequestId) {
       return;
     }
@@ -104,28 +107,21 @@ export function useNodeProductsGetOne(
       createNodeProductsGetOneRequestAction(nodeProductPk);
     setNodeProductsGetOneRequestId(nodeProductsGetOneAction.requestId);
     dispatch(nodeProductsGetOneAction);
-  }, [
-    dispatch,
-    nodeProductsGetOneRequest,
-    nodeProductsGetOneRequestId,
-    nodeProduct,
-    nodeProductPk,
-  ]);
+  }, [dispatch, nodeProductsGetOneRequestId, nodeProduct, nodeProductPk]);
 
   return {
     request: nodeProductsGetOneRequest,
     reducerMetadata: nodeProductsReducerMetadata,
     entity: nodeProduct,
+    callback: nodeProductsGetOneCallback,
   };
 }
 
-export function useNodeProductsGetMany(
-  forceFetch = false,
-  filterMyProducts = false,
-): UseRequestEntities<
+export function useNodeProductsGetMany(): UseRequestEntities<
   NodeProductsGetManyRequestAction['requestMetadata'],
   NodeProductsReducer['metadata'],
-  NodeProduct
+  NodeProduct,
+  (forceFetch?: boolean, filterMyProducts?: boolean) => void
 > {
   const dispatch = useDispatch();
   const { tokens } = useStateAuthReducerMetadata();
@@ -137,45 +133,34 @@ export function useNodeProductsGetMany(
     nodeProductsGetManyRequestId ?? ''
   ] as Request<NodeProductsGetManyRequestAction['requestMetadata']>;
 
-  useEffect(() => {
-    if (forceFetch) {
+  const nodeProductsGetManyCallback = useCallback(
+    (forceFetch = false, filterMyProducts = false) => {
+      if (nodeProductsGetManyRequestId && !forceFetch) {
+        return;
+      }
+
+      const nodeProductsGetManyAction = createNodeProductsGetManyRequestAction(
+        filterMyProducts ? tokens?.id.metadata.sub : undefined,
+      );
       dispatch(
         createNodeProductsUpdatePartialReducerMetadataRequestAction({
-          nodeProductsGetManyRequestId: null,
+          nodeProductsGetManyRequestId: nodeProductsGetManyAction.requestId,
         }),
       );
-    }
-  }, [dispatch, forceFetch]);
-
-  useEffect(() => {
-    if (nodeProductsGetManyRequestId) {
-      return;
-    }
-
-    const nodeProductsGetManyAction = createNodeProductsGetManyRequestAction(
-      filterMyProducts ? tokens?.id.metadata.sub : undefined,
-    );
-    dispatch(
-      createNodeProductsUpdatePartialReducerMetadataRequestAction({
-        nodeProductsGetManyRequestId: nodeProductsGetManyAction.requestId,
-      }),
-    );
-    dispatch(nodeProductsGetManyAction);
-  }, [
-    dispatch,
-    filterMyProducts,
-    nodeProductsGetManyRequestId,
-    tokens?.id.metadata.sub,
-  ]);
+      dispatch(nodeProductsGetManyAction);
+    },
+    [dispatch, nodeProductsGetManyRequestId, tokens?.id.metadata.sub],
+  );
 
   return {
     request: nodeProductsGetManyRequest,
     reducerMetadata: nodeProductsReducerMetadata,
     entities: nodeProducts,
+    callback: nodeProductsGetManyCallback,
   };
 }
 
-export function useNodeProductsUpdateOneWhole(): UseRequestCallback<
+export function useNodeProductsUpdateOneWhole(): UseRequestEntity<
   NodeProductsUpdateOneWholeRequestAction['requestMetadata'],
   NodeProductsReducer['metadata'],
   NodeProduct,
@@ -186,7 +171,6 @@ export function useNodeProductsUpdateOneWhole(): UseRequestCallback<
 > {
   const dispatch = useDispatch();
   const nodeProductsReducerMetadata = useNodeProductsReducerMetadata();
-  const nodeProducts = useNodeProductsEntities();
   const nodeProductsRequests = useNodeProductsRequests();
   const [
     nodeProductsUpdateOneWholeRequestId,
@@ -195,6 +179,10 @@ export function useNodeProductsUpdateOneWhole(): UseRequestCallback<
   const nodeProductsUpdateOneWholeRequest = nodeProductsRequests[
     nodeProductsUpdateOneWholeRequestId
   ] as Request<NodeProductsUpdateOneWholeRequestAction['requestMetadata']>;
+  const nodeProducts = useNodeProductsEntities();
+  const nodeProductPkUpdated =
+    nodeProductsUpdateOneWholeRequest?.entityPks?.[0];
+  const nodeProductUpdated = nodeProducts[nodeProductPkUpdated ?? ''];
 
   const nodeProductsUpdateOneWholeCallback = useCallback(
     (
@@ -217,22 +205,18 @@ export function useNodeProductsUpdateOneWhole(): UseRequestCallback<
   return {
     request: nodeProductsUpdateOneWholeRequest,
     reducerMetadata: nodeProductsReducerMetadata,
-    entities: nodeProducts,
+    entity: nodeProductUpdated,
     callback: nodeProductsUpdateOneWholeCallback,
   };
 }
 
-export function useNodeProductsDeleteOne(): UseRequestCallback<
+export function useNodeProductsDeleteOne(): UseRequestVoid<
   NodeProductsDeleteOneRequestAction['requestMetadata'],
-  NodeProductsReducer['metadata'],
-  NodeProduct,
   (
     nodeProductPk: NodeProductsDeleteOneRequestAction['requestMetadata']['entityPk'],
   ) => void
 > {
   const dispatch = useDispatch();
-  const nodeProductsReducerMetadata = useNodeProductsReducerMetadata();
-  const nodeProducts = useNodeProductsEntities();
   const nodeProductsRequests = useNodeProductsRequests();
   const [nodeProductsDeleteOneRequestId, setNodeProductsDeleteOneRequestId] =
     useState('');
@@ -254,8 +238,6 @@ export function useNodeProductsDeleteOne(): UseRequestCallback<
 
   return {
     request: nodeProductsDeleteOneRequest,
-    reducerMetadata: nodeProductsReducerMetadata,
-    entities: nodeProducts,
     callback: nodeProductsDeleteOneCallback,
   };
 }

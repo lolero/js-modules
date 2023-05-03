@@ -1,6 +1,6 @@
 import { DataSourceOptions } from 'typeorm';
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
-import { UsersEntity } from '../modules/users/users.entity';
+import { UsersEntity } from '@js-modules/apps-travel-log-api-core-modules';
 
 type VariableProps =
   | 'type'

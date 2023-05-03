@@ -7,11 +7,13 @@ import { PolicyEnforcementMode, TokenValidation } from 'nest-keycloak-connect';
 import { AuthModule } from '@js-modules/api-nest-module-auth-keycloak';
 import { utilGetAuthUsersServiceProvider } from '@js-modules/api-nest-utils';
 import { AUTH_BASE_URI } from '@js-modules/apps-travel-log-common-constants';
+import {
+  UsersModule,
+  UsersService,
+} from '@js-modules/apps-travel-log-api-core-modules';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { configTypeormDataSourceOptions } from '../../config/config.typeorm.dataSourceOptions';
-import { UsersModule } from '../users/users.module';
-import { UsersService } from '../users/users.service';
 
 @Module({
   imports: [

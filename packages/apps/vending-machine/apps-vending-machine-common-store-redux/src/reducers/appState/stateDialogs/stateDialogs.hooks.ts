@@ -1,7 +1,7 @@
 import {
   createReducerHooks,
   Request,
-  UseRequestCallback,
+  UseRequestReducerMetadata,
 } from '@js-modules/common-redux-utils-normalized-reducers';
 import { useDispatch } from 'react-redux';
 import { useCallback, useState } from 'react';
@@ -20,10 +20,9 @@ export const {
   useReducerConfig: useStateDialogsReducerConfig,
 } = stateDialogsHooks;
 
-export function useStateDialogsCloseAll(): UseRequestCallback<
+export function useStateDialogsCloseAll(): UseRequestReducerMetadata<
   StateDialogsUpdateWholeReducerMetadataRequestAction['requestMetadata'],
   StateDialogsReducer['metadata'],
-  never,
   () => void
 > {
   const dispatch = useDispatch();
@@ -47,15 +46,13 @@ export function useStateDialogsCloseAll(): UseRequestCallback<
   return {
     request: stateDialogsCloseAllRequest,
     reducerMetadata: stateDialogsReducerMetadata,
-    entities: {},
     callback: stateDialogsCloseAllCallback,
   };
 }
 
-export function useStateDialogsConfirmDialogOpen(): UseRequestCallback<
+export function useStateDialogsConfirmDialogOpen(): UseRequestReducerMetadata<
   StateDialogsUpdateWholeReducerMetadataRequestAction['requestMetadata'],
   StateDialogsReducer['metadata'],
-  never,
   (confirmDialogProps: ConfirmDialogProps) => void
 > {
   const dispatch = useDispatch();
@@ -88,7 +85,6 @@ export function useStateDialogsConfirmDialogOpen(): UseRequestCallback<
   return {
     request: stateDialogsConfirmDialogOpenRequest,
     reducerMetadata: stateDialogsReducerMetadata,
-    entities: {},
     callback: stateDialogsConfirmDialogOpenCallback,
   };
 }

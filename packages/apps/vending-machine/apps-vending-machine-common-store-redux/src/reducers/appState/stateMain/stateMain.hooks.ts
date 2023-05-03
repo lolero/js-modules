@@ -1,11 +1,10 @@
 import {
   createReducerHooks,
   Request,
-  UseRequestCallback,
   UseRequestReducerMetadata,
 } from '@js-modules/common-redux-utils-normalized-reducers';
 import { useDispatch } from 'react-redux';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { stateMainSelectors } from './stateMain.selectors';
 import {
   StateMainDepositRequestAction,
@@ -32,7 +31,8 @@ export const {
 
 export function useStateMainGetMyBalance(): UseRequestReducerMetadata<
   StateMainGetMyBalanceRequestAction['requestMetadata'],
-  StateMainReducer['metadata']
+  StateMainReducer['metadata'],
+  () => void
 > {
   const dispatch = useDispatch();
   const stateMainReducerMetadata = useStateMainReducerMetadata();
@@ -42,7 +42,7 @@ export function useStateMainGetMyBalance(): UseRequestReducerMetadata<
     getMyBalanceRequestId
   ] as Request<StateMainGetMyBalanceRequestAction['requestMetadata']>;
 
-  useEffect(() => {
+  const getMyBalanceCallback = useCallback(() => {
     if (getMyBalanceRequestId) {
       return;
     }
@@ -55,13 +55,13 @@ export function useStateMainGetMyBalance(): UseRequestReducerMetadata<
   return {
     request: getMyBalanceRequest,
     reducerMetadata: stateMainReducerMetadata,
+    callback: getMyBalanceCallback,
   };
 }
 
-export function useStateMainDeposit(): UseRequestCallback<
+export function useStateMainDeposit(): UseRequestReducerMetadata<
   StateMainDepositRequestAction['requestMetadata'],
   StateMainReducer['metadata'],
-  never,
   (amount: number) => void
 > {
   const dispatch = useDispatch();
@@ -84,15 +84,13 @@ export function useStateMainDeposit(): UseRequestCallback<
   return {
     request: depositRequest,
     reducerMetadata: stateMainReducerMetadata,
-    entities: {},
     callback: depositCallback,
   };
 }
 
-export function useStateMainPurchase(): UseRequestCallback<
+export function useStateMainPurchase(): UseRequestReducerMetadata<
   StateMainPurchaseRequestAction['requestMetadata'],
   StateMainReducer['metadata'],
-  never,
   () => void
 > {
   const dispatch = useDispatch();
@@ -112,15 +110,13 @@ export function useStateMainPurchase(): UseRequestCallback<
   return {
     request: purchaseRequest,
     reducerMetadata: stateMainReducerMetadata,
-    entities: {},
     callback: purchaseCallback,
   };
 }
 
-export function useStateMainReset(): UseRequestCallback<
+export function useStateMainReset(): UseRequestReducerMetadata<
   StateMainResetRequestAction['requestMetadata'],
   StateMainReducer['metadata'],
-  never,
   () => void
 > {
   const dispatch = useDispatch();
@@ -140,7 +136,6 @@ export function useStateMainReset(): UseRequestCallback<
   return {
     request: resetRequest,
     reducerMetadata: stateMainReducerMetadata,
-    entities: {},
     callback: resetCallback,
   };
 }

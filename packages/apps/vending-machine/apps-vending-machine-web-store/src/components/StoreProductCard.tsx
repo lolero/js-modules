@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
@@ -19,8 +19,11 @@ type StoreProductCardProps = {
 export const StoreProductCard: React.FC<StoreProductCardProps> = ({
   nodeProductPk,
 }) => {
-  const { request: getNodeProductRequest, entity: nodeProduct } =
-    useNodeProductsGetOne(nodeProductPk);
+  const {
+    request: getNodeProductRequest,
+    entity: nodeProduct,
+    callback: nodeProductsGetOneCallback,
+  } = useNodeProductsGetOne(nodeProductPk);
   const remainingBalance = useStateShoppingCartRemainingBalance();
 
   const {
@@ -31,6 +34,10 @@ export const StoreProductCard: React.FC<StoreProductCardProps> = ({
   const shoppingCartCount = useMemo(() => {
     return pendingPurchases[nodeProductPk]?.quantity ?? 0;
   }, [nodeProductPk, pendingPurchases]);
+
+  useEffect(() => {
+    nodeProductsGetOneCallback();
+  }, [nodeProductsGetOneCallback]);
 
   return (
     <Card sx={{ width: 200, minWidth: 200 }}>

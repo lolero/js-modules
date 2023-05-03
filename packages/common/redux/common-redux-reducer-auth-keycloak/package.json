@@ -14,7 +14,6 @@
   "dependencies": {
     "@js-modules/common-redux-utils-normalized-reducers": "workspace:^0.0.0",
     "@js-modules/common-utils-general": "workspace:^0.0.0",
-    "@js-modules/web-react-components": "workspace:^0.0.0",
     "@types/lodash": "^4.14.194",
     "@types/react": "^18.0.37",
     "@types/react-dom": "^18.0.11",

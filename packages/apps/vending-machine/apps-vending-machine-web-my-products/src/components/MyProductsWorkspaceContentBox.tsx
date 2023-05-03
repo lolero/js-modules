@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Box from '@mui/material/Box';
 import {
   getPkOfNodeProduct,
@@ -9,8 +9,15 @@ import values from 'lodash/values';
 import { MyProductsProductCard } from './MyProductsProductCard';
 
 export const MyProductsWorkspaceContentBox: React.FC = () => {
-  const { request: getProductsRequest, entities: nodeProducts } =
-    useNodeProductsGetMany(true, true);
+  const {
+    request: getProductsRequest,
+    entities: nodeProducts,
+    callback: nodeProductsGetManyCallback,
+  } = useNodeProductsGetMany();
+
+  useEffect(() => {
+    nodeProductsGetManyCallback(true, true);
+  }, [nodeProductsGetManyCallback]);
 
   return (
     <Box

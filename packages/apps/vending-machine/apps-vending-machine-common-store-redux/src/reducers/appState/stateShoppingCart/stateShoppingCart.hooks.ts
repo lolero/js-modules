@@ -1,7 +1,7 @@
 import {
   createReducerHooks,
   Request,
-  UseRequestCallback,
+  UseRequestReducerMetadata,
 } from '@js-modules/common-redux-utils-normalized-reducers';
 import { useCallback, useMemo, useState } from 'react';
 import { isEmpty } from 'lodash';
@@ -65,10 +65,9 @@ export function useStateShoppingCartRemainingBalance(): number {
   return remainingBalance;
 }
 
-export function useStateShoppingCartAddItem(): UseRequestCallback<
+export function useStateShoppingCartAddItem(): UseRequestReducerMetadata<
   StateShoppingCartAddItemRequestAction['requestMetadata'],
   StateShoppingCartReducer['metadata'],
-  never,
   (
     nodeProductPk: StateShoppingCartAddItemRequestAction['requestMetadata']['nodeProductPk'],
   ) => void
@@ -102,15 +101,13 @@ export function useStateShoppingCartAddItem(): UseRequestCallback<
   return {
     request: stateShoppingCartAddItemRequest,
     reducerMetadata: stateShoppingCartReducerMetadata,
-    entities: {},
     callback: stateShoppingCartAddItemCallback,
   };
 }
 
-export function useStateShoppingCartRemoveItem(): UseRequestCallback<
+export function useStateShoppingCartRemoveItem(): UseRequestReducerMetadata<
   StateShoppingCartRemoveItemRequestAction['requestMetadata'],
   StateShoppingCartReducer['metadata'],
-  never,
   (
     nodeProductPk: StateShoppingCartRemoveItemRequestAction['requestMetadata']['nodeProductPk'],
   ) => void
@@ -144,7 +141,6 @@ export function useStateShoppingCartRemoveItem(): UseRequestCallback<
   return {
     request: stateShoppingCartRemoveItemRequest,
     reducerMetadata: stateShoppingCartReducerMetadata,
-    entities: {},
     callback: stateShoppingCartRemoveItemCallback,
   };
 }

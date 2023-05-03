@@ -8,6 +8,7 @@ export enum MyModules {
   myBoards = 'my-boards',
   myLog = 'my-log',
   myNetwork = 'my-network',
+  settings = 'settings',
 }
 
 export enum SubModulesMyFeeds {
@@ -32,4 +33,15 @@ export enum SubModulesMyNetwork {
   following = 'following',
   followers = 'followers',
   groups = 'groups',
+}
+
+export enum SubModulesSettings {
+  profile = 'profile',
+  account = 'account',
+  billing = 'billing',
+  privacy = 'privacy',
+}
+
+export enum SubModulesSettingsProfile {
+  edit = 'edit-profile',
 }

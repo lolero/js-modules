@@ -1,10 +1,27 @@
-// TODO: create nodeUsersReducer
-// TODO: create users api controller, secured by keycloak
-// TODO: create a saga that takes the sigin success action and upserts the
-//  authenticated user in the core db and puts the returned user in the
-//  users reducer
-// TODO: figure out a way to add phoneNumber and middleName to the keycloak
-//  realm and a way to add them to the ID token.
-// TODO: also figure out how to add email to the id token so the
-//  users.service.checkin method can create the user records in the database
-//  with an email address.
+import {
+  Entity,
+  PkSchema,
+  Reducer,
+  ReducerMetadata,
+} from '@js-modules/common-redux-utils-normalized-reducers';
+
+export interface NodeUser extends Entity {
+  id: number;
+  username?: string | null;
+  firstName?: string | null;
+  middleName?: string | null;
+  lastName?: string | null;
+  createdAt: string;
+  deletedAt?: string | null;
+}
+
+export const nodeUsersPkSchema: PkSchema<NodeUser, ['id'], []> = {
+  fields: ['id'],
+  edges: [],
+  separator: '_node_users_sep_',
+  subSeparator: '_node_users_sub_sep_',
+};
+
+type NodeUsersReducerMetadata = ReducerMetadata;
+
+export type NodeUsersReducer = Reducer<NodeUsersReducerMetadata, NodeUser>;

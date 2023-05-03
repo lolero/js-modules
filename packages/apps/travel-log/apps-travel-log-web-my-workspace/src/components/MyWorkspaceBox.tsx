@@ -7,6 +7,7 @@ import {
   TravelLogNavToolbar,
 } from '@js-modules/apps-travel-log-web-components';
 import {
+  createStateSettingsGetProfileRequestAction,
   useStateAuthLogin,
   useStateAuthReducerMetadata,
 } from '@js-modules/apps-travel-log-common-store-redux';
@@ -34,6 +35,7 @@ export const MyWorkspaceBox: React.FunctionComponent<MyWorkspaceBoxProps> = ({
   const { callback: loginCallback } = useStateAuthLogin(
     WEB_CLIENT_BASE_URI,
     pathname,
+    createStateSettingsGetProfileRequestAction,
   );
 
   const getIsAuthorizedCallback = useCallback(() => {

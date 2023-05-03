@@ -1,5 +1,4 @@
 import { v4 as uuidv4 } from 'uuid';
-import { KeycloakConfig } from 'keycloak-js';
 import {
   StateAuthActionTypes,
   StateAuthInitializeFailAction,
@@ -17,12 +16,16 @@ import {
 } from './stateAuth.actionsTypes';
 
 export function createStateAuthInitializeRequestAction(
-  keycloakConfig: KeycloakConfig,
+  keycloakConfig: StateAuthInitializeRequestAction['requestMetadata']['keycloakConfig'],
+  onSigninActionCreator?: StateAuthInitializeRequestAction['requestMetadata']['onSigninActionCreator'],
+  onSignoutActionCreator?: StateAuthInitializeRequestAction['requestMetadata']['onSignoutActionCreator'],
 ): StateAuthInitializeRequestAction {
   return {
     type: StateAuthActionTypes.STATE_AUTH__INITIALIZE__REQUEST,
     requestMetadata: {
       keycloakConfig,
+      onSigninActionCreator,
+      onSignoutActionCreator,
     },
     requestId: uuidv4(),
   };
@@ -53,12 +56,14 @@ export function createStateAuthInitializeFailAction(
 export function createStateAuthSigninRequestAction(
   signinAction: StateAuthSigninRequestAction['requestMetadata']['signinAction'],
   redirectUri?: StateAuthSigninRequestAction['requestMetadata']['redirectUri'],
+  onSigninActionCreator?: StateAuthSigninRequestAction['requestMetadata']['onSigninActionCreator'],
 ): StateAuthSigninRequestAction {
   return {
     type: StateAuthActionTypes.STATE_AUTH__SIGNIN__REQUEST,
     requestMetadata: {
       signinAction,
       redirectUri,
+      onSigninActionCreator,
     },
     requestId: uuidv4(),
   };
@@ -86,11 +91,13 @@ export function createStateAuthSigninFailAction(
 
 export function createStateAuthSignoutRequestAction(
   redirectUri?: StateAuthSignoutRequestAction['requestMetadata']['redirectUri'],
+  onSignoutActionCreator?: StateAuthSignoutRequestAction['requestMetadata']['onSignoutActionCreator'],
 ): StateAuthSignoutRequestAction {
   return {
     type: StateAuthActionTypes.STATE_AUTH__SIGNOUT__REQUEST,
     requestMetadata: {
       redirectUri,
+      onSignoutActionCreator,
     },
     requestId: uuidv4(),
   };

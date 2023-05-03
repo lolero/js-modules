@@ -3,12 +3,14 @@ import {
   CallEffect,
   ForkEffect,
   put,
+  AllEffect,
   PutEffect,
   ChannelTakeEffect,
   takeEvery,
   takeLeading,
   fork,
   take,
+  all,
 } from 'redux-saga/effects';
 import Keycloak from 'keycloak-js';
 import { EventChannel } from 'redux-saga';
@@ -36,8 +38,9 @@ let keycloak: Keycloak;
 
 export function* stateAuthMonitorSaga(
   keycloakInstance: Keycloak,
+  onSignoutActionCreator: StateAuthInitializeRequestAction['requestMetadata']['onSignoutActionCreator'],
 ): Generator<
-  CallEffect | ChannelTakeEffect<boolean> | PutEffect,
+  CallEffect | ChannelTakeEffect<boolean> | PutEffect | AllEffect<PutEffect>,
   void,
   EventChannel<boolean> | boolean
 > {
@@ -68,6 +71,7 @@ export function* stateAuthMonitorSaga(
       };
 
       axiosRequestSetAuthHeader(keycloakTokens.access.token);
+
       yield put(
         createStateAuthUpdatePartialReducerMetadataSuccessAction({
           isAuthenticated: keycloak.authenticated,
@@ -76,12 +80,22 @@ export function* stateAuthMonitorSaga(
       );
     } else {
       axiosRequestSetAuthHeader(null);
-      yield put(
-        createStateAuthUpdatePartialReducerMetadataSuccessAction({
-          isAuthenticated: false,
-          tokens: null,
-        }),
-      );
+
+      const actionArray: PutEffect[] = [
+        put(
+          createStateAuthUpdatePartialReducerMetadataSuccessAction({
+            isAuthenticated: false,
+            tokens: null,
+          }),
+        ),
+      ];
+
+      if (onSignoutActionCreator) {
+        const onSignoutAction = onSignoutActionCreator();
+        actionArray.push(put(onSignoutAction));
+      }
+
+      yield all(actionArray);
     }
   }
 }
@@ -90,16 +104,17 @@ export function* stateAuthInitializeSaga({
   requestMetadata,
   requestId,
 }: StateAuthInitializeRequestAction): Generator<
-  ForkEffect | CallEffect | PutEffect,
+  ForkEffect | CallEffect | AllEffect<PutEffect> | PutEffect,
   void,
   void
 > {
-  const { keycloakConfig } = requestMetadata;
+  const { keycloakConfig, onSigninActionCreator, onSignoutActionCreator } =
+    requestMetadata;
 
   keycloak = new Keycloak(keycloakConfig);
 
   try {
-    yield fork(stateAuthMonitorSaga, keycloak);
+    yield fork(stateAuthMonitorSaga, keycloak, onSignoutActionCreator);
 
     yield call(keycloak.init, {
       onLoad: 'check-sso',
@@ -107,14 +122,23 @@ export function* stateAuthInitializeSaga({
       checkLoginIframe: false,
     });
 
-    yield put(
-      createStateAuthInitializeSuccessAction(
-        {
-          isKeycloakReady: true,
-        },
-        requestId,
+    const actionArray: PutEffect[] = [
+      put(
+        createStateAuthInitializeSuccessAction(
+          {
+            isKeycloakReady: true,
+          },
+          requestId,
+        ),
       ),
-    );
+    ];
+
+    if (onSigninActionCreator) {
+      const onSigninAction = onSigninActionCreator();
+      actionArray.push(put(onSigninAction));
+    }
+
+    yield all(actionArray);
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err: any) {
@@ -126,11 +150,11 @@ export function* stateAuthSigninSaga({
   requestMetadata,
   requestId,
 }: StateAuthSigninRequestAction): Generator<
-  CallEffect | PutEffect,
+  CallEffect | AllEffect<PutEffect> | PutEffect,
   void,
   void
 > {
-  const { signinAction, redirectUri } = requestMetadata;
+  const { signinAction, redirectUri, onSigninActionCreator } = requestMetadata;
 
   try {
     switch (signinAction) {
@@ -144,7 +168,16 @@ export function* stateAuthSigninSaga({
         throw new Error('Unknown signin action');
     }
 
-    yield put(createStateAuthSigninSuccessAction(requestId));
+    const actionArray: PutEffect[] = [
+      put(createStateAuthSigninSuccessAction(requestId)),
+    ];
+
+    if (onSigninActionCreator) {
+      const onSigninAction = onSigninActionCreator();
+      actionArray.push(put(onSigninAction));
+    }
+
+    yield all(actionArray);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err: any) {
     yield put(createStateAuthSigninFailAction(err, requestId));
@@ -155,16 +188,25 @@ export function* stateAuthSignoutSaga({
   requestMetadata,
   requestId,
 }: StateAuthSignoutRequestAction): Generator<
-  CallEffect | PutEffect,
+  CallEffect | AllEffect<PutEffect> | PutEffect,
   void,
   void
 > {
-  const { redirectUri } = requestMetadata;
+  const { redirectUri, onSignoutActionCreator } = requestMetadata;
 
   try {
     yield call(keycloak.logout, { redirectUri });
 
-    yield put(createStateAuthSignoutSuccessAction(requestId));
+    const actionArray: PutEffect[] = [
+      put(createStateAuthSignoutSuccessAction(requestId)),
+    ];
+
+    if (onSignoutActionCreator) {
+      const onSignoutAction = onSignoutActionCreator();
+      actionArray.push(put(onSignoutAction));
+    }
+
+    yield all(actionArray);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err: any) {
     yield put(createStateAuthSignoutFailAction(err, requestId));

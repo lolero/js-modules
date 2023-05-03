@@ -8,7 +8,10 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import { MuiFaIcon } from '@js-modules/web-react-components';
 import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons/faRightFromBracket';
-import { useStateAuthLogout } from '@js-modules/apps-travel-log-common-store-redux';
+import {
+  createStateSettingsSignoutRequestAction,
+  useStateAuthLogout,
+} from '@js-modules/apps-travel-log-common-store-redux';
 import {
   WEB_CLIENT_BASE_URI,
   PublicModules,
@@ -26,6 +29,7 @@ export const MyWorkspaceAccountMenu: React.FC = () => {
   } = useStateAuthLogout(
     WEB_CLIENT_BASE_URI,
     publicModulesRoutesMetadata[PublicModules.home].path,
+    createStateSettingsSignoutRequestAction,
   );
 
   const username = useMemo(() => {

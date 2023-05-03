@@ -40,7 +40,11 @@ export const MyWorkspaceBox: React.FunctionComponent<MyWorkspaceBoxProps> = ({
   const [isPendingRedirectToPublicPath, setIsPendingRedirectToPublicPath] =
     useState(false);
 
-  useStateMainGetMyBalance();
+  const { callback: getMyBalanceCallback } = useStateMainGetMyBalance();
+
+  useEffect(() => {
+    getMyBalanceCallback();
+  }, [getMyBalanceCallback]);
 
   const {
     reducerMetadata: { isAuthenticated, tokens },

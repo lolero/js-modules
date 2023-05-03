@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
@@ -34,8 +34,11 @@ export const MyProductsProductCard: React.FC<MyProductsProductCardProps> = ({
   nodeProductPk,
 }) => {
   const dispatch = useDispatch();
-  const { request: getNodeProductRequest, entity: nodeProduct } =
-    useNodeProductsGetOne(nodeProductPk);
+  const {
+    request: getNodeProductRequest,
+    entity: nodeProduct,
+    callback: nodeProductsGetOneCallback,
+  } = useNodeProductsGetOne(nodeProductPk);
 
   const { callback: closeAllCallback } = useStateDialogsCloseAll();
   const { callback: openConfirmDialogCallback } =
@@ -64,6 +67,10 @@ export const MyProductsProductCard: React.FC<MyProductsProductCardProps> = ({
       ].path
     }/${nodeProduct!.id}`;
   }, [nodeProduct]);
+
+  useEffect(() => {
+    nodeProductsGetOneCallback();
+  }, [nodeProductsGetOneCallback]);
 
   return (
     <Card sx={{ width: 200, minWidth: 200 }}>

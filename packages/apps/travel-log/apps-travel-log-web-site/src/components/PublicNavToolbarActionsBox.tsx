@@ -18,6 +18,7 @@ import {
   myModulesRoutesMetadata,
 } from '@js-modules/apps-travel-log-common-constants';
 import {
+  createStateSettingsGetProfileRequestAction,
   useStateAuthLogin,
   useStateAuthSignup,
 } from '@js-modules/apps-travel-log-common-store-redux';
@@ -33,11 +34,13 @@ export const PublicNavToolbarActionsBox: React.FC = () => {
   } = useStateAuthSignup(
     WEB_CLIENT_BASE_URI,
     myModulesRoutesMetadata[MyModules.myFeeds].path,
+    createStateSettingsGetProfileRequestAction,
   );
 
   const { callback: loginCallback } = useStateAuthLogin(
     WEB_CLIENT_BASE_URI,
     myModulesRoutesMetadata[MyModules.myFeeds].path,
+    createStateSettingsGetProfileRequestAction,
   );
 
   return (

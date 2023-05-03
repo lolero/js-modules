@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 import {
@@ -28,9 +28,14 @@ const keycloakConfig: KeycloakConfig = {
 export const VendingMachineRoutes: React.FunctionComponent = () => {
   const {
     reducerMetadata: { isKeycloakReady, isAuthenticated },
+    callback: initializeKeycloakCallback,
   } = useStateAuthInitializeKeycloak(keycloakConfig);
 
   const { confirmDialogMetadata } = useStateDialogsReducerMetadata();
+
+  useEffect(() => {
+    initializeKeycloakCallback();
+  }, [initializeKeycloakCallback]);
 
   if (!isKeycloakReady) {
     return <CircularProgress />;

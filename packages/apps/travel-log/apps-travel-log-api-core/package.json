@@ -14,6 +14,7 @@
     "@js-modules/api-nest-keycloak-admin-client-cjs": "workspace:^0.0.0",
     "@js-modules/api-nest-module-auth-keycloak": "workspace:^0.0.0",
     "@js-modules/api-nest-utils": "workspace:^0.0.0",
+    "@js-modules/apps-travel-log-api-core-modules": "workspace:^0.0.0",
     "@js-modules/apps-travel-log-common-constants": "workspace:^0.0.0",
     "@js-modules/apps-travel-log-web-keycloak-theme": "workspace:^0.0.0",
     "@js-modules/common-utils-general": "workspace:^0.0.0",

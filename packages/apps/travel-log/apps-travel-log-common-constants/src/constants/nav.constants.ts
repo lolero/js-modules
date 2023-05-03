@@ -16,6 +16,12 @@ import { faPersonArrowDownToLine } from '@fortawesome/free-solid-svg-icons/faPer
 import { faPeopleGroup } from '@fortawesome/free-solid-svg-icons/faPeopleGroup';
 import { faHouse } from '@fortawesome/free-solid-svg-icons/faHouse';
 import { faHandsHoldingCircle } from '@fortawesome/free-solid-svg-icons/faHandsHoldingCircle';
+import { faGear } from '@fortawesome/free-solid-svg-icons/faGear';
+import { faFileInvoice } from '@fortawesome/free-solid-svg-icons/faFileInvoice';
+import { faAddressCard } from '@fortawesome/free-solid-svg-icons/faAddressCard';
+import { faUserSecret } from '@fortawesome/free-solid-svg-icons/faUserSecret';
+import { faWallet } from '@fortawesome/free-solid-svg-icons/faWallet';
+import { faUserPen } from '@fortawesome/free-solid-svg-icons/faUserPen';
 import {
   MyModules,
   PublicModules,
@@ -23,6 +29,8 @@ import {
   SubModulesMyFeeds,
   SubModulesMyLog,
   SubModulesMyNetwork,
+  SubModulesSettings,
+  SubModulesSettingsProfile,
 } from './modules.constants';
 
 export const publicModulesRoutesMetadata: RoutesMetadata = {
@@ -144,4 +152,44 @@ export const myModulesRoutesMetadata: RoutesMetadata = {
     },
   },
   [PublicModules.home]: publicModulesRoutesMetadata[PublicModules.home],
+  [MyModules.settings]: {
+    path: `/${MyModules.settings}`,
+    icon: faGear,
+    label: upperFirst(lowerCase(MyModules.settings)),
+    isProtected: true,
+    subRoutes: {
+      [SubModulesSettings.profile]: {
+        path: `/${MyModules.settings}/${SubModulesSettings.profile}`,
+        icon: faAddressCard,
+        label: upperFirst(lowerCase(SubModulesSettings.profile)),
+        isProtected: true,
+        subRoutes: {
+          [SubModulesSettingsProfile.edit]: {
+            path: `/${MyModules.settings}/${SubModulesSettings.profile}/${SubModulesSettingsProfile.edit}`,
+            icon: faUserPen,
+            label: upperFirst(lowerCase(SubModulesSettingsProfile.edit)),
+            isProtected: true,
+          },
+        },
+      },
+      [SubModulesSettings.account]: {
+        path: `/${MyModules.settings}/${SubModulesSettings.account}`,
+        icon: faFileInvoice,
+        label: upperFirst(lowerCase(SubModulesSettings.account)),
+        isProtected: true,
+      },
+      [SubModulesSettings.billing]: {
+        path: `/${MyModules.settings}/${SubModulesSettings.billing}`,
+        icon: faWallet,
+        label: upperFirst(lowerCase(SubModulesSettings.billing)),
+        isProtected: true,
+      },
+      [SubModulesSettings.privacy]: {
+        path: `/${MyModules.settings}/${SubModulesSettings.privacy}`,
+        icon: faUserSecret,
+        label: upperFirst(lowerCase(SubModulesSettings.privacy)),
+        isProtected: true,
+      },
+    },
+  },
 };

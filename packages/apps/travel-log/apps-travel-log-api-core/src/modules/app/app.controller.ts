@@ -1,7 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 import { Public } from 'nest-keycloak-connect';
 import { AuthDecoratorUsersEntityCurrent } from '@js-modules/api-nest-module-auth-keycloak';
-import { UsersEntity } from '../users/users.entity';
+import { UsersEntity } from '@js-modules/apps-travel-log-api-core-modules';
 
 @Controller('')
 export class AppController {

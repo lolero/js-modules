@@ -9,7 +9,7 @@ export interface RequestEntity {
 export type FindManyUniqueKeysDto<
   EntityT extends RequestEntity = RequestEntity,
 > = {
-  [uniqueKeyName in keyof EntityT]?: (number | string)[];
+  [uniqueKeyName in keyof EntityT]?: (number | string | undefined)[];
 };
 
 export type FindManySearchDto<EntityT extends RequestEntity = RequestEntity> = {

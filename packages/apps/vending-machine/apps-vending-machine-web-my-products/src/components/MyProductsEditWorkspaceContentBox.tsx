@@ -21,8 +21,11 @@ type MyProductsEditWorkspaceContentBoxProps = {
 export const MyProductsEditWorkspaceContentBox: React.FC<
   MyProductsEditWorkspaceContentBoxProps
 > = ({ nodeProductPk }) => {
-  const { request: getNodeProductRequest, entity: nodeProduct } =
-    useNodeProductsGetOne(nodeProductPk);
+  const {
+    request: getNodeProductRequest,
+    entity: nodeProduct,
+    callback: nodeProductsGetOneCallback,
+  } = useNodeProductsGetOne(nodeProductPk);
   const getNodeProductRequestPrevious = usePrevious(getNodeProductRequest);
 
   const navigate = useNavigate();
@@ -91,6 +94,10 @@ export const MyProductsEditWorkspaceContentBox: React.FC<
     nodeProduct,
     nodeProductPk,
   ]);
+
+  useEffect(() => {
+    nodeProductsGetOneCallback();
+  }, [nodeProductsGetOneCallback]);
 
   useEffect(() => {
     if (
