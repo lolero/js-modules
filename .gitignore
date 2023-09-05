@@ -252,6 +252,19 @@ build/
 
 # Husky hooks
 .husky/
+
+# monorepo-mapper
+dependency-graph*
+
+# SQLite
+*.sqlite
+
+# Automatically generated icons
+dynamically-generated-icons-DO-NOT-EDIT.tsx
+
+# dotenv
+.env.development
+.env.production
 #endregion js-modules ΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛ
 
 #region keycloak-theme VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV

@@ -13,13 +13,22 @@ function getThemeBreakpointValues(
   };
 }
 
-export function createMaterialUiTheme(
-  paletteOverrides: Partial<Theme['palette']> = {},
-  getThemeComponents: GetThemeComponents = () => ({}),
-  themeBreakpointValuesOverrides: Partial<Theme['breakpoints']['values']> = {},
-): Theme {
+export type CreateMaterialUiThemeConfig = {
+  paletteOverrides?: Partial<Theme['palette']>;
+  typographyOverrides?: Partial<Theme['typography']>;
+  getThemeComponents?: GetThemeComponents;
+  themeBreakpointValuesOverrides?: Partial<Theme['breakpoints']['values']>;
+};
+
+export function createMaterialUiTheme({
+  paletteOverrides = {},
+  typographyOverrides = {},
+  getThemeComponents = () => ({}),
+  themeBreakpointValuesOverrides = {},
+}: CreateMaterialUiThemeConfig): Theme {
   const baseTheme: Theme = createTheme({
     palette: paletteOverrides,
+    typography: typographyOverrides,
   });
 
   return createTheme(baseTheme, {

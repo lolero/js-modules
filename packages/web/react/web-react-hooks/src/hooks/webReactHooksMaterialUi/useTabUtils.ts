@@ -6,14 +6,14 @@ export type TabUtils<TabValueT> = {
 };
 
 /**
- * Utility hoof to abstract the management of Material UI Tabs components
+ * Utility hook to abstract the management of Material UI Tabs components
  *
  * @param {number} initialTabValue - The initial tab that should be selected on
  *        first render
  *
  * @returns {object}
  */
-function useTabUtils<TabValueT>(
+export function useTabUtils<TabValueT>(
   initialTabValue: TabValueT,
 ): TabUtils<TabValueT> {
   const [selectedTabValue, setSelectedTabValue] =
@@ -31,5 +31,3 @@ function useTabUtils<TabValueT>(
     changeTabCallback,
   };
 }
-
-export default useTabUtils;

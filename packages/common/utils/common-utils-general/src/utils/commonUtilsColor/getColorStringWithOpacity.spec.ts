@@ -1,4 +1,4 @@
-import getColorStringWithOpacity from './getColorStringWithOpacity';
+import { getColorStringWithOpacity } from './getColorStringWithOpacity';
 
 describe('getColorStringWithOpacity', () => {
   it('Should throw error for invalid color strings', async () => {

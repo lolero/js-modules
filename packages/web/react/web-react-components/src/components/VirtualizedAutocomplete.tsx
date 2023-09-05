@@ -164,7 +164,20 @@ export type VirtualizedAutocompleteProps<
 > = Omit<
   AutocompleteProps<OptionT, MultipleT, DisableClearableT, FreeSoloT>,
   'disableListWrap' | 'ListboxComponent' | 'PopperComponent'
->;
+> & {
+  getOptionLabel: AutocompleteProps<
+    OptionT,
+    MultipleT,
+    DisableClearableT,
+    FreeSoloT
+  >['getOptionLabel'];
+  renderOption: AutocompleteProps<
+    OptionT,
+    MultipleT,
+    DisableClearableT,
+    FreeSoloT
+  >['renderOption'];
+};
 
 export function VirtualizedAutocomplete<
   OptionT,

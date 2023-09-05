@@ -9,7 +9,7 @@ import { SnackbarMessageMetadata } from './useSnackPackUtils';
 
 export type SnackbarMessage = { success: string; error: string };
 
-function useRequestSnackbar<ReducerMetadataT extends ReducerMetadata>(
+export function useRequestSnackbar<ReducerMetadataT extends ReducerMetadata>(
   request: Request<RequestMetadata> | undefined,
   message: SnackbarMessage,
   setSnackPack: React.Dispatch<React.SetStateAction<SnackbarMessageMetadata[]>>,
@@ -48,5 +48,3 @@ function useRequestSnackbar<ReducerMetadataT extends ReducerMetadata>(
     setSnackPack,
   ]);
 }
-
-export default useRequestSnackbar;

@@ -788,5 +788,21 @@ describe('reducerHandlers.utils', () => {
         'request7',
       ]);
     });
+
+    it('Should keep the 1st latest success and fail requests plus 1 protected request', () => {
+      state.config.protectedRequestIds = ['request2', 'request5'];
+      state.config.successRequestsCache = 1;
+      state.config.failRequestsCache = 1;
+
+      updateCompletedRequestsCache(state);
+
+      expect(Object.keys(state.requests).sort()).toEqual([
+        'request1',
+        'request2',
+        'request4',
+        'request5',
+        'request7',
+      ]);
+    });
   });
 });

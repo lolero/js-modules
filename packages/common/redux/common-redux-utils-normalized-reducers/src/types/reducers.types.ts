@@ -109,6 +109,7 @@ export type ReducerPartialData<EntityT extends Entity> = Record<
 export type ReducerMetadata = Record<string, unknown>;
 
 export type ReducerConfig = {
+  protectedRequestIds?: string[];
   successRequestsCache: number | null;
   failRequestsCache: number | null;
   requestsPrettyTimestamps?: {

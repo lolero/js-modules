@@ -17,7 +17,7 @@ export type SnackPackUtils = {
   exitedSnackbarCallback: () => void;
 };
 
-function useSnackPackUtils(autoHideDuration = 5000): SnackPackUtils {
+export function useSnackPackUtils(autoHideDuration = 5000): SnackPackUtils {
   const [snackPack, setSnackPack] = useState<SnackbarMessageMetadata[]>([]);
   const [snackbarMessageMetadata, setSnackbarMessageMetadata] =
     useState<SnackbarMessageMetadata | null>(null);
@@ -53,5 +53,3 @@ function useSnackPackUtils(autoHideDuration = 5000): SnackPackUtils {
     exitedSnackbarCallback,
   };
 }
-
-export default useSnackPackUtils;

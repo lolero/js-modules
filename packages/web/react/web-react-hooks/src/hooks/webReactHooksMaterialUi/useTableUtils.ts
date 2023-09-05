@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 
-function useTableUtils<SortByT>(initialSortBy: SortByT): {
+export function useTableUtils<SortByT>(initialSortBy: SortByT): {
   tableMetadata: {
     sortBy: SortByT;
     sortDirection: 'asc' | 'desc';
@@ -33,5 +33,3 @@ function useTableUtils<SortByT>(initialSortBy: SortByT): {
     onSortCallback,
   };
 }
-
-export default useTableUtils;

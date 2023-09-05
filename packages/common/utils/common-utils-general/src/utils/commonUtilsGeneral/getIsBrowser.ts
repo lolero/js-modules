@@ -3,8 +3,6 @@
  *
  * @returns {boolean} Whether or not the app is running in a web browser
  */
-function getIsBrowser(): boolean {
+export function getIsBrowser(): boolean {
   return typeof window !== 'undefined';
 }
-
-export default getIsBrowser;

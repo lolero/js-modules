@@ -10,7 +10,13 @@ import {
   SaveWholeEntitiesAction,
   SaveWholeReducerMetadataAction,
 } from '../types/actions.types';
-import { Entity, Reducer, ReducerMetadata } from '../types/reducers.types';
+import {
+  Entity,
+  Reducer,
+  ReducerMetadata,
+  Request,
+  RequestMetadata,
+} from '../types/reducers.types';
 
 /**
  * Duplicates the state object with shallow copies of the 'data', 'metadata',
@@ -198,43 +204,91 @@ export function updateCompletedRequestsCache<
   const completedRequests = Object.values(newState.requests).filter(
     (request) => !request.isPending,
   );
-  let successRequests = completedRequests.filter((request) => request.isOk);
-  let failRequests = completedRequests.filter((request) => !request.isOk);
+  type RequestsSeparated = {
+    requestsProtectedSuccess: Request<RequestMetadata>[];
+    requestsUnprotectedSuccess: Request<RequestMetadata>[];
+    requestsProtectedFail: Request<RequestMetadata>[];
+    requestsUnprotectedFail: Request<RequestMetadata>[];
+  };
+  const {
+    requestsProtectedSuccess,
+    requestsUnprotectedSuccess,
+    requestsProtectedFail,
+    requestsUnprotectedFail,
+  } = completedRequests.reduce(
+    (requestsSeparated: RequestsSeparated, request) => {
+      const requestsSeparatedTemp = { ...requestsSeparated };
+      const isProtectedRequest = newState.config.protectedRequestIds?.includes(
+        request.id,
+      );
+
+      if (request.isOk) {
+        if (isProtectedRequest) {
+          requestsSeparatedTemp.requestsProtectedSuccess.push(request);
+        } else {
+          requestsSeparatedTemp.requestsUnprotectedSuccess.push(request);
+        }
+      } else if (isProtectedRequest) {
+        requestsSeparatedTemp.requestsProtectedFail.push(request);
+      } else {
+        requestsSeparatedTemp.requestsUnprotectedFail.push(request);
+      }
+
+      return requestsSeparatedTemp;
+    },
+    {
+      requestsProtectedSuccess: [],
+      requestsUnprotectedSuccess: [],
+      requestsProtectedFail: [],
+      requestsUnprotectedFail: [],
+    },
+  );
+
+  let successRequests = [
+    ...requestsProtectedSuccess,
+    ...requestsUnprotectedSuccess,
+  ];
+  let failRequests = [...requestsProtectedFail, ...requestsUnprotectedFail];
 
   if (
     newState.config.successRequestsCache !== null &&
-    successRequests.length > newState.config.successRequestsCache
+    requestsUnprotectedSuccess.length > newState.config.successRequestsCache
   ) {
-    const sortedSuccessRequests = orderBy(
-      successRequests,
+    const requestsUnprotectedSuccessSorted = orderBy(
+      requestsUnprotectedSuccess,
       (successRequest) => successRequest.completedAt?.unixMilliseconds,
       'desc',
     );
 
-    const successRequestsCache = sortedSuccessRequests.slice(
-      0,
-      newState.config.successRequestsCache,
-    );
+    const requestsUnprotectedSuccessSortedCache =
+      requestsUnprotectedSuccessSorted.slice(
+        0,
+        newState.config.successRequestsCache,
+      );
 
-    successRequests = successRequestsCache;
+    successRequests = [
+      ...requestsProtectedSuccess,
+      ...requestsUnprotectedSuccessSortedCache,
+    ];
   }
 
   if (
     newState.config.failRequestsCache !== null &&
     failRequests.length > newState.config.failRequestsCache
   ) {
-    const sortedFailRequests = orderBy(
+    const requestsUnprotectedFailSorted = orderBy(
       failRequests,
       (failRequest) => failRequest.completedAt?.unixMilliseconds,
       'desc',
     );
 
-    const failRequestsCache = sortedFailRequests.slice(
-      0,
-      newState.config.failRequestsCache,
-    );
+    const requestsUnprotectedFailSortedCache =
+      requestsUnprotectedFailSorted.slice(0, newState.config.failRequestsCache);
 
-    failRequests = failRequestsCache;
+    failRequests = [
+      ...requestsProtectedFail,
+      ...requestsUnprotectedFailSortedCache,
+    ];
   }
 
   // no-param-reassign is disabled because the state has already been

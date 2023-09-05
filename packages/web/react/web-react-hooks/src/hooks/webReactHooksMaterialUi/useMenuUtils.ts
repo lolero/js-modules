@@ -22,7 +22,7 @@ export type MenuUtils = {
  *
  * @returns {MenuUtils} Menu utils
  */
-function useMenuUtils(): MenuUtils {
+export function useMenuUtils(): MenuUtils {
   const [menuAnchor, setMenuAnchor] = React.useState<MenuAnchor | null>(null);
 
   const [menuCoordinates, setMenuCoordinates] =
@@ -56,5 +56,3 @@ function useMenuUtils(): MenuUtils {
     closeMenuCallback,
   };
 }
-
-export default useMenuUtils;

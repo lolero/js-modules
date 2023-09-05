@@ -8,5 +8,3 @@ export function formatCurrencyQuantity(quantity: number): string {
   });
   return numberFormatter.format(quantity);
 }
-
-export default formatCurrencyQuantity;

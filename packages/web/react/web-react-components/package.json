@@ -12,10 +12,13 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
+    "@fortawesome/free-regular-svg-icons": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@js-modules/common-react-hooks": "workspace:^0.0.0",
     "@js-modules/common-redux-utils-normalized-reducers": "workspace:^0.0.0",
+    "@js-modules/common-utils-general": "workspace:^0.0.0",
+    "@js-modules/web-react-hooks": "workspace:^0.0.0",
     "@js-modules/web-styles-material-ui": "workspace:^0.0.0",
     "@mui/material": "^5.12.1",
     "@testing-library/jest-dom": "^5.16.5",
@@ -35,5 +38,6 @@
   },
   "devDependencies": {
     "jest-environment-jsdom": "^29.5.0"
-  }
+  },
+  "eslintConfig": {}
 }

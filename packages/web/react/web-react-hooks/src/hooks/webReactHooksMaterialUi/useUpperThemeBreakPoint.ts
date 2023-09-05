@@ -8,7 +8,7 @@ import { ContainerProps } from '@mui/material/Container';
  *
  * @returns {string} Material UI upper theme breakpoint code
  */
-function useUpperThemeBreakPoint(): Exclude<
+export function useUpperThemeBreakPoint(): Exclude<
   ContainerProps['maxWidth'],
   false | undefined
 > {
@@ -38,5 +38,3 @@ function useUpperThemeBreakPoint(): Exclude<
 
   return upperThemeBreakpoint;
 }
-
-export default useUpperThemeBreakPoint;

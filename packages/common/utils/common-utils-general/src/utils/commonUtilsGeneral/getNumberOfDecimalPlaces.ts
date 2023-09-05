@@ -6,10 +6,8 @@
  *
  * @returns {number} The number of decimal significant digits
  */
-function getNumberOfDecimalPlaces(number: number): number {
+export function getNumberOfDecimalPlaces(number: number): number {
   const decimals = number.toString().split('.')[1] || '';
 
   return decimals.length;
 }
-
-export default getNumberOfDecimalPlaces;

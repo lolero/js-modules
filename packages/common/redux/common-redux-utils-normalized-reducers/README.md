@@ -84,6 +84,14 @@ The initial state of a reducer is created by calling the
 [createInitialState](#createinitialstate) function which takes an optional
 [config](#reducerconfig) object with the following props.
 
+### `protectedRequestIds`
+
+- Type (optional): sttring[]
+- Default: undefined
+
+Array of request ids which should always be kept in the 
+[reducer's requests prop](#requests)
+
 ### `successRequestsCache`
 
 - Type: number | null
@@ -755,6 +763,7 @@ type Reducer<
 
 ```typescript
 type ReducerConfig = {
+  protectedRequestIds?: string[];
   successRequestsCache: number | null;
   failRequestsCache: number | null;
   requestsPrettyTimestamps?: {

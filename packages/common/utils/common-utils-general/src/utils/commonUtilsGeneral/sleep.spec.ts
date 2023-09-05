@@ -1,4 +1,4 @@
-import sleep from './sleep';
+import { sleep } from './sleep';
 
 describe('sleep', () => {
   it('Should freeze execution for given 500 milliseconds', async () => {
