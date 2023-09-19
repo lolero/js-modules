@@ -100,7 +100,7 @@ export function* nodeChainsGetManySaga({
 
 export function* nodeChainsSagas(): Generator<ForkEffect, void, void> {
   yield takeLatest(
-    NodeChainsActionTypes.NODE_CHAINS_GET_MANY__REQUEST,
+    NodeChainsActionTypes.NODE_CHAINS__GET_MANY__REQUEST,
     nodeChainsGetManySaga,
   );
 }

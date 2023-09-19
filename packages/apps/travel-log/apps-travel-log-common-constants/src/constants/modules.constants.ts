@@ -1,9 +1,23 @@
-export enum PublicModules {
+export enum ApiControllersTravelLog {
+  usersPublic = 'users',
+  usersPrivate = 'users-private',
+  transactions = 'transactions',
+}
+
+export enum ApiSubHandlersUsersPrivate {
+  resetPassword = 'reset-password',
+}
+
+export enum ApiSubHandlersTransactions {
+  testPath = 'test-path',
+}
+
+export enum WebModulesPublic {
   home = 'home',
   purpose = 'purpose',
 }
 
-export enum MyModules {
+export enum WebModulesPrivate {
   myFeeds = 'my-feeds',
   myBoards = 'my-boards',
   myLog = 'my-log',
@@ -11,22 +25,22 @@ export enum MyModules {
   settings = 'settings',
 }
 
-export enum SubModulesMyFeeds {
+export enum WebSubModulesMyFeeds {
   general = 'general',
 }
 
-export enum SubModulesMyBoards {
+export enum WebSubModulesMyBoards {
   public = 'public',
   followers = 'followers',
   friends = 'friends',
 }
 
-export enum SubModulesMyLog {
+export enum WebSubModulesMyLog {
   trips = 'trips',
   dives = 'dives',
 }
 
-export enum SubModulesMyNetwork {
+export enum WebSubModulesMyNetwork {
   connections = 'connections',
   friends = 'friends',
   inPerson = 'in-person',
@@ -35,13 +49,13 @@ export enum SubModulesMyNetwork {
   groups = 'groups',
 }
 
-export enum SubModulesSettings {
+export enum WebSubModulesSettings {
   profile = 'profile',
   account = 'account',
   billing = 'billing',
   privacy = 'privacy',
 }
 
-export enum SubModulesSettingsProfile {
+export enum WebSubModulesSettingsProfile {
   edit = 'edit-profile',
 }

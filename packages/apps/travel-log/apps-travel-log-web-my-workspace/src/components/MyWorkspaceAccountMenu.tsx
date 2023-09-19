@@ -9,13 +9,13 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import { MuiFaIcon } from '@js-modules/web-react-components';
 import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons/faRightFromBracket';
 import {
-  createStateSettingsSignoutRequestAction,
   useStateAuthLogout,
+  useStateSettingsSignout,
 } from '@js-modules/apps-travel-log-common-store-redux';
 import {
-  WEB_CLIENT_BASE_URI,
-  PublicModules,
-  publicModulesRoutesMetadata,
+  WEB_CLIENT_URI_TRAVEL_LOG,
+  WebModulesPublic,
+  modulesPublicRoutesMetadata,
 } from '@js-modules/apps-travel-log-common-constants';
 import startCase from 'lodash/startCase';
 import { faCopy } from '@fortawesome/free-solid-svg-icons/faCopy';
@@ -23,13 +23,15 @@ import { faCopy } from '@fortawesome/free-solid-svg-icons/faCopy';
 export const MyWorkspaceAccountMenu: React.FC = () => {
   const { menuAnchor, openMenuCallback, closeMenuCallback } = useMenuUtils();
 
+  const { callback: stateSettingsSignoutCallback } = useStateSettingsSignout();
+
   const {
     reducerMetadata: { tokens },
     callback: logoutCallback,
   } = useStateAuthLogout(
-    WEB_CLIENT_BASE_URI,
-    publicModulesRoutesMetadata[PublicModules.home].path,
-    createStateSettingsSignoutRequestAction,
+    WEB_CLIENT_URI_TRAVEL_LOG,
+    modulesPublicRoutesMetadata[WebModulesPublic.home].path,
+    stateSettingsSignoutCallback,
   );
 
   const username = useMemo(() => {

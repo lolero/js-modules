@@ -22,7 +22,7 @@ export function createStateSettingsUpdatePartialReducerMetadataRequestAction(
   partialStateSettingsReducerMetadata: StateSettingsUpdatePartialReducerMetadataRequestAction['requestMetadata']['partialReducerMetadata'],
 ): StateSettingsUpdatePartialReducerMetadataRequestAction {
   return {
-    type: StateSettingsActionTypes.STATE_SETTINGS_UPDATE_PARTIAL_REDUCER_METADATA_REQUEST,
+    type: StateSettingsActionTypes.STATE_SETTINGS__UPDATE_PARTIAL_REDUCER_METADATA__REQUEST,
     requestMetadata: {
       partialReducerMetadata: partialStateSettingsReducerMetadata,
     },
@@ -35,7 +35,7 @@ export function createStateSettingsUpdatePartialReducerMetadataSuccessAction(
   requestId: StateSettingsUpdatePartialReducerMetadataSuccessAction['requestId'],
 ): StateSettingsUpdatePartialReducerMetadataSuccessAction {
   return {
-    type: StateSettingsActionTypes.STATE_SETTINGS_UPDATE_PARTIAL_REDUCER_METADATA_SUCCESS,
+    type: StateSettingsActionTypes.STATE_SETTINGS__UPDATE_PARTIAL_REDUCER_METADATA__SUCCESS,
     partialReducerMetadata: partialStateSettingsReducerMetadata,
     requestId,
   };
@@ -46,17 +46,19 @@ export function createStateSettingsUpdatePartialReducerMetadataFailAction(
   requestId: StateSettingsUpdatePartialReducerMetadataFailAction['requestId'],
 ): StateSettingsUpdatePartialReducerMetadataFailAction {
   return {
-    type: StateSettingsActionTypes.STATE_SETTINGS_UPDATE_PARTIAL_REDUCER_METADATA_FAIL,
+    type: StateSettingsActionTypes.STATE_SETTINGS__UPDATE_PARTIAL_REDUCER_METADATA__FAIL,
     error,
     requestId,
   };
 }
 
+export const STATE_SETTINGS__GET_PROFILE__REQUEST_ID =
+  'STATE_SETTINGS__GET_PROFILE__REQUEST_ID';
 export function createStateSettingsGetProfileRequestAction(): StateSettingsGetProfileRequestAction {
   return {
-    type: StateSettingsActionTypes.STATE_SETTINGS_GET_PROFILE_REQUEST,
+    type: StateSettingsActionTypes.STATE_SETTINGS__GET_PROFILE__REQUEST,
     requestMetadata: {},
-    requestId: uuidv4(),
+    requestId: STATE_SETTINGS__GET_PROFILE__REQUEST_ID,
   };
 }
 
@@ -66,7 +68,7 @@ export function createStateSettingsGetProfileSuccessAction(
   statusCode: StateSettingsGetProfileSuccessAction['statusCode'],
 ): StateSettingsGetProfileSuccessAction {
   return {
-    type: StateSettingsActionTypes.STATE_SETTINGS_GET_PROFILE_SUCCESS,
+    type: StateSettingsActionTypes.STATE_SETTINGS__GET_PROFILE__SUCCESS,
     partialReducerMetadata: partialStateSettingsReducerMetadata,
     requestId,
     statusCode,
@@ -78,21 +80,23 @@ export function createStateSettingsGetProfileFailAction(
   requestId: StateSettingsGetProfileFailAction['requestId'],
 ): StateSettingsGetProfileFailAction {
   return {
-    type: StateSettingsActionTypes.STATE_SETTINGS_GET_PROFILE_FAIL,
+    type: StateSettingsActionTypes.STATE_SETTINGS__GET_PROFILE__FAIL,
     error,
     requestId,
   };
 }
 
+export const STATE_SETTINGS__UPDATE_PROFILE__REQUEST_ID =
+  'STATE_SETTINGS__UPDATE_PROFILE__REQUEST_ID';
 export function createStateSettingsUpdateProfileRequestAction(
   usersUpdateOnePartialDto: StateSettingsUpdateProfileRequestAction['requestMetadata']['usersUpdateOnePartialDto'],
 ): StateSettingsUpdateProfileRequestAction {
   return {
-    type: StateSettingsActionTypes.STATE_SETTINGS_UPDATE_PROFILE_REQUEST,
+    type: StateSettingsActionTypes.STATE_SETTINGS__UPDATE_PROFILE__REQUEST,
     requestMetadata: {
       usersUpdateOnePartialDto,
     },
-    requestId: uuidv4(),
+    requestId: STATE_SETTINGS__UPDATE_PROFILE__REQUEST_ID,
   };
 }
 
@@ -102,7 +106,7 @@ export function createStateSettingsUpdateProfileSuccessAction(
   statusCode: StateSettingsUpdateProfileSuccessAction['statusCode'],
 ): StateSettingsUpdateProfileSuccessAction {
   return {
-    type: StateSettingsActionTypes.STATE_SETTINGS_UPDATE_PROFILE_SUCCESS,
+    type: StateSettingsActionTypes.STATE_SETTINGS__UPDATE_PROFILE__SUCCESS,
     partialReducerMetadata: partialStateSettingsReducerMetadata,
     requestId,
     statusCode,
@@ -114,15 +118,17 @@ export function createStateSettingsUpdateProfileFailAction(
   requestId: StateSettingsUpdateProfileFailAction['requestId'],
 ): StateSettingsUpdateProfileFailAction {
   return {
-    type: StateSettingsActionTypes.STATE_SETTINGS_UPDATE_PROFILE_FAIL,
+    type: StateSettingsActionTypes.STATE_SETTINGS__UPDATE_PROFILE__FAIL,
     error,
     requestId,
   };
 }
 
+export const STATE_SETTINGS__RESET_PASSWORD__REQUEST_ID =
+  'STATE_SETTINGS__RESET_PASSWORD__REQUEST_ID';
 export function createStateSettingsResetPasswordRequestAction(): StateSettingsResetPasswordRequestAction {
   return {
-    type: StateSettingsActionTypes.STATE_SETTINGS_RESET_PASSWORD_REQUEST,
+    type: StateSettingsActionTypes.STATE_SETTINGS__RESET_PASSWORD__REQUEST,
     requestMetadata: {},
     requestId: uuidv4(),
   };
@@ -133,7 +139,7 @@ export function createStateSettingsResetPasswordSuccessAction(
   statusCode: StateSettingsResetPasswordSuccessAction['statusCode'],
 ): StateSettingsResetPasswordSuccessAction {
   return {
-    type: StateSettingsActionTypes.STATE_SETTINGS_RESET_PASSWORD_SUCCESS,
+    type: StateSettingsActionTypes.STATE_SETTINGS__RESET_PASSWORD__SUCCESS,
     requestId,
     statusCode,
   };
@@ -144,17 +150,19 @@ export function createStateSettingsResetPasswordFailAction(
   requestId: StateSettingsResetPasswordFailAction['requestId'],
 ): StateSettingsResetPasswordFailAction {
   return {
-    type: StateSettingsActionTypes.STATE_SETTINGS_RESET_PASSWORD_FAIL,
+    type: StateSettingsActionTypes.STATE_SETTINGS__RESET_PASSWORD__FAIL,
     error,
     requestId,
   };
 }
 
+export const STATE_SETTINGS__SIGNOUT__REQUEST_ID =
+  'STATE_SETTINGS__SIGNOUT__REQUEST_ID';
 export function createStateSettingsSignoutRequestAction(): StateSettingsSignoutRequestAction {
   return {
-    type: StateSettingsActionTypes.STATE_SETTINGS_SIGNOUT_REQUEST,
+    type: StateSettingsActionTypes.STATE_SETTINGS__SIGNOUT__REQUEST,
     requestMetadata: {},
-    requestId: uuidv4(),
+    requestId: STATE_SETTINGS__SIGNOUT__REQUEST_ID,
   };
 }
 
@@ -163,7 +171,7 @@ export function createStateSettingsSignoutSuccessAction(
   requestId: StateSettingsSignoutSuccessAction['requestId'],
 ): StateSettingsSignoutSuccessAction {
   return {
-    type: StateSettingsActionTypes.STATE_SETTINGS_SIGNOUT_SUCCESS,
+    type: StateSettingsActionTypes.STATE_SETTINGS__SIGNOUT__SUCCESS,
     partialReducerMetadata: partialStateSettingsReducerMetadata,
     requestId,
   };
@@ -174,7 +182,7 @@ export function createStateSettingsSignoutFailAction(
   requestId: StateSettingsSignoutFailAction['requestId'],
 ): StateSettingsSignoutFailAction {
   return {
-    type: StateSettingsActionTypes.STATE_SETTINGS_SIGNOUT_FAIL,
+    type: StateSettingsActionTypes.STATE_SETTINGS__SIGNOUT__FAIL,
     error,
     requestId,
   };

@@ -1,12 +1,16 @@
 import { Body, Controller, Delete, Get, Patch, Post } from '@nestjs/common';
 import { InterceptorSerialize } from '@js-modules/api-nest-utils';
 import { AuthDecoratorUsersEntityCurrent } from '@js-modules/api-nest-module-auth-keycloak';
+import {
+  ApiControllersTravelLog,
+  ApiSubHandlersUsersPrivate,
+} from '@js-modules/apps-travel-log-common-constants';
 import { UsersService } from './users.service';
 import { UsersEntity } from './users.entity';
 import { UsersUpdateOnePartialDto } from './dtos/users.updateOnePartial.dto';
 import { UsersPrivateDto } from './dtos/users.private.dto';
 
-@Controller('users-private')
+@Controller(ApiControllersTravelLog.usersPrivate)
 @InterceptorSerialize<UsersEntity>(UsersPrivateDto)
 export class UsersControllerPrivate {
   constructor(private usersService: UsersService) {}
@@ -34,7 +38,7 @@ export class UsersControllerPrivate {
     return usersEntity;
   }
 
-  @Post('/reset-password')
+  @Post(ApiSubHandlersUsersPrivate.resetPassword)
   async resetPassword(
     @AuthDecoratorUsersEntityCurrent()
     usersEntityCurrent: UsersEntity,

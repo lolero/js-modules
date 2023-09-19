@@ -1,10 +1,10 @@
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import {
-  MyModules,
-  myModulesRoutesMetadata,
-  SubModulesSettings,
-  SubModulesSettingsProfile,
+  WebModulesPrivate,
+  modulesPrivateRoutesMetadata,
+  WebSubModulesSettings,
+  WebSubModulesSettingsProfile,
 } from '@js-modules/apps-travel-log-common-constants';
 import { SettingsProfileWorkspaceBox } from './SettingsProfileWorkspaceBox';
 import { SettingsProfileEditWorkspaceBox } from './SettingsProfileEditWorkspaceBox';
@@ -14,7 +14,7 @@ export const SettingsProfileRoutes: React.FunctionComponent = () => {
     <Routes>
       <Route index element={<SettingsProfileWorkspaceBox />} />
       <Route
-        path={`${SubModulesSettingsProfile.edit}`}
+        path={`${WebSubModulesSettingsProfile.edit}`}
         element={<SettingsProfileEditWorkspaceBox />}
       />
       <Route
@@ -23,9 +23,8 @@ export const SettingsProfileRoutes: React.FunctionComponent = () => {
           <Navigate
             replace
             to={
-              myModulesRoutesMetadata[MyModules.settings].subRoutes![
-                SubModulesSettings.profile
-              ].path
+              modulesPrivateRoutesMetadata[WebModulesPrivate.settings]
+                .subRoutes![WebSubModulesSettings.profile].path
             }
           />
         }

@@ -48,7 +48,7 @@ export const MyWorkspaceBox: React.FunctionComponent<MyWorkspaceBoxProps> = ({
 
   const {
     reducerMetadata: { isAuthenticated, tokens },
-    callback: loginCallback,
+    callback: stateAuthLoginCallback,
   } = useStateAuthLogin(WEB_CLIENT_BASE_URI, pathname);
 
   const getIsAuthorizedCallback = useCallback(() => {
@@ -65,11 +65,11 @@ export const MyWorkspaceBox: React.FunctionComponent<MyWorkspaceBoxProps> = ({
 
   const onNotAuthorizedCallback = useCallback(() => {
     if (!isAuthenticated) {
-      loginCallback();
+      stateAuthLoginCallback();
     } else {
       setIsPendingRedirectToPublicPath(true);
     }
-  }, [isAuthenticated, loginCallback]);
+  }, [isAuthenticated, stateAuthLoginCallback]);
 
   useEffect(() => {
     if (isPendingRedirectToPublicPath) {

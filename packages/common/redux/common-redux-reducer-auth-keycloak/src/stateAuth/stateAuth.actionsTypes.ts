@@ -27,8 +27,8 @@ export type StateAuthInitializeRequestAction = RequestAction<
   StateAuthActionTypes.STATE_AUTH__INITIALIZE__REQUEST,
   {
     keycloakConfig: KeycloakConfig;
-    onSigninActionCreator?: () => RequestAction<string, Record<string, any>>;
-    onSignoutActionCreator?: () => RequestAction<string, Record<string, any>>;
+    onSigninCallback?: () => void;
+    onSignoutCallback?: () => void;
   }
 >;
 
@@ -45,7 +45,7 @@ export type StateAuthSigninRequestAction = RequestAction<
   {
     signinAction: SigninAction;
     redirectUri?: string;
-    onSigninActionCreator?: () => RequestAction<string, Record<string, any>>;
+    onSigninCallback?: () => void;
   }
 >;
 
@@ -59,7 +59,7 @@ export type StateAuthSignoutRequestAction = RequestAction<
   StateAuthActionTypes.STATE_AUTH__SIGNOUT__REQUEST,
   {
     redirectUri?: string;
-    onSignoutActionCreator?: () => RequestAction<string, Record<string, any>>;
+    onSignoutCallback?: () => void;
   }
 >;
 

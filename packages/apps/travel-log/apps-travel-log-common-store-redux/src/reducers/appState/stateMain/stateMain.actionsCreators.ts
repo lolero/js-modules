@@ -10,7 +10,7 @@ export function createStateMainUpdatePartialReducerMetadataRequestAction(
   partialStateMainReducerMetadata: StateMainUpdatePartialReducerMetadataRequestAction['requestMetadata']['partialReducerMetadata'],
 ): StateMainUpdatePartialReducerMetadataRequestAction {
   return {
-    type: StateMainActionTypes.STATE_MAIN_UPDATE_PARTIAL_REDUCER_METADATA_REQUEST,
+    type: StateMainActionTypes.STATE_MAIN__UPDATE_PARTIAL_REDUCER_METADATA__REQUEST,
     requestMetadata: {
       partialReducerMetadata: partialStateMainReducerMetadata,
     },
@@ -23,7 +23,7 @@ export function createStateMainUpdatePartialReducerMetadataSuccessAction(
   requestId: StateMainUpdatePartialReducerMetadataSuccessAction['requestId'],
 ): StateMainUpdatePartialReducerMetadataSuccessAction {
   return {
-    type: StateMainActionTypes.STATE_MAIN_UPDATE_PARTIAL_REDUCER_METADATA_SUCCESS,
+    type: StateMainActionTypes.STATE_MAIN__UPDATE_PARTIAL_REDUCER_METADATA__SUCCESS,
     partialReducerMetadata: partialStateMainReducerMetadata,
     requestId,
   };
@@ -34,7 +34,7 @@ export function createStateMainUpdatePartialReducerMetadataFailAction(
   requestId: StateMainUpdatePartialReducerMetadataFailAction['requestId'],
 ): StateMainUpdatePartialReducerMetadataFailAction {
   return {
-    type: StateMainActionTypes.STATE_MAIN_UPDATE_PARTIAL_REDUCER_METADATA_FAIL,
+    type: StateMainActionTypes.STATE_MAIN__UPDATE_PARTIAL_REDUCER_METADATA__FAIL,
     error,
     requestId,
   };

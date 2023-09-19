@@ -1,9 +1,9 @@
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import {
-  MyModules,
-  myModulesRoutesMetadata,
-  SubModulesMyFeeds,
+  WebModulesPrivate,
+  modulesPrivateRoutesMetadata,
+  WebSubModulesMyFeeds,
 } from '@js-modules/apps-travel-log-common-constants';
 import { MyFeedsWorkspaceBox } from './MyFeedsWorkspaceBox';
 
@@ -12,7 +12,7 @@ export const MyFeedsRoutes: React.FunctionComponent = () => {
     <Routes>
       <Route index element={<MyFeedsWorkspaceBox />} />
       <Route
-        path={`${SubModulesMyFeeds.general}`}
+        path={`${WebSubModulesMyFeeds.general}`}
         element={<MyFeedsWorkspaceBox />}
       />
       <Route
@@ -20,7 +20,7 @@ export const MyFeedsRoutes: React.FunctionComponent = () => {
         element={
           <Navigate
             replace
-            to={myModulesRoutesMetadata[MyModules.myFeeds].path}
+            to={modulesPrivateRoutesMetadata[WebModulesPrivate.myFeeds].path}
           />
         }
       />

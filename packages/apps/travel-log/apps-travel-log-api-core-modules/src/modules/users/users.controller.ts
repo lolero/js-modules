@@ -3,13 +3,14 @@ import {
   EntityUniqueKeyValue,
   InterceptorSerialize,
 } from '@js-modules/api-nest-utils';
+import { ApiControllersTravelLog } from '@js-modules/apps-travel-log-common-constants';
 import { UsersService } from './users.service';
 import { UsersEntity } from './users.entity';
 import { UsersPublicDto } from './dtos/users.public.dto';
 import { UsersUniqueKeyName } from './users.types';
 import { UsersFindManyDto } from './dtos/users.findMany.dto';
 
-@Controller('users')
+@Controller(ApiControllersTravelLog.usersPublic)
 @InterceptorSerialize<UsersEntity>(UsersPublicDto)
 export class UsersController {
   constructor(private usersService: UsersService) {}

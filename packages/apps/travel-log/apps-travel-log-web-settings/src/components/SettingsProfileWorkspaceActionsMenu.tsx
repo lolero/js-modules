@@ -3,10 +3,10 @@ import { MuiFaIcon } from '@js-modules/web-react-components';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons/faPenToSquare';
 import { Link } from 'react-router-dom';
 import {
-  MyModules,
-  myModulesRoutesMetadata,
-  SubModulesSettings,
-  SubModulesSettingsProfile,
+  WebModulesPrivate,
+  modulesPrivateRoutesMetadata,
+  WebSubModulesSettings,
+  WebSubModulesSettingsProfile,
 } from '@js-modules/apps-travel-log-common-constants';
 import { useMenuUtils } from '@js-modules/web-react-hooks';
 import IconButton from '@mui/material/IconButton';
@@ -32,9 +32,9 @@ export const SettingsProfileWorkspaceActionsMenu: React.FC = () => {
         <MenuItem
           component={Link}
           to={
-            myModulesRoutesMetadata[MyModules.settings].subRoutes![
-              SubModulesSettings.profile
-            ].subRoutes![SubModulesSettingsProfile.edit].path
+            modulesPrivateRoutesMetadata[WebModulesPrivate.settings].subRoutes![
+              WebSubModulesSettings.profile
+            ].subRoutes![WebSubModulesSettingsProfile.edit].path
           }
         >
           <ListItemIcon>

@@ -8,8 +8,6 @@ const stateSettingsReducerMetadataInitialState: StateSettingsReducer['metadata']
   {
     profile: null,
     profilePartialUnsaved: null,
-    profilePartialUnsavedErrors: [],
-    profileUpdateRequestId: null,
   };
 
 const stateSettingsReducerDataInitialState: StateSettingsReducer['data'] = {};

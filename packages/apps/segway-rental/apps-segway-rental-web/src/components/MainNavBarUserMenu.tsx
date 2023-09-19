@@ -2,14 +2,13 @@ import React from 'react';
 import Menu from '@mui/material/Menu';
 import IconButton from '@mui/material/IconButton';
 import MenuItem from '@mui/material/MenuItem';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 import { useStateAuthReducerMetadata } from '@js-modules/apps-segway-rental-store-redux';
 import { Avatar } from '@mui/material';
 import { useMenuUtils } from '@js-modules/web-react-hooks';
-import { menuItemSx } from '@js-modules/web-styles-material-ui';
 import { MuiFaIcon } from '@js-modules/web-react-components';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons/faSignOutAlt';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
 
 type Props = {
   logoutCallback: () => void;
@@ -35,15 +34,11 @@ const MainNavBarUserMenu: React.FunctionComponent<Props> = ({
         anchorEl={menuAnchor}
         onClose={closeMenuCallback}
       >
-        <MenuItem sx={menuItemSx.menuItem} onClick={logoutCallback}>
-          <Box sx={menuItemSx.menuItemLabelBox}>
-            <MuiFaIcon
-              sx={menuItemSx.menuItemIcon}
-              icon={faSignOutAlt}
-              fontSize="small"
-            />
-            <Typography>Logout</Typography>
-          </Box>
+        <MenuItem onClick={logoutCallback}>
+          <ListItemIcon>
+            <MuiFaIcon icon={faSignOutAlt} />
+          </ListItemIcon>
+          <ListItemText>Logout</ListItemText>
         </MenuItem>
       </Menu>
     </>

@@ -28,14 +28,14 @@ const keycloakConfig: KeycloakConfig = {
 export const VendingMachineRoutes: React.FunctionComponent = () => {
   const {
     reducerMetadata: { isKeycloakReady, isAuthenticated },
-    callback: initializeKeycloakCallback,
+    callback: stateAuthInitializeKeycloakCallback,
   } = useStateAuthInitializeKeycloak(keycloakConfig);
 
   const { confirmDialogMetadata } = useStateDialogsReducerMetadata();
 
   useEffect(() => {
-    initializeKeycloakCallback();
-  }, [initializeKeycloakCallback]);
+    stateAuthInitializeKeycloakCallback();
+  }, [stateAuthInitializeKeycloakCallback]);
 
   if (!isKeycloakReady) {
     return <CircularProgress />;

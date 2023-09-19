@@ -32,7 +32,7 @@ let configTypeormDataSourceOptionsVariable: Pick<
 };
 
 switch (process.env.NODE_ENV) {
-  case 'dev':
+  case 'development':
     break;
   case 'test':
     configTypeormDataSourceOptionsVariable = {
@@ -44,7 +44,7 @@ switch (process.env.NODE_ENV) {
       database: 'core',
     };
     break;
-  case 'prod':
+  case 'production':
     break;
   default:
     throw new Error(

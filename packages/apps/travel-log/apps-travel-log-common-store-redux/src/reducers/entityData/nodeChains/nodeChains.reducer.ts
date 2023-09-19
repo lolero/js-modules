@@ -16,11 +16,11 @@ export function nodeChainsReducer(
   action: NodeChainsReducerHittingAction,
 ): NodeChainsReducer {
   switch (action.type) {
-    case NodeChainsActionTypes.NODE_CHAINS_GET_MANY__REQUEST:
+    case NodeChainsActionTypes.NODE_CHAINS__GET_MANY__REQUEST:
       return handleRequest(state, action);
-    case NodeChainsActionTypes.NODE_CHAINS_GET_MANY__SUCCESS:
+    case NodeChainsActionTypes.NODE_CHAINS__GET_MANY__SUCCESS:
       return handleSaveWholeEntities(state, action);
-    case NodeChainsActionTypes.NODE_CHAINS_GET_MANY__FAIL:
+    case NodeChainsActionTypes.NODE_CHAINS__GET_MANY__FAIL:
       return handleFail(state, action);
     default:
       return state;

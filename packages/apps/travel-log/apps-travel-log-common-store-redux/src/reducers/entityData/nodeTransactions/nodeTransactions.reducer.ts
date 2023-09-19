@@ -16,17 +16,17 @@ export function nodeTransactionsReducer(
   action: NodeTransactionsReducerHittingAction,
 ): NodeTransactionsReducer {
   switch (action.type) {
-    case NodeTransactionsActionTypes.NODE_TRANSACTIONS_GET_MANY__REQUEST:
+    case NodeTransactionsActionTypes.NODE_TRANSACTIONS__GET_MANY__REQUEST:
       return handleRequest(state, action);
-    case NodeTransactionsActionTypes.NODE_TRANSACTIONS_GET_MANY__SUCCESS:
+    case NodeTransactionsActionTypes.NODE_TRANSACTIONS__GET_MANY__SUCCESS:
       return handleSaveWholeEntities(state, action);
-    case NodeTransactionsActionTypes.NODE_TRANSACTIONS_GET_MANY__FAIL:
+    case NodeTransactionsActionTypes.NODE_TRANSACTIONS__GET_MANY__FAIL:
       return handleFail(state, action);
-    case NodeTransactionsActionTypes.NODE_TRANSACTIONS_GET_ONE__REQUEST:
+    case NodeTransactionsActionTypes.NODE_TRANSACTIONS__GET_ONE__REQUEST:
       return handleRequest(state, action);
-    case NodeTransactionsActionTypes.NODE_TRANSACTIONS_GET_ONE__SUCCESS:
+    case NodeTransactionsActionTypes.NODE_TRANSACTIONS__GET_ONE__SUCCESS:
       return handleSaveWholeEntities(state, action);
-    case NodeTransactionsActionTypes.NODE_TRANSACTIONS_GET_ONE__FAIL:
+    case NodeTransactionsActionTypes.NODE_TRANSACTIONS__GET_ONE__FAIL:
       return handleFail(state, action);
     default:
       return state;

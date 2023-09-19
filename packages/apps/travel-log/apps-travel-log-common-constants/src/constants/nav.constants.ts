@@ -23,171 +23,171 @@ import { faUserSecret } from '@fortawesome/free-solid-svg-icons/faUserSecret';
 import { faWallet } from '@fortawesome/free-solid-svg-icons/faWallet';
 import { faUserPen } from '@fortawesome/free-solid-svg-icons/faUserPen';
 import {
-  MyModules,
-  PublicModules,
-  SubModulesMyBoards,
-  SubModulesMyFeeds,
-  SubModulesMyLog,
-  SubModulesMyNetwork,
-  SubModulesSettings,
-  SubModulesSettingsProfile,
+  WebModulesPrivate,
+  WebModulesPublic,
+  WebSubModulesMyBoards,
+  WebSubModulesMyFeeds,
+  WebSubModulesMyLog,
+  WebSubModulesMyNetwork,
+  WebSubModulesSettings,
+  WebSubModulesSettingsProfile,
 } from './modules.constants';
 
-export const publicModulesRoutesMetadata: RoutesMetadata = {
-  [PublicModules.home]: {
-    path: `/${PublicModules.home}`,
+export const modulesPublicRoutesMetadata: RoutesMetadata = {
+  [WebModulesPublic.home]: {
+    path: `/${WebModulesPublic.home}`,
     icon: faHouse,
-    label: upperFirst(PublicModules.home),
+    label: upperFirst(WebModulesPublic.home),
   },
-  [PublicModules.purpose]: {
-    path: `/${PublicModules.purpose}`,
+  [WebModulesPublic.purpose]: {
+    path: `/${WebModulesPublic.purpose}`,
     icon: faHandsHoldingCircle,
-    label: upperFirst(PublicModules.purpose),
+    label: upperFirst(WebModulesPublic.purpose),
   },
 };
 
-export const myModulesRoutesMetadata: RoutesMetadata = {
-  [MyModules.myFeeds]: {
-    path: `/${MyModules.myFeeds}`,
+export const modulesPrivateRoutesMetadata: RoutesMetadata = {
+  [WebModulesPrivate.myFeeds]: {
+    path: `/${WebModulesPrivate.myFeeds}`,
     icon: faRss,
-    label: upperFirst(lowerCase(MyModules.myFeeds)),
+    label: upperFirst(lowerCase(WebModulesPrivate.myFeeds)),
     isProtected: true,
     subRoutes: {
-      [SubModulesMyFeeds.general]: {
-        path: `/${MyModules.myFeeds}/${SubModulesMyFeeds.general}`,
+      [WebSubModulesMyFeeds.general]: {
+        path: `/${WebModulesPrivate.myFeeds}/${WebSubModulesMyFeeds.general}`,
         icon: faGlobe,
-        label: upperFirst(lowerCase(SubModulesMyFeeds.general)),
+        label: upperFirst(lowerCase(WebSubModulesMyFeeds.general)),
         isProtected: true,
       },
     },
   },
-  [MyModules.myBoards]: {
-    path: `/${MyModules.myBoards}`,
+  [WebModulesPrivate.myBoards]: {
+    path: `/${WebModulesPrivate.myBoards}`,
     icon: faPersonChalkboard,
-    label: upperFirst(lowerCase(MyModules.myBoards)),
+    label: upperFirst(lowerCase(WebModulesPrivate.myBoards)),
     isProtected: true,
     subRoutes: {
-      [SubModulesMyBoards.public]: {
-        path: `/${MyModules.myBoards}/${SubModulesMyBoards.public}`,
+      [WebSubModulesMyBoards.public]: {
+        path: `/${WebModulesPrivate.myBoards}/${WebSubModulesMyBoards.public}`,
         icon: faGlobe,
-        label: upperFirst(lowerCase(SubModulesMyBoards.public)),
+        label: upperFirst(lowerCase(WebSubModulesMyBoards.public)),
         isProtected: true,
       },
-      [SubModulesMyBoards.followers]: {
-        path: `/${MyModules.myBoards}/${SubModulesMyBoards.followers}`,
+      [WebSubModulesMyBoards.followers]: {
+        path: `/${WebModulesPrivate.myBoards}/${WebSubModulesMyBoards.followers}`,
         icon: faPersonArrowDownToLine,
-        label: upperFirst(lowerCase(SubModulesMyBoards.followers)),
+        label: upperFirst(lowerCase(WebSubModulesMyBoards.followers)),
         isProtected: true,
       },
-      [SubModulesMyBoards.friends]: {
-        path: `/${MyModules.myBoards}/${SubModulesMyBoards.friends}`,
+      [WebSubModulesMyBoards.friends]: {
+        path: `/${WebModulesPrivate.myBoards}/${WebSubModulesMyBoards.friends}`,
         icon: faHandshake,
-        label: upperFirst(lowerCase(SubModulesMyBoards.friends)),
+        label: upperFirst(lowerCase(WebSubModulesMyBoards.friends)),
         isProtected: true,
       },
     },
   },
-  [MyModules.myLog]: {
-    path: `/${MyModules.myLog}`,
+  [WebModulesPrivate.myLog]: {
+    path: `/${WebModulesPrivate.myLog}`,
     icon: faClipboardList,
-    label: upperFirst(lowerCase(MyModules.myLog)),
+    label: upperFirst(lowerCase(WebModulesPrivate.myLog)),
     isProtected: true,
     subRoutes: {
-      [SubModulesMyLog.trips]: {
-        path: `/${MyModules.myLog}/${SubModulesMyLog.trips}`,
+      [WebSubModulesMyLog.trips]: {
+        path: `/${WebModulesPrivate.myLog}/${WebSubModulesMyLog.trips}`,
         icon: faPlaneDeparture,
-        label: upperFirst(lowerCase(SubModulesMyLog.trips)),
+        label: upperFirst(lowerCase(WebSubModulesMyLog.trips)),
         isProtected: true,
       },
-      [SubModulesMyLog.dives]: {
-        path: `/${MyModules.myLog}/${SubModulesMyLog.dives}`,
+      [WebSubModulesMyLog.dives]: {
+        path: `/${WebModulesPrivate.myLog}/${WebSubModulesMyLog.dives}`,
         icon: faFish,
-        label: upperFirst(lowerCase(SubModulesMyLog.dives)),
+        label: upperFirst(lowerCase(WebSubModulesMyLog.dives)),
         isProtected: true,
       },
     },
   },
-  [MyModules.myNetwork]: {
-    path: `/${MyModules.myNetwork}`,
+  [WebModulesPrivate.myNetwork]: {
+    path: `/${WebModulesPrivate.myNetwork}`,
     icon: faDiagramProject,
-    label: upperFirst(lowerCase(MyModules.myNetwork)),
+    label: upperFirst(lowerCase(WebModulesPrivate.myNetwork)),
     isProtected: true,
     subRoutes: {
-      [SubModulesMyNetwork.connections]: {
-        path: `/${MyModules.myNetwork}/${SubModulesMyNetwork.connections}`,
+      [WebSubModulesMyNetwork.connections]: {
+        path: `/${WebModulesPrivate.myNetwork}/${WebSubModulesMyNetwork.connections}`,
         icon: faLink,
-        label: upperFirst(lowerCase(SubModulesMyNetwork.connections)),
+        label: upperFirst(lowerCase(WebSubModulesMyNetwork.connections)),
         isProtected: true,
       },
-      [SubModulesMyNetwork.friends]: {
-        path: `/${MyModules.myNetwork}/${SubModulesMyNetwork.friends}`,
+      [WebSubModulesMyNetwork.friends]: {
+        path: `/${WebModulesPrivate.myNetwork}/${WebSubModulesMyNetwork.friends}`,
         icon: faHandshake,
-        label: upperFirst(lowerCase(SubModulesMyNetwork.friends)),
+        label: upperFirst(lowerCase(WebSubModulesMyNetwork.friends)),
         isProtected: true,
       },
-      [SubModulesMyNetwork.inPerson]: {
-        path: `/${MyModules.myNetwork}/${SubModulesMyNetwork.inPerson}`,
+      [WebSubModulesMyNetwork.inPerson]: {
+        path: `/${WebModulesPrivate.myNetwork}/${WebSubModulesMyNetwork.inPerson}`,
         icon: faPeopleArrows,
-        label: upperFirst(lowerCase(SubModulesMyNetwork.inPerson)),
+        label: upperFirst(lowerCase(WebSubModulesMyNetwork.inPerson)),
         isProtected: true,
       },
-      [SubModulesMyNetwork.following]: {
-        path: `/${MyModules.myNetwork}/${SubModulesMyNetwork.following}`,
+      [WebSubModulesMyNetwork.following]: {
+        path: `/${WebModulesPrivate.myNetwork}/${WebSubModulesMyNetwork.following}`,
         icon: faPersonArrowUpFromLine,
-        label: upperFirst(lowerCase(SubModulesMyNetwork.following)),
+        label: upperFirst(lowerCase(WebSubModulesMyNetwork.following)),
         isProtected: true,
       },
-      [SubModulesMyNetwork.followers]: {
-        path: `/${MyModules.myNetwork}/${SubModulesMyNetwork.followers}`,
+      [WebSubModulesMyNetwork.followers]: {
+        path: `/${WebModulesPrivate.myNetwork}/${WebSubModulesMyNetwork.followers}`,
         icon: faPersonArrowDownToLine,
-        label: upperFirst(lowerCase(SubModulesMyNetwork.followers)),
+        label: upperFirst(lowerCase(WebSubModulesMyNetwork.followers)),
         isProtected: true,
       },
-      [SubModulesMyNetwork.groups]: {
-        path: `/${MyModules.myNetwork}/${SubModulesMyNetwork.groups}`,
+      [WebSubModulesMyNetwork.groups]: {
+        path: `/${WebModulesPrivate.myNetwork}/${WebSubModulesMyNetwork.groups}`,
         icon: faPeopleGroup,
-        label: upperFirst(lowerCase(SubModulesMyNetwork.groups)),
+        label: upperFirst(lowerCase(WebSubModulesMyNetwork.groups)),
         isProtected: true,
       },
     },
   },
-  [PublicModules.home]: publicModulesRoutesMetadata[PublicModules.home],
-  [MyModules.settings]: {
-    path: `/${MyModules.settings}`,
+  [WebModulesPublic.home]: modulesPublicRoutesMetadata[WebModulesPublic.home],
+  [WebModulesPrivate.settings]: {
+    path: `/${WebModulesPrivate.settings}`,
     icon: faGear,
-    label: upperFirst(lowerCase(MyModules.settings)),
+    label: upperFirst(lowerCase(WebModulesPrivate.settings)),
     isProtected: true,
     subRoutes: {
-      [SubModulesSettings.profile]: {
-        path: `/${MyModules.settings}/${SubModulesSettings.profile}`,
+      [WebSubModulesSettings.profile]: {
+        path: `/${WebModulesPrivate.settings}/${WebSubModulesSettings.profile}`,
         icon: faAddressCard,
-        label: upperFirst(lowerCase(SubModulesSettings.profile)),
+        label: upperFirst(lowerCase(WebSubModulesSettings.profile)),
         isProtected: true,
         subRoutes: {
-          [SubModulesSettingsProfile.edit]: {
-            path: `/${MyModules.settings}/${SubModulesSettings.profile}/${SubModulesSettingsProfile.edit}`,
+          [WebSubModulesSettingsProfile.edit]: {
+            path: `/${WebModulesPrivate.settings}/${WebSubModulesSettings.profile}/${WebSubModulesSettingsProfile.edit}`,
             icon: faUserPen,
-            label: upperFirst(lowerCase(SubModulesSettingsProfile.edit)),
+            label: upperFirst(lowerCase(WebSubModulesSettingsProfile.edit)),
             isProtected: true,
           },
         },
       },
-      [SubModulesSettings.account]: {
-        path: `/${MyModules.settings}/${SubModulesSettings.account}`,
+      [WebSubModulesSettings.account]: {
+        path: `/${WebModulesPrivate.settings}/${WebSubModulesSettings.account}`,
         icon: faFileInvoice,
-        label: upperFirst(lowerCase(SubModulesSettings.account)),
+        label: upperFirst(lowerCase(WebSubModulesSettings.account)),
         isProtected: true,
       },
-      [SubModulesSettings.billing]: {
-        path: `/${MyModules.settings}/${SubModulesSettings.billing}`,
+      [WebSubModulesSettings.billing]: {
+        path: `/${WebModulesPrivate.settings}/${WebSubModulesSettings.billing}`,
         icon: faWallet,
-        label: upperFirst(lowerCase(SubModulesSettings.billing)),
+        label: upperFirst(lowerCase(WebSubModulesSettings.billing)),
         isProtected: true,
       },
-      [SubModulesSettings.privacy]: {
-        path: `/${MyModules.settings}/${SubModulesSettings.privacy}`,
+      [WebSubModulesSettings.privacy]: {
+        path: `/${WebModulesPrivate.settings}/${WebSubModulesSettings.privacy}`,
         icon: faUserSecret,
-        label: upperFirst(lowerCase(SubModulesSettings.privacy)),
+        label: upperFirst(lowerCase(WebSubModulesSettings.privacy)),
         isProtected: true,
       },
     },

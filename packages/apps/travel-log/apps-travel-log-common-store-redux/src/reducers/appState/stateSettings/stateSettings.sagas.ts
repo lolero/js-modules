@@ -213,23 +213,23 @@ export function* stateSettingsSignoutSaga({
 
 export function* stateSettingsSagas(): Generator<ForkEffect, void, void> {
   yield takeEvery(
-    StateSettingsActionTypes.STATE_SETTINGS_UPDATE_PARTIAL_REDUCER_METADATA_REQUEST,
+    StateSettingsActionTypes.STATE_SETTINGS__UPDATE_PARTIAL_REDUCER_METADATA__REQUEST,
     stateSettingsUpdatePartialReducerMetadataSaga,
   );
   yield takeLatest(
-    StateSettingsActionTypes.STATE_SETTINGS_GET_PROFILE_REQUEST,
+    StateSettingsActionTypes.STATE_SETTINGS__GET_PROFILE__REQUEST,
     stateSettingsGetProfileSaga,
   );
   yield takeLatest(
-    StateSettingsActionTypes.STATE_SETTINGS_UPDATE_PROFILE_REQUEST,
+    StateSettingsActionTypes.STATE_SETTINGS__UPDATE_PROFILE__REQUEST,
     stateSettingsUpdateProfileSaga,
   );
   yield takeLatest(
-    StateSettingsActionTypes.STATE_SETTINGS_RESET_PASSWORD_REQUEST,
+    StateSettingsActionTypes.STATE_SETTINGS__RESET_PASSWORD__REQUEST,
     stateSettingsResetPasswordSaga,
   );
   yield takeLatest(
-    StateSettingsActionTypes.STATE_SETTINGS_SIGNOUT_REQUEST,
+    StateSettingsActionTypes.STATE_SETTINGS__SIGNOUT__REQUEST,
     stateSettingsSignoutSaga,
   );
 }

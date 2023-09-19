@@ -102,11 +102,11 @@ export function* nodeUsersGetManySaga({
 
 export function* nodeUsersSagas(): Generator<ForkEffect, void, void> {
   yield takeLatest(
-    NodeUsersActionTypes.NODE_USERS_GET_ONE__REQUEST,
+    NodeUsersActionTypes.NODE_USERS__GET_ONE__REQUEST,
     nodeUsersGetOneSaga,
   );
   yield takeLatest(
-    NodeUsersActionTypes.NODE_USERS_GET_MANY__REQUEST,
+    NodeUsersActionTypes.NODE_USERS__GET_MANY__REQUEST,
     nodeUsersGetManySaga,
   );
 }

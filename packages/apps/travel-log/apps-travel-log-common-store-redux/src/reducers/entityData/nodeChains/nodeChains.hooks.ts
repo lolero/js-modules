@@ -1,14 +1,13 @@
-import { useSelector } from 'react-redux';
-import { useMemo } from 'react';
-import { NodeChain } from './nodeChains.types';
-import { selectNodeChainsData } from './nodeChains.selectors';
+import { createReducerHooks } from '@js-modules/common-redux-utils-normalized-reducers';
+import { nodeChainsReducerSelectors } from './nodeChains.selectors';
 
-export function useNodeChain(nodeChainPk: string): NodeChain | undefined {
-  const nodeChains = useSelector(selectNodeChainsData);
-  const nodeChain = useMemo(
-    () => nodeChains[nodeChainPk],
-    [nodeChainPk, nodeChains],
-  );
+export const nodeChainsHooks = createReducerHooks(nodeChainsReducerSelectors);
 
-  return nodeChain;
-}
+export const {
+  useRequest: useNodeChainsRequest,
+  useRequests: useNodeChainsRequests,
+  useReducerMetadata: useNodeChainsReducerMetadata,
+  useEntity: useNodeChainsEntity,
+  useEntities: useNodeChainsEntities,
+  useReducerConfig: useNodeChainsReducerConfig,
+} = nodeChainsHooks;

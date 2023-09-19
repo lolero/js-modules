@@ -22,7 +22,7 @@ let appConfigTypeormDataSourceOptionsVariable: Pick<
 };
 
 switch (process.env.NODE_ENV) {
-  case 'dev':
+  case 'development':
     appConfigTypeormDataSourceOptionsVariable = {
       type: 'sqlite',
       database: 'db-dev.sqlite',
@@ -34,7 +34,7 @@ switch (process.env.NODE_ENV) {
       database: 'db-test.sqlite',
     };
     break;
-  case 'prod':
+  case 'production':
     break;
   default:
     throw new Error(

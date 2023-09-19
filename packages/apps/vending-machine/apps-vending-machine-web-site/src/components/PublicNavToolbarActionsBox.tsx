@@ -33,13 +33,13 @@ export const PublicNavToolbarActionsBox: React.FC = () => {
 
   const {
     reducerMetadata: { isAuthenticated, tokens },
-    callback: signupCallback,
+    callback: stateAuthSignupCallback,
   } = useStateAuthSignup(
     WEB_CLIENT_BASE_URI,
     myModulesRoutesMetadata[MyModules.myProducts].path,
   );
 
-  const { callback: loginCallback } = useStateAuthLogin(
+  const { callback: stateAuthLoginCallback } = useStateAuthLogin(
     WEB_CLIENT_BASE_URI,
     myModulesRoutesMetadata[MyModules.myProducts].path,
   );
@@ -85,13 +85,13 @@ export const PublicNavToolbarActionsBox: React.FC = () => {
             anchorEl={menuAnchor}
             onClose={closeMenuCallback}
           >
-            <MenuItem onClick={signupCallback}>
+            <MenuItem onClick={stateAuthSignupCallback}>
               <ListItemIcon>
                 <MuiFaIcon icon={faUserPlus} />
               </ListItemIcon>
               <ListItemText>Sign up!</ListItemText>
             </MenuItem>
-            <MenuItem onClick={loginCallback}>
+            <MenuItem onClick={stateAuthLoginCallback}>
               <ListItemIcon>
                 <MuiFaIcon icon={faRightToBracket} />
               </ListItemIcon>
@@ -109,7 +109,7 @@ export const PublicNavToolbarActionsBox: React.FC = () => {
             variant="contained"
             size="small"
             endIcon={<MuiFaIcon icon={faUserPlus} />}
-            onClick={signupCallback}
+            onClick={stateAuthSignupCallback}
           >
             Sign up!
           </Button>
@@ -117,7 +117,7 @@ export const PublicNavToolbarActionsBox: React.FC = () => {
             variant="outlined"
             size="small"
             endIcon={<MuiFaIcon icon={faRightToBracket} />}
-            onClick={loginCallback}
+            onClick={stateAuthLoginCallback}
           >
             Login
           </Button>

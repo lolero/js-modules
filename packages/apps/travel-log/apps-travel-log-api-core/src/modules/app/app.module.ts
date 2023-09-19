@@ -6,7 +6,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { PolicyEnforcementMode, TokenValidation } from 'nest-keycloak-connect';
 import { AuthModule } from '@js-modules/api-nest-module-auth-keycloak';
 import { utilGetAuthUsersServiceProvider } from '@js-modules/api-nest-utils';
-import { AUTH_BASE_URI } from '@js-modules/apps-travel-log-common-constants';
+import { AUTH_URI_TRAVEL_LOG } from '@js-modules/apps-travel-log-common-constants';
 import {
   UsersModule,
   UsersService,
@@ -24,7 +24,7 @@ import { configTypeormDataSourceOptions } from '../../config/config.typeorm.data
     TypeOrmModule.forRoot(configTypeormDataSourceOptions),
     AuthModule.registerAsync(
       {
-        authServerUrl: AUTH_BASE_URI,
+        authServerUrl: AUTH_URI_TRAVEL_LOG,
         realm: 'travel-log',
         clientId: 'client-api-core',
         secret: 'ii0vJvq1eKz8S1vn9sDtmmc2oCHm6zj4',
@@ -33,7 +33,7 @@ import { configTypeormDataSourceOptions } from '../../config/config.typeorm.data
       },
       {
         connectionConfig: {
-          baseUrl: AUTH_BASE_URI,
+          baseUrl: AUTH_URI_TRAVEL_LOG,
           realmName: 'travel-log',
         },
         credentials: {

@@ -40,7 +40,7 @@ export function* stateMainUpdatePartialReducerMetadataSaga({
 
 export function* stateMainSagas(): Generator<ForkEffect, void, void> {
   yield takeEvery(
-    StateMainActionTypes.STATE_MAIN_UPDATE_PARTIAL_REDUCER_METADATA_REQUEST,
+    StateMainActionTypes.STATE_MAIN__UPDATE_PARTIAL_REDUCER_METADATA__REQUEST,
     stateMainUpdatePartialReducerMetadataSaga,
   );
 }

@@ -15,7 +15,7 @@ export function createNodeUsersGetOneRequestAction(
   uniqueKeyName: NodeUsersGetOneRequestAction['requestMetadata']['uniqueKeyName'] = 'id',
 ): NodeUsersGetOneRequestAction {
   return {
-    type: NodeUsersActionTypes.NODE_USERS_GET_ONE__REQUEST,
+    type: NodeUsersActionTypes.NODE_USERS__GET_ONE__REQUEST,
     requestMetadata: {
       uniqueKeyValue,
       uniqueKeyName,
@@ -30,7 +30,7 @@ export function createNodeUsersGetOneSuccessAction(
   statusCode?: NodeUsersGetOneSuccessAction['statusCode'],
 ): NodeUsersGetOneSuccessAction {
   return {
-    type: NodeUsersActionTypes.NODE_USERS_GET_ONE__SUCCESS,
+    type: NodeUsersActionTypes.NODE_USERS__GET_ONE__SUCCESS,
     wholeEntities: nodeUsers,
     requestId,
     statusCode,
@@ -42,7 +42,7 @@ export function createNodeUsersGetOneFailAction(
   requestId: NodeUsersGetOneFailAction['requestId'],
 ): NodeUsersGetOneFailAction {
   return {
-    type: NodeUsersActionTypes.NODE_USERS_GET_ONE__FAIL,
+    type: NodeUsersActionTypes.NODE_USERS__GET_ONE__FAIL,
     error,
     requestId,
   };
@@ -50,7 +50,7 @@ export function createNodeUsersGetOneFailAction(
 
 export function createNodeUsersGetManyRequestAction(): NodeUsersGetManyRequestAction {
   return {
-    type: NodeUsersActionTypes.NODE_USERS_GET_MANY__REQUEST,
+    type: NodeUsersActionTypes.NODE_USERS__GET_MANY__REQUEST,
     requestMetadata: {},
     requestId: uuidv4(),
   };
@@ -63,7 +63,7 @@ export function createNodeUsersGetManySuccessAction(
   flush: NodeUsersGetManySuccessAction['flush'],
 ): NodeUsersGetManySuccessAction {
   return {
-    type: NodeUsersActionTypes.NODE_USERS_GET_MANY__SUCCESS,
+    type: NodeUsersActionTypes.NODE_USERS__GET_MANY__SUCCESS,
     wholeEntities: nodeUsers,
     requestId,
     statusCode,
@@ -76,7 +76,7 @@ export function createNodeUsersGetManyFailAction(
   requestId: NodeUsersGetManyFailAction['requestId'],
 ): NodeUsersGetManyFailAction {
   return {
-    type: NodeUsersActionTypes.NODE_USERS_GET_MANY__FAIL,
+    type: NodeUsersActionTypes.NODE_USERS__GET_MANY__FAIL,
     error,
     requestId,
   };
@@ -86,7 +86,7 @@ export function createNodeUsersUpdateOnePartialSuccessAction(
   nodeUsersPartial: NodeUsersUpdateOnePartialSuccessAction['partialEntities'],
 ): NodeUsersUpdateOnePartialSuccessAction {
   return {
-    type: NodeUsersActionTypes.NODE_USERS_UPDATE_ONE_PARTIAL__SUCCESS,
+    type: NodeUsersActionTypes.NODE_USERS__UPDATE_ONE_PARTIAL__SUCCESS,
     partialEntities: nodeUsersPartial,
   };
 }

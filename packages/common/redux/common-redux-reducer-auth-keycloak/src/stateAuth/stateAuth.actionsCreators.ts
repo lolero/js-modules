@@ -15,19 +15,21 @@ import {
   StateAuthUpdatePartialReducerMetadataSuccessAction,
 } from './stateAuth.actionsTypes';
 
+export const STATE_AUTH__INITIALIZE__REQUEST_ID =
+  'STATE_AUTH__INITIALIZE__REQUEST_ID';
 export function createStateAuthInitializeRequestAction(
   keycloakConfig: StateAuthInitializeRequestAction['requestMetadata']['keycloakConfig'],
-  onSigninActionCreator?: StateAuthInitializeRequestAction['requestMetadata']['onSigninActionCreator'],
-  onSignoutActionCreator?: StateAuthInitializeRequestAction['requestMetadata']['onSignoutActionCreator'],
+  onSigninCallback?: StateAuthInitializeRequestAction['requestMetadata']['onSigninCallback'],
+  onSignoutCallback?: StateAuthInitializeRequestAction['requestMetadata']['onSignoutCallback'],
 ): StateAuthInitializeRequestAction {
   return {
     type: StateAuthActionTypes.STATE_AUTH__INITIALIZE__REQUEST,
     requestMetadata: {
       keycloakConfig,
-      onSigninActionCreator,
-      onSignoutActionCreator,
+      onSigninCallback,
+      onSignoutCallback,
     },
-    requestId: uuidv4(),
+    requestId: STATE_AUTH__INITIALIZE__REQUEST_ID,
   };
 }
 
@@ -53,19 +55,20 @@ export function createStateAuthInitializeFailAction(
   };
 }
 
+export const STATE_AUTH__SIGNIN__REQUEST_ID = 'STATE_AUTH__SIGNIN__REQUEST_ID';
 export function createStateAuthSigninRequestAction(
   signinAction: StateAuthSigninRequestAction['requestMetadata']['signinAction'],
   redirectUri?: StateAuthSigninRequestAction['requestMetadata']['redirectUri'],
-  onSigninActionCreator?: StateAuthSigninRequestAction['requestMetadata']['onSigninActionCreator'],
+  onSigninCallback?: StateAuthSigninRequestAction['requestMetadata']['onSigninCallback'],
 ): StateAuthSigninRequestAction {
   return {
     type: StateAuthActionTypes.STATE_AUTH__SIGNIN__REQUEST,
     requestMetadata: {
       signinAction,
       redirectUri,
-      onSigninActionCreator,
+      onSigninCallback,
     },
-    requestId: uuidv4(),
+    requestId: STATE_AUTH__SIGNIN__REQUEST_ID,
   };
 }
 
@@ -89,17 +92,19 @@ export function createStateAuthSigninFailAction(
   };
 }
 
+export const STATE_AUTH__SIGNOUT__REQUEST_ID =
+  'STATE_AUTH__SIGNOUT__REQUEST_ID';
 export function createStateAuthSignoutRequestAction(
   redirectUri?: StateAuthSignoutRequestAction['requestMetadata']['redirectUri'],
-  onSignoutActionCreator?: StateAuthSignoutRequestAction['requestMetadata']['onSignoutActionCreator'],
+  onSignoutCallback?: StateAuthSignoutRequestAction['requestMetadata']['onSignoutCallback'],
 ): StateAuthSignoutRequestAction {
   return {
     type: StateAuthActionTypes.STATE_AUTH__SIGNOUT__REQUEST,
     requestMetadata: {
       redirectUri,
-      onSignoutActionCreator,
+      onSignoutCallback,
     },
-    requestId: uuidv4(),
+    requestId: STATE_AUTH__SIGNOUT__REQUEST_ID,
   };
 }
 

@@ -5,8 +5,9 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "build": "nest build -p tsconfig.build.json",
-    "dev": "cross-env NODE_ENV=dev nest start --watch",
+    "modules:build": "pnpm --filter @js-modules/apps-travel-log-common-constants build && pnpm --filter @js-modules/apps-travel-log-api-core-modules build",
+    "dev": "cross-env NODE_ENV=development nest start --watch",
+    "build": "cross-env NODE_ENV=production nest build -p tsconfig.build.json",
     "prod": "node build/main",
     "typeorm": "pnpm build && cross-env NODE_ENV=dev typeorm -d build/config/config.typeorm.dataSource.js"
   },

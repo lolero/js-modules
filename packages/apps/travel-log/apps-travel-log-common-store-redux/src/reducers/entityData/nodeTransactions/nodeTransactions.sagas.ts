@@ -102,11 +102,11 @@ export function* nodeTransactionsGetOneSaga({
 
 export function* nodeTransactionsSagas(): Generator<ForkEffect, void, void> {
   yield takeLatest(
-    NodeTransactionsActionTypes.NODE_TRANSACTIONS_GET_MANY__REQUEST,
+    NodeTransactionsActionTypes.NODE_TRANSACTIONS__GET_MANY__REQUEST,
     nodeTransactionsGetManySaga,
   );
   yield takeEvery(
-    NodeTransactionsActionTypes.NODE_TRANSACTIONS_GET_ONE__REQUEST,
+    NodeTransactionsActionTypes.NODE_TRANSACTIONS__GET_ONE__REQUEST,
     nodeTransactionsGetOneSaga,
   );
 }

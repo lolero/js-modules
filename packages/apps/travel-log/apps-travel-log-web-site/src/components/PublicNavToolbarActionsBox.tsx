@@ -13,14 +13,14 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { Link } from 'react-router-dom';
 import {
-  WEB_CLIENT_BASE_URI,
-  MyModules,
-  myModulesRoutesMetadata,
+  WEB_CLIENT_URI_TRAVEL_LOG,
+  WebModulesPrivate,
+  modulesPrivateRoutesMetadata,
 } from '@js-modules/apps-travel-log-common-constants';
 import {
-  createStateSettingsGetProfileRequestAction,
   useStateAuthLogin,
   useStateAuthSignup,
+  useStateSettingsGetProfile,
 } from '@js-modules/apps-travel-log-common-store-redux';
 
 export const PublicNavToolbarActionsBox: React.FC = () => {
@@ -28,19 +28,22 @@ export const PublicNavToolbarActionsBox: React.FC = () => {
 
   const { menuAnchor, openMenuCallback, closeMenuCallback } = useMenuUtils();
 
+  const { callback: stateSettingsGetProfileCallback } =
+    useStateSettingsGetProfile();
+
   const {
     reducerMetadata: { isAuthenticated },
-    callback: signupCallback,
+    callback: stateAuthSignupCallback,
   } = useStateAuthSignup(
-    WEB_CLIENT_BASE_URI,
-    myModulesRoutesMetadata[MyModules.myFeeds].path,
-    createStateSettingsGetProfileRequestAction,
+    WEB_CLIENT_URI_TRAVEL_LOG,
+    modulesPrivateRoutesMetadata[WebModulesPrivate.myFeeds].path,
+    stateSettingsGetProfileCallback,
   );
 
-  const { callback: loginCallback } = useStateAuthLogin(
-    WEB_CLIENT_BASE_URI,
-    myModulesRoutesMetadata[MyModules.myFeeds].path,
-    createStateSettingsGetProfileRequestAction,
+  const { callback: stateAuthLoginCallback } = useStateAuthLogin(
+    WEB_CLIENT_URI_TRAVEL_LOG,
+    modulesPrivateRoutesMetadata[WebModulesPrivate.myFeeds].path,
+    stateSettingsGetProfileCallback,
   );
 
   return (
@@ -48,7 +51,7 @@ export const PublicNavToolbarActionsBox: React.FC = () => {
       {isAuthenticated && (
         <Button
           component={Link}
-          to={myModulesRoutesMetadata[MyModules.myFeeds].path}
+          to={modulesPrivateRoutesMetadata[WebModulesPrivate.myFeeds].path}
           size="small"
         >
           Enter app
@@ -64,13 +67,13 @@ export const PublicNavToolbarActionsBox: React.FC = () => {
             anchorEl={menuAnchor}
             onClose={closeMenuCallback}
           >
-            <MenuItem onClick={signupCallback}>
+            <MenuItem onClick={stateAuthSignupCallback}>
               <ListItemIcon>
                 <MuiFaIcon icon={faUserPlus} />
               </ListItemIcon>
               <ListItemText>Sign up!</ListItemText>
             </MenuItem>
-            <MenuItem onClick={loginCallback}>
+            <MenuItem onClick={stateAuthLoginCallback}>
               <ListItemIcon>
                 <MuiFaIcon icon={faRightToBracket} />
               </ListItemIcon>
@@ -88,7 +91,7 @@ export const PublicNavToolbarActionsBox: React.FC = () => {
             variant="contained"
             size="small"
             endIcon={<MuiFaIcon icon={faUserPlus} />}
-            onClick={signupCallback}
+            onClick={stateAuthSignupCallback}
           >
             Sign up!
           </Button>
@@ -96,7 +99,7 @@ export const PublicNavToolbarActionsBox: React.FC = () => {
             variant="outlined"
             size="small"
             endIcon={<MuiFaIcon icon={faRightToBracket} />}
-            onClick={loginCallback}
+            onClick={stateAuthLoginCallback}
           >
             Login
           </Button>

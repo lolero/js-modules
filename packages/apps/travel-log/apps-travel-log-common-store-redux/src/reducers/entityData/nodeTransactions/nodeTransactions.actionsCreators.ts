@@ -11,7 +11,7 @@ import {
 
 export function createNodeTransactionsGetManyRequestAction(): NodeTransactionsGetManyRequestAction {
   return {
-    type: NodeTransactionsActionTypes.NODE_TRANSACTIONS_GET_MANY__REQUEST,
+    type: NodeTransactionsActionTypes.NODE_TRANSACTIONS__GET_MANY__REQUEST,
     requestMetadata: {},
     requestId: uuidv4(),
   };
@@ -24,7 +24,7 @@ export function createNodeTransactionsGetManySuccessAction(
   flush: NodeTransactionsGetManySuccessAction['flush'],
 ): NodeTransactionsGetManySuccessAction {
   return {
-    type: NodeTransactionsActionTypes.NODE_TRANSACTIONS_GET_MANY__SUCCESS,
+    type: NodeTransactionsActionTypes.NODE_TRANSACTIONS__GET_MANY__SUCCESS,
     wholeEntities: nodeTransactions,
     requestId,
     statusCode,
@@ -37,7 +37,7 @@ export function createNodeTransactionsGetManyFailAction(
   requestId: NodeTransactionsGetManyFailAction['requestId'],
 ): NodeTransactionsGetManyFailAction {
   return {
-    type: NodeTransactionsActionTypes.NODE_TRANSACTIONS_GET_MANY__FAIL,
+    type: NodeTransactionsActionTypes.NODE_TRANSACTIONS__GET_MANY__FAIL,
     error,
     requestId,
   };
@@ -47,7 +47,7 @@ export function createNodeTransactionsGetOneRequestAction(
   nodeTransactionPk: NodeTransactionsGetOneRequestAction['requestMetadata']['entityPk'],
 ): NodeTransactionsGetOneRequestAction {
   return {
-    type: NodeTransactionsActionTypes.NODE_TRANSACTIONS_GET_ONE__REQUEST,
+    type: NodeTransactionsActionTypes.NODE_TRANSACTIONS__GET_ONE__REQUEST,
     requestMetadata: {
       entityPk: nodeTransactionPk,
     },
@@ -61,7 +61,7 @@ export function createNodeTransactionsGetOneSuccessAction(
   statusCode: NodeTransactionsGetOneSuccessAction['statusCode'],
 ): NodeTransactionsGetOneSuccessAction {
   return {
-    type: NodeTransactionsActionTypes.NODE_TRANSACTIONS_GET_ONE__SUCCESS,
+    type: NodeTransactionsActionTypes.NODE_TRANSACTIONS__GET_ONE__SUCCESS,
     wholeEntities: nodeTransactions,
     requestId,
     statusCode,
@@ -73,7 +73,7 @@ export function createNodeTransactionsGetOneFailAction(
   requestId: NodeTransactionsGetOneFailAction['requestId'],
 ): NodeTransactionsGetOneFailAction {
   return {
-    type: NodeTransactionsActionTypes.NODE_TRANSACTIONS_GET_ONE__FAIL,
+    type: NodeTransactionsActionTypes.NODE_TRANSACTIONS__GET_ONE__FAIL,
     error,
     requestId,
   };

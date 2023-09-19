@@ -2,11 +2,11 @@ import React, { useEffect } from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 import {
-  AUTH_BASE_URI,
-  MyModules,
-  myModulesRoutesMetadata,
-  PublicModules,
-  publicModulesRoutesMetadata,
+  AUTH_URI_TRAVEL_LOG,
+  WebModulesPrivate,
+  modulesPrivateRoutesMetadata,
+  WebModulesPublic,
+  modulesPublicRoutesMetadata,
 } from '@js-modules/apps-travel-log-common-constants';
 import { MyFeedsRoutes } from '@js-modules/apps-travel-log-web-my-feeds';
 import {
@@ -14,32 +14,37 @@ import {
   PurposeWorkspaceBox,
 } from '@js-modules/apps-travel-log-web-site';
 import {
-  createStateSettingsGetProfileRequestAction,
-  createStateSettingsSignoutRequestAction,
   useStateAuthInitializeKeycloak,
+  useStateSettingsGetProfile,
+  useStateSettingsSignout,
 } from '@js-modules/apps-travel-log-common-store-redux';
 import { KeycloakConfig } from 'keycloak-js';
 import { SettingsRoutes } from '@js-modules/apps-travel-log-web-settings';
 
 const keycloakConfig: KeycloakConfig = {
-  url: AUTH_BASE_URI,
+  url: AUTH_URI_TRAVEL_LOG,
   realm: 'travel-log',
   clientId: 'client-web',
 };
 
 export const TravelLogRoutes: React.FunctionComponent = () => {
+  const { callback: stateSettingsGetProfileCallback } =
+    useStateSettingsGetProfile();
+
+  const { callback: stateSettingsSignoutCallback } = useStateSettingsSignout();
+
   const {
     reducerMetadata: { isKeycloakReady, isAuthenticated },
-    callback: initializeKeycloakCallback,
+    callback: stateAuthInitializeKeycloakCallback,
   } = useStateAuthInitializeKeycloak(
     keycloakConfig,
-    createStateSettingsGetProfileRequestAction,
-    createStateSettingsSignoutRequestAction,
+    stateSettingsGetProfileCallback,
+    stateSettingsSignoutCallback,
   );
 
   useEffect(() => {
-    initializeKeycloakCallback();
-  }, [initializeKeycloakCallback]);
+    stateAuthInitializeKeycloakCallback();
+  }, [stateAuthInitializeKeycloakCallback]);
 
   if (!isKeycloakReady) {
     // TODO: create loading workspace with skeletons instead of this ugly
@@ -48,21 +53,36 @@ export const TravelLogRoutes: React.FunctionComponent = () => {
   }
 
   const rootPath = !isAuthenticated
-    ? publicModulesRoutesMetadata[PublicModules.home].path
-    : myModulesRoutesMetadata[MyModules.myFeeds].path;
+    ? modulesPublicRoutesMetadata[WebModulesPublic.home].path
+    : modulesPrivateRoutesMetadata[WebModulesPrivate.myFeeds].path;
 
   return (
     <Routes>
-      <Route path={`${PublicModules.home}`} element={<HomeWorkspaceBox />} />
+      <Route path={`${WebModulesPublic.home}`} element={<HomeWorkspaceBox />} />
       <Route
-        path={`${PublicModules.purpose}`}
+        path={`${WebModulesPublic.purpose}`}
         element={<PurposeWorkspaceBox />}
       />
-      <Route path={`${MyModules.myFeeds}/*`} element={<MyFeedsRoutes />} />
-      <Route path={`${MyModules.myBoards}/*`} element={<MyFeedsRoutes />} />
-      <Route path={`${MyModules.myLog}/*`} element={<MyFeedsRoutes />} />
-      <Route path={`${MyModules.myNetwork}/*`} element={<MyFeedsRoutes />} />
-      <Route path={`${MyModules.settings}/*`} element={<SettingsRoutes />} />
+      <Route
+        path={`${WebModulesPrivate.myFeeds}/*`}
+        element={<MyFeedsRoutes />}
+      />
+      <Route
+        path={`${WebModulesPrivate.myBoards}/*`}
+        element={<MyFeedsRoutes />}
+      />
+      <Route
+        path={`${WebModulesPrivate.myLog}/*`}
+        element={<MyFeedsRoutes />}
+      />
+      <Route
+        path={`${WebModulesPrivate.myNetwork}/*`}
+        element={<MyFeedsRoutes />}
+      />
+      <Route
+        path={`${WebModulesPrivate.settings}/*`}
+        element={<SettingsRoutes />}
+      />
       <Route path="*" element={<Navigate replace to={rootPath} />} />
     </Routes>
   );

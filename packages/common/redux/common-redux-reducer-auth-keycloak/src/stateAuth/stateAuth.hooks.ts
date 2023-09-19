@@ -4,12 +4,15 @@ import {
   UseRequestReducerMetadata,
 } from '@js-modules/common-redux-utils-normalized-reducers';
 import { useDispatch } from 'react-redux';
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import { stateAuthSelectors } from './stateAuth.selectors';
 import {
   createStateAuthInitializeRequestAction,
   createStateAuthSigninRequestAction,
   createStateAuthSignoutRequestAction,
+  STATE_AUTH__INITIALIZE__REQUEST_ID,
+  STATE_AUTH__SIGNIN__REQUEST_ID,
+  STATE_AUTH__SIGNOUT__REQUEST_ID,
 } from './stateAuth.actionsCreators';
 import { SigninAction, StateAuthReducer } from './stateAuth.types';
 import {
@@ -29,145 +32,127 @@ export const {
 
 export function useStateAuthInitializeKeycloak(
   keycloakConfig: StateAuthInitializeRequestAction['requestMetadata']['keycloakConfig'],
-  onSigninActionCreator?: StateAuthInitializeRequestAction['requestMetadata']['onSigninActionCreator'],
-  onSignoutActionCreator?: StateAuthInitializeRequestAction['requestMetadata']['onSignoutActionCreator'],
+  onSigninCallback?: StateAuthInitializeRequestAction['requestMetadata']['onSigninCallback'],
+  onSignoutCallback?: StateAuthInitializeRequestAction['requestMetadata']['onSignoutCallback'],
 ): UseRequestReducerMetadata<
   StateAuthInitializeRequestAction['requestMetadata'],
   StateAuthReducer['metadata'],
   () => void
 > {
   const dispatch = useDispatch();
-  const stateAuthReducerMetadata = useStateAuthReducerMetadata();
-  const stateAuthRequests = useStateAuthRequests();
-  const [initializeRequestId, setInitializeRequestId] = useState('');
-  const initializeRequest = stateAuthRequests[initializeRequestId] as Request<
-    StateAuthInitializeRequestAction['requestMetadata']
-  >;
+  const request = useStateAuthRequest(
+    STATE_AUTH__INITIALIZE__REQUEST_ID,
+  ) as Request<StateAuthInitializeRequestAction['requestMetadata']>;
+  const reducerMetadata = useStateAuthReducerMetadata();
 
-  const initializeKeycloakCallback = useCallback(() => {
-    if (initializeRequestId) {
+  const callback = useCallback(() => {
+    if (request) {
       return;
     }
 
-    const initializeAction = createStateAuthInitializeRequestAction(
+    const action = createStateAuthInitializeRequestAction(
       keycloakConfig,
-      onSigninActionCreator,
-      onSignoutActionCreator,
+      onSigninCallback,
+      onSignoutCallback,
     );
-    setInitializeRequestId(initializeAction.requestId);
-    dispatch(initializeAction);
-  }, [
-    dispatch,
-    initializeRequestId,
-    keycloakConfig,
-    onSigninActionCreator,
-    onSignoutActionCreator,
-  ]);
+    dispatch(action);
+  }, [dispatch, keycloakConfig, onSigninCallback, onSignoutCallback, request]);
 
   return {
-    request: initializeRequest,
-    reducerMetadata: stateAuthReducerMetadata,
-    callback: initializeKeycloakCallback,
+    request,
+    reducerMetadata,
+    callback,
   };
 }
 
 export function useStateAuthSignup(
   redirectBaseUri: string,
   redirectPath: string,
-  onSigninActionCreator?: StateAuthSigninRequestAction['requestMetadata']['onSigninActionCreator'],
+  onSigninCallback?: StateAuthSigninRequestAction['requestMetadata']['onSigninCallback'],
 ): UseRequestReducerMetadata<
   StateAuthSigninRequestAction['requestMetadata'],
   StateAuthReducer['metadata'],
   () => void
 > {
   const dispatch = useDispatch();
-  const stateAuthReducerMetadata = useStateAuthReducerMetadata();
-  const stateAuthRequests = useStateAuthRequests();
-  const [signupRequestId, setSignupRequestId] = useState('');
-  const signupRequest = stateAuthRequests[signupRequestId] as Request<
-    StateAuthSigninRequestAction['requestMetadata']
-  >;
+  const request = useStateAuthRequest(
+    STATE_AUTH__SIGNIN__REQUEST_ID,
+  ) as Request<StateAuthSigninRequestAction['requestMetadata']>;
+  const reducerMetadata = useStateAuthReducerMetadata();
 
-  const signupCallback = useCallback(() => {
-    const signupAction = createStateAuthSigninRequestAction(
+  const callback = useCallback(() => {
+    const action = createStateAuthSigninRequestAction(
       SigninAction.signup,
       `${redirectBaseUri}${redirectPath}`,
-      onSigninActionCreator,
+      onSigninCallback,
     );
-    setSignupRequestId(signupAction.requestId);
-    dispatch(signupAction);
-  }, [onSigninActionCreator, redirectBaseUri, redirectPath, dispatch]);
+    dispatch(action);
+  }, [dispatch, onSigninCallback, redirectBaseUri, redirectPath]);
 
   return {
-    request: signupRequest,
-    reducerMetadata: stateAuthReducerMetadata,
-    callback: signupCallback,
+    request,
+    reducerMetadata,
+    callback,
   };
 }
 
 export function useStateAuthLogin(
   redirectBaseUri: string,
   redirectPath: string,
-  onSigninActionCreator?: StateAuthSigninRequestAction['requestMetadata']['onSigninActionCreator'],
+  onSigninCallback?: StateAuthSigninRequestAction['requestMetadata']['onSigninCallback'],
 ): UseRequestReducerMetadata<
   StateAuthSigninRequestAction['requestMetadata'],
   StateAuthReducer['metadata'],
   () => void
 > {
   const dispatch = useDispatch();
-  const stateAuthReducerMetadata = useStateAuthReducerMetadata();
-  const stateAuthRequests = useStateAuthRequests();
-  const [loginRequestId, setLoginRequestId] = useState('');
-  const loginRequest = stateAuthRequests[loginRequestId] as Request<
-    StateAuthSigninRequestAction['requestMetadata']
-  >;
+  const request = useStateAuthRequest(
+    STATE_AUTH__SIGNIN__REQUEST_ID,
+  ) as Request<StateAuthSigninRequestAction['requestMetadata']>;
+  const reducerMetadata = useStateAuthReducerMetadata();
 
-  const loginCallback = useCallback(() => {
-    const loginAction = createStateAuthSigninRequestAction(
+  const callback = useCallback(() => {
+    const action = createStateAuthSigninRequestAction(
       SigninAction.login,
       `${redirectBaseUri}${redirectPath}`,
-      onSigninActionCreator,
+      onSigninCallback,
     );
-    setLoginRequestId(loginAction.requestId);
-    dispatch(loginAction);
-  }, [redirectBaseUri, redirectPath, onSigninActionCreator, dispatch]);
+    dispatch(action);
+  }, [dispatch, onSigninCallback, redirectBaseUri, redirectPath]);
 
   return {
-    request: loginRequest,
-    reducerMetadata: stateAuthReducerMetadata,
-    callback: loginCallback,
+    request,
+    reducerMetadata,
+    callback,
   };
 }
 
 export function useStateAuthLogout(
   redirectBaseUri: string,
   redirectPath: string,
-  onSignoutActionCreator?: StateAuthSignoutRequestAction['requestMetadata']['onSignoutActionCreator'],
+  onSignoutCallback?: StateAuthSignoutRequestAction['requestMetadata']['onSignoutCallback'],
 ): UseRequestReducerMetadata<
   StateAuthSignoutRequestAction['requestMetadata'],
   StateAuthReducer['metadata'],
   () => void
 > {
   const dispatch = useDispatch();
-  const stateAuthReducerMetadata = useStateAuthReducerMetadata();
-  const stateAuthRequests = useStateAuthRequests();
-  const [logoutRequestId, setLogoutRequestId] = useState('');
-  const logoutRequest = stateAuthRequests[logoutRequestId] as Request<
-    StateAuthSignoutRequestAction['requestMetadata']
-  >;
+  const request = useStateAuthRequest(
+    STATE_AUTH__SIGNOUT__REQUEST_ID,
+  ) as Request<StateAuthSignoutRequestAction['requestMetadata']>;
+  const reducerMetadata = useStateAuthReducerMetadata();
 
-  const logoutCallback = useCallback(() => {
-    const logoutAction = createStateAuthSignoutRequestAction(
+  const callback = useCallback(() => {
+    const action = createStateAuthSignoutRequestAction(
       `${redirectBaseUri}${redirectPath}`,
-      onSignoutActionCreator,
+      onSignoutCallback,
     );
-    setLogoutRequestId(logoutAction.requestId);
-    dispatch(logoutAction);
-  }, [redirectBaseUri, redirectPath, onSignoutActionCreator, dispatch]);
+    dispatch(action);
+  }, [dispatch, onSignoutCallback, redirectBaseUri, redirectPath]);
 
   return {
-    request: logoutRequest,
-    reducerMetadata: stateAuthReducerMetadata,
-    callback: logoutCallback,
+    request,
+    reducerMetadata,
+    callback,
   };
 }
