@@ -1924,27 +1924,6 @@
   "adminEventsDetailsEnabled": false,
   "identityProviders": [
     {
-      "alias": "linkedin",
-      "internalId": "760dc773-75e1-40ef-8d53-402245a41909",
-      "providerId": "linkedin",
-      "enabled": true,
-      "updateProfileFirstLoginMode": "on",
-      "trustEmail": false,
-      "storeToken": false,
-      "addReadTokenRoleOnCreate": false,
-      "authenticateByDefault": false,
-      "linkOnly": false,
-      "firstBrokerLoginFlowAlias": "first broker login",
-      "config": {
-        "hideOnLoginPage": "false",
-        "clientId": "",
-        "acceptsPromptNoneForwardFromClient": "false",
-        "disableUserInfo": "false",
-        "syncMode": "IMPORT",
-        "clientSecret": ""
-      }
-    },
-    {
       "alias": "github",
       "internalId": "fba9899b-79eb-4767-a23d-e7abc3f787fc",
       "providerId": "github",

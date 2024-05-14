@@ -62,7 +62,6 @@ export const NavTopAppbar = forwardRef<HTMLDivElement, NavTopAppbarProps>(
       isNavLeftDrawerHidden,
     ]);
 
-    // TODO: add appbar animation
     const appbarDisplay = useMemo(() => {
       if (isMobile && workspaceScrollDirection === ScrollDirection.down) {
         return 'none';

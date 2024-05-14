@@ -1,6 +1,7 @@
 import React, { useCallback, useMemo } from 'react';
 import Box, { BoxProps } from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
+import Grid from '@mui/material/Unstable_Grid2';
 import { faCreditCard } from '@fortawesome/free-regular-svg-icons/faCreditCard';
 import { FormUtils, FormValidator } from '@js-modules/web-react-hooks';
 import { PaymentCard } from '@js-modules/common-utils-general';
@@ -98,53 +99,54 @@ export const PaymentCardBox: React.FunctionComponent<PaymentCardBoxProps> = ({
           {...textFieldProps.cardHolderName}
         />
       )}
-      <Box
-        sx={{
-          display: 'flex',
-          gap: 1,
-        }}
-      >
+      <Grid container spacing={2}>
         {(isEmpty(renderFields) || renderFields.includes('expirationDate')) && (
-          <TextField
-            required
-            disabled={isFormFieldsDisabled}
-            label="Expiry date"
-            placeholder="MM/YY"
-            value={paymentCardTemp.expirationDate}
-            onChange={changeFieldCallback}
-            onBlur={blurFieldCallback}
-            error={!!formErrors.expirationDate?.length}
-            helperText={formErrors.expirationDate?.join(', ')}
-            inputProps={{
-              'data-key': 'expirationDate',
-            }}
-            // eslint-disable-next-line react/jsx-props-no-spreading
-            {...textFieldProps.expirationDate}
-          />
+          <Grid xs={12} sm={6}>
+            <TextField
+              required
+              disabled={isFormFieldsDisabled}
+              fullWidth
+              label="Expiry date"
+              placeholder="MM/YY"
+              value={paymentCardTemp.expirationDate}
+              onChange={changeFieldCallback}
+              onBlur={blurFieldCallback}
+              error={!!formErrors.expirationDate?.length}
+              helperText={formErrors.expirationDate?.join(', ')}
+              inputProps={{
+                'data-key': 'expirationDate',
+              }}
+              // eslint-disable-next-line react/jsx-props-no-spreading
+              {...textFieldProps.expirationDate}
+            />
+          </Grid>
         )}
         {(isEmpty(renderFields) || renderFields.includes('cvv')) && (
-          <TextField
-            required
-            type="password"
-            disabled={isFormFieldsDisabled}
-            label="CVV"
-            value={paymentCardTemp.cvv}
-            onChange={changeFieldCallback}
-            onBlur={blurFieldCallback}
-            error={!!formErrors.cvv?.length}
-            helperText={formErrors.cvv?.join(', ')}
-            InputProps={{
-              endAdornment: <MuiFaIcon icon={faCreditCard} />,
-            }}
-            // eslint-disable-next-line react/jsx-no-duplicate-props
-            inputProps={{
-              'data-key': 'cvv',
-            }}
-            // eslint-disable-next-line react/jsx-props-no-spreading
-            {...textFieldProps.cvv}
-          />
+          <Grid xs={12} sm={6}>
+            <TextField
+              required
+              type="password"
+              disabled={isFormFieldsDisabled}
+              fullWidth
+              label="CVV"
+              value={paymentCardTemp.cvv}
+              onChange={changeFieldCallback}
+              onBlur={blurFieldCallback}
+              error={!!formErrors.cvv?.length}
+              helperText={formErrors.cvv?.join(', ')}
+              InputProps={{
+                endAdornment: <MuiFaIcon icon={faCreditCard} />,
+              }}
+              // eslint-disable-next-line react/jsx-no-duplicate-props
+              inputProps={{
+                'data-key': 'cvv',
+              }}
+              // eslint-disable-next-line react/jsx-props-no-spreading
+              {...textFieldProps.cvv}
+            />
+          </Grid>
         )}
-      </Box>
+      </Grid>
     </Box>
   );
 };

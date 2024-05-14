@@ -29,22 +29,6 @@ nvm install 18
 npm install -g pnpm nodemon ts-node -y
 ```
 
-## Getting started
-
-### Bootstrap
-To install all packages' dependencies and bootstrap the monorepo, run the 
-following command in the terminal, from the project's root directory:
-```shell
-pnpm reset:reset
-```
-
-### Build
-To build all packages for production, run the following command in the 
-terminal, from the project's root directory:
-```shell
-pnpm lerna:build
-```
-
 ### Execute package scripts
 There are two ways to execute a package's `package.json` script:
 1. Open a terminal, navigate to the package's root directory and execute 
@@ -110,7 +94,7 @@ pnpm clean:git-hooks # Disable husky git hooks
 pnpm reset:clean # Run the clean:main & clean:tsbuildinfo scripts
 ```
 ```shell
-pnpm reset:install # Create symbolic links to .gitignore for libraries that use .ignore files
+pnpm reset:install # Create symbolic links to .gitignore for libraries that use .ignore files and install package dependencies
 ```
 ```shell
 pnpm reset:reset # Run the reset:clean & reset:install scripts

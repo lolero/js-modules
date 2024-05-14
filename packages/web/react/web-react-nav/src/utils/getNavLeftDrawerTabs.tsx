@@ -40,9 +40,10 @@ export function getNavLeftDrawerTabs(
   const modulesUpToDepthLevel = splitTabValue.slice(0, depthLevel + 1);
 
   const tabs = values(routesMetadata).map((routeMetadata) => {
-    if (routeMetadata.isHidden && routeMetadata.roles) {
+    if (routeMetadata.isHidden) {
       return null;
     }
+
     if (routeMetadata.roles) {
       const rolesIntersection = intersection(userRoles, routeMetadata.roles);
       const isUserAuthorized = rolesIntersection.length > 0;
@@ -81,11 +82,11 @@ export function getNavLeftDrawerTabs(
 
     const splitTabPath = routeMetadata.path.split('/').slice(1);
     const tabModulesUpToDepthLevel = splitTabPath.slice(0, depthLevel + 1);
-    const isSelectedParentTabSx = isEqual(
+    const isSelectedParentTab = isEqual(
       tabModulesUpToDepthLevel,
       modulesUpToDepthLevel,
     );
-    const selectedParentTabSx = isSelectedParentTabSx
+    const selectedParentTabSx = isSelectedParentTab
       ? {
           color: 'primary.main',
           '& *': {
@@ -98,7 +99,9 @@ export function getNavLeftDrawerTabs(
       <Tab
         key={routeMetadata.path}
         sx={{
-          ml: 2 * depthLevel,
+          minHeight: '40px',
+          ml: 3 * depthLevel,
+          justifyContent: 'start',
           ...selectedParentTabSx,
         }}
         value={routeMetadata.path}

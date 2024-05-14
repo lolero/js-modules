@@ -6,9 +6,7 @@ export type FormErrors<FormDataT> = Partial<Record<keyof FormDataT, string[]>>;
 
 export type FormValidator<FormDataT extends Record<string, any>> = {
   formErrors: FormErrors<FormDataT>;
-  validateCallback: (
-    fieldNames?: (keyof FormDataT)[],
-  ) => Promise<FormErrors<FormDataT>>;
+  validateCallback: (fieldNames?: (keyof FormDataT)[]) => FormErrors<FormDataT>;
 };
 
 export type FormUtils<FormDataT extends Record<string, any>> = {

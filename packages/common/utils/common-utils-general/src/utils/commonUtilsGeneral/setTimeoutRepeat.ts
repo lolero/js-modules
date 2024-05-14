@@ -1,4 +1,5 @@
 import noop from 'lodash/noop';
+import { isUndefined } from 'lodash';
 
 export type TimeoutRepeat = {
   timeout: NodeJS.Timeout;
@@ -8,6 +9,7 @@ export type TimeoutRepeat = {
 export function setTimeoutRepeat(
   callback: (...args: any[]) => void,
   interval: number,
+  initialDelay?: number,
 ): TimeoutRepeat {
   let timeout = setTimeout(noop, 0);
 
@@ -19,7 +21,10 @@ export function setTimeoutRepeat(
   }
 
   // Start the initial timeout
-  timeout = setTimeout(executeCallback, interval);
+  timeout = setTimeout(
+    executeCallback,
+    !isUndefined(initialDelay) ? initialDelay : interval,
+  );
 
   function clearTimeoutCallback(): void {
     clearTimeout(timeout);
