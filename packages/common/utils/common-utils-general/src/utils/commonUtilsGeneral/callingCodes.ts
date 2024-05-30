@@ -17,7 +17,6 @@ const callingCodesRandom: Record<string, CallingCode> = entries(
     [countryCode, country],
   ) => {
     const callingCodes = country.phone
-      .split(',')
       .map((callingCode) => `+${callingCode}`)
       .reduce((callingCodesTemp, callingCode) => {
         return {

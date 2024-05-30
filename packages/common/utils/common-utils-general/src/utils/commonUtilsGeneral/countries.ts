@@ -1,7 +1,11 @@
 import orderBy from 'lodash/orderBy';
 import entries from 'lodash/entries';
 import keyBy from 'lodash/keyBy';
-import { countries as countriesList } from 'countries-list';
+import {
+  countries as countriesList,
+  getEmojiFlag,
+  TCountryCode,
+} from 'countries-list';
 
 export type Country = {
   code: string;
@@ -26,12 +30,10 @@ export const countriesArray = orderBy(
           nameNative: country.native,
           continentCode: country.continent,
           capital: country.capital,
-          flag: country.emoji,
-          callingCodes: country.phone
-            .split(',')
-            .map((callingCode) => `+${callingCode}`),
+          flag: getEmojiFlag(countryCode as TCountryCode),
+          callingCodes: country.phone.map((callingCode) => `+${callingCode}`),
           languageCodes: country.languages,
-          currencyCodes: country.currency.split(','),
+          currencyCodes: country.currency,
         },
       ];
     },

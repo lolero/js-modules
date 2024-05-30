@@ -12,12 +12,12 @@
     "build": "tsc -b tsconfig.build.json"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^6.4.0",
-    "@fortawesome/free-brands-svg-icons": "^6.4.0",
-    "@fortawesome/free-regular-svg-icons": "^6.4.0",
-    "@fortawesome/free-solid-svg-icons": "^6.4.0",
+    "@fortawesome/fontawesome-svg-core": "^6.5.2",
+    "@fortawesome/free-brands-svg-icons": "^6.5.2",
+    "@fortawesome/free-regular-svg-icons": "^6.5.2",
+    "@fortawesome/free-solid-svg-icons": "^6.5.2",
     "@js-modules/common-utils-general": "workspace:^0.0.0",
-    "@types/lodash": "^4.14.194",
+    "@types/lodash": "^4.17.4",
     "lodash": "^4.17.21"
   }
 }

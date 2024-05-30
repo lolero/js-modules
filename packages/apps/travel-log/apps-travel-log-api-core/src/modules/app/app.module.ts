@@ -27,7 +27,7 @@ import { configTypeormDataSourceOptions } from '../../config/config.typeorm.data
         authServerUrl: AUTH_URI_TRAVEL_LOG,
         realm: 'travel-log',
         clientId: 'client-api-core',
-        secret: 'ii0vJvq1eKz8S1vn9sDtmmc2oCHm6zj4',
+        secret: 'eaIQtsBBeyPTPYMawRZkEfwry6wHMCly',
         policyEnforcement: PolicyEnforcementMode.PERMISSIVE,
         tokenValidation: TokenValidation.ONLINE,
       },
@@ -39,7 +39,7 @@ import { configTypeormDataSourceOptions } from '../../config/config.typeorm.data
         credentials: {
           grantType: 'client_credentials',
           clientId: 'admin-cli',
-          clientSecret: 'lp3kus0cbqjcQyPve3k3VBqguALkXWkw',
+          clientSecret: 'jldaG8BrX98J5UxEqYnHXhOm1B4YU5E3',
         },
       },
       {

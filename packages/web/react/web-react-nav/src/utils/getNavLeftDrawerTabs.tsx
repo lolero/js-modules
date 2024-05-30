@@ -100,6 +100,7 @@ export function getNavLeftDrawerTabs(
         key={routeMetadata.path}
         sx={{
           minHeight: '40px',
+          py: 1,
           ml: 3 * depthLevel,
           justifyContent: 'start',
           ...selectedParentTabSx,

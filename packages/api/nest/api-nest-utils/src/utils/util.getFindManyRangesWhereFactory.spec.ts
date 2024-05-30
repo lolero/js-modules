@@ -84,11 +84,11 @@ describe('utilGetFindManyRangesWhereFactory', () => {
     const [rangeFrom, rangeTo] = utilGetFindManyDateRangeMockReturnValue;
     expect(utilGetFindManyDateRange).toHaveBeenNthCalledWith(
       1,
-      ...findManyDateRangesDto.propDate1,
+      findManyDateRangesDto.propDate1,
     );
     expect(utilGetFindManyDateRange).toHaveBeenNthCalledWith(
       2,
-      ...findManyDateRangesDto.propDate2,
+      findManyDateRangesDto.propDate2,
     );
     expect(whereMock).toHaveBeenNthCalledWith(
       1,
@@ -135,11 +135,11 @@ describe('utilGetFindManyRangesWhereFactory', () => {
     const [rangeFrom, rangeTo] = utilGetFindManyNumberRangeMockReturnValue;
     expect(utilGetFindManyNumberRange).toHaveBeenNthCalledWith(
       1,
-      ...findManyNumberRangesDto.propNumber1,
+      findManyNumberRangesDto.propNumber1,
     );
     expect(utilGetFindManyNumberRange).toHaveBeenNthCalledWith(
       2,
-      ...findManyNumberRangesDto.propNumber2,
+      findManyNumberRangesDto.propNumber2,
     );
     expect(whereMock).toHaveBeenNthCalledWith(
       1,
@@ -186,11 +186,11 @@ describe('utilGetFindManyRangesWhereFactory', () => {
     const [rangeFrom, rangeTo] = utilGetFindManyStringRangeMockReturnValue;
     expect(utilGetFindManyStringRange).toHaveBeenNthCalledWith(
       1,
-      ...findManyStringRangesDto.propString1,
+      findManyStringRangesDto.propString1,
     );
     expect(utilGetFindManyStringRange).toHaveBeenNthCalledWith(
       2,
-      ...findManyStringRangesDto.propString2,
+      findManyStringRangesDto.propString2,
     );
     expect(whereMock).toHaveBeenNthCalledWith(
       1,

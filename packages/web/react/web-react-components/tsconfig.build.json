@@ -3,6 +3,7 @@
   "compilerOptions": {
     "lib": ["dom", "dom.iterable", "esnext"],
     "jsx": "react-jsx",
+    "types": ["@testing-library/jest-dom"],
     "composite": true,
     "rootDir": "src",
     "outDir": "build"

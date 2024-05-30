@@ -12,6 +12,6 @@
     "build": "tsc -b tsconfig.build.json"
   },
   "dependencies": {
-    "date-fns": "^2.29.3"
+    "date-fns": "^3.6.0"
   }
 }
