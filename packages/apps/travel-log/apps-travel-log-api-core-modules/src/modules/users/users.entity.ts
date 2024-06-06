@@ -8,8 +8,11 @@ import {
   DeleteDateColumn,
   Entity,
   PrimaryGeneratedColumn,
+  OneToMany,
 } from 'typeorm';
 import { RequestEntity } from '@js-modules/api-nest-utils';
+// eslint-disable-next-line import/no-cycle
+import { LogEntriesEntity } from '../logEntries/logEntries.entity';
 
 @Entity('users')
 export class UsersEntity implements RequestEntity {
@@ -69,6 +72,12 @@ export class UsersEntity implements RequestEntity {
     nullable: true,
   })
   lastName?: string;
+
+  @OneToMany(
+    () => LogEntriesEntity,
+    (logEntriesEntity) => logEntriesEntity.user,
+  )
+  logEntries: Promise<LogEntriesEntity[]>;
 
   @CreateDateColumn({
     name: 'created_at',

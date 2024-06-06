@@ -8,7 +8,7 @@ import { KeycloakUser, UsersEntityType } from './users.types';
 import { UsersFindManyUniqueKeysDto } from './dtos/users.findManyUniqueKeys.dto';
 import { UsersFindManySearchDto } from './dtos/users.findManySearch.dto';
 import { UsersFindManyRelationsDto } from './dtos/users.findManyRelations.dto';
-import { UsersFindManyRangesDatesDto } from './dtos/users.findManyRangesDates.dto';
+import { UsersFindManyRangesDateDto } from './dtos/users.findManyRangesDate.dto';
 import { UsersFindManyRangesNumberDto } from './dtos/users.findManyRangesNumber.dto';
 import { UsersFindManyRangesStringDto } from './dtos/users.findManyRangesString.dto';
 
@@ -76,7 +76,7 @@ export function getUsersFindManyDtoFixture(
     UsersFindManyUniqueKeysDto,
     UsersFindManySearchDto,
     UsersFindManyRelationsDto,
-    UsersFindManyRangesDatesDto,
+    UsersFindManyRangesDateDto,
     UsersFindManyRangesNumberDto,
     UsersFindManyRangesStringDto
   >(overrides);

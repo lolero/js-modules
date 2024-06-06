@@ -8,7 +8,7 @@ export type UsersUniqueKeyName = EntityUniqueKeyName<
 
 export type UsersEntityType = Omit<
   UsersEntity,
-  'logInsert' | 'logUpdate' | 'logRemove'
+  'logEntries' | 'logInsert' | 'logUpdate' | 'logRemove'
 >;
 
 export type KeycloakUser = Omit<

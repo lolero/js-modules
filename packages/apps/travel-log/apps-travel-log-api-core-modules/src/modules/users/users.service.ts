@@ -38,15 +38,12 @@ export class UsersService implements AuthUsersService {
         keycloakTokenParsed,
       );
 
-    let usersEntity: UsersEntity | null;
-
-    usersEntity = await this.usersRepository.findOneBy({
+    let usersEntity = await this.usersRepository.findOneBy({
       keycloakId: keycloakUser.keycloakId,
     });
 
     if (!usersEntity) {
       usersEntity = await this.usersRepository.create(keycloakUser);
-
       usersEntity = await this.usersRepository.save(usersEntity);
       return usersEntity;
     }
@@ -74,7 +71,7 @@ export class UsersService implements AuthUsersService {
     uniqueKeyValue: EntityUniqueKeyValue,
   ): Promise<UsersEntity | null> {
     const usersEntity = await this.usersRepository.findOneBy({
-      [uniqueKeyName]: uniqueKeyValue,
+      [uniqueKeyName]: uniqueKeyValue as UsersEntity[UsersUniqueKeyName],
     });
 
     return usersEntity;

@@ -1,7 +1,7 @@
 import { DtoFindMany } from '@js-modules/api-nest-utils';
 import { UsersEntity } from '../users.entity';
 import { UsersFindManyUniqueKeysDto } from './users.findManyUniqueKeys.dto';
-import { UsersFindManyRangesDatesDto } from './users.findManyRangesDates.dto';
+import { UsersFindManyRangesDateDto } from './users.findManyRangesDate.dto';
 import { UsersFindManyRangesNumberDto } from './users.findManyRangesNumber.dto';
 import { UsersFindManyRangesStringDto } from './users.findManyRangesString.dto';
 import { UsersFindManySearchDto } from './users.findManySearch.dto';
@@ -12,7 +12,7 @@ export class UsersFindManyDto extends DtoFindMany<
   UsersFindManyUniqueKeysDto,
   UsersFindManySearchDto,
   UsersFindManyRelationsDto,
-  UsersFindManyRangesDatesDto,
+  UsersFindManyRangesDateDto,
   UsersFindManyRangesNumberDto,
   UsersFindManyRangesStringDto
 > {}

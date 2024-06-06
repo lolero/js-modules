@@ -8,6 +8,7 @@ import { AuthModule } from '@js-modules/api-nest-module-auth-keycloak';
 import { utilGetAuthUsersServiceProvider } from '@js-modules/api-nest-utils';
 import { AUTH_URI_TRAVEL_LOG } from '@js-modules/apps-travel-log-common-constants';
 import {
+  LogEntriesModule,
   UsersModule,
   UsersService,
 } from '@js-modules/apps-travel-log-api-core-modules';
@@ -48,6 +49,7 @@ import { configTypeormDataSourceOptions } from '../../config/config.typeorm.data
       },
     ),
     UsersModule,
+    LogEntriesModule,
   ],
   controllers: [AppController],
   providers: [

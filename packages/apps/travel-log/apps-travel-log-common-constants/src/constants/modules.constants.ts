@@ -1,7 +1,7 @@
 export enum ApiControllersTravelLog {
   usersPublic = 'users',
   usersPrivate = 'users-private',
-  transactions = 'transactions',
+  logEntries = 'log-entries',
 }
 
 export enum ApiSubHandlersUsersPrivate {

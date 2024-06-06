@@ -1,6 +1,9 @@
 import { DataSourceOptions } from 'typeorm';
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
-import { UsersEntity } from '@js-modules/apps-travel-log-api-core-modules';
+import {
+  LogEntriesEntity,
+  UsersEntity,
+} from '@js-modules/apps-travel-log-api-core-modules';
 
 type VariableProps =
   | 'type'
@@ -14,7 +17,7 @@ const configTypeormDataSourceOptionsBase: Omit<
   PostgresConnectionOptions,
   VariableProps
 > = {
-  entities: [UsersEntity],
+  entities: [UsersEntity, LogEntriesEntity],
   synchronize: false,
   migrations: [`build/migrations/*.js`],
 };
