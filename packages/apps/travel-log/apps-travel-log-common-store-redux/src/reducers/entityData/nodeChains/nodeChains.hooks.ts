@@ -1,7 +1,7 @@
 import { createReducerHooks } from '@js-modules/common-redux-utils-normalized-reducers';
-import { nodeChainsReducerSelectors } from './nodeChains.selectors';
+import { nodeChainsSelectors } from './nodeChains.selectors';
 
-export const nodeChainsHooks = createReducerHooks(nodeChainsReducerSelectors);
+export const nodeChainsHooks = createReducerHooks(nodeChainsSelectors);
 
 export const {
   useRequest: useNodeChainsRequest,

@@ -3,7 +3,7 @@ import { NodeChain, NodeChainsReducer } from './nodeChains.types';
 import { ReduxState } from '../../reducers.types';
 import { nodeChainsReducerPath } from './nodeChains.reducerPath';
 
-export const nodeChainsReducerSelectors = createReducerSelectors<
+export const nodeChainsSelectors = createReducerSelectors<
   NodeChainsReducer['metadata'],
   NodeChain,
   typeof nodeChainsReducerPath,
@@ -15,4 +15,4 @@ export const {
   selectMetadata: selectNodeChainsMetadata,
   selectData: selectNodeChainsData,
   selectConfig: selectNodeChainsConfig,
-} = nodeChainsReducerSelectors;
+} = nodeChainsSelectors;

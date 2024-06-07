@@ -9,7 +9,13 @@ export class LogEntriesDto {
   title: LogEntriesEntity['title'];
 
   @Expose()
-  description: LogEntriesEntity['description'];
+  description?: LogEntriesEntity['description'];
+
+  @Expose()
+  @Transform(({ obj }: { obj: LogEntriesEntity }) => {
+    return obj.user.id;
+  })
+  userId: number;
 
   @Expose()
   @Transform(({ obj }: { obj: LogEntriesEntity }) => {
@@ -19,13 +25,13 @@ export class LogEntriesDto {
 
   @Expose()
   @Transform(({ obj }: { obj: LogEntriesEntity }) => {
-    return obj.updatedAt?.toISOString() || null;
+    return obj.updatedAt?.toISOString();
   })
-  updatedAt: string | null;
+  updatedAt?: string;
 
   @Expose()
   @Transform(({ obj }: { obj: LogEntriesEntity }) => {
-    return obj.deletedAt?.toISOString() || null;
+    return obj.deletedAt?.toISOString();
   })
-  deletedAt: string | null;
+  deletedAt?: string;
 }

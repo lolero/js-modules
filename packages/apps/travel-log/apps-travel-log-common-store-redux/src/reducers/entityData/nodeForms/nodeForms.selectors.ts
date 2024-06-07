@@ -3,7 +3,7 @@ import { NodeForm, NodeFormsReducer } from './nodeForms.types';
 import { ReduxState } from '../../reducers.types';
 import { nodeFormsReducerPath } from './nodeForms.reducerPath';
 
-export const nodeFormsReducerSelectors = createReducerSelectors<
+export const nodeFormsSelectors = createReducerSelectors<
   NodeFormsReducer['metadata'],
   NodeForm,
   typeof nodeFormsReducerPath,
@@ -15,4 +15,4 @@ export const {
   selectMetadata: selectNodeFormsMetadata,
   selectData: selectNodeFormsData,
   selectConfig: selectNodeFormsConfig,
-} = nodeFormsReducerSelectors;
+} = nodeFormsSelectors;

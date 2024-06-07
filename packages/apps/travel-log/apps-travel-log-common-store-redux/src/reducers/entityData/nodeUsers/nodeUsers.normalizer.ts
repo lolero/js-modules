@@ -15,7 +15,6 @@ export function normalizeUsersPublicDtoArray(
           middleName: usersPublicDto.middleName,
           lastName: usersPublicDto.lastName,
           createdAt: usersPublicDto.createdAt,
-          deletedAt: usersPublicDto.deletedAt,
         };
 
         return {

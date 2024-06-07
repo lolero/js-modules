@@ -5,16 +5,12 @@ import {
 } from '@js-modules/common-redux-utils-normalized-reducers';
 import { useDispatch } from 'react-redux';
 import { useCallback, useState } from 'react';
-import { nodeFormsReducerSelectors } from './nodeForms.selectors';
-import {
-  useStateSettingsReducerMetadata,
-  useStateSettingsRequest,
-} from '../../appState/stateSettings/stateSettings.hooks';
+import { nodeFormsSelectors } from './nodeForms.selectors';
 import { NodeFormsUpdateOnePartialRequestAction } from './nodeForms.actionsTypes';
 import { NodeForm, NodeFormsReducer } from './nodeForms.types';
 import { createNodeFormsUpdateOnePartialRequestAction } from './nodeForms.actionsCreators';
 
-export const nodeFormsHooks = createReducerHooks(nodeFormsReducerSelectors);
+export const nodeFormsHooks = createReducerHooks(nodeFormsSelectors);
 
 export const {
   useRequest: useNodeFormsRequest,

@@ -1,8 +1,8 @@
 import { createReducerHooks } from '@js-modules/common-redux-utils-normalized-reducers';
-import { nodeTransactionsReducerSelectors } from './nodeTransactions.selectors';
+import { nodeTransactionsSelectors } from './nodeTransactions.selectors';
 
 export const nodeTransactionsHooks = createReducerHooks(
-  nodeTransactionsReducerSelectors,
+  nodeTransactionsSelectors,
 );
 
 export const {

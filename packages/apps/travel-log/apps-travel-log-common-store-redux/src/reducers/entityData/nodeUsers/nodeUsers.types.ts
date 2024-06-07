@@ -12,7 +12,6 @@ export interface NodeUser extends Entity {
   middleName?: string | null;
   lastName?: string | null;
   createdAt: string;
-  deletedAt?: string | null;
 }
 
 export const nodeUsersPkSchema: PkSchema<NodeUser, ['id'], []> = {

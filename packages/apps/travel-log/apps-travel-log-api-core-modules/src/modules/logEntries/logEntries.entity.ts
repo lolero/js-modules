@@ -49,7 +49,7 @@ export class LogEntriesEntity implements RequestEntity {
   @UpdateDateColumn({
     name: 'updated_at',
   })
-  updatedAt: Date;
+  updatedAt?: Date;
 
   @DeleteDateColumn({
     name: 'deleted_at',

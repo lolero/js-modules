@@ -3,7 +3,7 @@ import { NodeUser, NodeUsersReducer } from './nodeUsers.types';
 import { ReduxState } from '../../reducers.types';
 import { nodeUsersReducerPath } from './nodeUsers.reducerPath';
 
-export const nodeUsersReducerSelectors = createReducerSelectors<
+export const nodeUsersSelectors = createReducerSelectors<
   NodeUsersReducer['metadata'],
   NodeUser,
   typeof nodeUsersReducerPath,
@@ -15,4 +15,4 @@ export const {
   selectMetadata: selectNodeUsersMetadata,
   selectData: selectNodeUsersData,
   selectConfig: selectNodeUsersConfig,
-} = nodeUsersReducerSelectors;
+} = nodeUsersSelectors;
