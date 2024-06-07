@@ -12,6 +12,7 @@
     "build": "tsc -b tsconfig.build.json"
   },
   "dependencies": {
+    "@js-modules/api-nest-utils": "workspace:^0.0.0",
     "@js-modules/common-utils-general": "workspace:^0.0.0",
     "@testing-library/react": "^15.0.7",
     "@types/lodash": "^4.17.4",

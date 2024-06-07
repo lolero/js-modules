@@ -41,12 +41,12 @@ const darkPaletteOverrides: Partial<Theme['palette']> = {
 };
 
 export const materialUiThemes: Record<ThemePalette, Theme> = {
-  [ThemePalette.light]: createMaterialUiTheme(
-    lightPaletteOverrides,
+  [ThemePalette.light]: createMaterialUiTheme({
     getThemeComponents,
-  ),
-  [ThemePalette.dark]: createMaterialUiTheme(
-    darkPaletteOverrides,
+    paletteOverrides: lightPaletteOverrides,
+  }),
+  [ThemePalette.dark]: createMaterialUiTheme({
     getThemeComponents,
-  ),
+    paletteOverrides: darkPaletteOverrides,
+  }),
 };

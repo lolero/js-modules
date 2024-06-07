@@ -2,8 +2,6 @@ export type FindManySortOrder = 'asc' | 'desc';
 
 export interface RequestEntity {
   id: number | string;
-  createdAt?: Date;
-  updatedAt?: Date;
 }
 
 export type FindManyUniqueKeysDto<

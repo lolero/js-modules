@@ -13,13 +13,13 @@ import {
   STATE_AUTH__INITIALIZE__REQUEST_ID,
   STATE_AUTH__SIGNIN__REQUEST_ID,
   STATE_AUTH__SIGNOUT__REQUEST_ID,
-} from './stateAuth.actionsCreators';
+} from './stateAuth.actions.creators';
 import { SigninAction, StateAuthReducer } from './stateAuth.types';
 import {
   StateAuthInitializeRequestAction,
   StateAuthSigninRequestAction,
   StateAuthSignoutRequestAction,
-} from './stateAuth.actionsTypes';
+} from './stateAuth.actions.types';
 
 export const stateAuthHooks = createReducerHooks(stateAuthSelectors);
 

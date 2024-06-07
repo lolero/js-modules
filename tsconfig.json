@@ -63,6 +63,9 @@
       "@js-modules/apps-travel-log-web-my-feeds": [
         "apps/travel-log/apps-travel-log-web-my-feeds/src"
       ],
+      "@js-modules/apps-travel-log-web-my-log": [
+        "apps/travel-log/apps-travel-log-web-my-log/src"
+      ],
       "@js-modules/apps-travel-log-web-my-workspace": [
         "apps/travel-log/apps-travel-log-web-my-workspace/src"
       ],

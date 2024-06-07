@@ -19,7 +19,7 @@ import {
   StateAuthSigninRequestAction,
   StateAuthSignoutRequestAction,
   StateAuthUpdatePartialReducerMetadataRequestAction,
-} from './stateAuth.actionsTypes';
+} from './stateAuth.actions.types';
 import {
   createStateAuthInitializeFailAction,
   createStateAuthInitializeSuccessAction,
@@ -28,7 +28,7 @@ import {
   createStateAuthSignoutFailAction,
   createStateAuthSignoutSuccessAction,
   createStateAuthUpdatePartialReducerMetadataSuccessAction,
-} from './stateAuth.actionsCreators';
+} from './stateAuth.actions.creators';
 import { KeycloakTokens, SigninAction } from './stateAuth.types';
 import { stateAuthUtilCreateIsKeycloakTokenValidChannel } from './stateAuth.util.createIsKeycloakTokenValidChannel';
 

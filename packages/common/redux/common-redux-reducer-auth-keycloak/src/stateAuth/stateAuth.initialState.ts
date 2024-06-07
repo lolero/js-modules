@@ -7,7 +7,7 @@ import {
   STATE_AUTH__INITIALIZE__REQUEST_ID,
   STATE_AUTH__SIGNIN__REQUEST_ID,
   STATE_AUTH__SIGNOUT__REQUEST_ID,
-} from './stateAuth.actionsCreators';
+} from './stateAuth.actions.creators';
 
 const stateAuthReducerMetadataInitialState: StateAuthReducer['metadata'] = {
   isKeycloakReady: false,

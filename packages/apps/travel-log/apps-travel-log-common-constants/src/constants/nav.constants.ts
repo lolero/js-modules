@@ -4,12 +4,14 @@ import lowerCase from 'lodash/lowerCase';
 import { faRss } from '@fortawesome/free-solid-svg-icons/faRss';
 import { faGlobe } from '@fortawesome/free-solid-svg-icons/faGlobe';
 import { faPersonChalkboard } from '@fortawesome/free-solid-svg-icons/faPersonChalkboard';
+import { faClipboard } from '@fortawesome/free-solid-svg-icons/faClipboard';
 import { faClipboardList } from '@fortawesome/free-solid-svg-icons/faClipboardList';
 import { faPlaneDeparture } from '@fortawesome/free-solid-svg-icons/faPlaneDeparture';
 import { faFish } from '@fortawesome/free-solid-svg-icons/faFish';
 import { faDiagramProject } from '@fortawesome/free-solid-svg-icons/faDiagramProject';
 import { faLink } from '@fortawesome/free-solid-svg-icons/faLink';
 import { faHandshake } from '@fortawesome/free-solid-svg-icons/faHandshake';
+import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
 import { faPeopleArrows } from '@fortawesome/free-solid-svg-icons/faPeopleArrows';
 import { faPersonArrowUpFromLine } from '@fortawesome/free-solid-svg-icons/faPersonArrowUpFromLine';
 import { faPersonArrowDownToLine } from '@fortawesome/free-solid-svg-icons/faPersonArrowDownToLine';
@@ -28,6 +30,7 @@ import {
   WebSubModulesMyBoards,
   WebSubModulesMyFeeds,
   WebSubModulesMyLog,
+  WebSubModulesMyLogLogEntry,
   WebSubModulesMyNetwork,
   WebSubModulesSettings,
   WebSubModulesSettingsProfile,
@@ -93,6 +96,29 @@ export const modulesPrivateRoutesMetadata: RoutesMetadata = {
     label: upperFirst(lowerCase(WebModulesPrivate.myLog)),
     isProtected: true,
     subRoutes: {
+      [WebSubModulesMyLog.logEntry]: {
+        path: `/${WebModulesPrivate.myLog}/${WebSubModulesMyLog.logEntry}`,
+        icon: faClipboard,
+        label: upperFirst(lowerCase(WebSubModulesMyLog.logEntry)),
+        isProtected: true,
+        isHidden: true,
+        subRoutes: {
+          [WebSubModulesMyLogLogEntry.addNew]: {
+            path: `/${WebModulesPrivate.myLog}/${WebSubModulesMyLog.logEntry}/${WebSubModulesMyLogLogEntry.addNew}`,
+            icon: faPlus,
+            label: upperFirst(lowerCase(WebSubModulesMyLogLogEntry.addNew)),
+            isProtected: true,
+            isHidden: true,
+          },
+          [WebSubModulesMyLogLogEntry.edit]: {
+            path: `/${WebModulesPrivate.myLog}/${WebSubModulesMyLog.logEntry}/logEntryId/${WebSubModulesMyLogLogEntry.edit}`,
+            icon: faUserPen,
+            label: upperFirst(lowerCase(WebSubModulesMyLogLogEntry.edit)),
+            isProtected: true,
+            isHidden: true,
+          },
+        },
+      },
       [WebSubModulesMyLog.trips]: {
         path: `/${WebModulesPrivate.myLog}/${WebSubModulesMyLog.trips}`,
         icon: faPlaneDeparture,
@@ -169,6 +195,7 @@ export const modulesPrivateRoutesMetadata: RoutesMetadata = {
             icon: faUserPen,
             label: upperFirst(lowerCase(WebSubModulesSettingsProfile.edit)),
             isProtected: true,
+            isHidden: true,
           },
         },
       },

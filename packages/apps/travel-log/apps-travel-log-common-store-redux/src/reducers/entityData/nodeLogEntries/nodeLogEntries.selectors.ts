@@ -1,7 +1,7 @@
 import { createReducerSelectors } from '@js-modules/common-redux-utils-normalized-reducers';
 import { NodeLogEntry, NodeLogEntriesReducer } from './nodeLogEntries.types';
 import { ReduxState } from '../../reducers.types';
-import { nodeLogEntriesReducerPath } from './nodeLogEntries.reducerPath';
+import { nodeLogEntriesReducerPath } from './nodeLogEntries.reducer.path';
 
 export const nodeLogEntriesSelectors = createReducerSelectors<
   NodeLogEntriesReducer['metadata'],

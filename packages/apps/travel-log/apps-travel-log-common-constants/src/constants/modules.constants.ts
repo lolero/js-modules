@@ -36,8 +36,14 @@ export enum WebSubModulesMyBoards {
 }
 
 export enum WebSubModulesMyLog {
+  logEntry = 'log-entry',
   trips = 'trips',
   dives = 'dives',
+}
+
+export enum WebSubModulesMyLogLogEntry {
+  addNew = 'add-new',
+  edit = 'edit',
 }
 
 export enum WebSubModulesMyNetwork {

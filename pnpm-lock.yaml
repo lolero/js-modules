@@ -1587,6 +1587,9 @@ importers:
       '@js-modules/apps-travel-log-web-my-feeds':
         specifier: workspace:^0.0.0
         version: link:../apps-travel-log-web-my-feeds
+      '@js-modules/apps-travel-log-web-my-log':
+        specifier: workspace:^0.0.0
+        version: link:../apps-travel-log-web-my-log
       '@js-modules/apps-travel-log-web-settings':
         specifier: workspace:^0.0.0
         version: link:../apps-travel-log-web-settings
@@ -1932,6 +1935,72 @@ importers:
       '@js-modules/apps-travel-log-web-my-workspace':
         specifier: workspace:^0.0.0
         version: link:../apps-travel-log-web-my-workspace
+      '@js-modules/web-react-components':
+        specifier: workspace:^0.0.0
+        version: link:../../../web/react/web-react-components
+      '@js-modules/web-react-hooks':
+        specifier: workspace:^0.0.0
+        version: link:../../../web/react/web-react-hooks
+      '@js-modules/web-react-nav':
+        specifier: workspace:^0.0.0
+        version: link:../../../web/react/web-react-nav
+      '@mui/material':
+        specifier: ^5.15.19
+        version: 5.15.19(@emotion/react@11.11.4(@types/react@18.3.3)(react@18.3.1))(@emotion/styled@11.11.5(@emotion/react@11.11.4(@types/react@18.3.3)(react@18.3.1))(@types/react@18.3.3)(react@18.3.1))(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@types/lodash':
+        specifier: ^4.17.4
+        version: 4.17.4
+      '@types/react':
+        specifier: ^18.3.3
+        version: 18.3.3
+      '@types/react-dom':
+        specifier: ^18.3.0
+        version: 18.3.0
+      '@types/react-redux':
+        specifier: ^7.1.33
+        version: 7.1.33
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      react-dom:
+        specifier: ^18.3.1
+        version: 18.3.1(react@18.3.1)
+      react-redux:
+        specifier: ^9.1.2
+        version: 9.1.2(@types/react@18.3.3)(react@18.3.1)(redux@5.0.1)
+      react-router-dom:
+        specifier: ^6.23.1
+        version: 6.23.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+
+  packages/apps/travel-log/apps-travel-log-web-my-log:
+    dependencies:
+      '@fortawesome/fontawesome-svg-core':
+        specifier: ^6.5.2
+        version: 6.5.2
+      '@fortawesome/free-brands-svg-icons':
+        specifier: ^6.5.2
+        version: 6.5.2
+      '@fortawesome/free-regular-svg-icons':
+        specifier: ^6.5.2
+        version: 6.5.2
+      '@fortawesome/free-solid-svg-icons':
+        specifier: ^6.5.2
+        version: 6.5.2
+      '@js-modules/apps-travel-log-common-constants':
+        specifier: workspace:^0.0.0
+        version: link:../apps-travel-log-common-constants
+      '@js-modules/apps-travel-log-common-store-redux':
+        specifier: workspace:^0.0.0
+        version: link:../apps-travel-log-common-store-redux
+      '@js-modules/apps-travel-log-web-my-workspace':
+        specifier: workspace:^0.0.0
+        version: link:../apps-travel-log-web-my-workspace
+      '@js-modules/common-react-hooks':
+        specifier: workspace:^0.0.0
+        version: link:../../../common/react/common-react-hooks
       '@js-modules/web-react-components':
         specifier: workspace:^0.0.0
         version: link:../../../web/react/web-react-components
@@ -2986,6 +3055,9 @@ importers:
 
   packages/common/redux/common-redux-utils-normalized-reducers:
     dependencies:
+      '@js-modules/api-nest-utils':
+        specifier: workspace:^0.0.0
+        version: link:../../../api/nest/api-nest-utils
       '@js-modules/common-utils-general':
         specifier: workspace:^0.0.0
         version: link:../../utils/common-utils-general
@@ -7120,8 +7192,8 @@ packages:
     resolution: {integrity: sha512-rNjApaLzuwaOTjCiT8lSDdGN1APCiqkChLMJxJPWLunPAt5fy8xgU9/jNOchV84wfIxrA0lRQB7oCT8jrn/wrQ==}
     engines: {node: '>=6.0'}
 
-  chromedriver@125.0.3:
-    resolution: {integrity: sha512-Qzuk5Wian2o3EVGjtbz6V/jv+pT/AV9246HbG6kUljZXXjsKZLZxqJC+kHR3qEh/wdv4EJD0YwAOWV72v9hogw==}
+  chromedriver@126.0.0:
+    resolution: {integrity: sha512-rzwKp1okI9RmFtSyIzkk9+GTlTK62ai5P3/AS2qMwl86+gw84d2S/IyLkQMm5cqieFs4dgDAuqqPu0AqQACScg==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -18600,7 +18672,7 @@ snapshots:
 
   chrome-trace-event@1.0.4: {}
 
-  chromedriver@125.0.3:
+  chromedriver@126.0.0:
     dependencies:
       '@testim/chrome-version': 1.1.4
       axios: 1.7.2
@@ -22620,7 +22692,7 @@ snapshots:
     dependencies:
       jwk-to-pem: 2.0.5
     optionalDependencies:
-      chromedriver: 125.0.3
+      chromedriver: 126.0.0
     transitivePeerDependencies:
       - debug
       - supports-color

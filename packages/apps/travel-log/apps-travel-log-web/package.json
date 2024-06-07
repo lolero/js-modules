@@ -19,6 +19,7 @@
     "@js-modules/apps-travel-log-common-store-redux": "workspace:^0.0.0",
     "@js-modules/apps-travel-log-web-components": "workspace:^0.0.0",
     "@js-modules/apps-travel-log-web-my-feeds": "workspace:^0.0.0",
+    "@js-modules/apps-travel-log-web-my-log": "workspace:^0.0.0",
     "@js-modules/apps-travel-log-web-settings": "workspace:^0.0.0",
     "@js-modules/apps-travel-log-web-site": "workspace:^0.0.0",
     "@js-modules/common-react-hooks": "workspace:^0.0.0",

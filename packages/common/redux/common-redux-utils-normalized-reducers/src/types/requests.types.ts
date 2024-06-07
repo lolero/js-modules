@@ -1,10 +1,9 @@
+import { DtoFindMany } from '@js-modules/api-nest-utils/src/dtos/dto.findMany';
 import {
-  ReducerData,
-  Entity,
-  ReducerPartialData,
-  RequestMetadata,
-  ReducerMetadata,
-} from './reducers.types';
+  EntityUniqueKeyValue,
+  RequestEntity,
+} from '@js-modules/api-nest-utils/src/types/types.requests';
+import { Entity, RequestMetadata, ReducerMetadata } from './reducers.types';
 
 export interface UpdateWholeReducerMetadataRequestMetadata<
   ReducerMetadataT extends ReducerMetadata,
@@ -23,40 +22,37 @@ export interface CreateOneEntityRequestMetadata<EntityT extends Entity>
   entity: EntityT;
 }
 
-export interface CreateManyEntitiesRequestMetadata<EntityT extends Entity>
-  extends RequestMetadata {
-  wholeEntities: ReducerData<EntityT>;
+export interface GetOneEntityRequestMetadata<
+  EntityT extends RequestEntity,
+  EntityUniqueKeyName extends keyof EntityT,
+> extends RequestMetadata {
+  uniqueKeyName?: EntityUniqueKeyName;
+  uniqueKeyValue: EntityUniqueKeyValue;
 }
 
-export interface GetOneEntityRequestMetadata extends RequestMetadata {
-  entityPk: string;
-}
-
-export interface GetManyEntitiesRequestMetadata extends RequestMetadata {
-  entityPks?: string[];
+export interface GetManyEntitiesRequestMetadata<
+  EntityT extends RequestEntity,
+  findManyDtoT extends DtoFindMany<EntityT>,
+> extends RequestMetadata {
+  findManyDto?: findManyDtoT;
 }
 
 export interface UpdateOneWholeEntityRequestMetadata<EntityT extends Entity>
   extends RequestMetadata {
-  entityPk: string;
   entity: EntityT;
 }
 
-export interface UpdateManyWholeEntitiesRequestMetadata<EntityT extends Entity>
-  extends RequestMetadata {
-  wholeEntities: ReducerData<EntityT>;
+export interface UpdateManyPartialEntitiesWithPatternRequestMetadata<
+  EntityT extends Entity,
+> extends RequestMetadata {
+  entityPks: string[];
+  partialEntity: Partial<EntityT>;
 }
 
 export interface UpdateOnePartialEntityRequestMetadata<EntityT extends Entity>
   extends RequestMetadata {
   entityPk: string;
   partialEntity: Partial<EntityT>;
-}
-
-export interface UpdateManyPartialEntitiesRequestMetadata<
-  EntityT extends Entity,
-> extends RequestMetadata {
-  partialEntities: ReducerPartialData<EntityT>;
 }
 
 export interface DeleteOneEntityRequestMetadata extends RequestMetadata {

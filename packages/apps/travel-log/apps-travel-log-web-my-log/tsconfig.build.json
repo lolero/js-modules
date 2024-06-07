@@ -1,0 +1,14 @@
+{
+  "extends": "../../../../tsconfig.build.json",
+  "compilerOptions": {
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "jsx": "react-jsx",
+    "composite": true,
+    "rootDir": "src",
+    "outDir": "build",
+  },
+  "include": ["./src"],
+  "references": [
+    { "path": "../../../common/utils/common-utils-general/tsconfig.build.json" }
+  ]
+}

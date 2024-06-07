@@ -127,7 +127,7 @@ export class LogEntriesController {
 
   @Delete('/batch')
   async deleteMany(
-    @Body() logEntriesDeleteManyDto: LogEntriesDeleteManyDto,
+    @Query() logEntriesDeleteManyDto: LogEntriesDeleteManyDto,
     @AuthDecoratorUsersEntityCurrent()
     usersEntityCurrent: UsersEntity,
   ): Promise<void> {

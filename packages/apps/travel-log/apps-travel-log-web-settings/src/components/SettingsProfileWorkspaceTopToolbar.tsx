@@ -16,11 +16,6 @@ export const SettingsProfileWorkspaceTopToolbar: React.FC = () => {
   return (
     <>
       <BackIconButton />
-      <Box
-        sx={{
-          flexGrow: 1,
-        }}
-      />
       <Box>
         <Fab
           color="primary"

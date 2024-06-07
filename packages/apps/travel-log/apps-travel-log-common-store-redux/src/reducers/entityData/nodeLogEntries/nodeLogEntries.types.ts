@@ -25,7 +25,9 @@ export const nodeLogEntriesPkSchema: PkSchema<NodeLogEntry, ['id'], []> = {
   subSeparator: '_node_log_entries_sub_sep_',
 };
 
-type NodeLogEntriesReducerMetadata = ReducerMetadata;
+export interface NodeLogEntriesReducerMetadata extends ReducerMetadata {
+  nodeLogEntryUnsaved: NodeLogEntry | null;
+}
 
 export type NodeLogEntriesReducer = Reducer<
   NodeLogEntriesReducerMetadata,

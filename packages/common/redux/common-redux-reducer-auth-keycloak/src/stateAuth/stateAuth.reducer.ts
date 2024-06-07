@@ -9,7 +9,7 @@ import { stateAuthInitialState } from './stateAuth.initialState';
 import {
   StateAuthActionTypes,
   StateAuthReducerHittingAction,
-} from './stateAuth.actionsTypes';
+} from './stateAuth.actions.types';
 
 export function stateAuthReducer(
   // eslint-disable-next-line default-param-last

@@ -7,7 +7,7 @@ import { TravelLogNavContextProvider } from './TravelLogNavContextProvider';
 
 export const TravelLogThemeProvider: React.FC = () => {
   return (
-    <ThemeProvider theme={materialUiThemes[ThemePalette.light]}>
+    <ThemeProvider theme={materialUiThemes[ThemePalette.dark]}>
       <CssBaseline />
       <TravelLogNavContextProvider />
     </ThemeProvider>

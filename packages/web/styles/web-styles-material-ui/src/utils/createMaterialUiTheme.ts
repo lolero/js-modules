@@ -21,9 +21,9 @@ export type CreateMaterialUiThemeConfig = {
 };
 
 export function createMaterialUiTheme({
+  getThemeComponents = () => ({}),
   paletteOverrides = {},
   typographyOverrides = {},
-  getThemeComponents = () => ({}),
   themeBreakpointValuesOverrides = {},
 }: CreateMaterialUiThemeConfig): Theme {
   const baseTheme: Theme = createTheme({

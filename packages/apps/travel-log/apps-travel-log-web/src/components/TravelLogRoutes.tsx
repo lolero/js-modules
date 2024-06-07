@@ -20,6 +20,7 @@ import {
 } from '@js-modules/apps-travel-log-common-store-redux';
 import { KeycloakConfig } from 'keycloak-js';
 import { SettingsRoutes } from '@js-modules/apps-travel-log-web-settings';
+import { MyLogRoutes } from '@js-modules/apps-travel-log-web-my-log';
 
 const keycloakConfig: KeycloakConfig = {
   url: AUTH_URI_TRAVEL_LOG,
@@ -71,10 +72,7 @@ export const TravelLogRoutes: React.FunctionComponent = () => {
         path={`${WebModulesPrivate.myBoards}/*`}
         element={<MyFeedsRoutes />}
       />
-      <Route
-        path={`${WebModulesPrivate.myLog}/*`}
-        element={<MyFeedsRoutes />}
-      />
+      <Route path={`${WebModulesPrivate.myLog}/*`} element={<MyLogRoutes />} />
       <Route
         path={`${WebModulesPrivate.myNetwork}/*`}
         element={<MyFeedsRoutes />}
