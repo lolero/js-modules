@@ -3,12 +3,16 @@ import values from 'lodash/values';
 import flatten from 'lodash/flatten';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
-import Tooltip from '@mui/material/Tooltip';
-import { MuiFaIcon } from '@js-modules/web-react-components';
 import { Link } from 'react-router-dom';
 import isEqual from 'lodash/isEqual';
+import isNull from 'lodash/isNull';
 import intersection from 'lodash/intersection';
 import { RoutesMetadata } from '../types/routes.types';
+
+export type NavLeftDrawerTabs = {
+  tabsValue: string | null;
+  tabs: React.ReactNode[];
+};
 
 /**
  * Get array of Material UI vertical <Tab />s to populate the <NavLeftDrawer/>,
@@ -18,7 +22,7 @@ import { RoutesMetadata } from '../types/routes.types';
  * navigation's <Tab /> tree
  * @param {number} depthLevel - The navigation tree's depth level for which tabs
  * are being retrieved in the function call
- * @param {string} tabsValue - The selected tab's value
+ * @param {string} routerPath - The router path
  * @param {boolean} isNavLeftDrawerExpanded - Whether or not the <NavLeftDrawer /> is
  * expanded
  * @param {string[]} userRoles - Access roles of the current authenticated user
@@ -30,17 +34,30 @@ import { RoutesMetadata } from '../types/routes.types';
 export function getNavLeftDrawerTabs(
   routesMetadata: RoutesMetadata,
   depthLevel: number,
-  tabsValue: string,
+  routerPath: string,
   isNavLeftDrawerExpanded: boolean,
   userRoles: string[],
   onClickCallback: () => void,
-): React.ReactNode[] {
-  const splitTabValue = tabsValue.split('/').slice(1);
+): NavLeftDrawerTabs {
+  const splitRouterPath = routerPath.split('/').slice(1);
+  const modulesUpToDepthLevelPrevious = splitRouterPath.slice(0, depthLevel);
+  const modulesUpToDepthLevel = splitRouterPath.slice(0, depthLevel + 1);
 
-  const modulesUpToDepthLevel = splitTabValue.slice(0, depthLevel + 1);
-
+  let tabsValue = null;
   const tabs = values(routesMetadata).map((routeMetadata) => {
+    const splitRouteMetadataPath = routeMetadata.path.split('/').slice(1);
+    const routeMetadataModulesUpToDepthLevelPrevious =
+      splitRouteMetadataPath.slice(0, depthLevel);
+
     if (routeMetadata.isHidden) {
+      if (
+        isEqual(
+          modulesUpToDepthLevelPrevious,
+          routeMetadataModulesUpToDepthLevelPrevious,
+        )
+      ) {
+        tabsValue = `/${modulesUpToDepthLevelPrevious.join('/')}`;
+      }
       return null;
     }
 
@@ -52,17 +69,6 @@ export function getNavLeftDrawerTabs(
       }
     }
 
-    let icon: React.ReactNode = null;
-    if (isNavLeftDrawerExpanded) {
-      icon = <MuiFaIcon icon={routeMetadata.icon} />;
-    } else {
-      icon = (
-        <Tooltip title={routeMetadata.label} disableInteractive>
-          <MuiFaIcon icon={routeMetadata.icon} />
-        </Tooltip>
-      );
-    }
-
     let label: React.ReactNode = null;
     if (isNavLeftDrawerExpanded) {
       label = <Typography variant="body1">{routeMetadata.label}</Typography>;
@@ -70,14 +76,19 @@ export function getNavLeftDrawerTabs(
 
     let subTabs: React.ReactNode[] = [];
     if (routeMetadata.subRoutes) {
-      subTabs = getNavLeftDrawerTabs(
+      const subNavLeftDrawerTabs = getNavLeftDrawerTabs(
         routeMetadata.subRoutes,
         depthLevel + 1,
-        tabsValue,
+        routerPath,
         isNavLeftDrawerExpanded,
         userRoles,
         onClickCallback,
       );
+
+      subTabs = subNavLeftDrawerTabs.tabs;
+      if (!isNull(subNavLeftDrawerTabs.tabsValue)) {
+        tabsValue = subNavLeftDrawerTabs.tabsValue;
+      }
     }
 
     const splitTabPath = routeMetadata.path.split('/').slice(1);
@@ -106,12 +117,13 @@ export function getNavLeftDrawerTabs(
           ...selectedParentTabSx,
         }}
         value={routeMetadata.path}
-        icon={icon}
+        icon={routeMetadata.icon}
         label={label}
         component={Link}
         to={routeMetadata.path}
         onClick={onClickCallback}
         iconPosition="start"
+        title={!isNavLeftDrawerExpanded ? routeMetadata.label : undefined}
       />,
       ...subTabs,
     ];
@@ -119,5 +131,8 @@ export function getNavLeftDrawerTabs(
 
   const tabsFlat = flatten(tabs);
 
-  return tabsFlat;
+  return {
+    tabs: tabsFlat,
+    tabsValue,
+  };
 }

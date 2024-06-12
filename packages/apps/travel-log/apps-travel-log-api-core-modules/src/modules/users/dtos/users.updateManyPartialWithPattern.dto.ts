@@ -1,4 +1,4 @@
-import { DtoUpdateOnePartialWithPatternIdInt } from '@js-modules/api-nest-utils';
+import { DtoUpdateManyPartialWithPattern } from '@js-modules/api-nest-utils';
 import { UsersUpdateOnePartialDto } from './users.updateOnePartial.dto';
 
-export class UsersUpdateManyPartialWithPatternDto extends DtoUpdateOnePartialWithPatternIdInt<UsersUpdateOnePartialDto> {}
+export class UsersUpdateManyPartialWithPatternDto extends DtoUpdateManyPartialWithPattern<UsersUpdateOnePartialDto> {}

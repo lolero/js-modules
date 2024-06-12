@@ -15,10 +15,10 @@ import {
 import {
   WEB_CLIENT_URI_TRAVEL_LOG,
   WebModulesPublic,
-  modulesPublicRoutesMetadata,
 } from '@js-modules/apps-travel-log-common-constants';
 import startCase from 'lodash/startCase';
 import { faCopy } from '@fortawesome/free-solid-svg-icons/faCopy';
+import { routesMetadataPublic } from '@js-modules/apps-travel-log-web-components';
 
 export const MyWorkspaceAccountMenu: React.FC = () => {
   const { menuAnchor, openMenuCallback, closeMenuCallback } = useMenuUtils();
@@ -30,7 +30,7 @@ export const MyWorkspaceAccountMenu: React.FC = () => {
     callback: logoutCallback,
   } = useStateAuthLogout(
     WEB_CLIENT_URI_TRAVEL_LOG,
-    modulesPublicRoutesMetadata[WebModulesPublic.home].path,
+    routesMetadataPublic[WebModulesPublic.home].path,
     stateSettingsSignoutCallback,
   );
 

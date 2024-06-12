@@ -5,7 +5,7 @@ import { DtoFindManySearch } from '../dtos/dto.findManySearch';
 import { utilGetFindManySearchWhereFactory } from './util.getFindManySearchWhereFactory';
 
 interface TestEntity extends RequestEntity {
-  id: number;
+  uniqueKeyNumber1: number;
   propString1: string;
   propString2: string;
 }

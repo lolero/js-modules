@@ -4,7 +4,7 @@ import { RequestEntity, FindManyUniqueKeysDto } from '../types/types.requests';
 import { utilGetFindManyUniqueKeysWhereFactory } from './util.getFindManyUniqueKeysWhereFactory';
 
 interface TestEntity extends RequestEntity {
-  id: number;
+  uniqueKeyNumber1: number;
   uniqueKeyName1: number;
   uniqueKeyName2: string;
 }

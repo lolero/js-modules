@@ -5,16 +5,16 @@ import { MuiFaIcon } from '@js-modules/web-react-components';
 import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
 import { Link } from 'react-router-dom';
 import {
-  modulesPrivateRoutesMetadata,
   WebModulesPrivate,
   WebSubModulesMyLog,
   WebSubModulesMyLogLogEntry,
 } from '@js-modules/apps-travel-log-common-constants';
+import { routesMetadataPrivate } from '@js-modules/apps-travel-log-web-components';
 
 export const MyLogWorkspaceTopToolbar: React.FC = () => {
   const routeMetadata = useMemo(
     () =>
-      modulesPrivateRoutesMetadata[WebModulesPrivate.myLog].subRoutes![
+      routesMetadataPrivate[WebModulesPrivate.myLog].subRoutes![
         WebSubModulesMyLog.logEntry
       ].subRoutes![WebSubModulesMyLogLogEntry.addNew],
     [],

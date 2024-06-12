@@ -5,7 +5,6 @@ import { MuiFaIcon } from '@js-modules/web-react-components';
 import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck';
 import { faXmark } from '@fortawesome/free-solid-svg-icons/faXmark';
 import {
-  modulesPrivateRoutesMetadata,
   WebModulesPrivate,
   WebSubModulesMyLog,
 } from '@js-modules/apps-travel-log-common-constants';
@@ -14,6 +13,7 @@ import {
   useNodeLogEntriesCreateOne,
   useNodeLogEntriesUpdateOnePartial,
 } from '@js-modules/apps-travel-log-common-store-redux';
+import { routesMetadataPrivate } from '@js-modules/apps-travel-log-web-components';
 
 export const MyLogLogEntryAddEditWorkspaceTopToolbar: React.FC = () => {
   const { logEntryId } = useParams();
@@ -40,7 +40,7 @@ export const MyLogLogEntryAddEditWorkspaceTopToolbar: React.FC = () => {
       return {
         saveLabel: 'Save changes',
         cancelPath: `${
-          modulesPrivateRoutesMetadata[WebModulesPrivate.myLog].subRoutes![
+          routesMetadataPrivate[WebModulesPrivate.myLog].subRoutes![
             WebSubModulesMyLog.logEntry
           ].path
         }/${logEntryId}`,
@@ -50,7 +50,7 @@ export const MyLogLogEntryAddEditWorkspaceTopToolbar: React.FC = () => {
 
     return {
       saveLabel: 'Create',
-      cancelPath: modulesPrivateRoutesMetadata[WebModulesPrivate.myLog].path,
+      cancelPath: routesMetadataPrivate[WebModulesPrivate.myLog].path,
       submitRequest: nodeLogEntriesCreateOneRequest,
     };
   }, [

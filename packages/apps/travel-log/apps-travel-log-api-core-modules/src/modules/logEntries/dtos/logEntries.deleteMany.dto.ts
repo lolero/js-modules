@@ -1,3 +1,3 @@
-import { DtoDeleteManyIdInt } from '@js-modules/api-nest-utils';
+import { DtoDeleteMany } from '@js-modules/api-nest-utils';
 
-export class LogEntriesDeleteManyDto extends DtoDeleteManyIdInt {}
+export class LogEntriesDeleteManyDto extends DtoDeleteMany {}

@@ -5,7 +5,6 @@ import {
   EntityUniqueKeyValue,
   utilApplyFindManyFiltersToQuery,
   utilApplyFindManySortingAndPaginationToQuery,
-  utilCrossCheckIds,
   utilVerifyEntitiesPartialRelation,
 } from '@js-modules/api-nest-utils';
 import { pick } from 'lodash';
@@ -114,13 +113,14 @@ export class LogEntriesService {
     logEntriesUpdateManyPartialWithPatternDto: LogEntriesUpdateManyPartialWithPatternDto,
     usersEntityCurrent: UsersEntity,
   ): Promise<LogEntriesEntity[]> {
-    const { ids, dtoUpdateOnePartial } =
+    const { uniqueKeyName, uniqueKeyValues, updateOnePartialDto } =
       logEntriesUpdateManyPartialWithPatternDto;
     const logEntriesEntities = await this.logEntriesRepository.findBy({
-      id: In(ids),
+      [uniqueKeyName]: In(
+        uniqueKeyValues as LogEntriesEntity[LogEntriesUniqueKeyName][],
+      ),
     });
 
-    utilCrossCheckIds(ids, logEntriesEntities);
     utilVerifyEntitiesPartialRelation<LogEntriesEntity, UsersEntity>(
       logEntriesEntities,
       'user',
@@ -129,7 +129,7 @@ export class LogEntriesService {
 
     const logEntriesEntitiesUpdatedPreSave = logEntriesEntities.map(
       (logEntriesEntity) =>
-        Object.assign(logEntriesEntity, dtoUpdateOnePartial),
+        Object.assign(logEntriesEntity, updateOnePartialDto),
     );
 
     const logEntriesEntitiesUpdated = await this.logEntriesRepository.save(
@@ -143,12 +143,13 @@ export class LogEntriesService {
     logEntriesDeleteManyDto: LogEntriesDeleteManyDto,
     usersEntityCurrent: UsersEntity,
   ): Promise<void> {
-    const { ids } = logEntriesDeleteManyDto;
+    const { uniqueKeyName, uniqueKeyValues } = logEntriesDeleteManyDto;
     const logEntriesEntities = await this.logEntriesRepository.findBy({
-      id: In(ids),
+      [uniqueKeyName]: In(
+        uniqueKeyValues as LogEntriesEntity[LogEntriesUniqueKeyName][],
+      ),
     });
 
-    utilCrossCheckIds(ids, logEntriesEntities);
     utilVerifyEntitiesPartialRelation<LogEntriesEntity, UsersEntity>(
       logEntriesEntities,
       'user',

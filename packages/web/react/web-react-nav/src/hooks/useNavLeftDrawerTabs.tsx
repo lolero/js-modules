@@ -1,13 +1,11 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { useSplitRouterPath } from '@js-modules/web-react-hooks';
 import { useNavDisplayMetadata } from './useNavDisplayMetadata';
 import { RoutesMetadata } from '../types/routes.types';
-import { getNavLeftDrawerTabs } from '../utils/getNavLeftDrawerTabs';
-
-type UseNavLeftDrawerTabs = {
-  tabsValue: string;
-  tabs: React.ReactNode[];
-};
+import {
+  getNavLeftDrawerTabs,
+  NavLeftDrawerTabs,
+} from '../utils/getNavLeftDrawerTabs';
 
 /**
  * React hook to get array of Material UI vertical <Tab />s to populate the
@@ -22,21 +20,21 @@ type UseNavLeftDrawerTabs = {
 export function useNavLeftDrawerTabs(
   tabsMetadata: RoutesMetadata,
   userRoles: string[] = [],
-): UseNavLeftDrawerTabs {
+): NavLeftDrawerTabs {
   const { isNavLeftDrawerExpanded, closeNavLeftDrawerCallback } =
     useNavDisplayMetadata();
 
   const splitRouterPath = useSplitRouterPath();
 
-  const tabsValue = useMemo(() => {
+  const routerPath = useMemo(() => {
     return `/${splitRouterPath.join('/')}`;
   }, [splitRouterPath]);
 
-  const tabs = useMemo(() => {
+  const { tabsValue, tabs } = useMemo(() => {
     return getNavLeftDrawerTabs(
       tabsMetadata,
       0,
-      tabsValue,
+      routerPath,
       isNavLeftDrawerExpanded,
       userRoles,
       closeNavLeftDrawerCallback,
@@ -45,7 +43,7 @@ export function useNavLeftDrawerTabs(
     closeNavLeftDrawerCallback,
     isNavLeftDrawerExpanded,
     tabsMetadata,
-    tabsValue,
+    routerPath,
     userRoles,
   ]);
 

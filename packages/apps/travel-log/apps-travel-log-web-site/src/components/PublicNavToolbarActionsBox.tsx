@@ -15,13 +15,13 @@ import { Link } from 'react-router-dom';
 import {
   WEB_CLIENT_URI_TRAVEL_LOG,
   WebModulesPrivate,
-  modulesPrivateRoutesMetadata,
 } from '@js-modules/apps-travel-log-common-constants';
 import {
   useStateAuthLogin,
   useStateAuthSignup,
   useStateSettingsGetProfile,
 } from '@js-modules/apps-travel-log-common-store-redux';
+import { routesMetadataPrivate } from '@js-modules/apps-travel-log-web-components';
 
 export const PublicNavToolbarActionsBox: React.FC = () => {
   const { isMobile } = useNavDisplayMetadata();
@@ -36,13 +36,13 @@ export const PublicNavToolbarActionsBox: React.FC = () => {
     callback: stateAuthSignupCallback,
   } = useStateAuthSignup(
     WEB_CLIENT_URI_TRAVEL_LOG,
-    modulesPrivateRoutesMetadata[WebModulesPrivate.myFeeds].path,
+    routesMetadataPrivate[WebModulesPrivate.myFeeds].path,
     stateSettingsGetProfileCallback,
   );
 
   const { callback: stateAuthLoginCallback } = useStateAuthLogin(
     WEB_CLIENT_URI_TRAVEL_LOG,
-    modulesPrivateRoutesMetadata[WebModulesPrivate.myFeeds].path,
+    routesMetadataPrivate[WebModulesPrivate.myFeeds].path,
     stateSettingsGetProfileCallback,
   );
 
@@ -51,7 +51,7 @@ export const PublicNavToolbarActionsBox: React.FC = () => {
       {isAuthenticated && (
         <Button
           component={Link}
-          to={modulesPrivateRoutesMetadata[WebModulesPrivate.myFeeds].path}
+          to={routesMetadataPrivate[WebModulesPrivate.myFeeds].path}
           size="small"
         >
           Enter app

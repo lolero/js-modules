@@ -1,13 +1,11 @@
 import React from 'react';
 import Tabs from '@mui/material/Tabs';
 import { useNavLeftDrawerTabs } from '@js-modules/web-react-nav';
-import { modulesPublicRoutesMetadata } from '@js-modules/apps-travel-log-common-constants';
+import { routesMetadataPublic } from '@js-modules/apps-travel-log-web-components';
 
 export const PublicWorkspaceNavDrawerContentBox: React.FunctionComponent =
   () => {
-    const { tabsValue, tabs } = useNavLeftDrawerTabs(
-      modulesPublicRoutesMetadata,
-    );
+    const { tabsValue, tabs } = useNavLeftDrawerTabs(routesMetadataPublic);
 
     return (
       <Tabs orientation="vertical" variant="scrollable" value={tabsValue}>

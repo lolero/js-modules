@@ -2,13 +2,13 @@ import { RequestEntity } from '../types/types.requests';
 import { utilVerifyEntitiesPartialRelation } from './util.verifyEntitiesPartialRelation';
 
 interface Relation extends RequestEntity {
-  id: number;
+  uniqueKeyNumber: number;
   propString: string;
   propBoolean: boolean;
 }
 
 interface Entity extends RequestEntity {
-  id: number;
+  uniqueKeyNumber: number;
   propString: string;
   propRelation: Relation;
 }
@@ -20,31 +20,31 @@ describe('utilVerifyEntitiesPartialRelation', () => {
 
   beforeEach(() => {
     const relation: Relation = {
-      id: 1,
+      uniqueKeyNumber: 1,
       propString: 'propString',
       propBoolean: true,
     };
 
     entities = [
       {
-        id: 1,
+        uniqueKeyNumber: 1,
         propString: 'propString1',
         propRelation: { ...relation },
       },
       {
-        id: 2,
+        uniqueKeyNumber: 2,
         propString: 'propString2',
         propRelation: { ...relation },
       },
       {
-        id: 3,
+        uniqueKeyNumber: 3,
         propString: 'propString3',
         propRelation: { ...relation },
       },
     ];
 
     partialRelation = {
-      id: 1,
+      uniqueKeyNumber: 1,
       propString: 'propString',
     };
   });

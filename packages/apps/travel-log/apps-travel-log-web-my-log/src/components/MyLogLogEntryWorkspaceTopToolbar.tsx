@@ -4,7 +4,6 @@ import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
 import { MuiFaIcon } from '@js-modules/web-react-components';
 import {
-  modulesPrivateRoutesMetadata,
   WebModulesPrivate,
   WebSubModulesMyLog,
   WebSubModulesMyLogLogEntry,
@@ -12,13 +11,14 @@ import {
 import { Link, useParams } from 'react-router-dom';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons/faPenToSquare';
 import { faAngleLeft } from '@fortawesome/free-solid-svg-icons/faAngleLeft';
+import { routesMetadataPrivate } from '@js-modules/apps-travel-log-web-components';
 
 export const MyLogLogEntryWorkspaceTopToolbar: React.FC = () => {
   const { logEntryId } = useParams();
 
   const routeMetadataEdit = useMemo(
     () =>
-      modulesPrivateRoutesMetadata[WebModulesPrivate.myLog].subRoutes![
+      routesMetadataPrivate[WebModulesPrivate.myLog].subRoutes![
         WebSubModulesMyLog.logEntry
       ].subRoutes![WebSubModulesMyLogLogEntry.edit],
     [],
@@ -30,7 +30,7 @@ export const MyLogLogEntryWorkspaceTopToolbar: React.FC = () => {
   );
 
   const routeMetadataMyLog = useMemo(
-    () => modulesPrivateRoutesMetadata[WebModulesPrivate.myLog],
+    () => routesMetadataPrivate[WebModulesPrivate.myLog],
     [],
   );
 
@@ -43,7 +43,7 @@ export const MyLogLogEntryWorkspaceTopToolbar: React.FC = () => {
           component={Link}
           to={routeMetadataMyLog.path}
           startIcon={<MuiFaIcon icon={faAngleLeft} />}
-          endIcon={<MuiFaIcon icon={routeMetadataMyLog.icon} />}
+          endIcon={routeMetadataMyLog.icon}
         >
           {routeMetadataMyLog.label}
         </Button>

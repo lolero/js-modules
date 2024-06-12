@@ -2,9 +2,9 @@ import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import {
   WebModulesPrivate,
-  modulesPrivateRoutesMetadata,
   WebSubModulesMyLog,
 } from '@js-modules/apps-travel-log-common-constants';
+import { routesMetadataPrivate } from '@js-modules/apps-travel-log-web-components';
 import { MyLogWorkspaceBox } from './MyLogWorkspaceBox';
 import { MyLogLogEntryRoutes } from './MyLogLogEntryRoutes';
 
@@ -29,7 +29,7 @@ export const MyLogRoutes: React.FunctionComponent = () => {
         element={
           <Navigate
             replace
-            to={modulesPrivateRoutesMetadata[WebModulesPrivate.myLog].path}
+            to={routesMetadataPrivate[WebModulesPrivate.myLog].path}
           />
         }
       />

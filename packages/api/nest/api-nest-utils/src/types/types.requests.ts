@@ -1,8 +1,6 @@
 export type FindManySortOrder = 'asc' | 'desc';
 
-export interface RequestEntity {
-  id: number | string;
-}
+export type RequestEntity = object;
 
 export type FindManyUniqueKeysDto<
   EntityT extends RequestEntity = RequestEntity,

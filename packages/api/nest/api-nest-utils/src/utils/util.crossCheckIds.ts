@@ -6,12 +6,12 @@ import {
 } from '@nestjs/common';
 import sortedUniq from 'lodash/sortedUniq';
 import { isEqual } from 'lodash';
-import { RequestEntity } from '../types/types.requests';
+import { EntityUniqueKeyValue, RequestEntity } from '../types/types.requests';
 
-export function utilCrossCheckIds<EntityT extends RequestEntity>(
-  requestedIds: number[],
-  foundEntities: EntityT[],
-): void {
+// TODO: generalize this for any unique key names and values
+export function utilCrossCheckIds<
+  EntityT extends RequestEntity & { id: EntityUniqueKeyValue },
+>(requestedIds: number[], foundEntities: EntityT[]): void {
   const sortedUniqRequestedIds = sortedUniq(requestedIds);
   if (sortedUniqRequestedIds.length < requestedIds.length) {
     throw new BadRequestException('request error. duplicate ids.');

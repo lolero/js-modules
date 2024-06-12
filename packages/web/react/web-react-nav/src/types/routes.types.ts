@@ -1,10 +1,10 @@
-import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import React from 'react';
 
 export type RoutesMetadata = Record<string, RouteMetadata>;
 
 export type RouteMetadata = {
   path: string;
-  icon: IconDefinition;
+  icon: React.ReactElement;
   label: string;
   isProtected?: boolean;
   roles?: string[];

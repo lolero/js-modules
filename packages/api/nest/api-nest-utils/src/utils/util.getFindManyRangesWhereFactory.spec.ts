@@ -14,7 +14,7 @@ jest.mock('../utils/util.getFindManyNumberRange');
 jest.mock('../utils/util.getFindManyStringRange');
 
 interface TestEntity extends RequestEntity {
-  id: number;
+  uniqueKeyNumber1: number;
   propNumber1: number;
   propNumber2: number;
   propString1: string;
@@ -82,13 +82,15 @@ describe('utilGetFindManyRangesWhereFactory', () => {
     whereFactory(whereExpressionBuilder);
 
     const [rangeFrom, rangeTo] = utilGetFindManyDateRangeMockReturnValue;
-    expect(utilGetFindManyDateRange).toHaveBeenNthCalledWith(
+    expect(utilGetFindManyDateRangeMock).toHaveBeenNthCalledWith(
       1,
-      findManyDateRangesDto.propDate1,
+      findManyDateRangesDto.propDate1![0],
+      findManyDateRangesDto.propDate1![1],
     );
-    expect(utilGetFindManyDateRange).toHaveBeenNthCalledWith(
+    expect(utilGetFindManyDateRangeMock).toHaveBeenNthCalledWith(
       2,
-      findManyDateRangesDto.propDate2,
+      findManyDateRangesDto.propDate2![0],
+      findManyDateRangesDto.propDate2![1],
     );
     expect(whereMock).toHaveBeenNthCalledWith(
       1,
@@ -133,13 +135,15 @@ describe('utilGetFindManyRangesWhereFactory', () => {
     whereFactory(whereExpressionBuilder);
 
     const [rangeFrom, rangeTo] = utilGetFindManyNumberRangeMockReturnValue;
-    expect(utilGetFindManyNumberRange).toHaveBeenNthCalledWith(
+    expect(utilGetFindManyNumberRangeMock).toHaveBeenNthCalledWith(
       1,
-      findManyNumberRangesDto.propNumber1,
+      findManyNumberRangesDto.propNumber1![0],
+      findManyNumberRangesDto.propNumber1![1],
     );
-    expect(utilGetFindManyNumberRange).toHaveBeenNthCalledWith(
+    expect(utilGetFindManyNumberRangeMock).toHaveBeenNthCalledWith(
       2,
-      findManyNumberRangesDto.propNumber2,
+      findManyNumberRangesDto.propNumber2![0],
+      findManyNumberRangesDto.propNumber2![1],
     );
     expect(whereMock).toHaveBeenNthCalledWith(
       1,
@@ -186,11 +190,13 @@ describe('utilGetFindManyRangesWhereFactory', () => {
     const [rangeFrom, rangeTo] = utilGetFindManyStringRangeMockReturnValue;
     expect(utilGetFindManyStringRange).toHaveBeenNthCalledWith(
       1,
-      findManyStringRangesDto.propString1,
+      findManyStringRangesDto.propString1![0],
+      findManyStringRangesDto.propString1![1],
     );
     expect(utilGetFindManyStringRange).toHaveBeenNthCalledWith(
       2,
-      findManyStringRangesDto.propString2,
+      findManyStringRangesDto.propString2![0],
+      findManyStringRangesDto.propString2![1],
     );
     expect(whereMock).toHaveBeenNthCalledWith(
       1,

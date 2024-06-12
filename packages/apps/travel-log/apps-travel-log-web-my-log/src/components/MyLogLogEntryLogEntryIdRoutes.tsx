@@ -2,10 +2,10 @@ import React from 'react';
 import { Navigate, Route, Routes, useParams } from 'react-router-dom';
 import {
   WebModulesPrivate,
-  modulesPrivateRoutesMetadata,
   WebSubModulesMyLogLogEntry,
   WebSubModulesMyLog,
 } from '@js-modules/apps-travel-log-common-constants';
+import { routesMetadataPrivate } from '@js-modules/apps-travel-log-web-components';
 import { MyLogLogEntryAddEditWorkspaceBox } from './MyLogLogEntryAddEditWorkspaceBox';
 import { MyLogLogEntryWorkspaceBox } from './MyLogLogEntryWorkspaceBox';
 
@@ -25,7 +25,7 @@ export const MyLogLogEntryLogEntryIdRoutes: React.FunctionComponent = () => {
           <Navigate
             replace
             to={`${
-              modulesPrivateRoutesMetadata[WebModulesPrivate.myLog].subRoutes![
+              routesMetadataPrivate[WebModulesPrivate.myLog].subRoutes![
                 WebSubModulesMyLog.logEntry
               ].path
             }/${logEntryId}`}

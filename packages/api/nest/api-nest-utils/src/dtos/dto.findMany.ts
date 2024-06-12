@@ -10,18 +10,14 @@ import type {
   RequestEntity,
   FindManyRangesDto,
   FindManyRelationsDto,
-} from '../types/types.requests';
-import { DtoFindManySearch } from './dto.findManySearch';
-import { DtoFindManyUniqueKeys } from './dto.findManyUniqueKeys';
-import {
   FindManySearchDto,
   FindManyUniqueKeysDto,
 } from '../types/types.requests';
 
 export class DtoFindMany<
-  EntityT extends RequestEntity,
-  FindManyUniqueKeysDtoT extends FindManyUniqueKeysDto<EntityT> = DtoFindManyUniqueKeys<EntityT>,
-  FindManySearchDtoT extends FindManySearchDto<EntityT> = DtoFindManySearch<EntityT>,
+  EntityT extends RequestEntity = RequestEntity,
+  FindManyUniqueKeysDtoT extends FindManyUniqueKeysDto<EntityT> = FindManyUniqueKeysDto<EntityT>,
+  FindManySearchDtoT extends FindManySearchDto<EntityT> = FindManySearchDto<EntityT>,
   FindManyRelationsDtoT extends FindManyRelationsDto<EntityT> = FindManyRelationsDto<EntityT>,
   FindManyRangesDateDtoT extends FindManyRangesDto<EntityT> = FindManyRangesDto<EntityT>,
   FindManyRangesNumberDtoT extends FindManyRangesDto<EntityT> = FindManyRangesDto<EntityT>,

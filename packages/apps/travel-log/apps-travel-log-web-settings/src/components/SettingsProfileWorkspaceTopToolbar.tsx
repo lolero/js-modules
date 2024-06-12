@@ -6,10 +6,10 @@ import { faPenToSquare } from '@fortawesome/free-solid-svg-icons/faPenToSquare';
 import { Link } from 'react-router-dom';
 import {
   WebModulesPrivate,
-  modulesPrivateRoutesMetadata,
   WebSubModulesSettings,
   WebSubModulesSettingsProfile,
 } from '@js-modules/apps-travel-log-common-constants';
+import { routesMetadataPrivate } from '@js-modules/apps-travel-log-web-components';
 import { SettingsProfileWorkspaceActionsMenu } from './SettingsProfileWorkspaceActionsMenu';
 
 export const SettingsProfileWorkspaceTopToolbar: React.FC = () => {
@@ -22,7 +22,7 @@ export const SettingsProfileWorkspaceTopToolbar: React.FC = () => {
           size="small"
           component={Link}
           to={
-            modulesPrivateRoutesMetadata[WebModulesPrivate.settings].subRoutes![
+            routesMetadataPrivate[WebModulesPrivate.settings].subRoutes![
               WebSubModulesSettings.profile
             ].subRoutes![WebSubModulesSettingsProfile.edit].path
           }

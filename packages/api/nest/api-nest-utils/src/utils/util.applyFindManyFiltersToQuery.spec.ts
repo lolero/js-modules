@@ -18,6 +18,9 @@ jest.mock('./util.getFindManySearchWhereFactory');
 jest.mock('./util.getFindManyRangesWhereFactory');
 
 type TestEntity = RequestEntity & {
+  uniqueKeyNumber: number;
+  uniqueKeyString: string;
+  date1: Date;
   relation1?: RequestEntity;
 };
 
@@ -83,7 +86,8 @@ describe('utilApplyFindManyFiltersToQuery', () => {
     it('Should call utilGetFindManyUniqueKeysWhereFactory with the passed uniqueKeys FindManyUniqueKeysDto, if it is defined and not empty, and filter the query with the resulting Brackets', () => {
       dtoFindMany = {
         uniqueKeys: {
-          id: [1, 2, 3],
+          uniqueKeyNumber: [1, 2, 3],
+          uniqueKeyString: ['string_1', 'string_2', 'string_3'],
         },
       };
       utilGetFindManyUniqueKeysWhereFactoryMock.mockReturnValue(
@@ -142,11 +146,11 @@ describe('utilApplyFindManyFiltersToQuery', () => {
     it('Should throw an error if a non empty uniqueKeys FindManyUniqueKeysDto is passed, as well as a search DtoFindManySearch', () => {
       dtoFindMany = {
         uniqueKeys: {
-          id: [1, 2, 3],
+          uniqueKeyNumber: [1, 2, 3],
         },
         search: {
           searchStr: 'test_search',
-          entityPropNames: ['id'],
+          entityPropNames: ['uniqueKeyString'],
         },
       };
 
@@ -161,7 +165,7 @@ describe('utilApplyFindManyFiltersToQuery', () => {
     it('Should throw an error if a non empty uniqueKeys FindManyUniqueKeysDto is passed, as well as a relations FindManyRelationsDto', () => {
       dtoFindMany = {
         uniqueKeys: {
-          id: [1, 2, 3],
+          uniqueKeyNumber: [1, 2, 3],
         },
         relations: {},
       };
@@ -177,10 +181,10 @@ describe('utilApplyFindManyFiltersToQuery', () => {
     it('Should throw an error if a non empty uniqueKeys FindManyUniqueKeysDto is passed, as well as a dateRanges FindManyDateRangesDto', () => {
       dtoFindMany = {
         uniqueKeys: {
-          id: [1, 2, 3],
+          uniqueKeyNumber: [1, 2, 3],
         },
         dateRanges: {
-          createdAt: [null, null],
+          date1: [null, null],
         },
       };
 
@@ -195,10 +199,10 @@ describe('utilApplyFindManyFiltersToQuery', () => {
     it('Should throw an error if a non empty uniqueKeys FindManyUniqueKeysDto is passed, as well as numberRanges FindManyNumberRangesDto', () => {
       dtoFindMany = {
         uniqueKeys: {
-          id: [1, 2, 3],
+          uniqueKeyNumber: [1, 2, 3],
         },
         numberRanges: {
-          id: [null, null],
+          uniqueKeyNumber: [null, null],
         },
       };
 
@@ -213,10 +217,10 @@ describe('utilApplyFindManyFiltersToQuery', () => {
     it('Should throw an error if a non empty uniqueKeys FindManyUniqueKeysDto is passed, as well as stringRanges FindManyStringRangesDto', () => {
       dtoFindMany = {
         uniqueKeys: {
-          id: [1, 2, 3],
+          uniqueKeyNumber: [1, 2, 3],
         },
         stringRanges: {
-          id: [null, null],
+          uniqueKeyString: [null, null],
         },
       };
 
@@ -272,7 +276,7 @@ describe('utilApplyFindManyFiltersToQuery', () => {
       dtoFindMany = {
         search: {
           searchStr: 'test_search',
-          entityPropNames: ['id'],
+          entityPropNames: ['uniqueKeyString'],
         },
       };
       utilGetFindManySearchWhereFactoryMock.mockReturnValue(
@@ -318,7 +322,7 @@ describe('utilApplyFindManyFiltersToQuery', () => {
     it('Should call utilGetFindManyRangesWhereFactory with the passed dateRanges FindManyRangesDto, if it is defined, and filter the query with the resulting Brackets', () => {
       dtoFindMany = {
         dateRanges: {
-          createdAt: [null, null],
+          date1: [null, null],
         },
       };
       utilGetFindManyRangesWhereFactoryMock.mockReturnValue(
@@ -365,7 +369,7 @@ describe('utilApplyFindManyFiltersToQuery', () => {
     it('Should call utilGetFindManyRangesWhereFactory with the passed numberRanges FindManyRangesDto, if it is defined, and filter the query with the resulting Brackets', () => {
       dtoFindMany = {
         numberRanges: {
-          id: [null, null],
+          uniqueKeyNumber: [null, null],
         },
       };
       utilGetFindManyRangesWhereFactoryMock.mockReturnValue(
@@ -412,7 +416,7 @@ describe('utilApplyFindManyFiltersToQuery', () => {
     it('Should call utilGetFindManyRangesWhereFactory with the passed stringRanges FindManyRangesDto, if it is defined, and filter the query with the resulting Brackets', () => {
       dtoFindMany = {
         stringRanges: {
-          id: [null, null],
+          uniqueKeyString: [null, null],
         },
       };
       utilGetFindManyRangesWhereFactoryMock.mockReturnValue(

@@ -2,9 +2,9 @@ import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import {
   WebModulesPrivate,
-  modulesPrivateRoutesMetadata,
   WebSubModulesSettings,
 } from '@js-modules/apps-travel-log-common-constants';
+import { routesMetadataPrivate } from '@js-modules/apps-travel-log-web-components';
 import { SettingsWorkspaceBox } from './SettingsWorkspaceBox';
 import { SettingsProfileRoutes } from './SettingsProfileRoutes';
 
@@ -21,7 +21,7 @@ export const SettingsRoutes: React.FunctionComponent = () => {
         element={
           <Navigate
             replace
-            to={modulesPrivateRoutesMetadata[WebModulesPrivate.settings].path}
+            to={routesMetadataPrivate[WebModulesPrivate.settings].path}
           />
         }
       />

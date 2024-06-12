@@ -1,29 +1,4 @@
 import { RoutesMetadata } from '@js-modules/web-react-nav';
-import upperFirst from 'lodash/upperFirst';
-import lowerCase from 'lodash/lowerCase';
-import { faRss } from '@fortawesome/free-solid-svg-icons/faRss';
-import { faGlobe } from '@fortawesome/free-solid-svg-icons/faGlobe';
-import { faPersonChalkboard } from '@fortawesome/free-solid-svg-icons/faPersonChalkboard';
-import { faClipboard } from '@fortawesome/free-solid-svg-icons/faClipboard';
-import { faClipboardList } from '@fortawesome/free-solid-svg-icons/faClipboardList';
-import { faPlaneDeparture } from '@fortawesome/free-solid-svg-icons/faPlaneDeparture';
-import { faFish } from '@fortawesome/free-solid-svg-icons/faFish';
-import { faDiagramProject } from '@fortawesome/free-solid-svg-icons/faDiagramProject';
-import { faLink } from '@fortawesome/free-solid-svg-icons/faLink';
-import { faHandshake } from '@fortawesome/free-solid-svg-icons/faHandshake';
-import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
-import { faPeopleArrows } from '@fortawesome/free-solid-svg-icons/faPeopleArrows';
-import { faPersonArrowUpFromLine } from '@fortawesome/free-solid-svg-icons/faPersonArrowUpFromLine';
-import { faPersonArrowDownToLine } from '@fortawesome/free-solid-svg-icons/faPersonArrowDownToLine';
-import { faPeopleGroup } from '@fortawesome/free-solid-svg-icons/faPeopleGroup';
-import { faHouse } from '@fortawesome/free-solid-svg-icons/faHouse';
-import { faHandsHoldingCircle } from '@fortawesome/free-solid-svg-icons/faHandsHoldingCircle';
-import { faGear } from '@fortawesome/free-solid-svg-icons/faGear';
-import { faFileInvoice } from '@fortawesome/free-solid-svg-icons/faFileInvoice';
-import { faAddressCard } from '@fortawesome/free-solid-svg-icons/faAddressCard';
-import { faUserSecret } from '@fortawesome/free-solid-svg-icons/faUserSecret';
-import { faWallet } from '@fortawesome/free-solid-svg-icons/faWallet';
-import { faUserPen } from '@fortawesome/free-solid-svg-icons/faUserPen';
 import {
   WebModulesPrivate,
   WebModulesPublic,
@@ -34,31 +9,44 @@ import {
   WebSubModulesMyNetwork,
   WebSubModulesSettings,
   WebSubModulesSettingsProfile,
-} from './modules.constants';
+} from '@js-modules/apps-travel-log-common-constants';
+import { MuiFaIcon } from '@js-modules/web-react-components';
+import { faRss } from '@fortawesome/free-solid-svg-icons/faRss';
+import upperFirst from 'lodash/upperFirst';
+import lowerCase from 'lodash/lowerCase';
+import { faGlobe } from '@fortawesome/free-solid-svg-icons/faGlobe';
+import { faPersonChalkboard } from '@fortawesome/free-solid-svg-icons/faPersonChalkboard';
+import { faPersonArrowDownToLine } from '@fortawesome/free-solid-svg-icons/faPersonArrowDownToLine';
+import { faHandshake } from '@fortawesome/free-solid-svg-icons/faHandshake';
+import { faClipboardList } from '@fortawesome/free-solid-svg-icons/faClipboardList';
+import { faClipboard } from '@fortawesome/free-solid-svg-icons/faClipboard';
+import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
+import { faUserPen } from '@fortawesome/free-solid-svg-icons/faUserPen';
+import { faPlaneDeparture } from '@fortawesome/free-solid-svg-icons/faPlaneDeparture';
+import { faFish } from '@fortawesome/free-solid-svg-icons/faFish';
+import { faDiagramProject } from '@fortawesome/free-solid-svg-icons/faDiagramProject';
+import { faLink } from '@fortawesome/free-solid-svg-icons/faLink';
+import { faPeopleArrows } from '@fortawesome/free-solid-svg-icons/faPeopleArrows';
+import { faPersonArrowUpFromLine } from '@fortawesome/free-solid-svg-icons/faPersonArrowUpFromLine';
+import { faPeopleGroup } from '@fortawesome/free-solid-svg-icons/faPeopleGroup';
+import { faGear } from '@fortawesome/free-solid-svg-icons/faGear';
+import { faAddressCard } from '@fortawesome/free-solid-svg-icons/faAddressCard';
+import { faFileInvoice } from '@fortawesome/free-solid-svg-icons/faFileInvoice';
+import { faWallet } from '@fortawesome/free-solid-svg-icons/faWallet';
+import { faUserSecret } from '@fortawesome/free-solid-svg-icons/faUserSecret';
+import React from 'react';
+import { routesMetadataPublic } from './routesMetadata.pubilc';
 
-export const modulesPublicRoutesMetadata: RoutesMetadata = {
-  [WebModulesPublic.home]: {
-    path: `/${WebModulesPublic.home}`,
-    icon: faHouse,
-    label: upperFirst(WebModulesPublic.home),
-  },
-  [WebModulesPublic.purpose]: {
-    path: `/${WebModulesPublic.purpose}`,
-    icon: faHandsHoldingCircle,
-    label: upperFirst(WebModulesPublic.purpose),
-  },
-};
-
-export const modulesPrivateRoutesMetadata: RoutesMetadata = {
+export const routesMetadataPrivate: RoutesMetadata = {
   [WebModulesPrivate.myFeeds]: {
     path: `/${WebModulesPrivate.myFeeds}`,
-    icon: faRss,
+    icon: <MuiFaIcon icon={faRss} />,
     label: upperFirst(lowerCase(WebModulesPrivate.myFeeds)),
     isProtected: true,
     subRoutes: {
       [WebSubModulesMyFeeds.general]: {
         path: `/${WebModulesPrivate.myFeeds}/${WebSubModulesMyFeeds.general}`,
-        icon: faGlobe,
+        icon: <MuiFaIcon icon={faGlobe} />,
         label: upperFirst(lowerCase(WebSubModulesMyFeeds.general)),
         isProtected: true,
       },
@@ -66,25 +54,25 @@ export const modulesPrivateRoutesMetadata: RoutesMetadata = {
   },
   [WebModulesPrivate.myBoards]: {
     path: `/${WebModulesPrivate.myBoards}`,
-    icon: faPersonChalkboard,
+    icon: <MuiFaIcon icon={faPersonChalkboard} />,
     label: upperFirst(lowerCase(WebModulesPrivate.myBoards)),
     isProtected: true,
     subRoutes: {
       [WebSubModulesMyBoards.public]: {
         path: `/${WebModulesPrivate.myBoards}/${WebSubModulesMyBoards.public}`,
-        icon: faGlobe,
+        icon: <MuiFaIcon icon={faGlobe} />,
         label: upperFirst(lowerCase(WebSubModulesMyBoards.public)),
         isProtected: true,
       },
       [WebSubModulesMyBoards.followers]: {
         path: `/${WebModulesPrivate.myBoards}/${WebSubModulesMyBoards.followers}`,
-        icon: faPersonArrowDownToLine,
+        icon: <MuiFaIcon icon={faPersonArrowDownToLine} />,
         label: upperFirst(lowerCase(WebSubModulesMyBoards.followers)),
         isProtected: true,
       },
       [WebSubModulesMyBoards.friends]: {
         path: `/${WebModulesPrivate.myBoards}/${WebSubModulesMyBoards.friends}`,
-        icon: faHandshake,
+        icon: <MuiFaIcon icon={faHandshake} />,
         label: upperFirst(lowerCase(WebSubModulesMyBoards.friends)),
         isProtected: true,
       },
@@ -92,27 +80,27 @@ export const modulesPrivateRoutesMetadata: RoutesMetadata = {
   },
   [WebModulesPrivate.myLog]: {
     path: `/${WebModulesPrivate.myLog}`,
-    icon: faClipboardList,
+    icon: <MuiFaIcon icon={faClipboardList} />,
     label: upperFirst(lowerCase(WebModulesPrivate.myLog)),
     isProtected: true,
     subRoutes: {
       [WebSubModulesMyLog.logEntry]: {
         path: `/${WebModulesPrivate.myLog}/${WebSubModulesMyLog.logEntry}`,
-        icon: faClipboard,
+        icon: <MuiFaIcon icon={faClipboard} />,
         label: upperFirst(lowerCase(WebSubModulesMyLog.logEntry)),
         isProtected: true,
         isHidden: true,
         subRoutes: {
           [WebSubModulesMyLogLogEntry.addNew]: {
             path: `/${WebModulesPrivate.myLog}/${WebSubModulesMyLog.logEntry}/${WebSubModulesMyLogLogEntry.addNew}`,
-            icon: faPlus,
+            icon: <MuiFaIcon icon={faPlus} />,
             label: upperFirst(lowerCase(WebSubModulesMyLogLogEntry.addNew)),
             isProtected: true,
             isHidden: true,
           },
           [WebSubModulesMyLogLogEntry.edit]: {
             path: `/${WebModulesPrivate.myLog}/${WebSubModulesMyLog.logEntry}/logEntryId/${WebSubModulesMyLogLogEntry.edit}`,
-            icon: faUserPen,
+            icon: <MuiFaIcon icon={faUserPen} />,
             label: upperFirst(lowerCase(WebSubModulesMyLogLogEntry.edit)),
             isProtected: true,
             isHidden: true,
@@ -121,13 +109,13 @@ export const modulesPrivateRoutesMetadata: RoutesMetadata = {
       },
       [WebSubModulesMyLog.trips]: {
         path: `/${WebModulesPrivate.myLog}/${WebSubModulesMyLog.trips}`,
-        icon: faPlaneDeparture,
+        icon: <MuiFaIcon icon={faPlaneDeparture} />,
         label: upperFirst(lowerCase(WebSubModulesMyLog.trips)),
         isProtected: true,
       },
       [WebSubModulesMyLog.dives]: {
         path: `/${WebModulesPrivate.myLog}/${WebSubModulesMyLog.dives}`,
-        icon: faFish,
+        icon: <MuiFaIcon icon={faFish} />,
         label: upperFirst(lowerCase(WebSubModulesMyLog.dives)),
         isProtected: true,
       },
@@ -135,64 +123,64 @@ export const modulesPrivateRoutesMetadata: RoutesMetadata = {
   },
   [WebModulesPrivate.myNetwork]: {
     path: `/${WebModulesPrivate.myNetwork}`,
-    icon: faDiagramProject,
+    icon: <MuiFaIcon icon={faDiagramProject} />,
     label: upperFirst(lowerCase(WebModulesPrivate.myNetwork)),
     isProtected: true,
     subRoutes: {
       [WebSubModulesMyNetwork.connections]: {
         path: `/${WebModulesPrivate.myNetwork}/${WebSubModulesMyNetwork.connections}`,
-        icon: faLink,
+        icon: <MuiFaIcon icon={faLink} />,
         label: upperFirst(lowerCase(WebSubModulesMyNetwork.connections)),
         isProtected: true,
       },
       [WebSubModulesMyNetwork.friends]: {
         path: `/${WebModulesPrivate.myNetwork}/${WebSubModulesMyNetwork.friends}`,
-        icon: faHandshake,
+        icon: <MuiFaIcon icon={faHandshake} />,
         label: upperFirst(lowerCase(WebSubModulesMyNetwork.friends)),
         isProtected: true,
       },
       [WebSubModulesMyNetwork.inPerson]: {
         path: `/${WebModulesPrivate.myNetwork}/${WebSubModulesMyNetwork.inPerson}`,
-        icon: faPeopleArrows,
+        icon: <MuiFaIcon icon={faPeopleArrows} />,
         label: upperFirst(lowerCase(WebSubModulesMyNetwork.inPerson)),
         isProtected: true,
       },
       [WebSubModulesMyNetwork.following]: {
         path: `/${WebModulesPrivate.myNetwork}/${WebSubModulesMyNetwork.following}`,
-        icon: faPersonArrowUpFromLine,
+        icon: <MuiFaIcon icon={faPersonArrowUpFromLine} />,
         label: upperFirst(lowerCase(WebSubModulesMyNetwork.following)),
         isProtected: true,
       },
       [WebSubModulesMyNetwork.followers]: {
         path: `/${WebModulesPrivate.myNetwork}/${WebSubModulesMyNetwork.followers}`,
-        icon: faPersonArrowDownToLine,
+        icon: <MuiFaIcon icon={faPersonArrowDownToLine} />,
         label: upperFirst(lowerCase(WebSubModulesMyNetwork.followers)),
         isProtected: true,
       },
       [WebSubModulesMyNetwork.groups]: {
         path: `/${WebModulesPrivate.myNetwork}/${WebSubModulesMyNetwork.groups}`,
-        icon: faPeopleGroup,
+        icon: <MuiFaIcon icon={faPeopleGroup} />,
         label: upperFirst(lowerCase(WebSubModulesMyNetwork.groups)),
         isProtected: true,
       },
     },
   },
-  [WebModulesPublic.home]: modulesPublicRoutesMetadata[WebModulesPublic.home],
+  [WebModulesPublic.home]: routesMetadataPublic[WebModulesPublic.home],
   [WebModulesPrivate.settings]: {
     path: `/${WebModulesPrivate.settings}`,
-    icon: faGear,
+    icon: <MuiFaIcon icon={faGear} />,
     label: upperFirst(lowerCase(WebModulesPrivate.settings)),
     isProtected: true,
     subRoutes: {
       [WebSubModulesSettings.profile]: {
         path: `/${WebModulesPrivate.settings}/${WebSubModulesSettings.profile}`,
-        icon: faAddressCard,
+        icon: <MuiFaIcon icon={faAddressCard} />,
         label: upperFirst(lowerCase(WebSubModulesSettings.profile)),
         isProtected: true,
         subRoutes: {
           [WebSubModulesSettingsProfile.edit]: {
             path: `/${WebModulesPrivate.settings}/${WebSubModulesSettings.profile}/${WebSubModulesSettingsProfile.edit}`,
-            icon: faUserPen,
+            icon: <MuiFaIcon icon={faUserPen} />,
             label: upperFirst(lowerCase(WebSubModulesSettingsProfile.edit)),
             isProtected: true,
             isHidden: true,
@@ -201,19 +189,19 @@ export const modulesPrivateRoutesMetadata: RoutesMetadata = {
       },
       [WebSubModulesSettings.account]: {
         path: `/${WebModulesPrivate.settings}/${WebSubModulesSettings.account}`,
-        icon: faFileInvoice,
+        icon: <MuiFaIcon icon={faFileInvoice} />,
         label: upperFirst(lowerCase(WebSubModulesSettings.account)),
         isProtected: true,
       },
       [WebSubModulesSettings.billing]: {
         path: `/${WebModulesPrivate.settings}/${WebSubModulesSettings.billing}`,
-        icon: faWallet,
+        icon: <MuiFaIcon icon={faWallet} />,
         label: upperFirst(lowerCase(WebSubModulesSettings.billing)),
         isProtected: true,
       },
       [WebSubModulesSettings.privacy]: {
         path: `/${WebModulesPrivate.settings}/${WebSubModulesSettings.privacy}`,
-        icon: faUserSecret,
+        icon: <MuiFaIcon icon={faUserSecret} />,
         label: upperFirst(lowerCase(WebSubModulesSettings.privacy)),
         isProtected: true,
       },

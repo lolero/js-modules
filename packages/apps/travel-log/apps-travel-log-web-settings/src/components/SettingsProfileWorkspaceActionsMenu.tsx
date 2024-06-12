@@ -4,7 +4,6 @@ import { faPenToSquare } from '@fortawesome/free-solid-svg-icons/faPenToSquare';
 import { Link } from 'react-router-dom';
 import {
   WebModulesPrivate,
-  modulesPrivateRoutesMetadata,
   WebSubModulesSettings,
   WebSubModulesSettingsProfile,
 } from '@js-modules/apps-travel-log-common-constants';
@@ -15,6 +14,7 @@ import MenuItem from '@mui/material/MenuItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons/faEllipsisVertical';
+import { routesMetadataPrivate } from '@js-modules/apps-travel-log-web-components';
 
 export const SettingsProfileWorkspaceActionsMenu: React.FC = () => {
   const { menuAnchor, openMenuCallback, closeMenuCallback } = useMenuUtils();
@@ -32,7 +32,7 @@ export const SettingsProfileWorkspaceActionsMenu: React.FC = () => {
         <MenuItem
           component={Link}
           to={
-            modulesPrivateRoutesMetadata[WebModulesPrivate.settings].subRoutes![
+            routesMetadataPrivate[WebModulesPrivate.settings].subRoutes![
               WebSubModulesSettings.profile
             ].subRoutes![WebSubModulesSettingsProfile.edit].path
           }

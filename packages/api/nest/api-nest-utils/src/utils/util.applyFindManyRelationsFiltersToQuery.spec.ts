@@ -8,11 +8,13 @@ import {
 import { utilApplyFindManyRelationsFiltersToQuery } from './util.applyFindManyRelationsFiltersToQuery';
 
 type RelationEntity1 = RequestEntity & {
-  uniqueKey1: string;
+  uniqueKeyNumber1: string;
+  uniqueKeyString1: string;
 };
 
 type RelationEntity2 = RequestEntity & {
-  uniqueKey2: string;
+  uniqueKeyNumber2: string;
+  uniqueKeyString2: string;
 };
 
 type TestEntity = RequestEntity & {
@@ -55,12 +57,18 @@ describe('utilApplyFindManyRelationsFiltersToQuery', () => {
   it("Should call the passed query builder innerJoin, where, and orWhere methods to join the corresponding relations tables and filter the query by the passed relations' unique keys", () => {
     findManyRelationsDto = {
       relation1: {
-        id: [11, 22],
-        uniqueKey1: ['test_unique_key_11', 'test_unique_key_12'],
+        uniqueKeyNumber1: [11, 22],
+        uniqueKeyString1: [
+          'test_unique_key_string_11',
+          'test_unique_key_string_12',
+        ],
       },
       relation2: {
-        id: [21, 22],
-        uniqueKey2: ['test_unique_key_21', 'test_unique_key_22'],
+        uniqueKeyNumber2: [21, 22],
+        uniqueKeyString2: [
+          'test_unique_key_string_21',
+          'test_unique_key_string_22',
+        ],
       },
     };
 
@@ -81,30 +89,38 @@ describe('utilApplyFindManyRelationsFiltersToQuery', () => {
     );
     expect(queryBuilderWhereMock).toHaveBeenNthCalledWith(
       1,
-      `relation1Individual.${snakeCase('id')} = :id`,
+      `relation1Individual.${snakeCase(
+        'uniqueKeyNumber1',
+      )} = :uniqueKeyNumber1`,
       {
-        id: In(findManyRelationsDto.relation1.id!),
+        uniqueKeyNumber1: In(findManyRelationsDto.relation1.uniqueKeyNumber1!),
       },
     );
     expect(queryBuilderOrWhereMock).toHaveBeenNthCalledWith(
       1,
-      `relation1Individual.${snakeCase('uniqueKey1')} = :uniqueKey1`,
+      `relation1Individual.${snakeCase(
+        'uniqueKeyString1',
+      )} = :uniqueKeyString1`,
       {
-        uniqueKey1: In(findManyRelationsDto.relation1.uniqueKey1!),
+        uniqueKeyString1: In(findManyRelationsDto.relation1.uniqueKeyString1!),
       },
     );
     expect(queryBuilderOrWhereMock).toHaveBeenNthCalledWith(
       2,
-      `relation2Individual.${snakeCase('id')} = :id`,
+      `relation2Individual.${snakeCase(
+        'uniqueKeyNumber2',
+      )} = :uniqueKeyNumber2`,
       {
-        id: In(findManyRelationsDto.relation2.id!),
+        uniqueKeyNumber2: In(findManyRelationsDto.relation2.uniqueKeyNumber2!),
       },
     );
     expect(queryBuilderOrWhereMock).toHaveBeenNthCalledWith(
       3,
-      `relation2Individual.${snakeCase('uniqueKey2')} = :uniqueKey2`,
+      `relation2Individual.${snakeCase(
+        'uniqueKeyString2',
+      )} = :uniqueKeyString2`,
       {
-        uniqueKey2: In(findManyRelationsDto.relation2.uniqueKey2!),
+        uniqueKeyString2: In(findManyRelationsDto.relation2.uniqueKeyString2!),
       },
     );
   });

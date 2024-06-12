@@ -1,3 +1,3 @@
-import { DtoDeleteManyIdInt } from '@js-modules/api-nest-utils';
+import { DtoDeleteMany } from '@js-modules/api-nest-utils';
 
-export class UsersDeleteManyDto extends DtoDeleteManyIdInt {}
+export class UsersDeleteManyDto extends DtoDeleteMany {}

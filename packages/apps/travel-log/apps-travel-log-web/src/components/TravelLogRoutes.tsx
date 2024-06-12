@@ -4,9 +4,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import {
   AUTH_URI_TRAVEL_LOG,
   WebModulesPrivate,
-  modulesPrivateRoutesMetadata,
   WebModulesPublic,
-  modulesPublicRoutesMetadata,
 } from '@js-modules/apps-travel-log-common-constants';
 import { MyFeedsRoutes } from '@js-modules/apps-travel-log-web-my-feeds';
 import {
@@ -21,6 +19,10 @@ import {
 import { KeycloakConfig } from 'keycloak-js';
 import { SettingsRoutes } from '@js-modules/apps-travel-log-web-settings';
 import { MyLogRoutes } from '@js-modules/apps-travel-log-web-my-log';
+import {
+  routesMetadataPrivate,
+  routesMetadataPublic,
+} from '@js-modules/apps-travel-log-web-components';
 
 const keycloakConfig: KeycloakConfig = {
   url: AUTH_URI_TRAVEL_LOG,
@@ -54,8 +56,8 @@ export const TravelLogRoutes: React.FunctionComponent = () => {
   }
 
   const rootPath = !isAuthenticated
-    ? modulesPublicRoutesMetadata[WebModulesPublic.home].path
-    : modulesPrivateRoutesMetadata[WebModulesPrivate.myFeeds].path;
+    ? routesMetadataPublic[WebModulesPublic.home].path
+    : routesMetadataPrivate[WebModulesPrivate.myFeeds].path;
 
   return (
     <Routes>
