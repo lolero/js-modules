@@ -1,4 +1,5 @@
 import {
+  handleClearReducerRequests,
   handleDeleteEntities,
   handleFail,
   handleRequest,
@@ -18,6 +19,8 @@ export function nodeLogEntriesReducer(
   action: NodeLogEntriesReducerHittingAction,
 ): NodeLogEntriesReducer {
   switch (action.type) {
+    case NodeLogEntriesActionTypes.NODE_LOG_ENTRIES__CLEAR_REDUCER_REQUESTS:
+      return handleClearReducerRequests(state, action);
     case NodeLogEntriesActionTypes.NODE_LOG_ENTRIES__UPDATE_PARTIAL_REDUCER_METADATA__REQUEST:
       return handleRequest(state, action);
     case NodeLogEntriesActionTypes.NODE_LOG_ENTRIES__UPDATE_PARTIAL_REDUCER_METADATA__SUCCESS:

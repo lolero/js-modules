@@ -7,6 +7,11 @@ import {
   RequestMetadata,
 } from './reducers.types';
 
+export type ClearReducerRequestsAction<ActionTypeT extends string> = {
+  type: ActionTypeT;
+  requestIds: string[];
+};
+
 export type RequestAction<
   ActionTypeT extends string,
   RequestMetadataT extends RequestMetadata,

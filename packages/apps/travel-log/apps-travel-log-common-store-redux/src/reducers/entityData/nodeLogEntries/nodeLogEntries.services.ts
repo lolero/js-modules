@@ -57,7 +57,7 @@ export async function nodeLogEntriesGetManyService(
 ): Promise<NodeLogEntriesGetManyServiceResponse> {
   const res = await axiosRequest.get(
     `${API_CORE_URI_TRAVEL_LOG}/${ApiControllersTravelLog.logEntries}`,
-    { params: { findManyDto } },
+    { params: findManyDto },
   );
   return res;
 }
@@ -65,8 +65,9 @@ export async function nodeLogEntriesGetManyService(
 export async function nodeLogEntriesUpdateOneWholeService(
   entity: NodeLogEntriesUpdateOneWholeRequestAction['requestMetadata']['entity'],
 ): Promise<NodeLogEntriesUpdateOneWholeServiceResponse> {
-  const res = await axiosRequest.patch(
+  const res = await axiosRequest.put(
     `${API_CORE_URI_TRAVEL_LOG}/${ApiControllersTravelLog.logEntries}/${entity.id}`,
+    entity,
   );
   return res;
 }
@@ -93,8 +94,9 @@ export async function nodeLogEntriesUpdateManyPartialWithPatternService(
   );
   const logEntriesUpdateManyPartialWithPatternDto: LogEntriesUpdateManyPartialWithPatternDto =
     {
-      ids,
-      dtoUpdateOnePartial: partialEntity,
+      uniqueKeyName: 'id',
+      uniqueKeyValues: ids,
+      updateOnePartialDto: partialEntity,
     };
 
   const res = await axiosRequest.patch(
@@ -126,7 +128,8 @@ export async function nodeLogEntriesDeleteManyService(
     `${API_CORE_URI_TRAVEL_LOG}/${ApiControllersTravelLog.logEntries}/batch`,
     {
       params: {
-        ids: logEntryIds,
+        uniqueKeyName: 'id',
+        uniqueKeyValues: logEntryIds,
       },
     },
   );

@@ -1,4 +1,9 @@
 import {
+  Request,
+  RequestMetadata,
+} from '@js-modules/common-redux-utils-normalized-reducers';
+import pick from 'lodash/pick';
+import {
   testInitialReducerMetadata,
   TestEntity,
   testEntity1,
@@ -18,6 +23,7 @@ import {
   SavePartialPatternToEntitiesAction,
   SaveWholeReducerMetadataAction,
   SaveNothingAction,
+  ClearReducerRequestsAction,
 } from '../types/actions.types';
 import { createInitialState, defaultReducerConfig } from './initialState.utils';
 import * as ReducerHandlersUtils from './reducerHandlers.utils';
@@ -31,6 +37,7 @@ import {
   handleSavePartialPatternToEntities,
   handleDeleteEntities,
   handleFail,
+  handleClearReducerRequests,
 } from './reducerHandlers';
 
 describe('reducerHandlers', () => {
@@ -64,6 +71,43 @@ describe('reducerHandlers', () => {
     duplicateStateSpy.mockRestore();
     handleCommonPropsSpy.mockRestore();
     updateCompletedRequestsCacheSpy.mockRestore();
+  });
+
+  describe('handleClearReducerRequests', () => {
+    it('Should handle clear reducer requests', () => {
+      duplicatedState = {
+        ...duplicatedState,
+        requests: {
+          request_id_1: {} as Request<RequestMetadata>,
+          request_id_2: {} as Request<RequestMetadata>,
+          request_id_3: {} as Request<RequestMetadata>,
+        },
+      };
+
+      duplicateStateSpy = jest
+        .spyOn(ReducerHandlersUtils, 'duplicateState')
+        .mockImplementation(() => duplicatedState);
+
+      const testClearReducerRequestsAction: ClearReducerRequestsAction<'testClearReducerRequestsAction'> =
+        {
+          type: 'testClearReducerRequestsAction',
+          requestIds: ['request_id_1', 'request_id_2'],
+        };
+
+      const newState = handleClearReducerRequests(
+        state,
+        testClearReducerRequestsAction,
+      );
+
+      expect(duplicateStateSpy).toHaveBeenCalledWith(
+        state,
+        testClearReducerRequestsAction,
+      );
+      expect(newState).toEqual({
+        ...duplicatedState,
+        requests: pick(duplicatedState.requests, 'request_id_3'),
+      });
+    });
   });
 
   describe('handleRequest', () => {

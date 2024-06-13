@@ -6,6 +6,16 @@ import {
 } from '@js-modules/common-redux-utils-normalized-reducers';
 import { LogEntriesDto } from '@js-modules/apps-travel-log-api-core-modules';
 
+export const nodeLogEntryUnsavedEmpty: NodeLogEntry = {
+  id: 0,
+  title: '',
+  description: '',
+  createdAt: '',
+  __edges__: {
+    user: [''],
+  },
+};
+
 export interface NodeLogEntry extends Entity {
   id: LogEntriesDto['id'];
   title: LogEntriesDto['title'];

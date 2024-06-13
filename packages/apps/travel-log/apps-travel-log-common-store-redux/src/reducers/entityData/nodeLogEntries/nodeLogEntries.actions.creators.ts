@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import {
   NodeLogEntriesActionTypes,
+  NodeLogEntriesClearReducerRequestsAction,
   NodeLogEntriesCreateOneFailAction,
   NodeLogEntriesCreateOneRequestAction,
   NodeLogEntriesCreateOneSuccessAction,
@@ -29,6 +30,15 @@ import {
   NodeLogEntriesUpdatePartialReducerMetadataRequestAction,
   NodeLogEntriesUpdatePartialReducerMetadataSuccessAction,
 } from './nodeLogEntries.actions.types';
+
+export function createNodeLogEntriesClearReducerRequestsAction(
+  requestIds: NodeLogEntriesClearReducerRequestsAction['requestIds'],
+): NodeLogEntriesClearReducerRequestsAction {
+  return {
+    type: NodeLogEntriesActionTypes.NODE_LOG_ENTRIES__CLEAR_REDUCER_REQUESTS,
+    requestIds,
+  };
+}
 
 export function createNodeLogEntriesUpdatePartialReducerMetadataRequestAction(
   partialReducerMetadata: NodeLogEntriesUpdatePartialReducerMetadataRequestAction['requestMetadata']['partialReducerMetadata'],

@@ -5,6 +5,7 @@ import {
   RequestMetadata,
 } from '../types/reducers.types';
 import {
+  ClearReducerRequestsAction,
   DeleteEntitiesAction,
   FailAction,
   RequestAction,
@@ -20,6 +21,29 @@ import {
   handleCommonProps,
   updateCompletedRequestsCache,
 } from './reducerHandlers.utils';
+
+/**
+ * Clears a set of the reducer's 'requests'
+ *
+ * @param {Reducer} state - The current state of the reducer
+ * @param {RequestAction} action - Request action
+ * @returns {Reducer} Updated reducer state
+ */
+export function handleClearReducerRequests<
+  ActionTypeT extends string,
+  ReducerMetadataT extends ReducerMetadata,
+  EntityT extends Entity,
+>(
+  state: Reducer<ReducerMetadataT, EntityT>,
+  action: ClearReducerRequestsAction<ActionTypeT>,
+): Reducer<ReducerMetadataT, EntityT> {
+  const newState = duplicateState(state, action);
+  action.requestIds.forEach((requestId) => {
+    delete newState.requests[requestId];
+  });
+
+  return newState;
+}
 
 /**
  * Accessory function that simply calls handleCommonProps and

@@ -11,6 +11,7 @@ export type FormValidator<FormDataT extends Record<string, any>> = {
 
 export type FormUtils<FormDataT extends Record<string, any>> = {
   formDataTemp: FormDataT;
+  setFormDataTemp: React.Dispatch<React.SetStateAction<FormDataT>>;
   changeFieldCallback: (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => void;
@@ -109,6 +110,7 @@ export function useFormUtils<FormDataT extends Record<string, any>>(
 
   return {
     formDataTemp,
+    setFormDataTemp,
     changeFieldCallback,
     blurFieldCallback,
   };

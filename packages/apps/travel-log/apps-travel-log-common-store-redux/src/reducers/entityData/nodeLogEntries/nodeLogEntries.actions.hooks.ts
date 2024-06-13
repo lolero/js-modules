@@ -2,11 +2,13 @@ import { useDispatch } from 'react-redux';
 import { useCallback, useState } from 'react';
 import {
   Request,
+  UseCallback,
   UseRequestEntities,
   UseRequestEntity,
   UseRequestReducerMetadata,
 } from '@js-modules/common-redux-utils-normalized-reducers';
 import {
+  NodeLogEntriesClearReducerRequestsAction,
   NodeLogEntriesCreateOneRequestAction,
   NodeLogEntriesDeleteManyRequestAction,
   NodeLogEntriesDeleteOneRequestAction,
@@ -25,6 +27,7 @@ import {
   useNodeLogEntriesRequest,
 } from './nodeLogEntries.hooks';
 import {
+  createNodeLogEntriesClearReducerRequestsAction,
   createNodeLogEntriesCreateOneRequestAction,
   createNodeLogEntriesDeleteManyRequestAction,
   createNodeLogEntriesDeleteOneRequestAction,
@@ -42,6 +45,24 @@ import {
   NODE_LOG_ENTRIES__UPDATE_ONE_WHOLE__REQUEST_ID,
 } from './nodeLogEntries.actions.creators';
 import { getPkOfNodeLogEntry } from './nodeLogEntries.pkUtils';
+
+export function useNodeLogEntriesClearReducerRequests(): UseCallback<
+  (requestIds: NodeLogEntriesClearReducerRequestsAction['requestIds']) => void
+> {
+  const dispatch = useDispatch();
+
+  const callback = useCallback(
+    (requestIds: NodeLogEntriesClearReducerRequestsAction['requestIds']) => {
+      const action = createNodeLogEntriesClearReducerRequestsAction(requestIds);
+      dispatch(action);
+    },
+    [dispatch],
+  );
+
+  return {
+    callback,
+  };
+}
 
 export function useNodeLogEntriesUpdatePartialReducerMetadata(): UseRequestReducerMetadata<
   NodeLogEntriesUpdatePartialReducerMetadataRequestAction['requestMetadata'],

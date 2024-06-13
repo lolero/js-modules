@@ -1,10 +1,10 @@
 import { useCallback, useState } from 'react';
 import { FormErrors, FormValidator } from '@js-modules/web-react-hooks';
-import { NodeLogEntry } from './nodeLogEntries.types';
-import { useNodeLogEntriesReducerMetadata } from './nodeLogEntries.hooks';
 import _isEmpty from 'lodash/isEmpty';
 import pickBy from 'lodash/pickBy';
 import isEmpty from 'validator/lib/isEmpty';
+import { NodeLogEntry } from './nodeLogEntries.types';
+import { useNodeLogEntriesReducerMetadata } from './nodeLogEntries.hooks';
 
 export function useNodeLogEntriesValidateNodeLogEntryUnsaved(): FormValidator<NodeLogEntry> {
   const { nodeLogEntryUnsaved } = useNodeLogEntriesReducerMetadata();

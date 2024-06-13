@@ -11,6 +11,7 @@ export { createInitialState } from './utils/initialState.utils';
 export { normalizeEntityArrayByPk } from './utils/normalizer.utils';
 export { createReducerPkUtils, emptyPkSchema } from './utils/pk.utils';
 export {
+  handleClearReducerRequests,
   handleRequest,
   handleSaveNothing,
   handleSaveWholeReducerMetadata,

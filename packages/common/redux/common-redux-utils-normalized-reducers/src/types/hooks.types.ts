@@ -26,6 +26,11 @@ export type ReducerHooks<
   useReducerConfig: () => Reducer<ReducerMetadataT, EntityT>['config'];
 };
 
+export type UseCallback<CallbackT extends (...args: any[]) => void> = Pick<
+  UseReducerRequest<RequestMetadata, never, never, CallbackT>,
+  'callback'
+>;
+
 export type UseReducerRequest<
   RequestMetadataT extends RequestMetadata,
   ReducerMetadataT extends ReducerMetadata,

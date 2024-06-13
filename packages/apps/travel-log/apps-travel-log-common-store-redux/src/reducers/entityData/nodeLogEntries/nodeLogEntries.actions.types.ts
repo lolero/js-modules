@@ -1,4 +1,5 @@
 import {
+  ClearReducerRequestsAction,
   CreateOneEntityRequestMetadata,
   DeleteEntitiesAction,
   DeleteManyEntitiesRequestMetadata,
@@ -20,6 +21,7 @@ import { LogEntriesUniqueKeyName } from '@js-modules/apps-travel-log-api-core-mo
 import { NodeLogEntry, NodeLogEntriesReducer } from './nodeLogEntries.types';
 
 export enum NodeLogEntriesActionTypes {
+  NODE_LOG_ENTRIES__CLEAR_REDUCER_REQUESTS = 'NODE_LOG_ENTRIES__CLEAR_REDUCER_REQUESTS',
   NODE_LOG_ENTRIES__UPDATE_PARTIAL_REDUCER_METADATA__REQUEST = 'NODE_LOG_ENTRIES__UPDATE_PARTIAL_REDUCER_METADATA__REQUEST',
   NODE_LOG_ENTRIES__UPDATE_PARTIAL_REDUCER_METADATA__SUCCESS = 'NODE_LOG_ENTRIES__UPDATE_PARTIAL_REDUCER_METADATA__SUCCESS',
   NODE_LOG_ENTRIES__UPDATE_PARTIAL_REDUCER_METADATA__FAIL = 'NODE_LOG_ENTRIES__UPDATE_PARTIAL_REDUCER_METADATA__FAIL',
@@ -48,6 +50,9 @@ export enum NodeLogEntriesActionTypes {
   NODE_LOG_ENTRIES__DELETE_MANY__SUCCESS = 'NODE_LOG_ENTRIES__DELETE_MANY__SUCCESS',
   NODE_LOG_ENTRIES__DELETE_MANY__FAIL = 'NODE_LOG_ENTRIES__DELETE_MANY__FAIL',
 }
+
+export type NodeLogEntriesClearReducerRequestsAction =
+  ClearReducerRequestsAction<NodeLogEntriesActionTypes.NODE_LOG_ENTRIES__CLEAR_REDUCER_REQUESTS>;
 
 export type NodeLogEntriesUpdatePartialReducerMetadataRequestAction =
   RequestAction<
@@ -180,6 +185,7 @@ export type NodeLogEntriesDeleteManyFailAction =
   FailAction<NodeLogEntriesActionTypes.NODE_LOG_ENTRIES__DELETE_MANY__FAIL>;
 
 export type NodeLogEntriesReducerHittingAction =
+  | NodeLogEntriesClearReducerRequestsAction
   | NodeLogEntriesUpdatePartialReducerMetadataRequestAction
   | NodeLogEntriesUpdatePartialReducerMetadataSuccessAction
   | NodeLogEntriesUpdatePartialReducerMetadataFailAction
