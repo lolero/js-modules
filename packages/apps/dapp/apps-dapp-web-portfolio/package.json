@@ -12,22 +12,22 @@
     "build": "tsc -b tsconfig.build.json"
   },
   "dependencies": {
-    "@fortawesome/free-brands-svg-icons": "^6.5.2",
-    "@fortawesome/free-regular-svg-icons": "^6.5.2",
-    "@fortawesome/free-solid-svg-icons": "^6.5.2",
-    "@js-modules/apps-dapp-common-constants": "workspace:^0.0.0",
-    "@js-modules/apps-dapp-common-store-redux": "workspace:^0.0.0",
-    "@js-modules/apps-dapp-web-components": "workspace:^0.0.0",
-    "@js-modules/apps-dapp-web-tokens": "workspace:^0.0.0",
-    "@js-modules/apps-dapp-web-transactions": "workspace:^0.0.0",
-    "@js-modules/web-react-nav": "workspace:^0.0.0",
-    "@mui/material": "^5.15.19",
-    "@types/lodash": "^4.17.4",
+    "@fortawesome/free-brands-svg-icons": "^6.6.0",
+    "@fortawesome/free-regular-svg-icons": "^6.6.0",
+    "@fortawesome/free-solid-svg-icons": "^6.6.0",
+    "@js-modules/apps-dapp-common-constants": "workspace:^",
+    "@js-modules/apps-dapp-common-store-redux": "workspace:^",
+    "@js-modules/apps-dapp-web-components": "workspace:^",
+    "@js-modules/apps-dapp-web-tokens": "workspace:^",
+    "@js-modules/apps-dapp-web-transactions": "workspace:^",
+    "@js-modules/web-react-nav": "workspace:^",
+    "@mui/material": "^5.16.7",
+    "@types/lodash": "^4.17.7",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "lodash": "^4.17.21",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^6.23.1"
+    "react-router-dom": "^6.26.1"
   }
 }

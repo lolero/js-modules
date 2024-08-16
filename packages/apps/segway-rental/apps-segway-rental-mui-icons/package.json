@@ -12,8 +12,8 @@
     "build": "pnpm generate-icons && tsc -b tsconfig.build.json"
   },
   "dependencies": {
-    "@js-modules/web-react-utils": "workspace:^0.0.0",
-    "@mui/material": "^5.15.19",
+    "@js-modules/web-react-utils": "workspace:^",
+    "@mui/material": "^5.16.7",
     "@types/react": "^18.3.3",
     "react": "^18.3.1"
   },
