@@ -1,10 +1,10 @@
+import React from 'react';
 import { RoutesMetadata } from '@js-modules/web-react-nav';
 import { WebModulesPublic } from '@js-modules/apps-travel-log-common-constants';
 import { MuiFaIcon } from '@js-modules/web-react-components';
 import { faHouse } from '@fortawesome/free-solid-svg-icons/faHouse';
 import upperFirst from 'lodash/upperFirst';
 import { faHandsHoldingCircle } from '@fortawesome/free-solid-svg-icons/faHandsHoldingCircle';
-import React from 'react';
 
 export const routesMetadataPublic: RoutesMetadata = {
   [WebModulesPublic.home]: {

@@ -1,8 +1,5 @@
-import {
-  Request,
-  RequestMetadata,
-} from '@js-modules/common-redux-utils-normalized-reducers';
 import pick from 'lodash/pick';
+import { Request, RequestMetadata } from '../types/reducers.types';
 import {
   testInitialReducerMetadata,
   TestEntity,
