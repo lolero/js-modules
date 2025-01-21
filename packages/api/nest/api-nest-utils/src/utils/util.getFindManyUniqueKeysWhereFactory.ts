@@ -1,4 +1,4 @@
-import { In, WhereExpressionBuilder } from 'typeorm';
+import { SelectQueryBuilder, WhereExpressionBuilder } from 'typeorm';
 import keys from 'lodash/keys';
 import snakeCase from 'lodash/snakeCase';
 import { FindManyUniqueKeysDto, RequestEntity } from '../types/types.requests';
@@ -6,6 +6,7 @@ import { FindManyUniqueKeysDto, RequestEntity } from '../types/types.requests';
 export function utilGetFindManyUniqueKeysWhereFactory<
   EntityT extends RequestEntity,
 >(
+  query: SelectQueryBuilder<EntityT>,
   findManyUniqueKeysDto: FindManyUniqueKeysDto<EntityT>,
 ): (whereExpressionBuilder: WhereExpressionBuilder) => void {
   const uniqueKeyNames = keys(findManyUniqueKeysDto);
@@ -14,9 +15,11 @@ export function utilGetFindManyUniqueKeysWhereFactory<
     uniqueKeyNames.forEach((uniqueKeyName, uniqueKeyNameIndex) => {
       const uniqueKeyValues =
         findManyUniqueKeysDto[uniqueKeyName as keyof EntityT]!;
-      const whereStr = `${snakeCase(uniqueKeyName)} = :${uniqueKeyName}`;
+      const whereStr = `${query.alias}.${snakeCase(
+        uniqueKeyName,
+      )} IN (:...${uniqueKeyName})`;
       const whereParams = {
-        [uniqueKeyName]: In(uniqueKeyValues),
+        [uniqueKeyName]: uniqueKeyValues,
       };
 
       if (uniqueKeyNameIndex === 0) {

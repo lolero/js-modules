@@ -1,18 +1,16 @@
-import {
-  IsInt,
-  IsOptional,
-  IsString,
-  Min,
-  ValidateNested,
-} from 'class-validator';
+import { IsOptional, ValidateNested } from 'class-validator';
+import { Transform } from 'class-transformer';
 import type {
-  FindManySortOrder,
   RequestEntity,
   FindManyRangesDto,
   FindManyRelationsDto,
   FindManySearchDto,
   FindManyUniqueKeysDto,
+  FindManyBooleansDto,
+  FindManyOrderDto,
 } from '../types/types.requests';
+import { DtoFindManyPagination } from './dto.findManyPagination';
+import { utilParseDtoJsonStringWithQuotes } from '../utils/util.parseDtoJsonStringWithQuotes';
 
 export class DtoFindMany<
   EntityT extends RequestEntity = RequestEntity,
@@ -22,46 +20,51 @@ export class DtoFindMany<
   FindManyRangesDateDtoT extends FindManyRangesDto<EntityT> = FindManyRangesDto<EntityT>,
   FindManyRangesNumberDtoT extends FindManyRangesDto<EntityT> = FindManyRangesDto<EntityT>,
   FindManyRangesStringDtoT extends FindManyRangesDto<EntityT> = FindManyRangesDto<EntityT>,
-  SortByT extends keyof EntityT = keyof EntityT,
+  FindManyBooleansDtoT extends FindManyBooleansDto<EntityT> = FindManyBooleansDto<EntityT>,
+  FindManyOrderDtoT extends FindManyOrderDto<EntityT> = FindManyOrderDto<EntityT>,
 > {
-  @ValidateNested()
+  @Transform(utilParseDtoJsonStringWithQuotes<FindManyUniqueKeysDtoT>)
+  // @ValidateNested()
+  @IsOptional()
   uniqueKeys?: FindManyUniqueKeysDtoT;
 
-  @ValidateNested()
+  @Transform(utilParseDtoJsonStringWithQuotes<FindManySearchDtoT>)
+  // @ValidateNested()
   @IsOptional()
   search?: FindManySearchDtoT;
 
-  @ValidateNested()
+  @Transform(utilParseDtoJsonStringWithQuotes<FindManyRelationsDtoT>)
+  // @ValidateNested()
   @IsOptional()
   relations?: FindManyRelationsDtoT;
 
-  @ValidateNested()
+  @Transform(utilParseDtoJsonStringWithQuotes<FindManyRangesDateDtoT>)
+  // @ValidateNested()
   @IsOptional()
   dateRanges?: FindManyRangesDateDtoT;
 
-  @ValidateNested()
+  @Transform(utilParseDtoJsonStringWithQuotes<FindManyRangesNumberDtoT>)
+  // @ValidateNested()
   @IsOptional()
   numberRanges?: FindManyRangesNumberDtoT;
 
-  @ValidateNested()
+  @Transform(utilParseDtoJsonStringWithQuotes<FindManyRangesStringDtoT>)
+  // @ValidateNested()
   @IsOptional()
   stringRanges?: FindManyRangesStringDtoT;
 
-  @IsString()
+  @Transform(utilParseDtoJsonStringWithQuotes<FindManyBooleansDtoT>)
+  // @ValidateNested()
   @IsOptional()
-  sortBy?: SortByT;
+  booleans?: FindManyBooleansDtoT;
 
-  @IsString()
+  @Transform(utilParseDtoJsonStringWithQuotes<FindManyOrderDtoT>)
+  // @ValidateNested()
   @IsOptional()
-  sortOrder?: FindManySortOrder;
+  order?: FindManyOrderDtoT;
 
-  @IsInt()
-  @Min(1)
+  @Transform(utilParseDtoJsonStringWithQuotes<DtoFindManyPagination>)
+  // @ValidateNested()
   @IsOptional()
-  page?: number;
-
-  @IsInt()
-  @Min(1)
-  @IsOptional()
-  resultsPerPage?: number;
+  pagination?: DtoFindManyPagination;
 }

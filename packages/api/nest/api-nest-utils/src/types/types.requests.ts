@@ -1,4 +1,4 @@
-export type FindManySortOrder = 'asc' | 'desc';
+export type FindManyOrderDirection = 'asc' | 'desc';
 
 export type RequestEntity = object;
 
@@ -24,6 +24,17 @@ export type FindManyRelationsDto<
 > = {
   [relationName in keyof EntityT]?: FindManyUniqueKeysDto;
 };
+
+export type FindManyBooleansDto<EntityT extends RequestEntity = RequestEntity> =
+  {
+    [entityPropName in keyof EntityT]?: boolean;
+  };
+
+export type FindManyOrderDto<EntityT extends RequestEntity = RequestEntity> =
+  Array<{
+    entityPropName: keyof EntityT;
+    orderDirection: FindManyOrderDirection;
+  }>;
 
 export type EntityUniqueKeyName<
   EntityT extends RequestEntity,

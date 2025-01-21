@@ -1,4 +1,4 @@
-import { WhereExpressionBuilder } from 'typeorm';
+import { SelectQueryBuilder, WhereExpressionBuilder } from 'typeorm';
 import snakeCase from 'lodash/snakeCase';
 import { FindManyRangesDto, RequestEntity } from '../types/types.requests';
 import {
@@ -24,6 +24,10 @@ interface TestEntity extends RequestEntity {
 }
 
 describe('utilGetFindManyRangesWhereFactory', () => {
+  const selectQueryBuilderMock = {
+    alias: 'test_alias',
+  } as SelectQueryBuilder<TestEntity>;
+
   const utilGetFindManyDateRangeMockReturnValue: [Date, Date] = [
     new Date('2000-01-01'),
     new Date('2020-02-01'),
@@ -76,6 +80,7 @@ describe('utilGetFindManyRangesWhereFactory', () => {
     };
 
     const whereFactory = utilGetFindManyRangesWhereFactory(
+      selectQueryBuilderMock,
       findManyDateRangesDto,
       FindManyRangeType.date,
     );
@@ -94,28 +99,36 @@ describe('utilGetFindManyRangesWhereFactory', () => {
     );
     expect(whereMock).toHaveBeenNthCalledWith(
       1,
-      `${snakeCase('propDate1')} >= :propDate1From`,
+      `${selectQueryBuilderMock.alias}.${snakeCase(
+        'propDate1',
+      )} >= :propDate1From`,
       {
         propDate1From: rangeFrom,
       },
     );
     expect(andWhereMock).toHaveBeenNthCalledWith(
       1,
-      `${snakeCase('propDate1')} <= :propDate1To`,
+      `${selectQueryBuilderMock.alias}.${snakeCase(
+        'propDate1',
+      )} <= :propDate1To`,
       {
         propDate1To: rangeTo,
       },
     );
     expect(andWhereMock).toHaveBeenNthCalledWith(
       2,
-      `${snakeCase('propDate2')} >= :propDate2From`,
+      `${selectQueryBuilderMock.alias}.${snakeCase(
+        'propDate2',
+      )} >= :propDate2From`,
       {
         propDate2From: rangeFrom,
       },
     );
     expect(andWhereMock).toHaveBeenNthCalledWith(
       3,
-      `${snakeCase('propDate2')} <= :propDate2To`,
+      `${selectQueryBuilderMock.alias}.${snakeCase(
+        'propDate2',
+      )} <= :propDate2To`,
       {
         propDate2To: rangeTo,
       },
@@ -129,6 +142,7 @@ describe('utilGetFindManyRangesWhereFactory', () => {
     };
 
     const whereFactory = utilGetFindManyRangesWhereFactory(
+      selectQueryBuilderMock,
       findManyNumberRangesDto,
       FindManyRangeType.number,
     );
@@ -147,28 +161,36 @@ describe('utilGetFindManyRangesWhereFactory', () => {
     );
     expect(whereMock).toHaveBeenNthCalledWith(
       1,
-      `${snakeCase('propNumber1')} >= :propNumber1From`,
+      `${selectQueryBuilderMock.alias}.${snakeCase(
+        'propNumber1',
+      )} >= :propNumber1From`,
       {
         propNumber1From: rangeFrom,
       },
     );
     expect(andWhereMock).toHaveBeenNthCalledWith(
       1,
-      `${snakeCase('propNumber1')} <= :propNumber1To`,
+      `${selectQueryBuilderMock.alias}.${snakeCase(
+        'propNumber1',
+      )} <= :propNumber1To`,
       {
         propNumber1To: rangeTo,
       },
     );
     expect(andWhereMock).toHaveBeenNthCalledWith(
       2,
-      `${snakeCase('propNumber2')} >= :propNumber2From`,
+      `${selectQueryBuilderMock.alias}.${snakeCase(
+        'propNumber2',
+      )} >= :propNumber2From`,
       {
         propNumber2From: rangeFrom,
       },
     );
     expect(andWhereMock).toHaveBeenNthCalledWith(
       3,
-      `${snakeCase('propNumber2')} <= :propNumber2To`,
+      `${selectQueryBuilderMock.alias}.${snakeCase(
+        'propNumber2',
+      )} <= :propNumber2To`,
       {
         propNumber2To: rangeTo,
       },
@@ -182,6 +204,7 @@ describe('utilGetFindManyRangesWhereFactory', () => {
     };
 
     const whereFactory = utilGetFindManyRangesWhereFactory(
+      selectQueryBuilderMock,
       findManyStringRangesDto,
       FindManyRangeType.string,
     );
@@ -200,28 +223,36 @@ describe('utilGetFindManyRangesWhereFactory', () => {
     );
     expect(whereMock).toHaveBeenNthCalledWith(
       1,
-      `${snakeCase('propString1')} >= :propString1From`,
+      `${selectQueryBuilderMock.alias}.${snakeCase(
+        'propString1',
+      )} >= :propString1From`,
       {
         propString1From: rangeFrom,
       },
     );
     expect(andWhereMock).toHaveBeenNthCalledWith(
       1,
-      `${snakeCase('propString1')} <= :propString1To`,
+      `${selectQueryBuilderMock.alias}.${snakeCase(
+        'propString1',
+      )} <= :propString1To`,
       {
         propString1To: rangeTo,
       },
     );
     expect(andWhereMock).toHaveBeenNthCalledWith(
       2,
-      `${snakeCase('propString2')} >= :propString2From`,
+      `${selectQueryBuilderMock.alias}.${snakeCase(
+        'propString2',
+      )} >= :propString2From`,
       {
         propString2From: rangeFrom,
       },
     );
     expect(andWhereMock).toHaveBeenNthCalledWith(
       3,
-      `${snakeCase('propString2')} <= :propString2To`,
+      `${selectQueryBuilderMock.alias}.${snakeCase(
+        'propString2',
+      )} <= :propString2To`,
       {
         propString2To: rangeTo,
       },

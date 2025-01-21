@@ -1,4 +1,4 @@
-import { In, SelectQueryBuilder } from 'typeorm';
+import { SelectQueryBuilder } from 'typeorm';
 import keys from 'lodash/keys';
 import snakeCase from 'lodash/snakeCase';
 import { FindManyRelationsDto, RequestEntity } from '../types/types.requests';
@@ -14,7 +14,10 @@ export function utilApplyFindManyRelationsFiltersToQuery<
 
   relationNames.forEach((relationName) => {
     const relationNameIndividual = `${relationName}Individual`;
-    query.innerJoin(`${queryAlias}.${relationName}`, relationNameIndividual);
+    query.innerJoinAndSelect(
+      `${queryAlias}.${relationName}`,
+      relationNameIndividual,
+    );
   });
   relationNames.forEach((relationName, relationNameIndex) => {
     const relationNameIndividual = `${relationName}Individual`;
@@ -27,9 +30,9 @@ export function utilApplyFindManyRelationsFiltersToQuery<
         findManyUniqueKeysDto[uniqueKeyName as keyof RequestEntity]!;
       const whereStr = `${relationNameIndividual}.${snakeCase(
         uniqueKeyName,
-      )} = :${uniqueKeyName}`;
+      )} IN (:...${relationNameIndividual}${uniqueKeyName})`;
       const whereParams = {
-        [uniqueKeyName]: In(uniqueKeyValues),
+        [`${relationNameIndividual}${uniqueKeyName}`]: uniqueKeyValues,
       };
 
       if (uniqueKeyNameIndex === 0 && relationNameIndex === 0) {

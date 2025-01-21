@@ -9,4 +9,6 @@ export * from './util.getFindManyRangesWhereFactory';
 export * from './util.getFindManySearchWhereFactory';
 export * from './util.getFindManyStringRange';
 export * from './util.getFindManyUniqueKeysWhereFactory';
+export * from './util.parseDtoJsonStringWithQuotes';
+export * from './util.parseDtoStringWithQuotes';
 export * from './util.verifyEntitiesPartialRelation';

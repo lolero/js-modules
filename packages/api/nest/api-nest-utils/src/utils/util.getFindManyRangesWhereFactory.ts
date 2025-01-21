@@ -1,4 +1,4 @@
-import { WhereExpressionBuilder } from 'typeorm';
+import { WhereExpressionBuilder, SelectQueryBuilder } from 'typeorm';
 import keys from 'lodash/keys';
 import snakeCase from 'lodash/snakeCase';
 import { utilGetFindManyDateRange } from './util.getFindManyDateRange';
@@ -19,6 +19,7 @@ export enum FindManyRangeType {
 export function utilGetFindManyRangesWhereFactory<
   EntityT extends RequestEntity,
 >(
+  query: SelectQueryBuilder<EntityT>,
   findManyRangesDto: FindManyRangesDto<EntityT>,
   rangeType: FindManyRangeType,
 ): (whereExpressionBuilder: WhereExpressionBuilder) => void {
@@ -44,11 +45,15 @@ export function utilGetFindManyRangesWhereFactory<
       }
 
       const [rangeFrom, rangeTo] = range;
-      const whereStrFrom = `${snakeCase(rangeName)} >= :${rangeName}From`;
+      const whereStrFrom = `${query.alias}.${snakeCase(
+        rangeName,
+      )} >= :${rangeName}From`;
       const whereParamsFrom = {
         [`${rangeName}From`]: rangeFrom,
       };
-      const whereStrTo = `${snakeCase(rangeName)} <= :${rangeName}To`;
+      const whereStrTo = `${query.alias}.${snakeCase(
+        rangeName,
+      )} <= :${rangeName}To`;
       const whereParamsTo = {
         [`${rangeName}To`]: rangeTo,
       };

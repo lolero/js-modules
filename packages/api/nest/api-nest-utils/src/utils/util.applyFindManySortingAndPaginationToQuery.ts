@@ -1,5 +1,6 @@
 import { SelectQueryBuilder } from 'typeorm';
 import upperCase from 'lodash/upperCase';
+import snakeCase from 'lodash/snakeCase';
 import { RequestEntity } from '../types/types.requests';
 import { DtoFindMany } from '../dtos/dto.findMany';
 
@@ -10,23 +11,35 @@ export function utilApplyFindManySortingAndPaginationToQuery<
   dtoFindMany: DtoFindMany<EntityT>,
 ): SelectQueryBuilder<EntityT> {
   let skip = 0;
-  if (dtoFindMany.resultsPerPage && dtoFindMany.page && dtoFindMany.page > 1) {
-    skip = dtoFindMany.resultsPerPage * (dtoFindMany.page - 1);
+  let take;
+  if (dtoFindMany.pagination) {
+    const { pageNumber, resultsPerPage } = dtoFindMany.pagination;
+
+    take = resultsPerPage;
+    if (dtoFindMany.pagination.pageNumber > 1) {
+      skip = resultsPerPage * (pageNumber - 1);
+    }
   }
 
-  let take = Infinity;
-  if (dtoFindMany.resultsPerPage) {
-    take = dtoFindMany.resultsPerPage;
+  if (dtoFindMany.order) {
+    dtoFindMany.order.forEach(
+      ({ entityPropName, orderDirection }, uniqueKeyIndex) => {
+        if (uniqueKeyIndex === 0) {
+          query.orderBy(
+            `${query.alias}.${snakeCase(entityPropName as string)}`,
+            upperCase(orderDirection) as 'ASC' | 'DESC',
+          );
+        } else {
+          query.addOrderBy(
+            `${query.alias}.${snakeCase(entityPropName as string)}`,
+            upperCase(orderDirection) as 'ASC' | 'DESC',
+          );
+        }
+      },
+    );
   }
 
-  query
-    .orderBy(
-      ':sortBy',
-      upperCase(dtoFindMany.sortOrder ?? 'asc') as 'ASC' | 'DESC',
-    )
-    .setParameters({ sortBy: dtoFindMany.sortBy ?? 'username' })
-    .skip(skip)
-    .take(take);
+  query.skip(skip).take(take);
 
   return query;
 }

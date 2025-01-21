@@ -1,5 +1,7 @@
 import { DtoFindMany } from '../dtos/dto.findMany';
 import {
+  FindManyBooleansDto,
+  FindManyOrderDto,
   FindManyRangesDto,
   FindManyRelationsDto,
   type FindManySearchDto,
@@ -15,7 +17,8 @@ export function utilGetDtoFindManyFixture<
   FindManyDateRangesDtoT extends FindManyRangesDto<EntityT> = FindManyRangesDto<EntityT>,
   FindManyNumberRangesDtoT extends FindManyRangesDto<EntityT> = FindManyRangesDto<EntityT>,
   FindManyStringRangesDtoT extends FindManyRangesDto<EntityT> = FindManyRangesDto<EntityT>,
-  SortByT extends keyof EntityT = keyof EntityT,
+  FindManyBooleansDtoT extends FindManyBooleansDto<EntityT> = FindManyBooleansDto<EntityT>,
+  FindManyOrderDtoT extends FindManyOrderDto<EntityT> = FindManyOrderDto<EntityT>,
 >(
   overrides: Partial<
     DtoFindMany<
@@ -26,7 +29,8 @@ export function utilGetDtoFindManyFixture<
       FindManyDateRangesDtoT,
       FindManyNumberRangesDtoT,
       FindManyStringRangesDtoT,
-      SortByT
+      FindManyBooleansDtoT,
+      FindManyOrderDtoT
     >
   > = {},
 ): DtoFindMany<
@@ -37,7 +41,8 @@ export function utilGetDtoFindManyFixture<
   FindManyDateRangesDtoT,
   FindManyNumberRangesDtoT,
   FindManyStringRangesDtoT,
-  SortByT
+  FindManyBooleansDtoT,
+  FindManyOrderDtoT
 > {
   const requestsDtoQueryParamsFindManyDefault: DtoFindMany<
     EntityT,
@@ -47,12 +52,10 @@ export function utilGetDtoFindManyFixture<
     FindManyDateRangesDtoT,
     FindManyNumberRangesDtoT,
     FindManyStringRangesDtoT,
-    SortByT
+    FindManyBooleansDtoT,
+    FindManyOrderDtoT
   > = {
-    sortBy: 'test_sort_by' as SortByT,
-    sortOrder: 'desc',
-    page: 3,
-    resultsPerPage: 10,
+    pagination: { pageNumber: 1, resultsPerPage: 10 },
   };
 
   const requestsDtoQueryParamsFindMany: DtoFindMany<
@@ -63,7 +66,8 @@ export function utilGetDtoFindManyFixture<
     FindManyDateRangesDtoT,
     FindManyNumberRangesDtoT,
     FindManyStringRangesDtoT,
-    SortByT
+    FindManyBooleansDtoT,
+    FindManyOrderDtoT
   > = Object.assign(requestsDtoQueryParamsFindManyDefault, overrides);
 
   return requestsDtoQueryParamsFindMany;

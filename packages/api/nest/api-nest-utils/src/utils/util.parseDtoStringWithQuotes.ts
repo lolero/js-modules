@@ -1,0 +1,21 @@
+import { TransformFnParams } from 'class-transformer/types/interfaces/metadata/transform-fn-params.interface';
+import isString from 'lodash/isString';
+import { last } from 'lodash';
+
+export function utilParseDtoStringWithQuotes({
+  value,
+}: TransformFnParams): string {
+  if (!isString(value)) {
+    return value;
+  }
+
+  let cleanValue = value;
+  if (['"', "'"].includes(value[0])) {
+    cleanValue = cleanValue.slice(1);
+  }
+  if (['"', "'"].includes(last(value) as string)) {
+    cleanValue = cleanValue.slice(0, -1);
+  }
+
+  return cleanValue;
+}

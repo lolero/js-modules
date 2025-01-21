@@ -1,4 +1,4 @@
-import { In, WhereExpressionBuilder } from 'typeorm';
+import { SelectQueryBuilder, WhereExpressionBuilder } from 'typeorm';
 import snakeCase from 'lodash/snakeCase';
 import { RequestEntity, FindManyUniqueKeysDto } from '../types/types.requests';
 import { utilGetFindManyUniqueKeysWhereFactory } from './util.getFindManyUniqueKeysWhereFactory';
@@ -10,6 +10,10 @@ interface TestEntity extends RequestEntity {
 }
 
 describe('utilGetFindManyUniqueKeysWhereFactory', () => {
+  const selectQueryBuilderMock = {
+    alias: 'test_alias',
+  } as SelectQueryBuilder<TestEntity>;
+
   let whereMock: jest.Mock;
   let orWhereMock: jest.Mock;
   let whereExpressionBuilder: WhereExpressionBuilder;
@@ -30,22 +34,27 @@ describe('utilGetFindManyUniqueKeysWhereFactory', () => {
     };
 
     const whereFactory = utilGetFindManyUniqueKeysWhereFactory(
+      selectQueryBuilderMock,
       findManyUniqueKeysDto,
     );
     whereFactory(whereExpressionBuilder);
 
     expect(whereMock).toHaveBeenNthCalledWith(
       1,
-      `${snakeCase('uniqueKeyName1')} = :uniqueKeyName1`,
+      `${selectQueryBuilderMock.alias}.${snakeCase(
+        'uniqueKeyName1',
+      )} IN (:...uniqueKeyName1)`,
       {
-        uniqueKeyName1: In(findManyUniqueKeysDto.uniqueKeyName1!),
+        uniqueKeyName1: findManyUniqueKeysDto.uniqueKeyName1!,
       },
     );
     expect(orWhereMock).toHaveBeenNthCalledWith(
       1,
-      `${snakeCase('uniqueKeyName2')} = :uniqueKeyName2`,
+      `${selectQueryBuilderMock.alias}.${snakeCase(
+        'uniqueKeyName2',
+      )} IN (:...uniqueKeyName2)`,
       {
-        uniqueKeyName2: In(findManyUniqueKeysDto.uniqueKeyName2!),
+        uniqueKeyName2: findManyUniqueKeysDto.uniqueKeyName2!,
       },
     );
   });

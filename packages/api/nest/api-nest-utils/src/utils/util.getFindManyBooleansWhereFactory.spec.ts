@@ -1,16 +1,14 @@
 import { SelectQueryBuilder, WhereExpressionBuilder } from 'typeorm';
 import snakeCase from 'lodash/snakeCase';
-import { RequestEntity } from '../types/types.requests';
-import { DtoFindManySearch } from '../dtos/dto.findManySearch';
-import { utilGetFindManySearchWhereFactory } from './util.getFindManySearchWhereFactory';
+import { FindManyBooleansDto, RequestEntity } from '../types/types.requests';
+import { utilGetFindManyBooleansWhereFactory } from './util.getFindManyBooleansWhereFactory';
 
 interface TestEntity extends RequestEntity {
-  uniqueKeyNumber1: number;
-  propString1: string;
-  propString2: string;
+  booleanProp1: boolean;
+  booleanProp2: boolean;
 }
 
-describe('utilGetFindManySearchWhereFactory', () => {
+describe('utilGetFindManyBooleansWhereFactory', () => {
   const selectQueryBuilderMock = {
     alias: 'test_alias',
   } as SelectQueryBuilder<TestEntity>;
@@ -28,34 +26,34 @@ describe('utilGetFindManySearchWhereFactory', () => {
     } as unknown as WhereExpressionBuilder;
   });
 
-  it('Should call whereExpressionBuilder.where and whereExpressionBuilder.orWhere with the corresponding search filters', () => {
-    const findManySearchDto: DtoFindManySearch<TestEntity> = {
-      searchStr: 'test_search_str',
-      entityPropNames: ['propString1', 'propString2'],
+  it('Should call whereExpressionBuilder.where and whereExpressionBuilder.orWhere with the corresponding booleans', () => {
+    const findManyBooleansDto: FindManyBooleansDto<TestEntity> = {
+      booleanProp1: true,
+      booleanProp2: false,
     };
 
-    const whereFactory = utilGetFindManySearchWhereFactory(
+    const whereFactory = utilGetFindManyBooleansWhereFactory(
       selectQueryBuilderMock,
-      findManySearchDto,
+      findManyBooleansDto,
     );
     whereFactory(whereExpressionBuilder);
 
     expect(whereMock).toHaveBeenNthCalledWith(
       1,
       `${selectQueryBuilderMock.alias}.${snakeCase(
-        'propString1',
-      )} LIKE :propString1`,
+        'booleanProp1',
+      )} = :booleanProp1`,
       {
-        propString1: `%${findManySearchDto.searchStr}%`,
+        booleanProp1: 1,
       },
     );
     expect(orWhereMock).toHaveBeenNthCalledWith(
       1,
       `${selectQueryBuilderMock.alias}.${snakeCase(
-        'propString2',
-      )} LIKE :propString2`,
+        'booleanProp2',
+      )} = :booleanProp2`,
       {
-        propString2: `%${findManySearchDto.searchStr}%`,
+        booleanProp2: 0,
       },
     );
   });
