@@ -11,7 +11,7 @@
     "build": "tsc -b tsconfig.build.json"
   },
   "dependencies": {
-    "@mui/material": "^5.16.7"
+    "@mui/material": "^7.0.0"
   },
   "eslintConfig": {}
 }

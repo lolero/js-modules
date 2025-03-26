@@ -11,7 +11,7 @@
     "build": "tsc -b tsconfig.build.json"
   },
   "dependencies": {
-    "@types/lodash": "^4.17.7",
+    "@types/lodash": "^4.17.16",
     "lodash": "^4.17.21"
   },
   "eslintConfig": {}

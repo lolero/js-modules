@@ -12,10 +12,10 @@
     "build": "tsc -b tsconfig.build.json && esbuild src/index.ts --platform=node --bundle --format=cjs --outfile=build/index.js"
   },
   "dependencies": {
-    "@keycloak/keycloak-admin-client": "^25.0.2"
+    "@keycloak/keycloak-admin-client": "^26.1.4"
   },
   "devDependencies": {
-    "esbuild": "^0.23.0"
+    "esbuild": "^0.25.1"
   },
   "eslintConfig": {}
 }

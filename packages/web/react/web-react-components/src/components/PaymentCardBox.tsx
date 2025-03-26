@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from 'react';
 import Box, { BoxProps } from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import Grid from '@mui/material/Unstable_Grid2';
+import Grid from '@mui/material/Grid';
 import { faCreditCard } from '@fortawesome/free-regular-svg-icons/faCreditCard';
 import { FormUtils, FormValidator } from '@js-modules/web-react-hooks';
 import { PaymentCard } from '@js-modules/common-utils-general';

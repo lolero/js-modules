@@ -12,19 +12,19 @@
     "build": "tsc -b tsconfig.build.json"
   },
   "dependencies": {
-    "@fortawesome/free-brands-svg-icons": "^6.6.0",
-    "@fortawesome/free-regular-svg-icons": "^6.6.0",
-    "@fortawesome/free-solid-svg-icons": "^6.6.0",
+    "@fortawesome/free-brands-svg-icons": "^6.7.2",
+    "@fortawesome/free-regular-svg-icons": "^6.7.2",
+    "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@js-modules/apps-dapp-common-constants": "workspace:^",
     "@js-modules/apps-dapp-web-components": "workspace:^",
     "@js-modules/web-react-nav": "workspace:^",
-    "@mui/material": "^5.16.7",
-    "@types/lodash": "^4.17.7",
-    "@types/react": "^18.3.3",
-    "@types/react-dom": "^18.3.0",
+    "@mui/material": "^7.0.0",
+    "@types/lodash": "^4.17.16",
+    "@types/react": "^19.0.12",
+    "@types/react-dom": "^19.0.4",
     "lodash": "^4.17.21",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-router-dom": "^6.26.1"
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-router-dom": "^7.4.0"
   }
 }

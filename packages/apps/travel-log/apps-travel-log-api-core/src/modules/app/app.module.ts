@@ -28,7 +28,7 @@ import { configTypeormDataSourceOptions } from '../../config/config.typeorm.data
         authServerUrl: AUTH_URI_TRAVEL_LOG,
         realm: 'travel-log',
         clientId: 'client-api-core',
-        secret: 'eaIQtsBBeyPTPYMawRZkEfwry6wHMCly',
+        secret: 'TELNa1pP0N16LocwJChfeZJRUftzzA4Z',
         policyEnforcement: PolicyEnforcementMode.PERMISSIVE,
         tokenValidation: TokenValidation.ONLINE,
       },

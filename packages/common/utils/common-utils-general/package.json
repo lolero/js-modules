@@ -11,9 +11,9 @@
     "build": "tsc -b tsconfig.build.json"
   },
   "dependencies": {
-    "@types/lodash": "^4.17.7",
-    "axios": "^1.7.4",
-    "axios-cache-interceptor": "^1.5.3",
+    "@types/lodash": "^4.17.16",
+    "axios": "^1.8.4",
+    "axios-cache-interceptor": "^1.7.0",
     "countries-list": "^3.1.1",
     "lodash": "^4.17.21"
   },
