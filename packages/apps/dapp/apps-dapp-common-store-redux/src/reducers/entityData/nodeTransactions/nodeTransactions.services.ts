@@ -3,9 +3,9 @@ import { destructNodeTransactionPk } from './nodeTransactions.pkUtils';
 import {
   NodeTransactionsGetManyServiceResponse,
   NodeTransactionsGetOneServiceResponse,
-} from './nodeTransactions.servicesTypes';
-import { BASE_URL } from '../../../constants/apiConstants';
+} from './nodeTransactions.services.types';
 
+const BASE_URL = 'test';
 export async function nodeTransactionsGetManyService(): Promise<NodeTransactionsGetManyServiceResponse> {
   const res = await axiosRequest.get(`${BASE_URL}/transactions`);
   return res;

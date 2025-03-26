@@ -1,44 +1,33 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import Button, { buttonClasses } from '@mui/material/Button';
 import {
-  createStateWeb3WalletConnectRequestAction,
-  selectStateWeb3Metadata,
-  selectStateWeb3Requests,
+  useStateWeb3WalletConnect,
   WalletType,
 } from '@js-modules/apps-dapp-common-store-redux';
-import { useDispatch, useSelector } from 'react-redux';
 import { MuiFaIcon } from '@js-modules/web-react-components';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons/faCircleNotch';
 import { faLink } from '@fortawesome/free-solid-svg-icons/faLink';
 
 export const DappNavConnectButton: React.FC = () => {
-  const dispatch = useDispatch();
+  const {
+    request: stateWeb3ConnectWalletRequest,
+    reducerMetadata: { wallet },
+    callback: stateWeb3ConnectWalletCallback,
+  } = useStateWeb3WalletConnect();
 
-  const [connectWalletRequestId, setConnectWalletRequestId] = useState<
-    string | null
-  >(null);
-  const stateWeb3Requests = useSelector(selectStateWeb3Requests);
-  const connectWalletRequest = stateWeb3Requests[connectWalletRequestId || ''];
+  const walletConnectCallback = useCallback(() => {
+    stateWeb3ConnectWalletCallback(WalletType.metamask);
+  }, [stateWeb3ConnectWalletCallback]);
 
-  const { wallet } = useSelector(selectStateWeb3Metadata);
-
-  const connectWalletCallback = useCallback(() => {
-    const connectWalletAction = createStateWeb3WalletConnectRequestAction(
-      WalletType.metamask,
-    );
-    dispatch(connectWalletAction);
-    setConnectWalletRequestId(connectWalletAction.requestId);
-  }, [dispatch]);
-
-  if (!wallet && !connectWalletRequest?.isPending) {
+  if (!wallet && !stateWeb3ConnectWalletRequest?.isPending) {
     return (
-      <Button variant="contained" onClick={connectWalletCallback}>
+      <Button variant="contained" onClick={walletConnectCallback}>
         Connect wallet
       </Button>
     );
   }
 
-  if (!wallet && connectWalletRequest?.isPending) {
+  if (!wallet && stateWeb3ConnectWalletRequest?.isPending) {
     return (
       <Button
         variant="contained"

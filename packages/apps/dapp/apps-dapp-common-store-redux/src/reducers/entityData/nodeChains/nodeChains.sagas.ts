@@ -13,15 +13,15 @@ import { NodeChainsReducer } from './nodeChains.types';
 import {
   NodeChainsActionTypes,
   NodeChainsGetManyRequestAction,
-} from './nodeChains.actionsTypes';
+} from './nodeChains.actions.types';
 import {
   createNodeChainsGetManyFailAction,
   createNodeChainsGetManySuccessAction,
-} from './nodeChains.actionsCreators';
+} from './nodeChains.actions.creators';
 import {
   NodeChainsGetIconMetadataServiceResponse,
   NodeChainsGetManyServiceResponse,
-} from './nodeChains.servicesTypes';
+} from './nodeChains.services.types';
 import {
   nodeChainsGetIconMetadataService,
   nodeChainsGetManyService,
@@ -100,7 +100,7 @@ export function* nodeChainsGetManySaga({
 
 export function* nodeChainsSagas(): Generator<ForkEffect, void, void> {
   yield takeLatest(
-    NodeChainsActionTypes.NODE_CHAINS_GET_MANY__REQUEST,
+    NodeChainsActionTypes.NODE_CHAINS__GET_MANY__REQUEST,
     nodeChainsGetManySaga,
   );
 }

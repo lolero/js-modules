@@ -1,10 +1,10 @@
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import {
-  dappRoutesMetadata,
-  Modules,
-  SubModulesAnalytics,
+  WebModules,
+  WebSubModulesAnalytics,
 } from '@js-modules/apps-dapp-common-constants';
+import { routesMetadataDapp } from '@js-modules/apps-dapp-web-components';
 import { WebAnalyticsWorkspaceBox } from './WebAnalyticsWorkspaceBox';
 import { WebAnalyticsTokensRoutes } from './WebAnalyticsTokensRoutes';
 
@@ -13,21 +13,24 @@ export const WebAnalyticsRoutes: React.FunctionComponent = () => {
     <Routes>
       <Route index element={<WebAnalyticsWorkspaceBox />} />
       <Route
-        path={`${SubModulesAnalytics.tokens}/*`}
+        path={`${WebSubModulesAnalytics.tokens}/*`}
         element={<WebAnalyticsTokensRoutes />}
       />
       <Route
-        path={`${SubModulesAnalytics.history}/*`}
+        path={`${WebSubModulesAnalytics.history}/*`}
         element={<WebAnalyticsTokensRoutes />}
       />
       <Route
-        path={`${SubModulesAnalytics.insights}/*`}
+        path={`${WebSubModulesAnalytics.insights}/*`}
         element={<WebAnalyticsTokensRoutes />}
       />
       <Route
         path="*"
         element={
-          <Navigate replace to={dappRoutesMetadata[Modules.analytics].path} />
+          <Navigate
+            replace
+            to={routesMetadataDapp[WebModules.analytics].path}
+          />
         }
       />
     </Routes>

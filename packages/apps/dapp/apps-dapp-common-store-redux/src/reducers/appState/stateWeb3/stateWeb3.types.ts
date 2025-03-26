@@ -3,7 +3,7 @@ import {
   Reducer,
   ReducerMetadata,
 } from '@js-modules/common-redux-utils-normalized-reducers';
-import { ethers } from 'ethers';
+import { BrowserProvider } from 'ethers';
 import { MetaMaskInpageProvider } from '@metamask/providers';
 
 export enum WalletType {
@@ -12,7 +12,7 @@ export enum WalletType {
 
 export interface StateWeb3ReducerMetadata extends ReducerMetadata {
   metamaskProvider?: MetaMaskInpageProvider | null;
-  web3Provider?: ethers.providers.Web3Provider;
+  web3Provider?: BrowserProvider;
   network?: {
     chainId: number;
     isConnected: boolean;

@@ -6,7 +6,7 @@ import {
 import { ReduxState } from '../../reducers.types';
 import { nodeTransactionsReducerPath } from './nodeTransactions.reducerPath';
 
-export const nodeTransactionsReducerSelectors = createReducerSelectors<
+export const nodeTransactionsSelectors = createReducerSelectors<
   NodeTransactionsReducer['metadata'],
   NodeTransaction,
   typeof nodeTransactionsReducerPath,
@@ -18,4 +18,4 @@ export const {
   selectMetadata: selectNodeTransactionsMetadata,
   selectData: selectNodeTransactionsData,
   selectConfig: selectNodeTransactionsConfig,
-} = nodeTransactionsReducerSelectors;
+} = nodeTransactionsSelectors;

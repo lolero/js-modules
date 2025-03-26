@@ -1,39 +1,41 @@
 import React, { useEffect } from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  createNodeChainsGetManyRequestAction,
-  createStateMainUpdatePartialReducerMetadataRequestAction,
-  selectStateMainMetadata,
-} from '@js-modules/apps-dapp-common-store-redux';
-import { Modules } from '@js-modules/apps-dapp-common-constants';
+import { useNodeChainsGetMany } from '@js-modules/apps-dapp-common-store-redux';
+import { WebModules } from '@js-modules/apps-dapp-common-constants';
 import { WebPortfolioRoutes } from '@js-modules/apps-dapp-web-portfolio';
 import { WebAnalyticsRoutes } from '@js-modules/apps-dapp-web-analytics';
+import { routesMetadataDapp } from '@js-modules/apps-dapp-web-components';
 
 export const DappRoutes: React.FunctionComponent = () => {
-  const dispatch = useDispatch();
-
-  const { getNodeChainsRequestId } = useSelector(selectStateMainMetadata);
+  const {
+    request: nodeChainsGetManyRequest,
+    callback: nodeChainsGetManyCallback,
+  } = useNodeChainsGetMany();
 
   useEffect(() => {
-    if (!getNodeChainsRequestId) {
-      const getNodeChainsRequestAction = createNodeChainsGetManyRequestAction();
-      const updateGetNodeChainsRequestIdAction =
-        createStateMainUpdatePartialReducerMetadataRequestAction({
-          getNodeChainsRequestId: getNodeChainsRequestAction.requestId,
-        });
-      dispatch(updateGetNodeChainsRequestIdAction);
-      dispatch(getNodeChainsRequestAction);
+    if (!nodeChainsGetManyRequest) {
+      nodeChainsGetManyCallback();
     }
-  }, [dispatch, getNodeChainsRequestId]);
+  }, [nodeChainsGetManyCallback, nodeChainsGetManyRequest]);
 
   return (
     <Routes>
-      <Route path={`${Modules.portfolio}/*`} element={<WebPortfolioRoutes />} />
-      <Route path={`${Modules.analytics}/*`} element={<WebAnalyticsRoutes />} />
+      <Route
+        path={`${WebModules.portfolio}/*`}
+        element={<WebPortfolioRoutes />}
+      />
+      <Route
+        path={`${WebModules.analytics}/*`}
+        element={<WebAnalyticsRoutes />}
+      />
       <Route
         path="*"
-        element={<Navigate replace to={`/${Modules.portfolio}`} />}
+        element={
+          <Navigate
+            replace
+            to={routesMetadataDapp[WebModules.portfolio].path}
+          />
+        }
       />
     </Routes>
   );

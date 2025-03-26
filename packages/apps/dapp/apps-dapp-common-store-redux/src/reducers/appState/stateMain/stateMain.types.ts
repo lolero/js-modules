@@ -11,7 +11,6 @@ export enum ThemePalette {
 
 export interface StateMainReducerMetadata extends ReducerMetadata {
   themePalette: ThemePalette;
-  getNodeChainsRequestId: string | null;
 }
 
 export type StateMainReducer = Reducer<StateMainReducerMetadata, Entity>;

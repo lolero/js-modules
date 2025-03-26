@@ -8,14 +8,12 @@ import React, {
 import Box from '@mui/material/Box';
 import {
   NodeChain,
-  selectNodeChainsData,
-  useGetNodeChainsRequest,
+  useNodeChainsGetMany,
 } from '@js-modules/apps-dapp-common-store-redux';
 import { usePrevious } from '@js-modules/common-react-hooks';
 import ArrowDropDown from '@mui/icons-material/ArrowDropDown';
 import orderBy from 'lodash/orderBy';
 import values from 'lodash/values';
-import { useSelector } from 'react-redux';
 import {
   MuiFaIcon,
   VirtualizedAutocomplete,
@@ -28,10 +26,11 @@ import Avatar, { avatarClasses } from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 
 export const WebTokensWorkspaceContentBox: React.FC = () => {
-  const getNodeChainsRequest = useGetNodeChainsRequest();
-  const getNodeChainsRequestPrevious = usePrevious(getNodeChainsRequest);
-
-  const nodeChains = useSelector(selectNodeChainsData);
+  const { request: nodeChainsGetManyRequest, entities: nodeChains } =
+    useNodeChainsGetMany();
+  const nodeChainsGetManyRequestPrevious = usePrevious(
+    nodeChainsGetManyRequest,
+  );
 
   const sortedNodeChains = useMemo(() => {
     return orderBy(values(nodeChains), 'name', 'asc');
@@ -48,14 +47,14 @@ export const WebTokensWorkspaceContentBox: React.FC = () => {
 
   useEffect(() => {
     if (
-      getNodeChainsRequestPrevious?.isPending &&
-      !getNodeChainsRequest?.isPending
+      nodeChainsGetManyRequestPrevious?.isPending &&
+      !nodeChainsGetManyRequest?.isPending
     ) {
-      setSelectedChain(nodeChains[1]);
+      setSelectedChain(nodeChains[1] ?? null);
     }
   }, [
-    getNodeChainsRequest,
-    getNodeChainsRequestPrevious,
+    nodeChainsGetManyRequest,
+    nodeChainsGetManyRequestPrevious,
     nodeChains,
     selectedChain,
   ]);
@@ -78,13 +77,13 @@ export const WebTokensWorkspaceContentBox: React.FC = () => {
         getOptionLabel={(nodeChain) => nodeChain.name}
         groupBy={(nodeChain) => nodeChain.name[0]}
         popupIcon={
-          getNodeChainsRequest?.isPending ? (
+          nodeChainsGetManyRequest?.isPending ? (
             <MuiFaIcon icon={faCircleNotch} spin />
           ) : (
             <ArrowDropDown />
           )
         }
-        disabled={getNodeChainsRequest?.isPending}
+        disabled={nodeChainsGetManyRequest?.isPending}
         value={selectedChain}
         onChange={changeChainCallback}
         renderInput={(params) => {

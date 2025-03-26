@@ -8,7 +8,7 @@ import { stateWeb3InitialState } from './stateWeb3.initialState';
 import {
   StateWeb3ActionTypes,
   StateWeb3ReducerHittingAction,
-} from './stateWeb3.actionsTypes';
+} from './stateWeb3.actions.types';
 
 export function stateWeb3Reducer(
   // eslint-disable-next-line default-param-last
@@ -16,23 +16,23 @@ export function stateWeb3Reducer(
   action: StateWeb3ReducerHittingAction,
 ): StateWeb3Reducer {
   switch (action.type) {
-    case StateWeb3ActionTypes.STATE_WEB3_UPDATE_PARTIAL_REDUCER_METADATA_REQUEST:
+    case StateWeb3ActionTypes.STATE_WEB3__UPDATE_PARTIAL_REDUCER_METADATA__REQUEST:
       return handleRequest(state, action);
-    case StateWeb3ActionTypes.STATE_WEB3_UPDATE_PARTIAL_REDUCER_METADATA_SUCCESS:
+    case StateWeb3ActionTypes.STATE_WEB3__UPDATE_PARTIAL_REDUCER_METADATA__SUCCESS:
       return handleSavePartialReducerMetadata(state, action);
-    case StateWeb3ActionTypes.STATE_WEB3_UPDATE_PARTIAL_REDUCER_METADATA_FAIL:
+    case StateWeb3ActionTypes.STATE_WEB3__UPDATE_PARTIAL_REDUCER_METADATA__FAIL:
       return handleFail(state, action);
-    case StateWeb3ActionTypes.STATE_WEB3_WALLET_CONNECT_REQUEST:
+    case StateWeb3ActionTypes.STATE_WEB3__WALLET_CONNECT__REQUEST:
       return handleRequest(state, action);
-    case StateWeb3ActionTypes.STATE_WEB3_WALLET_CONNECT_SUCCESS:
+    case StateWeb3ActionTypes.STATE_WEB3__WALLET_CONNECT__SUCCESS:
       return handleSavePartialReducerMetadata(state, action);
-    case StateWeb3ActionTypes.STATE_WEB3_WALLET_CONNECT_FAIL:
+    case StateWeb3ActionTypes.STATE_WEB3__WALLET_CONNECT__FAIL:
       return handleFail(state, action);
-    case StateWeb3ActionTypes.STATE_WEB3_WALLET_DISCONNECT_REQUEST:
+    case StateWeb3ActionTypes.STATE_WEB3__WALLET_DISCONNECT__REQUEST:
       return handleRequest(state, action);
-    case StateWeb3ActionTypes.STATE_WEB3_WALLET_DISCONNECT_SUCCESS:
+    case StateWeb3ActionTypes.STATE_WEB3__WALLET_DISCONNECT__SUCCESS:
       return handleSavePartialReducerMetadata(state, action);
-    case StateWeb3ActionTypes.STATE_WEB3_WALLET_DISCONNECT_FAIL:
+    case StateWeb3ActionTypes.STATE_WEB3__WALLET_DISCONNECT__FAIL:
       return handleFail(state, action);
     default:
       return state;

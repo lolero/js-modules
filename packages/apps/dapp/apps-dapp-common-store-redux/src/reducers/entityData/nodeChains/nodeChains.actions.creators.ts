@@ -1,16 +1,17 @@
-import { v4 as uuidv4 } from 'uuid';
 import {
   NodeChainsActionTypes,
   NodeChainsGetManyFailAction,
   NodeChainsGetManyRequestAction,
   NodeChainsGetManySuccessAction,
-} from './nodeChains.actionsTypes';
+} from './nodeChains.actions.types';
 
+export const NODE_CHAINS__GET_MANY__REQUEST_ID =
+  'NODE_CHAINS__GET_MANY__REQUEST_ID';
 export function createNodeChainsGetManyRequestAction(): NodeChainsGetManyRequestAction {
   return {
-    type: NodeChainsActionTypes.NODE_CHAINS_GET_MANY__REQUEST,
+    type: NodeChainsActionTypes.NODE_CHAINS__GET_MANY__REQUEST,
     requestMetadata: {},
-    requestId: uuidv4(),
+    requestId: NODE_CHAINS__GET_MANY__REQUEST_ID,
   };
 }
 
@@ -21,7 +22,7 @@ export function createNodeChainsGetManySuccessAction(
   flush: NodeChainsGetManySuccessAction['flush'],
 ): NodeChainsGetManySuccessAction {
   return {
-    type: NodeChainsActionTypes.NODE_CHAINS_GET_MANY__SUCCESS,
+    type: NodeChainsActionTypes.NODE_CHAINS__GET_MANY__SUCCESS,
     wholeEntities: nodeChains,
     requestId,
     statusCode,
@@ -34,7 +35,7 @@ export function createNodeChainsGetManyFailAction(
   requestId: NodeChainsGetManyFailAction['requestId'],
 ): NodeChainsGetManyFailAction {
   return {
-    type: NodeChainsActionTypes.NODE_CHAINS_GET_MANY__FAIL,
+    type: NodeChainsActionTypes.NODE_CHAINS__GET_MANY__FAIL,
     error,
     requestId,
   };

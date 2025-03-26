@@ -39,17 +39,15 @@ export function createNetworkConnectionMetadataChannel(
 export function createWalletAccountChannel(
   metamaskProvider: MetaMaskInpageProvider,
 ): EventChannel<string> {
-  const onWalletDisconnectChannel = eventChannel(
-    (emit: (input: string) => void) => {
-      metamaskProvider.on('accountsChanged', (accountsNoType) => {
-        const accounts = accountsNoType as string[];
-        const account = accounts.length > 0 ? accounts[0] : '';
-        emit(account);
-      });
+  const walletAccountChannel = eventChannel((emit: (input: string) => void) => {
+    metamaskProvider.on('accountsChanged', (accountsNoType) => {
+      const accounts = accountsNoType as string[];
+      const account = accounts.length > 0 ? accounts[0] : '';
+      emit(account);
+    });
 
-      return noop;
-    },
-  );
+    return noop;
+  });
 
-  return onWalletDisconnectChannel;
+  return walletAccountChannel;
 }

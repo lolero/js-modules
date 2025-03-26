@@ -1,10 +1,10 @@
 import React from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import {
-  dappRoutesMetadata,
-  Modules,
-  SubModulesPortfolio,
+  WebModules,
+  WebSubModulesPortfolio,
 } from '@js-modules/apps-dapp-common-constants';
+import { routesMetadataDapp } from '@js-modules/apps-dapp-web-components';
 import { WebTokensWorkspaceBox } from './WebTokensWorkspaceBox';
 
 export const WebTokensRoutes: React.FunctionComponent = () => {
@@ -17,8 +17,8 @@ export const WebTokensRoutes: React.FunctionComponent = () => {
           <Navigate
             replace
             to={
-              dappRoutesMetadata[Modules.portfolio].subRoutes![
-                SubModulesPortfolio.tokens
+              routesMetadataDapp[WebModules.portfolio].subRoutes![
+                WebSubModulesPortfolio.tokens
               ].path
             }
           />

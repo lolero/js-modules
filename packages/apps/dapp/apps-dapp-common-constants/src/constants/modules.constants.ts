@@ -1,14 +1,14 @@
-export enum Modules {
+export enum WebModules {
   portfolio = 'portfolio',
   analytics = 'analytics',
 }
 
-export enum SubModulesPortfolio {
+export enum WebSubModulesPortfolio {
   tokens = 'tokens',
   transactions = 'transactions',
 }
 
-export enum SubModulesAnalytics {
+export enum WebSubModulesAnalytics {
   tokens = 'tokens',
   history = 'history',
   insights = 'insights',

@@ -2,7 +2,7 @@ import { axiosRequest } from '@js-modules/common-utils-general';
 import {
   NodeChainsGetIconMetadataServiceResponse,
   NodeChainsGetManyServiceResponse,
-} from './nodeChains.servicesTypes';
+} from './nodeChains.services.types';
 
 export async function nodeChainsGetManyService(): Promise<NodeChainsGetManyServiceResponse> {
   const res = await axiosRequest.get('https://chainid.network/chains.json');

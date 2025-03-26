@@ -12,17 +12,17 @@ import {
   NodeTransactionsActionTypes,
   NodeTransactionsGetManyRequestAction,
   NodeTransactionsGetOneRequestAction,
-} from './nodeTransactions.actionsTypes';
+} from './nodeTransactions.actions.types';
 import {
   createNodeTransactionsGetManyFailAction,
   createNodeTransactionsGetManySuccessAction,
   createNodeTransactionsGetOneFailAction,
   createNodeTransactionsGetOneSuccessAction,
-} from './nodeTransactions.actionsCreators';
+} from './nodeTransactions.actions.creators';
 import {
   NodeTransactionsGetManyServiceResponse,
   NodeTransactionsGetOneServiceResponse,
-} from './nodeTransactions.servicesTypes';
+} from './nodeTransactions.services.types';
 import {
   nodeTransactionsGetManyService,
   nodeTransactionsGetOneService,
@@ -102,11 +102,11 @@ export function* nodeTransactionsGetOneSaga({
 
 export function* nodeTransactionsSagas(): Generator<ForkEffect, void, void> {
   yield takeLatest(
-    NodeTransactionsActionTypes.NODE_TRANSACTIONS_GET_MANY__REQUEST,
+    NodeTransactionsActionTypes.NODE_TRANSACTIONS__GET_MANY__REQUEST,
     nodeTransactionsGetManySaga,
   );
   yield takeEvery(
-    NodeTransactionsActionTypes.NODE_TRANSACTIONS_GET_ONE__REQUEST,
+    NodeTransactionsActionTypes.NODE_TRANSACTIONS__GET_ONE__REQUEST,
     nodeTransactionsGetOneSaga,
   );
 }

@@ -2,11 +2,11 @@ import { ForkEffect, put, PutEffect, takeEvery } from 'redux-saga/effects';
 import {
   StateMainActionTypes,
   StateMainUpdatePartialReducerMetadataRequestAction,
-} from './stateMain.actionsTypes';
+} from './stateMain.actions.types';
 import {
   createStateMainUpdatePartialReducerMetadataFailAction,
   createStateMainUpdatePartialReducerMetadataSuccessAction,
-} from './stateMain.actionsCreators';
+} from './stateMain.actions.creators';
 
 export function* stateMainUpdatePartialReducerMetadataSaga({
   requestMetadata,
@@ -40,7 +40,7 @@ export function* stateMainUpdatePartialReducerMetadataSaga({
 
 export function* stateMainSagas(): Generator<ForkEffect, void, void> {
   yield takeEvery(
-    StateMainActionTypes.STATE_MAIN_UPDATE_PARTIAL_REDUCER_METADATA_REQUEST,
+    StateMainActionTypes.STATE_MAIN__UPDATE_PARTIAL_REDUCER_METADATA__REQUEST,
     stateMainUpdatePartialReducerMetadataSaga,
   );
 }

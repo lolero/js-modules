@@ -1,12 +1,12 @@
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import {
-  dappRoutesMetadata,
-  Modules,
-  SubModulesPortfolio,
+  WebModules,
+  WebSubModulesPortfolio,
 } from '@js-modules/apps-dapp-common-constants';
 import { WebTokensRoutes } from '@js-modules/apps-dapp-web-tokens';
 import { WebTransactionsRoutes } from '@js-modules/apps-dapp-web-transactions';
+import { routesMetadataDapp } from '@js-modules/apps-dapp-web-components';
 import { WebPortfolioWorkspaceBox } from './WebPortfolioWorkspaceBox';
 
 export const WebPortfolioRoutes: React.FunctionComponent = () => {
@@ -14,17 +14,20 @@ export const WebPortfolioRoutes: React.FunctionComponent = () => {
     <Routes>
       <Route index element={<WebPortfolioWorkspaceBox />} />
       <Route
-        path={`${SubModulesPortfolio.tokens}/*`}
+        path={`${WebSubModulesPortfolio.tokens}/*`}
         element={<WebTokensRoutes />}
       />
       <Route
-        path={`${SubModulesPortfolio.transactions}/*`}
+        path={`${WebSubModulesPortfolio.transactions}/*`}
         element={<WebTransactionsRoutes />}
       />
       <Route
         path="*"
         element={
-          <Navigate replace to={dappRoutesMetadata[Modules.portfolio].path} />
+          <Navigate
+            replace
+            to={routesMetadataDapp[WebModules.portfolio].path}
+          />
         }
       />
     </Routes>

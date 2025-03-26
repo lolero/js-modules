@@ -12,7 +12,7 @@ import {
   takeEvery,
   takeLatest,
 } from 'redux-saga/effects';
-import { ethers } from 'ethers';
+import { BrowserProvider, Network } from 'ethers';
 import detectEthereumProvider from '@metamask/detect-provider';
 import { MetaMaskInpageProvider } from '@metamask/providers';
 import { Maybe } from '@metamask/providers/dist/utils';
@@ -20,31 +20,29 @@ import {
   StateWeb3ActionTypes,
   StateWeb3UpdatePartialReducerMetadataRequestAction,
   StateWeb3WalletConnectRequestAction,
-} from './stateWeb3.actionsTypes';
+} from './stateWeb3.actions.types';
 import {
   createStateWeb3UpdatePartialReducerMetadataFailAction,
   createStateWeb3UpdatePartialReducerMetadataSuccessAction,
   createStateWeb3WalletConnectFailAction,
   createStateWeb3WalletConnectSuccessAction,
   createStateWeb3WalletDisconnectSuccessAction,
-} from './stateWeb3.actionsCreators';
+} from './stateWeb3.actions.creators';
 import {
   createNetworkConnectionMetadataChannel,
   createWalletAccountChannel,
   NetworkConnectionMetadata,
-} from './stateWeb3.sagasUtils';
+} from './stateWeb3.sagas.utils';
 import { StateWeb3Reducer, WalletType } from './stateWeb3.types';
 import { selectStateWeb3Metadata } from './stateWeb3.selectors';
 
 export function* stateWeb3NetworkConnectionSaga(): Generator<
   | SelectEffect
   | ChannelTakeEffect<NetworkConnectionMetadata>
-  | Promise<ethers.providers.Network>
+  | Promise<Network>
   | PutEffect,
   void,
-  | StateWeb3Reducer['metadata']
-  | NetworkConnectionMetadata
-  | ethers.providers.Network
+  StateWeb3Reducer['metadata'] | NetworkConnectionMetadata | Network
 > {
   const { metamaskProvider, web3Provider } = (yield select(
     selectStateWeb3Metadata,
@@ -62,15 +60,14 @@ export function* stateWeb3NetworkConnectionSaga(): Generator<
       networkConnectionMetadataChannel,
     )) as NetworkConnectionMetadata;
 
-    const network =
-      (yield web3Provider.getNetwork()) as ethers.providers.Network;
+    const network = (yield web3Provider.getNetwork()) as Network;
 
     yield put(
       createStateWeb3UpdatePartialReducerMetadataSuccessAction(
         {
           network: {
+            chainId: Number(network.chainId),
             isConnected: networkConnectionMetadata.isConnected,
-            chainId: network.chainId,
           },
         },
         '',
@@ -106,11 +103,11 @@ export function* stateWeb3WalletConnectionSaga(): Generator<
 export function* stateWeb3InitSaga(): Generator<
   | Promise<unknown>
   | ChannelTakeEffect<MetaMaskInpageProvider>
-  | Promise<ethers.providers.Network>
+  | Promise<Network>
   | PutEffect
   | AllEffect<ForkEffect>,
   void,
-  MetaMaskInpageProvider | ethers.providers.Network
+  MetaMaskInpageProvider | Network
 > {
   const metamaskProvider = (yield detectEthereumProvider({
     mustBeMetaMask: true,
@@ -128,17 +125,15 @@ export function* stateWeb3InitSaga(): Generator<
     return;
   }
 
-  const web3Provider = new ethers.providers.Web3Provider(
-    metamaskProvider as unknown as ethers.providers.ExternalProvider,
-  );
-  const network = (yield web3Provider.getNetwork()) as ethers.providers.Network;
+  const web3Provider = new BrowserProvider(metamaskProvider);
+  const network = (yield web3Provider.getNetwork()) as Network;
 
   const partialStateWeb3ReducerMetadata: Partial<StateWeb3Reducer['metadata']> =
     {
       metamaskProvider,
       web3Provider,
       network: {
-        chainId: network.chainId,
+        chainId: Number(network.chainId),
         isConnected: metamaskProvider.isConnected(),
       },
     };
@@ -238,11 +233,11 @@ export function* stateWeb3WalletConnectSaga({
 export function* stateWeb3Sagas(): Generator<ForkEffect, void, void> {
   yield fork(stateWeb3InitSaga);
   yield takeEvery(
-    StateWeb3ActionTypes.STATE_WEB3_UPDATE_PARTIAL_REDUCER_METADATA_REQUEST,
+    StateWeb3ActionTypes.STATE_WEB3__UPDATE_PARTIAL_REDUCER_METADATA__REQUEST,
     stateWeb3UpdatePartialReducerMetadataSaga,
   );
   yield takeLatest(
-    StateWeb3ActionTypes.STATE_WEB3_WALLET_CONNECT_REQUEST,
+    StateWeb3ActionTypes.STATE_WEB3__WALLET_CONNECT__REQUEST,
     stateWeb3WalletConnectSaga,
   );
 }

@@ -8,7 +8,7 @@ import { stateMainInitialState } from './stateMain.initialState';
 import {
   StateMainActionTypes,
   StateMainReducerHittingAction,
-} from './stateMain.actionsTypes';
+} from './stateMain.actions.types';
 
 export function stateMainReducer(
   // eslint-disable-next-line default-param-last
@@ -16,11 +16,11 @@ export function stateMainReducer(
   action: StateMainReducerHittingAction,
 ): StateMainReducer {
   switch (action.type) {
-    case StateMainActionTypes.STATE_MAIN_UPDATE_PARTIAL_REDUCER_METADATA_REQUEST:
+    case StateMainActionTypes.STATE_MAIN__UPDATE_PARTIAL_REDUCER_METADATA__REQUEST:
       return handleRequest(state, action);
-    case StateMainActionTypes.STATE_MAIN_UPDATE_PARTIAL_REDUCER_METADATA_SUCCESS:
+    case StateMainActionTypes.STATE_MAIN__UPDATE_PARTIAL_REDUCER_METADATA__SUCCESS:
       return handleSavePartialReducerMetadata(state, action);
-    case StateMainActionTypes.STATE_MAIN_UPDATE_PARTIAL_REDUCER_METADATA_FAIL:
+    case StateMainActionTypes.STATE_MAIN__UPDATE_PARTIAL_REDUCER_METADATA__FAIL:
       return handleFail(state, action);
     default:
       return state;
