@@ -9,7 +9,7 @@ import { nodeUsersInitialState } from './nodeUsers.initialState';
 import {
   NodeUsersActionTypes,
   NodeUsersReducerHittingAction,
-} from './nodeUsers.actionsTypes';
+} from './nodeUsers.actions.types';
 
 export function nodeUsersReducer(
   // eslint-disable-next-line default-param-last

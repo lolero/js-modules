@@ -16,7 +16,7 @@ import {
   StateSettingsUpdateProfileFailAction,
   StateSettingsUpdateProfileRequestAction,
   StateSettingsUpdateProfileSuccessAction,
-} from './stateSettings.actionsTypes';
+} from './stateSettings.actions.types';
 
 export function createStateSettingsUpdatePartialReducerMetadataRequestAction(
   partialStateSettingsReducerMetadata: StateSettingsUpdatePartialReducerMetadataRequestAction['requestMetadata']['partialReducerMetadata'],

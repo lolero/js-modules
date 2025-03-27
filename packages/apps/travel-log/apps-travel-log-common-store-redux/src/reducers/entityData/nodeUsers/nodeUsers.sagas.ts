@@ -12,17 +12,17 @@ import {
   NodeUsersActionTypes,
   NodeUsersGetManyRequestAction,
   NodeUsersGetOneRequestAction,
-} from './nodeUsers.actionsTypes';
+} from './nodeUsers.actions.types';
 import {
   createNodeUsersGetManyFailAction,
   createNodeUsersGetManySuccessAction,
   createNodeUsersGetOneFailAction,
   createNodeUsersGetOneSuccessAction,
-} from './nodeUsers.actionsCreators';
+} from './nodeUsers.actions.creators';
 import {
   NodeUsersGetManyServiceResponse,
   NodeUsersGetOneServiceResponse,
-} from './nodeUsers.servicesTypes';
+} from './nodeUsers.services.types';
 import {
   nodeUsersGetManyService,
   nodeUsersGetOneService,

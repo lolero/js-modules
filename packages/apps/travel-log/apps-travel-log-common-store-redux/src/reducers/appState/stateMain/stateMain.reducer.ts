@@ -8,7 +8,7 @@ import { stateMainInitialState } from './stateMain.initialState';
 import {
   StateMainActionTypes,
   StateMainReducerHittingAction,
-} from './stateMain.actionsTypes';
+} from './stateMain.actions.types';
 
 export function stateMainReducer(
   // eslint-disable-next-line default-param-last

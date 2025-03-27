@@ -6,8 +6,8 @@ import {
 import {
   NodeUsersGetManyServiceResponse,
   NodeUsersGetOneServiceResponse,
-} from './nodeUsers.servicesTypes';
-import { NodeUsersGetOneRequestAction } from './nodeUsers.actionsTypes';
+} from './nodeUsers.services.types';
+import { NodeUsersGetOneRequestAction } from './nodeUsers.actions.types';
 
 export async function nodeUsersGetOneService(
   uniqueKeyValue: NodeUsersGetOneRequestAction['requestMetadata']['uniqueKeyValue'],

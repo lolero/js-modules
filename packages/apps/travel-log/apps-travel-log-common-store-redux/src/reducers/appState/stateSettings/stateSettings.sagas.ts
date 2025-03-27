@@ -17,7 +17,7 @@ import {
   StateSettingsSignoutRequestAction,
   StateSettingsUpdatePartialReducerMetadataRequestAction,
   StateSettingsUpdateProfileRequestAction,
-} from './stateSettings.actionsTypes';
+} from './stateSettings.actions.types';
 import {
   createStateSettingsGetProfileFailAction,
   createStateSettingsGetProfileSuccessAction,
@@ -29,12 +29,12 @@ import {
   createStateSettingsUpdatePartialReducerMetadataSuccessAction,
   createStateSettingsUpdateProfileFailAction,
   createStateSettingsUpdateProfileSuccessAction,
-} from './stateSettings.actionsCreators';
+} from './stateSettings.actions.creators';
 import {
   StateSettingsGetProfileServiceResponse,
   StateSettingsResetPasswordServiceResponse,
   StateSettingsUpdateProfileServiceResponse,
-} from './stateSettings.servicesTypes';
+} from './stateSettings.services.types';
 import {
   stateSettingsGetProfileService,
   stateSettingsResetPasswordService,
@@ -44,7 +44,7 @@ import {
   createNodeUsersGetManySuccessAction,
   createNodeUsersGetOneSuccessAction,
   createNodeUsersUpdateOnePartialSuccessAction,
-} from '../../entityData/nodeUsers/nodeUsers.actionsCreators';
+} from '../../entityData/nodeUsers/nodeUsers.actions.creators';
 import { normalizeUsersPublicDtoArray } from '../../entityData/nodeUsers/nodeUsers.normalizer';
 
 export function* stateSettingsUpdatePartialReducerMetadataSaga({

@@ -9,7 +9,7 @@ import { stateSettingsInitialState } from './stateSettings.initialState';
 import {
   StateSettingsActionTypes,
   StateSettingsReducerHittingAction,
-} from './stateSettings.actionsTypes';
+} from './stateSettings.actions.types';
 
 export function stateSettingsReducer(
   // eslint-disable-next-line default-param-last

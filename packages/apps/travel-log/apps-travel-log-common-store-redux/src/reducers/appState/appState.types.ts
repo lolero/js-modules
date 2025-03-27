@@ -4,9 +4,9 @@ import type {
 } from '@js-modules/common-redux-reducer-auth-keycloak';
 
 import { StateMainReducer } from './stateMain/stateMain.types';
-import { StateMainReducerHittingAction } from './stateMain/stateMain.actionsTypes';
+import { StateMainReducerHittingAction } from './stateMain/stateMain.actions.types';
 import { StateSettingsReducer } from './stateSettings/stateSettings.types';
-import { StateSettingsReducerHittingAction } from './stateSettings/stateSettings.actionsTypes';
+import { StateSettingsReducerHittingAction } from './stateSettings/stateSettings.actions.types';
 
 export type AppStateReducerHittingAction =
   | StateAuthReducerHittingAction

@@ -9,7 +9,7 @@ import {
   StateSettingsGetProfileServiceResponse,
   StateSettingsResetPasswordServiceResponse,
   StateSettingsUpdateProfileServiceResponse,
-} from './stateSettings.servicesTypes';
+} from './stateSettings.services.types';
 
 export async function stateSettingsGetProfileService(): Promise<StateSettingsGetProfileServiceResponse> {
   const res = await axiosRequest.get(

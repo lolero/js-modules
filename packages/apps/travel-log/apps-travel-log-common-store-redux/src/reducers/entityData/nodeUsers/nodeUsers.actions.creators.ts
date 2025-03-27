@@ -8,11 +8,11 @@ import {
   NodeUsersGetOneRequestAction,
   NodeUsersGetOneSuccessAction,
   NodeUsersUpdateOnePartialSuccessAction,
-} from './nodeUsers.actionsTypes';
+} from './nodeUsers.actions.types';
 
 export function createNodeUsersGetOneRequestAction(
   uniqueKeyValue: NodeUsersGetOneRequestAction['requestMetadata']['uniqueKeyValue'],
-  uniqueKeyName: NodeUsersGetOneRequestAction['requestMetadata']['uniqueKeyName'] = 'id',
+  uniqueKeyName: NodeUsersGetOneRequestAction['requestMetadata']['uniqueKeyName'],
 ): NodeUsersGetOneRequestAction {
   return {
     type: NodeUsersActionTypes.NODE_USERS__GET_ONE__REQUEST,

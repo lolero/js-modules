@@ -1,12 +1,11 @@
 import {
   FailAction,
   GetManyEntitiesRequestMetadata,
+  GetOneEntityRequestMetadata,
   RequestAction,
   SavePartialEntitiesAction,
   SaveWholeEntitiesAction,
 } from '@js-modules/common-redux-utils-normalized-reducers';
-import { EntityUniqueKeyValue } from '@js-modules/api-nest-utils';
-import { UsersUniqueKeyName } from '@js-modules/apps-travel-log-api-core-modules/src/modules/users/users.types';
 import { NodeUser, NodeUsersReducer } from './nodeUsers.types';
 
 export enum NodeUsersActionTypes {
@@ -21,10 +20,7 @@ export enum NodeUsersActionTypes {
 
 export type NodeUsersGetOneRequestAction = RequestAction<
   NodeUsersActionTypes.NODE_USERS__GET_ONE__REQUEST,
-  {
-    uniqueKeyValue: EntityUniqueKeyValue;
-    uniqueKeyName: UsersUniqueKeyName;
-  }
+  GetOneEntityRequestMetadata<NodeUser, 'id' | 'username'>
 >;
 
 export type NodeUsersGetOneSuccessAction = SaveWholeEntitiesAction<
@@ -38,7 +34,7 @@ export type NodeUsersGetOneFailAction =
 
 export type NodeUsersGetManyRequestAction = RequestAction<
   NodeUsersActionTypes.NODE_USERS__GET_MANY__REQUEST,
-  GetManyEntitiesRequestMetadata
+  GetManyEntitiesRequestMetadata<NodeUser, never>
 >;
 
 export type NodeUsersGetManySuccessAction = SaveWholeEntitiesAction<
