@@ -1,8 +1,14 @@
 import { defineConfig, PluginOption } from 'vite';
 import reactPlugin from '@vitejs/plugin-react';
+import { keycloakify } from 'keycloakify/vite-plugin';
 import tsconfigPathsPlugin from 'vite-tsconfig-paths';
 
-const plugins: (PluginOption | PluginOption[])[] = [reactPlugin()];
+const plugins: (PluginOption | PluginOption[])[] = [
+  reactPlugin(),
+  keycloakify({
+    accountThemeImplementation: 'none',
+  }),
+];
 
 if (process.env.NODE_ENV !== 'production') {
   plugins.push(

@@ -21,6 +21,7 @@
     "@js-modules/web-react-components": "workspace:^",
     "@js-modules/web-react-hooks": "workspace:^",
     "@js-modules/web-react-nav": "workspace:^",
+    "@js-modules/web-styles-material-ui": "workspace:^",
     "@mui/material": "^7.0.0",
     "@types/lodash": "^4.17.16",
     "@types/react": "^19.0.12",
