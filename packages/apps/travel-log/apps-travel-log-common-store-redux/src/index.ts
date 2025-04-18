@@ -1,13 +1,13 @@
-import { applyMiddleware, createStore, CombinedState, Store } from 'redux';
+import {
+  applyMiddleware,
+  legacy_createStore as createStore,
+  Store,
+} from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 
 import { reducers } from './reducers/reducers.reducers';
 import { sagas } from './reducers/reducers.sagas';
-
-import { AppStateReducers } from './reducers/appState/appState.types';
-import { EntityDataReducers } from './reducers/entityData/entityData.types';
-import { ReducerHittingAction } from './reducers/reducers.types';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -15,22 +15,15 @@ export * from './reducers/reducers.exports';
 export * from './reducers/reducers.initialState';
 export * from './reducers/reducers.types';
 
-export type ReduxStore = Store<
-  CombinedState<{
-    appState: CombinedState<AppStateReducers>;
-    entityData: CombinedState<EntityDataReducers>;
-  }>,
-  ReducerHittingAction
->;
+export type ReduxStore = Store;
 
 export function createReduxStore(): ReduxStore {
-  const reduxStore = createStore(
-    reducers,
-    composeWithDevTools({
-      trace: true,
-      traceLimit: 25,
-    })(applyMiddleware(sagaMiddleware)),
-  );
+  const storeEnhancerReduxSaga = applyMiddleware(sagaMiddleware);
+  const storeEnhancers = composeWithDevTools({
+    trace: true,
+    traceLimit: 25,
+  })(storeEnhancerReduxSaga) as Partial<{ appState: never; entityData: never }>;
+  const reduxStore = createStore(reducers, storeEnhancers);
   sagaMiddleware.run(sagas);
   return reduxStore;
 }

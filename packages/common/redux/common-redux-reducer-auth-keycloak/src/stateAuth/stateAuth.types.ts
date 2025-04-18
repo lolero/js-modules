@@ -21,7 +21,7 @@ export type KeycloakTokens = {
   refresh: KeycloakToken;
 };
 
-interface StateAuthReducerMetadata extends ReducerMetadata {
+export interface StateAuthReducerMetadata extends ReducerMetadata {
   isKeycloakReady: boolean;
   isAuthenticated: boolean;
   tokens: KeycloakTokens | null;

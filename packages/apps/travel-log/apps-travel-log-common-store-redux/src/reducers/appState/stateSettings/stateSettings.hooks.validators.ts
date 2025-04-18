@@ -25,7 +25,7 @@ export function useStateSettingsValidateProfilePartialUnsaved(): FormValidator<P
   >({});
 
   const validateCallback = useCallback(
-    async (fieldNames: (keyof ProfilePartialUnsavedValidator)[] = []) => {
+    (fieldNames: (keyof ProfilePartialUnsavedValidator)[] = []) => {
       if (isNull(profilePartialUnsaved)) {
         return formErrors;
       }

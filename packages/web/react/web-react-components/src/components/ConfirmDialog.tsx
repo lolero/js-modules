@@ -74,7 +74,6 @@ export const ConfirmDialog: React.FunctionComponent<ConfirmDialogProps> = ({
       open
       onClose={onClose}
       disableEscapeKeyDown={actionRequest?.isPending}
-      onBackdropClick={actionRequest?.isPending ? noop : onClose}
     >
       <DialogTitle>
         {upperFirst(actionName)} {entityTypeName}: {entityName}

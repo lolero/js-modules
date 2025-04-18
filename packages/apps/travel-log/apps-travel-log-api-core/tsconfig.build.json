@@ -5,10 +5,5 @@
     "rootDir": "src",
     "outDir": "build"
   },
-  "include": ["src"],
-  "references": [
-    { "path": "../../../api/nest/api-nest-module-auth-keycloak/tsconfig.build.json" },
-    { "path": "../../../api/nest/api-nest-utils/tsconfig.build.json" },
-    { "path": "../../../common/utils/common-utils-general/tsconfig.build.json" }
-  ]
+  "include": ["src"]
 }

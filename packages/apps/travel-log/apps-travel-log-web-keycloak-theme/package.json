@@ -24,7 +24,6 @@
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@js-modules/apps-travel-log-common-store-redux": "workspace:^",
     "@js-modules/apps-travel-log-web-components": "workspace:^",
-    "@js-modules/web-react-components-keycloak-theme": "workspace:^",
     "@mui/icons-material": "^7.0.0",
     "@mui/material": "^7.0.0",
     "@storybook/react": "^8.6.11",

@@ -13,7 +13,7 @@ export function useRequestSnackbar<ReducerMetadataT extends ReducerMetadata>(
   request: Request<RequestMetadata> | undefined,
   message: SnackbarMessage,
   setSnackPack: React.Dispatch<React.SetStateAction<SnackbarMessageMetadata[]>>,
-  icon?: JSX.Element,
+  icon?: React.ReactElement,
   resetRequestIdsCallback?: (
     partialReducerMetadata: Partial<ReducerMetadataT>,
   ) => void,

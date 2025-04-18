@@ -8,7 +8,7 @@ import { useEffect, useRef } from 'react';
  * @returns {VarialbeT} Previous value of variable
  */
 function usePrevious<VarialbeT>(variable: VarialbeT): VarialbeT | undefined {
-  const ref = useRef<VarialbeT>();
+  const ref = useRef<VarialbeT>(undefined);
 
   useEffect(() => {
     ref.current = variable;

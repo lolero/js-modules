@@ -101,7 +101,12 @@ export const PaymentCardBox: React.FunctionComponent<PaymentCardBoxProps> = ({
       )}
       <Grid container spacing={2}>
         {(isEmpty(renderFields) || renderFields.includes('expirationDate')) && (
-          <Grid xs={12} sm={6}>
+          <Grid
+            size={{
+              xs: 12,
+              sm: 6,
+            }}
+          >
             <TextField
               required
               disabled={isFormFieldsDisabled}
@@ -122,7 +127,12 @@ export const PaymentCardBox: React.FunctionComponent<PaymentCardBoxProps> = ({
           </Grid>
         )}
         {(isEmpty(renderFields) || renderFields.includes('cvv')) && (
-          <Grid xs={12} sm={6}>
+          <Grid
+            size={{
+              xs: 12,
+              sm: 6,
+            }}
+          >
             <TextField
               required
               type="password"

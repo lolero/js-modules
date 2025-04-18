@@ -1,7 +1,7 @@
 import { createRoot } from 'react-dom/client';
 import React, { StrictMode } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
-import { ThemePalette } from '@js-modules/apps-travel-log-common-store-redux/src/reducers/appState/stateMain/stateMain.types';
+import { ThemePalette } from '@js-modules/apps-travel-log-common-store-redux';
 import CssBaseline from '@mui/material/CssBaseline';
 import { materialUiThemes } from '@js-modules/apps-travel-log-web-components';
 import { KcPage } from './kc.gen';

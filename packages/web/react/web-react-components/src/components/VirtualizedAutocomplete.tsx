@@ -89,9 +89,9 @@ const ListboxComponent = React.forwardRef<
   React.HTMLAttributes<HTMLUListElement> & { overscanCount?: number }
 >(function ListboxComponent(props, ref) {
   const { children, overscanCount = 5, ...other } = props;
-  const itemData: React.ReactChild[] = [];
-  (children as React.ReactChild[]).forEach(
-    (item: React.ReactChild & { children?: React.ReactChild[] }) => {
+  const itemData: React.ReactElement[] = [];
+  (children as React.ReactElement[]).forEach(
+    (item: React.ReactElement & { children?: React.ReactElement[] }) => {
       itemData.push(item);
       itemData.push(...(item.children || []));
     },
@@ -106,7 +106,7 @@ const ListboxComponent = React.forwardRef<
     ? parseInt(theme.spacing(4.5), 10)
     : parseInt(theme.spacing(6), 10);
 
-  const getChildSize = (child: React.ReactChild) => {
+  const getChildSize = (child: React.ReactElement) => {
     // eslint-disable-next-line no-prototype-builtins
     if (child.hasOwnProperty('group')) {
       return parseInt(theme.spacing(6), 10);

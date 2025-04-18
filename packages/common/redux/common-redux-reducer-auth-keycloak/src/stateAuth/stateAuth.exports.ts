@@ -1,7 +1,4 @@
-export {
-  createStateAuthSigninRequestAction,
-  createStateAuthSignoutRequestAction,
-} from './stateAuth.actions.creators';
+export * from './stateAuth.actions.creators';
 export * from './stateAuth.actions.hooks';
 export * from './stateAuth.actions.types';
 export * from './stateAuth.hooks';

@@ -5,7 +5,7 @@ export type SnackbarMessageMetadata = {
   unixMilliseconds: number;
   message: string;
   severity?: AlertProps['severity'];
-  icon?: JSX.Element;
+  icon?: React.ReactElement;
 };
 
 export type SnackPackUtils = {
