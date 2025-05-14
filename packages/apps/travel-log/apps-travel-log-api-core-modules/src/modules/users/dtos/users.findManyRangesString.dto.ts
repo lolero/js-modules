@@ -1,9 +1,9 @@
 import { IsOptional } from 'class-validator';
-import {
+import type {
   FindManyRange,
   FindManyRangesDto,
-  isFindManyRange,
 } from '@js-modules/api-nest-utils';
+import { isFindManyRange } from '@js-modules/api-nest-utils';
 import { UsersEntity } from '../users.entity';
 
 export class UsersFindManyRangesStringDto

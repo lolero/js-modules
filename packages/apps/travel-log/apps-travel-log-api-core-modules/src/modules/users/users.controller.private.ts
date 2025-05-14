@@ -4,7 +4,7 @@ import { AuthDecoratorUsersEntityCurrent } from '@js-modules/api-nest-module-aut
 import {
   ApiControllersTravelLog,
   ApiSubHandlersUsersPrivate,
-} from '@js-modules/apps-travel-log-common-constants';
+} from '@js-modules/apps-travel-log-common-constants-cjs';
 import { UsersService } from './users.service';
 import { UsersEntity } from './users.entity';
 import { UsersUpdateOnePartialDto } from './dtos/users.updateOnePartial.dto';

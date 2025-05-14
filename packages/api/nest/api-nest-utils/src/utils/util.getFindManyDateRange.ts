@@ -1,4 +1,4 @@
-import { MAX_DATE_MILLISECONDS } from '@js-modules/common-utils-general';
+import { MAX_DATE_MILLISECONDS } from '@js-modules/common-utils-general-cjs';
 import sortBy from 'lodash/sortBy';
 import { FindManyRange } from '../types/types.requests';
 

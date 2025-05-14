@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@js-modules/api-nest-utils": "workspace:^",
-    "@js-modules/common-utils-general": "workspace:^",
+    "@js-modules/common-utils-general-cjs": "workspace:^",
     "@nestjs/common": "^11.0.12",
     "@nestjs/config": "^4.0.1",
     "@nestjs/core": "^11.0.12",

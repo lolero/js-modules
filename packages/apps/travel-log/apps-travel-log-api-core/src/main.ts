@@ -3,7 +3,7 @@ import {
   API_CORE_IP_TRAVEL_LOG,
   API_CORE_PORT_TRAVEL_LOG,
   WEB_CLIENT_URI_TRAVEL_LOG,
-} from '@js-modules/apps-travel-log-common-constants';
+} from '@js-modules/apps-travel-log-common-constants-cjs';
 import { AppModule } from './modules/app/app.module';
 
 async function bootstrap() {

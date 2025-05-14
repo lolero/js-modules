@@ -13,7 +13,7 @@ import {
   EntityUniqueKeyValue,
   InterceptorSerialize,
 } from '@js-modules/api-nest-utils';
-import { ApiControllersTravelLog } from '@js-modules/apps-travel-log-common-constants';
+import { ApiControllersTravelLog } from '@js-modules/apps-travel-log-common-constants-cjs';
 import { AuthDecoratorUsersEntityCurrent } from '@js-modules/api-nest-module-auth-keycloak';
 import { UsersEntity } from '../users/users.entity';
 import { LogEntriesService } from './logEntries.service';

@@ -3,7 +3,7 @@ import {
   EntityUniqueKeyValue,
   InterceptorSerialize,
 } from '@js-modules/api-nest-utils';
-import { ApiControllersTravelLog } from '@js-modules/apps-travel-log-common-constants';
+import { ApiControllersTravelLog } from '@js-modules/apps-travel-log-common-constants-cjs';
 import { UsersService } from './users.service';
 import { UsersEntity } from './users.entity';
 import { UsersPublicDto } from './dtos/users.public.dto';

@@ -5,20 +5,17 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "modules:build": "pnpm --filter @js-modules/apps-travel-log-common-constants build && pnpm --filter @js-modules/apps-travel-log-api-core-modules build",
+    "modules:build": "pnpm --filter @js-modules/apps-travel-log-common-constants build && pnpm --filter @js-modules/apps-travel-log-common-constants-cjs build && pnpm --filter @js-modules/api-nest-keycloak-admin-client-cjs build && pnpm --filter @js-modules/common-utils-general build && pnpm --filter @js-modules/common-utils-general-cjs build && pnpm --filter @js-modules/api-nest-utils build && pnpm --filter @js-modules/api-nest-module-auth-keycloak build && pnpm --filter @js-modules/apps-travel-log-api-core-modules build",
     "dev:travel-log-api-core": "cross-env NODE_ENV=development nest start --watch",
     "build": "cross-env NODE_ENV=production nest build -p tsconfig.build.json",
     "prod": "node build/main",
     "typeorm": "pnpm build && cross-env NODE_ENV=development typeorm -d build/config/config.typeorm.dataSource.js"
   },
   "dependencies": {
-    "@js-modules/api-nest-keycloak-admin-client-cjs": "workspace:^",
     "@js-modules/api-nest-module-auth-keycloak": "workspace:^",
     "@js-modules/api-nest-utils": "workspace:^",
     "@js-modules/apps-travel-log-api-core-modules": "workspace:^",
-    "@js-modules/apps-travel-log-common-constants": "workspace:^",
-    "@js-modules/apps-travel-log-web-keycloak-theme": "workspace:^",
-    "@js-modules/common-utils-general": "workspace:^",
+    "@js-modules/apps-travel-log-common-constants-cjs": "workspace:^",
     "@nestjs/common": "^11.0.12",
     "@nestjs/config": "^4.0.1",
     "@nestjs/core": "^11.0.12",

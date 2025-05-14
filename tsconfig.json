@@ -54,6 +54,9 @@
       "@js-modules/apps-travel-log-common-constants": [
         "apps/travel-log/apps-travel-log-common-constants/src"
       ],
+      "@js-modules/apps-travel-log-common-constants-cjs": [
+        "apps/travel-log/apps-travel-log-common-constants-cjs/src"
+      ],
       "@js-modules/apps-travel-log-common-store-redux": [
         "apps/travel-log/apps-travel-log-common-store-redux/src"
       ],
@@ -107,6 +110,9 @@
       "@js-modules/common-redux-utils-normalized-reducers": ["common/redux/common-redux-utils-normalized-reducers/src"],
       "@js-modules/common-utils-general": [
         "common/utils/common-utils-general/src"
+      ],
+      "@js-modules/common-utils-general-cjs": [
+        "common/utils/common-utils-general-cjs/src"
       ],
       "@js-modules/web-react-components": [
         "web/react/web-react-components/src"
