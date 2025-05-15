@@ -1261,6 +1261,9 @@ importers:
       '@js-modules/apps-travel-log-common-constants-cjs':
         specifier: workspace:^
         version: link:../apps-travel-log-common-constants-cjs
+      '@js-modules/apps-travel-log-web-keycloak-theme':
+        specifier: workspace:^
+        version: link:../apps-travel-log-web-keycloak-theme
       '@nestjs/common':
         specifier: ^11.0.12
         version: 11.1.1(class-transformer@0.5.1)(class-validator@0.14.2)(reflect-metadata@0.2.2)(rxjs@7.8.2)
@@ -6958,8 +6961,8 @@ packages:
     resolution: {integrity: sha512-rNjApaLzuwaOTjCiT8lSDdGN1APCiqkChLMJxJPWLunPAt5fy8xgU9/jNOchV84wfIxrA0lRQB7oCT8jrn/wrQ==}
     engines: {node: '>=6.0'}
 
-  chromedriver@136.0.0:
-    resolution: {integrity: sha512-21LxtGIqRLkafi0aOLKxIyQ3uRklgdmhuihzAkoL3Er5QtC74UDuu2OeTDdh58LM7WDbiuTXjdoIQARUekL8DA==}
+  chromedriver@136.0.2:
+    resolution: {integrity: sha512-yJ52GN01edLYWYK/OspYBv3plzF08Ucdq4ukYigJGOX8dWr/tP5PXSZPWFPVarmbmcO57pNLP9Im8hsYljMEjw==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -18453,7 +18456,7 @@ snapshots:
 
   chrome-trace-event@1.0.4: {}
 
-  chromedriver@136.0.0:
+  chromedriver@136.0.2:
     dependencies:
       '@testim/chrome-version': 1.1.4
       axios: 1.9.0
@@ -22363,7 +22366,7 @@ snapshots:
     dependencies:
       jwk-to-pem: 2.0.7
     optionalDependencies:
-      chromedriver: 136.0.0
+      chromedriver: 136.0.2
     transitivePeerDependencies:
       - debug
       - supports-color

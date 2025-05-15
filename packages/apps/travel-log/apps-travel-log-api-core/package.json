@@ -16,6 +16,7 @@
     "@js-modules/api-nest-utils": "workspace:^",
     "@js-modules/apps-travel-log-api-core-modules": "workspace:^",
     "@js-modules/apps-travel-log-common-constants-cjs": "workspace:^",
+    "@js-modules/apps-travel-log-web-keycloak-theme": "workspace:^",
     "@nestjs/common": "^11.0.12",
     "@nestjs/config": "^4.0.1",
     "@nestjs/core": "^11.0.12",

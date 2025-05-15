@@ -49,7 +49,7 @@ services:
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
       #      https://www.youtube.com/watch?v=G6h3eVNZFg8&list=PLQZfys2xO5kgpa9-qpJly78d-t7_Fnjec&index=4
-#      https://letsencrypt.org/docs/certificates-for-localhost/
+      #      https://letsencrypt.org/docs/certificates-for-localhost/
       KC_HTTPS_CERTIFICATE_FILE: /opt/keycloak/certificates/localhostcert.pem
       KC_HTTPS_CERTIFICATE_KEY_FILE: /opt/keycloak/certificates/localhostkey.pem
     depends_on:
@@ -59,7 +59,7 @@ services:
     volumes:
       - ./keycloak/certificates:/opt/keycloak/certificates
       - ./keycloak/backup:/opt/keycloak/data/import
-#      - ./node_modules/@js-modules/apps-travel-log-web-keycloak-theme/build_keycloak/target:/opt/keycloak/providers
+      - ./node_modules/@js-modules/apps-travel-log-web-keycloak-theme/build_keycloak:/opt/keycloak/providers
   mailhog:
     image: mailhog/mailhog
     restart: always
