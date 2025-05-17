@@ -8,7 +8,10 @@
     "build": "nest build -p tsconfig.build.json",
     "dev": "cross-env NODE_ENV=dev nest start --watch",
     "prod": "node build/main",
-    "typeorm": "pnpm build && cross-env NODE_ENV=dev typeorm -d build/app/app.config.typeormDataSource.js"
+    "typeorm": "pnpm build && cross-env NODE_ENV=dev typeorm -d build/app/app.config.typeormDataSource.js",
+    "test:test":  "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
   },
   "dependencies": {
     "@js-modules/api-nest-module-auth-basic": "workspace:^",

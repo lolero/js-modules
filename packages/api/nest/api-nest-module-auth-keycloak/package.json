@@ -9,7 +9,10 @@
     "build"
   ],
   "scripts": {
-    "build": "tsc -b tsconfig.build.json"
+    "build": "tsc -b tsconfig.build.json",
+    "test:test":  "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
   },
   "dependencies": {
     "@js-modules/api-nest-keycloak-admin-client-cjs": "workspace:^",

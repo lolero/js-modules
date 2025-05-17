@@ -9,7 +9,10 @@
     "dev:travel-log-api-core": "cross-env NODE_ENV=development nest start --watch",
     "build": "cross-env NODE_ENV=production nest build -p tsconfig.build.json",
     "prod": "node build/main",
-    "typeorm": "pnpm build && cross-env NODE_ENV=development typeorm -d build/config/config.typeorm.dataSource.js"
+    "typeorm": "pnpm build && cross-env NODE_ENV=development typeorm -d build/config/config.typeorm.dataSource.js",
+    "test:test":  "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
   },
   "dependencies": {
     "@js-modules/api-nest-module-auth-keycloak": "workspace:^",

@@ -181,16 +181,9 @@ root `tsconfig.build.json`.
 Unit testing of JavaScript and TypeScript code is carried out using
 [Jest](https://jestjs.io/).
 
-The testing configuration is set up with a hierarchy of config files, similar 
-to the approach used for `package.json` and `tsconfig` described in the 
-sections above.
-
-- `jest.config.ts` is the root config for jest, which contains the 
-  common config, shared by all packages, and enables testing for packages 
-  where there is a
-- `jest.config-project.ts` config in the package directory, which enables 
-  Jest to execute tests in the package and allows it to extend and/or 
-  override the root shared configuration for its purpose
+Each package has its own jest configuration specified in its `jest.config.
+ts` file which usually imports a common configuration defined in the `jest.
+config-common.ts` file at the root of the project.
 
 ### .ignore
 The only `.ignore` that is actively maintained is `.gitignore`. All other
