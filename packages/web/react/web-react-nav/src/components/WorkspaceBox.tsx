@@ -15,6 +15,7 @@ import { NavDrawerDisplayStatus, NavContext } from '../contexts/NavContext';
 import { useNavDisplayMetadata } from '../hooks/useNavDisplayMetadata';
 import { WorkspaceContentBox } from './WorkspaceContentBox';
 import { NavRightDrawer } from './NavRightDrawer';
+import { NavRightDrawerDisplayButton } from './NavRightDrawerDisplayButton';
 
 export type WorkspaceBoxProps = {
   shortLogo: React.ReactNode;
@@ -55,6 +56,7 @@ export const WorkspaceBox: React.FC<WorkspaceBoxProps> = ({
     nonAuthorizedRedirectPath,
     setNavLeftDrawerDisplayStatus,
     navLeftDrawerCollapsedWidth,
+    navRightDrawerCollapsedWidth,
   } = useContext(NavContext);
   const [isWorkspaceScroll, setIsWorkspaceScroll] = useState<boolean>(false);
   const [workspaceScrollTop, setWorkspaceScrollTop] = useState<number>(0);
@@ -101,11 +103,11 @@ export const WorkspaceBox: React.FC<WorkspaceBoxProps> = ({
     }
 
     if (isTablet) {
-      return navLeftDrawerCollapsedWidth;
+      return navRightDrawerCollapsedWidth;
     }
 
-    return `${navLeftDrawerWidth}px`;
-  }, [isMobile, isTablet, navLeftDrawerCollapsedWidth, navLeftDrawerWidth]);
+    return `${navRightDrawerWidth}px`;
+  }, [isMobile, isTablet, navRightDrawerCollapsedWidth, navRightDrawerWidth]);
 
   const workspaceContextValue: WorkspaceContextValue = useMemo(() => {
     return {
@@ -187,11 +189,14 @@ export const WorkspaceBox: React.FC<WorkspaceBoxProps> = ({
           />
         )}
         {isNavRightDrawerWithContent && (
-          <NavRightDrawer
-            ref={navRightDrawerRef}
-            navRightDrawerContent={navRightDrawerContent}
-            navRightDrawerFooter={navRightDrawerFooter}
-          />
+          <>
+            <NavRightDrawerDisplayButton />
+            <NavRightDrawer
+              ref={navRightDrawerRef}
+              navRightDrawerContent={navRightDrawerContent}
+              navRightDrawerFooter={navRightDrawerFooter}
+            />
+          </>
         )}
         <WorkspaceTopToolbarBox ref={workspaceTopToolbarRef}>
           {workspaceTopToolbar}

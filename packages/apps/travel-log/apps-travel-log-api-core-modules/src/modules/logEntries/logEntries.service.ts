@@ -3,6 +3,7 @@ import { In, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
   EntityUniqueKeyValue,
+  FindManyResponse,
   utilApplyFindManyFiltersToQuery,
   utilApplyFindManySortingAndPaginationToQuery,
   utilVerifyEntitiesPartialRelation,
@@ -54,7 +55,7 @@ export class LogEntriesService {
 
   async findMany(
     logEntriesFindManyDto: LogEntriesFindManyDto,
-  ): Promise<LogEntriesEntity[]> {
+  ): Promise<FindManyResponse<LogEntriesEntity>> {
     const query = this.logEntriesRepository.createQueryBuilder();
 
     const queryFiltered = utilApplyFindManyFiltersToQuery<LogEntriesEntity>(
@@ -68,10 +69,9 @@ export class LogEntriesService {
         logEntriesFindManyDto,
       );
 
-    const logEntriesEntities =
-      await querySortedAndPaginated.getRawMany<LogEntriesEntity>();
+    const [entities, total] = await querySortedAndPaginated.getManyAndCount();
 
-    return logEntriesEntities;
+    return { entities, total };
   }
 
   async updateOne(

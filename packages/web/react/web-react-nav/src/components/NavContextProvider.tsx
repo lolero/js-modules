@@ -13,6 +13,8 @@ export type NavContextProviderProps = {
   hideNavRightDrawerString?: string;
   navLeftDrawerCollapsedWidth?: string;
   navLeftDrawerExpandedWidth?: string;
+  navRightDrawerCollapsedWidth?: string;
+  navRightDrawerExpandedWidth?: string;
   workspaceTopToolbarPaddingYSpacing?: number;
   workspacePaddingXSpacing?: number;
   children: React.ReactNode;
@@ -26,6 +28,8 @@ export const NavContextProvider: React.FC<NavContextProviderProps> = ({
   hideNavRightDrawerString = 'Hide Workspace Toolbar',
   navLeftDrawerCollapsedWidth = '80px',
   navLeftDrawerExpandedWidth = '240px',
+  navRightDrawerCollapsedWidth = '20px',
+  navRightDrawerExpandedWidth = '240px',
   workspaceTopToolbarPaddingYSpacing = 0.5,
   workspacePaddingXSpacing = 2,
   children,
@@ -48,6 +52,8 @@ export const NavContextProvider: React.FC<NavContextProviderProps> = ({
       setNavRightDrawerDisplayStatus,
       navLeftDrawerCollapsedWidth,
       navLeftDrawerExpandedWidth,
+      navRightDrawerCollapsedWidth,
+      navRightDrawerExpandedWidth,
       workspaceTopToolbarPaddingYSpacing,
       workspacePaddingXSpacing,
     };
@@ -57,7 +63,9 @@ export const NavContextProvider: React.FC<NavContextProviderProps> = ({
     navLeftDrawerCollapsedWidth,
     navLeftDrawerDisplayStatus,
     navLeftDrawerExpandedWidth,
+    navRightDrawerCollapsedWidth,
     navRightDrawerDisplayStatus,
+    navRightDrawerExpandedWidth,
     nonAuthenticatedRedirectPath,
     showNavLeftDrawerString,
     showNavRightDrawerString,

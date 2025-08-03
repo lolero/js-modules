@@ -37,6 +37,7 @@ export const WorkspaceContentBox: React.FunctionComponent<
     navTopToolbarHeight,
     workspaceTopToolbarHeight,
     workspaceMarginLeft,
+    workspaceMarginRight,
     isWorkspaceScroll,
     workspaceScrollTop,
     workspaceScrollDirection,
@@ -90,6 +91,7 @@ export const WorkspaceContentBox: React.FunctionComponent<
         display: 'flex',
         flexDirection: 'column',
         overflow: 'hidden',
+        mr: workspaceMarginRight,
         ml: workspaceMarginLeft,
         height: (t) =>
           `calc(100% - ${

@@ -7,7 +7,8 @@ import { Link } from 'react-router-dom';
 import isEqual from 'lodash/isEqual';
 import isNull from 'lodash/isNull';
 import intersection from 'lodash/intersection';
-import { RoutesMetadata } from '../types/routes.types';
+import pick from 'lodash/pick';
+import { ReactRouterNavUtils, RoutesMetadata } from '../types/routes.types';
 
 export type NavLeftDrawerTabs = {
   tabsValue: string | null;
@@ -25,9 +26,12 @@ export type NavLeftDrawerTabs = {
  * @param {string} routerPath - The router path
  * @param {boolean} isNavLeftDrawerExpanded - Whether or not the <NavLeftDrawer /> is
  * expanded
- * @param {string[]} userRoles - Access roles of the current authenticated user
+ * @param {ReactRouterNavUtils} reactRouterNavUtils - Necessary utilities to
+ * check if all required query params are present and redicrect if necessary
  * @param {function} onClickCallback - Callback function to close the
  * <NavLeftDrawer /> when navigation to a tab's path occurs
+ * @param {string[]} userRoles - Access roles of the current authenticated user
+ * @param {function} translateCallback - Translation callback function
  *
  * @returns {React.ReactNode[]} Array of <Tab />s
  */
@@ -36,8 +40,13 @@ export function getNavLeftDrawerTabs(
   depthLevel: number,
   routerPath: string,
   isNavLeftDrawerExpanded: boolean,
-  userRoles: string[],
-  onClickCallback: () => void,
+  reactRouterNavUtils: ReactRouterNavUtils,
+  onClickCallback: (
+    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+  ) => void,
+  userRoles: string[] = [],
+  translateCallback: (translationKey: string) => string = (translationKey) =>
+    translationKey,
 ): NavLeftDrawerTabs {
   const splitRouterPath = routerPath.split('/').slice(1);
   const modulesUpToDepthLevelPrevious = splitRouterPath.slice(0, depthLevel);
@@ -71,7 +80,11 @@ export function getNavLeftDrawerTabs(
 
     let label: React.ReactNode = null;
     if (isNavLeftDrawerExpanded) {
-      label = <Typography variant="body1">{routeMetadata.label}</Typography>;
+      label = (
+        <Typography variant="body1">
+          {translateCallback(routeMetadata.label)}
+        </Typography>
+      );
     }
 
     let subTabs: React.ReactNode[] = [];
@@ -81,14 +94,20 @@ export function getNavLeftDrawerTabs(
         depthLevel + 1,
         routerPath,
         isNavLeftDrawerExpanded,
-        userRoles,
+        reactRouterNavUtils,
         onClickCallback,
+        userRoles,
+        translateCallback,
       );
 
       subTabs = subNavLeftDrawerTabs.tabs;
       if (!isNull(subNavLeftDrawerTabs.tabsValue)) {
         tabsValue = subNavLeftDrawerTabs.tabsValue;
       }
+    }
+
+    if (isEqual(splitRouterPath, splitRouteMetadataPath)) {
+      tabsValue = `/${splitRouteMetadataPath.join('/')}`;
     }
 
     const splitTabPath = routeMetadata.path.split('/').slice(1);
@@ -124,6 +143,11 @@ export function getNavLeftDrawerTabs(
         onClick={onClickCallback}
         iconPosition="start"
         title={!isNavLeftDrawerExpanded ? routeMetadata.label : undefined}
+        data-key={JSON.stringify(
+          pick(routeMetadata, ['path', 'keepQueryParamsKeys']),
+          null,
+          2,
+        )}
       />,
       ...subTabs,
     ];

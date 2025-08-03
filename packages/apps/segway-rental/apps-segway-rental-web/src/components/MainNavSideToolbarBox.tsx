@@ -4,7 +4,7 @@ import Tabs, { tabsClasses } from '@mui/material/Tabs';
 import Tab, { tabClasses } from '@mui/material/Tab';
 import Divider from '@mui/material/Divider';
 import Tooltip from '@mui/material/Tooltip';
-import { useTheme, Theme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
 import { useNavDisplayMetadata } from '@js-modules/web-react-nav';
 import { MuiFaIcon } from '@js-modules/web-react-components';
@@ -28,10 +28,6 @@ export enum MainNavSideToolbarBoxDataTestIds {
   settingsTooltipTrigger = 'nav-side-toolbar-settings-tooltip-trigger',
   helpTooltipTrigger = 'nav-side-toolbar-help-tooltip-trigger',
 }
-
-const dividerSx = {
-  mx: (theme: Theme) => theme.spacing(0.5),
-} as const;
 
 const MainNavSideToolbarBox: React.FunctionComponent = () => {
   const {
@@ -175,7 +171,7 @@ const MainNavSideToolbarBox: React.FunctionComponent = () => {
           iconPosition="start"
         />
       </Tabs>
-      <Divider sx={dividerSx} />
+      <Divider sx={{ mx: 0.5 }} />
       <Tabs
         sx={{
           ...tabsSx,
@@ -224,7 +220,7 @@ const MainNavSideToolbarBox: React.FunctionComponent = () => {
           iconPosition="start"
         />
       </Tabs>
-      <Divider sx={dividerSx} />
+      <Divider sx={{ mx: 0.5 }} />
       <Box
         sx={{
           flexGrow: 1,

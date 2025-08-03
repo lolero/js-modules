@@ -3,6 +3,7 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
   EntityUniqueKeyValue,
+  FindManyResponse,
   utilApplyFindManyFiltersToQuery,
   utilApplyFindManySortingAndPaginationToQuery,
 } from '@js-modules/api-nest-utils';
@@ -77,7 +78,9 @@ export class UsersService implements AuthUsersService {
     return usersEntity;
   }
 
-  async findMany(usersFindManyDto: UsersFindManyDto): Promise<UsersEntity[]> {
+  async findMany(
+    usersFindManyDto: UsersFindManyDto,
+  ): Promise<FindManyResponse<UsersEntity>> {
     const query = this.usersRepository.createQueryBuilder();
 
     const queryFiltered = utilApplyFindManyFiltersToQuery<UsersEntity>(
@@ -91,10 +94,9 @@ export class UsersService implements AuthUsersService {
         usersFindManyDto,
       );
 
-    const usersEntities =
-      await querySortedAndPaginated.getRawMany<UsersEntity>();
+    const [entities, total] = await querySortedAndPaginated.getManyAndCount();
 
-    return usersEntities;
+    return { entities, total };
   }
 
   async updateOnePartial(

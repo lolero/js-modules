@@ -1,6 +1,7 @@
 import { Controller, Get, Param, Query } from '@nestjs/common';
 import {
   EntityUniqueKeyValue,
+  FindManyResponse,
   InterceptorSerialize,
 } from '@js-modules/api-nest-utils';
 import { ApiControllersTravelLog } from '@js-modules/apps-travel-log-common-constants-cjs';
@@ -31,7 +32,7 @@ export class UsersController {
   @Get()
   async findMany(
     @Query() usersFindManyDto: UsersFindManyDto,
-  ): Promise<UsersEntity[]> {
+  ): Promise<FindManyResponse<UsersEntity>> {
     const usersEntities = await this.usersService.findMany(usersFindManyDto);
 
     return usersEntities;

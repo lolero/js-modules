@@ -29,7 +29,7 @@ export type FormUtils<FormDataT extends Record<string, any>> = {
  * @param {FormValidator<FormDataT>['validateCallback']} validateCallback -
  *        Validation function that takes an array of FormDataT field names
  *        to validate
- * @param {(formData: FormDataT) => voi} updateCallback - Function to update
+ * @param {(formData: FormDataT) => void} updateCallback - Function to update
  *        the FormDataT when the user types into the input fields
  * @param {(keyof FormDataT)[]} jsonFieldNames - Field names for which the
  *        change event's target.value is a JSON string that should be
@@ -58,7 +58,7 @@ export function useFormUtils<FormDataT extends Record<string, any>>(
       const fieldName = e.currentTarget.getAttribute(
         'data-key',
       ) as keyof FormDataT;
-      let fieldValue: string | boolean = e.target.value;
+      let fieldValue: string | boolean | number = e.target.value;
       if (inputType === 'checkbox') {
         fieldValue = (e as React.ChangeEvent<HTMLInputElement>).target.checked;
       } else if (jsonFieldNames.includes(fieldName)) {

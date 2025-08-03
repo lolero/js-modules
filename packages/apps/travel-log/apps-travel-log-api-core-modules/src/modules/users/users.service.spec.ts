@@ -51,7 +51,7 @@ describe('UsersService', () => {
   );
 
   let usersRepositoryCreateQueryBuilderMock: jest.Mock;
-  let usersRepositoryQueryBuilderGetRawManyMock: jest.Mock;
+  let usersRepositoryQueryBuilderGetManyAndCountMock: jest.Mock;
   let usersRepositoryQueryBuilderMock: Partial<SelectQueryBuilder<UsersEntity>>;
   let usersRepositoryCreateMock: jest.Mock;
   let usersRepositoryFindOneByMock: jest.Mock;
@@ -72,14 +72,14 @@ describe('UsersService', () => {
 
   beforeEach(async () => {
     usersRepositoryQueryBuilderMock = {
-      getRawMany: jest.fn(),
+      getManyAndCount: jest.fn(),
     };
     usersRepositoryCreateQueryBuilderMock = jest
       .fn()
       .mockReturnValue(usersRepositoryQueryBuilderMock);
-    usersRepositoryQueryBuilderGetRawManyMock = jest.fn();
+    usersRepositoryQueryBuilderGetManyAndCountMock = jest.fn();
     Object.assign(usersRepositoryQueryBuilderMock, {
-      getRawMany: usersRepositoryQueryBuilderGetRawManyMock,
+      getManyAndCount: usersRepositoryQueryBuilderGetManyAndCountMock,
     });
     utilApplyFindManyFiltersToQueryMock.mockReturnValue(
       usersRepositoryQueryBuilderMock as unknown as SelectQueryBuilder<RequestEntity>,
@@ -289,7 +289,10 @@ describe('UsersService', () => {
   });
 
   describe('findMany', () => {
-    let usersRepositoryQueryBuilderGetRawManyMockReturnValue: UsersEntity[];
+    let usersRepositoryQueryBuilderGetManyAndCountMockReturnValue: [
+      UsersEntity[],
+      number,
+    ];
     let usersFindManyDto: UsersFindManyDto;
 
     it('Should create a query builder, call utilApplyFindManyFiltersToQuery with the query builder and the passed UsersFindManyDto, call utilApplyFindManySortingAndPaginationToQuery with the updated query builder and the passed UsersFindManyDto, and return the found users', async () => {
@@ -297,13 +300,17 @@ describe('UsersService', () => {
         getUsersEntityFixture(),
         getUsersEntityFixture(),
       ];
-      usersRepositoryQueryBuilderGetRawManyMockReturnValue = testUsersEntities;
-      usersRepositoryQueryBuilderGetRawManyMock.mockReturnValue(
-        usersRepositoryQueryBuilderGetRawManyMockReturnValue,
+      usersRepositoryQueryBuilderGetManyAndCountMockReturnValue = [
+        testUsersEntities,
+        10,
+      ];
+      usersRepositoryQueryBuilderGetManyAndCountMock.mockReturnValue(
+        usersRepositoryQueryBuilderGetManyAndCountMockReturnValue,
       );
 
       usersFindManyDto = getUsersFindManyDtoFixture();
-      usersEntities = await usersService.findMany(usersFindManyDto);
+      const { entities, total } = await usersService.findMany(usersFindManyDto);
+      usersEntities = entities;
 
       expect(usersRepositoryCreateQueryBuilderMock).toHaveBeenCalledTimes(1);
       expect(utilApplyFindManyFiltersToQueryMock).toHaveBeenNthCalledWith(
@@ -318,10 +325,11 @@ describe('UsersService', () => {
         usersRepositoryQueryBuilderMock,
         usersFindManyDto,
       );
-      expect(usersRepositoryQueryBuilderGetRawManyMock).toHaveBeenNthCalledWith(
-        1,
-      );
+      expect(
+        usersRepositoryQueryBuilderGetManyAndCountMock,
+      ).toHaveBeenNthCalledWith(1);
       expect(usersEntities).toEqual(testUsersEntities);
+      expect(total).toBe(10);
     });
   });
 

@@ -46,3 +46,8 @@ export type UpdateManyEntitiesObjectDto<UpdateOneEntityDtoT> = Record<
   string,
   UpdateOneEntityDtoT
 >;
+
+export type FindManyResponse<EntityT> = {
+  entities: EntityT[];
+  total: number;
+};

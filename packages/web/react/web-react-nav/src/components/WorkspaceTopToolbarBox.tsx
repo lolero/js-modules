@@ -15,7 +15,7 @@ export const WorkspaceTopToolbarBox = forwardRef<
   const { workspaceTopToolbarPaddingYSpacing, workspacePaddingXSpacing } =
     useContext(NavContext);
 
-  const { navTopToolbarHeight, workspaceMarginLeft } =
+  const { navTopToolbarHeight, workspaceMarginLeft, workspaceMarginRight } =
     useContext(WorkspaceContext);
 
   const { isMobile, isNavLeftDrawerHidden } = useNavDisplayMetadata();
@@ -32,8 +32,9 @@ export const WorkspaceTopToolbarBox = forwardRef<
           isMobile || isNavLeftDrawerHidden
             ? t.spacing(1)
             : t.spacing(workspacePaddingXSpacing),
-        ml: workspaceMarginLeft,
         mt: `${navTopToolbarHeight}px`,
+        ml: workspaceMarginLeft,
+        mr: workspaceMarginRight,
       })}
       ref={ref}
     >

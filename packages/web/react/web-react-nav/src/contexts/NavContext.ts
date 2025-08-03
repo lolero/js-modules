@@ -23,6 +23,8 @@ export type NavContextValue = {
   hideNavRightDrawerString: string;
   navLeftDrawerCollapsedWidth: string;
   navLeftDrawerExpandedWidth: string;
+  navRightDrawerCollapsedWidth: string;
+  navRightDrawerExpandedWidth: string;
   workspaceTopToolbarPaddingYSpacing: number;
   workspacePaddingXSpacing: number;
 };
@@ -39,6 +41,8 @@ export const NavContext = React.createContext<NavContextValue>({
   hideNavRightDrawerString: '',
   navLeftDrawerCollapsedWidth: '0',
   navLeftDrawerExpandedWidth: '0',
+  navRightDrawerCollapsedWidth: '0',
+  navRightDrawerExpandedWidth: '0',
   workspaceTopToolbarPaddingYSpacing: 0,
   workspacePaddingXSpacing: 0,
 });

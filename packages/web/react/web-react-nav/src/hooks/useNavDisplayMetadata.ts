@@ -20,6 +20,7 @@ export type NavDisplayMetadata = {
   hideNavRightDrawerCallback: () => void;
   collapseNavRightDrawerCallback: () => void;
   expandNavRightDrawerCallback: () => void;
+  closeNavRightDrawerCallback: () => void;
 };
 
 export function useNavDisplayMetadata(): NavDisplayMetadata {
@@ -110,6 +111,21 @@ export function useNavDisplayMetadata(): NavDisplayMetadata {
     setNavRightDrawerDisplayStatus(NavDrawerDisplayStatus.expanded);
   }, [setNavRightDrawerDisplayStatus]);
 
+  const closeNavRightDrawerCallback = useCallback(() => {
+    if (isNavRightDrawerExpanded) {
+      if (isMobile) {
+        setNavRightDrawerDisplayStatus(NavDrawerDisplayStatus.hidden);
+      } else if (isTablet) {
+        setNavRightDrawerDisplayStatus(NavDrawerDisplayStatus.collapsed);
+      }
+    }
+  }, [
+    isMobile,
+    isNavRightDrawerExpanded,
+    isTablet,
+    setNavRightDrawerDisplayStatus,
+  ]);
+
   return {
     isMobile,
     isTablet,
@@ -127,5 +143,6 @@ export function useNavDisplayMetadata(): NavDisplayMetadata {
     hideNavRightDrawerCallback,
     collapseNavRightDrawerCallback,
     expandNavRightDrawerCallback,
+    closeNavRightDrawerCallback,
   };
 }

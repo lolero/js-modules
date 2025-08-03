@@ -2,15 +2,10 @@ import React, { forwardRef, useContext, useMemo } from 'react';
 import Drawer, { DrawerProps } from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
-import { Theme } from '@mui/material/styles';
 import { NavBoxShadowVerticalSx } from '../styles/navStyles';
 import { WorkspaceContext } from '../contexts/WorkspaceContext';
 import { useNavDisplayMetadata } from '../hooks/useNavDisplayMetadata';
 import { NavContext, NavDrawerDisplayStatus } from '../contexts/NavContext';
-
-const dividerSx = {
-  mx: (t: Theme) => t.spacing(0.5),
-} as const;
 
 type NavLeftDrawerProps = {
   navLeftDrawerContent?: React.ReactNode;
@@ -83,7 +78,7 @@ export const NavLeftDrawer = forwardRef<HTMLDivElement, NavLeftDrawerProps>(
         }}
         onClose={closeNavLeftDrawerCallback}
       >
-        <Divider sx={dividerSx} />
+        <Divider sx={{ mx: 0.5 }} />
         <Box
           sx={{
             flexGrow: 1,

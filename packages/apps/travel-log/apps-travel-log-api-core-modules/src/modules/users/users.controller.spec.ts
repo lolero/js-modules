@@ -1,4 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { FindManyResponse } from '@js-modules/api-nest-utils';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 import {
@@ -84,26 +85,33 @@ describe('UsersController', () => {
   });
 
   describe('findMany', () => {
-    let usersServiceFindManyMockReturnValue: UsersEntity[];
+    let usersServiceFindManyMockReturnValue: FindManyResponse<UsersEntity>;
     let testUsersFindManyDto: UsersFindManyDto;
 
     it('Should call usersService.findMany with a UsersFindManyDto, and return the found users', async () => {
-      usersServiceFindManyMockReturnValue = [
-        getUsersEntityFixture(),
-        getUsersEntityFixture(),
-      ];
+      usersServiceFindManyMockReturnValue = {
+        entities: [getUsersEntityFixture(), getUsersEntityFixture()],
+        total: 10,
+      };
       usersServiceFindManyMock.mockReturnValue(
         usersServiceFindManyMockReturnValue,
       );
 
       testUsersFindManyDto = getUsersFindManyDtoFixture();
-      usersEntities = await usersController.findMany(testUsersFindManyDto);
+      const { entities, total } = await usersController.findMany(
+        testUsersFindManyDto,
+      );
+
+      usersEntities = entities;
 
       expect(usersServiceFindManyMock).toHaveBeenNthCalledWith(
         1,
         testUsersFindManyDto,
       );
-      expect(usersEntities).toEqual(usersServiceFindManyMockReturnValue);
+      expect(usersEntities).toEqual(
+        usersServiceFindManyMockReturnValue.entities,
+      );
+      expect(total).toBe(usersServiceFindManyMockReturnValue.total);
     });
   });
 });
