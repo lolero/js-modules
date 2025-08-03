@@ -11,6 +11,8 @@ import {
 
 const nodeLogEntriesReducerMetadataInitialState: NodeLogEntriesReducer['metadata'] =
   {
+    getManyTotal: 0,
+    getManyPksSorted: [],
     nodeLogEntryUnsaved: null,
   };
 

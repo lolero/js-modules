@@ -10,6 +10,7 @@ import {
   WebSubModulesMyLogLogEntry,
 } from '@js-modules/apps-travel-log-common-constants';
 import { routesMetadataPrivate } from '@js-modules/apps-travel-log-web-components';
+import { MyLogWorkspaceActionsMenu } from './MyLogWorkspaceActionsMenu';
 
 export const MyLogWorkspaceTopToolbar: React.FC = () => {
   const routeMetadata = useMemo(
@@ -33,6 +34,7 @@ export const MyLogWorkspaceTopToolbar: React.FC = () => {
         >
           <MuiFaIcon icon={faPlus} />
         </Fab>
+        <MyLogWorkspaceActionsMenu />
       </Box>
     </>
   );

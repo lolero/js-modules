@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField';
 import { Address } from '@js-modules/common-utils-general';
 import isEmpty from 'lodash/isEmpty';
 import { CountriesAutocomplete } from './CountriesAutocomplete';
-import { FormTextFieldProps } from '../types/formTextFieldProps.types';
+import { FormTextFieldProps } from '../types/form.types';
 
 export type AddressBoxProps = {
   sx?: BoxProps['sx'];

@@ -54,6 +54,24 @@ export const MyLogLogEntryWorkspaceContentBox: React.FC = () => {
         <Typography>Description:</Typography>
         <Typography>{nodeLogEntry.description}</Typography>
       </Box>
+      <Box
+        sx={{
+          display: 'flex',
+          gap: 1,
+        }}
+      >
+        <Typography>Created at:</Typography>
+        <Typography>{nodeLogEntry.createdAt}</Typography>
+      </Box>
+      <Box
+        sx={{
+          display: 'flex',
+          gap: 1,
+        }}
+      >
+        <Typography>Updated at:</Typography>
+        <Typography>{nodeLogEntry.updatedAt}</Typography>
+      </Box>
     </Box>
   );
 };

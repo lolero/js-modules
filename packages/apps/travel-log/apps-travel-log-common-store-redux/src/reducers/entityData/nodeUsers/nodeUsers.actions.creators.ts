@@ -12,7 +12,7 @@ import {
 
 export function createNodeUsersGetOneRequestAction(
   uniqueKeyValue: NodeUsersGetOneRequestAction['requestMetadata']['uniqueKeyValue'],
-  uniqueKeyName: NodeUsersGetOneRequestAction['requestMetadata']['uniqueKeyName'],
+  uniqueKeyName: NodeUsersGetOneRequestAction['requestMetadata']['uniqueKeyName'] = 'id',
 ): NodeUsersGetOneRequestAction {
   return {
     type: NodeUsersActionTypes.NODE_USERS__GET_ONE__REQUEST,

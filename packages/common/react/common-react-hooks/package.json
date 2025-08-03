@@ -11,8 +11,12 @@
     "build": "tsc -b tsconfig.build.json"
   },
   "dependencies": {
+    "@js-modules/api-nest-utils": "workspace:^",
+    "@types/lodash": "^4.17.16",
     "@types/react": "^19.0.12",
-    "react": "^19.0.0"
+    "lodash": "^4.17.21",
+    "react": "^19.0.0",
+    "react-router-dom": "^7.4.0"
   },
   "eslintConfig": {}
 }

@@ -36,6 +36,8 @@ export const nodeLogEntriesPkSchema: PkSchema<NodeLogEntry, ['id'], []> = {
 };
 
 export interface NodeLogEntriesReducerMetadata extends ReducerMetadata {
+  getManyTotal: number;
+  getManyPksSorted: string[];
   nodeLogEntryUnsaved: NodeLogEntry | null;
 }
 

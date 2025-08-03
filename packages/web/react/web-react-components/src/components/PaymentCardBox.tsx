@@ -8,7 +8,7 @@ import { PaymentCard } from '@js-modules/common-utils-general';
 import isEmpty from 'lodash/isEmpty';
 import ceil from 'lodash/ceil';
 import { MuiFaIcon } from './MuiFaIcon';
-import { FormTextFieldProps } from '../types/formTextFieldProps.types';
+import { FormTextFieldProps } from '../types/form.types';
 
 export type PaymentCardBoxProps = {
   sx?: BoxProps['sx'];

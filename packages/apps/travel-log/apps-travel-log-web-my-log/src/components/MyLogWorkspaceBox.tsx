@@ -5,6 +5,8 @@ import { MyLogWorkspaceTopToolbar } from './MyLogWorkspaceTopToolbar';
 import { MyLogWorkspaceContentBox } from './MyLogWorkspaceContentBox';
 
 export const MyLogWorkspaceBox: React.FC = () => {
+  // TODO: write filter and sorting logic where the state is maintained in
+  //  the url query params.
   return (
     <MyWorkspaceBox
       title={WebModulesPrivate.myLog}

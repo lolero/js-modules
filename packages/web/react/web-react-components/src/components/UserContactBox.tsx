@@ -5,7 +5,7 @@ import { FormUtils, FormValidator } from '@js-modules/web-react-hooks';
 import { UserContact } from '@js-modules/common-utils-general';
 import isEmpty from 'lodash/isEmpty';
 import { CallingCodesAutocomplete } from './CallingCodesAutocomplete';
-import { FormTextFieldProps } from '../types/formTextFieldProps.types';
+import { FormTextFieldProps } from '../types/form.types';
 
 export type UserContactBoxProps = {
   sx?: BoxProps['sx'];

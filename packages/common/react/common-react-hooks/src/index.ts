@@ -1,1 +1,2 @@
-export * from './hooks/commonReactHooks/commonReactHooks.exports';
+export * from './hooks/hooks.exports';
+export * from './types/types.exports';
