@@ -15,7 +15,7 @@
     "@js-modules/apps-travel-log-common-constants": "workspace:^"
   },
   "devDependencies": {
-    "esbuild": "^0.25.1"
+    "esbuild": "^0.25.8"
   },
   "eslintConfig": {}
 }

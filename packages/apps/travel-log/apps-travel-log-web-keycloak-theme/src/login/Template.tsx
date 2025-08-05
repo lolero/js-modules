@@ -56,7 +56,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
   return (
     <Box
       sx={{
-        backgroundColor: 'red',
+        backgroundColor: 'orange',
       }}
       className={kcClsx('kcLoginClass')}
     >

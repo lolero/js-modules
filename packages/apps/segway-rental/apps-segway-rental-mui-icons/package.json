@@ -13,9 +13,9 @@
   },
   "dependencies": {
     "@js-modules/web-react-utils": "workspace:^",
-    "@mui/material": "^7.0.0",
-    "@types/react": "^19.0.12",
-    "react": "^19.0.0"
+    "@mui/material": "^7.3.1",
+    "@types/react": "^19.1.10",
+    "react": "^19.1.1"
   },
   "devDependencies": {
     "ts-node": "^10.9.2",
