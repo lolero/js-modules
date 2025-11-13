@@ -1,4 +1,7 @@
-export type FindManyOrderDirection = 'asc' | 'desc';
+export enum FindManyOrderDirection {
+  asc = 'asc',
+  desc = 'desc',
+}
 
 export type RequestEntity = object;
 
@@ -30,11 +33,35 @@ export type FindManyBooleansDto<EntityT extends RequestEntity = RequestEntity> =
     [entityPropName in keyof EntityT]?: boolean;
   };
 
+export type FindManyOrderItemDto<
+  EntityT extends RequestEntity = RequestEntity,
+> = {
+  entityPropName: keyof EntityT;
+  orderDirection: FindManyOrderDirection;
+};
+
 export type FindManyOrderDto<EntityT extends RequestEntity = RequestEntity> =
   Array<{
     entityPropName: keyof EntityT;
     orderDirection: FindManyOrderDirection;
   }>;
+
+export type FindManyPaginationDto = {
+  pageNumber: number;
+  resultsPerPage: number;
+};
+
+export type FindManyDto<EntityT extends RequestEntity = RequestEntity> = {
+  uniqueKeys?: FindManyUniqueKeysDto<EntityT>;
+  search?: FindManySearchDto<EntityT>;
+  relations?: FindManyRelationsDto<EntityT>;
+  dateRanges?: FindManyRangesDto<EntityT>;
+  numberRanges?: FindManyRangesDto<EntityT>;
+  stringRanges?: FindManyRangesDto<EntityT>;
+  booleans?: FindManyBooleansDto<EntityT>;
+  order?: FindManyOrderItemDto<EntityT>[];
+  pagination?: FindManyPaginationDto;
+};
 
 export type EntityUniqueKeyName<
   EntityT extends RequestEntity,

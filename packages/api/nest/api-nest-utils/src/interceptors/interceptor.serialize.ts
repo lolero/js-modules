@@ -11,7 +11,7 @@ import { FindManyResponse } from '../types/types.requests';
 type Dto = ClassConstructor<any>;
 
 class Serialize<EntityT> implements NestInterceptor {
-  constructor(private dto: Dto) {}
+  constructor(private readonly dto: Dto) {}
 
   intercept(
     context: ExecutionContext,

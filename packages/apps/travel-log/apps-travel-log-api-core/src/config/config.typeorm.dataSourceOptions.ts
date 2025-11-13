@@ -28,7 +28,7 @@ let configTypeormDataSourceOptionsVariable: Pick<
 > = {
   type: 'postgres',
   host: 'localhost',
-  port: 5432,
+  port: 5433,
   username: 'postgres',
   password: 'postgres',
   database: 'core',
@@ -41,7 +41,7 @@ switch (process.env.NODE_ENV) {
     configTypeormDataSourceOptionsVariable = {
       type: 'postgres',
       host: 'localhost',
-      port: 5432,
+      port: 5433,
       username: 'postgres',
       password: 'postgres',
       database: 'core',

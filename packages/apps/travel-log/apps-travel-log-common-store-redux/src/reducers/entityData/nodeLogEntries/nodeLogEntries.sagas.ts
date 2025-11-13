@@ -7,7 +7,8 @@ import {
   takeEvery,
   takeLatest,
 } from 'redux-saga/effects';
-import { NodeLogEntriesReducer } from './nodeLogEntries.types';
+import { NormalizeEntityDtoArrayResponse } from '@js-modules/common-redux-utils-normalized-reducers';
+import { NodeLogEntriesReducer, NodeLogEntry } from './nodeLogEntries.types';
 import {
   NodeLogEntriesActionTypes,
   NodeLogEntriesCreateOneRequestAction,
@@ -171,24 +172,35 @@ export function* nodeLogEntriesGetManySaga({
 }: NodeLogEntriesGetManyRequestAction): Generator<
   CallEffect | PutEffect,
   void,
-  NodeLogEntriesGetManyServiceResponse | NodeLogEntriesReducer['data']
+  | NodeLogEntriesGetManyServiceResponse
+  | NormalizeEntityDtoArrayResponse<NodeLogEntry>
 > {
   const { findManyDto } = requestMetadata;
 
   try {
-    const { data: logEntriesDtoArray, status: statusCode } = (yield call(
+    const {
+      data: { entities: logEntriesDtoArray, total: getManyTotal },
+      status: statusCode,
+    } = (yield call(
       nodeLogEntriesGetManyService,
       findManyDto,
     )) as NodeLogEntriesGetManyServiceResponse;
 
-    const normalizedNodeLogEntries = (yield call(
+    const {
+      reducerData: normalizedNodeLogEntries,
+      entityPksSorted: getManyPksSorted,
+    } = (yield call(
       normalizeLogEntriesDtoArray,
       logEntriesDtoArray,
-    )) as NodeLogEntriesReducer['data'];
+    )) as NormalizeEntityDtoArrayResponse<NodeLogEntry>;
 
     yield put(
       createNodeLogEntriesGetManySuccessAction(
         normalizedNodeLogEntries,
+        {
+          getManyTotal,
+          getManyPksSorted,
+        },
         requestId,
         statusCode,
         true,

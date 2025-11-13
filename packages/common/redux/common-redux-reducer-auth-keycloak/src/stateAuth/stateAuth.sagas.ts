@@ -99,19 +99,22 @@ export function* stateAuthInitializeSaga({
   void,
   boolean
 > {
-  const { keycloakConfig, onSigninCallback, onSignoutCallback } =
-    requestMetadata;
+  const {
+    keycloakConfig,
+    keycloakInitOptions,
+    onSigninCallback,
+    onSignoutCallback,
+  } = requestMetadata;
 
   keycloak = new Keycloak(keycloakConfig);
 
   try {
     yield fork(stateAuthMonitorSaga, keycloak, onSignoutCallback);
 
-    const isAuthenticated = (yield call(keycloak.init, {
-      onLoad: 'check-sso',
-      // silentCheckSsoRedirectUri: `${window.location.origin}/silent-check-sso.html`,
-      checkLoginIframe: false,
-    })) as boolean;
+    const isAuthenticated = (yield call(
+      keycloak.init,
+      keycloakInitOptions,
+    )) as boolean;
 
     yield put(
       createStateAuthInitializeSuccessAction(
@@ -127,6 +130,7 @@ export function* stateAuthInitializeSaga({
     }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err: any) {
+    console.error('stateAuthInitializeSaga error:', err);
     yield put(createStateAuthInitializeFailAction(err, requestId));
   }
 }
@@ -139,15 +143,16 @@ export function* stateAuthSigninSaga({
   void,
   void
 > {
-  const { signinAction, redirectUri, onSigninCallback } = requestMetadata;
+  const { signinAction, keycloakLoginOptions, onSigninCallback } =
+    requestMetadata;
 
   try {
     switch (signinAction) {
       case SigninAction.signup:
-        yield call(keycloak.register, { redirectUri });
+        yield call(keycloak.register, keycloakLoginOptions);
         break;
       case SigninAction.login:
-        yield call(keycloak.login, { redirectUri });
+        yield call(keycloak.login, keycloakLoginOptions);
         break;
       default:
         throw new Error('Unknown signin action');
@@ -158,6 +163,7 @@ export function* stateAuthSigninSaga({
     onSigninCallback?.();
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err: any) {
+    console.error('stateAuthSigninSaga error:', err);
     yield put(createStateAuthSigninFailAction(err, requestId));
   }
 }
@@ -170,16 +176,17 @@ export function* stateAuthSignoutSaga({
   void,
   void
 > {
-  const { redirectUri, onSignoutCallback } = requestMetadata;
+  const { keycloakLogoutOptions, onSignoutCallback } = requestMetadata;
 
   try {
-    yield call(keycloak.logout, { redirectUri });
+    yield call(keycloak.logout, keycloakLogoutOptions);
 
     yield put(createStateAuthSignoutSuccessAction(requestId));
 
     onSignoutCallback?.();
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err: any) {
+    console.error('stateAuthSignoutSaga error:', err);
     yield put(createStateAuthSignoutFailAction(err, requestId));
   }
 }

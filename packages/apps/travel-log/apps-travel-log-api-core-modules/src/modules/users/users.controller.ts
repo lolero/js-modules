@@ -14,7 +14,7 @@ import { UsersFindManyDto } from './dtos/users.findMany.dto';
 @Controller(ApiControllersTravelLog.usersPublic)
 @InterceptorSerialize<UsersEntity>(UsersPublicDto)
 export class UsersController {
-  constructor(private usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService) {}
 
   @Get('/:uniqueKeyValue')
   async findOne(

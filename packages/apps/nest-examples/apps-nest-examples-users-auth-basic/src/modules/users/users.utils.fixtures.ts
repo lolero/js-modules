@@ -1,5 +1,5 @@
 import omit from 'lodash/omit';
-import { utilGetDtoFindManyFixture } from '@js-modules/api-nest-utils';
+import { utilGetFindManyDtoFixture } from '@js-modules/api-nest-utils';
 import {
   getAuthDtoSignupFixture,
   getAuthUserEntityFixture,
@@ -13,7 +13,6 @@ import { UsersDtoDeleteMany } from './users.dto.deleteMany';
 import { UsersEntity } from './users.entity';
 import { getSystemRolesEntityFixture } from '../systemRoles/systemRoles.utils.fixtures';
 import { UsersEntityType } from './users.types';
-import { UsersDtoFindManyUniqueKeys } from './users.dto.findManyUniqueKeys';
 
 export function getUsersEntityFixture(
   overrides: Partial<UsersEntityType> = {},
@@ -38,10 +37,7 @@ export function getUsersDtoCreateOneFixture(
 export function getUsersDtoFindManyFixture(
   overrides: Partial<UsersDtoFindMany> = {},
 ): UsersDtoFindMany {
-  return utilGetDtoFindManyFixture<
-    UsersDtoFindManyUniqueKeys,
-    UsersDtoFindMany['sortBy']
-  >(overrides);
+  return utilGetFindManyDtoFixture<UsersEntity>(overrides);
 }
 
 export function getUsersDtoUpdateOneWholeFixture(

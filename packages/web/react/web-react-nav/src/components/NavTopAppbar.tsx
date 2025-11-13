@@ -101,6 +101,7 @@ export const NavTopAppbar = forwardRef<HTMLDivElement, NavTopAppbarProps>(
         >
           <Box
             sx={{
+              color: 'primary.main',
               width: logoBoxWidth,
               height: (t) => `calc(${navTopToolbarHeight}px - ${t.spacing(1)})`,
               pr: (t) => t.spacing(1),

@@ -1,6 +1,6 @@
 import { SelectQueryBuilder } from 'typeorm';
 import keys from 'lodash/keys';
-import snakeCase from 'lodash/snakeCase';
+import { camelToSnakeCaseWithAcronyms } from '@js-modules/common-utils-general-cjs';
 import { FindManyRelationsDto, RequestEntity } from '../types/types.requests';
 
 export function utilApplyFindManyRelationsFiltersToQuery<
@@ -28,7 +28,7 @@ export function utilApplyFindManyRelationsFiltersToQuery<
     uniqueKeyNames.forEach((uniqueKeyName, uniqueKeyNameIndex) => {
       const uniqueKeyValues =
         findManyUniqueKeysDto[uniqueKeyName as keyof RequestEntity]!;
-      const whereStr = `${relationNameIndividual}.${snakeCase(
+      const whereStr = `${relationNameIndividual}.${camelToSnakeCaseWithAcronyms(
         uniqueKeyName,
       )} IN (:...${relationNameIndividual}${uniqueKeyName})`;
       const whereParams = {

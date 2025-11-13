@@ -1,5 +1,6 @@
 export * from './types/actions.types';
 export * from './types/hooks.types';
+export * from './types/normalizer.types';
 export * from './types/pk.types';
 export * from './types/reducers.types';
 export * from './types/requests.types';

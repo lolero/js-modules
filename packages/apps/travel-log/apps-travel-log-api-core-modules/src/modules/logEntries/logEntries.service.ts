@@ -23,7 +23,7 @@ import { LogEntriesDeleteManyDto } from './dtos/logEntries.deleteMany.dto';
 export class LogEntriesService {
   constructor(
     @InjectRepository(LogEntriesEntity)
-    private logEntriesRepository: Repository<LogEntriesEntity>,
+    private readonly logEntriesRepository: Repository<LogEntriesEntity>,
   ) {}
 
   async createOne(

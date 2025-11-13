@@ -1,4 +1,4 @@
-import { DtoFindMany } from '@js-modules/api-nest-utils';
+import { utilCreateFindManyDto } from '@js-modules/api-nest-utils';
 import { LogEntriesEntity } from '../logEntries.entity';
 import { LogEntriesFindManyUniqueKeysDto } from './logEntries.findManyUniqueKeys.dto';
 import { LogEntriesFindManyRangesDateDto } from './logEntries.findManyRangesDate.dto';
@@ -7,12 +7,12 @@ import { LogEntriesFindManyRangesStringDto } from './logEntries.findManyRangesSt
 import { LogEntriesFindManySearchDto } from './logEntries.findManySearch.dto';
 import { LogEntriesFindManyRelationsDto } from './logEntries.findManyRelations.dto';
 
-export class LogEntriesFindManyDto extends DtoFindMany<
+export class LogEntriesFindManyDto extends utilCreateFindManyDto(
   LogEntriesEntity,
   LogEntriesFindManyUniqueKeysDto,
   LogEntriesFindManySearchDto,
   LogEntriesFindManyRelationsDto,
   LogEntriesFindManyRangesDateDto,
   LogEntriesFindManyRangesNumberDto,
-  LogEntriesFindManyRangesStringDto
-> {}
+  LogEntriesFindManyRangesStringDto,
+) {}

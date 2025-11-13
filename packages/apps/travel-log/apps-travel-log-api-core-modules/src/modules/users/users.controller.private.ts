@@ -13,7 +13,7 @@ import { UsersPrivateDto } from './dtos/users.private.dto';
 @Controller(ApiControllersTravelLog.usersPrivate)
 @InterceptorSerialize<UsersEntity>(UsersPrivateDto)
 export class UsersControllerPrivate {
-  constructor(private usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService) {}
 
   @Get()
   async checkIn(

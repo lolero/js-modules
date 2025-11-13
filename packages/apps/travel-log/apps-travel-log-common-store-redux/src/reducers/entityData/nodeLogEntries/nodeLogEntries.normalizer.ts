@@ -1,4 +1,5 @@
 import { LogEntriesDto } from '@js-modules/apps-travel-log-api-core-modules/src/modules/logEntries/dtos/logEntries.dto';
+import { NormalizeEntityDtoArrayResponse } from '@js-modules/common-redux-utils-normalized-reducers';
 import { NodeLogEntry, NodeLogEntriesReducer } from './nodeLogEntries.types';
 import { getPkOfNodeLogEntry } from './nodeLogEntries.pkUtils';
 import { NodeUser } from '../nodeUsers/nodeUsers.types';
@@ -6,7 +7,8 @@ import { getPkOfNodeUser } from '../nodeUsers/nodeUsers.pkUtils';
 
 export function normalizeLogEntriesDtoArray(
   logEntriesDtoArray: LogEntriesDto[],
-): NodeLogEntriesReducer['data'] {
+): NormalizeEntityDtoArrayResponse<NodeLogEntry> {
+  const entityPksSorted: string[] = [];
   const normalizedNodeLogEntries: NodeLogEntriesReducer['data'] =
     logEntriesDtoArray.reduce(
       (
@@ -31,6 +33,9 @@ export function normalizeLogEntriesDtoArray(
           },
         };
 
+        const nodeLogEntryPk = getPkOfNodeLogEntry(nodeLogEntry);
+        entityPksSorted.push(nodeLogEntryPk);
+
         return {
           ...normalizedNodeLogEntriesTemp,
           [getPkOfNodeLogEntry(nodeLogEntry)]: nodeLogEntry,
@@ -39,5 +44,8 @@ export function normalizeLogEntriesDtoArray(
       {},
     );
 
-  return normalizedNodeLogEntries;
+  return {
+    reducerData: normalizedNodeLogEntries,
+    entityPksSorted,
+  };
 }

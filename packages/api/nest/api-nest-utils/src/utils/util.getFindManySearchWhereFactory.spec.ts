@@ -1,5 +1,4 @@
 import { SelectQueryBuilder, WhereExpressionBuilder } from 'typeorm';
-import snakeCase from 'lodash/snakeCase';
 import { RequestEntity } from '../types/types.requests';
 import { DtoFindManySearch } from '../dtos/dto.findManySearch';
 import { utilGetFindManySearchWhereFactory } from './util.getFindManySearchWhereFactory';
@@ -7,7 +6,7 @@ import { utilGetFindManySearchWhereFactory } from './util.getFindManySearchWhere
 interface TestEntity extends RequestEntity {
   uniqueKeyNumber1: number;
   propString1: string;
-  propString2: string;
+  propSTRING2: string;
 }
 
 describe('utilGetFindManySearchWhereFactory', () => {
@@ -31,7 +30,7 @@ describe('utilGetFindManySearchWhereFactory', () => {
   it('Should call whereExpressionBuilder.where and whereExpressionBuilder.orWhere with the corresponding search filters', () => {
     const findManySearchDto: DtoFindManySearch<TestEntity> = {
       searchStr: 'test_search_str',
-      entityPropNames: ['propString1', 'propString2'],
+      entityPropNames: ['propString1', 'propSTRING2'],
     };
 
     const whereFactory = utilGetFindManySearchWhereFactory(
@@ -42,20 +41,16 @@ describe('utilGetFindManySearchWhereFactory', () => {
 
     expect(whereMock).toHaveBeenNthCalledWith(
       1,
-      `${selectQueryBuilderMock.alias}.${snakeCase(
-        'propString1',
-      )} LIKE :propString1`,
+      `${selectQueryBuilderMock.alias}.prop_string1 LIKE :propString1`,
       {
         propString1: `%${findManySearchDto.searchStr}%`,
       },
     );
     expect(orWhereMock).toHaveBeenNthCalledWith(
       1,
-      `${selectQueryBuilderMock.alias}.${snakeCase(
-        'propString2',
-      )} LIKE :propString2`,
+      `${selectQueryBuilderMock.alias}.prop_STRING2 LIKE :propSTRING2`,
       {
-        propString2: `%${findManySearchDto.searchStr}%`,
+        propSTRING2: `%${findManySearchDto.searchStr}%`,
       },
     );
   });

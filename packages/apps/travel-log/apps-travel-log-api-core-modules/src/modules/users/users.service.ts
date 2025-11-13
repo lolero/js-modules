@@ -25,10 +25,10 @@ import { UsersUpdateOnePartialDto } from './dtos/users.updateOnePartial.dto';
 export class UsersService implements AuthUsersService {
   constructor(
     @InjectRepository(UsersEntity)
-    private usersRepository: Repository<UsersEntity>,
-    private usersServiceUtils: UsersServiceUtils,
+    private readonly usersRepository: Repository<UsersEntity>,
+    private readonly usersServiceUtils: UsersServiceUtils,
     @Inject(KEYCLOAK_ADMIN_CLIENT)
-    private keycloakAdminClient: KeycloakAdminClient,
+    private readonly keycloakAdminClient: KeycloakAdminClient,
   ) {}
 
   async checkIn(

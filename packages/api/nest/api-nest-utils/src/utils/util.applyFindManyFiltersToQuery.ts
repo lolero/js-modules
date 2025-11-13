@@ -1,8 +1,7 @@
 import { Brackets, SelectQueryBuilder } from 'typeorm';
 import isEmpty from 'lodash/isEmpty';
 import { BadRequestException } from '@nestjs/common';
-import { RequestEntity } from '../types/types.requests';
-import { DtoFindMany } from '../dtos/dto.findMany';
+import { FindManyDto, RequestEntity } from '../types/types.requests';
 import { utilGetFindManyUniqueKeysWhereFactory } from './util.getFindManyUniqueKeysWhereFactory';
 import { utilGetFindManySearchWhereFactory } from './util.getFindManySearchWhereFactory';
 import {
@@ -14,7 +13,7 @@ import { utilGetFindManyBooleansWhereFactory } from './util.getFindManyBooleansW
 
 export function utilApplyFindManyFiltersToQuery<EntityT extends RequestEntity>(
   query: SelectQueryBuilder<EntityT>,
-  dtoFindMany: DtoFindMany<EntityT>,
+  dtoFindMany: FindManyDto<EntityT>,
   eagerFetchRelations: (keyof EntityT)[] = [],
 ): SelectQueryBuilder<EntityT> {
   if (dtoFindMany.uniqueKeys && !isEmpty(dtoFindMany.uniqueKeys)) {

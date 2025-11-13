@@ -58,9 +58,13 @@ export function useFormUtils<FormDataT extends Record<string, any>>(
       const fieldName = e.currentTarget.getAttribute(
         'data-key',
       ) as keyof FormDataT;
-      let fieldValue: string | boolean | number = e.target.value;
+      let fieldValue: string | boolean | number | File[] = e.target.value;
       if (inputType === 'checkbox') {
         fieldValue = (e as React.ChangeEvent<HTMLInputElement>).target.checked;
+      } else if (inputType === 'file') {
+        fieldValue = Array.from(
+          (e as React.ChangeEvent<HTMLInputElement>).target.files!,
+        );
       } else if (jsonFieldNames.includes(fieldName)) {
         fieldValue = JSON.parse(fieldValue);
       }

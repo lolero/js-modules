@@ -7,7 +7,7 @@ import {
   NODE_LOG_ENTRIES__UPDATE_MANY_PARTIAL_WITH_PATTERN__REQUEST_ID,
   NODE_LOG_ENTRIES__UPDATE_ONE_PARTIAL__REQUEST_ID,
   NODE_LOG_ENTRIES__UPDATE_ONE_WHOLE__REQUEST_ID,
-} from './nodeLogEntries.actions.creators';
+} from './nodeLogEntries.actions.types';
 
 const nodeLogEntriesReducerMetadataInitialState: NodeLogEntriesReducer['metadata'] =
   {

@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@js-modules/apps-travel-log-api-core-modules",
-  "description": "Apps Travel log Api Core Modules",
+  "description": "Apps Travel Log Api Core Modules",
   "version": "0.0.0",
   "license": "MIT",
   "main": "build/index",

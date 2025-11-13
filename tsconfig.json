@@ -12,6 +12,9 @@
       "@js-modules/api-nest-module-auth-keycloak": [
         "api/nest/api-nest-module-auth-keycloak/src"
       ],
+      "@js-modules/api-nest-module-aws-s3-files": [
+        "api/nest/api-nest-module-aws-s3-files/src"
+      ],
       "@js-modules/api-nest-utils": [
         "api/nest/api-nest-utils/src"
       ],
@@ -107,6 +110,7 @@
       ],
       "@js-modules/common-react-hooks": ["common/react/common-react-hooks/src"],
       "@js-modules/common-redux-reducer-auth-keycloak": ["common/redux/common-redux-reducer-auth-keycloak/src"],
+      "@js-modules/common-redux-reducer-aws-s3-files": ["common/redux/common-redux-reducer-aws-s3-files/src"],
       "@js-modules/common-redux-utils-normalized-reducers": ["common/redux/common-redux-utils-normalized-reducers/src"],
       "@js-modules/common-utils-general": [
         "common/utils/common-utils-general/src"

@@ -25,7 +25,7 @@ import { UsersEntity } from '../users/users.entity';
 @Controller('/products')
 @InterceptorSerialize<ProductsEntity>(ProductsDtoPublic)
 export class ProductsController {
-  constructor(private productsService: ProductsService) {}
+  constructor(private readonly productsService: ProductsService) {}
 
   @Get('/hello-world')
   @Public()

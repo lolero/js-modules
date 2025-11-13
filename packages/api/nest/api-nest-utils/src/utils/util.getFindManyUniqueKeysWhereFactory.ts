@@ -1,6 +1,6 @@
 import { SelectQueryBuilder, WhereExpressionBuilder } from 'typeorm';
 import keys from 'lodash/keys';
-import snakeCase from 'lodash/snakeCase';
+import { camelToSnakeCaseWithAcronyms } from '@js-modules/common-utils-general-cjs';
 import { FindManyUniqueKeysDto, RequestEntity } from '../types/types.requests';
 
 export function utilGetFindManyUniqueKeysWhereFactory<
@@ -15,7 +15,7 @@ export function utilGetFindManyUniqueKeysWhereFactory<
     uniqueKeyNames.forEach((uniqueKeyName, uniqueKeyNameIndex) => {
       const uniqueKeyValues =
         findManyUniqueKeysDto[uniqueKeyName as keyof EntityT]!;
-      const whereStr = `${query.alias}.${snakeCase(
+      const whereStr = `${query.alias}.${camelToSnakeCaseWithAcronyms(
         uniqueKeyName,
       )} IN (:...${uniqueKeyName})`;
       const whereParams = {

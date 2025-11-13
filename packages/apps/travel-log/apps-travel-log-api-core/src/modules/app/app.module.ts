@@ -28,7 +28,7 @@ import { configTypeormDataSourceOptions } from '../../config/config.typeorm.data
         authServerUrl: AUTH_URI_TRAVEL_LOG,
         realm: 'travel-log',
         clientId: 'client-api-core',
-        secret: 'HGdZlkiK5KlOpcFd07s1TVEKXefNZNQW',
+        secret: 'O3TeW6hj9yQPQEbRRDJrcxtIdJGl3JBx',
         policyEnforcement: PolicyEnforcementMode.PERMISSIVE,
         tokenValidation: TokenValidation.ONLINE,
       },
@@ -40,7 +40,7 @@ import { configTypeormDataSourceOptions } from '../../config/config.typeorm.data
         credentials: {
           grantType: 'client_credentials',
           clientId: 'admin-cli',
-          clientSecret: 'yy4SyUcEEgy8QkFSEaeKdnz2OeBtUsox',
+          clientSecret: 'O1OsPPggxSSiKwRzsuvr4jVw0iOHWCNO',
         },
       },
       {
@@ -63,7 +63,7 @@ import { configTypeormDataSourceOptions } from '../../config/config.typeorm.data
   ],
 })
 export class AppModule {
-  constructor(private configService: ConfigService) {}
+  constructor(private readonly configService: ConfigService) {}
 
   configure(consumer: MiddlewareConsumer) {
     consumer

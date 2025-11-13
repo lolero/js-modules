@@ -1,5 +1,11 @@
 import { v4 as uuidv4 } from 'uuid';
 import {
+  NODE_LOG_ENTRIES__CREATE_ONE__REQUEST_ID,
+  NODE_LOG_ENTRIES__DELETE_MANY__REQUEST_ID,
+  NODE_LOG_ENTRIES__DELETE_ONE__REQUEST_ID,
+  NODE_LOG_ENTRIES__UPDATE_MANY_PARTIAL_WITH_PATTERN__REQUEST_ID,
+  NODE_LOG_ENTRIES__UPDATE_ONE_PARTIAL__REQUEST_ID,
+  NODE_LOG_ENTRIES__UPDATE_ONE_WHOLE__REQUEST_ID,
   NodeLogEntriesActionTypes,
   NodeLogEntriesClearReducerRequestsAction,
   NodeLogEntriesCreateOneFailAction,
@@ -74,8 +80,6 @@ export function createNodeLogEntriesUpdatePartialReducerMetadataFailAction(
   };
 }
 
-export const NODE_LOG_ENTRIES__CREATE_ONE__REQUEST_ID =
-  'NODE_LOG_ENTRIES__CREATE_ONE__REQUEST_ID';
 export function createNodeLogEntriesCreateOneRequestAction(
   entity: NodeLogEntriesCreateOneRequestAction['requestMetadata']['entity'],
 ): NodeLogEntriesCreateOneRequestAction {
@@ -164,6 +168,7 @@ export function createNodeLogEntriesGetManyRequestAction(
 
 export function createNodeLogEntriesGetManySuccessAction(
   wholeEntities: NodeLogEntriesGetManySuccessAction['wholeEntities'],
+  partialReducerMetadata: NodeLogEntriesGetManySuccessAction['partialReducerMetadata'],
   requestId: NodeLogEntriesGetManySuccessAction['requestId'],
   statusCode: NodeLogEntriesGetManySuccessAction['statusCode'],
   flush: NodeLogEntriesGetManySuccessAction['flush'],
@@ -171,6 +176,7 @@ export function createNodeLogEntriesGetManySuccessAction(
   return {
     type: NodeLogEntriesActionTypes.NODE_LOG_ENTRIES__GET_MANY__SUCCESS,
     wholeEntities,
+    partialReducerMetadata,
     requestId,
     statusCode,
     flush,
@@ -188,8 +194,6 @@ export function createNodeLogEntriesGetManyFailAction(
   };
 }
 
-export const NODE_LOG_ENTRIES__UPDATE_ONE_WHOLE__REQUEST_ID =
-  'NODE_LOG_ENTRIES__UPDATE_ONE_WHOLE__REQUEST_ID';
 export function createNodeLogEntriesUpdateOneWholeRequestAction(
   entity: NodeLogEntriesUpdateOneWholeRequestAction['requestMetadata']['entity'],
 ): NodeLogEntriesUpdateOneWholeRequestAction {
@@ -226,8 +230,6 @@ export function createNodeLogEntriesUpdateOneWholeFailAction(
   };
 }
 
-export const NODE_LOG_ENTRIES__UPDATE_ONE_PARTIAL__REQUEST_ID =
-  'NODE_LOG_ENTRIES__UPDATE_ONE_PARTIAL__REQUEST_ID';
 export function createNodeLogEntriesUpdateOnePartialRequestAction(
   entityPk: NodeLogEntriesUpdateOnePartialRequestAction['requestMetadata']['entityPk'],
   partialEntity: NodeLogEntriesUpdateOnePartialRequestAction['requestMetadata']['partialEntity'],
@@ -266,8 +268,6 @@ export function createNodeLogEntriesUpdateOnePartialFailAction(
   };
 }
 
-export const NODE_LOG_ENTRIES__UPDATE_MANY_PARTIAL_WITH_PATTERN__REQUEST_ID =
-  'NODE_LOG_ENTRIES__UPDATE_MANY_PARTIAL_WITH_PATTERN__REQUEST_ID';
 export function createNodeLogEntriesUpdateManyPartialWithPatternRequestAction(
   entityPks: NodeLogEntriesUpdateManyPartialWithPatternRequestAction['requestMetadata']['entityPks'],
   partialEntity: NodeLogEntriesUpdateManyPartialWithPatternRequestAction['requestMetadata']['partialEntity'],
@@ -306,8 +306,6 @@ export function createNodeLogEntriesUpdateManyPartialWithPatternFailAction(
   };
 }
 
-export const NODE_LOG_ENTRIES__DELETE_ONE__REQUEST_ID =
-  'NODE_LOG_ENTRIES__DELETE_ONE__REQUEST_ID';
 export function createNodeLogEntriesDeleteOneRequestAction(
   entityPk: NodeLogEntriesDeleteOneRequestAction['requestMetadata']['entityPk'],
 ): NodeLogEntriesDeleteOneRequestAction {
@@ -344,8 +342,6 @@ export function createNodeLogEntriesDeleteOneFailAction(
   };
 }
 
-export const NODE_LOG_ENTRIES__DELETE_MANY__REQUEST_ID =
-  'NODE_LOG_ENTRIES__DELETE_MANY__REQUEST_ID';
 export function createNodeLogEntriesDeleteManyRequestAction(
   entityPks: NodeLogEntriesDeleteManyRequestAction['requestMetadata']['entityPks'],
 ): NodeLogEntriesDeleteManyRequestAction {

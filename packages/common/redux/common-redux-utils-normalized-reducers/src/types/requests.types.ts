@@ -1,6 +1,6 @@
-import { DtoFindMany } from '@js-modules/api-nest-utils/src/dtos/dto.findMany';
 import {
   EntityUniqueKeyValue,
+  FindManyDto,
   RequestEntity,
 } from '@js-modules/api-nest-utils/src/types/types.requests';
 import { Entity, RequestMetadata, ReducerMetadata } from './reducers.types';
@@ -32,7 +32,7 @@ export interface GetOneEntityRequestMetadata<
 
 export interface GetManyEntitiesRequestMetadata<
   EntityT extends RequestEntity,
-  findManyDtoT extends DtoFindMany<EntityT>,
+  findManyDtoT extends FindManyDto<EntityT>,
 > extends RequestMetadata {
   findManyDto?: findManyDtoT;
 }

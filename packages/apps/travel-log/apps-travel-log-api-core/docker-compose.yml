@@ -14,7 +14,7 @@ services:
     command: ['postgres']
     restart: always
     ports:
-      - '5432:5432'
+      - '5433:5432'
     environment:
       POSTGRES_DB: core
       POSTGRES_USER: postgres
@@ -24,7 +24,7 @@ services:
     command: ['postgres']
     restart: always
     ports:
-      - '5433:5432'
+      - '5434:5432'
     environment:
       POSTGRES_DB: auth
       POSTGRES_USER: postgres
@@ -59,7 +59,7 @@ services:
     volumes:
       - ./keycloak/certificates:/opt/keycloak/certificates
       - ./keycloak/backup:/opt/keycloak/data/import
-      - ./node_modules/@js-modules/apps-travel-log-web-keycloak-theme/build_keycloak:/opt/keycloak/providers
+      - ../apps-travel-log-web-keycloak-theme/build_keycloak:/opt/keycloak/providers
   mailhog:
     image: mailhog/mailhog
     restart: always

@@ -16,7 +16,7 @@ import {
   useStateSettingsGetProfile,
   useStateSettingsSignout,
 } from '@js-modules/apps-travel-log-common-store-redux';
-import { KeycloakConfig } from 'keycloak-js';
+import { KeycloakConfig, KeycloakInitOptions } from 'keycloak-js';
 import { SettingsRoutes } from '@js-modules/apps-travel-log-web-settings';
 import { MyLogRoutes } from '@js-modules/apps-travel-log-web-my-log';
 import {
@@ -30,6 +30,12 @@ const keycloakConfig: KeycloakConfig = {
   clientId: 'client-web',
 };
 
+const keycloakInitOptions: KeycloakInitOptions = {
+  onLoad: 'check-sso',
+  // silentCheckSsoRedirectUri: `${window.location.origin}/silent-check-sso.html`,
+  checkLoginIframe: false,
+};
+
 export const TravelLogRoutes: React.FunctionComponent = () => {
   const { callback: stateSettingsGetProfileCallback } =
     useStateSettingsGetProfile();
@@ -41,6 +47,7 @@ export const TravelLogRoutes: React.FunctionComponent = () => {
     callback: stateAuthInitializeKeycloakCallback,
   } = useStateAuthInitializeKeycloak(
     keycloakConfig,
+    keycloakInitOptions,
     stateSettingsGetProfileCallback,
     stateSettingsSignoutCallback,
   );

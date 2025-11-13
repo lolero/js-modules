@@ -1,4 +1,4 @@
-import { DtoFindMany } from '@js-modules/api-nest-utils';
+import { utilCreateFindManyDto } from '@js-modules/api-nest-utils';
 import { UsersEntity } from './users.entity';
 
-export class UsersDtoFindMany extends DtoFindMany<UsersEntity> {}
+export class UsersDtoFindMany extends utilCreateFindManyDto(UsersEntity) {}

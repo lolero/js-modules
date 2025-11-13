@@ -4,8 +4,10 @@ import {
   API_CORE_PORT_TRAVEL_LOG,
   WEB_CLIENT_URI_TRAVEL_LOG,
 } from '@js-modules/apps-travel-log-common-constants-cjs';
+import { loadEnvConfig } from '@js-modules/common-utils-general-cjs';
 import { AppModule } from './modules/app/app.module';
 
+loadEnvConfig();
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     cors: {

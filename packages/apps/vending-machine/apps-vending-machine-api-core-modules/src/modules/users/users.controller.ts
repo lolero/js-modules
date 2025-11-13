@@ -9,7 +9,7 @@ import { ProductsEntity } from '../products/products.entity';
 
 @Controller('users')
 export class UsersController {
-  constructor(private usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService) {}
 
   @Get('/hello-world')
   @Public()

@@ -1,4 +1,4 @@
-import { utilGetDtoFindManyFixture } from '@js-modules/api-nest-utils';
+import { utilGetFindManyDtoFixture } from '@js-modules/api-nest-utils';
 import omit from 'lodash/omit';
 import { UserRepresentation } from '@js-modules/api-nest-keycloak-admin-client-cjs';
 import { UsersFindManyDto } from './dtos/users.findMany.dto';
@@ -71,15 +71,7 @@ export function getKeycloakUserRepresentationFixture(
 export function getUsersFindManyDtoFixture(
   overrides: Partial<UsersFindManyDto> = {},
 ): UsersFindManyDto {
-  return utilGetDtoFindManyFixture<
-    UsersEntity,
-    UsersFindManyUniqueKeysDto,
-    UsersFindManySearchDto,
-    UsersFindManyRelationsDto,
-    UsersFindManyRangesDateDto,
-    UsersFindManyRangesNumberDto,
-    UsersFindManyRangesStringDto
-  >(overrides);
+  return utilGetFindManyDtoFixture<UsersEntity>(overrides);
 }
 
 export function getUsersUpdateOnePartialDtoFixture(

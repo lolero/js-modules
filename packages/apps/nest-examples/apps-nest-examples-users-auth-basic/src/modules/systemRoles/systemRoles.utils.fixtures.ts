@@ -1,5 +1,5 @@
 import omit from 'lodash/omit';
-import { utilGetDtoFindManyFixture } from '@js-modules/api-nest-utils';
+import { utilGetFindManyDtoFixture } from '@js-modules/api-nest-utils';
 import { SystemRolesDtoUpdateOneWhole } from './systemRoles.dto.updateOneWhole';
 import { SystemRolesDtoFindMany } from './systemRoles.dto.findMany';
 import { SystemRolesDtoCreateOne } from './systemRoles.dto.createOne';
@@ -8,7 +8,6 @@ import { SystemRolesDtoUpdateOnePartialWithPattern } from './systemRoles.dto.upd
 import { SystemRolesDtoDeleteMany } from './systemRoles.dto.deleteMany';
 import { SystemRolesEntityType, SystemRolesName } from './systemRoles.types';
 import { SystemRolesEntity } from './systemRoles.entity';
-import { SystemRolesDtoFindManyUniqueKeys } from './systemRoles.dto.findManyUniqueKeys';
 
 export function getSystemRolesEntityFixture(
   overrides: Partial<SystemRolesEntityType> = {},
@@ -44,10 +43,7 @@ export function getSystemRolesDtoCreateOneFixture(
 export function getSystemRolesDtoFindManyFixture(
   overrides: Partial<SystemRolesDtoFindMany> = {},
 ): SystemRolesDtoFindMany {
-  return utilGetDtoFindManyFixture<
-    SystemRolesDtoFindManyUniqueKeys,
-    SystemRolesDtoFindMany['sortBy']
-  >(overrides);
+  return utilGetFindManyDtoFixture<SystemRolesEntity>(overrides);
 }
 
 export function getSystemRolesDtoUpdateOneWholeFixture(

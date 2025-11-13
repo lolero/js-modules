@@ -71,6 +71,8 @@ export type NodeLogEntriesUpdatePartialReducerMetadataSuccessAction =
 export type NodeLogEntriesUpdatePartialReducerMetadataFailAction =
   FailAction<NodeLogEntriesActionTypes.NODE_LOG_ENTRIES__UPDATE_PARTIAL_REDUCER_METADATA__FAIL>;
 
+export const NODE_LOG_ENTRIES__CREATE_ONE__REQUEST_ID =
+  'NODE_LOG_ENTRIES__CREATE_ONE__REQUEST_ID';
 export type NodeLogEntriesCreateOneRequestAction = RequestAction<
   NodeLogEntriesActionTypes.NODE_LOG_ENTRIES__CREATE_ONE__REQUEST,
   CreateOneEntityRequestMetadata<NodeLogEntry>
@@ -113,6 +115,8 @@ export type NodeLogEntriesGetManySuccessAction = SaveWholeEntitiesAction<
 export type NodeLogEntriesGetManyFailAction =
   FailAction<NodeLogEntriesActionTypes.NODE_LOG_ENTRIES__GET_MANY__FAIL>;
 
+export const NODE_LOG_ENTRIES__UPDATE_ONE_WHOLE__REQUEST_ID =
+  'NODE_LOG_ENTRIES__UPDATE_ONE_WHOLE__REQUEST_ID';
 export type NodeLogEntriesUpdateOneWholeRequestAction = RequestAction<
   NodeLogEntriesActionTypes.NODE_LOG_ENTRIES__UPDATE_ONE_WHOLE__REQUEST,
   UpdateOneWholeEntityRequestMetadata<NodeLogEntry>
@@ -127,6 +131,8 @@ export type NodeLogEntriesUpdateOneWholeSuccessAction = SaveWholeEntitiesAction<
 export type NodeLogEntriesUpdateOneWholeFailAction =
   FailAction<NodeLogEntriesActionTypes.NODE_LOG_ENTRIES__UPDATE_ONE_WHOLE__FAIL>;
 
+export const NODE_LOG_ENTRIES__UPDATE_ONE_PARTIAL__REQUEST_ID =
+  'NODE_LOG_ENTRIES__UPDATE_ONE_PARTIAL__REQUEST_ID';
 export type NodeLogEntriesUpdateOnePartialRequestAction = RequestAction<
   NodeLogEntriesActionTypes.NODE_LOG_ENTRIES__UPDATE_ONE_PARTIAL__REQUEST,
   UpdateOnePartialEntityRequestMetadata<NodeLogEntry>
@@ -142,6 +148,8 @@ export type NodeLogEntriesUpdateOnePartialSuccessAction =
 export type NodeLogEntriesUpdateOnePartialFailAction =
   FailAction<NodeLogEntriesActionTypes.NODE_LOG_ENTRIES__UPDATE_ONE_PARTIAL__FAIL>;
 
+export const NODE_LOG_ENTRIES__UPDATE_MANY_PARTIAL_WITH_PATTERN__REQUEST_ID =
+  'NODE_LOG_ENTRIES__UPDATE_MANY_PARTIAL_WITH_PATTERN__REQUEST_ID';
 export type NodeLogEntriesUpdateManyPartialWithPatternRequestAction =
   RequestAction<
     NodeLogEntriesActionTypes.NODE_LOG_ENTRIES__UPDATE_MANY_PARTIAL_WITH_PATTERN__REQUEST,
@@ -158,6 +166,8 @@ export type NodeLogEntriesUpdateManyPartialWithPatternSuccessAction =
 export type NodeLogEntriesUpdateManyPartialWithPatternFailAction =
   FailAction<NodeLogEntriesActionTypes.NODE_LOG_ENTRIES__UPDATE_MANY_PARTIAL_WITH_PATTERN__FAIL>;
 
+export const NODE_LOG_ENTRIES__DELETE_ONE__REQUEST_ID =
+  'NODE_LOG_ENTRIES__DELETE_ONE__REQUEST_ID';
 export type NodeLogEntriesDeleteOneRequestAction = RequestAction<
   NodeLogEntriesActionTypes.NODE_LOG_ENTRIES__DELETE_ONE__REQUEST,
   DeleteOneEntityRequestMetadata
@@ -171,6 +181,8 @@ export type NodeLogEntriesDeleteOneSuccessAction = DeleteEntitiesAction<
 export type NodeLogEntriesDeleteOneFailAction =
   FailAction<NodeLogEntriesActionTypes.NODE_LOG_ENTRIES__DELETE_ONE__FAIL>;
 
+export const NODE_LOG_ENTRIES__DELETE_MANY__REQUEST_ID =
+  'NODE_LOG_ENTRIES__DELETE_MANY__REQUEST_ID';
 export type NodeLogEntriesDeleteManyRequestAction = RequestAction<
   NodeLogEntriesActionTypes.NODE_LOG_ENTRIES__DELETE_MANY__REQUEST,
   DeleteManyEntitiesRequestMetadata

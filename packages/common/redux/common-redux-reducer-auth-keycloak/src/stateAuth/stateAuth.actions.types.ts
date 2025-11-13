@@ -5,7 +5,12 @@ import {
   SavePartialReducerMetadataAction,
   UpdatePartialReducerMetadataRequestMetadata,
 } from '@js-modules/common-redux-utils-normalized-reducers';
-import { KeycloakConfig } from 'keycloak-js';
+import {
+  KeycloakConfig,
+  KeycloakInitOptions,
+  KeycloakLoginOptions,
+  KeycloakLogoutOptions,
+} from 'keycloak-js';
 import { SigninAction, StateAuthReducer } from './stateAuth.types';
 
 export enum StateAuthActionTypes {
@@ -27,6 +32,7 @@ export type StateAuthInitializeRequestAction = RequestAction<
   StateAuthActionTypes.STATE_AUTH__INITIALIZE__REQUEST,
   {
     keycloakConfig: KeycloakConfig;
+    keycloakInitOptions: KeycloakInitOptions;
     onSigninCallback?: () => void;
     onSignoutCallback?: () => void;
   }
@@ -44,7 +50,7 @@ export type StateAuthSigninRequestAction = RequestAction<
   StateAuthActionTypes.STATE_AUTH__SIGNIN__REQUEST,
   {
     signinAction: SigninAction;
-    redirectUri?: string;
+    keycloakLoginOptions: KeycloakLoginOptions;
     onSigninCallback?: () => void;
   }
 >;
@@ -58,7 +64,7 @@ export type StateAuthSigninFailAction =
 export type StateAuthSignoutRequestAction = RequestAction<
   StateAuthActionTypes.STATE_AUTH__SIGNOUT__REQUEST,
   {
-    redirectUri?: string;
+    keycloakLogoutOptions: KeycloakLogoutOptions;
     onSignoutCallback?: () => void;
   }
 >;

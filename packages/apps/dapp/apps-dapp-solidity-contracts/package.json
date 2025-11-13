@@ -32,7 +32,6 @@
     "chai": "^5.2.1",
     "eslint": "^8.57.0",
     "ethereum-waffle": "^4.0.10",
-    "ts-node": "^10.9.2",
     "typechain": "^8.3.2"
   },
   "eslintConfig": {

@@ -63,7 +63,7 @@ import { configTypeormDataSourceOptions } from '../../config/config.typeorm.data
   ],
 })
 export class AppModule {
-  constructor(private configService: ConfigService) {}
+  constructor(private readonly configService: ConfigService) {}
 
   configure(consumer: MiddlewareConsumer) {
     consumer

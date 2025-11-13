@@ -19,6 +19,7 @@ export const STATE_AUTH__INITIALIZE__REQUEST_ID =
   'STATE_AUTH__INITIALIZE__REQUEST_ID';
 export function createStateAuthInitializeRequestAction(
   keycloakConfig: StateAuthInitializeRequestAction['requestMetadata']['keycloakConfig'],
+  keycloakInitOptions: StateAuthInitializeRequestAction['requestMetadata']['keycloakInitOptions'],
   onSigninCallback?: StateAuthInitializeRequestAction['requestMetadata']['onSigninCallback'],
   onSignoutCallback?: StateAuthInitializeRequestAction['requestMetadata']['onSignoutCallback'],
 ): StateAuthInitializeRequestAction {
@@ -26,6 +27,7 @@ export function createStateAuthInitializeRequestAction(
     type: StateAuthActionTypes.STATE_AUTH__INITIALIZE__REQUEST,
     requestMetadata: {
       keycloakConfig,
+      keycloakInitOptions,
       onSigninCallback,
       onSignoutCallback,
     },
@@ -58,14 +60,14 @@ export function createStateAuthInitializeFailAction(
 export const STATE_AUTH__SIGNIN__REQUEST_ID = 'STATE_AUTH__SIGNIN__REQUEST_ID';
 export function createStateAuthSigninRequestAction(
   signinAction: StateAuthSigninRequestAction['requestMetadata']['signinAction'],
-  redirectUri?: StateAuthSigninRequestAction['requestMetadata']['redirectUri'],
+  keycloakLoginOptions: StateAuthSigninRequestAction['requestMetadata']['keycloakLoginOptions'],
   onSigninCallback?: StateAuthSigninRequestAction['requestMetadata']['onSigninCallback'],
 ): StateAuthSigninRequestAction {
   return {
     type: StateAuthActionTypes.STATE_AUTH__SIGNIN__REQUEST,
     requestMetadata: {
       signinAction,
-      redirectUri,
+      keycloakLoginOptions,
       onSigninCallback,
     },
     requestId: STATE_AUTH__SIGNIN__REQUEST_ID,
@@ -95,13 +97,13 @@ export function createStateAuthSigninFailAction(
 export const STATE_AUTH__SIGNOUT__REQUEST_ID =
   'STATE_AUTH__SIGNOUT__REQUEST_ID';
 export function createStateAuthSignoutRequestAction(
-  redirectUri?: StateAuthSignoutRequestAction['requestMetadata']['redirectUri'],
+  keycloakLogoutOptions: StateAuthSignoutRequestAction['requestMetadata']['keycloakLogoutOptions'],
   onSignoutCallback?: StateAuthSignoutRequestAction['requestMetadata']['onSignoutCallback'],
 ): StateAuthSignoutRequestAction {
   return {
     type: StateAuthActionTypes.STATE_AUTH__SIGNOUT__REQUEST,
     requestMetadata: {
-      redirectUri,
+      keycloakLogoutOptions,
       onSignoutCallback,
     },
     requestId: STATE_AUTH__SIGNOUT__REQUEST_ID,

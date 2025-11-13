@@ -1,4 +1,4 @@
-import { DynamicModule, Global, Module } from '@nestjs/common';
+import { DynamicModule, Module } from '@nestjs/common';
 import { KeycloakConnectModule } from 'nest-keycloak-connect';
 import { KeycloakConnectOptions } from 'nest-keycloak-connect/interface/keycloak-connect-options.interface';
 import { AuthModuleMetadata } from '@js-modules/api-nest-utils';
@@ -12,7 +12,6 @@ import {
   getAuthProviderAdminClientCredentials,
 } from './auth.providers';
 
-@Global()
 @Module({})
 export class AuthModule {
   static registerAsync(
@@ -22,6 +21,7 @@ export class AuthModule {
   ): DynamicModule {
     return {
       module: AuthModule,
+      global: true,
       imports: [
         KeycloakConnectModule.register(keycloakConnectOptions),
         usersModuleMetadata.module,

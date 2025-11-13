@@ -271,6 +271,12 @@ build_keycloak/
 dynamically-generated-icons-DO-NOT-EDIT.tsx
 
 # dotenv
-.env.development
-.env.production
+.env.dev
+.env.prod
+
+# http-client.private.env
+http-client.private.env.json
+
+# secrets
+.secrets/
 #endregion js-modules ΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛΛ

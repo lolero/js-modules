@@ -2,6 +2,8 @@ import React, { useCallback, useContext, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import {
+  NODE_LOG_ENTRIES__CREATE_ONE__REQUEST_ID,
+  NODE_LOG_ENTRIES__UPDATE_ONE_WHOLE__REQUEST_ID,
   nodeLogEntryUnsavedEmpty,
   useNodeLogEntriesClearReducerRequests,
   useNodeLogEntriesIsMutationPendingOrCompleted,
@@ -12,10 +14,6 @@ import { useFormUtils } from '@js-modules/web-react-hooks';
 import { usePrevious } from '@js-modules/common-react-hooks';
 import isUndefined from 'lodash/isUndefined';
 import isNull from 'lodash/isNull';
-import {
-  NODE_LOG_ENTRIES__CREATE_ONE__REQUEST_ID,
-  NODE_LOG_ENTRIES__UPDATE_ONE_WHOLE__REQUEST_ID,
-} from '@js-modules/apps-travel-log-common-store-redux/src/reducers/entityData/nodeLogEntries/nodeLogEntries.actions.creators';
 import { MyLogLogEntryAddEditContext } from './MyLogLogEntryAddEditContext';
 
 export const MyLogLogEntryAddEditWorkspaceContentBox: React.FC = () => {

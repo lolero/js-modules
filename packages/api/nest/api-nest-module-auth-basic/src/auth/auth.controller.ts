@@ -18,7 +18,7 @@ import { AuthDecoratorCurrentUser } from './auth.decorator.currentUser';
 @Controller('auth')
 @InterceptorSerialize<AuthUsersEntity>(AuthDtoPublicUser)
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(private readonly authService: AuthService) {}
 
   @Get('/hello-world')
   usersHelloWorld() {

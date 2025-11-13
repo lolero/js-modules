@@ -12,7 +12,7 @@ import { UsersUpdateOnePartialDto } from './dtos/users.updateOnePartial.dto';
 export class UsersServiceUtils {
   constructor(
     @InjectRepository(UsersEntity)
-    private usersRepository: Repository<UsersEntity>,
+    private readonly usersRepository: Repository<UsersEntity>,
   ) {}
 
   getKeycloakUserFromTokenParsed(

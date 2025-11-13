@@ -1,5 +1,5 @@
 import { SelectQueryBuilder, WhereExpressionBuilder } from 'typeorm';
-import snakeCase from 'lodash/snakeCase';
+import { camelToSnakeCaseWithAcronyms } from '@js-modules/common-utils-general-cjs';
 import { DtoFindManySearch } from '../dtos/dto.findManySearch';
 import { RequestEntity } from '../types/types.requests';
 
@@ -13,7 +13,7 @@ export function utilGetFindManySearchWhereFactory<
 
   const whereFactory = (whereExpressionBuilder: WhereExpressionBuilder) => {
     entityPropNames.forEach((entityPropName, uniqueKeyNameIndex) => {
-      const whereStr = `${query.alias}.${snakeCase(
+      const whereStr = `${query.alias}.${camelToSnakeCaseWithAcronyms(
         entityPropName as string,
       )} LIKE :${entityPropName as string}`;
       const whereParams = {

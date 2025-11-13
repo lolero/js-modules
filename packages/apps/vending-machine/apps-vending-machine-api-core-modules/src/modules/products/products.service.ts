@@ -16,9 +16,9 @@ import { ProductsDtoUpdateOneWhole } from './products.dto.updateOneWhole';
 export class ProductsService {
   constructor(
     @InjectRepository(ProductsEntity)
-    private productsRepository: Repository<ProductsEntity>,
+    private readonly productsRepository: Repository<ProductsEntity>,
     @InjectRepository(UsersEntity)
-    private usersRepository: Repository<UsersEntity>,
+    private readonly usersRepository: Repository<UsersEntity>,
   ) {}
 
   async createOne(

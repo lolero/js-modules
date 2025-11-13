@@ -1,6 +1,6 @@
 import { WhereExpressionBuilder, SelectQueryBuilder } from 'typeorm';
 import keys from 'lodash/keys';
-import snakeCase from 'lodash/snakeCase';
+import { camelToSnakeCaseWithAcronyms } from '@js-modules/common-utils-general-cjs';
 import { utilGetFindManyDateRange } from './util.getFindManyDateRange';
 import { utilGetFindManyNumberRange } from './util.getFindManyNumberRange';
 import { utilGetFindManyStringRange } from './util.getFindManyStringRange';
@@ -45,13 +45,13 @@ export function utilGetFindManyRangesWhereFactory<
       }
 
       const [rangeFrom, rangeTo] = range;
-      const whereStrFrom = `${query.alias}.${snakeCase(
+      const whereStrFrom = `${query.alias}.${camelToSnakeCaseWithAcronyms(
         rangeName,
       )} >= :${rangeName}From`;
       const whereParamsFrom = {
         [`${rangeName}From`]: rangeFrom,
       };
-      const whereStrTo = `${query.alias}.${snakeCase(
+      const whereStrTo = `${query.alias}.${camelToSnakeCaseWithAcronyms(
         rangeName,
       )} <= :${rangeName}To`;
       const whereParamsTo = {

@@ -31,7 +31,7 @@ import { LogEntriesDeleteManyDto } from './dtos/logEntries.deleteMany.dto';
 @Controller(ApiControllersTravelLog.logEntries)
 @InterceptorSerialize<LogEntriesEntity>(LogEntriesDto)
 export class LogEntriesController {
-  constructor(private logEntriesService: LogEntriesService) {}
+  constructor(private readonly logEntriesService: LogEntriesService) {}
 
   @Post()
   async createOne(

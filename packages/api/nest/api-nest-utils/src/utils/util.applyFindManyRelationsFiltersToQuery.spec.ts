@@ -1,5 +1,4 @@
-import { In, SelectQueryBuilder } from 'typeorm';
-import snakeCase from 'lodash/snakeCase';
+import { SelectQueryBuilder } from 'typeorm';
 import {
   FindManyRelationsDto,
   FindManyUniqueKeysDto,
@@ -13,8 +12,8 @@ type RelationEntity1 = RequestEntity & {
 };
 
 type RelationEntity2 = RequestEntity & {
-  uniqueKeyNumber2: string;
-  uniqueKeyString2: string;
+  uniqueKEYNumber2: string;
+  uniqueKEYString2: string;
 };
 
 type TestEntity = RequestEntity & {
@@ -32,7 +31,7 @@ describe('utilApplyFindManyRelationsFiltersToQuery', () => {
   const queryAlias = 'entity';
   let findManyRelationsDto: TestFindManyRelationsDto;
 
-  let queryBuilderInnerJoinMock: jest.Mock;
+  let queryBuilderInnerJoinAndSelectMock: jest.Mock;
   let queryBuilderWhereMock: jest.Mock;
   let queryBuilderOrWhereMock: jest.Mock;
   let queryBuilderMock: Partial<SelectQueryBuilder<TestEntity>>;
@@ -44,11 +43,13 @@ describe('utilApplyFindManyRelationsFiltersToQuery', () => {
       where: jest.fn(),
       orWhere: jest.fn(),
     };
-    queryBuilderInnerJoinMock = jest.fn().mockReturnValue(queryBuilderMock);
+    queryBuilderInnerJoinAndSelectMock = jest
+      .fn()
+      .mockReturnValue(queryBuilderMock);
     queryBuilderWhereMock = jest.fn().mockReturnValue(queryBuilderMock);
     queryBuilderOrWhereMock = jest.fn().mockReturnValue(queryBuilderMock);
     Object.assign(queryBuilderMock, {
-      innerJoin: queryBuilderInnerJoinMock,
+      innerJoinAndSelect: queryBuilderInnerJoinAndSelectMock,
       where: queryBuilderWhereMock,
       orWhere: queryBuilderOrWhereMock,
     });
@@ -64,8 +65,8 @@ describe('utilApplyFindManyRelationsFiltersToQuery', () => {
         ],
       },
       relation2: {
-        uniqueKeyNumber2: [21, 22],
-        uniqueKeyString2: [
+        uniqueKEYNumber2: [21, 22],
+        uniqueKEYString2: [
           'test_unique_key_string_21',
           'test_unique_key_string_22',
         ],
@@ -77,50 +78,46 @@ describe('utilApplyFindManyRelationsFiltersToQuery', () => {
       findManyRelationsDto,
     );
 
-    expect(queryBuilderInnerJoinMock).toHaveBeenNthCalledWith(
+    expect(queryBuilderInnerJoinAndSelectMock).toHaveBeenNthCalledWith(
       1,
       `${queryAlias}.relation1`,
       'relation1Individual',
     );
-    expect(queryBuilderInnerJoinMock).toHaveBeenNthCalledWith(
+    expect(queryBuilderInnerJoinAndSelectMock).toHaveBeenNthCalledWith(
       2,
       `${queryAlias}.relation2`,
       'relation2Individual',
     );
     expect(queryBuilderWhereMock).toHaveBeenNthCalledWith(
       1,
-      `relation1Individual.${snakeCase(
-        'uniqueKeyNumber1',
-      )} = :uniqueKeyNumber1`,
+      'relation1Individual.unique_key_number1 IN (:...relation1IndividualuniqueKeyNumber1)',
       {
-        uniqueKeyNumber1: In(findManyRelationsDto.relation1.uniqueKeyNumber1!),
+        relation1IndividualuniqueKeyNumber1:
+          findManyRelationsDto.relation1.uniqueKeyNumber1,
       },
     );
     expect(queryBuilderOrWhereMock).toHaveBeenNthCalledWith(
       1,
-      `relation1Individual.${snakeCase(
-        'uniqueKeyString1',
-      )} = :uniqueKeyString1`,
+      'relation1Individual.unique_key_string1 IN (:...relation1IndividualuniqueKeyString1)',
       {
-        uniqueKeyString1: In(findManyRelationsDto.relation1.uniqueKeyString1!),
+        relation1IndividualuniqueKeyString1:
+          findManyRelationsDto.relation1.uniqueKeyString1,
       },
     );
     expect(queryBuilderOrWhereMock).toHaveBeenNthCalledWith(
       2,
-      `relation2Individual.${snakeCase(
-        'uniqueKeyNumber2',
-      )} = :uniqueKeyNumber2`,
+      'relation2Individual.unique_KEY_number2 IN (:...relation2IndividualuniqueKEYNumber2)',
       {
-        uniqueKeyNumber2: In(findManyRelationsDto.relation2.uniqueKeyNumber2!),
+        relation2IndividualuniqueKEYNumber2:
+          findManyRelationsDto.relation2.uniqueKEYNumber2,
       },
     );
     expect(queryBuilderOrWhereMock).toHaveBeenNthCalledWith(
       3,
-      `relation2Individual.${snakeCase(
-        'uniqueKeyString2',
-      )} = :uniqueKeyString2`,
+      'relation2Individual.unique_KEY_string2 IN (:...relation2IndividualuniqueKEYString2)',
       {
-        uniqueKeyString2: In(findManyRelationsDto.relation2.uniqueKeyString2!),
+        relation2IndividualuniqueKEYString2:
+          findManyRelationsDto.relation2.uniqueKEYString2,
       },
     );
   });
