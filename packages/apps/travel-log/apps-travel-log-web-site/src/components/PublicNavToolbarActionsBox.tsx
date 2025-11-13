@@ -13,7 +13,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { Link } from 'react-router-dom';
 import {
-  WEB_CLIENT_URI_TRAVEL_LOG,
+  WEB_CLIENT__URI__TRAVEL_LOG,
   WebModulesPrivate,
 } from '@js-modules/apps-travel-log-common-constants';
 import {
@@ -35,13 +35,13 @@ export const PublicNavToolbarActionsBox: React.FC = () => {
     reducerMetadata: { isAuthenticated },
     callback: stateAuthSignupCallback,
   } = useStateAuthSignup(
-    WEB_CLIENT_URI_TRAVEL_LOG,
+    WEB_CLIENT__URI__TRAVEL_LOG,
     routesMetadataPrivate[WebModulesPrivate.myFeeds].path,
     stateSettingsGetProfileCallback,
   );
 
   const { callback: stateAuthLoginCallback } = useStateAuthLogin(
-    WEB_CLIENT_URI_TRAVEL_LOG,
+    WEB_CLIENT__URI__TRAVEL_LOG,
     routesMetadataPrivate[WebModulesPrivate.myFeeds].path,
     stateSettingsGetProfileCallback,
   );

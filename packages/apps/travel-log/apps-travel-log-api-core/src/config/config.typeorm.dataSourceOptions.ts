@@ -1,61 +1,19 @@
-import { DataSourceOptions } from 'typeorm';
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
+import { loadEnvConfig } from '@js-modules/common-utils-general-cjs';
 import {
-  LogEntriesEntity,
   UsersEntity,
-} from '@js-modules/apps-travel-log-api-core-modules';
+  LogEntriesEntity,
+} from '@js-modules/apps-travel-log-api-modules-core';
 
-type VariableProps =
-  | 'type'
-  | 'host'
-  | 'port'
-  | 'username'
-  | 'password'
-  | 'database';
-
-const configTypeormDataSourceOptionsBase: Omit<
-  PostgresConnectionOptions,
-  VariableProps
-> = {
+loadEnvConfig();
+export const configTypeormDataSourceOptions: PostgresConnectionOptions = {
+  type: 'postgres',
+  host: process.env.DB_CORE_HOST,
+  port: Number(process.env.DB_CORE_PORT),
+  username: process.env.DB_CORE_USERNAME,
+  password: process.env.DB_CORE_PASSWORD,
+  database: process.env.DB_CORE_DATABASE,
   entities: [UsersEntity, LogEntriesEntity],
   synchronize: false,
   migrations: [`build/migrations/*.js`],
 };
-
-let configTypeormDataSourceOptionsVariable: Pick<
-  PostgresConnectionOptions,
-  VariableProps
-> = {
-  type: 'postgres',
-  host: 'localhost',
-  port: 5433,
-  username: 'postgres',
-  password: 'postgres',
-  database: 'core',
-};
-
-switch (process.env.NODE_ENV) {
-  case 'development':
-    break;
-  case 'test':
-    configTypeormDataSourceOptionsVariable = {
-      type: 'postgres',
-      host: 'localhost',
-      port: 5433,
-      username: 'postgres',
-      password: 'postgres',
-      database: 'core',
-    };
-    break;
-  case 'production':
-    break;
-  default:
-    throw new Error(
-      'TypeOrm config failed to initialize. Unknown environment!',
-    );
-}
-
-export const configTypeormDataSourceOptions = {
-  ...configTypeormDataSourceOptionsVariable,
-  ...configTypeormDataSourceOptionsBase,
-} as DataSourceOptions;

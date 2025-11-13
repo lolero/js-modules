@@ -22,8 +22,8 @@ export class UsersController {
     @Query('uniqueKeyName') uniqueKeyName: UsersUniqueKeyName = 'id',
   ): Promise<UsersEntity | null> {
     const usersEntity = await this.usersService.findOne(
-      uniqueKeyName,
       uniqueKeyValue,
+      uniqueKeyName,
     );
 
     return usersEntity;

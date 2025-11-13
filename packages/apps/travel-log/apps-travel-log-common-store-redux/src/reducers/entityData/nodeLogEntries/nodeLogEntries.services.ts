@@ -1,10 +1,10 @@
 import { axiosRequest } from '@js-modules/common-utils-general';
 import {
-  API_CORE_URI_TRAVEL_LOG,
+  API_CORE__URI__TRAVEL_LOG,
   ApiControllersTravelLog,
 } from '@js-modules/apps-travel-log-common-constants';
-import { LogEntriesCreateOneDto } from '@js-modules/apps-travel-log-api-core-modules/src/modules/logEntries/dtos/logEntries.createOne.dto';
-import { LogEntriesUpdateManyPartialWithPatternDto } from '@js-modules/apps-travel-log-api-core-modules/src/modules/logEntries/dtos/logEntries.updateManyPartialWithPattern.dto';
+import { LogEntriesCreateOneDto } from '@js-modules/apps-travel-log-api-modules-core/src/modules/logEntries/dtos/logEntries.createOne.dto';
+import { LogEntriesUpdateManyPartialWithPatternDto } from '@js-modules/apps-travel-log-api-modules-core/src/modules/logEntries/dtos/logEntries.updateManyPartialWithPattern.dto';
 import { destructNodeLogEntryPk } from './nodeLogEntries.pkUtils';
 import {
   NodeLogEntriesGetManyRequestAction,
@@ -36,7 +36,7 @@ export async function nodeLogEntriesCreateOneService(
   };
 
   const res = await axiosRequest.post(
-    `${API_CORE_URI_TRAVEL_LOG}/${ApiControllersTravelLog.logEntries}`,
+    `${API_CORE__URI__TRAVEL_LOG}/${ApiControllersTravelLog.logEntries}`,
     logEntriesCreateOneDto,
   );
   return res;
@@ -47,7 +47,7 @@ export async function nodeLogEntriesGetOneService(
   uniqueKeyName: NodeLogEntriesGetOneRequestAction['requestMetadata']['uniqueKeyName'],
 ): Promise<NodeLogEntriesGetOneServiceResponse> {
   const res = await axiosRequest.get(
-    `${API_CORE_URI_TRAVEL_LOG}/${ApiControllersTravelLog.logEntries}/${uniqueKeyValue}?uniqueKeyName=${uniqueKeyName}`,
+    `${API_CORE__URI__TRAVEL_LOG}/${ApiControllersTravelLog.logEntries}/${uniqueKeyValue}?uniqueKeyName=${uniqueKeyName}`,
   );
   return res;
 }
@@ -56,7 +56,7 @@ export async function nodeLogEntriesGetManyService(
   findManyDto: NodeLogEntriesGetManyRequestAction['requestMetadata']['findManyDto'],
 ): Promise<NodeLogEntriesGetManyServiceResponse> {
   const res = await axiosRequest.get(
-    `${API_CORE_URI_TRAVEL_LOG}/${ApiControllersTravelLog.logEntries}`,
+    `${API_CORE__URI__TRAVEL_LOG}/${ApiControllersTravelLog.logEntries}`,
     { params: findManyDto },
   );
   return res;
@@ -66,7 +66,7 @@ export async function nodeLogEntriesUpdateOneWholeService(
   entity: NodeLogEntriesUpdateOneWholeRequestAction['requestMetadata']['entity'],
 ): Promise<NodeLogEntriesUpdateOneWholeServiceResponse> {
   const res = await axiosRequest.put(
-    `${API_CORE_URI_TRAVEL_LOG}/${ApiControllersTravelLog.logEntries}/${entity.id}`,
+    `${API_CORE__URI__TRAVEL_LOG}/${ApiControllersTravelLog.logEntries}/${entity.id}`,
     entity,
   );
   return res;
@@ -79,7 +79,7 @@ export async function nodeLogEntriesUpdateOnePartialService(
   const logEntryId = destructNodeLogEntryPk(entityPk).fields.id;
 
   const res = await axiosRequest.patch(
-    `${API_CORE_URI_TRAVEL_LOG}/${ApiControllersTravelLog.logEntries}/${logEntryId}`,
+    `${API_CORE__URI__TRAVEL_LOG}/${ApiControllersTravelLog.logEntries}/${logEntryId}`,
     partialEntity,
   );
   return res;
@@ -100,7 +100,7 @@ export async function nodeLogEntriesUpdateManyPartialWithPatternService(
     };
 
   const res = await axiosRequest.patch(
-    `${API_CORE_URI_TRAVEL_LOG}/${ApiControllersTravelLog.logEntries}/batch`,
+    `${API_CORE__URI__TRAVEL_LOG}/${ApiControllersTravelLog.logEntries}/batch`,
     logEntriesUpdateManyPartialWithPatternDto,
   );
   return res;
@@ -112,7 +112,7 @@ export async function nodeLogEntriesDeleteOneService(
   const logEntryId = destructNodeLogEntryPk(entityPk).fields.id;
 
   const res = await axiosRequest.delete(
-    `${API_CORE_URI_TRAVEL_LOG}/${ApiControllersTravelLog.logEntries}/${logEntryId}`,
+    `${API_CORE__URI__TRAVEL_LOG}/${ApiControllersTravelLog.logEntries}/${logEntryId}`,
   );
   return res;
 }
@@ -125,7 +125,7 @@ export async function nodeLogEntriesDeleteManyService(
   );
 
   const res = await axiosRequest.delete(
-    `${API_CORE_URI_TRAVEL_LOG}/${ApiControllersTravelLog.logEntries}/batch`,
+    `${API_CORE__URI__TRAVEL_LOG}/${ApiControllersTravelLog.logEntries}/batch`,
     {
       params: {
         uniqueKeyName: 'id',

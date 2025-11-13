@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@js-modules/api-nest-utils": "workspace:^",
-    "@js-modules/apps-travel-log-api-core-modules": "workspace:^",
+    "@js-modules/apps-travel-log-api-modules-core": "workspace:^",
     "@js-modules/apps-travel-log-common-constants": "workspace:^",
     "@js-modules/common-redux-reducer-auth-keycloak": "workspace:^",
     "@js-modules/common-redux-utils-normalized-reducers": "workspace:^",

@@ -1,17 +1,63 @@
-export const AUTH_PROTOCOL_TRAVEL_LOG = 'http';
-export const AUTH_IP_TRAVEL_LOG = 'localhost';
-export const AUTH_HOST_TRAVEL_LOG = `${AUTH_PROTOCOL_TRAVEL_LOG}://${AUTH_IP_TRAVEL_LOG}`;
-export const AUTH_PORT_TRAVEL_LOG = '8080';
-export const AUTH_URI_TRAVEL_LOG = `${AUTH_HOST_TRAVEL_LOG}:${AUTH_PORT_TRAVEL_LOG}`;
+import { IS_ENV_DEV } from '@js-modules/common-utils-general';
 
-export const WEB_CLIENT_PROTOCOL_TRAVEL_LOG = 'http';
-export const WEB_CLIENT_IP_TRAVEL_LOG = 'localhost';
-export const WEB_CLIENT_HOST_TRAVEL_LOG = `${WEB_CLIENT_PROTOCOL_TRAVEL_LOG}://${WEB_CLIENT_IP_TRAVEL_LOG}`;
-export const WEB_CLIENT_PORT_TRAVEL_LOG = '5173';
-export const WEB_CLIENT_URI_TRAVEL_LOG = `${WEB_CLIENT_HOST_TRAVEL_LOG}:${WEB_CLIENT_PORT_TRAVEL_LOG}`;
+export const ROUTER__PROTOCOL__TRAVEL_LOG = 'https';
+export const ROUTER__IP__TRAVEL_LOG = IS_ENV_DEV
+  ? 'localhost'
+  : process.env.ROUTER_HOST;
+export const ROUTER__PORT__TRAVEL_LOG = '';
+// console.log('ROUTER__IP__TRAVEL_LOG:', ROUTER__IP__TRAVEL_LOG);
 
-export const API_CORE_PROTOCOL_TRAVEL_LOG = WEB_CLIENT_PROTOCOL_TRAVEL_LOG;
-export const API_CORE_IP_TRAVEL_LOG = WEB_CLIENT_IP_TRAVEL_LOG;
-export const API_CORE_HOST_TRAVEL_LOG = `${API_CORE_PROTOCOL_TRAVEL_LOG}://${API_CORE_IP_TRAVEL_LOG}`;
-export const API_CORE_PORT_TRAVEL_LOG = '3000';
-export const API_CORE_URI_TRAVEL_LOG = `${API_CORE_HOST_TRAVEL_LOG}:${API_CORE_PORT_TRAVEL_LOG}`;
+export const AUTH__PROTOCOL__TRAVEL_LOG = ROUTER__PROTOCOL__TRAVEL_LOG;
+export const AUTH__IP__TRAVEL_LOG = ROUTER__IP__TRAVEL_LOG;
+export const AUTH__PORT__TRAVEL_LOG = ROUTER__PORT__TRAVEL_LOG;
+export const AUTH__PATH__TRAVEL_LOG = '/auth';
+export const AUTH__HOST__TRAVEL_LOG = `${AUTH__PROTOCOL__TRAVEL_LOG}://${AUTH__IP__TRAVEL_LOG}`;
+export const AUTH__URI__TRAVEL_LOG = `${AUTH__HOST__TRAVEL_LOG}${
+  AUTH__PORT__TRAVEL_LOG ? `:${AUTH__PORT__TRAVEL_LOG}` : ''
+}${AUTH__PATH__TRAVEL_LOG}`;
+// console.log('AUTH__URI__TRAVEL_LOG:', AUTH__URI__TRAVEL_LOG);
+
+// This AUTH_SERVER section was created so that the APIs could talk to the
+// auth server internally through the docker-compose network. But keycloak-js
+// would not have it since it issues tokens for WEB_CLIENT__URI__TRAVEL_LOG and the API
+// is calling it from AUTH_SERVER__URI__TRAVEL_LOG. I left it in case keycloak-js
+// publishes an update to support this. Now the API calls the auth server
+// through the nginx router, so all calls come from the same origin.
+export const AUTH_SERVER__PROTOCOL__TRAVEL_LOG = AUTH__PROTOCOL__TRAVEL_LOG;
+export const AUTH_SERVER__IP__TRAVEL_LOG = IS_ENV_DEV
+  ? AUTH__IP__TRAVEL_LOG
+  : AUTH__IP__TRAVEL_LOG;
+// : 'auth-service';
+export const AUTH_SERVER__PORT__TRAVEL_LOG = IS_ENV_DEV
+  ? AUTH__PORT__TRAVEL_LOG
+  : AUTH__PORT__TRAVEL_LOG;
+// : '8080';
+export const AUTH_SERVER__PATH__TRAVEL_LOG = AUTH__PATH__TRAVEL_LOG;
+export const AUTH_SERVER__HOST__TRAVEL_LOG = `${AUTH_SERVER__PROTOCOL__TRAVEL_LOG}://${AUTH_SERVER__IP__TRAVEL_LOG}`;
+export const AUTH_SERVER__URI__TRAVEL_LOG = `${AUTH_SERVER__HOST__TRAVEL_LOG}${
+  AUTH_SERVER__PORT__TRAVEL_LOG ? `:${AUTH_SERVER__PORT__TRAVEL_LOG}` : ''
+}${AUTH_SERVER__PATH__TRAVEL_LOG}`;
+// console.log('AUTH_SERVER__URI__TRAVEL_LOG:', AUTH_SERVER__URI__TRAVEL_LOG);
+
+export const WEB_CLIENT__PROTOCOL__TRAVEL_LOG = ROUTER__PROTOCOL__TRAVEL_LOG;
+export const WEB_CLIENT__IP__TRAVEL_LOG = ROUTER__IP__TRAVEL_LOG;
+export const WEB_CLIENT__PORT__TRAVEL_LOG = ROUTER__PORT__TRAVEL_LOG;
+export const WEB_CLIENT__PATH__TRAVEL_LOG = '';
+export const WEB_CLIENT__HOST__TRAVEL_LOG = `${WEB_CLIENT__PROTOCOL__TRAVEL_LOG}://${WEB_CLIENT__IP__TRAVEL_LOG}`;
+export const WEB_CLIENT__URI__TRAVEL_LOG = `${WEB_CLIENT__HOST__TRAVEL_LOG}${
+  WEB_CLIENT__PORT__TRAVEL_LOG ? `:${WEB_CLIENT__PORT__TRAVEL_LOG}` : ''
+}${WEB_CLIENT__PATH__TRAVEL_LOG}`;
+// console.log('WEB_CLIENT__URI__TRAVEL_LOG:', WEB_CLIENT__URI__TRAVEL_LOG);
+
+export const API_CORE__PROTOCOL__TRAVEL_LOG = ROUTER__PROTOCOL__TRAVEL_LOG;
+export const API_CORE__IP__TRAVEL_LOG = ROUTER__IP__TRAVEL_LOG;
+export const API_CORE__PORT__TRAVEL_LOG = ROUTER__PORT__TRAVEL_LOG;
+export const API_CORE__PATH__TRAVEL_LOG = '/api';
+export const API_CORE__HOST__TRAVEL_LOG = `${API_CORE__PROTOCOL__TRAVEL_LOG}://${API_CORE__IP__TRAVEL_LOG}`;
+export const API_CORE__URI__TRAVEL_LOG = `${API_CORE__HOST__TRAVEL_LOG}${
+  API_CORE__PORT__TRAVEL_LOG ? `:${API_CORE__PORT__TRAVEL_LOG}` : ''
+}${API_CORE__PATH__TRAVEL_LOG}`;
+// console.log('API_CORE__URI__TRAVEL_LOG:', API_CORE__URI__TRAVEL_LOG);
+
+export const API_CORE_SERVER__IP__TRAVEL_LOG = '0.0.0.0';
+export const API_CORE_SERVER__PORT__TRAVEL_LOG = '3000';

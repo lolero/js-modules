@@ -16,7 +16,7 @@
     "@fortawesome/free-brands-svg-icons": "^7.0.0",
     "@fortawesome/free-regular-svg-icons": "^7.0.0",
     "@fortawesome/free-solid-svg-icons": "^7.0.0",
-    "@js-modules/apps-travel-log-api-core-modules": "workspace:^",
+    "@js-modules/apps-travel-log-api-modules-core": "workspace:^",
     "@js-modules/apps-travel-log-common-constants": "workspace:^",
     "@js-modules/apps-travel-log-common-store-redux": "workspace:^",
     "@js-modules/apps-travel-log-web-components": "workspace:^",

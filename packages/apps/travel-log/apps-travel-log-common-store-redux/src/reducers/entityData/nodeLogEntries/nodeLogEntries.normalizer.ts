@@ -1,4 +1,4 @@
-import { LogEntriesDto } from '@js-modules/apps-travel-log-api-core-modules/src/modules/logEntries/dtos/logEntries.dto';
+import { LogEntriesDto } from '@js-modules/apps-travel-log-api-modules-core/src/modules/logEntries/dtos/logEntries.dto';
 import { NormalizeEntityDtoArrayResponse } from '@js-modules/common-redux-utils-normalized-reducers';
 import { NodeLogEntry, NodeLogEntriesReducer } from './nodeLogEntries.types';
 import { getPkOfNodeLogEntry } from './nodeLogEntries.pkUtils';

@@ -12,7 +12,7 @@ import {
   useStateSettingsGetProfile,
 } from '@js-modules/apps-travel-log-common-store-redux';
 import { useLocation } from 'react-router-dom';
-import { WEB_CLIENT_URI_TRAVEL_LOG } from '@js-modules/apps-travel-log-common-constants';
+import { WEB_CLIENT__URI__TRAVEL_LOG } from '@js-modules/apps-travel-log-common-constants';
 import { MyWorkspaceNavDrawerContentBox } from './MyWorkspaceNavDrawerContentBox';
 import { MyWorkspaceNavToolbarActionsBox } from './MyWorkspaceNavToolbarActionsBox';
 
@@ -36,8 +36,9 @@ export const MyWorkspaceBox: React.FunctionComponent<MyWorkspaceBoxProps> = ({
     useStateSettingsGetProfile();
 
   const { callback: stateAuthLoginCallback } = useStateAuthLogin(
-    WEB_CLIENT_URI_TRAVEL_LOG,
-    pathname,
+    {
+      redirectUri: `${WEB_CLIENT__URI__TRAVEL_LOG}${pathname}`,
+    },
     stateSettingsGetProfileCallback,
   );
 

@@ -42,8 +42,8 @@ export class LogEntriesService {
   }
 
   async findOne(
-    uniqueKeyName: LogEntriesUniqueKeyName,
     uniqueKeyValue: EntityUniqueKeyValue,
+    uniqueKeyName: LogEntriesUniqueKeyName,
   ): Promise<LogEntriesEntity | null> {
     const logEntriesEntity = await this.logEntriesRepository.findOneBy({
       [uniqueKeyName]:
@@ -79,8 +79,8 @@ export class LogEntriesService {
       | LogEntriesUpdateOneWholeDto
       | LogEntriesUpdateOnePartialDto,
     usersEntityCurrent: UsersEntity,
-    uniqueKeyName: LogEntriesUniqueKeyName,
     uniqueKeyValue: EntityUniqueKeyValue,
+    uniqueKeyName: LogEntriesUniqueKeyName,
   ): Promise<LogEntriesEntity> {
     const logEntriesEntity = await this.logEntriesRepository.findOneBy({
       [uniqueKeyName]:

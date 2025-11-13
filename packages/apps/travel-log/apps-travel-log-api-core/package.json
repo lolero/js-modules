@@ -5,10 +5,10 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "dev:travel-log-api-core": "cross-env NODE_ENV=development nest start --watch",
-    "build": "cross-env NODE_ENV=production nest build -p tsconfig.build.json",
-    "prod": "node build/main",
-    "typeorm": "pnpm build && cross-env NODE_ENV=development typeorm -d build/config/config.typeorm.dataSource.js",
+    "dev:travel-log-api-core": "cross-env NODE_ENV=development NODE_TLS_REJECT_UNAUTHORIZED=0 nest start --watch",
+    "build": "nest build -p tsconfig.build.json",
+    "prod": "cross-env NODE_ENV=production NODE_TLS_REJECT_UNAUTHORIZED=0 node build/main",
+    "typeorm": "nx build && cross-env NODE_ENV=development typeorm -d build/config/config.typeorm.dataSource.js",
     "test:test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage"
@@ -16,7 +16,7 @@
   "dependencies": {
     "@js-modules/api-nest-module-auth-keycloak": "workspace:^",
     "@js-modules/api-nest-utils": "workspace:^",
-    "@js-modules/apps-travel-log-api-core-modules": "workspace:^",
+    "@js-modules/apps-travel-log-api-modules-core": "workspace:^",
     "@js-modules/apps-travel-log-common-constants-cjs": "workspace:^",
     "@js-modules/common-utils-general-cjs": "workspace:^",
     "@nestjs/common": "^11.1.6",

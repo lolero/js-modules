@@ -8,12 +8,16 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import { MuiFaIcon } from '@js-modules/web-react-components';
 import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons/faRightFromBracket';
+import { faSun } from '@fortawesome/free-solid-svg-icons/faSun';
+import { faMoon } from '@fortawesome/free-solid-svg-icons/faMoon';
 import {
+  ThemePalette,
   useStateAuthLogout,
+  useStateMainUpdatePartialReducerMetadata,
   useStateSettingsSignout,
 } from '@js-modules/apps-travel-log-common-store-redux';
 import {
-  WEB_CLIENT_URI_TRAVEL_LOG,
+  WEB_CLIENT__URI__TRAVEL_LOG,
   WebModulesPublic,
 } from '@js-modules/apps-travel-log-common-constants';
 import startCase from 'lodash/startCase';
@@ -26,11 +30,19 @@ export const MyWorkspaceAccountMenu: React.FC = () => {
   const { callback: stateSettingsSignoutCallback } = useStateSettingsSignout();
 
   const {
+    reducerMetadata: { themePalette },
+    callback: stateMainUpdatePartialReducerMetadataCallback,
+  } = useStateMainUpdatePartialReducerMetadata();
+
+  const {
     reducerMetadata: { tokens },
     callback: logoutCallback,
   } = useStateAuthLogout(
-    WEB_CLIENT_URI_TRAVEL_LOG,
-    routesMetadataPublic[WebModulesPublic.home].path,
+    {
+      redirectUri: `${WEB_CLIENT__URI__TRAVEL_LOG}${
+        routesMetadataPublic[WebModulesPublic.home].path
+      }`,
+    },
     stateSettingsSignoutCallback,
   );
 
@@ -41,6 +53,15 @@ export const MyWorkspaceAccountMenu: React.FC = () => {
   const copyTokenCallback = useCallback(() => {
     navigator.clipboard.writeText(tokens!.access.token);
   }, [tokens]);
+
+  const toggleThemeCallback = useCallback(() => {
+    stateMainUpdatePartialReducerMetadataCallback({
+      themePalette:
+        themePalette === ThemePalette.light
+          ? ThemePalette.dark
+          : ThemePalette.light,
+    });
+  }, [stateMainUpdatePartialReducerMetadataCallback, themePalette]);
 
   return (
     <>
@@ -59,6 +80,16 @@ export const MyWorkspaceAccountMenu: React.FC = () => {
       >
         <MenuItem disabled>
           <ListItemText>{username}</ListItemText>
+        </MenuItem>
+        <MenuItem onClick={toggleThemeCallback}>
+          <ListItemIcon>
+            <MuiFaIcon
+              icon={themePalette === ThemePalette.light ? faMoon : faSun}
+            />
+          </ListItemIcon>
+          <ListItemText>
+            Light {themePalette === ThemePalette.light ? 'off' : 'on'}
+          </ListItemText>
         </MenuItem>
         <MenuItem onClick={logoutCallback}>
           <ListItemIcon>

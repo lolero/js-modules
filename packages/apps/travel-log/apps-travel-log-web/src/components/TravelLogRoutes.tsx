@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 import {
-  AUTH_URI_TRAVEL_LOG,
+  AUTH__URI__TRAVEL_LOG,
   WebModulesPrivate,
   WebModulesPublic,
 } from '@js-modules/apps-travel-log-common-constants';
@@ -25,7 +25,7 @@ import {
 } from '@js-modules/apps-travel-log-web-components';
 
 const keycloakConfig: KeycloakConfig = {
-  url: AUTH_URI_TRAVEL_LOG,
+  url: AUTH__URI__TRAVEL_LOG,
   realm: 'travel-log',
   clientId: 'client-web',
 };

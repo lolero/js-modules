@@ -6,11 +6,13 @@ import upperFirst from 'lodash/upperFirst';
 import lowerCase from 'lodash/lowerCase';
 
 export type TravelLogNavToolbarProps = {
+  icon?: React.ReactNode;
   title: string;
   navActions: React.ReactNode;
 };
 
 export const TravelLogNavToolbar: React.FC<TravelLogNavToolbarProps> = ({
+  icon,
   title,
   navActions,
 }) => {
@@ -31,9 +33,11 @@ export const TravelLogNavToolbar: React.FC<TravelLogNavToolbarProps> = ({
           height: '100%',
         }}
       >
+        {icon ?? null}
         <Typography
           sx={{
             fontWeight: 'bold',
+            ml: 1,
           }}
           variant="h5"
         >

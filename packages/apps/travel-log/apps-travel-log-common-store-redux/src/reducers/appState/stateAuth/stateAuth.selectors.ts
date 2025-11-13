@@ -2,8 +2,8 @@ import {
   createReducerSelectors,
   Entity,
 } from '@js-modules/common-redux-utils-normalized-reducers';
-import { StateAuthReducer } from './stateAuth.types';
-import { stateAuthReducerPath } from './stateAuth.reducer.path';
+import { StateAuthReducer } from '@js-modules/common-redux-reducer-auth-keycloak';
+import { stateAuthReducerPath } from './stateAuth.reducerPath';
 
 type ReduxState = {
   appState: {

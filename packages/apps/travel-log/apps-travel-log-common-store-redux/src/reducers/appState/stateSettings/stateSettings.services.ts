@@ -1,10 +1,10 @@
 import { axiosRequest } from '@js-modules/common-utils-general';
 import {
-  API_CORE_URI_TRAVEL_LOG,
+  API_CORE__URI__TRAVEL_LOG,
   ApiControllersTravelLog,
   ApiSubHandlersUsersPrivate,
 } from '@js-modules/apps-travel-log-common-constants';
-import { UsersUpdateOnePartialDto } from '@js-modules/apps-travel-log-api-core-modules/src/modules/users/dtos/users.updateOnePartial.dto';
+import { UsersUpdateOnePartialDto } from '@js-modules/apps-travel-log-api-modules-core/src/modules/users/dtos/users.updateOnePartial.dto';
 import {
   StateSettingsGetProfileServiceResponse,
   StateSettingsResetPasswordServiceResponse,
@@ -13,7 +13,7 @@ import {
 
 export async function stateSettingsGetProfileService(): Promise<StateSettingsGetProfileServiceResponse> {
   const res = await axiosRequest.get(
-    `${API_CORE_URI_TRAVEL_LOG}/${ApiControllersTravelLog.usersPrivate}`,
+    `${API_CORE__URI__TRAVEL_LOG}/${ApiControllersTravelLog.usersPrivate}`,
   );
   return res;
 }
@@ -22,7 +22,7 @@ export async function stateSettingsUpdateProfileService(
   usersUpdateOnePartialDto: UsersUpdateOnePartialDto,
 ): Promise<StateSettingsUpdateProfileServiceResponse> {
   const res = await axiosRequest.patch(
-    `${API_CORE_URI_TRAVEL_LOG}/${ApiControllersTravelLog.usersPrivate}`,
+    `${API_CORE__URI__TRAVEL_LOG}/${ApiControllersTravelLog.usersPrivate}`,
     usersUpdateOnePartialDto,
   );
   return res;
@@ -30,7 +30,7 @@ export async function stateSettingsUpdateProfileService(
 
 export async function stateSettingsResetPasswordService(): Promise<StateSettingsResetPasswordServiceResponse> {
   const res = await axiosRequest.post(
-    `${API_CORE_URI_TRAVEL_LOG}/${ApiControllersTravelLog.usersPrivate}/${ApiSubHandlersUsersPrivate.resetPassword}`,
+    `${API_CORE__URI__TRAVEL_LOG}/${ApiControllersTravelLog.usersPrivate}/${ApiSubHandlersUsersPrivate.resetPassword}`,
   );
   return res;
 }

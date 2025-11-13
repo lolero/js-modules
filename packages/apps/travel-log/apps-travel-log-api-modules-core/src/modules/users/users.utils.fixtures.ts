@@ -5,12 +5,6 @@ import { UsersFindManyDto } from './dtos/users.findMany.dto';
 import { UsersUpdateOnePartialDto } from './dtos/users.updateOnePartial.dto';
 import { UsersEntity } from './users.entity';
 import { KeycloakUser, UsersEntityType } from './users.types';
-import { UsersFindManyUniqueKeysDto } from './dtos/users.findManyUniqueKeys.dto';
-import { UsersFindManySearchDto } from './dtos/users.findManySearch.dto';
-import { UsersFindManyRelationsDto } from './dtos/users.findManyRelations.dto';
-import { UsersFindManyRangesDateDto } from './dtos/users.findManyRangesDate.dto';
-import { UsersFindManyRangesNumberDto } from './dtos/users.findManyRangesNumber.dto';
-import { UsersFindManyRangesStringDto } from './dtos/users.findManyRangesString.dto';
 
 export function getUsersEntityFixture(
   overrides: Partial<UsersEntityType> = {},

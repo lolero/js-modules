@@ -27,7 +27,14 @@ if (process.env.NODE_ENV !== 'production') {
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins,
+  define: {
+    'process.env.ROUTER_HOST': JSON.stringify('$VITE_ROUTER_HOST'),
+  },
   build: {
     outDir: 'build',
+  },
+  server: {
+    host: true,
+    allowedHosts: ['client-web'],
   },
 });

@@ -3,7 +3,7 @@ import _isEmpty from 'lodash/isEmpty';
 import pickBy from 'lodash/pickBy';
 import isEmpty from 'validator/lib/isEmpty';
 import isEmail from 'validator/lib/isEmail';
-import { UsersUpdateOnePartialDto } from '@js-modules/apps-travel-log-api-core-modules/src/modules/users/dtos/users.updateOnePartial.dto';
+import { UsersUpdateOnePartialDto } from '@js-modules/apps-travel-log-api-modules-core/src/modules/users/dtos/users.updateOnePartial.dto';
 import {
   FormErrors,
   FormValidator,

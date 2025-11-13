@@ -277,8 +277,8 @@ describe('UsersService', () => {
       );
 
       usersEntity = await usersService.findOne(
-        'username',
         getUsersEntityFixture().username ?? '',
+        'username',
       );
 
       expect(usersRepositoryFindOneByMock).toHaveBeenNthCalledWith(1, {

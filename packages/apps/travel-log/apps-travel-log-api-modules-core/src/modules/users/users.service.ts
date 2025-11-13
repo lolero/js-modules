@@ -68,8 +68,8 @@ export class UsersService implements AuthUsersService {
   }
 
   async findOne(
-    uniqueKeyName: UsersUniqueKeyName,
     uniqueKeyValue: EntityUniqueKeyValue,
+    uniqueKeyName: UsersUniqueKeyName,
   ): Promise<UsersEntity | null> {
     const usersEntity = await this.usersRepository.findOneBy({
       [uniqueKeyName]: uniqueKeyValue as UsersEntity[UsersUniqueKeyName],

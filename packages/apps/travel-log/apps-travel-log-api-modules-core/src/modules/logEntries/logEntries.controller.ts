@@ -54,8 +54,8 @@ export class LogEntriesController {
     @Query('uniqueKeyName') uniqueKeyName: LogEntriesUniqueKeyName = 'id',
   ): Promise<LogEntriesEntity | null> {
     const logEntriesEntity = await this.logEntriesService.findOne(
-      uniqueKeyName,
       uniqueKeyValue,
+      uniqueKeyName,
     );
 
     return logEntriesEntity;
@@ -84,8 +84,8 @@ export class LogEntriesController {
     const logEntriesEntity = await this.logEntriesService.updateOne(
       logEntriesUpdateOneWholeDto,
       usersEntityCurrent,
-      uniqueKeyName,
       uniqueKeyValue,
+      uniqueKeyName,
     );
 
     return logEntriesEntity;
@@ -119,8 +119,8 @@ export class LogEntriesController {
     const logEntriesEntity = await this.logEntriesService.updateOne(
       logEntriesUpdateOnePartialDto,
       usersEntityCurrent,
-      uniqueKeyName,
       uniqueKeyValue,
+      uniqueKeyName,
     );
 
     return logEntriesEntity;

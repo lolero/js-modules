@@ -6,12 +6,13 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { PolicyEnforcementMode, TokenValidation } from 'nest-keycloak-connect';
 import { AuthModule } from '@js-modules/api-nest-module-auth-keycloak';
 import { utilGetAuthUsersServiceProvider } from '@js-modules/api-nest-utils';
-import { AUTH_URI_TRAVEL_LOG } from '@js-modules/apps-travel-log-common-constants-cjs';
+import { AUTH_SERVER__URI__TRAVEL_LOG } from '@js-modules/apps-travel-log-common-constants-cjs';
+import { getEnvFileName } from '@js-modules/common-utils-general-cjs';
 import {
   LogEntriesModule,
   UsersModule,
   UsersService,
-} from '@js-modules/apps-travel-log-api-core-modules';
+} from '@js-modules/apps-travel-log-api-modules-core';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { configTypeormDataSourceOptions } from '../../config/config.typeorm.dataSourceOptions';
@@ -20,27 +21,27 @@ import { configTypeormDataSourceOptions } from '../../config/config.typeorm.data
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: `.env.${process.env.NODE_ENV}`,
+      envFilePath: getEnvFileName(),
     }),
     TypeOrmModule.forRoot(configTypeormDataSourceOptions),
     AuthModule.registerAsync(
       {
-        authServerUrl: AUTH_URI_TRAVEL_LOG,
+        authServerUrl: AUTH_SERVER__URI__TRAVEL_LOG,
         realm: 'travel-log',
         clientId: 'client-api-core',
-        secret: 'O3TeW6hj9yQPQEbRRDJrcxtIdJGl3JBx',
+        secret: process.env.KEYCLOAK_SECRET_CLIENT_API_CORE,
         policyEnforcement: PolicyEnforcementMode.PERMISSIVE,
         tokenValidation: TokenValidation.ONLINE,
       },
       {
         connectionConfig: {
-          baseUrl: AUTH_URI_TRAVEL_LOG,
+          baseUrl: AUTH_SERVER__URI__TRAVEL_LOG,
           realmName: 'travel-log',
         },
         credentials: {
           grantType: 'client_credentials',
           clientId: 'admin-cli',
-          clientSecret: 'O1OsPPggxSSiKwRzsuvr4jVw0iOHWCNO',
+          clientSecret: process.env.KEYCLOAK_SECRET_ADMIN_CLI,
         },
       },
       {
@@ -57,6 +58,7 @@ import { configTypeormDataSourceOptions } from '../../config/config.typeorm.data
       provide: APP_PIPE,
       useValue: new ValidationPipe({
         whitelist: true,
+        forbidNonWhitelisted: true,
       }),
     },
     AppService,

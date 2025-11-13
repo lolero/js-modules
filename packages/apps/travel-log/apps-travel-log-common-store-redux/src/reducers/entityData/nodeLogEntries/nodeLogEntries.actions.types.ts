@@ -15,9 +15,9 @@ import {
   UpdateOneWholeEntityRequestMetadata,
   UpdatePartialReducerMetadataRequestMetadata,
 } from '@js-modules/common-redux-utils-normalized-reducers';
-import { LogEntriesFindManyDto } from '@js-modules/apps-travel-log-api-core-modules/src/modules/logEntries/dtos/logEntries.findMany.dto';
-import { LogEntriesEntity } from '@js-modules/apps-travel-log-api-core-modules/src/modules/logEntries/logEntries.entity';
-import { LogEntriesUniqueKeyName } from '@js-modules/apps-travel-log-api-core-modules/src/modules/logEntries/logEntries.types';
+import { LogEntriesFindManyDto } from '@js-modules/apps-travel-log-api-modules-core/src/modules/logEntries/dtos/logEntries.findMany.dto';
+import { LogEntriesEntity } from '@js-modules/apps-travel-log-api-modules-core/src/modules/logEntries/logEntries.entity';
+import { LogEntriesUniqueKeyName } from '@js-modules/apps-travel-log-api-modules-core/src/modules/logEntries/logEntries.types';
 import { NodeLogEntry, NodeLogEntriesReducer } from './nodeLogEntries.types';
 
 export enum NodeLogEntriesActionTypes {

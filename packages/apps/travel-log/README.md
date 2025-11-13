@@ -99,7 +99,7 @@ uses DTOs to enforce validation of API request payloads.
 The same DTOs are also consumed as parameter types by the service functions 
 which the front-end uses to call on the back-end APIs. This is why NestJs 
 modules are implemented in a separate package, namely 
-`apps-travel-log-api-core-modules`, instead of 
+`apps-travel-log-api-modules-core`, instead of 
 `apps-travel-log-api-core`.
 
 ***REMINDER**: No package can be both an app and a library!
