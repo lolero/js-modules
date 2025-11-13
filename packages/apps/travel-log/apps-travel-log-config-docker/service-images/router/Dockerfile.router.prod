@@ -1,0 +1,15 @@
+FROM nginx:1.29.1-alpine
+
+# Build argument for user UID
+ARG USER_UID
+
+# Copy files
+COPY ./packages/apps/travel-log/apps-travel-log-config-docker/service-images/router/nginx.conf.router.prod /etc/nginx/conf.d/default.conf
+
+# Set permissions for uid specified in docker-compose
+RUN chown -R ${USER_UID}:${USER_UID} /var/cache/nginx && \
+    chown -R ${USER_UID}:${USER_UID} /var/log/nginx && \
+    chown -R ${USER_UID}:${USER_UID} /etc/nginx/conf.d && \
+    touch /var/run/nginx.pid && \
+    chown -R ${USER_UID}:${USER_UID} /var/run/nginx.pid && \
+    chmod 1777 /tmp

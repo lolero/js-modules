@@ -1,0 +1,31 @@
+FROM node:lts-alpine3.22 as image-build
+WORKDIR '/app'
+RUN npm install -g pnpm
+COPY . .
+RUN pnpm reset:reset
+RUN pnpm nx run @js-modules/apps-travel-log-api-core:build
+RUN cd packages/apps/travel-log/apps-travel-log-api-core && pnpm ncc build build/main.js -o bundle --transpile-only && mv bundle/index.js bundle/main.js
+RUN cd packages/apps/travel-log/apps-travel-log-api-core && pnpm ncc build build/config/config.typeorm.dataSource.js -o bundle/data-source --transpile-only && mv bundle/data-source/index.js bundle/data-source/main.js
+
+FROM node:lts-alpine3.22
+
+WORKDIR '/app'
+
+# Build argument for user UID
+ARG USER_UID
+
+# Copy files
+COPY --from=image-build /app/packages/apps/travel-log/apps-travel-log-api-core/bundle ./build
+COPY --from=image-build /app/packages/apps/travel-log/apps-travel-log-api-core/build/migrations ./build/migrations
+COPY --from=image-build /app/packages/apps/travel-log/apps-travel-log-api-core/package.typeorm.json ./package.json
+COPY --from=image-build /app/packages/apps/travel-log/apps-travel-log-config-docker/service-images/api-core/typeorm-migration-run.sh ./typeorm-migration-run.sh
+
+# Set permissions for uid specified in docker-compose
+RUN chmod +x ./typeorm-migration-run.sh && \
+    chown -R ${USER_UID}:${USER_UID} /app
+
+# Install dependencies
+RUN npm install -g pnpm
+RUN pnpm install
+
+EXPOSE 3000
