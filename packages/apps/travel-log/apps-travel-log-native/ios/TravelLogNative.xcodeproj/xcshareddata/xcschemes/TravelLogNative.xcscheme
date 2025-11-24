@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "AppsTravelLogNative.app"
-               BlueprintName = "AppsTravelLogNative"
-               ReferencedContainer = "container:AppsTravelLogNative.xcodeproj">
+               BuildableName = "TravelLogNative.app"
+               BlueprintName = "TravelLogNative"
+               ReferencedContainer = "container:TravelLogNative.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "AppsTravelLogNativeTests.xctest"
-               BlueprintName = "AppsTravelLogNativeTests"
-               ReferencedContainer = "container:AppsTravelLogNative.xcodeproj">
+               BuildableName = "TravelLogNativeTests.xctest"
+               BlueprintName = "TravelLogNativeTests"
+               ReferencedContainer = "container:TravelLogNative.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "AppsTravelLogNative.app"
-            BlueprintName = "AppsTravelLogNative"
-            ReferencedContainer = "container:AppsTravelLogNative.xcodeproj">
+            BuildableName = "TravelLogNative.app"
+            BlueprintName = "TravelLogNative"
+            ReferencedContainer = "container:TravelLogNative.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "AppsTravelLogNative.app"
-            BlueprintName = "AppsTravelLogNative"
-            ReferencedContainer = "container:AppsTravelLogNative.xcodeproj">
+            BuildableName = "TravelLogNative.app"
+            BlueprintName = "TravelLogNative"
+            ReferencedContainer = "container:TravelLogNative.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

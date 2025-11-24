@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "clean:main": "rm -rf `find . -type d -name 'node_modules'` `find . -type d -name 'coverage'` .husky .eslintignore .prettierignore .nxignore .dockerignore .solhintignore",
-    "clean:build": "rm -rf `find . -type d -name 'build'` `find . -type d -name 'dist'` `find . -type d -name 'build_keycloak'`",
+    "clean:build": "rm -rf `find . -type d -name 'build'` `find . -type d -name 'dist'` `find . -type d -name 'build_keycloak'` `find . -type d -name '.gradle'` `find . -type d -name '.kotlin'` `find . -type d -name '.cxx'`",
     "clean:tsbuildinfo": "rm -rf `find . -type f -name '*.tsbuildinfo'`",
     "clean:nx": "rm -rf `find . -type d -name '.nx'`",
     "clean:build-cache": "pnpm clean:build && pnpm clean:tsbuildinfo && pnpm clean:nx",

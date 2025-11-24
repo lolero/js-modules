@@ -1,4 +1,4 @@
-package com.appstravellognative
+package com.travellognative
 
 import android.app.Application
 import com.facebook.react.PackageList

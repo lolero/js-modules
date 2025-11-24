@@ -1,5 +1,17 @@
 {
-  "extends": "@react-native/typescript-config",
-  "include": ["**/*.ts", "**/*.tsx"],
-  "exclude": ["**/node_modules", "**/Pods"]
+  // "extends": "@react-native/typescript-config",
+  "extends": "../../../../tsconfig.json",
+  "compilerOptions": {
+    "moduleResolution": "bundler",
+    "lib": ["esnext"],
+    "jsx": "react-native",
+    "noEmit": true,
+    "types": ["jest"],
+    "customConditions": ["react-native"],
+    "allowImportingTsExtensions": true,
+    "allowArbitraryExtensions": true,
+    // Causes issues with package.json "exports"
+    "forceConsistentCasingInFileNames": false
+  },
+  "include": ["./src"]
 }
