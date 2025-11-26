@@ -1,7 +1,7 @@
 import React from 'react';
 import Tabs from '@mui/material/Tabs';
 import { useNavLeftDrawerTabs } from '@js-modules/web-react-nav';
-import { routesMetadataPublic } from '@js-modules/apps-travel-log-web-components';
+import { routesMetadataPublic } from '@js-modules/apps-travel-log-common-react';
 
 export const PublicWorkspaceNavDrawerContentBox: React.FunctionComponent =
   () => {

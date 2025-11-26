@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 import {
-  AUTH__URI__TRAVEL_LOG,
   WebModulesPrivate,
   WebModulesPublic,
 } from '@js-modules/apps-travel-log-common-constants';
@@ -11,60 +10,18 @@ import {
   HomeWorkspaceBox,
   PurposeWorkspaceBox,
 } from '@js-modules/apps-travel-log-web-site';
-import {
-  useStateAuthInitializeKeycloak,
-  useStateSettingsGetProfile,
-  useStateSettingsSignout,
-} from '@js-modules/apps-travel-log-common-store-redux';
-import { KeycloakConfig, KeycloakInitOptions } from 'keycloak-js';
 import { SettingsRoutes } from '@js-modules/apps-travel-log-web-settings';
 import { MyLogRoutes } from '@js-modules/apps-travel-log-web-my-log';
-import {
-  routesMetadataPrivate,
-  routesMetadataPublic,
-} from '@js-modules/apps-travel-log-web-components';
-
-const keycloakConfig: KeycloakConfig = {
-  url: AUTH__URI__TRAVEL_LOG,
-  realm: 'travel-log',
-  clientId: 'client-web',
-};
-
-const keycloakInitOptions: KeycloakInitOptions = {
-  onLoad: 'check-sso',
-  // silentCheckSsoRedirectUri: `${window.location.origin}/silent-check-sso.html`,
-  checkLoginIframe: false,
-};
+import { useInitializeKeycloak } from '@js-modules/apps-travel-log-common-react';
 
 export const TravelLogRoutes: React.FunctionComponent = () => {
-  const { callback: stateSettingsGetProfileCallback } =
-    useStateSettingsGetProfile();
-
-  const { callback: stateSettingsSignoutCallback } = useStateSettingsSignout();
-
-  const {
-    reducerMetadata: { isKeycloakReady, isAuthenticated },
-    callback: stateAuthInitializeKeycloakCallback,
-  } = useStateAuthInitializeKeycloak(
-    keycloakConfig,
-    keycloakInitOptions,
-    stateSettingsGetProfileCallback,
-    stateSettingsSignoutCallback,
-  );
-
-  useEffect(() => {
-    stateAuthInitializeKeycloakCallback();
-  }, [stateAuthInitializeKeycloakCallback]);
+  const { isKeycloakReady, rootPath } = useInitializeKeycloak();
 
   if (!isKeycloakReady) {
     // TODO: create loading workspace with skeletons instead of this ugly
     //  circular loader
     return <CircularProgress />;
   }
-
-  const rootPath = !isAuthenticated
-    ? routesMetadataPublic[WebModulesPublic.home].path
-    : routesMetadataPrivate[WebModulesPrivate.myFeeds].path;
 
   return (
     <Routes>

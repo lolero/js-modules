@@ -6,7 +6,6 @@ import {
   WebSubModulesMyLogLogEntry,
 } from '@js-modules/apps-travel-log-common-constants';
 import { useParams } from 'react-router-dom';
-import { routesMetadataPrivate } from '@js-modules/apps-travel-log-web-components';
 import {
   NodeLogEntry,
   nodeLogEntryUnsavedEmpty,
@@ -18,6 +17,7 @@ import {
 import isUndefined from 'lodash/isUndefined';
 import CircularProgress from '@mui/material/CircularProgress';
 import isNull from 'lodash/isNull';
+import { routesMetadataPrivate } from '@js-modules/apps-travel-log-common-react';
 import { MyLogLogEntryAddEditWorkspaceTopToolbar } from './MyLogLogEntryAddEditWorkspaceTopToolbar';
 import { MyLogLogEntryAddEditWorkspaceContentBox } from './MyLogLogEntryAddEditWorkspaceContentBox';
 import {

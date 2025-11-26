@@ -21,7 +21,7 @@ import {
   useStateAuthSignup,
   useStateSettingsGetProfile,
 } from '@js-modules/apps-travel-log-common-store-redux';
-import { routesMetadataPrivate } from '@js-modules/apps-travel-log-web-components';
+import { routesMetadataPrivate } from '@js-modules/apps-travel-log-common-react';
 
 export const PublicNavToolbarActionsBox: React.FC = () => {
   const { isMobile } = useNavDisplayMetadata();
@@ -35,14 +35,20 @@ export const PublicNavToolbarActionsBox: React.FC = () => {
     reducerMetadata: { isAuthenticated },
     callback: stateAuthSignupCallback,
   } = useStateAuthSignup(
-    WEB_CLIENT__URI__TRAVEL_LOG,
-    routesMetadataPrivate[WebModulesPrivate.myFeeds].path,
+    {
+      redirectUri: `${WEB_CLIENT__URI__TRAVEL_LOG}${
+        routesMetadataPrivate[WebModulesPrivate.myFeeds].path
+      }`,
+    },
     stateSettingsGetProfileCallback,
   );
 
   const { callback: stateAuthLoginCallback } = useStateAuthLogin(
-    WEB_CLIENT__URI__TRAVEL_LOG,
-    routesMetadataPrivate[WebModulesPrivate.myFeeds].path,
+    {
+      redirectUri: `${WEB_CLIENT__URI__TRAVEL_LOG}${
+        routesMetadataPrivate[WebModulesPrivate.myFeeds].path
+      }`,
+    },
     stateSettingsGetProfileCallback,
   );
 

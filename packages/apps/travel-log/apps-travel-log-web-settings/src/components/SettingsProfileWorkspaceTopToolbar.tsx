@@ -9,7 +9,7 @@ import {
   WebSubModulesSettings,
   WebSubModulesSettingsProfile,
 } from '@js-modules/apps-travel-log-common-constants';
-import { routesMetadataPrivate } from '@js-modules/apps-travel-log-web-components';
+import { routesMetadataPrivate } from '@js-modules/apps-travel-log-common-react';
 import { SettingsProfileWorkspaceActionsMenu } from './SettingsProfileWorkspaceActionsMenu';
 
 export const SettingsProfileWorkspaceTopToolbar: React.FC = () => {

@@ -54,6 +54,9 @@
       "@js-modules/apps-travel-log-api-modules-core": [
         "apps/travel-log/apps-travel-log-api-modules-core/src"
       ],
+      "@js-modules/apps-travel-log-common-react": [
+        "apps/travel-log/apps-travel-log-common-react/src"
+      ],
       "@js-modules/apps-travel-log-common-constants": [
         "apps/travel-log/apps-travel-log-common-constants/src"
       ],
@@ -109,6 +112,7 @@
         "apps/vending-machine/apps-vending-machine-web-components/src"
       ],
       "@js-modules/common-react-hooks": ["common/react/common-react-hooks/src"],
+      "@js-modules/common-react-nav": ["common/react/common-react-nav/src"],
       "@js-modules/common-redux-reducer-auth-keycloak": ["common/redux/common-redux-reducer-auth-keycloak/src"],
       "@js-modules/common-redux-reducer-aws-s3-files": ["common/redux/common-redux-reducer-aws-s3-files/src"],
       "@js-modules/common-redux-utils-normalized-reducers": ["common/redux/common-redux-utils-normalized-reducers/src"],

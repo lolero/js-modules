@@ -2,7 +2,8 @@ import {
   createInitialState,
   Entity,
 } from '@js-modules/common-redux-utils-normalized-reducers';
-import { StateMainReducer, ThemePalette } from './stateMain.types';
+import { ThemePalette } from '@js-modules/apps-travel-log-common-constants';
+import { StateMainReducer } from './stateMain.types';
 
 const stateMainReducerMetadataInitialState: StateMainReducer['metadata'] = {
   themePalette: ThemePalette.light,

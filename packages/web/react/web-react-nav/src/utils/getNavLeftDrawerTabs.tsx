@@ -8,7 +8,9 @@ import isEqual from 'lodash/isEqual';
 import isNull from 'lodash/isNull';
 import intersection from 'lodash/intersection';
 import pick from 'lodash/pick';
-import { ReactRouterNavUtils, RoutesMetadata } from '../types/routes.types';
+import { RoutesMetadata } from '@js-modules/common-react-nav';
+import { MuiFaIcon } from '@js-modules/web-react-components';
+import { ReactRouterNavUtils } from '../types/routes.types';
 
 export type NavLeftDrawerTabs = {
   tabsValue: string | null;
@@ -136,7 +138,7 @@ export function getNavLeftDrawerTabs(
           ...selectedParentTabSx,
         }}
         value={routeMetadata.path}
-        icon={routeMetadata.icon}
+        icon={<MuiFaIcon icon={routeMetadata.icon} />}
         label={label}
         component={Link}
         to={routeMetadata.path}

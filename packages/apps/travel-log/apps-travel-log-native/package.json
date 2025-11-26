@@ -5,15 +5,25 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "dev:travel-log-native": "react-native start",
+    "dev:travel-log-native": "react-native start --reset-cache",
     "dev:travel-log-native-android": "react-native run-android",
-    "dev:travel-log-native-ios": "react-native run-ios"
+    "dev:travel-log-native-ios": "react-native run-ios",
+    "reset:metro-kill": "pkill -9 -f \"cli.js start\"",
+    "reset:clean-android": "adb uninstall com.travellognative && cd android && ./gradlew clean",
+    "reset:reverse-port-fwd-android": "~/Android/Sdk/platform-tools/adb reverse tcp:8081 tcp:8081"
   },
   "dependencies": {
-    "@react-native/new-app-screen": "0.82.1",
+    "@js-modules/apps-travel-log-common-constants": "workspace:^",
+    "@js-modules/apps-travel-log-common-react": "workspace:^",
+    "@js-modules/apps-travel-log-common-store-redux": "workspace:^",
+    "@js-modules/apps-travel-log-native-start": "workspace:^",
+    "@react-native-vector-icons/fontawesome": "^12.4.0",
+    "@react-navigation/native": "^7.1.21",
+    "@react-navigation/native-stack": "^7.8.0",
     "@types/react": "^19.1.10",
     "react": "^19.1.1",
     "react-native": "0.82.1",
+    "react-native-paper": "^5.14.5",
     "react-native-safe-area-context": "^5.5.2"
   },
   "devDependencies": {
@@ -31,8 +41,5 @@
     "@react-native/typescript-config": "0.82.1",
     "@types/react-test-renderer": "^19.1.0",
     "react-test-renderer": "19.1.1"
-  },
-  "eslintConfig": {
-    "extends": "@react-native"
   }
 }

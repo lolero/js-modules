@@ -14,7 +14,7 @@ import MenuItem from '@mui/material/MenuItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons/faEllipsisVertical';
-import { routesMetadataPrivate } from '@js-modules/apps-travel-log-web-components';
+import { routesMetadataPrivate } from '@js-modules/apps-travel-log-common-react';
 
 export const SettingsProfileWorkspaceActionsMenu: React.FC = () => {
   const { menuAnchor, openMenuCallback, closeMenuCallback } = useMenuUtils();

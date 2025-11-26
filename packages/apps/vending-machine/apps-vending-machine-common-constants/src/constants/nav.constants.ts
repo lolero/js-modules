@@ -1,4 +1,4 @@
-import { RoutesMetadata } from '@js-modules/web-react-nav';
+import { RoutesMetadata } from '@js-modules/common-react-nav';
 import upperFirst from 'lodash/upperFirst';
 import lowerCase from 'lodash/lowerCase';
 import { faStore } from '@fortawesome/free-solid-svg-icons/faStore';

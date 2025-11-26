@@ -1,7 +1,5 @@
-import { RoutesMetadata } from '@js-modules/web-react-nav';
-import { MuiFaIcon } from '@js-modules/web-react-components';
+import { RoutesMetadata } from '@js-modules/common-react-nav';
 import upperFirst from 'lodash/upperFirst';
-import React from 'react';
 import {
   WebModules,
   WebSubModulesAnalytics,
@@ -13,43 +11,44 @@ import { faMoneyBillTransfer } from '@fortawesome/free-solid-svg-icons/faMoneyBi
 import { faMagnifyingGlassChart } from '@fortawesome/free-solid-svg-icons/faMagnifyingGlassChart';
 import { faClockRotateLeft } from '@fortawesome/free-solid-svg-icons/faClockRotateLeft';
 import { faWaveSquare } from '@fortawesome/free-solid-svg-icons/faWaveSquare';
+import { IconDefinition } from '@fortawesome/fontawesome-common-types';
 
-export const routesMetadataDapp: RoutesMetadata = {
+export const routesMetadataDapp: RoutesMetadata<IconDefinition> = {
   [WebModules.portfolio]: {
     path: `/${WebModules.portfolio}`,
-    icon: <MuiFaIcon icon={faChartPie} />,
+    icon: faChartPie,
     label: upperFirst(WebModules.portfolio),
     subRoutes: {
       [WebSubModulesPortfolio.tokens]: {
         path: `/${WebModules.portfolio}/${WebSubModulesPortfolio.tokens}`,
-        icon: <MuiFaIcon icon={faCoins} />,
+        icon: faCoins,
         label: upperFirst(WebSubModulesPortfolio.tokens),
       },
       [WebSubModulesPortfolio.transactions]: {
         path: `/${WebModules.portfolio}/${WebSubModulesPortfolio.transactions}`,
-        icon: <MuiFaIcon icon={faMoneyBillTransfer} />,
+        icon: faMoneyBillTransfer,
         label: upperFirst(WebSubModulesPortfolio.transactions),
       },
     },
   },
   [WebModules.analytics]: {
     path: `/${WebModules.analytics}`,
-    icon: <MuiFaIcon icon={faMagnifyingGlassChart} />,
+    icon: faMagnifyingGlassChart,
     label: upperFirst(WebModules.analytics),
     subRoutes: {
       [WebSubModulesAnalytics.tokens]: {
         path: `/${WebModules.analytics}/${WebSubModulesPortfolio.tokens}`,
-        icon: <MuiFaIcon icon={faCoins} />,
+        icon: faCoins,
         label: upperFirst(WebSubModulesAnalytics.tokens),
       },
       [WebSubModulesAnalytics.history]: {
         path: `/${WebModules.analytics}/${WebSubModulesAnalytics.history}`,
-        icon: <MuiFaIcon icon={faClockRotateLeft} />,
+        icon: faClockRotateLeft,
         label: upperFirst(WebSubModulesAnalytics.history),
       },
       [WebSubModulesAnalytics.insights]: {
         path: `/${WebModules.analytics}/${WebSubModulesAnalytics.insights}`,
-        icon: <MuiFaIcon icon={faWaveSquare} />,
+        icon: faWaveSquare,
         label: upperFirst(WebSubModulesAnalytics.insights),
       },
     },

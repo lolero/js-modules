@@ -4,7 +4,7 @@ import {
   WebModulesPrivate,
   WebSubModulesMyLog,
 } from '@js-modules/apps-travel-log-common-constants';
-import { routesMetadataPrivate } from '@js-modules/apps-travel-log-web-components';
+import { routesMetadataPrivate } from '@js-modules/apps-travel-log-common-react';
 import { MyLogWorkspaceBox } from './MyLogWorkspaceBox';
 import { MyLogLogEntryRoutes } from './MyLogLogEntryRoutes';
 

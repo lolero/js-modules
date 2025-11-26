@@ -3,11 +3,7 @@ import {
   Reducer,
   ReducerMetadata,
 } from '@js-modules/common-redux-utils-normalized-reducers';
-
-export enum ThemePalette {
-  light = 'light',
-  dark = 'dark',
-}
+import { ThemePalette } from '@js-modules/apps-travel-log-common-constants';
 
 export interface StateMainReducerMetadata extends ReducerMetadata {
   themePalette: ThemePalette;

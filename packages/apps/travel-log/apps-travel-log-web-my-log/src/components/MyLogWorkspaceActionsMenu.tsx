@@ -13,7 +13,6 @@ import MenuItem from '@mui/material/MenuItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons/faEllipsisVertical';
-import { routesMetadataPrivate } from '@js-modules/apps-travel-log-web-components';
 import { FindManyRangesMenu } from '@js-modules/web-react-components/src/components/FindManyRangesMenu';
 import {
   FindManyRangesTypes,
@@ -22,6 +21,7 @@ import {
 } from '@js-modules/common-react-hooks';
 import { faCalendarPlus } from '@fortawesome/free-solid-svg-icons/faCalendarPlus';
 import { faCalendarDays } from '@fortawesome/free-solid-svg-icons/faCalendarDays';
+import { routesMetadataPrivate } from '@js-modules/apps-travel-log-common-react';
 
 const rangeTypes: FindManyRangesTypes = {
   id: FindManyRangeType.number,
@@ -77,7 +77,9 @@ export const MyLogWorkspaceActionsMenu: React.FC = () => {
         onClose={closeMenuCallback}
       >
         <MenuItem component={Link} to={routeMetadataAddNew.path}>
-          <ListItemIcon>{routeMetadataAddNew.icon}</ListItemIcon>
+          <ListItemIcon>
+            <MuiFaIcon icon={routeMetadataAddNew.icon} />
+          </ListItemIcon>
           <ListItemText>{routeMetadataAddNew.label}</ListItemText>
         </MenuItem>
         <FindManyRangesMenu rangeTypes={rangeTypes} button={rangesMenuButton} />

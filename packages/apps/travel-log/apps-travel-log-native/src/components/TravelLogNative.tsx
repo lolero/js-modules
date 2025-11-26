@@ -1,38 +1,25 @@
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
+import React from 'react';
 import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
+  getStoreRedux,
+  TravelLogReduxProvider,
+} from '@js-modules/apps-travel-log-common-react';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+// import { TravelLogPaperProvider } from './TravelLogPaperProvider';
+import { StartScreenView } from './StartScreenView';
 
-function App() {
-  const isDarkMode = useColorScheme() === 'dark';
+function initApp(): React.FC {
+  const reduxStore = getStoreRedux();
 
-  return (
+  const App: React.FC = () => (
     <SafeAreaProvider>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <AppContent />
+      <TravelLogReduxProvider reduxStore={reduxStore}>
+        <StartScreenView />
+        {/*  <TravelLogPaperProvider /> */}
+      </TravelLogReduxProvider>
     </SafeAreaProvider>
   );
+
+  return App;
 }
 
-function AppContent() {
-  const safeAreaInsets = useSafeAreaInsets();
-
-  return (
-    <View style={styles.container}>
-      <NewAppScreen
-        templateFileName="App.tsx"
-        safeAreaInsets={safeAreaInsets}
-      />
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
-
-export default App;
+export const TravelLogNative = initApp();

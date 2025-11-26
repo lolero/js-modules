@@ -11,18 +11,18 @@ import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons/faRightFro
 import { faSun } from '@fortawesome/free-solid-svg-icons/faSun';
 import { faMoon } from '@fortawesome/free-solid-svg-icons/faMoon';
 import {
-  ThemePalette,
   useStateAuthLogout,
   useStateMainUpdatePartialReducerMetadata,
   useStateSettingsSignout,
 } from '@js-modules/apps-travel-log-common-store-redux';
 import {
+  ThemePalette,
   WEB_CLIENT__URI__TRAVEL_LOG,
   WebModulesPublic,
 } from '@js-modules/apps-travel-log-common-constants';
 import startCase from 'lodash/startCase';
 import { faCopy } from '@fortawesome/free-solid-svg-icons/faCopy';
-import { routesMetadataPublic } from '@js-modules/apps-travel-log-web-components';
+import { routesMetadataPublic } from '@js-modules/apps-travel-log-common-react';
 
 export const MyWorkspaceAccountMenu: React.FC = () => {
   const { menuAnchor, openMenuCallback, closeMenuCallback } = useMenuUtils();

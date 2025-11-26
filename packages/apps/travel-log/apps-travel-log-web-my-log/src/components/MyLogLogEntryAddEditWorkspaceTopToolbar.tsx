@@ -18,11 +18,11 @@ import {
   useNodeLogEntriesReducerMetadata,
   useNodeLogEntriesUpdateOneWhole,
 } from '@js-modules/apps-travel-log-common-store-redux';
-import { routesMetadataPrivate } from '@js-modules/apps-travel-log-web-components';
 import isUndefined from 'lodash/isUndefined';
 import isNull from 'lodash/isNull';
 import isEqual from 'lodash/isEqual';
 import isEmpty from 'lodash/isEmpty';
+import { routesMetadataPrivate } from '@js-modules/apps-travel-log-common-react';
 import { MyLogLogEntryAddEditContext } from './MyLogLogEntryAddEditContext';
 
 export const MyLogLogEntryAddEditWorkspaceTopToolbar: React.FC = () => {

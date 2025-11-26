@@ -11,7 +11,7 @@ import {
 import { Link, useParams } from 'react-router-dom';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons/faPenToSquare';
 import { faAngleLeft } from '@fortawesome/free-solid-svg-icons/faAngleLeft';
-import { routesMetadataPrivate } from '@js-modules/apps-travel-log-web-components';
+import { routesMetadataPrivate } from '@js-modules/apps-travel-log-common-react';
 
 export const MyLogLogEntryWorkspaceTopToolbar: React.FC = () => {
   const { logEntryId } = useParams();
@@ -43,7 +43,7 @@ export const MyLogLogEntryWorkspaceTopToolbar: React.FC = () => {
           component={Link}
           to={routeMetadataMyLog.path}
           startIcon={<MuiFaIcon icon={faAngleLeft} />}
-          endIcon={routeMetadataMyLog.icon}
+          endIcon={<MuiFaIcon icon={routeMetadataMyLog.icon} />}
         >
           {routeMetadataMyLog.label}
         </Button>

@@ -3,12 +3,9 @@ import { useSplitRouterPath } from '@js-modules/web-react-hooks';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import intersection from 'lodash/intersection';
 import isEmpty from 'lodash/isEmpty';
+import { RouteMetadata, RoutesMetadata } from '@js-modules/common-react-nav';
 import { useNavDisplayMetadata } from './useNavDisplayMetadata';
-import {
-  ReactRouterNavUtils,
-  RouteMetadata,
-  RoutesMetadata,
-} from '../types/routes.types';
+import { ReactRouterNavUtils } from '../types/routes.types';
 import {
   getNavLeftDrawerTabs,
   NavLeftDrawerTabs,
