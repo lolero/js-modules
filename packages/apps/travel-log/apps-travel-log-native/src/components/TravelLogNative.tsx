@@ -4,8 +4,7 @@ import {
   TravelLogReduxProvider,
 } from '@js-modules/apps-travel-log-common-react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-// import { TravelLogPaperProvider } from './TravelLogPaperProvider';
-import { StartScreenView } from './StartScreenView';
+import { TravelLogPaperProvider } from './TravelLogPaperProvider';
 
 function initApp(): React.FC {
   const reduxStore = getStoreRedux();
@@ -13,8 +12,7 @@ function initApp(): React.FC {
   const App: React.FC = () => (
     <SafeAreaProvider>
       <TravelLogReduxProvider reduxStore={reduxStore}>
-        <StartScreenView />
-        {/*  <TravelLogPaperProvider /> */}
+        <TravelLogPaperProvider />
       </TravelLogReduxProvider>
     </SafeAreaProvider>
   );

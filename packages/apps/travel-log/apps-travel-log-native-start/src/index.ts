@@ -1,1 +1,1 @@
-export * from './components/StartScreenView';
+export * from './components/components.exports';

@@ -64,25 +64,11 @@ const config = {
       ...extraNodeModules,
       // Provide empty polyfills for required Node.js built-ins
       path: path.resolve(__dirname, 'src/polyfills/polyfills.empty.js'),
-      fs: path.resolve(__dirname, 'src/polyfills/polyfills.empty.js'),
       os: path.resolve(__dirname, 'src/polyfills/polyfills.empty.js'),
-      crypto: path.resolve(__dirname, 'src/polyfills/polyfills.empty.js'),
-      // Mock the dotenv package itself for React Native
-      dotenv: path.resolve(__dirname, 'src/polyfills/polyfills.dotenv.js'),
     },
 
     // Ensure Metro can resolve TypeScript source files
     sourceExts: ['js', 'jsx', 'json', 'ts', 'tsx'],
-  },
-
-  // Transformer configuration to handle TypeScript and workspace packages
-  transformer: {
-    getTransformOptions: async () => ({
-      transform: {
-        experimentalImportSupport: false,
-        inlineRequires: true,
-      },
-    }),
   },
 };
 
