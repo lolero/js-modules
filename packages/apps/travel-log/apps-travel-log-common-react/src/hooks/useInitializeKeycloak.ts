@@ -1,6 +1,7 @@
-import { useMemo, useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { KeycloakConfig, KeycloakInitOptions } from 'keycloak-js';
 import {
+  ClientType,
   useStateAuthInitializeKeycloak,
   useStateSettingsGetProfile,
   useStateSettingsSignout,
@@ -15,10 +16,9 @@ import {
   routesMetadataPublic,
 } from '../routesMetadata/routesMetadata.exports';
 
-const keycloakConfig: KeycloakConfig = {
+const keycloakConfig: Omit<KeycloakConfig, 'clientId'> = {
   url: AUTH__URI__TRAVEL_LOG,
   realm: 'travel-log',
-  clientId: 'client-web',
 };
 
 const keycloakInitOptions: KeycloakInitOptions = {
@@ -27,7 +27,7 @@ const keycloakInitOptions: KeycloakInitOptions = {
   checkLoginIframe: false,
 };
 
-export function useInitializeKeycloak(): {
+export function useInitializeKeycloak(clientType: ClientType): {
   isKeycloakReady: boolean;
   rootPath: string;
 } {
@@ -40,17 +40,27 @@ export function useInitializeKeycloak(): {
     reducerMetadata: { isKeycloakReady, isAuthenticated },
     callback: stateAuthInitializeKeycloakCallback,
   } = useStateAuthInitializeKeycloak(
-    keycloakConfig,
-    keycloakInitOptions,
+    clientType,
+    {
+      ...keycloakConfig,
+      clientId: `client-${clientType}`,
+    },
+    clientType === ClientType.web ? keycloakInitOptions : {},
     stateSettingsGetProfileCallback,
     stateSettingsSignoutCallback,
   );
 
   const rootPath = useMemo(() => {
+    if (clientType === ClientType.native) {
+      return !isAuthenticated
+        ? WebModulesPublic.home
+        : WebModulesPrivate.myFeeds;
+    }
+
     return !isAuthenticated
       ? routesMetadataPublic[WebModulesPublic.home].path
       : routesMetadataPrivate[WebModulesPrivate.myFeeds].path;
-  }, [isAuthenticated]);
+  }, [clientType, isAuthenticated]);
 
   useEffect(() => {
     stateAuthInitializeKeycloakCallback();

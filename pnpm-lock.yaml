@@ -1656,6 +1656,9 @@ importers:
       '@js-modules/apps-travel-log-common-store-redux':
         specifier: workspace:^
         version: link:../apps-travel-log-common-store-redux
+      '@js-modules/apps-travel-log-native-my-feeds':
+        specifier: workspace:^
+        version: link:../apps-travel-log-native-my-feeds
       '@js-modules/apps-travel-log-native-start':
         specifier: workspace:^
         version: link:../apps-travel-log-native-start
@@ -1677,6 +1680,12 @@ importers:
       react-native:
         specifier: 0.82.1
         version: 0.82.1(@babel/core@7.28.5)(@react-native-community/cli@20.0.0(bufferutil@4.0.5)(typescript@5.9.3)(utf-8-validate@5.0.7))(@react-native/metro-config@0.82.1(@babel/core@7.28.5)(bufferutil@4.0.5)(utf-8-validate@5.0.7))(@types/react@19.2.7)(bufferutil@4.0.5)(react@19.1.1)(utf-8-validate@5.0.7)
+      react-native-app-auth:
+        specifier: ^8.1.0
+        version: 8.1.0(react-native@0.82.1(@babel/core@7.28.5)(@react-native-community/cli@20.0.0(bufferutil@4.0.5)(typescript@5.9.3)(utf-8-validate@5.0.7))(@react-native/metro-config@0.82.1(@babel/core@7.28.5)(bufferutil@4.0.5)(utf-8-validate@5.0.7))(@types/react@19.2.7)(bufferutil@4.0.5)(react@19.1.1)(utf-8-validate@5.0.7))
+      react-native-keychain:
+        specifier: ^10.0.0
+        version: 10.0.0
       react-native-paper:
         specifier: ^5.14.5
         version: 5.14.5(react-native-safe-area-context@5.6.2(react-native@0.82.1(@babel/core@7.28.5)(@react-native-community/cli@20.0.0(bufferutil@4.0.5)(typescript@5.9.3)(utf-8-validate@5.0.7))(@react-native/metro-config@0.82.1(@babel/core@7.28.5)(bufferutil@4.0.5)(utf-8-validate@5.0.7))(@types/react@19.2.7)(bufferutil@4.0.5)(react@19.1.1)(utf-8-validate@5.0.7))(react@19.1.1))(react-native@0.82.1(@babel/core@7.28.5)(@react-native-community/cli@20.0.0(bufferutil@4.0.5)(typescript@5.9.3)(utf-8-validate@5.0.7))(@react-native/metro-config@0.82.1(@babel/core@7.28.5)(bufferutil@4.0.5)(utf-8-validate@5.0.7))(@types/react@19.2.7)(bufferutil@4.0.5)(react@19.1.1)(utf-8-validate@5.0.7))(react@19.1.1)
@@ -1729,6 +1738,45 @@ importers:
       react-test-renderer:
         specifier: 19.1.1
         version: 19.1.1(react@19.1.1)
+
+  packages/apps/travel-log/apps-travel-log-native-my-feeds:
+    dependencies:
+      '@js-modules/apps-travel-log-common-constants':
+        specifier: workspace:^
+        version: link:../apps-travel-log-common-constants
+      '@js-modules/apps-travel-log-common-react':
+        specifier: workspace:^
+        version: link:../apps-travel-log-common-react
+      '@js-modules/apps-travel-log-common-store-redux':
+        specifier: workspace:^
+        version: link:../apps-travel-log-common-store-redux
+      '@react-native-vector-icons/fontawesome-free-brands':
+        specifier: ^0.1.0
+        version: 0.1.0(react-native@0.82.1(@babel/core@7.28.5)(@react-native-community/cli@20.0.0(bufferutil@4.0.5)(typescript@5.9.3)(utf-8-validate@5.0.7))(@react-native/metro-config@0.82.1(@babel/core@7.28.5)(bufferutil@4.0.5)(utf-8-validate@5.0.7))(@types/react@19.2.7)(bufferutil@4.0.5)(react@19.1.1)(utf-8-validate@5.0.7))(react@19.1.1)
+      '@react-native-vector-icons/fontawesome-free-regular':
+        specifier: ^0.1.0
+        version: 0.1.0(react-native@0.82.1(@babel/core@7.28.5)(@react-native-community/cli@20.0.0(bufferutil@4.0.5)(typescript@5.9.3)(utf-8-validate@5.0.7))(@react-native/metro-config@0.82.1(@babel/core@7.28.5)(bufferutil@4.0.5)(utf-8-validate@5.0.7))(@types/react@19.2.7)(bufferutil@4.0.5)(react@19.1.1)(utf-8-validate@5.0.7))(react@19.1.1)
+      '@react-native-vector-icons/fontawesome-free-solid':
+        specifier: ^0.1.0
+        version: 0.1.0(react-native@0.82.1(@babel/core@7.28.5)(@react-native-community/cli@20.0.0(bufferutil@4.0.5)(typescript@5.9.3)(utf-8-validate@5.0.7))(@react-native/metro-config@0.82.1(@babel/core@7.28.5)(bufferutil@4.0.5)(utf-8-validate@5.0.7))(@types/react@19.2.7)(bufferutil@4.0.5)(react@19.1.1)(utf-8-validate@5.0.7))(react@19.1.1)
+      '@types/lodash':
+        specifier: ^4.17.20
+        version: 4.17.21
+      '@types/react':
+        specifier: ^19.1.10
+        version: 19.2.7
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
+      react:
+        specifier: ^19.1.1
+        version: 19.1.1
+      react-native:
+        specifier: 0.82.1
+        version: 0.82.1(@babel/core@7.28.5)(@react-native-community/cli@20.0.0(bufferutil@4.0.5)(typescript@5.9.3)(utf-8-validate@5.0.7))(@react-native/metro-config@0.82.1(@babel/core@7.28.5)(bufferutil@4.0.5)(utf-8-validate@5.0.7))(@types/react@19.2.7)(bufferutil@4.0.5)(react@19.1.1)(utf-8-validate@5.0.7)
+      react-native-paper:
+        specifier: ^5.14.5
+        version: 5.14.5(react-native-safe-area-context@5.6.2(react-native@0.82.1(@babel/core@7.28.5)(@react-native-community/cli@20.0.0(bufferutil@4.0.5)(typescript@5.9.3)(utf-8-validate@5.0.7))(@react-native/metro-config@0.82.1(@babel/core@7.28.5)(bufferutil@4.0.5)(utf-8-validate@5.0.7))(@types/react@19.2.7)(bufferutil@4.0.5)(react@19.1.1)(utf-8-validate@5.0.7))(react@19.1.1))(react-native@0.82.1(@babel/core@7.28.5)(@react-native-community/cli@20.0.0(bufferutil@4.0.5)(typescript@5.9.3)(utf-8-validate@5.0.7))(@react-native/metro-config@0.82.1(@babel/core@7.28.5)(bufferutil@4.0.5)(utf-8-validate@5.0.7))(@types/react@19.2.7)(bufferutil@4.0.5)(react@19.1.1)(utf-8-validate@5.0.7))(react@19.1.1)
 
   packages/apps/travel-log/apps-travel-log-native-start:
     dependencies:
@@ -3145,6 +3193,12 @@ importers:
       react:
         specifier: ^19.1.1
         version: 19.1.1
+      react-native-app-auth:
+        specifier: ^8.1.0
+        version: 8.1.0(react-native@0.82.1(@babel/core@7.28.5)(@react-native-community/cli@20.0.0(bufferutil@4.0.5)(typescript@5.9.3)(utf-8-validate@5.0.7))(@react-native/metro-config@0.82.1(@babel/core@7.28.5)(bufferutil@4.0.5)(utf-8-validate@5.0.7))(@types/react@19.2.7)(bufferutil@4.0.5)(react@19.1.1)(utf-8-validate@5.0.7))
+      react-native-keychain:
+        specifier: ^10.0.0
+        version: 10.0.0
       react-redux:
         specifier: ^9.2.0
         version: 9.2.0(@types/react@19.2.7)(react@19.1.1)(redux@5.0.1)
@@ -3286,6 +3340,9 @@ importers:
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
+      react-native:
+        specifier: 0.82.1
+        version: 0.82.1(@babel/core@7.28.5)(@react-native-community/cli@20.0.0(bufferutil@4.0.5)(typescript@5.9.3)(utf-8-validate@5.0.7))(@react-native/metro-config@0.82.1(@babel/core@7.28.5)(bufferutil@4.0.5)(utf-8-validate@5.0.7))(@types/react@19.2.7)(bufferutil@4.0.5)(react@19.1.1)(utf-8-validate@5.0.7)
 
   packages/common/utils/common-utils-general-cjs:
     dependencies:
@@ -8941,8 +8998,8 @@ packages:
     resolution: {integrity: sha512-rNjApaLzuwaOTjCiT8lSDdGN1APCiqkChLMJxJPWLunPAt5fy8xgU9/jNOchV84wfIxrA0lRQB7oCT8jrn/wrQ==}
     engines: {node: '>=6.0'}
 
-  chromedriver@142.0.3:
-    resolution: {integrity: sha512-1Ibm/tuJRTaIpRfGi6M3IEb61CAlPirkFHvfiLiiu3h8OEtJFKat/FSr8Rn8pBsJlCCRlb5UWdj+nZeAmRLQUg==}
+  chromedriver@143.0.0:
+    resolution: {integrity: sha512-zsDjk9nLeQsMcnFXP4huqCOqneIdox3ECIR4laBOH7sog1+K2rTgrK60ogSeYaHUnx9OTAMFkwJL29ekVgVQgw==}
     engines: {node: '>=20'}
     hasBin: true
 
@@ -14045,6 +14102,18 @@ packages:
 
   react-is@19.2.0:
     resolution: {integrity: sha512-x3Ax3kNSMIIkyVYhWPyO09bu0uttcAIoecO/um/rKGQ4EltYWVYtyiGkS/3xMynrbVQdS69Jhlv8FXUEZehlzA==}
+
+  react-native-app-auth@8.1.0:
+    resolution: {integrity: sha512-PNX+iNMO6Ix3YBc5oKOEugCyPzAZ3MjKPk0dhWAzDnS1cPld7RPcxOzIjEd7+FYF1VGlGxhgOpFz+pOyRDJGdQ==}
+    peerDependencies:
+      react-native: '>=0.63.0'
+
+  react-native-base64@0.0.2:
+    resolution: {integrity: sha512-Fu/J1a2y0X22EJDWqJR2oEa1fpP4gTFjYxk8ElJdt1Yak3HOXmFJ7EohLVHU2DaQkgmKfw8qb7u/48gpzveRbg==}
+
+  react-native-keychain@10.0.0:
+    resolution: {integrity: sha512-YzPKSAnSzGEJ12IK6CctNLU79T1W15WDrElRQ+1/FsOazGX9ucFPTQwgYe8Dy8jiSEDJKM4wkVa3g4lD2Z+Pnw==}
+    engines: {node: '>=16'}
 
   react-native-paper@5.14.5:
     resolution: {integrity: sha512-eaIH5bUQjJ/mYm4AkI6caaiyc7BcHDwX6CqNDi6RIxfxfWxROsHpll1oBuwn/cFvknvA8uEAkqLk/vzVihI3AQ==}
@@ -23512,7 +23581,7 @@ snapshots:
 
   chrome-trace-event@1.0.4: {}
 
-  chromedriver@142.0.3:
+  chromedriver@143.0.0:
     dependencies:
       '@testim/chrome-version': 1.1.4
       axios: 1.13.2
@@ -27784,7 +27853,7 @@ snapshots:
     dependencies:
       jwk-to-pem: 2.0.7
     optionalDependencies:
-      chromedriver: 142.0.3
+      chromedriver: 143.0.0
     transitivePeerDependencies:
       - debug
       - supports-color
@@ -30099,6 +30168,16 @@ snapshots:
   react-is@18.3.1: {}
 
   react-is@19.2.0: {}
+
+  react-native-app-auth@8.1.0(react-native@0.82.1(@babel/core@7.28.5)(@react-native-community/cli@20.0.0(bufferutil@4.0.5)(typescript@5.9.3)(utf-8-validate@5.0.7))(@react-native/metro-config@0.82.1(@babel/core@7.28.5)(bufferutil@4.0.5)(utf-8-validate@5.0.7))(@types/react@19.2.7)(bufferutil@4.0.5)(react@19.1.1)(utf-8-validate@5.0.7)):
+    dependencies:
+      invariant: 2.2.4
+      react-native: 0.82.1(@babel/core@7.28.5)(@react-native-community/cli@20.0.0(bufferutil@4.0.5)(typescript@5.9.3)(utf-8-validate@5.0.7))(@react-native/metro-config@0.82.1(@babel/core@7.28.5)(bufferutil@4.0.5)(utf-8-validate@5.0.7))(@types/react@19.2.7)(bufferutil@4.0.5)(react@19.1.1)(utf-8-validate@5.0.7)
+      react-native-base64: 0.0.2
+
+  react-native-base64@0.0.2: {}
+
+  react-native-keychain@10.0.0: {}
 
   react-native-paper@5.14.5(react-native-safe-area-context@5.6.2(react-native@0.82.1(@babel/core@7.28.5)(@react-native-community/cli@20.0.0(bufferutil@4.0.5)(typescript@5.9.3)(utf-8-validate@5.0.7))(@react-native/metro-config@0.82.1(@babel/core@7.28.5)(bufferutil@4.0.5)(utf-8-validate@5.0.7))(@types/react@19.2.7)(bufferutil@4.0.5)(react@19.1.1)(utf-8-validate@5.0.7))(react@19.1.1))(react-native@0.82.1(@babel/core@7.28.5)(@react-native-community/cli@20.0.0(bufferutil@4.0.5)(typescript@5.9.3)(utf-8-validate@5.0.7))(@react-native/metro-config@0.82.1(@babel/core@7.28.5)(bufferutil@4.0.5)(utf-8-validate@5.0.7))(@types/react@19.2.7)(bufferutil@4.0.5)(react@19.1.1)(utf-8-validate@5.0.7))(react@19.1.1):
     dependencies:

@@ -7,6 +7,7 @@ import {
 import { MD3Theme } from 'react-native-paper/src/types';
 import { adaptNavigationTheme } from 'react-native-paper';
 import { useStateMainReducerMetadata } from '@js-modules/apps-travel-log-common-store-redux';
+import { WebModulesPublic } from '@js-modules/apps-travel-log-common-constants';
 import { TravelLogStackNavigator } from './TravelLogStackNavigator';
 
 export type TravelLogNavigationContainerProps = {
@@ -34,8 +35,17 @@ export const TravelLogNavigationContainer: React.FC<
     return themeTemp;
   }, [paperTheme, themePalette]);
 
+  const linking = {
+    prefixes: ['travellog://'],
+    config: {
+      screens: {
+        [WebModulesPublic.home]: 'oauth-callback',
+      },
+    },
+  };
+
   return (
-    <NavigationContainer theme={theme}>
+    <NavigationContainer theme={theme} linking={linking}>
       <TravelLogStackNavigator />
     </NavigationContainer>
   );

@@ -10,7 +10,7 @@ if [ "$ENV_CHOICE" = "1" ]; then
   # Development environment
   ENV_DIR="./travel-log-dev"
   CERT_CN="localhost"
-  CERT_SAN="DNS:localhost,IP:127.0.0.1"
+  CERT_SAN="DNS:localhost,IP:127.0.0.1,IP:10.0.2.2"
   echo "Generating certificates for DEVELOPMENT environment..."
 elif [ "$ENV_CHOICE" = "2" ]; then
   # Production environment

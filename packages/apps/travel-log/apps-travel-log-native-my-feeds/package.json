@@ -1,0 +1,29 @@
+{
+  "private": true,
+  "name": "@js-modules/apps-travel-log-native-my-feeds",
+  "description": "Apps Travel Log Native My Feeds",
+  "version": "0.0.0",
+  "license": "MIT",
+  "main": "build/index",
+  "react-native": "src/index.ts",
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "build": "tsc -b tsconfig.build.json"
+  },
+  "dependencies": {
+    "@js-modules/apps-travel-log-common-constants": "workspace:^",
+    "@js-modules/apps-travel-log-common-react": "workspace:^",
+    "@js-modules/apps-travel-log-common-store-redux": "workspace:^",
+    "@react-native-vector-icons/fontawesome-free-brands": "^0.1.0",
+    "@react-native-vector-icons/fontawesome-free-regular": "^0.1.0",
+    "@react-native-vector-icons/fontawesome-free-solid": "^0.1.0",
+    "@types/lodash": "^4.17.20",
+    "@types/react": "^19.1.10",
+    "lodash": "^4.17.21",
+    "react": "^19.1.1",
+    "react-native": "0.82.1",
+    "react-native-paper": "^5.14.5"
+  }
+}

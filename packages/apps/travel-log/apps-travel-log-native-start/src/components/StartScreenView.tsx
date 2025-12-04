@@ -1,8 +1,18 @@
 import React from 'react';
 import { View } from 'react-native';
-import { Text } from 'react-native-paper';
+import { ActivityIndicator, Button, Text } from 'react-native-paper';
+import {
+  useStateAuthLogin,
+  useStateSettingsGetProfile,
+} from '@js-modules/apps-travel-log-common-store-redux';
 
 export const StartScreenView: React.FC = () => {
+  const { callback: stateSettingsGetProfileCallback } =
+    useStateSettingsGetProfile();
+
+  const { request: stateAuthLoginRequest, callback: stateAuthLoginCallback } =
+    useStateAuthLogin({}, stateSettingsGetProfileCallback);
+
   return (
     <View
       style={{
@@ -11,8 +21,29 @@ export const StartScreenView: React.FC = () => {
         alignItems: 'center',
       }}
     >
-      <Text variant="headlineLarge">Hello Travel Log!</Text>
-      <Text variant="bodyLarge">Your React Native app is working!</Text>
+      <Text variant="headlineLarge">Welcome to Travel Log!</Text>
+      <Button
+        mode="contained"
+        onPress={stateAuthLoginCallback}
+        loading={stateAuthLoginRequest?.isPending}
+        disabled={stateAuthLoginRequest?.isPending}
+      >
+        Sign In
+      </Button>
+      {stateAuthLoginRequest?.error && (
+        <View>
+          <Text variant="bodySmall">Login failed :(</Text>
+          <Text variant="bodySmall">
+            {String(stateAuthLoginRequest?.error)}
+          </Text>
+        </View>
+      )}
+      {stateAuthLoginRequest?.isPending && (
+        <View>
+          <ActivityIndicator size="small" />
+          <Text variant="bodySmall">Opening browser...</Text>
+        </View>
+      )}
     </View>
   );
 };

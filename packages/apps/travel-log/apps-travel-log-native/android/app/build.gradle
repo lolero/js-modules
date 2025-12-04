@@ -84,6 +84,10 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        manifestPlaceholders = [
+            appAuthRedirectScheme: 'travellog',
+            usesCleartextTraffic: 'false'  // Default: no cleartext traffic
+        ]
     }
     signingConfigs {
         debug {
@@ -96,6 +100,10 @@ android {
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
+            manifestPlaceholders = [
+                appAuthRedirectScheme: 'travellog',
+                usesCleartextTraffic: 'true'  // Debug only: allow for Metro bundler
+            ]
         }
         release {
             // Caution! In production, you need to generate your own keystore file.
@@ -103,6 +111,10 @@ android {
             signingConfig signingConfigs.debug
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            manifestPlaceholders = [
+                appAuthRedirectScheme: 'travellog',
+                usesCleartextTraffic: 'false'  // Release: no cleartext traffic
+            ]
         }
     }
 }

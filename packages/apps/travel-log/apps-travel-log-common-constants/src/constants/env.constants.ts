@@ -1,8 +1,8 @@
-import { IS_ENV_DEV } from '@js-modules/common-utils-general';
+import { getDevHostIp, IS_ENV_DEV } from '@js-modules/common-utils-general';
 
 export const ROUTER__PROTOCOL__TRAVEL_LOG = 'https';
 export const ROUTER__IP__TRAVEL_LOG = IS_ENV_DEV
-  ? 'localhost'
+  ? getDevHostIp()
   : process.env.ROUTER_HOST;
 export const ROUTER__PORT__TRAVEL_LOG = '';
 // console.log('ROUTER__IP__TRAVEL_LOG:', ROUTER__IP__TRAVEL_LOG);

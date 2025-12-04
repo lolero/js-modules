@@ -90,9 +90,7 @@
         "composite": true,
         "composites": {
           "client": {
-            "realm-management": [
-              "manage-users"
-            ]
+            "realm-management": ["manage-users"]
           }
         },
         "clientRole": false,
@@ -105,15 +103,9 @@
         "description": "${role_default-roles}",
         "composite": true,
         "composites": {
-          "realm": [
-            "offline_access",
-            "uma_authorization"
-          ],
+          "realm": ["offline_access", "uma_authorization"],
           "client": {
-            "account": [
-              "manage-account",
-              "view-profile"
-            ]
+            "account": ["manage-account", "view-profile"]
           }
         },
         "clientRole": false,
@@ -129,9 +121,7 @@
           "description": "",
           "composite": true,
           "composites": {
-            "realm": [
-              "realm-role-user"
-            ]
+            "realm": ["realm-role-user"]
           },
           "clientRole": true,
           "containerId": "7bbf2cff-c667-4d20-b804-ee6d67828122",
@@ -143,9 +133,7 @@
           "description": "",
           "composite": true,
           "composites": {
-            "realm": [
-              "realm-role-admin"
-            ]
+            "realm": ["realm-role-admin"]
           },
           "clientRole": true,
           "containerId": "7bbf2cff-c667-4d20-b804-ee6d67828122",
@@ -310,9 +298,7 @@
           "composite": true,
           "composites": {
             "client": {
-              "realm-management": [
-                "query-clients"
-              ]
+              "realm-management": ["query-clients"]
             }
           },
           "clientRole": true,
@@ -326,10 +312,7 @@
           "composite": true,
           "composites": {
             "client": {
-              "realm-management": [
-                "query-groups",
-                "query-users"
-              ]
+              "realm-management": ["query-groups", "query-users"]
             }
           },
           "clientRole": true,
@@ -364,6 +347,32 @@
           "attributes": {}
         }
       ],
+      "client-native": [
+        {
+          "id": "976d0674-a241-40a6-a716-b43919608f28",
+          "name": "client-role-admin",
+          "description": "",
+          "composite": true,
+          "composites": {
+            "realm": ["realm-role-admin"]
+          },
+          "clientRole": true,
+          "containerId": "3362bcf3-a7ac-4ea2-b57a-1e6c12a98769",
+          "attributes": {}
+        },
+        {
+          "id": "caf4b7b0-3cd0-498f-84a5-fd046691242f",
+          "name": "client-role-user",
+          "description": "",
+          "composite": true,
+          "composites": {
+            "realm": ["realm-role-user"]
+          },
+          "clientRole": true,
+          "containerId": "3362bcf3-a7ac-4ea2-b57a-1e6c12a98769",
+          "attributes": {}
+        }
+      ],
       "client-web": [
         {
           "id": "e41a47ee-42df-44cf-a29d-9b33233e2f37",
@@ -371,9 +380,7 @@
           "description": "",
           "composite": true,
           "composites": {
-            "realm": [
-              "realm-role-admin"
-            ]
+            "realm": ["realm-role-admin"]
           },
           "clientRole": true,
           "containerId": "59b16fe9-a5e6-43df-8d39-21271b4a013a",
@@ -385,9 +392,7 @@
           "description": "",
           "composite": true,
           "composites": {
-            "realm": [
-              "realm-role-user"
-            ]
+            "realm": ["realm-role-user"]
           },
           "clientRole": true,
           "containerId": "59b16fe9-a5e6-43df-8d39-21271b4a013a",
@@ -417,9 +422,7 @@
           "composite": true,
           "composites": {
             "client": {
-              "account": [
-                "manage-account-links"
-              ]
+              "account": ["manage-account-links"]
             }
           },
           "clientRole": true,
@@ -469,9 +472,7 @@
           "composite": true,
           "composites": {
             "client": {
-              "account": [
-                "view-consent"
-              ]
+              "account": ["view-consent"]
             }
           },
           "clientRole": true,
@@ -506,10 +507,7 @@
       "path": "/realm-group-admin",
       "subGroups": [],
       "attributes": {},
-      "realmRoles": [
-        "realm-role-admin",
-        "realm-role-user"
-      ],
+      "realmRoles": ["realm-role-admin", "realm-role-user"],
       "clientRoles": {}
     },
     {
@@ -518,9 +516,7 @@
       "path": "/realm-group-user",
       "subGroups": [],
       "attributes": {},
-      "realmRoles": [
-        "realm-role-user"
-      ],
+      "realmRoles": ["realm-role-user"],
       "clientRoles": {}
     }
   ],
@@ -532,9 +528,7 @@
     "clientRole": false,
     "containerId": "4218f2b7-4a1e-4077-9ff3-df583068df6b"
   },
-  "requiredCredentials": [
-    "password"
-  ],
+  "requiredCredentials": ["password"],
   "otpPolicyType": "totp",
   "otpPolicyAlgorithm": "HmacSHA1",
   "otpPolicyInitialCounter": 0,
@@ -549,9 +543,7 @@
   ],
   "localizationTexts": {},
   "webAuthnPolicyRpEntityName": "keycloak",
-  "webAuthnPolicySignatureAlgorithms": [
-    "ES256"
-  ],
+  "webAuthnPolicySignatureAlgorithms": ["ES256"],
   "webAuthnPolicyRpId": "",
   "webAuthnPolicyAttestationConveyancePreference": "not specified",
   "webAuthnPolicyAuthenticatorAttachment": "not specified",
@@ -562,9 +554,7 @@
   "webAuthnPolicyAcceptableAaguids": [],
   "webAuthnPolicyExtraOrigins": [],
   "webAuthnPolicyPasswordlessRpEntityName": "keycloak",
-  "webAuthnPolicyPasswordlessSignatureAlgorithms": [
-    "ES256"
-  ],
+  "webAuthnPolicyPasswordlessSignatureAlgorithms": ["ES256"],
   "webAuthnPolicyPasswordlessRpId": "",
   "webAuthnPolicyPasswordlessAttestationConveyancePreference": "not specified",
   "webAuthnPolicyPasswordlessAuthenticatorAttachment": "not specified",
@@ -602,9 +592,7 @@
       "serviceAccountClientId": "client-api-core",
       "disableableCredentialTypes": [],
       "requiredActions": [],
-      "realmRoles": [
-        "default-roles-travel-log"
-      ],
+      "realmRoles": ["default-roles-travel-log"],
       "notBefore": 0,
       "groups": []
     }
@@ -612,19 +600,14 @@
   "scopeMappings": [
     {
       "clientScope": "offline_access",
-      "roles": [
-        "offline_access"
-      ]
+      "roles": ["offline_access"]
     }
   ],
   "clientScopeMappings": {
     "account": [
       {
         "client": "account-console",
-        "roles": [
-          "manage-account",
-          "view-groups"
-        ]
+        "roles": ["manage-account", "view-groups"]
       }
     ]
   },
@@ -639,9 +622,7 @@
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
-      "redirectUris": [
-        "/realms/travel-log/account/*"
-      ],
+      "redirectUris": ["/realms/travel-log/account/*"],
       "webOrigins": [],
       "notBefore": 0,
       "bearerOnly": false,
@@ -685,9 +666,7 @@
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
-      "redirectUris": [
-        "/realms/travel-log/account/*"
-      ],
+      "redirectUris": ["/realms/travel-log/account/*"],
       "webOrigins": [],
       "notBefore": 0,
       "bearerOnly": false,
@@ -887,12 +866,8 @@
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "secret": "**********",
-      "redirectUris": [
-        ""
-      ],
-      "webOrigins": [
-        ""
-      ],
+      "redirectUris": [""],
+      "webOrigins": [""],
       "notBefore": 0,
       "bearerOnly": false,
       "consentRequired": false,
@@ -996,12 +971,8 @@
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
-      "redirectUris": [
-        "https://localhost/api-core-docs/oauth2-redirect.html"
-      ],
-      "webOrigins": [
-        "https://localhost/api-core-docs"
-      ],
+      "redirectUris": ["https://localhost/api-core-docs/oauth2-redirect.html"],
+      "webOrigins": ["https://localhost/api-core-docs"],
       "notBefore": 0,
       "bearerOnly": false,
       "consentRequired": false,
@@ -1043,6 +1014,60 @@
       ]
     },
     {
+      "id": "3362bcf3-a7ac-4ea2-b57a-1e6c12a98769",
+      "clientId": "client-native",
+      "name": "",
+      "description": "",
+      "rootUrl": "",
+      "adminUrl": "",
+      "baseUrl": "",
+      "surrogateAuthRequired": false,
+      "enabled": true,
+      "alwaysDisplayInConsole": false,
+      "clientAuthenticatorType": "client-secret",
+      "redirectUris": ["travellog://oauth-callback/*"],
+      "webOrigins": [],
+      "notBefore": 0,
+      "bearerOnly": false,
+      "consentRequired": false,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "publicClient": true,
+      "frontchannelLogout": true,
+      "protocol": "openid-connect",
+      "attributes": {
+        "realm_client": "false",
+        "oidc.ciba.grant.enabled": "false",
+        "backchannel.logout.session.required": "true",
+        "standard.token.exchange.enabled": "false",
+        "login_theme": "js-modules-apps-travel-log-web-keycloak-theme",
+        "frontchannel.logout.session.required": "true",
+        "display.on.consent.screen": "false",
+        "oauth2.device.authorization.grant.enabled": "false",
+        "pkce.code.challenge.method": "S256",
+        "backchannel.logout.revoke.offline.tokens": "false"
+      },
+      "authenticationFlowBindingOverrides": {},
+      "fullScopeAllowed": true,
+      "nodeReRegistrationTimeout": -1,
+      "defaultClientScopes": [
+        "web-origins",
+        "acr",
+        "roles",
+        "profile",
+        "basic",
+        "email"
+      ],
+      "optionalClientScopes": [
+        "address",
+        "phone",
+        "offline_access",
+        "microprofile-jwt"
+      ]
+    },
+    {
       "id": "59b16fe9-a5e6-43df-8d39-21271b4a013a",
       "clientId": "client-web",
       "name": "",
@@ -1054,12 +1079,8 @@
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
-      "redirectUris": [
-        "https://localhost/*"
-      ],
-      "webOrigins": [
-        "https://localhost"
-      ],
+      "redirectUris": ["https://localhost/*"],
+      "webOrigins": ["https://localhost"],
       "notBefore": 0,
       "bearerOnly": false,
       "consentRequired": false,
@@ -1155,12 +1176,8 @@
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
-      "redirectUris": [
-        "/admin/travel-log/console/*"
-      ],
-      "webOrigins": [
-        "+"
-      ],
+      "redirectUris": ["/admin/travel-log/console/*"],
+      "webOrigins": ["+"],
       "notBefore": 0,
       "bearerOnly": false,
       "consentRequired": false,
@@ -2128,9 +2145,7 @@
   },
   "loginTheme": "js-modules-apps-travel-log-web-keycloak-theme",
   "eventsEnabled": false,
-  "eventsListeners": [
-    "jboss-logging"
-  ],
+  "eventsListeners": ["jboss-logging"],
   "enabledEventTypes": [],
   "adminEventsEnabled": false,
   "adminEventsDetailsEnabled": false,
@@ -2145,9 +2160,7 @@
         "subType": "authenticated",
         "subComponents": {},
         "config": {
-          "allow-default-scopes": [
-            "true"
-          ]
+          "allow-default-scopes": ["true"]
         }
       },
       {
@@ -2176,9 +2189,7 @@
         "subType": "anonymous",
         "subComponents": {},
         "config": {
-          "max-clients": [
-            "200"
-          ]
+          "max-clients": ["200"]
         }
       },
       {
@@ -2188,9 +2199,7 @@
         "subType": "anonymous",
         "subComponents": {},
         "config": {
-          "allow-default-scopes": [
-            "true"
-          ]
+          "allow-default-scopes": ["true"]
         }
       },
       {
@@ -2227,12 +2236,8 @@
         "subType": "anonymous",
         "subComponents": {},
         "config": {
-          "host-sending-registration-request-must-match": [
-            "true"
-          ],
-          "client-uris-must-match": [
-            "true"
-          ]
+          "host-sending-registration-request-must-match": ["true"],
+          "client-uris-must-match": ["true"]
         }
       },
       {
@@ -2263,12 +2268,8 @@
         "providerId": "hmac-generated",
         "subComponents": {},
         "config": {
-          "priority": [
-            "100"
-          ],
-          "algorithm": [
-            "HS256"
-          ]
+          "priority": ["100"],
+          "algorithm": ["HS256"]
         }
       },
       {
@@ -2277,12 +2278,8 @@
         "providerId": "hmac-generated",
         "subComponents": {},
         "config": {
-          "priority": [
-            "100"
-          ],
-          "algorithm": [
-            "HS512"
-          ]
+          "priority": ["100"],
+          "algorithm": ["HS512"]
         }
       },
       {
@@ -2291,9 +2288,7 @@
         "providerId": "rsa-generated",
         "subComponents": {},
         "config": {
-          "priority": [
-            "100"
-          ]
+          "priority": ["100"]
         }
       },
       {
@@ -2302,12 +2297,8 @@
         "providerId": "rsa-enc-generated",
         "subComponents": {},
         "config": {
-          "priority": [
-            "100"
-          ],
-          "algorithm": [
-            "RSA-OAEP"
-          ]
+          "priority": ["100"],
+          "algorithm": ["RSA-OAEP"]
         }
       },
       {
@@ -2316,9 +2307,7 @@
         "providerId": "aes-generated",
         "subComponents": {},
         "config": {
-          "priority": [
-            "100"
-          ]
+          "priority": ["100"]
         }
       }
     ]

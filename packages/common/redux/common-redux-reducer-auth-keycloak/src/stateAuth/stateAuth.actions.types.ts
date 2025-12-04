@@ -11,7 +11,7 @@ import {
   KeycloakLoginOptions,
   KeycloakLogoutOptions,
 } from 'keycloak-js';
-import { SigninAction, StateAuthReducer } from './stateAuth.types';
+import { ClientType, SigninAction, StateAuthReducer } from './stateAuth.types';
 
 export enum StateAuthActionTypes {
   STATE_AUTH__INITIALIZE__REQUEST = 'STATE_AUTH__INITIALIZE__REQUEST',
@@ -31,6 +31,7 @@ export enum StateAuthActionTypes {
 export type StateAuthInitializeRequestAction = RequestAction<
   StateAuthActionTypes.STATE_AUTH__INITIALIZE__REQUEST,
   {
+    clientType: ClientType;
     keycloakConfig: KeycloakConfig;
     keycloakInitOptions: KeycloakInitOptions;
     onSigninCallback?: () => void;

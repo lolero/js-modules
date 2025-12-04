@@ -1,16 +1,15 @@
 import {
   call,
   CallEffect,
+  ChannelTakeEffect,
+  fork,
   ForkEffect,
   put,
   PutEffect,
-  ChannelTakeEffect,
+  take,
   takeEvery,
   takeLeading,
-  fork,
-  take,
 } from 'redux-saga/effects';
-import Keycloak from 'keycloak-js';
 import { EventChannel } from 'redux-saga';
 import { axiosRequestSetAuthHeader } from '@js-modules/common-utils-general';
 import {
@@ -29,53 +28,45 @@ import {
   createStateAuthSignoutSuccessAction,
   createStateAuthUpdatePartialReducerMetadataSuccessAction,
 } from './stateAuth.actions.creators';
-import { KeycloakTokens, SigninAction } from './stateAuth.types';
-import { stateAuthUtilCreateIsKeycloakTokenValidChannel } from './stateAuth.util.createIsKeycloakTokenValidChannel';
+import {
+  AuthAdapter,
+  AuthInitResult,
+  ClientType,
+  SigninAction,
+} from './stateAuth.types';
+import { StateAuthAdaptersWeb } from './stateAuth.adapters.web';
+import { StateAuthAdaptersNative } from './stateAuth.adapters.native';
 
-let keycloak: Keycloak;
+let authAdapter: AuthAdapter;
 
 export function* stateAuthMonitorSaga(
-  keycloakInstance: Keycloak,
   onSignoutCallback: StateAuthInitializeRequestAction['requestMetadata']['onSignoutCallback'],
 ): Generator<
   CallEffect | ChannelTakeEffect<boolean> | PutEffect,
   void,
   EventChannel<boolean> | boolean
 > {
-  const isKeycloakTokenValidChannel = (yield call(
-    stateAuthUtilCreateIsKeycloakTokenValidChannel,
-    keycloakInstance,
-  )) as EventChannel<boolean>;
+  const isTokenValidChannel = (yield call([
+    authAdapter,
+    authAdapter.getIsTokenValidChannel,
+  ])) as EventChannel<boolean>;
 
   while (true) {
-    const isKeycloakTokenValid = (yield take(
-      isKeycloakTokenValidChannel,
-    )) as boolean;
+    const isTokenValid = (yield take(isTokenValidChannel)) as boolean;
 
-    if (isKeycloakTokenValid) {
-      const keycloakTokens: KeycloakTokens = {
-        id: {
-          token: keycloakInstance.idToken!,
-          metadata: keycloakInstance.idTokenParsed!,
-        },
-        access: {
-          token: keycloakInstance.token!,
-          metadata: keycloakInstance.tokenParsed!,
-        },
-        refresh: {
-          token: keycloakInstance.refreshToken!,
-          metadata: keycloakInstance.refreshTokenParsed!,
-        },
-      };
+    if (isTokenValid) {
+      const tokens = authAdapter.getTokens()!;
 
-      axiosRequestSetAuthHeader(keycloakTokens.access.token);
+      if (tokens) {
+        axiosRequestSetAuthHeader(tokens.access.token);
 
-      yield put(
-        createStateAuthUpdatePartialReducerMetadataSuccessAction({
-          isAuthenticated: keycloak.authenticated,
-          tokens: keycloakTokens,
-        }),
-      );
+        yield put(
+          createStateAuthUpdatePartialReducerMetadataSuccessAction({
+            isAuthenticated: authAdapter.isAuthenticated(),
+            tokens,
+          }),
+        );
+      }
     } else {
       axiosRequestSetAuthHeader(null);
 
@@ -97,24 +88,29 @@ export function* stateAuthInitializeSaga({
 }: StateAuthInitializeRequestAction): Generator<
   ForkEffect | CallEffect | PutEffect,
   void,
-  boolean
+  AuthInitResult
 > {
   const {
+    clientType,
     keycloakConfig,
     keycloakInitOptions,
     onSigninCallback,
     onSignoutCallback,
   } = requestMetadata;
 
-  keycloak = new Keycloak(keycloakConfig);
+  if (clientType === ClientType.web) {
+    authAdapter = new StateAuthAdaptersWeb(keycloakConfig);
+  } else {
+    authAdapter = new StateAuthAdaptersNative(keycloakConfig);
+  }
 
   try {
-    yield fork(stateAuthMonitorSaga, keycloak, onSignoutCallback);
+    yield fork(stateAuthMonitorSaga, onSignoutCallback);
 
-    const isAuthenticated = (yield call(
-      keycloak.init,
+    const authInitResult = (yield call(
+      [authAdapter, authAdapter.initialize],
       keycloakInitOptions,
-    )) as boolean;
+    )) as AuthInitResult;
 
     yield put(
       createStateAuthInitializeSuccessAction(
@@ -125,7 +121,7 @@ export function* stateAuthInitializeSaga({
       ),
     );
 
-    if (isAuthenticated) {
+    if (authInitResult.isAuthenticated) {
       onSigninCallback?.();
     }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -149,10 +145,10 @@ export function* stateAuthSigninSaga({
   try {
     switch (signinAction) {
       case SigninAction.signup:
-        yield call(keycloak.register, keycloakLoginOptions);
+        yield call([authAdapter, authAdapter.register], keycloakLoginOptions);
         break;
       case SigninAction.login:
-        yield call(keycloak.login, keycloakLoginOptions);
+        yield call([authAdapter, authAdapter.login], keycloakLoginOptions);
         break;
       default:
         throw new Error('Unknown signin action');
@@ -179,7 +175,7 @@ export function* stateAuthSignoutSaga({
   const { keycloakLogoutOptions, onSignoutCallback } = requestMetadata;
 
   try {
-    yield call(keycloak.logout, keycloakLogoutOptions);
+    yield call([authAdapter, authAdapter.logout], keycloakLogoutOptions);
 
     yield put(createStateAuthSignoutSuccessAction(requestId));
 

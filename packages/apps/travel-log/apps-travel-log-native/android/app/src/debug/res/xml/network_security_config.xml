@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!-- Debug builds: Trust all certificates (including self-signed) -->
+    <debug-overrides>
+        <trust-anchors>
+            <!-- Trust system CAs -->
+            <certificates src="system" />
+            <!-- Trust user-installed certificates -->
+            <certificates src="user" />
+        </trust-anchors>
+    </debug-overrides>
+
+    <!-- Allow cleartext traffic for Metro bundler -->
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">localhost</domain>
+    </domain-config>
+
+    <!-- Development server: cleartext + trust self-signed certificates -->
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">10.0.2.2</domain>
+        <trust-anchors>
+            <certificates src="system" />
+            <certificates src="user" />
+        </trust-anchors>
+    </domain-config>
+
+    <!-- All other domains: default security (system CAs only) -->
+    <base-config cleartextTrafficPermitted="false">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+</network-security-config>

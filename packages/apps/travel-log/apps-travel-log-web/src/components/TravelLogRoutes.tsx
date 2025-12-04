@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes, Navigate } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 import {
   WebModulesPrivate,
@@ -13,9 +13,10 @@ import {
 import { SettingsRoutes } from '@js-modules/apps-travel-log-web-settings';
 import { MyLogRoutes } from '@js-modules/apps-travel-log-web-my-log';
 import { useInitializeKeycloak } from '@js-modules/apps-travel-log-common-react';
+import { ClientType } from '@js-modules/apps-travel-log-common-store-redux';
 
 export const TravelLogRoutes: React.FunctionComponent = () => {
-  const { isKeycloakReady, rootPath } = useInitializeKeycloak();
+  const { isKeycloakReady, rootPath } = useInitializeKeycloak(ClientType.web);
 
   if (!isKeycloakReady) {
     // TODO: create loading workspace with skeletons instead of this ugly

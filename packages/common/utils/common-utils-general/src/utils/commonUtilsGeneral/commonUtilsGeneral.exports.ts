@@ -2,6 +2,8 @@ export * from './callingCodes';
 export * from './camelToSnakeCaseWithAcronyms';
 export * from './countries';
 export * from './formatCurrencyQuantity';
+export * from './getAppPlatform';
+export * from './getDevHostIp';
 export * from './getFindManyDtoQueryParams';
 export * from './getIsBrowser';
 export * from './getNumberOfDecimalPlaces';

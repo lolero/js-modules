@@ -1,3 +1,10 @@
+export enum AppPlatform {
+  node = 'node',
+  web = 'web',
+  android = 'android',
+  ios = 'ios',
+}
+
 export enum ProcessStatus {
   pending = 'pending',
   success = 'success',

@@ -66,6 +66,12 @@
       "@js-modules/apps-travel-log-common-store-redux": [
         "apps/travel-log/apps-travel-log-common-store-redux/src"
       ],
+      "@js-modules/apps-travel-log-native-my-feeds": [
+        "apps/travel-log/apps-travel-log-native-my-feeds/src"
+      ],
+      "@js-modules/apps-travel-log-native-start": [
+        "apps/travel-log/apps-travel-log-native-start/src"
+      ],
       "@js-modules/apps-travel-log-web-components": [
         "apps/travel-log/apps-travel-log-web-components/src"
       ],
