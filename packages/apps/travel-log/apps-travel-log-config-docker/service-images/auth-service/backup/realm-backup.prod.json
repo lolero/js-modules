@@ -3,7 +3,7 @@
   "realm": "travel-log",
   "notBefore": 0,
   "defaultSignatureAlgorithm": "RS256",
-  "revokeRefreshToken": false,
+  "revokeRefreshToken": true,
   "refreshTokenMaxReuse": 0,
   "accessTokenLifespan": 300,
   "accessTokenLifespanForImplicitFlow": 900,
@@ -964,15 +964,17 @@
       "clientId": "client-api-core-docs",
       "name": "",
       "description": "",
-      "rootUrl": "https://prod.ip",
+      "rootUrl": "https://$DOMAIN_PROD",
       "adminUrl": "",
       "baseUrl": "/api-core-docs",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
-      "redirectUris": ["https://prod.ip/api-core-docs/oauth2-redirect.html"],
-      "webOrigins": ["https://prod.ip/api-core-docs"],
+      "redirectUris": [
+        "https://$DOMAIN_PROD/api-core-docs/oauth2-redirect.html"
+      ],
+      "webOrigins": ["https://$DOMAIN_PROD/api-core-docs"],
       "notBefore": 0,
       "bearerOnly": false,
       "consentRequired": false,
@@ -989,7 +991,7 @@
         "backchannel.logout.session.required": "true",
         "standard.token.exchange.enabled": "false",
         "frontchannel.logout.session.required": "true",
-        "post.logout.redirect.uris": "https://prod.ip/api-core-docs",
+        "post.logout.redirect.uris": "https://$DOMAIN_PROD/api-core-docs",
         "display.on.consent.screen": "false",
         "oauth2.device.authorization.grant.enabled": "false",
         "pkce.code.challenge.method": "S256",
@@ -1055,6 +1057,7 @@
       "defaultClientScopes": [
         "web-origins",
         "acr",
+        "client-scope-api-core-access",
         "roles",
         "profile",
         "basic",
@@ -1072,15 +1075,15 @@
       "clientId": "client-web",
       "name": "",
       "description": "",
-      "rootUrl": "https://prod.ip",
+      "rootUrl": "https://$DOMAIN_PROD",
       "adminUrl": "",
       "baseUrl": "/home",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
-      "redirectUris": ["https://prod.ip/*"],
-      "webOrigins": ["https://prod.ip"],
+      "redirectUris": ["https://$DOMAIN_PROD/*"],
+      "webOrigins": ["https://$DOMAIN_PROD"],
       "notBefore": 0,
       "bearerOnly": false,
       "consentRequired": false,
@@ -1098,7 +1101,7 @@
         "standard.token.exchange.enabled": "false",
         "login_theme": "js-modules-apps-travel-log-web-keycloak-theme",
         "frontchannel.logout.session.required": "true",
-        "post.logout.redirect.uris": "https://prod.ip/home",
+        "post.logout.redirect.uris": "https://$DOMAIN_PROD/home",
         "display.on.consent.screen": "false",
         "oauth2.device.authorization.grant.enabled": "false",
         "pkce.code.challenge.method": "S256",
@@ -1110,6 +1113,7 @@
       "defaultClientScopes": [
         "web-origins",
         "acr",
+        "client-scope-api-core-access",
         "client-scope-id",
         "roles",
         "profile",
@@ -1473,7 +1477,8 @@
             "id.token.claim": "true",
             "access.token.claim": "true",
             "claim.name": "client_scope.access.groups",
-            "userinfo.token.claim": "false"
+            "userinfo.token.claim": "false",
+            "multivalued": "true"
           }
         },
         {
@@ -2103,6 +2108,34 @@
           "config": {}
         }
       ]
+    },
+    {
+      "id": "de01990b-b45f-4493-84f3-491b5d3b7dee",
+      "name": "client-scope-api-core-access",
+      "description": "",
+      "protocol": "openid-connect",
+      "attributes": {
+        "include.in.token.scope": "false",
+        "display.on.consent.screen": "false",
+        "gui.order": "",
+        "consent.screen.text": ""
+      },
+      "protocolMappers": [
+        {
+          "id": "9cd5f3af-7564-4a45-b199-a3917b1b333d",
+          "name": "mapper-audience-api-core",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-audience-mapper",
+          "consentRequired": false,
+          "config": {
+            "included.client.audience": "client-api-core",
+            "id.token.claim": "false",
+            "lightweight.claim": "true",
+            "access.token.claim": "true",
+            "introspection.token.claim": "true"
+          }
+        }
+      ]
     }
   ],
   "defaultDefaultClientScopes": [
@@ -2112,7 +2145,8 @@
     "roles",
     "web-origins",
     "acr",
-    "basic"
+    "basic",
+    "client-scope-api-core-access"
   ],
   "defaultOptionalClientScopes": [
     "offline_access",
@@ -2138,7 +2172,7 @@
     "host": "smtp.office365.com",
     "replyTo": "",
     "from": "from-realm-travel-log@mail.com",
-    "fromDisplayName": "travel-log Authentication Service",
+    "fromDisplayName": "Travel Log Authentication Service",
     "envelopeFrom": "",
     "ssl": "false",
     "authType": "basic"

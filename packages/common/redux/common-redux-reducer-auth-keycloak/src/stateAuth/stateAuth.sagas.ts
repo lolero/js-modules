@@ -28,14 +28,8 @@ import {
   createStateAuthSignoutSuccessAction,
   createStateAuthUpdatePartialReducerMetadataSuccessAction,
 } from './stateAuth.actions.creators';
-import {
-  AuthAdapter,
-  AuthInitResult,
-  ClientType,
-  SigninAction,
-} from './stateAuth.types';
-import { StateAuthAdaptersWeb } from './stateAuth.adapters.web';
-import { StateAuthAdaptersNative } from './stateAuth.adapters.native';
+import { AuthAdapter, AuthInitResult, SigninAction } from './stateAuth.types';
+import { StateAuthAdapter } from './stateAuth.adapter';
 
 let authAdapter: AuthAdapter;
 
@@ -91,18 +85,13 @@ export function* stateAuthInitializeSaga({
   AuthInitResult
 > {
   const {
-    clientType,
     keycloakConfig,
     keycloakInitOptions,
     onSigninCallback,
     onSignoutCallback,
   } = requestMetadata;
 
-  if (clientType === ClientType.web) {
-    authAdapter = new StateAuthAdaptersWeb(keycloakConfig);
-  } else {
-    authAdapter = new StateAuthAdaptersNative(keycloakConfig);
-  }
+  authAdapter = new StateAuthAdapter(keycloakConfig);
 
   try {
     yield fork(stateAuthMonitorSaga, onSignoutCallback);

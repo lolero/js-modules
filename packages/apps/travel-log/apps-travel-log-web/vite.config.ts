@@ -27,11 +27,17 @@ if (process.env.NODE_ENV !== 'production') {
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins,
+  build: {
+    outDir: 'build',
+  },
   define: {
     'process.env.ROUTER_HOST': JSON.stringify('$VITE_ROUTER_HOST'),
   },
-  build: {
-    outDir: 'build',
+  optimizeDeps: {
+    exclude: ['react-native'],
+  },
+  resolve: {
+    dedupe: ['react', 'react-dom'],
   },
   server: {
     host: true,

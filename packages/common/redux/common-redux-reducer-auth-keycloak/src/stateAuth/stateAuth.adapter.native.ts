@@ -15,13 +15,13 @@ import {
   getKeycloakTokens,
   storeKeycloakTokens,
   TOKEN_REFRESH_BUFFER_SECONDS,
-} from './stateAuth.adapters.native.utils';
+} from './stateAuth.adapter.native.utils';
 
 /**
  * Native authentication adapter using react-native-app-auth
  * Implements OAuth Authorization Code + PKCE flow for mobile apps
  */
-export class StateAuthAdaptersNative implements AuthAdapter {
+export class StateAuthAdapter implements AuthAdapter {
   private authConfiguration: AuthConfiguration;
 
   private isTokenValidChannel: EventChannel<boolean>;
@@ -209,25 +209,17 @@ export class StateAuthAdaptersNative implements AuthAdapter {
       this.isTokenValidEventEmitter!(false);
 
       // Log detailed error information                                                                           │
+      console.error('[StateAuthAdapter] Login failed - Full error details:');
+      console.error('[StateAuthAdapter] Error:', error);
       console.error(
-        '[StateAuthAdaptersNative] Login failed - Full error details:',
-      );
-      console.error('[StateAuthAdaptersNative] Error:', error);
-      console.error(
-        '[StateAuthAdaptersNative] Error message:',
+        '[StateAuthAdapter] Error message:',
         (error as Error).message,
       );
-      console.error(
-        '[StateAuthAdaptersNative] Error stack:',
-        (error as Error).stack,
-      );
+      console.error('[StateAuthAdapter] Error stack:', (error as Error).stack);
       if (error && typeof error === 'object') {
+        console.error('[StateAuthAdapter] Error keys:', Object.keys(error));
         console.error(
-          '[StateAuthAdaptersNative] Error keys:',
-          Object.keys(error),
-        );
-        console.error(
-          '[StateAuthAdaptersNative] Full error object:',
+          '[StateAuthAdapter] Full error object:',
           JSON.stringify(error, null, 2),
         );
       }

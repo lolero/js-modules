@@ -18,7 +18,6 @@ import {
 export const STATE_AUTH__INITIALIZE__REQUEST_ID =
   'STATE_AUTH__INITIALIZE__REQUEST_ID';
 export function createStateAuthInitializeRequestAction(
-  clientType: StateAuthInitializeRequestAction['requestMetadata']['clientType'],
   keycloakConfig: StateAuthInitializeRequestAction['requestMetadata']['keycloakConfig'],
   keycloakInitOptions: StateAuthInitializeRequestAction['requestMetadata']['keycloakInitOptions'],
   onSigninCallback?: StateAuthInitializeRequestAction['requestMetadata']['onSigninCallback'],
@@ -27,7 +26,6 @@ export function createStateAuthInitializeRequestAction(
   return {
     type: StateAuthActionTypes.STATE_AUTH__INITIALIZE__REQUEST,
     requestMetadata: {
-      clientType,
       keycloakConfig,
       keycloakInitOptions,
       onSigninCallback,

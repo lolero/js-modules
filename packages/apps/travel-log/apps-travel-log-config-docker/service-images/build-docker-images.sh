@@ -34,6 +34,7 @@ DEV_MODE=false
 DOCKER_USERNAME=""
 DOCKER_PASSWORD=""
 USER_UID=""
+DOMAIN_PROD=""
 declare -A SELECTED_SERVICES
 declare -A SERVICE_VERSIONS
 declare -A VERSION_UPDATES
@@ -110,9 +111,19 @@ prompt_user_uid() {
     echo "Enter the UID that the containers should run as."
     echo "This should match the UID of the user on the target system."
     echo ""
+    log_info "Press Enter to use current local UID as default: $(id -u) NOT RECOMMENDED!!!"
+    echo ""
 
     while true; do
         read -p "User UID: " uid_input
+
+        # If empty, use current user's UID as default
+        if [ -z "$uid_input" ]; then
+            USER_UID=$(id -u)
+            log_info "Using default UID: $USER_UID"
+            echo ""
+            return 0
+        fi
 
         # Validate that it's a number
         if ! [[ "$uid_input" =~ ^[0-9]+$ ]]; then
@@ -128,6 +139,40 @@ prompt_user_uid() {
 
         USER_UID="$uid_input"
         log_info "Using UID: $USER_UID"
+        echo ""
+        return 0
+    done
+}
+
+prompt_domain_prod() {
+    log_section "Production Domain Configuration"
+    echo ""
+    echo "Enter the production domain for the application."
+    echo "This will be used to configure the router and other services."
+    echo "(e.g., example.com or app.example.com)"
+    echo ""
+    log_info "Press Enter to use default: localhost"
+    echo ""
+
+    while true; do
+        read -p "Production Domain: " domain_input
+
+        # If empty, use localhost as default
+        if [ -z "$domain_input" ]; then
+            DOMAIN_PROD="localhost"
+            log_info "Using default production domain: $DOMAIN_PROD"
+            echo ""
+            return 0
+        fi
+
+        # Validate domain format (basic check)
+        if ! [[ "$domain_input" =~ ^[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$ ]]; then
+            log_error "Invalid domain format"
+            continue
+        fi
+
+        DOMAIN_PROD="$domain_input"
+        log_info "Using production domain: $DOMAIN_PROD"
         echo ""
         return 0
     done
@@ -441,12 +486,13 @@ build_service() {
     local dockerfile=$2
     local tag=$3
     local user_uid=${4:-$USER_UID}  # Default to USER_UID if not provided
+    local domain_prod=${5:-$DOMAIN_PROD}  # Default to DOMAIN_PROD if not provided
 
     local image="${REGISTRY}/travel-log-${service}"
 
-    log_info "Building ${image}:${tag} with USER_UID=${user_uid}..."
+    log_info "Building ${image}:${tag} with USER_UID=${user_uid} and DOMAIN_PROD=${domain_prod}..."
 
-    if docker build -f "$dockerfile" -t "${image}:${tag}" --build-arg USER_UID="${user_uid}" . ; then
+    if docker build -f "$dockerfile" -t "${image}:${tag}" --build-arg USER_UID="${user_uid}" --build-arg DOMAIN_PROD="${domain_prod}" . ; then
         log_info "Successfully built ${image}:${tag}"
         return 0
     else
@@ -520,7 +566,7 @@ build_all_services() {
                 ((skip_count++))
             else
                 # Build with version tag
-                if build_service "$service" "$dockerfile" "v${version}" "$USER_UID"; then
+                if build_service "$service" "$dockerfile" "v${version}" "$USER_UID" "$DOMAIN_PROD"; then
                     ((build_count++))
 
                     # Tag as latest
@@ -613,8 +659,9 @@ main() {
             fi
         fi
 
-        # Production mode - prompt for UID after successful authentication
+        # Production mode - prompt for USER_UID and DOMAIN_PROD after successful authentication
         prompt_user_uid
+        prompt_domain_prod
 
         echo ""
     fi

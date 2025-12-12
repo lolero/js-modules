@@ -149,14 +149,6 @@ cd /opt/travel-log
 - Username
 - Password
 
-#### Configure Web Clients host
-Replace 'prod.ip' with prod IP/domain name in web clients' configs
-e.g. client-web, client-api-core-docs, etc.
-- Root URL
-- Valid redirect URIs
-- Valid post logout redirect URIs
-- Web origins
-
 ### Update admin-cli and client-api-core secrets
 ```bash
 cd /opt/travel-log-app

@@ -3,7 +3,7 @@
   "realm": "travel-log",
   "notBefore": 0,
   "defaultSignatureAlgorithm": "RS256",
-  "revokeRefreshToken": false,
+  "revokeRefreshToken": true,
   "refreshTokenMaxReuse": 0,
   "accessTokenLifespan": 300,
   "accessTokenLifespanForImplicitFlow": 900,
@@ -1055,6 +1055,7 @@
       "defaultClientScopes": [
         "web-origins",
         "acr",
+        "client-scope-api-core-access",
         "roles",
         "profile",
         "basic",
@@ -1110,6 +1111,7 @@
       "defaultClientScopes": [
         "web-origins",
         "acr",
+        "client-scope-api-core-access",
         "client-scope-id",
         "roles",
         "profile",
@@ -1473,7 +1475,8 @@
             "id.token.claim": "true",
             "access.token.claim": "true",
             "claim.name": "client_scope.access.groups",
-            "userinfo.token.claim": "false"
+            "userinfo.token.claim": "false",
+            "multivalued": "true"
           }
         },
         {
@@ -2103,6 +2106,34 @@
           "config": {}
         }
       ]
+    },
+    {
+      "id": "de01990b-b45f-4493-84f3-491b5d3b7dee",
+      "name": "client-scope-api-core-access",
+      "description": "",
+      "protocol": "openid-connect",
+      "attributes": {
+        "include.in.token.scope": "false",
+        "display.on.consent.screen": "false",
+        "gui.order": "",
+        "consent.screen.text": ""
+      },
+      "protocolMappers": [
+        {
+          "id": "9cd5f3af-7564-4a45-b199-a3917b1b333d",
+          "name": "mapper-audience-api-core",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-audience-mapper",
+          "consentRequired": false,
+          "config": {
+            "included.client.audience": "client-api-core",
+            "id.token.claim": "false",
+            "lightweight.claim": "true",
+            "access.token.claim": "true",
+            "introspection.token.claim": "true"
+          }
+        }
+      ]
     }
   ],
   "defaultDefaultClientScopes": [
@@ -2112,7 +2143,8 @@
     "roles",
     "web-origins",
     "acr",
-    "basic"
+    "basic",
+    "client-scope-api-core-access"
   ],
   "defaultOptionalClientScopes": [
     "offline_access",

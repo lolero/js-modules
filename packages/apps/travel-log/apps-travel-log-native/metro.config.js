@@ -66,9 +66,17 @@ const config = {
       path: path.resolve(__dirname, 'src/polyfills/polyfills.empty.js'),
       os: path.resolve(__dirname, 'src/polyfills/polyfills.empty.js'),
     },
+  },
 
-    // Ensure Metro can resolve TypeScript source files
-    sourceExts: ['js', 'jsx', 'json', 'ts', 'tsx'],
+  transformer: {
+    // Enable experimental import support
+    unstable_allowRequireContext: true,
+    getTransformOptions: async () => ({
+      transform: {
+        experimentalImportSupport: false,
+        inlineRequires: true,
+      },
+    }),
   },
 };
 

@@ -11,7 +11,7 @@ import { AuthAdapter, AuthInitResult, KeycloakTokens } from './stateAuth.types';
  * Web authentication adapter using keycloak-js
  * Wraps browser-based Keycloak OAuth flows
  */
-export class StateAuthAdaptersWeb implements AuthAdapter {
+export class StateAuthAdapter implements AuthAdapter {
   private keycloak: Keycloak;
 
   private isTokenValidChannel: EventChannel<boolean>;
@@ -25,11 +25,21 @@ export class StateAuthAdaptersWeb implements AuthAdapter {
     const keycloakInstance = this.keycloak;
 
     const isTokenValidChannel = eventChannel<boolean>((emit) => {
+      const clearTokenAndEmitFalse = () => {
+        // Only clear if tokens exist
+        if (keycloakInstance.token || keycloakInstance.refreshToken) {
+          keycloakInstance.clearToken();
+        }
+        emit(false);
+      };
+
       // Initial token check
       if (keycloakInstance.authenticated && keycloakInstance.token) {
         emit(true);
       } else {
-        emit(false);
+        // Not authenticated on initial check
+        // Clear any stale tokens as defensive measure
+        clearTokenAndEmitFalse();
       }
 
       // Set up token refresh interval
@@ -42,11 +52,11 @@ export class StateAuthAdaptersWeb implements AuthAdapter {
           if (keycloakInstance.authenticated && keycloakInstance.token) {
             emit(true);
           } else {
-            emit(false);
+            clearTokenAndEmitFalse();
           }
         } catch (error) {
           console.error('Failed to refresh token:', error);
-          emit(false);
+          clearTokenAndEmitFalse();
         }
       }, 60000); // Check every minute
 
@@ -56,7 +66,7 @@ export class StateAuthAdaptersWeb implements AuthAdapter {
       };
 
       keycloakInstance.onAuthError = () => {
-        emit(false);
+        clearTokenAndEmitFalse();
       };
 
       keycloakInstance.onAuthRefreshSuccess = () => {
@@ -64,11 +74,11 @@ export class StateAuthAdaptersWeb implements AuthAdapter {
       };
 
       keycloakInstance.onAuthRefreshError = () => {
-        emit(false);
+        clearTokenAndEmitFalse();
       };
 
       keycloakInstance.onAuthLogout = () => {
-        emit(false);
+        clearTokenAndEmitFalse();
       };
 
       keycloakInstance.onTokenExpired = () => {
@@ -79,7 +89,7 @@ export class StateAuthAdaptersWeb implements AuthAdapter {
             emit(true);
           })
           .catch(() => {
-            emit(false);
+            clearTokenAndEmitFalse();
           });
       };
 
@@ -113,6 +123,10 @@ export class StateAuthAdaptersWeb implements AuthAdapter {
   }
 
   async logout(options?: KeycloakLogoutOptions): Promise<void> {
+    // Logout will redirect to Keycloak, clearing server-side session
+    // keycloak-js will clear tokens automatically during logout process
+    // The onAuthLogout event will fire after redirect, triggering clearTokenAndEmitFalse()
+    // This ensures tokens are cleared via event handlers without interfering with logout flow
     await this.keycloak.logout(options);
   }
 

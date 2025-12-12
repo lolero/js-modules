@@ -40,7 +40,6 @@ export function useInitializeKeycloak(clientType: ClientType): {
     reducerMetadata: { isKeycloakReady, isAuthenticated },
     callback: stateAuthInitializeKeycloakCallback,
   } = useStateAuthInitializeKeycloak(
-    clientType,
     {
       ...keycloakConfig,
       clientId: `client-${clientType}`,

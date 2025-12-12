@@ -2,7 +2,7 @@ import noop from 'lodash/noop';
 import { isUndefined } from 'lodash';
 
 export type TimeoutRepeat = {
-  timeout: NodeJS.Timeout;
+  timeout: number;
   clearTimeoutCallback: () => void;
 };
 

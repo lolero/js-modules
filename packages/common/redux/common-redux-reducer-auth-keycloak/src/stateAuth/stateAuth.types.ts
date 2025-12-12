@@ -4,7 +4,6 @@ import {
   ReducerMetadata,
 } from '@js-modules/common-redux-utils-normalized-reducers';
 import {
-  KeycloakConfig,
   KeycloakInitOptions,
   KeycloakLoginOptions,
   KeycloakLogoutOptions,

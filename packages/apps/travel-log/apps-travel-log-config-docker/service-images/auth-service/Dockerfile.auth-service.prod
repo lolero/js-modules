@@ -17,6 +17,9 @@ ARG USER_UID
 COPY --from=image-build /app/packages/apps/travel-log/apps-travel-log-config-docker/service-images/auth-service/backup/realm-backup.prod.json /opt/keycloak/data/import/realm-backup.json
 COPY --from=image-build /app/packages/apps/travel-log/apps-travel-log-config-docker/service-images/auth-service/providers /opt/keycloak/providers
 
+# Substitute $DOMAIN_PROD in keycloak's realm backup
+RUN sed -i "s/\$DOMAIN_PROD/${DOMAIN_PROD}/g" /opt/keycloak/data/import/realm-backup.json
+
 # Build Keycloak
 RUN /opt/keycloak/bin/kc.sh build --db=postgres --http-relative-path=/auth
 

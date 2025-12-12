@@ -2,18 +2,24 @@ import { Provider } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard, ResourceGuard, RoleGuard } from 'nest-keycloak-connect';
 import { KeycloakAdminClient } from '@js-modules/api-nest-keycloak-admin-client-cjs';
-import { KeycloakAdminClientConfig } from './auth.types';
+import {
+  KeycloakAdminClientConfig,
+  KeycloakMultiIssuerConfig,
+} from './auth.types';
 import {
   KEYCLOAK_ADMIN_CLIENT,
-  KEYCLOAK_ADMIN_CLIENT_CREDENTIALS,
+  KEYCLOAK_ADMIN_CLIENT_CONFIG,
+  KEYCLOAK_MULTI_ISSUER_CONFIG,
 } from './auth.constants';
 import { AuthGuardUsersEntityCurrent } from './auth.guard.usersEntityCurrent';
+import { AuthServiceMultiIssuer } from './auth.service.multiIssuer';
+import { AuthGuardMultiIssuer } from './auth.guard.multiIssuer';
 
-export function getAuthProviderAdminClientCredentials(
+export function getAuthProviderKeycloakAdminClientConfig(
   keycloakAdminClientConfig: KeycloakAdminClientConfig,
 ): Provider {
   return {
-    provide: KEYCLOAK_ADMIN_CLIENT_CREDENTIALS,
+    provide: KEYCLOAK_ADMIN_CLIENT_CONFIG,
     useValue: keycloakAdminClientConfig,
   };
 }
@@ -27,12 +33,31 @@ export const authProviderKeycloakAdminClient: Provider = {
     await keycloakAdminClient.auth(keycloakAdminClientConfig.credentials);
     return keycloakAdminClient;
   },
-  inject: [KEYCLOAK_ADMIN_CLIENT_CREDENTIALS],
+  inject: [KEYCLOAK_ADMIN_CLIENT_CONFIG],
 };
 
 export const authProviderAuthGuard: Provider = {
   provide: APP_GUARD,
   useClass: AuthGuard,
+};
+
+export function getAuthProviderKeycloakMultiIssuerConfig(
+  keycloakMultiIssuerConfig: KeycloakMultiIssuerConfig,
+): Provider {
+  return {
+    provide: KEYCLOAK_MULTI_ISSUER_CONFIG,
+    useValue: keycloakMultiIssuerConfig,
+  };
+}
+
+export const authProviderAuthServiceMultiIssuer: Provider = {
+  provide: AuthServiceMultiIssuer,
+  useClass: AuthServiceMultiIssuer,
+};
+
+export const authProviderAuthGuardMultiIssuer: Provider = {
+  provide: APP_GUARD,
+  useClass: AuthGuardMultiIssuer,
 };
 
 export const authProviderResourceGuard: Provider = {

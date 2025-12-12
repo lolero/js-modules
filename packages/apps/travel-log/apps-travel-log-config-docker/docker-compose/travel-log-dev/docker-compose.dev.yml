@@ -47,7 +47,6 @@ services:
     image: quay.io/keycloak/keycloak:26.3.5-0
     command: ['start-dev', '--import-realm', '--log-level=INFO,org.keycloak.services:DEBUG']
     environment:
-      KC_HOSTNAME_STRICT: 'false' # Necessary for react-native Android redirects to work
       KC_DB_USERNAME: ${DB_AUTH_USERNAME}
       KC_DB_PASSWORD: ${DB_AUTH_PASSWORD}
       KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN_USERNAME}
@@ -57,8 +56,9 @@ services:
       KC_DB_URL_DATABASE: ${DB_AUTH_DATABASE}
       KC_HTTP_ENABLED: 'true'
       KC_HTTP_RELATIVE_PATH: /auth
-      KC_PROXY: edge
       KC_PROXY_HEADERS: xforwarded
+      KC_HOSTNAME_STRICT: 'false' # Allows tokens from multiple hostnames for multi-issuer support
+      KC_HOSTNAME_DEBUG: 'true' # Enable hostname debug logging
     depends_on:
       - db-auth
     networks:

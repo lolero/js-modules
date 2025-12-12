@@ -1,4 +1,9 @@
-import { getDevHostIp, IS_ENV_DEV } from '@js-modules/common-utils-general';
+import {
+  AppPlatform,
+  appPlatformIpDev,
+  getDevHostIp,
+  IS_ENV_DEV,
+} from '@js-modules/common-utils-general';
 
 export const ROUTER__PROTOCOL__TRAVEL_LOG = 'https';
 export const ROUTER__IP__TRAVEL_LOG = IS_ENV_DEV
@@ -9,10 +14,16 @@ export const ROUTER__PORT__TRAVEL_LOG = '';
 
 export const AUTH__PROTOCOL__TRAVEL_LOG = ROUTER__PROTOCOL__TRAVEL_LOG;
 export const AUTH__IP__TRAVEL_LOG = ROUTER__IP__TRAVEL_LOG;
+export const AUTH__IP_DEV_ANDROID__TRAVEL_LOG =
+  appPlatformIpDev[AppPlatform.android];
 export const AUTH__PORT__TRAVEL_LOG = ROUTER__PORT__TRAVEL_LOG;
 export const AUTH__PATH__TRAVEL_LOG = '/auth';
 export const AUTH__HOST__TRAVEL_LOG = `${AUTH__PROTOCOL__TRAVEL_LOG}://${AUTH__IP__TRAVEL_LOG}`;
+export const AUTH__HOST_DEV_ANDROID__TRAVEL_LOG = `${AUTH__PROTOCOL__TRAVEL_LOG}://${AUTH__IP_DEV_ANDROID__TRAVEL_LOG}`;
 export const AUTH__URI__TRAVEL_LOG = `${AUTH__HOST__TRAVEL_LOG}${
+  AUTH__PORT__TRAVEL_LOG ? `:${AUTH__PORT__TRAVEL_LOG}` : ''
+}${AUTH__PATH__TRAVEL_LOG}`;
+export const AUTH__URI_DEV_ANDROID__TRAVEL_LOG = `${AUTH__HOST_DEV_ANDROID__TRAVEL_LOG}${
   AUTH__PORT__TRAVEL_LOG ? `:${AUTH__PORT__TRAVEL_LOG}` : ''
 }${AUTH__PATH__TRAVEL_LOG}`;
 // console.log('AUTH__URI__TRAVEL_LOG:', AUTH__URI__TRAVEL_LOG);

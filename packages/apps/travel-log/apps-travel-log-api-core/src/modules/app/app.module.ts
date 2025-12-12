@@ -6,8 +6,15 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { PolicyEnforcementMode, TokenValidation } from 'nest-keycloak-connect';
 import { AuthModule } from '@js-modules/api-nest-module-auth-keycloak';
 import { utilGetAuthUsersServiceProvider } from '@js-modules/api-nest-utils';
-import { AUTH_SERVER__URI__TRAVEL_LOG } from '@js-modules/apps-travel-log-common-constants-cjs';
-import { getEnvFileName } from '@js-modules/common-utils-general-cjs';
+import {
+  AUTH_SERVER__URI__TRAVEL_LOG,
+  AUTH__URI__TRAVEL_LOG,
+  AUTH__URI_DEV_ANDROID__TRAVEL_LOG,
+} from '@js-modules/apps-travel-log-common-constants-cjs';
+import {
+  getEnvFileName,
+  IS_ENV_DEV,
+} from '@js-modules/common-utils-general-cjs';
 import {
   LogEntriesModule,
   UsersModule,
@@ -43,6 +50,14 @@ import { configTypeormDataSourceOptions } from '../../config/config.typeorm.data
           clientId: 'admin-cli',
           clientSecret: process.env.KEYCLOAK_SECRET_ADMIN_CLI,
         },
+      },
+      {
+        allowedIssuers: [
+          AUTH__URI__TRAVEL_LOG,
+          AUTH_SERVER__URI__TRAVEL_LOG,
+          ...(IS_ENV_DEV ? [AUTH__URI_DEV_ANDROID__TRAVEL_LOG] : []),
+        ],
+        isOfflineValidationAllowed: IS_ENV_DEV,
       },
       {
         module: UsersModule,

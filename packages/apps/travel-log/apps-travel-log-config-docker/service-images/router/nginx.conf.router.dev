@@ -13,14 +13,16 @@ upstream api-core {
 # HTTP server - redirect to HTTPS
 server {
   listen 80;
-  server_name _;
+  # Only accept requests from localhost and Android emulator (10.0.2.2)
+  server_name localhost 10.0.2.2;
   return 301 https://$host$request_uri;
 }
 
 # HTTPS server
 server {
   listen 443 ssl;
-  server_name _;
+  # Only accept requests from localhost and Android emulator (10.0.2.2)
+  server_name localhost 10.0.2.2;
 
   # SSL configuration
   ssl_certificate /etc/nginx/ssl/nginx-selfsigned.crt;
@@ -31,6 +33,12 @@ server {
   ssl_protocols TLSv1.2 TLSv1.3;
   ssl_ciphers HIGH:!aNULL:!MD5;
   ssl_prefer_server_ciphers on;
+
+  # Security headers
+  add_header X-Frame-Options "SAMEORIGIN" always;
+  add_header X-Content-Type-Options "nosniff" always;
+  add_header X-XSS-Protection "1; mode=block" always;
+  add_header Referrer-Policy "strict-origin-when-cross-origin" always;
 
   location / {
     proxy_pass http://client-web;
