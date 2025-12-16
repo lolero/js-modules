@@ -67,17 +67,6 @@ const config = {
       os: path.resolve(__dirname, 'src/polyfills/polyfills.empty.js'),
     },
   },
-
-  transformer: {
-    // Enable experimental import support
-    unstable_allowRequireContext: true,
-    getTransformOptions: async () => ({
-      transform: {
-        experimentalImportSupport: false,
-        inlineRequires: true,
-      },
-    }),
-  },
 };
 
 module.exports = mergeConfig(getDefaultConfig(__dirname), config);
