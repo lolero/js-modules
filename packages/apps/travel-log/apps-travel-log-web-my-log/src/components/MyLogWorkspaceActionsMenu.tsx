@@ -4,7 +4,7 @@ import {
   useMenuUtils,
   FindManyRangesMenu,
 } from '@js-modules/web-react-utils';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import {
   WebModulesPrivate,
   WebSubModulesMyLog,
@@ -44,7 +44,13 @@ export const MyLogWorkspaceActionsMenu: React.FC = () => {
 
   const { menuAnchor, openMenuCallback, closeMenuCallback } = useMenuUtils();
 
-  const { rangeKeysActive } = useFindManyRangesUtils(rangeTypes);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const { rangeKeysActive } = useFindManyRangesUtils(
+    searchParams,
+    setSearchParams,
+    rangeTypes,
+  );
 
   const rangesMenuButton = useMemo(() => {
     if (rangeKeysActive.length === 0) {

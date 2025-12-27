@@ -6,6 +6,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import isNull from 'lodash/isNull';
 import { format, parse } from 'date-fns';
 import { useFindManyRangesUtils } from '@js-modules/common-react-utils';
+import { useSearchParams } from 'react-router-dom';
 
 export type FindManyRangeBoxDateProps = {
   rangeKey: string;
@@ -14,7 +15,11 @@ export type FindManyRangeBoxDateProps = {
 export const FindManyRangeBoxDate: React.FC<FindManyRangeBoxDateProps> = ({
   rangeKey,
 }) => {
-  const { getRangeCallback, setRangeCallback } = useFindManyRangesUtils();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const { getRangeCallback, setRangeCallback } = useFindManyRangesUtils(
+    searchParams,
+    setSearchParams,
+  );
 
   const range = useMemo(() => {
     const rangeTemp = getRangeCallback(rangeKey);

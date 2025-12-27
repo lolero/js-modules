@@ -1,5 +1,4 @@
 import { useCallback, useMemo } from 'react';
-import { useSearchParams } from 'react-router-dom';
 import isEqual from 'lodash/isEqual';
 import { FindManyRange } from '@js-modules/api-nest-utils/src/types/types.requests';
 import keys from 'lodash/keys';
@@ -7,6 +6,10 @@ import difference from 'lodash/difference';
 import { FindManyRangesTypes } from '../types/findManyRanges.types';
 
 export const useFindManyRangesUtils = (
+  searchParams: URLSearchParams,
+  setSearchParams: (
+    params: URLSearchParams | ((prev: URLSearchParams) => URLSearchParams),
+  ) => void,
   rangeTypes: FindManyRangesTypes = {},
 ): {
   rangeKeys: string[];
@@ -16,8 +19,6 @@ export const useFindManyRangesUtils = (
   setRangeCallback: (rangeKey: string, range: FindManyRange) => void;
   deleteRangeCallback: (rangeKey: string) => void;
 } => {
-  const [searchParams, setSearchParams] = useSearchParams();
-
   const rangeKeys = useMemo(() => {
     return keys(rangeTypes);
   }, [rangeTypes]);

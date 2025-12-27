@@ -1,4 +1,7 @@
-import { axiosRequest } from '@js-modules/common-utils-general';
+import {
+  axiosRequest,
+  getFindManyDtoQueryParams,
+} from '@js-modules/common-utils-general';
 import {
   API_CORE__URI__TRAVEL_LOG,
   ApiControllersTravelLog,
@@ -55,9 +58,11 @@ export async function nodeLogEntriesGetOneService(
 export async function nodeLogEntriesGetManyService(
   findManyDto: NodeLogEntriesGetManyRequestAction['requestMetadata']['findManyDto'],
 ): Promise<NodeLogEntriesGetManyServiceResponse> {
+  const findManyDtoQueryParams = getFindManyDtoQueryParams(findManyDto!);
+
   const res = await axiosRequest.get(
     `${API_CORE__URI__TRAVEL_LOG}/${ApiControllersTravelLog.logEntries}`,
-    { params: findManyDto },
+    { params: findManyDtoQueryParams },
   );
   return res;
 }

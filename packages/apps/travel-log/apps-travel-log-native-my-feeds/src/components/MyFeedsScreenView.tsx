@@ -1,7 +1,10 @@
 import React from 'react';
 import { View } from 'react-native';
-import { Text } from 'react-native-paper';
+import { Icon, Text } from 'react-native-paper';
 import { useStateSettingsReducerMetadata } from '@js-modules/apps-travel-log-common-store-redux';
+import { getFaIconGenerator } from '@js-modules/native-react-utils';
+import { routesMetadataPrivate } from '@js-modules/apps-travel-log-common-react';
+import { WebModulesPrivate } from '@js-modules/apps-travel-log-common-constants';
 
 export const MyFeedsScreenView: React.FC = () => {
   const { profile } = useStateSettingsReducerMetadata();
@@ -14,6 +17,12 @@ export const MyFeedsScreenView: React.FC = () => {
         alignItems: 'center',
       }}
     >
+      <Icon
+        source={getFaIconGenerator(
+          routesMetadataPrivate[WebModulesPrivate.myFeeds].icon,
+        )}
+        size={40}
+      />
       <Text variant="headlineLarge">My Feeds</Text>
       <Text variant="bodyLarge">eMail: {profile?.email}</Text>
     </View>

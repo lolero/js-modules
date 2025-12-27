@@ -96,6 +96,7 @@
       "@js-modules/common-utils-general-cjs": [
         "common/utils/common-utils-general-cjs/src"
       ],
+      "@js-modules/native-react-utils": ["native/react/native-react-utils/src"],
       "@js-modules/web-react-icons": ["web/react/web-react-icons/src"],
       "@js-modules/web-react-nav": ["web/react/web-react-nav/src"],
       "@js-modules/web-react-utils": ["web/react/web-react-utils/src"],

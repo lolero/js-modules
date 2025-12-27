@@ -13,12 +13,13 @@
     "build": "tsc -b tsconfig.build.json"
   },
   "dependencies": {
+    "@fortawesome/free-brands-svg-icons": "^7.0.0",
+    "@fortawesome/free-regular-svg-icons": "^7.0.0",
+    "@fortawesome/free-solid-svg-icons": "^7.0.0",
     "@js-modules/apps-travel-log-common-constants": "workspace:^",
     "@js-modules/apps-travel-log-common-react": "workspace:^",
     "@js-modules/apps-travel-log-common-store-redux": "workspace:^",
-    "@react-native-vector-icons/fontawesome-free-brands": "^0.1.0",
-    "@react-native-vector-icons/fontawesome-free-regular": "^0.1.0",
-    "@react-native-vector-icons/fontawesome-free-solid": "^0.1.0",
+    "@js-modules/native-react-utils": "workspace:^",
     "@types/lodash": "^4.17.20",
     "@types/react": "^19.1.10",
     "lodash": "^4.17.21",

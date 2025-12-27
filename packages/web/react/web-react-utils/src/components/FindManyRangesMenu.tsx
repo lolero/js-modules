@@ -10,6 +10,7 @@ import {
   FindManyRangesTypes,
   useFindManyRangesUtils,
 } from '@js-modules/common-react-utils';
+import { useSearchParams } from 'react-router-dom';
 import { useMenuUtils } from '../hooks/hooksMaterialUi/useMenuUtils';
 import { FindManyRangesMenuItem } from './FindManyRangesMenuItem';
 
@@ -22,8 +23,9 @@ export const FindManyRangesMenu: React.FC<FindManyRangesMenuProps> = ({
   rangeTypes,
   button,
 }) => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const { rangeKeysActive, rangeKeysUnselected, deleteRangeCallback } =
-    useFindManyRangesUtils(rangeTypes);
+    useFindManyRangesUtils(searchParams, setSearchParams, rangeTypes);
 
   const [selectedRangeKey, setSelectedRangeKey] = useState<string | null>(null);
 
