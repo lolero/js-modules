@@ -37,18 +37,6 @@
       "@js-modules/apps-dapp-web-transactions": [
         "apps/dapp/apps-dapp-web-transactions/src"
       ],
-      "@js-modules/apps-nest-examples-users-modules": [
-        "apps/nest-examples/apps-nest-examples-users-modules/src"
-      ],
-      "@js-modules/apps-segway-rental-mui-icons": [
-        "apps/segway-rental/apps-segway-rental-mui-icons/src"
-      ],
-      "@js-modules/apps-segway-rental-store-redux": [
-        "apps/segway-rental/apps-segway-rental-store-redux/src"
-      ],
-      "@js-modules/apps-segway-rental-utils": [
-        "apps/segway-rental/apps-segway-rental-utils/src"
-      ],
       "@js-modules/apps-travel-log-api-modules-core": [
         "apps/travel-log/apps-travel-log-api-modules-core/src"
       ],
@@ -90,33 +78,6 @@
       ],
       "@js-modules/apps-travel-log-web-site": [
         "apps/travel-log/apps-travel-log-web-site/src"
-      ],
-      "@js-modules/apps-vending-machine-api-modules-core": [
-        "apps/vending-machine/apps-vending-machine-api-modules-core/src"
-      ],
-      "@js-modules/apps-vending-machine-common-constants": [
-        "apps/vending-machine/apps-vending-machine-common-constants/src"
-      ],
-      "@js-modules/apps-vending-machine-common-store-redux": [
-        "apps/vending-machine/apps-vending-machine-common-store-redux/src"
-      ],
-      "@js-modules/apps-vending-machine-web-my-products": [
-        "apps/vending-machine/apps-vending-machine-web-my-products/src"
-      ],
-      "@js-modules/apps-vending-machine-web-my-workspace": [
-        "apps/vending-machine/apps-vending-machine-web-my-workspace/src"
-      ],
-      "@js-modules/apps-vending-machine-web-shopping-cart": [
-        "apps/vending-machine/apps-vending-machine-web-shopping-cart/src"
-      ],
-      "@js-modules/apps-vending-machine-web-site": [
-        "apps/vending-machine/apps-vending-machine-web-site/src"
-      ],
-      "@js-modules/apps-vending-machine-web-store": [
-        "apps/vending-machine/apps-vending-machine-web-store/src"
-      ],
-      "@js-modules/apps-vending-machine-web-components": [
-        "apps/vending-machine/apps-vending-machine-web-components/src"
       ],
       "@js-modules/common-react-nav": ["common/react/common-react-nav/src"],
       "@js-modules/common-react-utils": ["common/react/common-react-utils/src"],
