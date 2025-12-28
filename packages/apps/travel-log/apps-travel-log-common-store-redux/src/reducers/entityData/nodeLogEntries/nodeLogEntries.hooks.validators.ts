@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { FormErrors, FormValidator } from '@js-modules/web-react-hooks';
+import { FormErrors, FormValidator } from '@js-modules/web-react-utils';
 import _isEmpty from 'lodash/isEmpty';
 import pickBy from 'lodash/pickBy';
 import isEmpty from 'validator/lib/isEmpty';

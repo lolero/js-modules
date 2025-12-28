@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { MuiFaIcon } from '@js-modules/web-react-components';
+import { MuiFaIcon } from '@js-modules/web-react-utils';
 import { faBiking } from '@fortawesome/free-solid-svg-icons/faBiking';
 
 const MainLogoBox: React.FunctionComponent = () => {

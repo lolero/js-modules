@@ -15,9 +15,7 @@
       "@js-modules/api-nest-module-aws-s3-files": [
         "api/nest/api-nest-module-aws-s3-files/src"
       ],
-      "@js-modules/api-nest-utils": [
-        "api/nest/api-nest-utils/src"
-      ],
+      "@js-modules/api-nest-utils": ["api/nest/api-nest-utils/src"],
       "@js-modules/apps-dapp-common-constants": [
         "apps/dapp/apps-dapp-common-constants/src"
       ],
@@ -75,6 +73,9 @@
       "@js-modules/apps-travel-log-web-components": [
         "apps/travel-log/apps-travel-log-web-components/src"
       ],
+      "@js-modules/apps-travel-log-web-icons": [
+        "apps/travel-log/apps-travel-log-web-icons/src"
+      ],
       "@js-modules/apps-travel-log-web-my-feeds": [
         "apps/travel-log/apps-travel-log-web-my-feeds/src"
       ],
@@ -117,21 +118,24 @@
       "@js-modules/apps-vending-machine-web-components": [
         "apps/vending-machine/apps-vending-machine-web-components/src"
       ],
-      "@js-modules/common-react-hooks": ["common/react/common-react-hooks/src"],
       "@js-modules/common-react-nav": ["common/react/common-react-nav/src"],
-      "@js-modules/common-redux-reducer-auth-keycloak": ["common/redux/common-redux-reducer-auth-keycloak/src"],
-      "@js-modules/common-redux-reducer-aws-s3-files": ["common/redux/common-redux-reducer-aws-s3-files/src"],
-      "@js-modules/common-redux-utils-normalized-reducers": ["common/redux/common-redux-utils-normalized-reducers/src"],
+      "@js-modules/common-react-utils": ["common/react/common-react-utils/src"],
+      "@js-modules/common-redux-reducer-auth-keycloak": [
+        "common/redux/common-redux-reducer-auth-keycloak/src"
+      ],
+      "@js-modules/common-redux-reducer-aws-s3-files": [
+        "common/redux/common-redux-reducer-aws-s3-files/src"
+      ],
+      "@js-modules/common-redux-utils-normalized-reducers": [
+        "common/redux/common-redux-utils-normalized-reducers/src"
+      ],
       "@js-modules/common-utils-general": [
         "common/utils/common-utils-general/src"
       ],
       "@js-modules/common-utils-general-cjs": [
         "common/utils/common-utils-general-cjs/src"
       ],
-      "@js-modules/web-react-components": [
-        "web/react/web-react-components/src"
-      ],
-      "@js-modules/web-react-hooks": ["web/react/web-react-hooks/src"],
+      "@js-modules/web-react-icons": ["web/react/web-react-icons/src"],
       "@js-modules/web-react-nav": ["web/react/web-react-nav/src"],
       "@js-modules/web-react-utils": ["web/react/web-react-utils/src"],
       "@js-modules/web-styles-material-ui": [

@@ -7,7 +7,7 @@ import Fab from '@mui/material/Fab';
 import Box from '@mui/material/Box';
 import { svgIconClasses } from '@mui/material/SvgIcon';
 import IconButton from '@mui/material/IconButton';
-import { MuiFaIcon } from '@js-modules/web-react-components';
+import { MuiFaIcon } from '@js-modules/web-react-utils';
 import { WorkspaceContext } from '../contexts/WorkspaceContext';
 import { NavContext } from '../contexts/NavContext';
 import { useNavDisplayMetadata } from '../hooks/useNavDisplayMetadata';

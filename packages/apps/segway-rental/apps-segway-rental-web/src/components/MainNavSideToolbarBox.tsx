@@ -7,7 +7,7 @@ import Tooltip from '@mui/material/Tooltip';
 import { useTheme } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
 import { useNavDisplayMetadata } from '@js-modules/web-react-nav';
-import { MuiFaIcon } from '@js-modules/web-react-components';
+import { MuiFaIcon } from '@js-modules/web-react-utils';
 import { faHouse } from '@fortawesome/free-solid-svg-icons/faHouse';
 import { faMapLocationDot } from '@fortawesome/free-solid-svg-icons/faMapLocationDot';
 import { faUsers } from '@fortawesome/free-solid-svg-icons/faUsers';

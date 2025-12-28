@@ -13,7 +13,7 @@ import {
   useStateShoppingCartRemoveItem,
 } from '@js-modules/apps-vending-machine-common-store-redux';
 import keys from 'lodash/keys';
-import { MuiFaIcon } from '@js-modules/web-react-components';
+import { MuiFaIcon } from '@js-modules/web-react-utils';
 import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
 import { faMinus } from '@fortawesome/free-solid-svg-icons/faMinus';
 import Avatar from '@mui/material/Avatar';

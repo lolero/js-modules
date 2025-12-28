@@ -3,7 +3,7 @@ import {
   faAnglesRight,
   faXmark,
 } from '@fortawesome/free-solid-svg-icons';
-import { MuiFaIcon } from '@js-modules/web-react-components';
+import { MuiFaIcon } from '@js-modules/web-react-utils';
 import {
   Box,
   Fab,

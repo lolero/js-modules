@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 import Box, { BoxProps } from '@mui/material/Box';
-import { useChildNodeSize } from '@js-modules/web-react-hooks';
-import { usePrevious } from '@js-modules/common-react-hooks';
+import { useChildNodeSize } from '@js-modules/web-react-utils';
+import { usePrevious } from '@js-modules/common-react-utils';
 import { useNavigate } from 'react-router-dom';
 import {
   WorkspaceContext,

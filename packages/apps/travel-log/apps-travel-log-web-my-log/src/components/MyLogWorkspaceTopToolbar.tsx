@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
-import { MuiFaIcon } from '@js-modules/web-react-components';
+import { MuiFaIcon } from '@js-modules/web-react-utils';
 import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
 import { Link } from 'react-router-dom';
 import {

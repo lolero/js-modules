@@ -16,9 +16,9 @@ import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
 import { keys, noop } from 'lodash';
 import { Autocomplete } from '@mui/material';
-import { usePrevious } from '@js-modules/common-react-hooks';
+import { usePrevious } from '@js-modules/common-react-utils';
 import { autocompleteSx } from '@js-modules/web-styles-material-ui';
-import { MuiFaIcon } from '@js-modules/web-react-components';
+import { MuiFaIcon } from '@js-modules/web-react-utils';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons/faCircleNotch';
 import { useCloseAllDialogsCallBack } from '../hooks/segwayRentalWebHooks';
 

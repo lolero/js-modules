@@ -10,7 +10,7 @@ import {
   NodeSegway,
 } from '@js-modules/apps-segway-rental-store-redux';
 import Button from '@mui/material/Button';
-import { MuiFaIcon } from '@js-modules/web-react-components';
+import { MuiFaIcon } from '@js-modules/web-react-utils';
 import { faCalendarTimes } from '@fortawesome/free-solid-svg-icons/faCalendarTimes';
 import { useCloseAllDialogsCallBack } from '../hooks/segwayRentalWebHooks';
 

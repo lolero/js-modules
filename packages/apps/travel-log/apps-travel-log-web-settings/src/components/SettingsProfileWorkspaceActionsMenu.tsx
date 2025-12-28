@@ -1,5 +1,5 @@
 import React from 'react';
-import { MuiFaIcon } from '@js-modules/web-react-components';
+import { MuiFaIcon, useMenuUtils } from '@js-modules/web-react-utils';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons/faPenToSquare';
 import { Link } from 'react-router-dom';
 import {
@@ -7,7 +7,6 @@ import {
   WebSubModulesSettings,
   WebSubModulesSettingsProfile,
 } from '@js-modules/apps-travel-log-common-constants';
-import { useMenuUtils } from '@js-modules/web-react-hooks';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';

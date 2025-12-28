@@ -10,14 +10,14 @@ import {
   NodeChain,
   useNodeChainsGetMany,
 } from '@js-modules/apps-dapp-common-store-redux';
-import { usePrevious } from '@js-modules/common-react-hooks';
+import { usePrevious } from '@js-modules/common-react-utils';
 import ArrowDropDown from '@mui/icons-material/ArrowDropDown';
 import orderBy from 'lodash/orderBy';
 import values from 'lodash/values';
 import {
   MuiFaIcon,
   VirtualizedAutocomplete,
-} from '@js-modules/web-react-components';
+} from '@js-modules/web-react-utils';
 import { faCloud } from '@fortawesome/free-solid-svg-icons/faCloud';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons/faCircleNotch';
 import TextField from '@mui/material/TextField';

@@ -1,24 +1,26 @@
 import React, { useMemo } from 'react';
-import { MuiFaIcon } from '@js-modules/web-react-components';
+import {
+  MuiFaIcon,
+  useMenuUtils,
+  FindManyRangesMenu,
+} from '@js-modules/web-react-utils';
 import { Link } from 'react-router-dom';
 import {
   WebModulesPrivate,
   WebSubModulesMyLog,
   WebSubModulesMyLogLogEntry,
 } from '@js-modules/apps-travel-log-common-constants';
-import { useMenuUtils } from '@js-modules/web-react-hooks';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons/faEllipsisVertical';
-import { FindManyRangesMenu } from '@js-modules/web-react-components/src/components/FindManyRangesMenu';
 import {
   FindManyRangesTypes,
   FindManyRangeType,
   useFindManyRangesUtils,
-} from '@js-modules/common-react-hooks';
+} from '@js-modules/common-react-utils';
 import { faCalendarPlus } from '@fortawesome/free-solid-svg-icons/faCalendarPlus';
 import { faCalendarDays } from '@fortawesome/free-solid-svg-icons/faCalendarDays';
 import { routesMetadataPrivate } from '@js-modules/apps-travel-log-common-react';

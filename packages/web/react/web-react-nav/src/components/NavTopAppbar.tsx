@@ -5,7 +5,7 @@ import Divider from '@mui/material/Divider';
 import { Link } from 'react-router-dom';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import { MuiFaIcon } from '@js-modules/web-react-components';
+import { MuiFaIcon } from '@js-modules/web-react-utils';
 import { faBars } from '@fortawesome/free-solid-svg-icons/faBars';
 import { faXmark } from '@fortawesome/free-solid-svg-icons/faXmark';
 import { NavContext, NavDrawerDisplayStatus } from '../contexts/NavContext';

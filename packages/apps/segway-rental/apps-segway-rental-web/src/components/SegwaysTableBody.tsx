@@ -13,7 +13,7 @@ import { useSelector } from 'react-redux';
 import { TableBody } from '@mui/material';
 import { lightFormat } from 'date-fns';
 import { getDaysArrayInTimestampRange } from '@js-modules/apps-segway-rental-utils';
-import { MuiFaIcon } from '@js-modules/web-react-components';
+import { MuiFaIcon } from '@js-modules/web-react-utils';
 import { faCheckSquare } from '@fortawesome/free-solid-svg-icons/faCheckSquare';
 import { faSquare } from '@fortawesome/free-solid-svg-icons/faSquare';
 import SegwaysTableRowMenuAdmin from './SegwaysTableRowMenuAdmin';

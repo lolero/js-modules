@@ -4,7 +4,7 @@ import {
   useStateWeb3WalletConnect,
   WalletType,
 } from '@js-modules/apps-dapp-common-store-redux';
-import { MuiFaIcon } from '@js-modules/web-react-components';
+import { MuiFaIcon } from '@js-modules/web-react-utils';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons/faCircleNotch';
 import { faLink } from '@fortawesome/free-solid-svg-icons/faLink';
 

@@ -1,0 +1,23 @@
+{
+  "name": "@js-modules/apps-travel-log-web-icons",
+  "description": "Apps Travel Log Web Icons",
+  "version": "0.0.0",
+  "license": "MIT",
+  "main": "build/index",
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "generate-icons": "ts-node --project tsconfig.generate-icons.json -r tsconfig-paths/register src/utils/generateIcons.ts",
+    "build": "pnpm generate-icons && tsc -b tsconfig.build.json"
+  },
+  "dependencies": {
+    "@js-modules/web-react-icons": "workspace:^",
+    "@mui/material": "^7.3.1",
+    "@types/react": "^19.1.10",
+    "react": "^19.1.1"
+  },
+  "devDependencies": {
+    "tsconfig-paths": "^4.2.0"
+  }
+}

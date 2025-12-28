@@ -1,6 +1,6 @@
 import React from 'react';
 import { faStore } from '@fortawesome/free-solid-svg-icons/faStore';
-import { MuiFaIcon } from '@js-modules/web-react-components';
+import { MuiFaIcon } from '@js-modules/web-react-utils';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 

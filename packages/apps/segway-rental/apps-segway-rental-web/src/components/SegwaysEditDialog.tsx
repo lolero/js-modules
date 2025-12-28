@@ -18,8 +18,8 @@ import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
 import { noop } from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
-import { usePrevious } from '@js-modules/common-react-hooks';
-import { MuiFaIcon } from '@js-modules/web-react-components';
+import { usePrevious } from '@js-modules/common-react-utils';
+import { MuiFaIcon } from '@js-modules/web-react-utils';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons/faCircleNotch';
 import { useCloseAllDialogsCallBack } from '../hooks/segwayRentalWebHooks';
 

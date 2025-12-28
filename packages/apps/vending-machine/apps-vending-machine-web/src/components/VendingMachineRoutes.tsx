@@ -17,7 +17,7 @@ import { HomeWorkspaceBox } from '@js-modules/apps-vending-machine-web-site';
 import { StoreWorkspaceBox } from '@js-modules/apps-vending-machine-web-store';
 import { MyProductsRoutes } from '@js-modules/apps-vending-machine-web-my-products';
 import { ShoppingCartWorkspaceBox } from '@js-modules/apps-vending-machine-web-shopping-cart';
-import { ConfirmDialog } from '@js-modules/web-react-components';
+import { ConfirmDialog } from '@js-modules/web-react-utils';
 
 const keycloakConfig: KeycloakConfig = {
   url: AUTH_BASE_URI,

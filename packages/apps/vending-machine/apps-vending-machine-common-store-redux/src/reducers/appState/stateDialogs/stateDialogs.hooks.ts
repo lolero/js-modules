@@ -5,7 +5,7 @@ import {
 } from '@js-modules/common-redux-utils-normalized-reducers';
 import { useDispatch } from 'react-redux';
 import { useCallback, useState } from 'react';
-import { ConfirmDialogProps } from '@js-modules/web-react-components';
+import { ConfirmDialogProps } from '@js-modules/web-react-utils';
 import { stateDialogsSelectors } from './stateDialogs.selectors';
 import { StateDialogsReducer } from './stateDialogs.types';
 import { StateDialogsUpdateWholeReducerMetadataRequestAction } from './stateDialogs.actionsTypes';

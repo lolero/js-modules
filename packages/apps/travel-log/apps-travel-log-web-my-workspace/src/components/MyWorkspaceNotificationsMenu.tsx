@@ -1,7 +1,6 @@
 import React from 'react';
 import { faBell } from '@fortawesome/free-solid-svg-icons/faBell';
-import { MuiFaIcon } from '@js-modules/web-react-components';
-import { useMenuUtils } from '@js-modules/web-react-hooks';
+import { MuiFaIcon, useMenuUtils } from '@js-modules/web-react-utils';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';

@@ -213,7 +213,7 @@ basic guidelines for the sake of consistency:
 
 - Package names are always prefixed as follows: 
   `<category>-<subcategory>-<package name>`, e.g. `api-nest-utils`, 
-  `common-react-hooks` or `web-react-utils`.
+  `common-react-utils` or `web-react-icons`.
 - The only place with `index` files are used is in each package's `src` 
   directory. Everywhere else, files have meaningful names regardless of the 
   fact that import statements are slightly more verbose.

@@ -1,6 +1,6 @@
 import React from 'react';
 import Box from '@mui/material/Box';
-import { BackIconButton, MuiFaIcon } from '@js-modules/web-react-components';
+import { BackIconButton, MuiFaIcon } from '@js-modules/web-react-utils';
 import Fab from '@mui/material/Fab';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons/faPenToSquare';
 import { Link } from 'react-router-dom';

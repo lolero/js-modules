@@ -12,7 +12,7 @@
     "build": "pnpm generate-icons && tsc -b tsconfig.build.json"
   },
   "dependencies": {
-    "@js-modules/web-react-utils": "workspace:^",
+    "@js-modules/web-react-icons": "workspace:^",
     "@mui/material": "^7.3.1",
     "@types/react": "^19.1.10",
     "react": "^19.1.1"

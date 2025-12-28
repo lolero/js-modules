@@ -17,7 +17,7 @@ import {
 import {
   ConfirmDialogProps,
   MuiFaIcon,
-} from '@js-modules/web-react-components';
+} from '@js-modules/web-react-utils';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {

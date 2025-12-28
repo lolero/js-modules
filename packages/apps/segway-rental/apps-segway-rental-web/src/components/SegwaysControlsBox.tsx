@@ -15,7 +15,7 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import DateRangePicker from '@mui/lab/DateRangePicker';
 import { autocompleteSx } from '@js-modules/web-styles-material-ui';
-import { MuiFaIcon } from '@js-modules/web-react-components';
+import { MuiFaIcon } from '@js-modules/web-react-utils';
 import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
 import SegwaysContext from './SegwaysContext';
 

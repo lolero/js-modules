@@ -14,9 +14,8 @@ import {
   UserRoles,
   useStateAuthReducerMetadata,
 } from '@js-modules/apps-segway-rental-store-redux';
-import { useMenuUtils } from '@js-modules/web-react-hooks';
+import { useMenuUtils, MuiFaIcon } from '@js-modules/web-react-utils';
 import { menuItemSx } from '@js-modules/web-styles-material-ui';
-import { MuiFaIcon } from '@js-modules/web-react-components';
 import { faEllipsis } from '@fortawesome/free-solid-svg-icons/faEllipsis';
 import { faEdit } from '@fortawesome/free-solid-svg-icons/faEdit';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons/faTrashAlt';

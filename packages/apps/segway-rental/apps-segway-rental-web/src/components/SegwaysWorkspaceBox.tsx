@@ -3,7 +3,7 @@ import { NodeSegway } from '@js-modules/apps-segway-rental-store-redux';
 import { Table, TableContainer } from '@mui/material';
 import Box from '@mui/material/Box';
 import { DateRange } from '@mui/lab/DateRangePicker';
-import { useTableUtils } from '@js-modules/web-react-hooks';
+import { useTableUtils } from '@js-modules/web-react-utils';
 import MainTableHead from './MainTableHead';
 import SegwaysTableBody from './SegwaysTableBody';
 import SegwaysContext from './SegwaysContext';

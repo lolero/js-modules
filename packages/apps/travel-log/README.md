@@ -307,7 +307,7 @@ Font Awesome publishes NPM packages with different free and premium subsets
 of their icon collection. These packages export artifacts which can be 
 adapted to Material UI  components.
 
-The `<MuiFaIcon />`, exported by the `@js-modules/web-react-components` 
+The `<MuiFaIcon />`, exported by the `@js-modules/web-react-utils` 
 library package is an adapter which accepts an `IconDefinition`, exported 
 for evey icon in the FontAwesome library, as well as Font Awesome icon and 
 Material UI `<SvgIcon />` properties. Using the `<MuiFaIcon />` adapter 

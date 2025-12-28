@@ -10,8 +10,8 @@ import {
   useNodeLogEntriesUpdatePartialReducerMetadata,
 } from '@js-modules/apps-travel-log-common-store-redux';
 import { useParams } from 'react-router-dom';
-import { useFormUtils } from '@js-modules/web-react-hooks';
-import { usePrevious } from '@js-modules/common-react-hooks';
+import { useFormUtils } from '@js-modules/web-react-utils';
+import { usePrevious } from '@js-modules/common-react-utils';
 import isUndefined from 'lodash/isUndefined';
 import isNull from 'lodash/isNull';
 import { MyLogLogEntryAddEditContext } from './MyLogLogEntryAddEditContext';

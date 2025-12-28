@@ -1,4 +1,4 @@
-import { useSplitRouterPath } from '@js-modules/web-react-hooks';
+import { useSplitRouterPath } from '@js-modules/web-react-utils';
 import { Modules } from '../types/segwayRentalWebTypes';
 
 function useModule(): string {

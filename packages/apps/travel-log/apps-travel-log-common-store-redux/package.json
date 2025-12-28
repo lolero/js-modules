@@ -19,7 +19,7 @@
     "@js-modules/common-redux-reducer-auth-keycloak": "workspace:^",
     "@js-modules/common-redux-utils-normalized-reducers": "workspace:^",
     "@js-modules/common-utils-general": "workspace:^",
-    "@js-modules/web-react-hooks": "workspace:^",
+    "@js-modules/web-react-utils": "workspace:^",
     "@types/lodash": "^4.17.20",
     "@types/react": "^19.1.10",
     "@types/react-redux": "^7.1.34",

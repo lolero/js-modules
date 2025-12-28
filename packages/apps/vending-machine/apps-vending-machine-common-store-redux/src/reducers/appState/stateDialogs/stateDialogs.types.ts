@@ -3,7 +3,7 @@ import {
   Reducer,
   ReducerMetadata,
 } from '@js-modules/common-redux-utils-normalized-reducers';
-import { ConfirmDialogProps } from '@js-modules/web-react-components';
+import { ConfirmDialogProps } from '@js-modules/web-react-utils';
 
 interface StateDialogsReducerMetadata extends ReducerMetadata {
   confirmDialogMetadata?: ConfirmDialogProps;

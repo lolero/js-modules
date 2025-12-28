@@ -2,7 +2,7 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
-import { MuiFaIcon } from '@js-modules/web-react-components';
+import { MuiFaIcon } from '@js-modules/web-react-utils';
 import { Link } from 'react-router-dom';
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons/faCartShopping';
 import {

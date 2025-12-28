@@ -6,7 +6,7 @@ import {
   useStateSettingsUpdatePartialReducerMetadata,
   useStateSettingsValidateProfilePartialUnsaved,
 } from '@js-modules/apps-travel-log-common-store-redux';
-import { useFormUtils } from '@js-modules/web-react-hooks';
+import { useFormUtils } from '@js-modules/web-react-utils';
 
 export const SettingsProfileEditWorkspaceContentBox: React.FC = () => {
   const {

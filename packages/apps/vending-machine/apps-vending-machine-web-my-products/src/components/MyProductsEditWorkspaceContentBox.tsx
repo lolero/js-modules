@@ -8,7 +8,7 @@ import {
   useNodeProductsGetOne,
   useNodeProductsUpdateOneWhole,
 } from '@js-modules/apps-vending-machine-common-store-redux';
-import { usePrevious } from '@js-modules/common-react-hooks';
+import { usePrevious } from '@js-modules/common-react-utils';
 import {
   MyModules,
   myModulesRoutesMetadata,

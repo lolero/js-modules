@@ -1,7 +1,7 @@
 import React from 'react';
 import { NodeUser } from '@js-modules/apps-segway-rental-store-redux';
 import { Table, TableContainer } from '@mui/material';
-import { useTableUtils } from '@js-modules/web-react-hooks';
+import { useTableUtils } from '@js-modules/web-react-utils';
 import MainTableHead from './MainTableHead';
 import ReservationsTableBody from './ReservationsTableBody';
 

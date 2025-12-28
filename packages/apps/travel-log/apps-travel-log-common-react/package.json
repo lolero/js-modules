@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@js-modules/apps-travel-log-common-react",
-  "description": "Apps Travel Log Common Components",
+  "description": "Apps Travel Log Common React",
   "version": "0.0.0",
   "license": "MIT",
   "main": "build/index",

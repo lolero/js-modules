@@ -9,7 +9,7 @@ import isNull from 'lodash/isNull';
 import intersection from 'lodash/intersection';
 import pick from 'lodash/pick';
 import { RoutesMetadata } from '@js-modules/common-react-nav';
-import { MuiFaIcon } from '@js-modules/web-react-components';
+import { MuiFaIcon } from '@js-modules/web-react-utils';
 import { ReactRouterNavUtils } from '../types/routes.types';
 
 export type NavLeftDrawerTabs = {

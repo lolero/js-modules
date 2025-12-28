@@ -5,7 +5,7 @@ import {
   UserRoles,
   useStateAuthReducerMetadata,
 } from '@js-modules/apps-segway-rental-store-redux';
-import { usePrevious } from '@js-modules/common-react-hooks';
+import { usePrevious } from '@js-modules/common-react-utils';
 import HomeWorkspace from './HomeWorkspace';
 import { Modules } from '../types/segwayRentalWebTypes';
 import SegwaysWorkspace from './SegwaysWorkspace';

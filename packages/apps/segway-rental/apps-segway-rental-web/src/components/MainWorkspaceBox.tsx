@@ -1,8 +1,7 @@
 import React from 'react';
 import Box, { BoxProps } from '@mui/material/Box';
 import { useStateDialogsReducerMetadata } from '@js-modules/apps-segway-rental-store-redux';
-import { ConfirmDialog } from '@js-modules/web-react-components';
-import { useChildNodeSize } from '@js-modules/web-react-hooks';
+import { ConfirmDialog, useChildNodeSize } from '@js-modules/web-react-utils';
 import MainNavBar from './MainNavBar';
 import UsersEditDialog from './UsersEditDialog';
 import SegwaysEditDialog from './SegwaysEditDialog';

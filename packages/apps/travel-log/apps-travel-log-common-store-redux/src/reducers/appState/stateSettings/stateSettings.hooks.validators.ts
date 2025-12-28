@@ -8,7 +8,7 @@ import {
   FormErrors,
   FormValidator,
   validateDto,
-} from '@js-modules/web-react-hooks';
+} from '@js-modules/web-react-utils';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import { StateSettingsReducer } from './stateSettings.types';

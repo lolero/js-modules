@@ -18,7 +18,7 @@ import {
   useStateAuthRequest,
 } from '@js-modules/apps-segway-rental-store-redux';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons/faCircleNotch';
-import { MuiFaIcon } from '@js-modules/web-react-components';
+import { MuiFaIcon } from '@js-modules/web-react-utils';
 import { faSignInAlt } from '@fortawesome/free-solid-svg-icons/faSignInAlt';
 import MainLogoBox from './MainLogoBox';
 import MainNavMenu from './MainNavMenu';

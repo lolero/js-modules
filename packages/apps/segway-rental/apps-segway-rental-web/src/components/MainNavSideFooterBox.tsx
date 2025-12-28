@@ -1,6 +1,6 @@
 import React from 'react';
 import Box from '@mui/material/Box';
-import { MuiFaIcon } from '@js-modules/web-react-components';
+import { MuiFaIcon } from '@js-modules/web-react-utils';
 import Tooltip from '@mui/material/Tooltip';
 import MuiLink from '@mui/material/Link';
 import { faDiscord } from '@fortawesome/free-brands-svg-icons/faDiscord';

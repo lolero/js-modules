@@ -2,7 +2,7 @@ import React, { useCallback, useContext, useRef } from 'react';
 import Box, { BoxProps } from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import { faAngleUp } from '@fortawesome/free-solid-svg-icons/faAngleUp';
-import { MuiFaIcon } from '@js-modules/web-react-components';
+import { MuiFaIcon } from '@js-modules/web-react-utils';
 import {
   WorkspaceContext,
   ScrollDirection,

@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from 'react';
-import { useSplitRouterPath } from '@js-modules/web-react-hooks';
+import { useSplitRouterPath } from '@js-modules/web-react-utils';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import intersection from 'lodash/intersection';
 import isEmpty from 'lodash/isEmpty';

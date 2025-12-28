@@ -15,7 +15,7 @@
     "@js-modules/apps-segway-rental-utils": "workspace:^",
     "@js-modules/common-redux-utils-normalized-reducers": "workspace:^",
     "@js-modules/common-utils-general": "workspace:^",
-    "@js-modules/web-react-components": "workspace:^",
+    "@js-modules/web-react-utils": "workspace:^",
     "@types/lodash": "^4.17.20",
     "@types/uuid": "^10.0.0",
     "axios": "^1.11.0",

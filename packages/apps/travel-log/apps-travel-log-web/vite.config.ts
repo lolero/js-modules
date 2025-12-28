@@ -1,6 +1,7 @@
 import { defineConfig, PluginOption } from 'vite';
 import pluginReact from '@vitejs/plugin-react';
 import tsconfigPathsPlugin from 'vite-tsconfig-paths';
+import svgr from 'vite-plugin-svgr';
 
 const plugins: (PluginOption | PluginOption[])[] = [
   pluginReact({
@@ -13,6 +14,12 @@ const plugins: (PluginOption | PluginOption[])[] = [
       //   ['@babel/plugin-proposal-class-properties', { loose: true }],
       // ],
     },
+  }),
+  svgr({
+    svgrOptions: {
+      exportType: 'named',
+    },
+    include: '**/*.svg',
   }),
 ];
 
