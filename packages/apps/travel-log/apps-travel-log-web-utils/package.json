@@ -1,7 +1,7 @@
 {
   "private": true,
-  "name": "@js-modules/apps-travel-log-web-components",
-  "description": "Apps Travel Log Web Components",
+  "name": "@js-modules/apps-travel-log-web-utils",
+  "description": "Apps Travel Log Web Utils",
   "version": "0.0.0",
   "license": "MIT",
   "main": "build/index",

@@ -46,17 +46,17 @@ id user-travel-log-app
 
 ### Directory Structure
 ```
-/opt/travel-log/                          # Main application directory
+/opt/travel-log-app/                          # Main application directory
 ├── docker-compose.prod.yml        # Docker compose file
 ├── docker-compose.prod.sh         # Startup script
 ├── create-secrets.sh              # Secrets creation script
 ├── .secrets/                      # Secrets directory (restricted access)
 └── backups/                       # Database backups
 
-/var/log/travel-log/                      # Application logs
+/var/log/travel-log-app/                      # Application logs
 ```
 
-#### Why `/opt/travel-log/`?
+#### Why `/opt/travel-log-app/`?
 - `/opt/` is the standard location for third-party applications
 - Separate from system files
 - Easy to backup and manage
@@ -139,7 +139,7 @@ exit
 
 ### Run docker-compose up
 ```bash
-cd /opt/travel-log
+cd /opt/travel-log-app
 ./docker-compose.prod.sh up -d
 ```
 
@@ -157,7 +157,7 @@ cd /opt/travel-log-app
 
 ### Restart the api-core service
 ```bash
-cd /opt/travel-log
+cd /opt/travel-log-app
 ./docker-compose.prod.sh up -d --force-recreate --no-deps api-core
 ```
 
@@ -168,7 +168,7 @@ docker exec -it travel-log-app-api-core-1 /bin/sh -c './typeorm-migration-run.sh
 
 ### Restart the api-core service again
 ```bash
-cd /opt/travel-log
+cd /opt/travel-log-app
 ./docker-compose.prod.sh up -d --force-recreate --no-deps api-core
 ```
 
@@ -178,7 +178,7 @@ cd /opt/travel-log
 docker ps
 
 # Check logs
-cd /opt/travel-log
+cd /opt/travel-log-app
 ./docker-compose.prod.sh logs -f
 
 # Check specific service
@@ -197,13 +197,16 @@ cd ./packages/apps/travel-log/apps-travel-log-config-docker/
 
 ### Deploy Updates
 ```bash
-cd /opt/travel-log
+cd /opt/travel-log-app
 
 # Pull/load new images
-./docker-compose.prod.sh logs pull
+./docker-compose.prod.sh pull
 
 # Recreate containers with new images
 ./docker-compose.prod.sh up -d --force-recreate
+
+# Wait a minute and restart the api-core service again after the auth-service is restarted
+./docker-compose.prod.sh up -d --force-recreate --no-deps api-core
 
 # Remove old images
 docker image prune -a

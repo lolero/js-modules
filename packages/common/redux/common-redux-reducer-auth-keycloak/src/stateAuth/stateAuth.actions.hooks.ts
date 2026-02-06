@@ -31,7 +31,7 @@ export function getStateAuthActionHooks(
   useStateAuthReducerMetadata: () => StateAuthReducerMetadata,
 ) {
   function useStateAuthInitializeKeycloak(
-    keycloakConfig: StateAuthInitializeRequestAction['requestMetadata']['keycloakConfig'],
+    keycloakServerConfig: StateAuthInitializeRequestAction['requestMetadata']['keycloakServerConfig'],
     keycloakInitOptions: StateAuthInitializeRequestAction['requestMetadata']['keycloakInitOptions'],
     onSigninCallback?: StateAuthInitializeRequestAction['requestMetadata']['onSigninCallback'],
     onSignoutCallback?: StateAuthInitializeRequestAction['requestMetadata']['onSignoutCallback'],
@@ -52,7 +52,7 @@ export function getStateAuthActionHooks(
       }
 
       const action = createStateAuthInitializeRequestAction(
-        keycloakConfig,
+        keycloakServerConfig,
         keycloakInitOptions,
         onSigninCallback,
         onSignoutCallback,
@@ -60,7 +60,7 @@ export function getStateAuthActionHooks(
       dispatch(action);
     }, [
       dispatch,
-      keycloakConfig,
+      keycloakServerConfig,
       keycloakInitOptions,
       onSigninCallback,
       onSignoutCallback,

@@ -1,8 +1,8 @@
 import Keycloak, {
-  KeycloakConfig,
   KeycloakInitOptions,
   KeycloakLoginOptions,
   KeycloakLogoutOptions,
+  KeycloakServerConfig,
 } from 'keycloak-js';
 import { EventChannel, eventChannel } from 'redux-saga';
 import { AuthAdapter, AuthInitResult, KeycloakTokens } from './stateAuth.types';
@@ -16,7 +16,7 @@ export class StateAuthAdapter implements AuthAdapter {
 
   private isTokenValidChannel: EventChannel<boolean>;
 
-  constructor(config: KeycloakConfig) {
+  constructor(config: KeycloakServerConfig) {
     this.keycloak = new Keycloak(config);
     this.isTokenValidChannel = this.createIsTokenValidChannel();
   }

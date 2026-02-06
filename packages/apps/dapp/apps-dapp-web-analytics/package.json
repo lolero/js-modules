@@ -16,7 +16,7 @@
     "@fortawesome/free-regular-svg-icons": "^7.1.0",
     "@fortawesome/free-solid-svg-icons": "^7.1.0",
     "@js-modules/apps-dapp-common-constants": "workspace:^",
-    "@js-modules/apps-dapp-web-components": "workspace:^",
+    "@js-modules/apps-dapp-web-utils": "workspace:^",
     "@js-modules/web-react-nav": "workspace:^",
     "@mui/material": "^7.3.6",
     "@types/lodash": "^4.17.21",

@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { Icon, Text } from 'react-native-paper';
 import { useStateSettingsReducerMetadata } from '@js-modules/apps-travel-log-common-store-redux';
-import { getFaIconGenerator } from '@js-modules/native-react-utils';
+import { getFaIcon } from '@js-modules/native-react-utils';
 import { routesMetadataPrivate } from '@js-modules/apps-travel-log-common-react';
 import { WebModulesPrivate } from '@js-modules/apps-travel-log-common-constants';
 
@@ -18,7 +18,7 @@ export const MyFeedsScreenView: React.FC = () => {
       }}
     >
       <Icon
-        source={getFaIconGenerator(
+        source={getFaIcon(
           routesMetadataPrivate[WebModulesPrivate.myFeeds].icon,
         )}
         size={40}

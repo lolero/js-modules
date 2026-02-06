@@ -62,6 +62,7 @@ export function getNavLeftDrawerTabs(
 
     if (routeMetadata.isHidden) {
       if (
+        modulesUpToDepthLevelPrevious.length > 0 &&
         isEqual(
           modulesUpToDepthLevelPrevious,
           routeMetadataModulesUpToDepthLevelPrevious,

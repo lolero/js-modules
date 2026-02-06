@@ -4,7 +4,7 @@ import {
   WebModules,
   WebSubModulesAnalytics,
 } from '@js-modules/apps-dapp-common-constants';
-import { routesMetadataDapp } from '@js-modules/apps-dapp-web-components';
+import { routesMetadataDapp } from '@js-modules/apps-dapp-web-utils';
 import { WebAnalyticsTokensWorkspaceBox } from './WebAnalyticsTokensWorkspaceBox';
 
 export const WebAnalyticsTokensRoutes: React.FunctionComponent = () => {

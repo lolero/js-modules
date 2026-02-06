@@ -5,7 +5,7 @@ import {
   revoke,
 } from 'react-native-app-auth';
 import { EventChannel, eventChannel } from 'redux-saga';
-import { KeycloakConfig } from 'keycloak-js';
+import { KeycloakServerConfig } from 'keycloak-js';
 import { AuthAdapter, AuthInitResult, KeycloakTokens } from './stateAuth.types';
 import {
   createKeycloakTokens,
@@ -35,7 +35,7 @@ export class StateAuthAdapter implements AuthAdapter {
 
   private tokenRefreshPromise: Promise<KeycloakTokens | null> | null = null;
 
-  constructor(config: KeycloakConfig) {
+  constructor(config: KeycloakServerConfig) {
     this.authConfiguration = createAuthConfiguration(config);
     this.isTokenValidChannel = this.createIsTokenValidChannel();
   }

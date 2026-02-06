@@ -1,5 +1,5 @@
 import React from 'react';
-import { DappWorkspaceBox } from '@js-modules/apps-dapp-web-components';
+import { DappWorkspaceBox } from '@js-modules/apps-dapp-web-utils';
 import { WebSubModulesPortfolio } from '@js-modules/apps-dapp-common-constants';
 import { WebTransactionsWorkspaceContentBox } from './WebTransactionsWorkspaceContentBox';
 import { WebTransactionsWorkspaceTopToolbar } from './WebTransactionsWorkspaceTopToolbar';

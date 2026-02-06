@@ -19,24 +19,24 @@ import {
 } from './stateSettings.actions.types';
 
 export function createStateSettingsUpdatePartialReducerMetadataRequestAction(
-  partialStateSettingsReducerMetadata: StateSettingsUpdatePartialReducerMetadataRequestAction['requestMetadata']['partialReducerMetadata'],
+  partialReducerMetadata: StateSettingsUpdatePartialReducerMetadataRequestAction['requestMetadata']['partialReducerMetadata'],
 ): StateSettingsUpdatePartialReducerMetadataRequestAction {
   return {
     type: StateSettingsActionTypes.STATE_SETTINGS__UPDATE_PARTIAL_REDUCER_METADATA__REQUEST,
     requestMetadata: {
-      partialReducerMetadata: partialStateSettingsReducerMetadata,
+      partialReducerMetadata,
     },
     requestId: uuidv4(),
   };
 }
 
 export function createStateSettingsUpdatePartialReducerMetadataSuccessAction(
-  partialStateSettingsReducerMetadata: StateSettingsUpdatePartialReducerMetadataSuccessAction['partialReducerMetadata'],
+  partialReducerMetadata: StateSettingsUpdatePartialReducerMetadataSuccessAction['partialReducerMetadata'],
   requestId: StateSettingsUpdatePartialReducerMetadataSuccessAction['requestId'],
 ): StateSettingsUpdatePartialReducerMetadataSuccessAction {
   return {
     type: StateSettingsActionTypes.STATE_SETTINGS__UPDATE_PARTIAL_REDUCER_METADATA__SUCCESS,
-    partialReducerMetadata: partialStateSettingsReducerMetadata,
+    partialReducerMetadata,
     requestId,
   };
 }

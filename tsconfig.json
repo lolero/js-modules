@@ -25,9 +25,6 @@
       "@js-modules/apps-dapp-web-analytics": [
         "apps/dapp/apps-dapp-web-analytics/src"
       ],
-      "@js-modules/apps-dapp-web-components": [
-        "apps/dapp/apps-dapp-web-components/src"
-      ],
       "@js-modules/apps-dapp-web-portfolio": [
         "apps/dapp/apps-dapp-web-portfolio/src"
       ],
@@ -37,17 +34,18 @@
       "@js-modules/apps-dapp-web-transactions": [
         "apps/dapp/apps-dapp-web-transactions/src"
       ],
+      "@js-modules/apps-dapp-web-utils": ["apps/dapp/apps-dapp-web-utils/src"],
       "@js-modules/apps-travel-log-api-modules-core": [
         "apps/travel-log/apps-travel-log-api-modules-core/src"
-      ],
-      "@js-modules/apps-travel-log-common-react": [
-        "apps/travel-log/apps-travel-log-common-react/src"
       ],
       "@js-modules/apps-travel-log-common-constants": [
         "apps/travel-log/apps-travel-log-common-constants/src"
       ],
       "@js-modules/apps-travel-log-common-constants-cjs": [
         "apps/travel-log/apps-travel-log-common-constants-cjs/src"
+      ],
+      "@js-modules/apps-travel-log-common-react": [
+        "apps/travel-log/apps-travel-log-common-react/src"
       ],
       "@js-modules/apps-travel-log-common-store-redux": [
         "apps/travel-log/apps-travel-log-common-store-redux/src"
@@ -57,9 +55,6 @@
       ],
       "@js-modules/apps-travel-log-native-start": [
         "apps/travel-log/apps-travel-log-native-start/src"
-      ],
-      "@js-modules/apps-travel-log-web-components": [
-        "apps/travel-log/apps-travel-log-web-components/src"
       ],
       "@js-modules/apps-travel-log-web-icons": [
         "apps/travel-log/apps-travel-log-web-icons/src"
@@ -78,6 +73,9 @@
       ],
       "@js-modules/apps-travel-log-web-site": [
         "apps/travel-log/apps-travel-log-web-site/src"
+      ],
+      "@js-modules/apps-travel-log-web-utils": [
+        "apps/travel-log/apps-travel-log-web-utils/src"
       ],
       "@js-modules/common-react-nav": ["common/react/common-react-nav/src"],
       "@js-modules/common-react-utils": ["common/react/common-react-utils/src"],

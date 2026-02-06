@@ -14,7 +14,7 @@ import {
   WebModulesPublic,
 } from '@js-modules/apps-travel-log-common-constants';
 import { faRightToBracket } from '@fortawesome/free-solid-svg-icons/faRightToBracket';
-import { getFaIconGenerator } from '@js-modules/native-react-utils';
+import { getFaIcon } from '@js-modules/native-react-utils';
 import { IconSource } from 'react-native-paper/lib/typescript/components/Icon';
 
 export const StartScreenView: React.FC = () => {
@@ -33,13 +33,11 @@ export const StartScreenView: React.FC = () => {
       }}
     >
       <Icon
-        source={getFaIconGenerator(
-          routesMetadataPublic[WebModulesPublic.home].icon,
-        )}
+        source={getFaIcon(routesMetadataPublic[WebModulesPublic.home].icon)}
         size={40}
       />
       <Icon
-        source={getFaIconGenerator(
+        source={getFaIcon(
           routesMetadataPrivate[WebModulesPrivate.myBoards].icon,
         )}
         size={40}
@@ -50,7 +48,7 @@ export const StartScreenView: React.FC = () => {
         onPress={stateAuthLoginCallback}
         loading={stateAuthLoginRequest?.isPending}
         disabled={stateAuthLoginRequest?.isPending}
-        icon={getFaIconGenerator(faRightToBracket) as IconSource}
+        icon={getFaIcon(faRightToBracket) as IconSource}
       >
         Sign In
       </Button>

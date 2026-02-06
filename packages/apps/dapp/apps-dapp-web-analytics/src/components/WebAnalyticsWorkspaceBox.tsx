@@ -1,5 +1,5 @@
 import React from 'react';
-import { DappWorkspaceBox } from '@js-modules/apps-dapp-web-components';
+import { DappWorkspaceBox } from '@js-modules/apps-dapp-web-utils';
 import { WebModules } from '@js-modules/apps-dapp-common-constants';
 import { WebAnalyticsWorkspaceContentBox } from './WebAnalyticsWorkspaceContentBox';
 import { WebAnalyticsWorkspaceTopToolbar } from './WebAnalyticsWorkspaceTopToolbar';

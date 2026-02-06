@@ -4,7 +4,7 @@ import {
 } from '@js-modules/common-redux-utils-normalized-reducers';
 import { StateSettingsReducer } from './stateSettings.types';
 import { ReduxState } from '../../reducers.types';
-import { stateSettingsReducerPath } from './stateSettings.reducerPath';
+import { stateSettingsReducerPath } from './stateSettings.reducer.path';
 
 export const stateSettingsSelectors = createReducerSelectors<
   StateSettingsReducer['metadata'],

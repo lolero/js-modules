@@ -25,6 +25,7 @@
     "@js-modules/web-react-utils": "workspace:^",
     "@js-modules/web-styles-material-ui": "workspace:^",
     "@mui/material": "^7.3.6",
+    "@mui/x-charts": "^8.23.0",
     "@mui/x-date-pickers": "^8.23.0",
     "@mui/x-date-pickers-pro": "^8.23.0",
     "@testing-library/jest-dom": "^6.9.1",

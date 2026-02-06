@@ -6,10 +6,10 @@ import {
   UpdatePartialReducerMetadataRequestMetadata,
 } from '@js-modules/common-redux-utils-normalized-reducers';
 import {
-  KeycloakConfig,
   KeycloakInitOptions,
   KeycloakLoginOptions,
   KeycloakLogoutOptions,
+  KeycloakServerConfig,
 } from 'keycloak-js';
 import { SigninAction, StateAuthReducer } from './stateAuth.types';
 
@@ -31,7 +31,7 @@ export enum StateAuthActionTypes {
 export type StateAuthInitializeRequestAction = RequestAction<
   StateAuthActionTypes.STATE_AUTH__INITIALIZE__REQUEST,
   {
-    keycloakConfig: KeycloakConfig;
+    keycloakServerConfig: KeycloakServerConfig;
     keycloakInitOptions: KeycloakInitOptions;
     onSigninCallback?: () => void;
     onSignoutCallback?: () => void;

@@ -12,18 +12,19 @@ FROM quay.io/keycloak/keycloak:26.3.5-0
 
 # Build argument for user UID
 ARG USER_UID
+ARG DOMAIN_PROD
 
 # Copy files
 COPY --from=image-build /app/packages/apps/travel-log/apps-travel-log-config-docker/service-images/auth-service/backup/realm-backup.prod.json /opt/keycloak/data/import/realm-backup.json
 COPY --from=image-build /app/packages/apps/travel-log/apps-travel-log-config-docker/service-images/auth-service/providers /opt/keycloak/providers
 
 # Substitute $DOMAIN_PROD in keycloak's realm backup
+USER root
 RUN sed -i "s/\$DOMAIN_PROD/${DOMAIN_PROD}/g" /opt/keycloak/data/import/realm-backup.json
 
 # Build Keycloak
 RUN /opt/keycloak/bin/kc.sh build --db=postgres --http-relative-path=/auth
 
 # Set permissions for uid specified in docker-compose
-USER root
 RUN chown -R ${USER_UID}:${USER_UID} /opt/keycloak && \
     chmod -R g+w /opt/keycloak

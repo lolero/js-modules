@@ -16,11 +16,20 @@ import {
   WebModulesPrivate,
 } from '@js-modules/apps-travel-log-common-constants';
 import {
+  StateAuthSigninRequestAction,
   useStateAuthLogin,
   useStateAuthSignup,
   useStateSettingsGetProfile,
 } from '@js-modules/apps-travel-log-common-store-redux';
 import { routesMetadataPrivate } from '@js-modules/apps-travel-log-common-react';
+
+const redirectUri = `${WEB_CLIENT__URI__TRAVEL_LOG}${
+  routesMetadataPrivate[WebModulesPrivate.myFeeds].path
+}`;
+const keycloakLoginOptions: StateAuthSigninRequestAction['requestMetadata']['keycloakLoginOptions'] =
+  {
+    redirectUri,
+  };
 
 export const PublicNavToolbarActionsBox: React.FC = () => {
   const { isMobile } = useNavDisplayMetadata();
@@ -33,21 +42,10 @@ export const PublicNavToolbarActionsBox: React.FC = () => {
   const {
     reducerMetadata: { isAuthenticated },
     callback: stateAuthSignupCallback,
-  } = useStateAuthSignup(
-    {
-      redirectUri: `${WEB_CLIENT__URI__TRAVEL_LOG}${
-        routesMetadataPrivate[WebModulesPrivate.myFeeds].path
-      }`,
-    },
-    stateSettingsGetProfileCallback,
-  );
+  } = useStateAuthSignup(keycloakLoginOptions, stateSettingsGetProfileCallback);
 
   const { callback: stateAuthLoginCallback } = useStateAuthLogin(
-    {
-      redirectUri: `${WEB_CLIENT__URI__TRAVEL_LOG}${
-        routesMetadataPrivate[WebModulesPrivate.myFeeds].path
-      }`,
-    },
+    keycloakLoginOptions,
     stateSettingsGetProfileCallback,
   );
 

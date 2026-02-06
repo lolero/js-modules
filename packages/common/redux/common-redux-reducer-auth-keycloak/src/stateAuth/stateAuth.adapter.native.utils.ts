@@ -9,7 +9,7 @@ import {
   resetGenericPassword,
   setGenericPassword,
 } from 'react-native-keychain';
-import { KeycloakConfig, KeycloakTokenParsed } from 'keycloak-js';
+import { KeycloakServerConfig, KeycloakTokenParsed } from 'keycloak-js';
 import { KeycloakTokens } from './stateAuth.types';
 
 export const KEYCHAIN_SERVICE = 'com.travellog.auth';
@@ -61,7 +61,7 @@ export function createAuthConfiguration({
   url,
   realm,
   clientId,
-}: KeycloakConfig): AuthConfiguration {
+}: KeycloakServerConfig): AuthConfiguration {
   const authConfiguration: AuthConfiguration = {
     issuer: `${url}/realms/${realm}`,
     clientId,

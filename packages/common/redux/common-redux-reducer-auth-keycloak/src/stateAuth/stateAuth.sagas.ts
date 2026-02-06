@@ -85,13 +85,13 @@ export function* stateAuthInitializeSaga({
   AuthInitResult
 > {
   const {
-    keycloakConfig,
+    keycloakServerConfig,
     keycloakInitOptions,
     onSigninCallback,
     onSignoutCallback,
   } = requestMetadata;
 
-  authAdapter = new StateAuthAdapter(keycloakConfig);
+  authAdapter = new StateAuthAdapter(keycloakServerConfig);
 
   try {
     yield fork(stateAuthMonitorSaga, onSignoutCallback);

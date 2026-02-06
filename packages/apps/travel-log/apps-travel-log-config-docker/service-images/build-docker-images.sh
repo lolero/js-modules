@@ -602,7 +602,7 @@ build_all_services() {
 
 main() {
     clear
-    log_section "travel-log Docker Image Builder"
+    log_section "Travel Log Docker Image Builder"
     echo ""
 
     # Step 1: Check mode (dev or production)

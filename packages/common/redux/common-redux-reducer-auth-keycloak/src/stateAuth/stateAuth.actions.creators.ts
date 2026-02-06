@@ -18,7 +18,7 @@ import {
 export const STATE_AUTH__INITIALIZE__REQUEST_ID =
   'STATE_AUTH__INITIALIZE__REQUEST_ID';
 export function createStateAuthInitializeRequestAction(
-  keycloakConfig: StateAuthInitializeRequestAction['requestMetadata']['keycloakConfig'],
+  keycloakServerConfig: StateAuthInitializeRequestAction['requestMetadata']['keycloakServerConfig'],
   keycloakInitOptions: StateAuthInitializeRequestAction['requestMetadata']['keycloakInitOptions'],
   onSigninCallback?: StateAuthInitializeRequestAction['requestMetadata']['onSigninCallback'],
   onSignoutCallback?: StateAuthInitializeRequestAction['requestMetadata']['onSignoutCallback'],
@@ -26,7 +26,7 @@ export function createStateAuthInitializeRequestAction(
   return {
     type: StateAuthActionTypes.STATE_AUTH__INITIALIZE__REQUEST,
     requestMetadata: {
-      keycloakConfig,
+      keycloakServerConfig,
       keycloakInitOptions,
       onSigninCallback,
       onSignoutCallback,
@@ -36,12 +36,12 @@ export function createStateAuthInitializeRequestAction(
 }
 
 export function createStateAuthInitializeSuccessAction(
-  partialStateAuthReducerMetadata: StateAuthUpdatePartialReducerMetadataSuccessAction['partialReducerMetadata'],
+  partialReducerMetadata: StateAuthUpdatePartialReducerMetadataSuccessAction['partialReducerMetadata'],
   requestId: string,
 ): StateAuthInitializeSuccessAction {
   return {
     type: StateAuthActionTypes.STATE_AUTH__INITIALIZE__SUCCESS,
-    partialReducerMetadata: partialStateAuthReducerMetadata,
+    partialReducerMetadata,
     requestId,
   };
 }
@@ -131,24 +131,24 @@ export function createStateAuthSignoutFailAction(
 }
 
 export function createStateAuthUpdatePartialReducerMetadataRequestAction(
-  partialStateAuthReducerMetadata: StateAuthUpdatePartialReducerMetadataRequestAction['requestMetadata'],
+  partialReducerMetadata: StateAuthUpdatePartialReducerMetadataRequestAction['requestMetadata']['partialReducerMetadata'],
 ): StateAuthUpdatePartialReducerMetadataRequestAction {
   return {
     type: StateAuthActionTypes.STATE_AUTH__UPDATE_PARTIAL_REDUCER_METADATA__REQUEST,
     requestMetadata: {
-      partialReducerMetadata: partialStateAuthReducerMetadata,
+      partialReducerMetadata,
     },
     requestId: uuidv4(),
   };
 }
 
 export function createStateAuthUpdatePartialReducerMetadataSuccessAction(
-  partialStateAuthReducerMetadata: StateAuthUpdatePartialReducerMetadataSuccessAction['partialReducerMetadata'],
+  partialReducerMetadata: StateAuthUpdatePartialReducerMetadataSuccessAction['partialReducerMetadata'],
   requestId?: string,
 ): StateAuthUpdatePartialReducerMetadataSuccessAction {
   return {
     type: StateAuthActionTypes.STATE_AUTH__UPDATE_PARTIAL_REDUCER_METADATA__SUCCESS,
-    partialReducerMetadata: partialStateAuthReducerMetadata,
+    partialReducerMetadata,
     requestId,
   };
 }

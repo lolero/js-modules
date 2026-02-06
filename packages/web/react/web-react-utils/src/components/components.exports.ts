@@ -4,6 +4,7 @@ export * from './CallingCodesAutocomplete';
 export * from './ConfirmDialog';
 export * from './CountriesAutocomplete';
 export * from './FindManyRangesMenu';
+export * from './MuiChartLegendWithTitle';
 export * from './MuiFaIcon';
 export * from './OtpBox';
 export * from './PaymentCardBox';

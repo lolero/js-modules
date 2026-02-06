@@ -2170,7 +2170,7 @@
     "host": "mailhog",
     "replyTo": "",
     "from": "from-realm-travel-log@mail.com",
-    "fromDisplayName": "travel-log Authentication Service",
+    "fromDisplayName": "Travel Log Authentication Service",
     "envelopeFrom": "",
     "ssl": "false",
     "authType": "basic"

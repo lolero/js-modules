@@ -4,7 +4,7 @@ import { useNodeChainsGetMany } from '@js-modules/apps-dapp-common-store-redux';
 import { WebModules } from '@js-modules/apps-dapp-common-constants';
 import { WebPortfolioRoutes } from '@js-modules/apps-dapp-web-portfolio';
 import { WebAnalyticsRoutes } from '@js-modules/apps-dapp-web-analytics';
-import { routesMetadataDapp } from '@js-modules/apps-dapp-web-components';
+import { routesMetadataDapp } from '@js-modules/apps-dapp-web-utils';
 
 export const DappRoutes: React.FunctionComponent = () => {
   const {

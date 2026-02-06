@@ -10,6 +10,8 @@ import {
 import { NavDrawerDisplayStatus, NavContext } from '../contexts/NavContext';
 import { useNavDisplayMetadata } from '../hooks/useNavDisplayMetadata';
 
+export const CSS_CLASSNAME__WORKSPACE_CONTENT_BOX = 'workspace-content-box';
+
 export type WorkspaceContentBoxProps = {
   setIsWorkspaceScroll: (isWorkspaceScroll: boolean) => void;
   setWorkspaceScrollTop: (scrollTop: number) => void;
@@ -100,6 +102,7 @@ export const WorkspaceContentBox: React.FunctionComponent<
         backgroundColor: 'background.default',
         color: 'text.primary',
       }}
+      className={CSS_CLASSNAME__WORKSPACE_CONTENT_BOX}
     >
       <Box
         sx={{

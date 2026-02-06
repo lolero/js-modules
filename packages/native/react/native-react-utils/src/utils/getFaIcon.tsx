@@ -4,7 +4,7 @@ import { IconDefinition } from '@fortawesome/fontawesome-common-types';
 import { IconProps } from 'react-native-paper/lib/typescript/components/MaterialCommunityIcon';
 import { iconStylesByPrefix } from '../constants/iconTypesByPrefix';
 
-export const getFaIconGenerator = (icon: IconDefinition) => {
+export const getFaIcon = (icon: IconDefinition) => {
   return ({ color, size }: IconProps & { color: string }) => {
     return (
       <FontAwesome6Icon

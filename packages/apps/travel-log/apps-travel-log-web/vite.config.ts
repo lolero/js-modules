@@ -43,9 +43,6 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['react-native'],
   },
-  resolve: {
-    dedupe: ['react', 'react-dom'],
-  },
   server: {
     host: true,
     allowedHosts: ['client-web'],

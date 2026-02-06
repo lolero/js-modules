@@ -16,6 +16,8 @@ import {
 import { useNavDisplayMetadata } from '../hooks/useNavDisplayMetadata';
 import { NavLeftDrawerDisplayButton } from './NavLeftDrawerDisplayButton';
 
+export const CSS_CLASSNAME__NAV_APPBAR_LOGO_BOX = 'nav-appbar-logo-box';
+
 type NavTopAppbarProps = {
   shortLogo: React.ReactNode;
   longLogo: React.ReactNode;
@@ -103,16 +105,18 @@ export const NavTopAppbar = forwardRef<HTMLDivElement, NavTopAppbarProps>(
             sx={{
               color: 'primary.main',
               width: logoBoxWidth,
-              height: (t) => `calc(${navTopToolbarHeight}px - ${t.spacing(1)})`,
-              pr: (t) => t.spacing(1),
+              display: 'flex',
+              alignItems: 'center',
+              height: `${navTopToolbarHeight}px`,
+              pr: (t) => t.spacing(1.5),
               textDecoration: 'none !important',
               ...(isNavLeftDrawerCollapsed
                 ? {
-                    display: 'flex',
                     justifyContent: 'center',
                   }
                 : {}),
             }}
+            className={CSS_CLASSNAME__NAV_APPBAR_LOGO_BOX}
             component={Link}
             to={homePath}
           >

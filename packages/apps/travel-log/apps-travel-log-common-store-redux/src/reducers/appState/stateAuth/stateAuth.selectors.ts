@@ -3,7 +3,7 @@ import {
   Entity,
 } from '@js-modules/common-redux-utils-normalized-reducers';
 import { StateAuthReducer } from '@js-modules/common-redux-reducer-auth-keycloak';
-import { stateAuthReducerPath } from './stateAuth.reducerPath';
+import { stateAuthReducerPath } from './stateAuth.reducer.path';
 
 type ReduxState = {
   appState: {

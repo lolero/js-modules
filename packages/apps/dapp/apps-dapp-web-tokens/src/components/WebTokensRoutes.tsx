@@ -4,7 +4,7 @@ import {
   WebModules,
   WebSubModulesPortfolio,
 } from '@js-modules/apps-dapp-common-constants';
-import { routesMetadataDapp } from '@js-modules/apps-dapp-web-components';
+import { routesMetadataDapp } from '@js-modules/apps-dapp-web-utils';
 import { WebTokensWorkspaceBox } from './WebTokensWorkspaceBox';
 
 export const WebTokensRoutes: React.FunctionComponent = () => {

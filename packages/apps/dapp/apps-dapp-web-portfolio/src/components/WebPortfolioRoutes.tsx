@@ -6,7 +6,7 @@ import {
 } from '@js-modules/apps-dapp-common-constants';
 import { WebTokensRoutes } from '@js-modules/apps-dapp-web-tokens';
 import { WebTransactionsRoutes } from '@js-modules/apps-dapp-web-transactions';
-import { routesMetadataDapp } from '@js-modules/apps-dapp-web-components';
+import { routesMetadataDapp } from '@js-modules/apps-dapp-web-utils';
 import { WebPortfolioWorkspaceBox } from './WebPortfolioWorkspaceBox';
 
 export const WebPortfolioRoutes: React.FunctionComponent = () => {

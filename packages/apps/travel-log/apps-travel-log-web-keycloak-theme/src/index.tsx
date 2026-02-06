@@ -2,7 +2,7 @@ import { createRoot } from 'react-dom/client';
 import React, { StrictMode } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { materialUiThemes } from '@js-modules/apps-travel-log-web-components';
+import { materialUiThemes } from '@js-modules/apps-travel-log-web-utils';
 import { ThemePalette } from '@js-modules/apps-travel-log-common-constants/src/constants/theme.constants';
 import { KcPage } from './kc.gen';
 

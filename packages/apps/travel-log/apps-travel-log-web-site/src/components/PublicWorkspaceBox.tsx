@@ -5,7 +5,7 @@ import {
   TravelLogLogoShortBox,
   TravelLogNavDrawerFooterBox,
   TravelLogNavToolbar,
-} from '@js-modules/apps-travel-log-web-components';
+} from '@js-modules/apps-travel-log-web-utils';
 import { PublicWorkspaceNavDrawerContentBox } from './PublicWorkspaceNavDrawerContentBox';
 import { PublicNavToolbarActionsBox } from './PublicNavToolbarActionsBox';
 

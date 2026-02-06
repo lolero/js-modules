@@ -1,7 +1,7 @@
 {
   "private": true,
-  "name": "@js-modules/apps-dapp-web-components",
-  "description": "Apps Dapp Web Components",
+  "name": "@js-modules/apps-dapp-web-utils",
+  "description": "Apps Dapp Web Utils",
   "version": "0.0.0",
   "license": "MIT",
   "main": "build/index",

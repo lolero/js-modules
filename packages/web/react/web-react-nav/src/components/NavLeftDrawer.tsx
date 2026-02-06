@@ -7,6 +7,8 @@ import { WorkspaceContext } from '../contexts/WorkspaceContext';
 import { useNavDisplayMetadata } from '../hooks/useNavDisplayMetadata';
 import { NavContext, NavDrawerDisplayStatus } from '../contexts/NavContext';
 
+export const CSS_CLASSNAME__NAV_LEFT_DRAWER = 'nav-left-drawer';
+
 type NavLeftDrawerProps = {
   navLeftDrawerContent?: React.ReactNode;
   navLeftDrawerFooter?: React.ReactNode;
@@ -60,6 +62,7 @@ export const NavLeftDrawer = forwardRef<HTMLDivElement, NavLeftDrawerProps>(
     return (
       <Drawer
         ref={ref}
+        className={CSS_CLASSNAME__NAV_LEFT_DRAWER}
         sx={{
           width: navDrawerWidth,
         }}

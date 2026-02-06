@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from 'react';
-import { KeycloakConfig, KeycloakInitOptions } from 'keycloak-js';
+import { KeycloakServerConfig, KeycloakInitOptions } from 'keycloak-js';
 import {
   ClientType,
   useStateAuthInitializeKeycloak,
@@ -16,7 +16,7 @@ import {
   routesMetadataPublic,
 } from '../routesMetadata/routesMetadata.exports';
 
-const keycloakConfig: Omit<KeycloakConfig, 'clientId'> = {
+const keycloakServerConfig: Omit<KeycloakServerConfig, 'clientId'> = {
   url: AUTH__URI__TRAVEL_LOG,
   realm: 'travel-log',
 };
@@ -41,9 +41,9 @@ export function useInitializeKeycloak(clientType: ClientType): {
     callback: stateAuthInitializeKeycloakCallback,
   } = useStateAuthInitializeKeycloak(
     {
-      ...keycloakConfig,
+      ...keycloakServerConfig,
       clientId: `client-${clientType}`,
-    },
+    } as KeycloakServerConfig,
     clientType === ClientType.web ? keycloakInitOptions : {},
     stateSettingsGetProfileCallback,
     stateSettingsSignoutCallback,
