@@ -65,7 +65,20 @@ typings/
 
 #region GitHub global JetBrains template VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
 # https://github.com/github/gitignore/blob/master/Global/JetBrains.gitignore
-.idea
+# Ignore .idea contents but unignore safe-to-share directories
+.idea/*
+
+!.idea/codeStyles/
+!.idea/dictionaries/
+!.idea/inspectionProfiles/
+!.idea/jsLinters/
+!.idea/runConfigurations/
+!.idea/scopes/
+!.idea/misc.xml
+!.idea/nx-angular-config.xml
+!.idea/prettier.xml
+!.idea/vcs.xml
+
 *.iml
 *.ipr
 
