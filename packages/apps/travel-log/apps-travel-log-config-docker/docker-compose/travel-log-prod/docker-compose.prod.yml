@@ -1,4 +1,4 @@
-version: '3.3'
+version: '3.8'
 
 volumes:
   volume_data_auth:
@@ -32,14 +32,6 @@ secrets:
     file: ./.secrets/db_core_username
   db_core_password:
     file: ./.secrets/db_core_password
-  db_erp_host:
-    file: ./.secrets/db_erp_host
-  db_erp_port:
-    file: ./.secrets/db_erp_port
-  db_erp_username:
-    file: ./.secrets/db_erp_username
-  db_erp_password:
-    file: ./.secrets/db_erp_password
   keycloak_secret_admin_cli:
     file: ./.secrets/keycloak_secret_admin_cli
   keycloak_secret_client_api_core:
@@ -55,9 +47,12 @@ services:
       - '80:80'
       - '443:443'
     depends_on:
-      - auth-service
-      - api-core
-      - client-web
+      auth-service:
+        condition: service_healthy
+      api-core:
+        condition: service_healthy
+      client-web:
+        condition: service_healthy
     networks:
       - network_router
     volumes:
@@ -80,6 +75,12 @@ services:
       POSTGRES_USER_FILE: /run/secrets/db_auth_username
       POSTGRES_PASSWORD_FILE: /run/secrets/db_auth_password
       POSTGRES_DB: auth
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U $$(cat /run/secrets/db_auth_username) -d auth']
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
     networks:
       - network_auth
     volumes:
@@ -107,7 +108,7 @@ services:
         export KC_DB_PASSWORD=$$(cat /run/secrets/db_auth_password)
         export KEYCLOAK_ADMIN=$$(cat /run/secrets/keycloak_admin_username)
         export KEYCLOAK_ADMIN_PASSWORD=$$(cat /run/secrets/keycloak_admin_password)
-        /opt/keycloak/bin/kc.sh start --optimized --import-realm
+        /opt/keycloak/bin/kc.sh start --optimized --import-realm --health-enabled=true
     environment:
       KC_DB: postgres
       KC_DB_URL_HOST: db-auth
@@ -115,8 +116,15 @@ services:
       KC_HTTP_ENABLED: 'true'
       KC_HTTP_RELATIVE_PATH: /auth
       KC_PROXY_HEADERS: xforwarded
+    healthcheck:
+      test: ['CMD-SHELL', 'exec 3<>/dev/tcp/localhost/9000 && echo -e "GET /auth/health/ready HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n\r\n" >&3 && cat <&3 | grep -q "200 OK"']
+      interval: 10s
+      timeout: 5s
+      retries: 15
+      start_period: 90s
     depends_on:
-      - db-auth
+      db-auth:
+        condition: service_healthy
     networks:
       - network_router
       - network_auth
@@ -138,6 +146,12 @@ services:
       POSTGRES_USER_FILE: /run/secrets/db_core_username
       POSTGRES_PASSWORD_FILE: /run/secrets/db_core_password
       POSTGRES_DB: core
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U $$(cat /run/secrets/db_core_username) -d core']
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
     networks:
       - network_api_core
     volumes:
@@ -155,10 +169,6 @@ services:
       - router_host
       - db_core_username
       - db_core_password
-      - db_erp_host
-      - db_erp_port
-      - db_erp_username
-      - db_erp_password
       - keycloak_secret_admin_cli
       - keycloak_secret_client_api_core
     extra_hosts:
@@ -169,10 +179,6 @@ services:
         export ROUTER_HOST=$$(cat /run/secrets/router_host)
         export DB_CORE_USERNAME=$$(cat /run/secrets/db_core_username)
         export DB_CORE_PASSWORD=$$(cat /run/secrets/db_core_password)
-        export DB_ERP_HOST=$$(cat /run/secrets/db_erp_host)
-        export DB_ERP_PORT=$$(cat /run/secrets/db_erp_port)
-        export DB_ERP_USERNAME=$$(cat /run/secrets/db_erp_username)
-        export DB_ERP_PASSWORD=$$(cat /run/secrets/db_erp_password)
         export KEYCLOAK_SECRET_ADMIN_CLI=$$(cat /run/secrets/keycloak_secret_admin_cli)
         export KEYCLOAK_SECRET_CLIENT_API_CORE=$$(cat /run/secrets/keycloak_secret_client_api_core)
         node build/main.js
@@ -182,10 +188,17 @@ services:
       DB_CORE_HOST: db-core
       DB_CORE_PORT: 5432
       DB_CORE_DATABASE: core
-      DB_ERP_DATABASE: finanztool
+    healthcheck:
+      test: ['CMD-SHELL', 'exec 3<>/dev/tcp/localhost/3000']
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
     depends_on:
-      - auth-service
-      - db-core
+      auth-service:
+        condition: service_healthy
+      db-core:
+        condition: service_healthy
     networks:
       - network_router
       - network_api_core
@@ -213,6 +226,17 @@ services:
         nginx -g 'daemon off;'
     environment:
       NODE_ENV: production
+    healthcheck:
+      test: ['CMD-SHELL', 'exec 3<>/dev/tcp/localhost/80']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    depends_on:
+      auth-service:
+        condition: service_healthy
+      api-core:
+        condition: service_healthy
     networks:
       - network_router
     logging:

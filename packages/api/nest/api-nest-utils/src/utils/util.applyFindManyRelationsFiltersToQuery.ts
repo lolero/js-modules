@@ -19,15 +19,21 @@ export function utilApplyFindManyRelationsFiltersToQuery<
       relationNameIndividual,
     );
   });
-  relationNames.forEach((relationName, relationNameIndex) => {
+  let whereClauseAdded = false;
+  relationNames.forEach((relationName) => {
     const relationNameIndividual = `${relationName}Individual`;
     const findManyUniqueKeysDto =
       findManyRelationsDto[relationName as keyof EntityT]!;
     const uniqueKeyNames = keys(findManyUniqueKeysDto);
 
-    uniqueKeyNames.forEach((uniqueKeyName, uniqueKeyNameIndex) => {
+    uniqueKeyNames.forEach((uniqueKeyName) => {
       const uniqueKeyValues =
-        findManyUniqueKeysDto[uniqueKeyName as keyof RequestEntity]!;
+        findManyUniqueKeysDto[uniqueKeyName as keyof RequestEntity];
+
+      if (!uniqueKeyValues) {
+        return;
+      }
+
       const whereStr = `${relationNameIndividual}.${camelToSnakeCaseWithAcronyms(
         uniqueKeyName,
       )} IN (:...${relationNameIndividual}${uniqueKeyName})`;
@@ -35,8 +41,9 @@ export function utilApplyFindManyRelationsFiltersToQuery<
         [`${relationNameIndividual}${uniqueKeyName}`]: uniqueKeyValues,
       };
 
-      if (uniqueKeyNameIndex === 0 && relationNameIndex === 0) {
+      if (!whereClauseAdded) {
         query.where(whereStr, whereParams);
+        whereClauseAdded = true;
       } else {
         query.orWhere(whereStr, whereParams);
       }

@@ -1,19 +1,17 @@
 import React from 'react';
-import {
-  getStoreRedux,
-  TravelLogReduxProvider,
-} from '@js-modules/apps-travel-log-common-react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { ReduxProvider } from '@js-modules/common-react-utils';
+import { createReduxStore } from '@js-modules/apps-travel-log-common-store-redux';
 import { TravelLogPaperProvider } from './TravelLogPaperProvider';
 
 function initApp(): React.FC {
-  const reduxStore = getStoreRedux();
+  const reduxStore = createReduxStore();
 
   const App: React.FC = () => (
     <SafeAreaProvider>
-      <TravelLogReduxProvider reduxStore={reduxStore}>
+      <ReduxProvider reduxStore={reduxStore}>
         <TravelLogPaperProvider />
-      </TravelLogReduxProvider>
+      </ReduxProvider>
     </SafeAreaProvider>
   );
 

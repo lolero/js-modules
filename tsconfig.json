@@ -19,20 +19,23 @@
       "@js-modules/apps-dapp-common-constants": [
         "apps/dapp/apps-dapp-common-constants/src"
       ],
+      "@js-modules/apps-dapp-common-react": [
+        "apps/dapp/apps-dapp-common-react/src"
+      ],
       "@js-modules/apps-dapp-common-store-redux": [
         "apps/dapp/apps-dapp-common-store-redux/src"
       ],
-      "@js-modules/apps-dapp-web-analytics": [
-        "apps/dapp/apps-dapp-web-analytics/src"
+      "@js-modules/apps-dapp-web-module-private-analytics": [
+        "apps/dapp/apps-dapp-web-module-private-analytics/src"
       ],
-      "@js-modules/apps-dapp-web-portfolio": [
-        "apps/dapp/apps-dapp-web-portfolio/src"
+      "@js-modules/apps-dapp-web-module-private-portfolio": [
+        "apps/dapp/apps-dapp-web-module-private-portfolio/src"
       ],
-      "@js-modules/apps-dapp-web-tokens": [
-        "apps/dapp/apps-dapp-web-tokens/src"
+      "@js-modules/apps-dapp-web-module-private-tokens": [
+        "apps/dapp/apps-dapp-web-module-private-tokens/src"
       ],
-      "@js-modules/apps-dapp-web-transactions": [
-        "apps/dapp/apps-dapp-web-transactions/src"
+      "@js-modules/apps-dapp-web-module-private-transactions": [
+        "apps/dapp/apps-dapp-web-module-private-transactions/src"
       ],
       "@js-modules/apps-dapp-web-utils": ["apps/dapp/apps-dapp-web-utils/src"],
       "@js-modules/apps-travel-log-api-modules-core": [
@@ -50,32 +53,35 @@
       "@js-modules/apps-travel-log-common-store-redux": [
         "apps/travel-log/apps-travel-log-common-store-redux/src"
       ],
-      "@js-modules/apps-travel-log-native-my-feeds": [
-        "apps/travel-log/apps-travel-log-native-my-feeds/src"
+      "@js-modules/apps-travel-log-common-utils": [
+        "apps/travel-log/apps-travel-log-common-utils/src"
       ],
-      "@js-modules/apps-travel-log-native-start": [
-        "apps/travel-log/apps-travel-log-native-start/src"
+      "@js-modules/apps-travel-log-native-module-private-feeds": [
+        "apps/travel-log/apps-travel-log-native-module-private-feeds/src"
+      ],
+      "@js-modules/apps-travel-log-native-module-public-start": [
+        "apps/travel-log/apps-travel-log-native-module-public-start/src"
       ],
       "@js-modules/apps-travel-log-web-icons": [
         "apps/travel-log/apps-travel-log-web-icons/src"
       ],
-      "@js-modules/apps-travel-log-web-my-feeds": [
-        "apps/travel-log/apps-travel-log-web-my-feeds/src"
+      "@js-modules/apps-travel-log-web-module-private-feeds": [
+        "apps/travel-log/apps-travel-log-web-module-private-feeds/src"
       ],
-      "@js-modules/apps-travel-log-web-my-log": [
-        "apps/travel-log/apps-travel-log-web-my-log/src"
+      "@js-modules/apps-travel-log-web-module-private-log": [
+        "apps/travel-log/apps-travel-log-web-module-private-log/src"
       ],
-      "@js-modules/apps-travel-log-web-my-workspace": [
-        "apps/travel-log/apps-travel-log-web-my-workspace/src"
+      "@js-modules/apps-travel-log-web-module-private-settings": [
+        "apps/travel-log/apps-travel-log-web-module-private-settings/src"
       ],
-      "@js-modules/apps-travel-log-web-settings": [
-        "apps/travel-log/apps-travel-log-web-settings/src"
-      ],
-      "@js-modules/apps-travel-log-web-site": [
-        "apps/travel-log/apps-travel-log-web-site/src"
+      "@js-modules/apps-travel-log-web-module-public-site": [
+        "apps/travel-log/apps-travel-log-web-module-public-site/src"
       ],
       "@js-modules/apps-travel-log-web-utils": [
         "apps/travel-log/apps-travel-log-web-utils/src"
+      ],
+      "@js-modules/apps-travel-log-web-workspace-private": [
+        "apps/travel-log/apps-travel-log-web-workspace-private/src"
       ],
       "@js-modules/common-react-nav": ["common/react/common-react-nav/src"],
       "@js-modules/common-react-utils": ["common/react/common-react-utils/src"],

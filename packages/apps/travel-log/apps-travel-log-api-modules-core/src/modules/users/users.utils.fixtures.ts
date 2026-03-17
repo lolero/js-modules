@@ -65,7 +65,7 @@ export function getKeycloakUserRepresentationFixture(
 export function getUsersFindManyDtoFixture(
   overrides: Partial<UsersFindManyDto> = {},
 ): UsersFindManyDto {
-  return utilGetFindManyDtoFixture<UsersEntity>(overrides);
+  return utilGetFindManyDtoFixture<UsersEntity, UsersFindManyDto>(overrides);
 }
 
 export function getUsersUpdateOnePartialDtoFixture(

@@ -25,7 +25,9 @@ export function getLogEntriesEntityFixture(
 export function getLogEntriesFindManyDtoFixture(
   overrides: Partial<LogEntriesFindManyDto> = {},
 ): LogEntriesFindManyDto {
-  return utilGetFindManyDtoFixture<LogEntriesEntity>(overrides);
+  return utilGetFindManyDtoFixture<LogEntriesEntity, LogEntriesFindManyDto>(
+    overrides,
+  );
 }
 
 export function getLogEntriesUpdateOnePartialDtoFixture(

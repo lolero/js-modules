@@ -25,8 +25,8 @@ export type MuiFaIconProps = Omit<SvgIconProps, 'viewBox'> &
     icon: IconDefinition;
     flip?: boolean;
     flipDirection?: FontAwesomeIconProps['flip'];
-    spinReverse?: boolean;
     spinPulse?: boolean;
+    spinReverse?: boolean;
   };
 
 export const MuiFaIcon = forwardRef<SVGSVGElement, MuiFaIconProps>(
@@ -46,19 +46,17 @@ export const MuiFaIcon = forwardRef<SVGSVGElement, MuiFaIconProps>(
       shake,
       spin,
       swapOpacity,
-      icon,
+      icon: {
+        prefix,
+        iconName,
+        icon: [width, height, , , svgPathData],
+      },
       flip,
       flipDirection,
       spinPulse,
       spinReverse,
       ...muiProps
     } = props;
-
-    const {
-      prefix,
-      iconName,
-      icon: [width, height, , , svgPathData],
-    } = icon;
 
     return (
       <SvgIcon

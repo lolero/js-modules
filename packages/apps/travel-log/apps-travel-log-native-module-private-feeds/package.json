@@ -1,0 +1,30 @@
+{
+  "private": true,
+  "name": "@js-modules/apps-travel-log-native-module-private-feeds",
+  "description": "Apps Travel Log Native Module Private Feeds",
+  "version": "0.0.0",
+  "license": "MIT",
+  "main": "build/index",
+  "react-native": "src/index.ts",
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "build": "tsc -b tsconfig.build.json"
+  },
+  "dependencies": {
+    "@fortawesome/free-brands-svg-icons": "^7.2.0",
+    "@fortawesome/free-regular-svg-icons": "^7.2.0",
+    "@fortawesome/free-solid-svg-icons": "^7.2.0",
+    "@js-modules/apps-travel-log-common-constants": "workspace:^",
+    "@js-modules/apps-travel-log-common-react": "workspace:^",
+    "@js-modules/apps-travel-log-common-store-redux": "workspace:^",
+    "@js-modules/native-react-utils": "workspace:^",
+    "@types/lodash": "^4.17.24",
+    "@types/react": "^19.2.14",
+    "lodash": "^4.17.23",
+    "react": "19.2.4",
+    "react-native": "0.84.1",
+    "react-native-paper": "^5.15.0"
+  }
+}

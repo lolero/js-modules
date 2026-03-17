@@ -1,5 +1,5 @@
 upstream client-web {
-  server host.docker.internal:5173;
+  server host.docker.internal:5180;
 }
 
 upstream auth-service {

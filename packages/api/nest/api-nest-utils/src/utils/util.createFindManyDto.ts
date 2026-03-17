@@ -35,7 +35,19 @@ export function utilCreateFindManyDto<
   FindManyRangesStringDtoClass?: InitClass<FindManyRangesStringDtoT>,
   FindManyBooleansDtoClass?: InitClass<FindManyBooleansDtoT>,
   FindManyOrderItemDtoClass?: InitClass<FindManyOrderItemDtoT>,
-): { new (): FindManyDto<EntityT> } {
+): {
+  new (): {
+    uniqueKeys?: FindManyUniqueKeysDtoT;
+    search?: FindManySearchDtoT;
+    relations?: FindManyRelationsDtoT;
+    dateRanges?: FindManyRangesDateDtoT;
+    numberRanges?: FindManyRangesNumberDtoT;
+    stringRanges?: FindManyRangesStringDtoT;
+    booleans?: FindManyBooleansDtoT;
+    order?: FindManyOrderItemDtoT[];
+    pagination?: DtoFindManyPagination;
+  };
+} {
   class FindManyDtoClass implements FindManyDto<EntityT> {
     @Transform((params) =>
       utilTransformFindManyDtoField(params, FindManyUniqueKeysDtoClass),

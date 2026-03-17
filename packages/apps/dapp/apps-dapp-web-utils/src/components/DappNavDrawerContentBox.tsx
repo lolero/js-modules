@@ -1,10 +1,10 @@
 import React from 'react';
 import Tabs from '@mui/material/Tabs';
 import { useNavLeftDrawerTabs } from '@js-modules/web-react-nav';
-import { routesMetadataDapp } from '../routesMetadata/routesMetadata.exports';
+import { routesMetadataPrivate } from '@js-modules/apps-dapp-common-react';
 
 export const DappNavDrawerContentBox: React.FunctionComponent = () => {
-  const { tabsValue, tabs } = useNavLeftDrawerTabs(routesMetadataDapp);
+  const { tabsValue, tabs } = useNavLeftDrawerTabs(routesMetadataPrivate);
 
   return (
     <Tabs orientation="vertical" variant="scrollable" value={tabsValue}>

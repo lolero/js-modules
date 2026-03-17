@@ -126,12 +126,6 @@ pnpm graph:dependency-map # Generate dependency graph files
 ```shell
 pnpm graph:package-tree # Print package tree to the terminal
 ```
-```shell
-pnpm lerna:build # Run the build script of all packages
-```
-```shell
-pnpm prepublish # Run the lint:fix, test:coverage & lerna:build scripts
-```
 
 #### Dependencies
 All dependencies of the root `package.json` are installed in all packages.

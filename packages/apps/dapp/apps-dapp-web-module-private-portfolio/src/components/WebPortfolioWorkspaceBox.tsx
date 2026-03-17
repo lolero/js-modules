@@ -1,0 +1,15 @@
+import React from 'react';
+import { DappWorkspaceBox } from '@js-modules/apps-dapp-web-utils';
+import { WebModulesPrivate } from '@js-modules/apps-dapp-common-constants';
+import { WebPortfolioWorkspaceContentBox } from './WebPortfolioWorkspaceContentBox';
+import { WebPortfolioWorkspaceTopToolbar } from './WebPortfolioWorkspaceTopToolbar';
+
+export const WebPortfolioWorkspaceBox: React.FC = () => {
+  return (
+    <DappWorkspaceBox
+      title={WebModulesPrivate.portfolio}
+      workspaceTopToolbar={<WebPortfolioWorkspaceTopToolbar />}
+      workspaceContent={<WebPortfolioWorkspaceContentBox />}
+    />
+  );
+};

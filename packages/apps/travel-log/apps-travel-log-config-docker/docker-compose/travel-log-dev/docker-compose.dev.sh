@@ -9,4 +9,4 @@ if [[ "$1" == "up" ]]; then
     cd ../../service-images/auth-service && ./download-providers.sh && cd -
 fi
 
-docker-compose -f docker-compose.dev.yml "$@"
+docker compose -f docker-compose.dev.yml "$@"

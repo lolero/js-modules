@@ -35,7 +35,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
   useEffect(() => {
     document.title =
       documentTitle ?? msgStr('loginTitle', kcContext.realm.displayName);
-  }, []);
+  }, [documentTitle, kcContext.realm.displayName, msgStr]);
 
   useSetClassName({
     qualifiedName: 'html',

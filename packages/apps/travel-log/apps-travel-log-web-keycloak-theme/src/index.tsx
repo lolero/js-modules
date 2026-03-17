@@ -31,6 +31,5 @@ root.render(
         <KcPage kcContext={window.kcContext} />
       )}
     </ThemeProvider>
-    ,
   </StrictMode>,
 );

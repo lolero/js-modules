@@ -7,13 +7,13 @@ import {
 import {
   InitScreenView,
   StartScreenView,
-} from '@js-modules/apps-travel-log-native-start';
+} from '@js-modules/apps-travel-log-native-module-public-start';
 import { useInitializeKeycloak } from '@js-modules/apps-travel-log-common-react';
 import {
   ClientType,
   useStateAuthReducerMetadata,
 } from '@js-modules/apps-travel-log-common-store-redux';
-import { MyFeedsScreenView } from '@js-modules/apps-travel-log-native-my-feeds';
+import { FeedsScreenView } from '@js-modules/apps-travel-log-native-module-private-feeds';
 
 const Stack = createNativeStackNavigator();
 
@@ -29,7 +29,7 @@ export const TravelLogStackNavigator: React.FC = () => {
   return (
     <Stack.Navigator
       initialRouteName={
-        !isAuthenticated ? WebModulesPublic.home : WebModulesPrivate.myFeeds
+        !isAuthenticated ? WebModulesPublic.home : WebModulesPrivate.feeds
       }
       screenOptions={{ headerShown: false }}
     >
@@ -41,12 +41,12 @@ export const TravelLogStackNavigator: React.FC = () => {
       ) : (
         <>
           <Stack.Screen
-            name={WebModulesPrivate.myFeeds}
-            component={MyFeedsScreenView}
+            name={WebModulesPrivate.feeds}
+            component={FeedsScreenView}
           />
           <Stack.Screen
-            name={WebModulesPrivate.myLog}
-            component={MyFeedsScreenView}
+            name={WebModulesPrivate.log}
+            component={FeedsScreenView}
           />
         </>
       )}

@@ -1,17 +1,15 @@
 import React from 'react';
-import {
-  getStoreRedux,
-  TravelLogReduxProvider,
-} from '@js-modules/apps-travel-log-common-react';
+import { ReduxProvider } from '@js-modules/common-react-utils';
+import { createReduxStore } from '@js-modules/apps-travel-log-common-store-redux';
 import { TravelLogThemeProvider } from './TravelLogThemeProvider';
 
 function initApp(): React.FC {
-  const reduxStore = getStoreRedux();
+  const reduxStore = createReduxStore();
 
   const App: React.FC = () => (
-    <TravelLogReduxProvider reduxStore={reduxStore}>
+    <ReduxProvider reduxStore={reduxStore}>
       <TravelLogThemeProvider />
-    </TravelLogReduxProvider>
+    </ReduxProvider>
   );
 
   return App;

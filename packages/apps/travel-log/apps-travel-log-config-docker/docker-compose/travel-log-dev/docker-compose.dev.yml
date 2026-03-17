@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'
 
 volumes:
   volume_data_auth:
@@ -22,7 +22,10 @@ services:
       - '80:80'
       - '443:443'
     depends_on:
-      - auth-service
+      auth-service:
+        condition: service_healthy
+      db-core:
+        condition: service_healthy
     networks:
       - network_router
     volumes:
@@ -39,13 +42,19 @@ services:
       POSTGRES_USER: ${DB_AUTH_USERNAME}
       POSTGRES_PASSWORD: ${DB_AUTH_PASSWORD}
       POSTGRES_DB: ${DB_AUTH_DATABASE}
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}']
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
     networks:
       - network_auth
     volumes:
       - volume_data_auth:/var/lib/postgresql/data
   auth-service:
     image: quay.io/keycloak/keycloak:26.3.5-0
-    command: ['start-dev', '--import-realm', '--log-level=INFO,org.keycloak.services:DEBUG']
+    command: ['start-dev', '--import-realm', '--log-level=INFO,org.keycloak.services:DEBUG', '--health-enabled=true']
     environment:
       KC_DB_USERNAME: ${DB_AUTH_USERNAME}
       KC_DB_PASSWORD: ${DB_AUTH_PASSWORD}
@@ -59,8 +68,15 @@ services:
       KC_PROXY_HEADERS: xforwarded
       KC_HOSTNAME_STRICT: 'false' # Allows tokens from multiple hostnames for multi-issuer support
       KC_HOSTNAME_DEBUG: 'true' # Enable hostname debug logging
+    healthcheck:
+      test: ['CMD-SHELL', 'exec 3<>/dev/tcp/localhost/9000 && echo -e "GET /auth/health/ready HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n\r\n" >&3 && cat <&3 | grep -q "200 OK"']
+      interval: 10s
+      timeout: 5s
+      retries: 15
+      start_period: 90s
     depends_on:
-      - db-auth
+      db-auth:
+        condition: service_healthy
     networks:
       - network_router
       - network_auth
@@ -76,6 +92,12 @@ services:
       POSTGRES_USER: ${DB_CORE_USERNAME}
       POSTGRES_PASSWORD: ${DB_CORE_PASSWORD}
       POSTGRES_DB: ${DB_CORE_DATABASE}
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}']
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
     networks:
       - network_api_core
     volumes:

@@ -51,14 +51,12 @@ export function useInitializeKeycloak(clientType: ClientType): {
 
   const rootPath = useMemo(() => {
     if (clientType === ClientType.native) {
-      return !isAuthenticated
-        ? WebModulesPublic.home
-        : WebModulesPrivate.myFeeds;
+      return !isAuthenticated ? WebModulesPublic.home : WebModulesPrivate.feeds;
     }
 
     return !isAuthenticated
       ? routesMetadataPublic[WebModulesPublic.home].path
-      : routesMetadataPrivate[WebModulesPrivate.myFeeds].path;
+      : routesMetadataPrivate[WebModulesPrivate.feeds].path;
   }, [clientType, isAuthenticated]);
 
   useEffect(() => {

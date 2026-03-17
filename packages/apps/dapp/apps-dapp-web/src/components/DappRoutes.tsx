@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
-import { Route, Routes, Navigate } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import { WebModulesPrivate } from '@js-modules/apps-dapp-common-constants';
 import { useNodeChainsGetMany } from '@js-modules/apps-dapp-common-store-redux';
-import { WebModules } from '@js-modules/apps-dapp-common-constants';
-import { WebPortfolioRoutes } from '@js-modules/apps-dapp-web-portfolio';
-import { WebAnalyticsRoutes } from '@js-modules/apps-dapp-web-analytics';
-import { routesMetadataDapp } from '@js-modules/apps-dapp-web-utils';
+import { WebPortfolioRoutes } from '@js-modules/apps-dapp-web-module-private-portfolio';
+import { WebAnalyticsRoutes } from '@js-modules/apps-dapp-web-module-private-analytics';
+import { routesMetadataPrivate } from '@js-modules/apps-dapp-common-react';
 
 export const DappRoutes: React.FunctionComponent = () => {
   const {
@@ -21,11 +21,11 @@ export const DappRoutes: React.FunctionComponent = () => {
   return (
     <Routes>
       <Route
-        path={`${WebModules.portfolio}/*`}
+        path={`${WebModulesPrivate.portfolio}/*`}
         element={<WebPortfolioRoutes />}
       />
       <Route
-        path={`${WebModules.analytics}/*`}
+        path={`${WebModulesPrivate.analytics}/*`}
         element={<WebAnalyticsRoutes />}
       />
       <Route
@@ -33,7 +33,7 @@ export const DappRoutes: React.FunctionComponent = () => {
         element={
           <Navigate
             replace
-            to={routesMetadataDapp[WebModules.portfolio].path}
+            to={routesMetadataPrivate[WebModulesPrivate.portfolio].path}
           />
         }
       />

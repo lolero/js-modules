@@ -1,2 +1,2 @@
-export * from './components/DappWorkspaceBox';
-export * from './routesMetadata/routesMetadata.exports';
+export * from './components/components.exports';
+export * from './styles/styles.exports';

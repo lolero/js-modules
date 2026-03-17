@@ -44,6 +44,8 @@ export default defineConfig({
     exclude: ['react-native'],
   },
   server: {
+    port: 5180,
+    strictPort: true,
     host: true,
     allowedHosts: ['client-web'],
   },

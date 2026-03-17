@@ -1,17 +1,17 @@
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import CircularProgress from '@mui/material/CircularProgress';
 import {
   WebModulesPrivate,
   WebModulesPublic,
 } from '@js-modules/apps-travel-log-common-constants';
-import { MyFeedsRoutes } from '@js-modules/apps-travel-log-web-my-feeds';
+import CircularProgress from '@mui/material/CircularProgress';
+import { FeedsRoutes } from '@js-modules/apps-travel-log-web-module-private-feeds';
 import {
   HomeWorkspaceBox,
   PurposeWorkspaceBox,
-} from '@js-modules/apps-travel-log-web-site';
-import { SettingsRoutes } from '@js-modules/apps-travel-log-web-settings';
-import { MyLogRoutes } from '@js-modules/apps-travel-log-web-my-log';
+} from '@js-modules/apps-travel-log-web-module-public-site';
+import { SettingsRoutes } from '@js-modules/apps-travel-log-web-module-private-settings';
+import { LogRoutes } from '@js-modules/apps-travel-log-web-module-private-log';
 import { useInitializeKeycloak } from '@js-modules/apps-travel-log-common-react';
 import { ClientType } from '@js-modules/apps-travel-log-common-store-redux';
 
@@ -31,18 +31,12 @@ export const TravelLogRoutes: React.FunctionComponent = () => {
         path={`${WebModulesPublic.purpose}`}
         element={<PurposeWorkspaceBox />}
       />
+      <Route path={`${WebModulesPrivate.feeds}/*`} element={<FeedsRoutes />} />
+      <Route path={`${WebModulesPrivate.boards}/*`} element={<FeedsRoutes />} />
+      <Route path={`${WebModulesPrivate.log}/*`} element={<LogRoutes />} />
       <Route
-        path={`${WebModulesPrivate.myFeeds}/*`}
-        element={<MyFeedsRoutes />}
-      />
-      <Route
-        path={`${WebModulesPrivate.myBoards}/*`}
-        element={<MyFeedsRoutes />}
-      />
-      <Route path={`${WebModulesPrivate.myLog}/*`} element={<MyLogRoutes />} />
-      <Route
-        path={`${WebModulesPrivate.myNetwork}/*`}
-        element={<MyFeedsRoutes />}
+        path={`${WebModulesPrivate.network}/*`}
+        element={<FeedsRoutes />}
       />
       <Route
         path={`${WebModulesPrivate.settings}/*`}

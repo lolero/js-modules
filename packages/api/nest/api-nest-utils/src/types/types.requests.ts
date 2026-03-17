@@ -40,12 +40,6 @@ export type FindManyOrderItemDto<
   orderDirection: FindManyOrderDirection;
 };
 
-export type FindManyOrderDto<EntityT extends RequestEntity = RequestEntity> =
-  Array<{
-    entityPropName: keyof EntityT;
-    orderDirection: FindManyOrderDirection;
-  }>;
-
 export type FindManyPaginationDto = {
   pageNumber: number;
   resultsPerPage: number;

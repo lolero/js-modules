@@ -18,35 +18,35 @@ export enum WebModulesPublic {
 }
 
 export enum WebModulesPrivate {
-  myFeeds = 'my-feeds',
-  myBoards = 'my-boards',
-  myLog = 'my-log',
-  myNetwork = 'my-network',
+  feeds = 'feeds',
+  boards = 'boards',
+  log = 'log',
+  network = 'network',
   settings = 'settings',
 }
 
-export enum WebSubModulesMyFeeds {
+export enum WebSubModulesFeeds {
   general = 'general',
 }
 
-export enum WebSubModulesMyBoards {
+export enum WebSubModulesBoards {
   public = 'public',
   followers = 'followers',
   friends = 'friends',
 }
 
-export enum WebSubModulesMyLog {
+export enum WebSubModulesLog {
   logEntry = 'log-entry',
   trips = 'trips',
   dives = 'dives',
 }
 
-export enum WebSubModulesMyLogLogEntry {
+export enum WebSubModulesLogLogEntry {
   addNew = 'add-new',
   edit = 'edit',
 }
 
-export enum WebSubModulesMyNetwork {
+export enum WebSubModulesNetwork {
   connections = 'connections',
   friends = 'friends',
   inPerson = 'in-person',

@@ -10,6 +10,8 @@ import {
   setGenericPassword,
 } from 'react-native-keychain';
 import { KeycloakServerConfig, KeycloakTokenParsed } from 'keycloak-js';
+import camelCase from 'lodash/camelCase';
+import lowerCase from 'lodash/lowerCase';
 import { KeycloakTokens } from './stateAuth.types';
 
 export const KEYCHAIN_SERVICE = 'com.travellog.auth';
@@ -65,7 +67,7 @@ export function createAuthConfiguration({
   const authConfiguration: AuthConfiguration = {
     issuer: `${url}/realms/${realm}`,
     clientId,
-    redirectUrl: 'travellog://oauth-callback',
+    redirectUrl: `${lowerCase(camelCase(realm))}://oauth-callback`,
     scopes: ['openid', 'profile', 'email'],
     serviceConfiguration: {
       authorizationEndpoint: `${url}/realms/${realm}/protocol/openid-connect/auth`,

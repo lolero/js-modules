@@ -1,0 +1,29 @@
+{
+  "private": true,
+  "name": "@js-modules/apps-dapp-common-react",
+  "description": "Apps Dapp Common React",
+  "version": "0.0.0",
+  "license": "MIT",
+  "main": "build/index",
+  "react-native": "src/index.ts",
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "build": "tsc -b tsconfig.build.json"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-common-types": "^7.2.0",
+    "@fortawesome/free-brands-svg-icons": "^7.2.0",
+    "@fortawesome/free-regular-svg-icons": "^7.2.0",
+    "@fortawesome/free-solid-svg-icons": "^7.2.0",
+    "@js-modules/apps-dapp-common-constants": "workspace:^",
+    "@js-modules/apps-dapp-common-store-redux": "workspace:^",
+    "@js-modules/common-react-nav": "workspace:^",
+    "@types/lodash": "^4.17.24",
+    "@types/react": "^19.2.14",
+    "keycloak-js": "26.2.3",
+    "lodash": "^4.17.23",
+    "react": "19.2.4"
+  }
+}

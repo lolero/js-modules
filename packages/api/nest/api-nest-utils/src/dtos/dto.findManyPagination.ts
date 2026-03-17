@@ -1,6 +1,7 @@
 import { IsInt, Min } from 'class-validator';
+import { FindManyPaginationDto } from '../types/types.requests';
 
-export class DtoFindManyPagination {
+export class DtoFindManyPagination implements FindManyPaginationDto {
   @IsInt()
   @Min(1)
   pageNumber: number;

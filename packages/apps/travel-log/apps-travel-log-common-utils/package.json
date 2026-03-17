@@ -1,0 +1,28 @@
+{
+  "private": true,
+  "name": "@js-modules/apps-travel-log-common-utils",
+  "description": "Apps Trevel Log Common Utils",
+  "version": "0.0.0",
+  "license": "MIT",
+  "main": "build/index",
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "build": "tsc -b tsconfig.build.json"
+  },
+  "dependencies": {
+    "@js-modules/api-nest-utils": "workspace:^",
+    "@js-modules/apps-travel-log-api-modules-core": "workspace:^",
+    "@js-modules/apps-travel-log-common-constants": "workspace:^",
+    "@js-modules/common-redux-utils-normalized-reducers": "workspace:^",
+    "@js-modules/common-utils-general": "workspace:^",
+    "@js-modules/web-react-utils": "workspace:^",
+    "@types/lodash": "^4.17.21",
+    "@types/react": "^19.2.7",
+    "date-fns": "^4.1.0",
+    "lodash": "^4.17.21",
+    "react": "19.2.3",
+    "react-router-dom": "^7.11.0"
+  }
+}
