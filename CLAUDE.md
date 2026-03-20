@@ -10,22 +10,23 @@ TypeScript monorepo with production-ready full-stack applications and reusable l
 
 ```bash
 # Installation & Setup
-pnpm install                          # Install all dependencies
-pnpm reset:install                    # Clean setup with ignore symlinks
+pnpm install:js                       # Install JS dependencies (pnpm install)
+pnpm install:py                       # Install Python dependencies (uv sync)
+pnpm reset:install                    # Create symlinks + install JS & Python in parallel
 pnpm reset:reset                      # Full clean + reinstall
 
 # Build
 pnpm --filter <package-name> build    # Build specific package
 
-# Testing
-pnpm --filter <package-name> test:test      # Run tests for specific package
-pnpm --filter <package-name> test:watch     # Watch mode for specific package
-pnpm --filter <package-name> test:coverage  # Coverage for specific package
-pnpm --filter '*' test:coverage             # All packages coverage
+# Testing (JS and Python via Nx)
+pnpm nx test:test <package-name>      # Run tests for specific package
+pnpm nx test:watch <package-name>     # Watch mode for specific package
+pnpm nx test:coverage <package-name>  # Coverage for specific package
+pnpm nx run-many -t test:test         # Run all tests (JS + Python)
 
 # Linting
-pnpm lint:check                       # Check ESLint, Prettier, Solhint
-pnpm lint:fix                         # Auto-fix linting issues
+pnpm lint:check                       # Check ESLint, Prettier, Solhint, Ruff (parallel)
+pnpm lint:fix                         # Auto-fix linting issues (parallel)
 
 # Development servers (run from package directory or use --filter)
 pnpm dev:travel-log-api-core          # NestJS API server
@@ -33,7 +34,9 @@ pnpm dev:travel-log-web               # Vite web app
 pnpm dev:travel-log-native            # React Native app
 
 # Cleanup
-pnpm clean:build-cache                # Clear build artifacts and caches
+pnpm clean:main                       # Remove dependencies (node_modules, .venv, etc.)
+pnpm clean:build                      # Remove build artifacts (JS + Python)
+pnpm reset:clean                      # Full clean (main + build)
 ```
 
 ## Architecture
@@ -41,6 +44,8 @@ pnpm clean:build-cache                # Clear build artifacts and caches
 ### Monorepo Tools
 - **pnpm** - Package manager (use pnpm, not npm/yarn)
 - **Nx** - Task orchestration and caching
+- **uv** - Python package manager and virtualenv
+- **nx-plugin.ts** - Custom plugin providing unified test/lint targets for JS and Python
 
 ### Package Structure
 ```
@@ -96,3 +101,55 @@ Test files: `src/**/?(*.)+(spec|test).[jt]s?(x)`
 - **Frontend**: React 19, Material UI 7, Redux + Saga, Vite
 - **Mobile**: React Native 0.83, React Navigation, React Native Paper
 - **Blockchain**: Solidity 0.8.x (dapp only)
+- **Python/ML**: Python 3.11+, LangChain, uv
+
+## Python Packages
+
+### Python Tooling
+- **uv** - Package manager, virtualenv, and Python version manager (replaces pip, poetry, pyenv)
+- **ruff** - Linting and formatting (replaces flake8, black, isort)
+- **pytest** - Testing framework
+- **nx-plugin.ts** - Auto-detects Python packages and provides Nx targets
+
+### Python Commands
+
+```bash
+# Installation & Setup
+uv python install 3.11                # Install specific Python version
+uv python pin 3.11                    # Pin version for project
+pnpm install:py                       # Install Python dependencies (uv sync)
+
+# Testing & Linting (via Nx - same as JS)
+pnpm nx test:test apps-langchain-basics
+pnpm nx test:coverage apps-langchain-basics
+pnpm nx lint:check apps-langchain-basics
+pnpm nx lint:fix apps-langchain-basics
+
+# Run across all packages (JS + Python)
+pnpm nx run-many -t test:test
+pnpm nx run-many -t lint:check
+```
+
+### Python Configuration Files
+```
+js-modules/
+├── pyproject.toml                    # Workspace config (uv, ruff, pytest)
+├── .python-version                   # Python version pin (3.11)
+├── nx-plugin.ts                      # Nx plugin for JS + Python targets
+└── packages/
+    └── apps/langchain/
+        └── apps-langchain-basics/
+            ├── pyproject.toml        # Package dependencies
+            ├── src/apps_langchain_basics/
+            └── tests/
+```
+
+### Python Package Detection
+- Any directory with `pyproject.toml` (without `package.json`) is detected as a Python package
+- Nx targets (`test:test`, `test:watch`, `test:coverage`, `lint:check`, `lint:fix`) are auto-generated
+
+### Python Code Style
+- Ruff for linting (replaces flake8, isort, etc.)
+- Single quotes (matching TypeScript/Prettier config)
+- Line length: 88 (ruff default)
+- Python 3.11+ required

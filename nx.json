@@ -1,13 +1,13 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "plugins": ["./nx-plugin.ts"],
   "targetDefaults": {
     "build": {
-      "dependsOn": [
-        "^build"
-      ]
+      "dependsOn": ["^build"]
     },
     "test": {
       "cache": true
     }
-  }
+  },
+  "analytics": false
 }
