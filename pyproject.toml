@@ -14,7 +14,10 @@ dev = [
 ]
 
 [tool.uv.workspace]
-members = ["packages/apps/langchain/apps-langchain-basics"]
+members = [
+  "packages/apps/langchain/apps-langchain-basics",
+  "packages/apps/langchain/apps-langchain-chatbot",
+]
 
 [tool.ruff]
 line-length = 88
