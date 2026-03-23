@@ -33,7 +33,6 @@ select = [
 ignore = ["E501"]  # line too long (handled by formatter)
 
 [tool.ruff.format]
-quote-style = "single"
 
 [tool.pytest.ini_options]
 testpaths = ["packages"]
