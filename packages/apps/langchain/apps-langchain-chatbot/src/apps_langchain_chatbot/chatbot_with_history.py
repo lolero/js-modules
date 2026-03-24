@@ -12,7 +12,7 @@ from langchain_core.prompts import (
 )
 from langchain_core.runnables.history import RunnableWithMessageHistory
 
-load_dotenv(Path(__file__).parent.parent.parent / ".env.dev")
+load_dotenv(Path(__file__).parent.parent.parent.parent / ".env.dev")
 
 api_key = os.getenv("ANTHROPIC_API_KEY")
 llm = ChatAnthropic(model="claude-sonnet-4-20250514", api_key=api_key)

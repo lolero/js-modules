@@ -8,7 +8,7 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import PromptTemplate
 from langchain_core.runnables import RunnablePassthrough
 
-load_dotenv(Path(__file__).parent.parent.parent / ".env.dev")
+load_dotenv(Path(__file__).parent.parent.parent.parent / ".env.dev")
 
 api_key = os.getenv("ANTHROPIC_API_KEY")
 llm = ChatAnthropic(model="claude-sonnet-4-20250514", api_key=api_key)

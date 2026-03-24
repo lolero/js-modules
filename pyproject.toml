@@ -11,12 +11,15 @@ dev = [
     "pytest-cov>=6.0.0",
     "pytest-watch>=4.2.0",
     "ruff>=0.9.0",
+    "jupyter>=1.0.0",
+    "ipykernel>=6.0.0",
 ]
 
 [tool.uv.workspace]
 members = [
   "packages/apps/langchain/apps-langchain-basics",
   "packages/apps/langchain/apps-langchain-chatbot",
+  "packages/apps/langchain/apps-langchain-facts",
 ]
 
 [tool.ruff]
