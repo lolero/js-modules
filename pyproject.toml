@@ -17,9 +17,10 @@ dev = [
 
 [tool.uv.workspace]
 members = [
-  "packages/apps/langchain/apps-langchain-basics",
-  "packages/apps/langchain/apps-langchain-chatbot",
-  "packages/apps/langchain/apps-langchain-facts",
+  "packages/apps/langchain/apps-langchain-1-basics",
+  "packages/apps/langchain/apps-langchain-2-chatbot",
+  "packages/apps/langchain/apps-langchain-3-facts",
+  "packages/apps/langchain/apps-langchain-4-agents",
 ]
 
 [tool.ruff]
