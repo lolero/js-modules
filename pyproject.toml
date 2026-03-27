@@ -21,6 +21,7 @@ members = [
   "packages/apps/langchain/apps-langchain-2-chatbot",
   "packages/apps/langchain/apps-langchain-3-facts",
   "packages/apps/langchain/apps-langchain-4-agents",
+  "packages/apps/langchain/apps-langchain-5-pdf",
 ]
 
 [tool.ruff]

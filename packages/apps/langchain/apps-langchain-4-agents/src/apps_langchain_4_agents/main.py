@@ -10,7 +10,7 @@ from langgraph.checkpoint.memory import MemorySaver
 from tools.report import write_report_tool
 from tools.sql import describe_tables_tool, list_tables, run_query_tool
 
-load_dotenv(Path(__file__).parent.parent.parent.parent / ".env.dev")
+load_dotenv(Path(__file__).resolve().parents[3] / ".env.dev")
 
 handler = ChatModelStartHandler()
 api_key = os.getenv("ANTHROPIC_API_KEY")

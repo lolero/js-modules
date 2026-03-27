@@ -8,7 +8,7 @@ from langchain_community.document_loaders import TextLoader
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_text_splitters import CharacterTextSplitter
 
-load_dotenv(Path(__file__).parent.parent.parent.parent / ".env.dev")
+load_dotenv(Path(__file__).resolve().parents[3] / ".env.dev")
 
 api_key = os.getenv("ANTHROPIC_API_KEY")
 llm = ChatAnthropic(model="claude-sonnet-4-20250514", api_key=api_key)
