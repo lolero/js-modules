@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import {
   WebModulesPrivate,
@@ -6,8 +6,8 @@ import {
   WebSubModulesSettingsProfile,
 } from '@js-modules/apps-travel-log-common-constants';
 import { routesMetadataPrivate } from '@js-modules/apps-travel-log-common-react';
-import { SettingsProfileWorkspaceBox } from './SettingsProfileWorkspaceBox';
 import { SettingsProfileEditWorkspaceBox } from './SettingsProfileEditWorkspaceBox';
+import { SettingsProfileWorkspaceBox } from './SettingsProfileWorkspaceBox';
 
 export const SettingsProfileRoutes: React.FunctionComponent = () => {
   return (

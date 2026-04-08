@@ -1,7 +1,7 @@
-import React from 'react';
 import Box from '@mui/material/Box';
-import { PrivateWorkspaceNotificationsMenu } from './PrivateWorkspaceNotificationsMenu';
+import type React from 'react';
 import { PrivateWorkspaceAccountMenu } from './PrivateWorkspaceAccountMenu';
+import { PrivateWorkspaceNotificationsMenu } from './PrivateWorkspaceNotificationsMenu';
 
 export const PrivateWorkspaceNavToolbarActionsBox: React.FC = () => {
   return (

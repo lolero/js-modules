@@ -1,16 +1,16 @@
 import { v4 as uuidv4 } from 'uuid';
-import {
-  StateWeb3ActionTypes,
+import type {
+  StateWeb3UpdatePartialReducerMetadataFailAction,
+  StateWeb3UpdatePartialReducerMetadataRequestAction,
+  StateWeb3UpdatePartialReducerMetadataSuccessAction,
   StateWeb3WalletConnectFailAction,
   StateWeb3WalletConnectRequestAction,
   StateWeb3WalletConnectSuccessAction,
   StateWeb3WalletDisconnectFailAction,
   StateWeb3WalletDisconnectRequestAction,
   StateWeb3WalletDisconnectSuccessAction,
-  StateWeb3UpdatePartialReducerMetadataFailAction,
-  StateWeb3UpdatePartialReducerMetadataRequestAction,
-  StateWeb3UpdatePartialReducerMetadataSuccessAction,
 } from './stateWeb3.actions.types';
+import { StateWeb3ActionTypes } from './stateWeb3.actions.types';
 
 export function createStateWeb3UpdatePartialReducerMetadataRequestAction(
   partialStateWeb3ReducerMetadata: StateWeb3UpdatePartialReducerMetadataRequestAction['requestMetadata']['partialReducerMetadata'],

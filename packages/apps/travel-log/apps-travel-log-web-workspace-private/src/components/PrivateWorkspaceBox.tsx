@@ -1,18 +1,20 @@
-import React, { useCallback } from 'react';
-import { WorkspaceBox, WorkspaceBoxProps } from '@js-modules/web-react-nav';
+import type React from 'react';
+import { useCallback } from 'react';
+import { useLocation } from 'react-router-dom';
+import { WEB_CLIENT__URI__TRAVEL_LOG } from '@js-modules/apps-travel-log-common-constants';
+import {
+  useStateAuthLogin,
+  useStateAuthReducerMetadata,
+  useStateSettingsGetProfile,
+} from '@js-modules/apps-travel-log-common-store-redux';
 import {
   TravelLogLogoLongBox,
   TravelLogLogoShortBox,
   TravelLogNavDrawerFooterBox,
   TravelLogNavToolbar,
 } from '@js-modules/apps-travel-log-web-utils';
-import {
-  useStateAuthLogin,
-  useStateAuthReducerMetadata,
-  useStateSettingsGetProfile,
-} from '@js-modules/apps-travel-log-common-store-redux';
-import { useLocation } from 'react-router-dom';
-import { WEB_CLIENT__URI__TRAVEL_LOG } from '@js-modules/apps-travel-log-common-constants';
+import type { WorkspaceBoxProps } from '@js-modules/web-react-nav';
+import { WorkspaceBox } from '@js-modules/web-react-nav';
 import { PrivateWorkspaceNavDrawerContentBox } from './PrivateWorkspaceNavDrawerContentBox';
 import { PrivateWorkspaceNavToolbarActionsBox } from './PrivateWorkspaceNavToolbarActionsBox';
 

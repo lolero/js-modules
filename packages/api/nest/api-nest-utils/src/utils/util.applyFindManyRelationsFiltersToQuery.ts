@@ -1,7 +1,10 @@
-import { SelectQueryBuilder } from 'typeorm';
 import keys from 'lodash/keys';
+import type { SelectQueryBuilder } from 'typeorm';
 import { camelToSnakeCaseWithAcronyms } from '@js-modules/common-utils-general-cjs';
-import { FindManyRelationsDto, RequestEntity } from '../types/types.requests';
+import type {
+  FindManyRelationsDto,
+  RequestEntity,
+} from '../types/types.requests';
 
 export function utilApplyFindManyRelationsFiltersToQuery<
   EntityT extends RequestEntity,
@@ -27,8 +30,7 @@ export function utilApplyFindManyRelationsFiltersToQuery<
     const uniqueKeyNames = keys(findManyUniqueKeysDto);
 
     uniqueKeyNames.forEach((uniqueKeyName) => {
-      const uniqueKeyValues =
-        findManyUniqueKeysDto[uniqueKeyName as keyof RequestEntity];
+      const uniqueKeyValues = findManyUniqueKeysDto[uniqueKeyName];
 
       if (!uniqueKeyValues) {
         return;

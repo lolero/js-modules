@@ -1,17 +1,18 @@
-import React, { forwardRef, useCallback, useContext, useMemo } from 'react';
+import { faBars } from '@fortawesome/free-solid-svg-icons/faBars';
+import { faXmark } from '@fortawesome/free-solid-svg-icons/faXmark';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
-import { Link } from 'react-router-dom';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
+import type React from 'react';
+import { forwardRef, useCallback, useContext, useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import { MuiFaIcon } from '@js-modules/web-react-utils';
-import { faBars } from '@fortawesome/free-solid-svg-icons/faBars';
-import { faXmark } from '@fortawesome/free-solid-svg-icons/faXmark';
 import { NavContext, NavDrawerDisplayStatus } from '../contexts/NavContext';
 import {
-  WorkspaceContext,
   ScrollDirection,
+  WorkspaceContext,
 } from '../contexts/WorkspaceContext';
 import { useNavDisplayMetadata } from '../hooks/useNavDisplayMetadata';
 import { NavLeftDrawerDisplayButton } from './NavLeftDrawerDisplayButton';
@@ -27,10 +28,10 @@ type NavTopAppbarProps = {
 };
 
 export const NavTopAppbar = forwardRef<HTMLDivElement, NavTopAppbarProps>(
-  (
+  function NavTopAppbar(
     { shortLogo, longLogo, homePath, isNavLeftDrawerWithContent, children },
     ref,
-  ) => {
+  ) {
     const {
       navLeftDrawerDisplayStatus,
       showNavLeftDrawerString,

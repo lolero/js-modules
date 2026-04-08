@@ -1,12 +1,10 @@
-import { Entity, Reducer, ReducerMetadata } from '../types/reducers.types';
+import type { Entity, Reducer, ReducerMetadata } from '../types/reducers.types';
 
 /**
  * Selects reducer prop.
- *
- * @param {Reducer} reducer - The path to the reducer in the redux state
- * @param {reducerPropKey} reducerPropKey - The key of the reducer prop being
- *        selected
- * @returns {object} Reducer prop
+ * @param reducer - Path to reducer in redux state.
+ * @param reducerPropKey - Reducer prop key.
+ * @returns Reducer prop.
  */
 export function selectReducerProp<
   ReducerMetadataT extends ReducerMetadata,

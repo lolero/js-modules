@@ -1,5 +1,8 @@
 {
-  "extends": "../../../../tsconfig.json",
+  "extends": [
+    "../../../../tsconfig.json",
+    "../../../../scripts/tsconfig/tsconfig.node.json"
+  ],
   "compilerOptions": {},
   "include": ["src"]
 }

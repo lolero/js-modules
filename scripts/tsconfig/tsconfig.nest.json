@@ -1,0 +1,6 @@
+{
+  "extends": "./tsconfig.nest.build.json",
+  "compilerOptions": {
+    "types": ["node", "jest"]
+  }
+}

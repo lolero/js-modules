@@ -1,9 +1,9 @@
-import {
-  NodeChainsActionTypes,
+import type {
   NodeChainsGetManyFailAction,
   NodeChainsGetManyRequestAction,
   NodeChainsGetManySuccessAction,
 } from './nodeChains.actions.types';
+import { NodeChainsActionTypes } from './nodeChains.actions.types';
 
 export const NODE_CHAINS__GET_MANY__REQUEST_ID =
   'NODE_CHAINS__GET_MANY__REQUEST_ID';

@@ -1,24 +1,24 @@
-import React, { useCallback, useMemo } from 'react';
-import Box, { BoxProps } from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Grid from '@mui/material/Grid';
 import { faCreditCard } from '@fortawesome/free-regular-svg-icons/faCreditCard';
-import { PaymentCard } from '@js-modules/common-utils-general';
-import isEmpty from 'lodash/isEmpty';
+import type { BoxProps } from '@mui/material/Box';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import TextField from '@mui/material/TextField';
 import ceil from 'lodash/ceil';
-import {
-  FormUtils,
-  FormValidator,
-} from '../hooks/hooksMaterialUi/useFormUtils';
+import isEmpty from 'lodash/isEmpty';
+import type React from 'react';
+import { useCallback, useMemo } from 'react';
+import type { FormValidator } from '@js-modules/common-react-utils';
+import type { PaymentCard } from '@js-modules/common-utils-general';
+import type { FormUtilsWeb } from '../hooks/hooksMaterialUi/useFormUtilsWeb';
+import type { FormTextFieldProps } from '../types/form.types';
 import { MuiFaIcon } from './MuiFaIcon';
-import { FormTextFieldProps } from '../types/form.types';
 
 export type PaymentCardBoxProps = {
   sx?: BoxProps['sx'];
   renderFields?: (keyof PaymentCard)[];
   paymentCardTemp: PaymentCard;
-  changeFieldCallback: FormUtils<PaymentCard>['changeFieldCallback'];
-  blurFieldCallback: FormUtils<PaymentCard>['blurFieldCallback'];
+  changeFieldCallback: FormUtilsWeb<PaymentCard>['changeFieldCallback'];
+  blurFieldCallback: FormUtilsWeb<PaymentCard>['blurFieldCallback'];
   formErrors: FormValidator<PaymentCard>['formErrors'];
   isFormFieldsDisabled: boolean;
   textFieldProps?: {
@@ -78,10 +78,9 @@ export const PaymentCardBox: React.FunctionComponent<PaymentCardBoxProps> = ({
           onBlur={blurFieldCallback}
           error={!!formErrors.cardNumber?.length}
           helperText={formErrors.cardNumber?.join(', ')}
-          inputProps={{
-            'data-key': 'cardNumber',
+          slotProps={{
+            htmlInput: { 'data-key': 'cardNumber' },
           }}
-          // eslint-disable-next-line react/jsx-props-no-spreading
           {...textFieldProps.cardNumber}
         />
       )}
@@ -95,10 +94,9 @@ export const PaymentCardBox: React.FunctionComponent<PaymentCardBoxProps> = ({
           onBlur={blurFieldCallback}
           error={!!formErrors.cardHolderName?.length}
           helperText={formErrors.cardHolderName?.join(', ')}
-          inputProps={{
-            'data-key': 'cardHolderName',
+          slotProps={{
+            htmlInput: { 'data-key': 'cardHolderName' },
           }}
-          // eslint-disable-next-line react/jsx-props-no-spreading
           {...textFieldProps.cardHolderName}
         />
       )}
@@ -121,10 +119,9 @@ export const PaymentCardBox: React.FunctionComponent<PaymentCardBoxProps> = ({
               onBlur={blurFieldCallback}
               error={!!formErrors.expirationDate?.length}
               helperText={formErrors.expirationDate?.join(', ')}
-              inputProps={{
-                'data-key': 'expirationDate',
+              slotProps={{
+                htmlInput: { 'data-key': 'expirationDate' },
               }}
-              // eslint-disable-next-line react/jsx-props-no-spreading
               {...textFieldProps.expirationDate}
             />
           </Grid>
@@ -147,14 +144,10 @@ export const PaymentCardBox: React.FunctionComponent<PaymentCardBoxProps> = ({
               onBlur={blurFieldCallback}
               error={!!formErrors.cvv?.length}
               helperText={formErrors.cvv?.join(', ')}
-              InputProps={{
-                endAdornment: <MuiFaIcon icon={faCreditCard} />,
+              slotProps={{
+                input: { endAdornment: <MuiFaIcon icon={faCreditCard} /> },
+                htmlInput: { 'data-key': 'cvv' },
               }}
-              // eslint-disable-next-line react/jsx-no-duplicate-props
-              inputProps={{
-                'data-key': 'cvv',
-              }}
-              // eslint-disable-next-line react/jsx-props-no-spreading
               {...textFieldProps.cvv}
             />
           </Grid>

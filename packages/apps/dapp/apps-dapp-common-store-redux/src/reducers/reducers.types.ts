@@ -1,8 +1,8 @@
-import {
+import type {
   AppStateReducerHittingAction,
   AppStateReducers,
 } from './appState/appState.types';
-import {
+import type {
   EntityDataReducerHittingAction,
   EntityDataReducers,
 } from './entityData/entityData.types';

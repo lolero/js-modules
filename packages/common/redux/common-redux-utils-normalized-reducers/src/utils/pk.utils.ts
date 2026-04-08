@@ -1,11 +1,11 @@
-import {
+import type { ReducerPkUtils } from '../types/pk.types';
+import type {
   DestructedPk,
   Entity,
   PkSchema,
   PkSchemaEdges,
   PkSchemaFields,
 } from '../types/reducers.types';
-import { ReducerPkUtils } from '../types/pk.types';
 
 export const emptyPkSchema: PkSchema<Entity, [], []> = {
   fields: [],
@@ -16,10 +16,9 @@ export const emptyPkSchema: PkSchema<Entity, [], []> = {
 
 /**
  * Get PK of entity
- *
- * @param {Entity} entity - Entity
- * @param {PkSchema} pkSchema - PK schema of reducer's entities
- * @returns {string} PK of entity
+ * @param entity - Entity
+ * @param pkSchema - PK schema of reducer's entities
+ * @returns PK of entity
  */
 export function getPkOfEntity<
   EntityT extends Entity,
@@ -40,11 +39,10 @@ export function getPkOfEntity<
 }
 
 /**
- * Get fields and edges from entity's PK
- *
- * @param {string} pk - Entity's PK
- * @param {PkSchema} pkSchema - PK schema of reducer's entities
- * @returns {DestructedPk} Fields and edges from entity's PK
+ * Get fields and edges from entity PK
+ * @param pk - Entity PK
+ * @param pkSchema - PK schema of reducer's entities
+ * @returns Fields and edges from entity PK
  */
 export function destructPk<
   EntityT extends Entity,
@@ -89,9 +87,8 @@ export function destructPk<
 
 /**
  * Create reducer PK utils
- *
- * @param {PkSchema} pkSchema - PK schema of reducer's entities
- * @returns {object} PK utils
+ * @param pkSchema - PK schema of reducer's entities
+ * @returns PK utils
  */
 export function createReducerPkUtils<
   EntityT extends Entity,

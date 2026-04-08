@@ -1,34 +1,44 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { Repository, SelectQueryBuilder } from 'typeorm';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  jest as jestGlobals,
+} from '@jest/globals';
+import type { TestingModule } from '@nestjs/testing';
+import { Test } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import {
-  RequestEntity,
-  utilApplyFindManyFiltersToQuery,
-  utilApplyFindManySortingAndPaginationToQuery,
-} from '@js-modules/api-nest-utils';
-import {
+import type { KeycloakTokenParsed } from 'keycloak-js';
+import type { Repository, SelectQueryBuilder } from 'typeorm';
+import type {
   KeycloakAdminClient,
   UserRepresentation,
   Users,
 } from '@js-modules/api-nest-keycloak-admin-client-cjs';
 import { KEYCLOAK_ADMIN_CLIENT } from '@js-modules/api-nest-module-auth-keycloak';
-import { KeycloakTokenParsed } from 'keycloak-js';
-import { UsersService } from './users.service';
-import { UsersEntity } from './users.entity';
 import {
-  getUsersFindManyDtoFixture,
-  getUsersEntityFixture,
+  utilApplyFindManyFiltersToQuery,
+  utilApplyFindManySortingAndPaginationToQuery,
+} from '@js-modules/api-nest-utils';
+import type { UsersFindManyDto } from './dtos/users.findMany.dto';
+import type { UsersUpdateOnePartialDto } from './dtos/users.updateOnePartial.dto';
+import { UsersEntity } from './users.entity';
+import { UsersService } from './users.service';
+import { UsersServiceUtils } from './users.service.utils';
+import type { KeycloakUser } from './users.types';
+import {
   getKeycloakUserFixture,
   getKeycloakUserRepresentationFixture,
+  getUsersEntityFixture,
+  getUsersFindManyDtoFixture,
   getUsersUpdateOnePartialDtoFixture,
 } from './users.utils.fixtures';
-import { UsersFindManyDto } from './dtos/users.findMany.dto';
-import { UsersServiceUtils } from './users.service.utils';
-import { KeycloakUser } from './users.types';
-import { UsersUpdateOnePartialDto } from './dtos/users.updateOnePartial.dto';
 
 jest.mock('@js-modules/api-nest-utils', () => {
-  const originalModule = jest.requireActual('@js-modules/api-nest-utils');
+  const originalModule = jest.requireActual<Record<string, unknown>>(
+    '@js-modules/api-nest-utils',
+  );
 
   return {
     __esModule: true,
@@ -43,76 +53,79 @@ describe('UsersService', () => {
   let usersEntity: UsersEntity | null;
   let usersEntities: UsersEntity[];
 
-  const utilApplyFindManyFiltersToQueryMock = jest.mocked(
+  const utilApplyFindManyFiltersToQueryMock = jestGlobals.mocked(
     utilApplyFindManyFiltersToQuery,
   );
-  const utilApplyFindManySortingAndPaginationToQueryMock = jest.mocked(
+  const utilApplyFindManySortingAndPaginationToQueryMock = jestGlobals.mocked(
     utilApplyFindManySortingAndPaginationToQuery,
   );
 
-  let usersRepositoryCreateQueryBuilderMock: jest.Mock;
-  let usersRepositoryQueryBuilderGetManyAndCountMock: jest.Mock;
-  let usersRepositoryQueryBuilderMock: Partial<SelectQueryBuilder<UsersEntity>>;
-  let usersRepositoryCreateMock: jest.Mock;
-  let usersRepositoryFindOneByMock: jest.Mock;
-  let usersRepositorySaveMock: jest.Mock;
-  let usersRepositorySoftRemoveMock: jest.Mock;
-  let usersRepositoryMock: Partial<Repository<UsersEntity>>;
+  let usersRepositoryCreateQueryBuilderMock: jestGlobals.Mock;
+  let usersRepositoryQueryBuilderGetManyAndCountMock: jestGlobals.Mock;
+  let usersRepositoryQueryBuilderMock: SelectQueryBuilder<UsersEntity>;
+  let usersRepositoryCreateMock: jestGlobals.Mock;
+  let usersRepositoryFindOneByMock: jestGlobals.Mock;
+  let usersRepositorySaveMock: jestGlobals.Mock;
+  let usersRepositorySoftRemoveMock: jestGlobals.Mock;
+  let usersRepositoryMock: Repository<UsersEntity>;
 
-  let usersServiceUtilsGetKeycloakUserFromTokenParsedMock: jest.Mock;
-  let usersServiceUtilsGetUpdatedKeycloakUserRepresentationMock: jest.Mock;
-  let usersServiceUtilsMock: Partial<UsersServiceUtils>;
+  let usersServiceUtilsGetKeycloakUserFromTokenParsedMock: jestGlobals.Mock;
+  let usersServiceUtilsGetUpdatedKeycloakUserRepresentationMock: jestGlobals.Mock;
+  let usersServiceUtilsMock: UsersServiceUtils;
 
-  let keycloakAdminClientUsersFindOneMock: jest.Mock;
-  let keycloakAdminClientUsersUpdateMock: jest.Mock;
-  let keycloakAdminClientUsersExecuteActionsEmailMock: jest.Mock;
+  let keycloakAdminClientUsersFindOneMock: jestGlobals.Mock;
+  let keycloakAdminClientUsersUpdateMock: jestGlobals.Mock;
+  let keycloakAdminClientUsersExecuteActionsEmailMock: jestGlobals.Mock;
   let keycloakAdminClientMock: Partial<KeycloakAdminClient>;
 
   let usersService: UsersService;
 
   beforeEach(async () => {
     usersRepositoryQueryBuilderMock = {
-      getManyAndCount: jest.fn(),
-    };
-    usersRepositoryCreateQueryBuilderMock = jest
-      .fn()
-      .mockReturnValue(usersRepositoryQueryBuilderMock);
-    usersRepositoryQueryBuilderGetManyAndCountMock = jest.fn();
+      getManyAndCount: jestGlobals.fn(),
+    } as unknown as SelectQueryBuilder<UsersEntity>;
+    usersRepositoryCreateQueryBuilderMock = jestGlobals.fn();
+    usersRepositoryCreateQueryBuilderMock.mockReturnValue(
+      usersRepositoryQueryBuilderMock,
+    );
+    usersRepositoryQueryBuilderGetManyAndCountMock = jestGlobals.fn();
     Object.assign(usersRepositoryQueryBuilderMock, {
       getManyAndCount: usersRepositoryQueryBuilderGetManyAndCountMock,
     });
     utilApplyFindManyFiltersToQueryMock.mockReturnValue(
-      usersRepositoryQueryBuilderMock as unknown as SelectQueryBuilder<RequestEntity>,
+      usersRepositoryQueryBuilderMock,
     );
     utilApplyFindManySortingAndPaginationToQueryMock.mockReturnValue(
-      usersRepositoryQueryBuilderMock as unknown as SelectQueryBuilder<RequestEntity>,
+      usersRepositoryQueryBuilderMock,
     );
-    usersRepositoryCreateMock = jest.fn();
-    usersRepositoryFindOneByMock = jest.fn();
-    usersRepositorySaveMock = jest
-      .fn()
-      .mockImplementation((usersEntitiesToSave) => usersEntitiesToSave);
-    usersRepositorySoftRemoveMock = jest.fn();
+    usersRepositoryCreateMock = jestGlobals.fn();
+    usersRepositoryFindOneByMock = jestGlobals.fn();
+    usersRepositorySaveMock = jestGlobals.fn();
+    usersRepositorySaveMock.mockImplementation(
+      (usersEntitiesToSave) => usersEntitiesToSave,
+    );
+    usersRepositorySoftRemoveMock = jestGlobals.fn();
     usersRepositoryMock = {
       create: usersRepositoryCreateMock,
       createQueryBuilder: usersRepositoryCreateQueryBuilderMock,
       findOneBy: usersRepositoryFindOneByMock,
       save: usersRepositorySaveMock,
       softRemove: usersRepositorySoftRemoveMock,
-    };
+    } as unknown as Repository<UsersEntity>;
 
-    usersServiceUtilsGetKeycloakUserFromTokenParsedMock = jest.fn();
-    usersServiceUtilsGetUpdatedKeycloakUserRepresentationMock = jest.fn();
+    usersServiceUtilsGetKeycloakUserFromTokenParsedMock = jestGlobals.fn();
+    usersServiceUtilsGetUpdatedKeycloakUserRepresentationMock =
+      jestGlobals.fn();
     usersServiceUtilsMock = {
       getKeycloakUserFromTokenParsed:
         usersServiceUtilsGetKeycloakUserFromTokenParsedMock,
       getUpdatedKeycloakUserRepresentation:
         usersServiceUtilsGetUpdatedKeycloakUserRepresentationMock,
-    };
+    } as unknown as UsersServiceUtils;
 
-    keycloakAdminClientUsersFindOneMock = jest.fn();
-    keycloakAdminClientUsersUpdateMock = jest.fn();
-    keycloakAdminClientUsersExecuteActionsEmailMock = jest.fn();
+    keycloakAdminClientUsersFindOneMock = jestGlobals.fn();
+    keycloakAdminClientUsersUpdateMock = jestGlobals.fn();
+    keycloakAdminClientUsersExecuteActionsEmailMock = jestGlobals.fn();
     keycloakAdminClientMock = {
       users: {
         findOne: keycloakAdminClientUsersFindOneMock,
@@ -316,14 +329,14 @@ describe('UsersService', () => {
       expect(utilApplyFindManyFiltersToQueryMock).toHaveBeenNthCalledWith(
         1,
         usersRepositoryQueryBuilderMock,
-        usersFindManyDto,
+        usersFindManyDto as never,
       );
       expect(
         utilApplyFindManySortingAndPaginationToQueryMock,
       ).toHaveBeenNthCalledWith(
         1,
         usersRepositoryQueryBuilderMock,
-        usersFindManyDto,
+        usersFindManyDto as never,
       );
       expect(
         usersRepositoryQueryBuilderGetManyAndCountMock,

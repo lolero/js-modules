@@ -6,9 +6,7 @@ import type {
 import { isFindManyRange } from '@js-modules/api-nest-utils';
 import { LogEntriesEntity } from '../logEntries.entity';
 
-export class LogEntriesFindManyRangesDateDto
-  implements FindManyRangesDto<LogEntriesEntity>
-{
+export class LogEntriesFindManyRangesDateDto implements FindManyRangesDto<LogEntriesEntity> {
   @isFindManyRange()
   @IsOptional()
   createdAt?: FindManyRange;

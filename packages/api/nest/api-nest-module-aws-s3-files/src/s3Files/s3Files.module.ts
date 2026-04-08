@@ -1,11 +1,11 @@
-import { DynamicModule, Module } from '@nestjs/common';
-import { AwsSdkModule } from 'aws-sdk-v3-nest';
 import { S3Client } from '@aws-sdk/client-s3';
+import { DynamicModule, Module } from '@nestjs/common';
 import { MulterModule } from '@nestjs/platform-express';
-import { AwsS3FilesConfig } from './s3Files.types';
-import { S3FilesService } from './s3Files.service';
+import { AwsSdkModule } from 'aws-sdk-v3-nest';
 import { S3FilesGateway } from './s3Files.gateway';
 import { getAwsProviderS3FilesWebSocketGatewayConfig } from './s3Files.providers';
+import { S3FilesService } from './s3Files.service';
+import { AwsS3FilesConfig } from './s3Files.types';
 
 @Module({})
 export class S3FilesModule {

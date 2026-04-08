@@ -1,4 +1,5 @@
-import React, { useCallback, useState } from 'react';
+import type React from 'react';
+import { useCallback, useState } from 'react';
 
 export type TabUtils<TabValueT> = {
   changeTabCallback: (e: React.SyntheticEvent, tabValue: TabValueT) => void;
@@ -6,11 +7,8 @@ export type TabUtils<TabValueT> = {
 };
 
 /**
- * Utility hook to abstract the management of Material UI Tabs components
- *
- * @param {number} initialTabValue - The initial tab that should be selected on
- *        first render
- *
+ * Utils for  Material UI Tabs components
+ * @param initialTabValue - Initial tab to be selected on first render.
  * @returns {object}
  */
 export function useTabUtils<TabValueT>(

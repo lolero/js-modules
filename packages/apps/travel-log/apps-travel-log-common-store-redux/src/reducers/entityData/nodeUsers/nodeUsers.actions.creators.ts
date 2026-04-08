@@ -1,6 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import {
-  NodeUsersActionTypes,
+import type {
   NodeUsersGetManyFailAction,
   NodeUsersGetManyRequestAction,
   NodeUsersGetManySuccessAction,
@@ -9,6 +8,7 @@ import {
   NodeUsersGetOneSuccessAction,
   NodeUsersUpdateOnePartialSuccessAction,
 } from './nodeUsers.actions.types';
+import { NodeUsersActionTypes } from './nodeUsers.actions.types';
 
 export function createNodeUsersGetOneRequestAction(
   uniqueKeyValue: NodeUsersGetOneRequestAction['requestMetadata']['uniqueKeyValue'],

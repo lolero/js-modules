@@ -4,7 +4,6 @@ RUN apk add --no-cache maven curl bash
 RUN npm install -g pnpm
 COPY . .
 RUN pnpm reset:reset
-RUN pnpm nx run @js-modules/api-nest-module-auth-keycloak:fix-keycloak-types
 RUN pnpm nx run @js-modules/apps-travel-log-web-keycloak-theme:keycloakify:build
 RUN cd packages/apps/travel-log/apps-travel-log-config-docker/service-images/auth-service && ./download-providers.sh
 

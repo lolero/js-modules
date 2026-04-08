@@ -1,26 +1,5 @@
-import {
-  call,
-  CallEffect,
-  ForkEffect,
-  put,
-  PutEffect,
-  takeEvery,
-  takeLatest,
-} from 'redux-saga/effects';
-import { NormalizeEntityDtoArrayResponse } from '@js-modules/common-redux-utils-normalized-reducers';
-import { NodeLogEntriesReducer, NodeLogEntry } from './nodeLogEntries.types';
-import {
-  NodeLogEntriesActionTypes,
-  NodeLogEntriesCreateOneRequestAction,
-  NodeLogEntriesDeleteManyRequestAction,
-  NodeLogEntriesDeleteOneRequestAction,
-  NodeLogEntriesGetManyRequestAction,
-  NodeLogEntriesGetOneRequestAction,
-  NodeLogEntriesUpdateManyPartialWithPatternRequestAction,
-  NodeLogEntriesUpdateOnePartialRequestAction,
-  NodeLogEntriesUpdateOneWholeRequestAction,
-  NodeLogEntriesUpdatePartialReducerMetadataRequestAction,
-} from './nodeLogEntries.actions.types';
+import type { SagaGenerator } from 'typed-redux-saga';
+import { all, call, put, takeEvery, takeLatest } from 'typed-redux-saga';
 import {
   createNodeLogEntriesCreateOneFailAction,
   createNodeLogEntriesCreateOneSuccessAction,
@@ -41,16 +20,19 @@ import {
   createNodeLogEntriesUpdatePartialReducerMetadataFailAction,
   createNodeLogEntriesUpdatePartialReducerMetadataSuccessAction,
 } from './nodeLogEntries.actions.creators';
-import {
-  NodeLogEntriesCreateOneServiceResponse,
-  NodeLogEntriesDeleteManyServiceResponse,
-  NodeLogEntriesDeleteOneServiceResponse,
-  NodeLogEntriesGetManyServiceResponse,
-  NodeLogEntriesGetOneServiceResponse,
-  NodeLogEntriesUpdateManyPartialWithPatternServiceResponse,
-  NodeLogEntriesUpdateOnePartialServiceResponse,
-  NodeLogEntriesUpdateOneWholeServiceResponse,
-} from './nodeLogEntries.services.types';
+import type {
+  NodeLogEntriesCreateOneRequestAction,
+  NodeLogEntriesDeleteManyRequestAction,
+  NodeLogEntriesDeleteOneRequestAction,
+  NodeLogEntriesGetManyRequestAction,
+  NodeLogEntriesGetOneRequestAction,
+  NodeLogEntriesUpdateManyPartialWithPatternRequestAction,
+  NodeLogEntriesUpdateOnePartialRequestAction,
+  NodeLogEntriesUpdateOneWholeRequestAction,
+  NodeLogEntriesUpdatePartialReducerMetadataRequestAction,
+} from './nodeLogEntries.actions.types';
+import { NodeLogEntriesActionTypes } from './nodeLogEntries.actions.types';
+import { normalizeLogEntriesDtoArray } from './nodeLogEntries.normalizer';
 import {
   nodeLogEntriesCreateOneService,
   nodeLogEntriesDeleteManyService,
@@ -61,32 +43,25 @@ import {
   nodeLogEntriesUpdateOnePartialService,
   nodeLogEntriesUpdateOneWholeService,
 } from './nodeLogEntries.services';
-import { normalizeLogEntriesDtoArray } from './nodeLogEntries.normalizer';
 
 export function* nodeLogEntriesUpdatePartialReducerMetadataSaga({
   requestMetadata,
   requestId,
-}: NodeLogEntriesUpdatePartialReducerMetadataRequestAction): Generator<
-  PutEffect,
-  void,
-  void
-> {
+}: NodeLogEntriesUpdatePartialReducerMetadataRequestAction): SagaGenerator<void> {
   try {
     const { partialReducerMetadata } = requestMetadata;
 
-    yield put(
+    yield* put(
       createNodeLogEntriesUpdatePartialReducerMetadataSuccessAction(
         partialReducerMetadata,
         requestId,
       ),
     );
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (err: any) {
-    // eslint-disable-next-line no-console
-    console.error(err.message);
-    yield put(
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    yield* put(
       createNodeLogEntriesUpdatePartialReducerMetadataFailAction(
-        err.message,
+        message,
         requestId,
       ),
     );
@@ -96,105 +71,82 @@ export function* nodeLogEntriesUpdatePartialReducerMetadataSaga({
 export function* nodeLogEntriesCreateOneSaga({
   requestMetadata,
   requestId,
-}: NodeLogEntriesCreateOneRequestAction): Generator<
-  CallEffect | PutEffect,
-  void,
-  NodeLogEntriesCreateOneServiceResponse | NodeLogEntriesReducer['data']
-> {
+}: NodeLogEntriesCreateOneRequestAction): SagaGenerator<void> {
   const { entity } = requestMetadata;
 
   try {
-    const { data: logEntriesDto, status: statusCode } = (yield call(
+    const { data: logEntriesDto, status: statusCode } = yield* call(
       nodeLogEntriesCreateOneService,
       entity,
-    )) as NodeLogEntriesCreateOneServiceResponse;
+    );
 
-    const normalizedNodeLogEntries = (yield call(normalizeLogEntriesDtoArray, [
-      logEntriesDto,
-    ])) as NodeLogEntriesReducer['data'];
+    const { reducerData: normalizedNodeLogEntries } = yield* call(
+      normalizeLogEntriesDtoArray,
+      [logEntriesDto],
+    );
 
-    yield put(
+    yield* put(
       createNodeLogEntriesCreateOneSuccessAction(
         normalizedNodeLogEntries,
         requestId,
         statusCode,
       ),
     );
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (err: any) {
-    // eslint-disable-next-line no-console
-    console.log(err.message);
-    yield put(createNodeLogEntriesCreateOneFailAction(err.message, requestId));
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    yield* put(createNodeLogEntriesCreateOneFailAction(message, requestId));
   }
 }
 
 export function* nodeLogEntriesGetOneSaga({
   requestMetadata,
   requestId,
-}: NodeLogEntriesGetOneRequestAction): Generator<
-  CallEffect | PutEffect,
-  void,
-  NodeLogEntriesGetOneServiceResponse | NodeLogEntriesReducer['data']
-> {
+}: NodeLogEntriesGetOneRequestAction): SagaGenerator<void> {
   const { uniqueKeyValue, uniqueKeyName } = requestMetadata;
 
   try {
-    const { data: logEntriesDto, status: statusCode } = (yield call(
+    const { data: logEntriesDto, status: statusCode } = yield* call(
       nodeLogEntriesGetOneService,
       uniqueKeyValue,
       uniqueKeyName,
-    )) as NodeLogEntriesGetOneServiceResponse;
+    );
 
-    const normalizedNodeLogEntries = (yield call(normalizeLogEntriesDtoArray, [
-      logEntriesDto,
-    ])) as NodeLogEntriesReducer['data'];
+    const { reducerData: normalizedNodeLogEntries } = yield* call(
+      normalizeLogEntriesDtoArray,
+      [logEntriesDto],
+    );
 
-    yield put(
+    yield* put(
       createNodeLogEntriesGetOneSuccessAction(
         normalizedNodeLogEntries,
         requestId,
         statusCode,
       ),
     );
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (err: any) {
-    // eslint-disable-next-line no-console
-    console.log(err.message);
-    yield put(createNodeLogEntriesGetOneFailAction(err.message, requestId));
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    yield* put(createNodeLogEntriesGetOneFailAction(message, requestId));
   }
 }
 
 export function* nodeLogEntriesGetManySaga({
   requestMetadata,
   requestId,
-}: NodeLogEntriesGetManyRequestAction): Generator<
-  CallEffect | PutEffect,
-  void,
-  | NodeLogEntriesGetManyServiceResponse
-  | NormalizeEntityDtoArrayResponse<NodeLogEntry>
-> {
+}: NodeLogEntriesGetManyRequestAction): SagaGenerator<void> {
   const { findManyDto } = requestMetadata;
 
   try {
     const {
       data: { entities: logEntriesDtoArray, total: getManyTotal },
       status: statusCode,
-    } = (yield call(
-      nodeLogEntriesGetManyService,
-      findManyDto,
-    )) as NodeLogEntriesGetManyServiceResponse;
+    } = yield* call(nodeLogEntriesGetManyService, findManyDto);
 
     const {
       reducerData: normalizedNodeLogEntries,
       entityPksSorted: getManyPksSorted,
-    } = (yield call(
-      normalizeLogEntriesDtoArray,
-      logEntriesDtoArray,
-    )) as NormalizeEntityDtoArrayResponse<NodeLogEntry>;
+    } = yield* call(normalizeLogEntriesDtoArray, logEntriesDtoArray);
 
-    yield put(
+    yield* put(
       createNodeLogEntriesGetManySuccessAction(
         normalizedNodeLogEntries,
         {
@@ -206,49 +158,40 @@ export function* nodeLogEntriesGetManySaga({
         true,
       ),
     );
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (err: any) {
-    // eslint-disable-next-line no-console
-    console.log(err.message);
-    yield put(createNodeLogEntriesGetManyFailAction(err.message, requestId));
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    yield* put(createNodeLogEntriesGetManyFailAction(message, requestId));
   }
 }
 
 export function* nodeLogEntriesUpdateOneWholeSaga({
   requestMetadata,
   requestId,
-}: NodeLogEntriesUpdateOneWholeRequestAction): Generator<
-  CallEffect | PutEffect,
-  void,
-  NodeLogEntriesUpdateOneWholeServiceResponse | NodeLogEntriesReducer['data']
-> {
+}: NodeLogEntriesUpdateOneWholeRequestAction): SagaGenerator<void> {
   const { entity } = requestMetadata;
 
   try {
-    const { data: logEntriesDto, status: statusCode } = (yield call(
+    const { data: logEntriesDto, status: statusCode } = yield* call(
       nodeLogEntriesUpdateOneWholeService,
       entity,
-    )) as NodeLogEntriesUpdateOneWholeServiceResponse;
+    );
 
-    const normalizedNodeLogEntries = (yield call(normalizeLogEntriesDtoArray, [
-      logEntriesDto,
-    ])) as NodeLogEntriesReducer['data'];
+    const { reducerData: normalizedNodeLogEntries } = yield* call(
+      normalizeLogEntriesDtoArray,
+      [logEntriesDto],
+    );
 
-    yield put(
+    yield* put(
       createNodeLogEntriesUpdateOneWholeSuccessAction(
         normalizedNodeLogEntries,
         requestId,
         statusCode,
       ),
     );
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (err: any) {
-    // eslint-disable-next-line no-console
-    console.log(err.message);
-    yield put(
-      createNodeLogEntriesUpdateOneWholeFailAction(err.message, requestId),
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    yield* put(
+      createNodeLogEntriesUpdateOneWholeFailAction(message, requestId),
     );
   }
 }
@@ -256,38 +199,32 @@ export function* nodeLogEntriesUpdateOneWholeSaga({
 export function* nodeLogEntriesUpdateOnePartialSaga({
   requestMetadata,
   requestId,
-}: NodeLogEntriesUpdateOnePartialRequestAction): Generator<
-  CallEffect | PutEffect,
-  void,
-  NodeLogEntriesUpdateOnePartialServiceResponse | NodeLogEntriesReducer['data']
-> {
+}: NodeLogEntriesUpdateOnePartialRequestAction): SagaGenerator<void> {
   const { entityPk, partialEntity } = requestMetadata;
 
   try {
-    const { data: logEntriesDto, status: statusCode } = (yield call(
+    const { data: logEntriesDto, status: statusCode } = yield* call(
       nodeLogEntriesUpdateOnePartialService,
       entityPk,
       partialEntity,
-    )) as NodeLogEntriesUpdateOnePartialServiceResponse;
+    );
 
-    const normalizedNodeLogEntries = (yield call(normalizeLogEntriesDtoArray, [
-      logEntriesDto,
-    ])) as NodeLogEntriesReducer['data'];
+    const { reducerData: normalizedNodeLogEntries } = yield* call(
+      normalizeLogEntriesDtoArray,
+      [logEntriesDto],
+    );
 
-    yield put(
+    yield* put(
       createNodeLogEntriesUpdateOnePartialSuccessAction(
         normalizedNodeLogEntries,
         requestId,
         statusCode,
       ),
     );
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (err: any) {
-    // eslint-disable-next-line no-console
-    console.log(err.message);
-    yield put(
-      createNodeLogEntriesUpdateOnePartialFailAction(err.message, requestId),
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    yield* put(
+      createNodeLogEntriesUpdateOnePartialFailAction(message, requestId),
     );
   }
 }
@@ -295,41 +232,33 @@ export function* nodeLogEntriesUpdateOnePartialSaga({
 export function* nodeLogEntriesUpdateManyPartialWithPatternSaga({
   requestMetadata,
   requestId,
-}: NodeLogEntriesUpdateManyPartialWithPatternRequestAction): Generator<
-  CallEffect | PutEffect,
-  void,
-  | NodeLogEntriesUpdateManyPartialWithPatternServiceResponse
-  | NodeLogEntriesReducer['data']
-> {
+}: NodeLogEntriesUpdateManyPartialWithPatternRequestAction): SagaGenerator<void> {
   const { entityPks, partialEntity } = requestMetadata;
 
   try {
-    const { data: logEntriesDtoArray, status: statusCode } = (yield call(
+    const { data: logEntriesDtoArray, status: statusCode } = yield* call(
       nodeLogEntriesUpdateManyPartialWithPatternService,
       entityPks,
       partialEntity,
-    )) as NodeLogEntriesUpdateManyPartialWithPatternServiceResponse;
+    );
 
-    const normalizedNodeLogEntries = (yield call(
+    const { reducerData: normalizedNodeLogEntries } = yield* call(
       normalizeLogEntriesDtoArray,
       logEntriesDtoArray,
-    )) as NodeLogEntriesReducer['data'];
+    );
 
-    yield put(
+    yield* put(
       createNodeLogEntriesUpdateManyPartialWithPatternSuccessAction(
         normalizedNodeLogEntries,
         requestId,
         statusCode,
       ),
     );
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (err: any) {
-    // eslint-disable-next-line no-console
-    console.log(err.message);
-    yield put(
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    yield* put(
       createNodeLogEntriesUpdateManyPartialWithPatternFailAction(
-        err.message,
+        message,
         requestId,
       ),
     );
@@ -339,102 +268,90 @@ export function* nodeLogEntriesUpdateManyPartialWithPatternSaga({
 export function* nodeLogEntriesDeleteOneSaga({
   requestMetadata,
   requestId,
-}: NodeLogEntriesDeleteOneRequestAction): Generator<
-  CallEffect | PutEffect,
-  void,
-  NodeLogEntriesDeleteOneServiceResponse
-> {
+}: NodeLogEntriesDeleteOneRequestAction): SagaGenerator<void> {
   const { entityPk } = requestMetadata;
 
   try {
-    const { status: statusCode } = (yield call(
+    const { status: statusCode } = yield* call(
       nodeLogEntriesDeleteOneService,
       entityPk,
-    )) as NodeLogEntriesDeleteOneServiceResponse;
+    );
 
-    yield put(
+    yield* put(
       createNodeLogEntriesDeleteOneSuccessAction(
         [entityPk],
         requestId,
         statusCode,
       ),
     );
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (err: any) {
-    // eslint-disable-next-line no-console
-    console.log(err.message);
-    yield put(createNodeLogEntriesDeleteOneFailAction(err.message, requestId));
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    yield* put(createNodeLogEntriesDeleteOneFailAction(message, requestId));
   }
 }
 
 export function* nodeLogEntriesDeleteManySaga({
   requestMetadata,
   requestId,
-}: NodeLogEntriesDeleteManyRequestAction): Generator<
-  CallEffect | PutEffect,
-  void,
-  NodeLogEntriesDeleteManyServiceResponse
-> {
+}: NodeLogEntriesDeleteManyRequestAction): SagaGenerator<void> {
   const { entityPks } = requestMetadata;
 
   try {
-    const { status: statusCode } = (yield call(
+    const { status: statusCode } = yield* call(
       nodeLogEntriesDeleteManyService,
       entityPks,
-    )) as NodeLogEntriesDeleteManyServiceResponse;
+    );
 
-    yield put(
+    yield* put(
       createNodeLogEntriesDeleteManySuccessAction(
         entityPks,
         requestId,
         statusCode,
       ),
     );
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (err: any) {
-    // eslint-disable-next-line no-console
-    console.log(err.message);
-    yield put(createNodeLogEntriesDeleteManyFailAction(err.message, requestId));
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    yield* put(createNodeLogEntriesDeleteManyFailAction(message, requestId));
   }
 }
 
-export function* nodeLogEntriesSagas(): Generator<ForkEffect, void, void> {
-  yield takeEvery(
-    NodeLogEntriesActionTypes.NODE_LOG_ENTRIES__UPDATE_PARTIAL_REDUCER_METADATA__REQUEST,
-    nodeLogEntriesUpdatePartialReducerMetadataSaga,
-  );
-  yield takeLatest(
-    NodeLogEntriesActionTypes.NODE_LOG_ENTRIES__CREATE_ONE__REQUEST,
-    nodeLogEntriesCreateOneSaga,
-  );
-  yield takeLatest(
-    NodeLogEntriesActionTypes.NODE_LOG_ENTRIES__GET_ONE__REQUEST,
-    nodeLogEntriesGetOneSaga,
-  );
-  yield takeLatest(
-    NodeLogEntriesActionTypes.NODE_LOG_ENTRIES__GET_MANY__REQUEST,
-    nodeLogEntriesGetManySaga,
-  );
-  yield takeLatest(
-    NodeLogEntriesActionTypes.NODE_LOG_ENTRIES__UPDATE_ONE_WHOLE__REQUEST,
-    nodeLogEntriesUpdateOneWholeSaga,
-  );
-  yield takeLatest(
-    NodeLogEntriesActionTypes.NODE_LOG_ENTRIES__UPDATE_ONE_PARTIAL__REQUEST,
-    nodeLogEntriesUpdateOnePartialSaga,
-  );
-  yield takeLatest(
-    NodeLogEntriesActionTypes.NODE_LOG_ENTRIES__UPDATE_MANY_PARTIAL_WITH_PATTERN__REQUEST,
-    nodeLogEntriesUpdateManyPartialWithPatternSaga,
-  );
-  yield takeLatest(
-    NodeLogEntriesActionTypes.NODE_LOG_ENTRIES__DELETE_ONE__REQUEST,
-    nodeLogEntriesDeleteOneSaga,
-  );
-  yield takeLatest(
-    NodeLogEntriesActionTypes.NODE_LOG_ENTRIES__DELETE_MANY__REQUEST,
-    nodeLogEntriesDeleteManySaga,
-  );
+export function* nodeLogEntriesSagas(): SagaGenerator<void> {
+  yield* all([
+    takeEvery(
+      NodeLogEntriesActionTypes.NODE_LOG_ENTRIES__UPDATE_PARTIAL_REDUCER_METADATA__REQUEST,
+      nodeLogEntriesUpdatePartialReducerMetadataSaga,
+    ),
+    takeLatest(
+      NodeLogEntriesActionTypes.NODE_LOG_ENTRIES__CREATE_ONE__REQUEST,
+      nodeLogEntriesCreateOneSaga,
+    ),
+    takeLatest(
+      NodeLogEntriesActionTypes.NODE_LOG_ENTRIES__GET_ONE__REQUEST,
+      nodeLogEntriesGetOneSaga,
+    ),
+    takeLatest(
+      NodeLogEntriesActionTypes.NODE_LOG_ENTRIES__GET_MANY__REQUEST,
+      nodeLogEntriesGetManySaga,
+    ),
+    takeLatest(
+      NodeLogEntriesActionTypes.NODE_LOG_ENTRIES__UPDATE_ONE_WHOLE__REQUEST,
+      nodeLogEntriesUpdateOneWholeSaga,
+    ),
+    takeLatest(
+      NodeLogEntriesActionTypes.NODE_LOG_ENTRIES__UPDATE_ONE_PARTIAL__REQUEST,
+      nodeLogEntriesUpdateOnePartialSaga,
+    ),
+    takeLatest(
+      NodeLogEntriesActionTypes.NODE_LOG_ENTRIES__UPDATE_MANY_PARTIAL_WITH_PATTERN__REQUEST,
+      nodeLogEntriesUpdateManyPartialWithPatternSaga,
+    ),
+    takeLatest(
+      NodeLogEntriesActionTypes.NODE_LOG_ENTRIES__DELETE_ONE__REQUEST,
+      nodeLogEntriesDeleteOneSaga,
+    ),
+    takeLatest(
+      NodeLogEntriesActionTypes.NODE_LOG_ENTRIES__DELETE_MANY__REQUEST,
+      nodeLogEntriesDeleteManySaga,
+    ),
+  ]);
 }

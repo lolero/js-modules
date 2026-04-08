@@ -1,11 +1,8 @@
 {
-  "extends": "../../../../tsconfig.build.json",
-  "compilerOptions": {
-    "lib": ["esnext"],
-    "jsx": "react-native",
-    "composite": true,
-    "rootDir": "src",
-    "outDir": "build"
-  },
-  "include": ["./src"]
+  "extends": [
+    "../../../../tsconfig.build.json",
+    "../../../../scripts/tsconfig/tsconfig.react-native.build.json"
+  ],
+  "compilerOptions": {},
+  "include": ["src"]
 }

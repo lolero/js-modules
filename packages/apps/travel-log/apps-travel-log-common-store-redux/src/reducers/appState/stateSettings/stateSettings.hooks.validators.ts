@@ -1,22 +1,24 @@
-import { useCallback, useState } from 'react';
 import _isEmpty from 'lodash/isEmpty';
-import pickBy from 'lodash/pickBy';
-import isEmpty from 'validator/lib/isEmpty';
-import isEmail from 'validator/lib/isEmail';
-import { UsersUpdateOnePartialDto } from '@js-modules/apps-travel-log-api-modules-core/src/modules/users/dtos/users.updateOnePartial.dto';
-import {
-  FormErrors,
-  FormValidator,
-  validateDto,
-} from '@js-modules/web-react-utils';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
-import { StateSettingsReducer } from './stateSettings.types';
+import pickBy from 'lodash/pickBy';
+import { useCallback, useState } from 'react';
+import isEmail from 'validator/lib/isEmail';
+import isEmpty from 'validator/lib/isEmpty';
+// import { UsersUpdateOnePartialDto } from '@js-modules/apps-travel-log-api-modules-core/src/modules/users/dtos/users.updateOnePartial.dto';
+import type {
+  FormErrors,
+  FormValidator,
+  // validateDto,
+} from '@js-modules/common-react-utils';
+import type { ClassObject } from '@js-modules/common-utils-general';
 import { useStateSettingsReducerMetadata } from './stateSettings.hooks';
+import type { StateSettingsReducer } from './stateSettings.types';
 
-export type ProfilePartialUnsavedValidator = NonNullable<
-  StateSettingsReducer['metadata']['profilePartialUnsaved']
+export type ProfilePartialUnsavedValidator = ClassObject<
+  NonNullable<StateSettingsReducer['metadata']['profilePartialUnsaved']>
 >;
+
 export function useStateSettingsValidateProfilePartialUnsaved(): FormValidator<ProfilePartialUnsavedValidator> {
   const { profilePartialUnsaved } = useStateSettingsReducerMetadata();
 

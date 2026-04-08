@@ -1,7 +1,10 @@
-import { SelectQueryBuilder, WhereExpressionBuilder } from 'typeorm';
 import keys from 'lodash/keys';
+import type { SelectQueryBuilder, WhereExpressionBuilder } from 'typeorm';
 import { camelToSnakeCaseWithAcronyms } from '@js-modules/common-utils-general-cjs';
-import { FindManyUniqueKeysDto, RequestEntity } from '../types/types.requests';
+import type {
+  FindManyUniqueKeysDto,
+  RequestEntity,
+} from '../types/types.requests';
 
 export function utilGetFindManyUniqueKeysWhereFactory<
   EntityT extends RequestEntity,

@@ -1,9 +1,9 @@
-import React from 'react';
+import { Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
+import type React from 'react';
 import { useStateSettingsReducerMetadata } from '@js-modules/apps-travel-log-common-store-redux';
-import { Typography } from '@mui/material';
 
 const formControlSx = {
   display: 'flex',

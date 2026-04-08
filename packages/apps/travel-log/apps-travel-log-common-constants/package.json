@@ -1,17 +1,15 @@
 {
-  "private": true,
   "name": "@js-modules/apps-travel-log-common-constants",
-  "description": "Apps Travel Log Common Constants",
   "version": "0.0.0",
+  "private": true,
+  "description": "Apps Travel Log Common Constants",
   "license": "MIT",
   "main": "build/index",
   "react-native": "src/index.ts",
   "files": [
     "build"
   ],
-  "scripts": {
-    "build": "tsc -b tsconfig.build.json"
-  },
+  "scripts": {},
   "dependencies": {
     "@js-modules/common-utils-general": "workspace:^"
   }

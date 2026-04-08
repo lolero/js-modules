@@ -1,6 +1,6 @@
 import { IsString } from 'class-validator';
-import { isNumberOrString } from '../validators/validator.isNumberOrString';
 import { EntityUniqueKeyValue } from '../types/types.requests';
+import { isNumberOrString } from '../validators/validator.isNumberOrString';
 
 export class DtoDeleteMany {
   @IsString()

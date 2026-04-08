@@ -1,5 +1,6 @@
-import { SelectQueryBuilder } from 'typeorm';
-import {
+import { beforeEach, describe, expect, it, jest } from '@jest/globals';
+import type { SelectQueryBuilder } from 'typeorm';
+import type {
   FindManyRelationsDto,
   FindManyUniqueKeysDto,
   RequestEntity,
@@ -21,11 +22,10 @@ type TestEntity = RequestEntity & {
   relation2?: RelationEntity2;
 };
 
-class TestFindManyRelationsDto implements FindManyRelationsDto<TestEntity> {
+type TestFindManyRelationsDto = FindManyRelationsDto<TestEntity> & {
   relation1: FindManyUniqueKeysDto<RelationEntity1>;
-
   relation2: FindManyUniqueKeysDto<RelationEntity2>;
-}
+};
 
 describe('utilApplyFindManyRelationsFiltersToQuery', () => {
   const queryAlias = 'entity';
@@ -34,7 +34,7 @@ describe('utilApplyFindManyRelationsFiltersToQuery', () => {
   let queryBuilderInnerJoinAndSelectMock: jest.Mock;
   let queryBuilderWhereMock: jest.Mock;
   let queryBuilderOrWhereMock: jest.Mock;
-  let queryBuilderMock: Partial<SelectQueryBuilder<TestEntity>>;
+  let queryBuilderMock: SelectQueryBuilder<TestEntity>;
 
   beforeEach(() => {
     queryBuilderMock = {
@@ -42,7 +42,7 @@ describe('utilApplyFindManyRelationsFiltersToQuery', () => {
       innerJoin: jest.fn(),
       where: jest.fn(),
       orWhere: jest.fn(),
-    };
+    } as unknown as SelectQueryBuilder<TestEntity>;
     queryBuilderInnerJoinAndSelectMock = jest
       .fn()
       .mockReturnValue(queryBuilderMock);
@@ -74,7 +74,7 @@ describe('utilApplyFindManyRelationsFiltersToQuery', () => {
     };
 
     utilApplyFindManyRelationsFiltersToQuery(
-      queryBuilderMock as SelectQueryBuilder<TestEntity>,
+      queryBuilderMock,
       findManyRelationsDto,
     );
 

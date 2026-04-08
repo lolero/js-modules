@@ -1,17 +1,15 @@
 {
   "name": "@js-modules/web-styles-material-ui",
-  "description": "Web Styles Material UI",
   "version": "0.0.0",
+  "private": true,
+  "description": "Web Styles Material UI",
   "license": "MIT",
   "main": "build/index",
   "files": [
     "build"
   ],
-  "scripts": {
-    "build": "tsc -b tsconfig.build.json"
-  },
+  "scripts": {},
   "dependencies": {
-    "@mui/material": "^7.3.9"
-  },
-  "eslintConfig": {}
+    "@mui/material": "^9.0.0"
+  }
 }

@@ -1,8 +1,7 @@
-import React from 'react';
-import Box from '@mui/material/Box';
-import { BackIconButton, MuiFaIcon } from '@js-modules/web-react-utils';
-import Fab from '@mui/material/Fab';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons/faPenToSquare';
+import Box from '@mui/material/Box';
+import Fab from '@mui/material/Fab';
+import type React from 'react';
 import { Link } from 'react-router-dom';
 import {
   WebModulesPrivate,
@@ -10,6 +9,7 @@ import {
   WebSubModulesSettingsProfile,
 } from '@js-modules/apps-travel-log-common-constants';
 import { routesMetadataPrivate } from '@js-modules/apps-travel-log-common-react';
+import { BackIconButton, MuiFaIcon } from '@js-modules/web-react-utils';
 import { SettingsProfileWorkspaceActionsMenu } from './SettingsProfileWorkspaceActionsMenu';
 
 export const SettingsProfileWorkspaceTopToolbar: React.FC = () => {

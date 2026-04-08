@@ -1,10 +1,8 @@
+import { describe, expect, it } from '@jest/globals';
 import { createInitialState } from './initialState.utils';
-import {
-  TestEntity,
-  testInitialReducerMetadata,
-  TestReducer,
-} from './spec.utils';
 import { selectReducerProp } from './selectors';
+import type { TestEntity, TestReducer } from './spec.utils';
+import { testInitialReducerMetadata } from './spec.utils';
 
 describe('selectors', () => {
   describe('selectReducerProp', () => {

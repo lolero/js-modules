@@ -6,12 +6,12 @@ PDF chat application with Flask backend and LangChain.
 
 From this package directory (`packages/apps/langchain/apps-langchain-5-pdf`):
 
-| Command | Description |
-|---------|-------------|
-| `inv init-db` | Initialize the SQLite database |
-| `inv dev` | Run Flask server on port 8000 |
+| Command          | Description                        |
+| ---------------- | ---------------------------------- |
+| `inv init-db`    | Initialize the SQLite database     |
+| `inv dev`        | Run Flask server on port 8000      |
 | `inv dev-worker` | Run Celery worker with auto-reload |
-| `inv redis` | Start Redis server (Docker) |
+| `inv redis`      | Start Redis server (Docker)        |
 
 Run `inv --list` to see all available tasks.
 
@@ -19,7 +19,7 @@ Run `inv --list` to see all available tasks.
 
 ```bash
 # From monorepo root - install all Python dependencies
-pnpm install:py
+pnpm install:python
 
 # Copy env file and fill in your keys
 cd packages/apps/langchain/apps-langchain-5-pdf

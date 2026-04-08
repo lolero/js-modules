@@ -1,12 +1,10 @@
-import {
-  createMaterialUiTheme,
-  GetThemeComponents,
-} from '@js-modules/web-styles-material-ui';
-import { Theme } from '@mui/material/styles';
 import { drawerClasses } from '@mui/material/Drawer';
+import type { Theme } from '@mui/material/styles';
 import { tabClasses } from '@mui/material/Tab';
 import { ThemePalette } from '@js-modules/apps-travel-log-common-constants';
 import { CSS_CLASSNAME__NAV_LEFT_DRAWER } from '@js-modules/web-react-nav';
+import type { GetThemeComponents } from '@js-modules/web-styles-material-ui';
+import { createMaterialUiTheme } from '@js-modules/web-styles-material-ui';
 
 export const getThemeComponents: GetThemeComponents = (baseTheme: Theme) => ({
   MuiDrawer: {

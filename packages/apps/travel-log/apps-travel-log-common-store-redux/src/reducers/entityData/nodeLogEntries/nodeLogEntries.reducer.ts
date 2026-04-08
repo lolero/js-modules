@@ -6,15 +6,12 @@ import {
   handleSavePartialReducerMetadata,
   handleSaveWholeEntities,
 } from '@js-modules/common-redux-utils-normalized-reducers';
-import { NodeLogEntriesReducer } from './nodeLogEntries.types';
+import type { NodeLogEntriesReducerHittingAction } from './nodeLogEntries.actions.types';
+import { NodeLogEntriesActionTypes } from './nodeLogEntries.actions.types';
 import { nodeLogEntriesInitialState } from './nodeLogEntries.initialState';
-import {
-  NodeLogEntriesActionTypes,
-  NodeLogEntriesReducerHittingAction,
-} from './nodeLogEntries.actions.types';
+import type { NodeLogEntriesReducer } from './nodeLogEntries.types';
 
 export function nodeLogEntriesReducer(
-  // eslint-disable-next-line default-param-last
   state: NodeLogEntriesReducer = nodeLogEntriesInitialState,
   action: NodeLogEntriesReducerHittingAction,
 ): NodeLogEntriesReducer {

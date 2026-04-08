@@ -1,27 +1,28 @@
-import React, { useCallback, useMemo } from 'react';
-import { useMenuUtils, MuiFaIcon } from '@js-modules/web-react-utils';
-import IconButton from '@mui/material/IconButton';
-import Menu from '@mui/material/Menu';
-import Avatar from '@mui/material/Avatar';
-import MenuItem from '@mui/material/MenuItem';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemIcon from '@mui/material/ListItemIcon';
+import { faCopy } from '@fortawesome/free-solid-svg-icons/faCopy';
+import { faMoon } from '@fortawesome/free-solid-svg-icons/faMoon';
 import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons/faRightFromBracket';
 import { faSun } from '@fortawesome/free-solid-svg-icons/faSun';
-import { faMoon } from '@fortawesome/free-solid-svg-icons/faMoon';
-import {
-  useStateAuthLogout,
-  useStateMainUpdatePartialReducerMetadata,
-  useStateSettingsSignout,
-} from '@js-modules/apps-travel-log-common-store-redux';
+import Avatar from '@mui/material/Avatar';
+import IconButton from '@mui/material/IconButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import startCase from 'lodash/startCase';
+import type React from 'react';
+import { useCallback, useMemo } from 'react';
 import {
   ThemePalette,
   WEB_CLIENT__URI__TRAVEL_LOG,
   WebModulesPublic,
 } from '@js-modules/apps-travel-log-common-constants';
-import startCase from 'lodash/startCase';
-import { faCopy } from '@fortawesome/free-solid-svg-icons/faCopy';
 import { routesMetadataPublic } from '@js-modules/apps-travel-log-common-react';
+import {
+  useStateAuthLogout,
+  useStateMainUpdatePartialReducerMetadata,
+  useStateSettingsSignout,
+} from '@js-modules/apps-travel-log-common-store-redux';
+import { MuiFaIcon, useMenuUtils } from '@js-modules/web-react-utils';
 
 export const PrivateWorkspaceAccountMenu: React.FC = () => {
   const { menuAnchor, openMenuCallback, closeMenuCallback } = useMenuUtils();
@@ -46,11 +47,13 @@ export const PrivateWorkspaceAccountMenu: React.FC = () => {
   );
 
   const username = useMemo(() => {
-    return startCase(tokens?.id.metadata.given_name ?? '');
+    return startCase(
+      (tokens?.id.metadata.given_name as string | undefined) ?? '',
+    );
   }, [tokens?.id.metadata.given_name]);
 
   const copyTokenCallback = useCallback(() => {
-    navigator.clipboard.writeText(tokens!.access.token);
+    void navigator.clipboard.writeText(tokens!.access.token);
   }, [tokens]);
 
   const toggleThemeCallback = useCallback(() => {

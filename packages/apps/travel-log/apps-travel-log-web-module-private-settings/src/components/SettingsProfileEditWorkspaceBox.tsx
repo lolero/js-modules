@@ -1,6 +1,6 @@
-import React from 'react';
-import { PrivateWorkspaceBox } from '@js-modules/apps-travel-log-web-workspace-private';
+import type React from 'react';
 import { WebSubModulesSettingsProfile } from '@js-modules/apps-travel-log-common-constants';
+import { PrivateWorkspaceBox } from '@js-modules/apps-travel-log-web-workspace-private';
 import { SettingsProfileEditWorkspaceContentBox } from './SettingsProfileEditWorkspaceContentBox';
 import { SettingsProfileEditWorkspaceTopToolbar } from './SettingsProfileEditWorkspaceTopToolbar';
 

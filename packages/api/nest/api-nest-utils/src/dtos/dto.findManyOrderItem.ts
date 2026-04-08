@@ -5,9 +5,9 @@ import {
   RequestEntity,
 } from '../types/types.requests';
 
-export class DtoFindManyOrderItem<EntityT extends RequestEntity>
-  implements FindManyOrderItemDto<EntityT>
-{
+export class DtoFindManyOrderItem<
+  EntityT extends RequestEntity,
+> implements FindManyOrderItemDto<EntityT> {
   @IsString()
   entityPropName: keyof EntityT;
 

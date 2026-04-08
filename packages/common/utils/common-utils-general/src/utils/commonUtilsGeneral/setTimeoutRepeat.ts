@@ -1,13 +1,13 @@
-import noop from 'lodash/noop';
 import { isUndefined } from 'lodash';
+import noop from 'lodash/noop';
 
 export type TimeoutRepeat = {
-  timeout: number;
+  timeout: ReturnType<typeof setTimeout>;
   clearTimeoutCallback: () => void;
 };
 
 export function setTimeoutRepeat(
-  callback: (...args: any[]) => void,
+  callback: (...args: never[]) => void,
   interval: number,
   initialDelay?: number,
 ): TimeoutRepeat {

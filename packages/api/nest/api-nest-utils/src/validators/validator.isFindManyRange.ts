@@ -11,7 +11,7 @@ import isArray from 'lodash/isArray';
   async: false,
 })
 class ValidatorIsFindManyRange implements ValidatorConstraintInterface {
-  validate(value: any) {
+  validate(value: unknown) {
     if (!isArray(value)) {
       return false;
     }
@@ -38,7 +38,7 @@ class ValidatorIsFindManyRange implements ValidatorConstraintInterface {
 }
 
 export function isFindManyRange(validationOptions?: ValidationOptions) {
-  return function (object: Object, propertyName: string) {
+  return function (object: object, propertyName: string) {
     registerDecorator({
       target: object.constructor,
       propertyName,

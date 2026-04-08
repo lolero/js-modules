@@ -3,15 +3,12 @@ import {
   handleRequest,
   handleSavePartialReducerMetadata,
 } from '@js-modules/common-redux-utils-normalized-reducers';
-import { StateMainReducer } from './stateMain.types';
+import type { StateMainReducerHittingAction } from './stateMain.actions.types';
+import { StateMainActionTypes } from './stateMain.actions.types';
 import { stateMainInitialState } from './stateMain.initialState';
-import {
-  StateMainActionTypes,
-  StateMainReducerHittingAction,
-} from './stateMain.actions.types';
+import type { StateMainReducer } from './stateMain.types';
 
 export function stateMainReducer(
-  // eslint-disable-next-line default-param-last
   state: StateMainReducer = stateMainInitialState,
   action: StateMainReducerHittingAction,
 ): StateMainReducer {

@@ -1,15 +1,15 @@
 import { Controller, Get, Param, Query } from '@nestjs/common';
 import {
-  EntityUniqueKeyValue,
   FindManyResponse,
   InterceptorSerialize,
 } from '@js-modules/api-nest-utils';
+import type { EntityUniqueKeyValue } from '@js-modules/api-nest-utils';
 import { ApiControllersTravelLog } from '@js-modules/apps-travel-log-common-constants-cjs';
-import { UsersService } from './users.service';
-import { UsersEntity } from './users.entity';
-import { UsersPublicDto } from './dtos/users.public.dto';
-import { UsersUniqueKeyName } from './users.types';
 import { UsersFindManyDto } from './dtos/users.findMany.dto';
+import { UsersPublicDto } from './dtos/users.public.dto';
+import { UsersEntity } from './users.entity';
+import { UsersService } from './users.service';
+import type { UsersUniqueKeyName } from './users.types';
 
 @Controller(ApiControllersTravelLog.usersPublic)
 @InterceptorSerialize<UsersEntity>(UsersPublicDto)

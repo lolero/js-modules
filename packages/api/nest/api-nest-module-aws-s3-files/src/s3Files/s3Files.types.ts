@@ -1,5 +1,5 @@
-import { S3ClientConfig } from '@aws-sdk/client-s3/dist-types/S3Client';
-import { GatewayMetadata } from '@nestjs/websockets/interfaces/gateway-metadata.interface';
+import type { S3ClientConfig } from '@aws-sdk/client-s3/dist-types/S3Client';
+import type { GatewayMetadata } from '@nestjs/websockets/interfaces/gateway-metadata.interface';
 
 export type S3FilesWebSocketGatewayConfig = {
   path: string;

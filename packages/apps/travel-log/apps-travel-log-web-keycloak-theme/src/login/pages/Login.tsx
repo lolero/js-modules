@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import type { JSX } from 'keycloakify/tools/JSX';
 import { kcSanitize } from 'keycloakify/lib/kcSanitize';
-import { useIsPasswordRevealed } from 'keycloakify/tools/useIsPasswordRevealed';
-import { clsx } from 'keycloakify/tools/clsx';
-import type { PageProps } from 'keycloakify/login/pages/PageProps';
 import { getKcClsx, type KcClsx } from 'keycloakify/login/lib/kcClsx';
-import type { KcContext } from '../KcContext';
+import type { PageProps } from 'keycloakify/login/pages/PageProps';
+import { clsx } from 'keycloakify/tools/clsx';
+import type { JSX } from 'keycloakify/tools/JSX';
+import { useIsPasswordRevealed } from 'keycloakify/tools/useIsPasswordRevealed';
+import { useState } from 'react';
 import type { I18n } from '../i18n';
+import type { KcContext } from '../KcContext';
 
 export default function Login(
   props: PageProps<Extract<KcContext, { pageId: 'login.ftl' }>, I18n>,
@@ -127,11 +127,15 @@ export default function Login(
               {!usernameHidden && (
                 <div className={kcClsx('kcFormGroupClass')}>
                   <label htmlFor="username" className={kcClsx('kcLabelClass')}>
-                    {!realm.loginWithEmailAllowed
-                      ? msg('username')
-                      : !realm.registrationEmailAsUsername
-                      ? msg('usernameOrEmail')
-                      : msg('email')}
+                    {(() => {
+                      if (!realm.loginWithEmailAllowed) {
+                        return msg('username');
+                      }
+                      if (!realm.registrationEmailAsUsername) {
+                        return msg('usernameOrEmail');
+                      }
+                      return msg('email');
+                    })()}
                   </label>
                   <input
                     tabIndex={2}

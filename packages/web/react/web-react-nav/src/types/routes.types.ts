@@ -1,4 +1,4 @@
-import { Location, NavigateFunction } from 'react-router-dom';
+import type { Location, NavigateFunction } from 'react-router-dom';
 
 export type ReactRouterNavUtils = {
   navigate: NavigateFunction;

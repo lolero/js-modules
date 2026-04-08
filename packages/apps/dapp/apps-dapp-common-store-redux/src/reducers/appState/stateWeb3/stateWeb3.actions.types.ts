@@ -1,10 +1,10 @@
-import {
+import type {
   FailAction,
   RequestAction,
   SavePartialReducerMetadataAction,
   UpdatePartialReducerMetadataRequestMetadata,
 } from '@js-modules/common-redux-utils-normalized-reducers';
-import { StateWeb3Reducer, WalletType } from './stateWeb3.types';
+import type { StateWeb3Reducer, WalletType } from './stateWeb3.types';
 
 export enum StateWeb3ActionTypes {
   STATE_WEB3__UPDATE_PARTIAL_REDUCER_METADATA__REQUEST = 'STATE_WEB3__UPDATE_PARTIAL_REDUCER_METADATA__REQUEST',

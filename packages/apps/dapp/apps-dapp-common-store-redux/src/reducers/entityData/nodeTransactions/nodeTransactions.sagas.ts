@@ -1,52 +1,36 @@
-import {
-  call,
-  CallEffect,
-  ForkEffect,
-  put,
-  PutEffect,
-  takeEvery,
-  takeLatest,
-} from 'redux-saga/effects';
-import { NodeTransactionsReducer } from './nodeTransactions.types';
-import {
-  NodeTransactionsActionTypes,
-  NodeTransactionsGetManyRequestAction,
-  NodeTransactionsGetOneRequestAction,
-} from './nodeTransactions.actions.types';
+import type { SagaGenerator } from 'typed-redux-saga';
+import { all, call, put, takeEvery, takeLatest } from 'typed-redux-saga';
 import {
   createNodeTransactionsGetManyFailAction,
   createNodeTransactionsGetManySuccessAction,
   createNodeTransactionsGetOneFailAction,
   createNodeTransactionsGetOneSuccessAction,
 } from './nodeTransactions.actions.creators';
-import {
-  NodeTransactionsGetManyServiceResponse,
-  NodeTransactionsGetOneServiceResponse,
-} from './nodeTransactions.services.types';
+import type {
+  NodeTransactionsGetManyRequestAction,
+  NodeTransactionsGetOneRequestAction,
+} from './nodeTransactions.actions.types';
+import { NodeTransactionsActionTypes } from './nodeTransactions.actions.types';
+import { normalizeNodeTransactionsRawArray } from './nodeTransactions.normalizer';
 import {
   nodeTransactionsGetManyService,
   nodeTransactionsGetOneService,
 } from './nodeTransactions.services';
-import { normalizeNodeTransactionsRawArray } from './nodeTransactions.normalizer';
 
 export function* nodeTransactionsGetManySaga({
   requestId,
-}: NodeTransactionsGetManyRequestAction): Generator<
-  CallEffect | PutEffect,
-  void,
-  NodeTransactionsGetManyServiceResponse | NodeTransactionsReducer['data']
-> {
+}: NodeTransactionsGetManyRequestAction): SagaGenerator<void> {
   try {
-    const { data: nodeTransactionsRawArray, status: statusCode } = (yield call(
+    const { data: nodeTransactionsRawArray, status: statusCode } = yield* call(
       nodeTransactionsGetManyService,
-    )) as NodeTransactionsGetManyServiceResponse;
+    );
 
-    const normalizedNodeTransactions = (yield call(
+    const normalizedNodeTransactions = yield* call(
       normalizeNodeTransactionsRawArray,
       nodeTransactionsRawArray,
-    )) as NodeTransactionsReducer['data'];
+    );
 
-    yield put(
+    yield* put(
       createNodeTransactionsGetManySuccessAction(
         normalizedNodeTransactions,
         requestId,
@@ -54,59 +38,53 @@ export function* nodeTransactionsGetManySaga({
         true,
       ),
     );
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (err: any) {
-    // eslint-disable-next-line no-console
-    console.log(err.message);
-    yield put(createNodeTransactionsGetManyFailAction(err.message, requestId));
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    console.log(message);
+    yield* put(createNodeTransactionsGetManyFailAction(message, requestId));
   }
 }
 
 export function* nodeTransactionsGetOneSaga({
   requestMetadata,
   requestId,
-}: NodeTransactionsGetOneRequestAction): Generator<
-  CallEffect | PutEffect,
-  void,
-  NodeTransactionsGetOneServiceResponse | NodeTransactionsReducer['data']
-> {
+}: NodeTransactionsGetOneRequestAction): SagaGenerator<void> {
   try {
-    const { entityPk: nodeTransactionPk } = requestMetadata;
+    const nodeTransactionPk = requestMetadata.uniqueKeyValue as string;
 
-    const { data: nodeTransactionRaw, status: statusCode } = (yield call(
+    const { data: nodeTransactionRaw, status: statusCode } = yield* call(
       nodeTransactionsGetOneService,
       nodeTransactionPk,
-    )) as NodeTransactionsGetOneServiceResponse;
+    );
 
-    const normalizedNodeTransactions = (yield call(
+    const normalizedNodeTransactions = yield* call(
       normalizeNodeTransactionsRawArray,
       [nodeTransactionRaw],
-    )) as NodeTransactionsReducer['data'];
+    );
 
-    yield put(
+    yield* put(
       createNodeTransactionsGetOneSuccessAction(
         normalizedNodeTransactions,
         requestId,
         statusCode,
       ),
     );
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (err: any) {
-    // eslint-disable-next-line no-console
-    console.log(err.message);
-    yield put(createNodeTransactionsGetOneFailAction(err.message, requestId));
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    console.log(message);
+    yield* put(createNodeTransactionsGetOneFailAction(message, requestId));
   }
 }
 
-export function* nodeTransactionsSagas(): Generator<ForkEffect, void, void> {
-  yield takeLatest(
-    NodeTransactionsActionTypes.NODE_TRANSACTIONS__GET_MANY__REQUEST,
-    nodeTransactionsGetManySaga,
-  );
-  yield takeEvery(
-    NodeTransactionsActionTypes.NODE_TRANSACTIONS__GET_ONE__REQUEST,
-    nodeTransactionsGetOneSaga,
-  );
+export function* nodeTransactionsSagas(): SagaGenerator<void> {
+  yield* all([
+    takeLatest(
+      NodeTransactionsActionTypes.NODE_TRANSACTIONS__GET_MANY__REQUEST,
+      nodeTransactionsGetManySaga,
+    ),
+    takeEvery(
+      NodeTransactionsActionTypes.NODE_TRANSACTIONS__GET_ONE__REQUEST,
+      nodeTransactionsGetOneSaga,
+    ),
+  ]);
 }

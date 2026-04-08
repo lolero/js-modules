@@ -1,7 +1,7 @@
-import { ClassConstructor } from 'class-transformer';
-import { FactoryProvider } from '@nestjs/common/interfaces/modules/provider.interface';
+import type { FactoryProvider } from '@nestjs/common/interfaces/modules/provider.interface';
+import type { ClassConstructor } from 'class-transformer';
 
 export type AuthModuleMetadata<ServiceT> = {
-  module: ClassConstructor<any>;
+  module: ClassConstructor<unknown>;
   serviceProvider: FactoryProvider<ServiceT>;
 };

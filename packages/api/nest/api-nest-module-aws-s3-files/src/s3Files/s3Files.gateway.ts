@@ -1,3 +1,4 @@
+import { Inject, Injectable } from '@nestjs/common';
 import {
   OnGatewayConnection,
   OnGatewayDisconnect,
@@ -5,13 +6,10 @@ import {
   WebSocketGateway,
   WebSocketServer,
 } from '@nestjs/websockets';
-import { Inject, Injectable } from '@nestjs/common';
 import { Server, Socket } from 'socket.io';
-import {
-  S3FilesProgress,
-  S3FilesWebSocketGatewayConfig,
-} from './s3Files.types';
 import { AWS_S3_FILES_WEB_SOCKET_GATEWAY_CONFIG } from './s3Files.constants';
+import { S3FilesProgress } from './s3Files.types';
+import type { S3FilesWebSocketGatewayConfig } from './s3Files.types';
 
 @Injectable()
 @WebSocketGateway()

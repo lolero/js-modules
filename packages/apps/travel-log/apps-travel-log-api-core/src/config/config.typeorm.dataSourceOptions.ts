@@ -1,9 +1,9 @@
-import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
-import { loadEnvConfig } from '@js-modules/common-utils-general-cjs';
+import type { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
 import {
-  UsersEntity,
   LogEntriesEntity,
+  UsersEntity,
 } from '@js-modules/apps-travel-log-api-modules-core';
+import { loadEnvConfig } from '@js-modules/common-utils-general-cjs';
 
 loadEnvConfig();
 export const configTypeormDataSourceOptions: PostgresConnectionOptions = {

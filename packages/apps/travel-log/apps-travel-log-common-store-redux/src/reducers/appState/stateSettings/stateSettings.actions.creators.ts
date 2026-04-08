@@ -1,6 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import {
-  StateSettingsActionTypes,
+import type {
   StateSettingsGetProfileFailAction,
   StateSettingsGetProfileRequestAction,
   StateSettingsGetProfileSuccessAction,
@@ -17,6 +16,7 @@ import {
   StateSettingsUpdateProfileRequestAction,
   StateSettingsUpdateProfileSuccessAction,
 } from './stateSettings.actions.types';
+import { StateSettingsActionTypes } from './stateSettings.actions.types';
 
 export function createStateSettingsUpdatePartialReducerMetadataRequestAction(
   partialReducerMetadata: StateSettingsUpdatePartialReducerMetadataRequestAction['requestMetadata']['partialReducerMetadata'],

@@ -1,6 +1,7 @@
-import { getAuthUserEntityFixture } from './auth.utils.fixtures';
+import { beforeAll, describe, expect, it } from '@jest/globals';
 import { authUtilScrypt } from './auth.util.scrypt';
 import { authUtilValidatePassword } from './auth.util.validatePassword';
+import { getAuthUserEntityFixture } from './auth.utils.fixtures';
 
 describe('authUtilValidatePassword', () => {
   let password: string;

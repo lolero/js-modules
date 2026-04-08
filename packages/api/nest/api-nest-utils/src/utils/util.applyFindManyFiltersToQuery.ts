@@ -1,15 +1,16 @@
-import { Brackets, SelectQueryBuilder } from 'typeorm';
-import isEmpty from 'lodash/isEmpty';
 import { BadRequestException } from '@nestjs/common';
-import { FindManyDto, RequestEntity } from '../types/types.requests';
-import { utilGetFindManyUniqueKeysWhereFactory } from './util.getFindManyUniqueKeysWhereFactory';
-import { utilGetFindManySearchWhereFactory } from './util.getFindManySearchWhereFactory';
+import isEmpty from 'lodash/isEmpty';
+import type { SelectQueryBuilder } from 'typeorm';
+import { Brackets } from 'typeorm';
+import type { FindManyDto, RequestEntity } from '../types/types.requests';
+import { utilApplyFindManyRelationsFiltersToQuery } from './util.applyFindManyRelationsFiltersToQuery';
+import { utilGetFindManyBooleansWhereFactory } from './util.getFindManyBooleansWhereFactory';
 import {
   FindManyRangeType,
   utilGetFindManyRangesWhereFactory,
 } from './util.getFindManyRangesWhereFactory';
-import { utilApplyFindManyRelationsFiltersToQuery } from './util.applyFindManyRelationsFiltersToQuery';
-import { utilGetFindManyBooleansWhereFactory } from './util.getFindManyBooleansWhereFactory';
+import { utilGetFindManySearchWhereFactory } from './util.getFindManySearchWhereFactory';
+import { utilGetFindManyUniqueKeysWhereFactory } from './util.getFindManyUniqueKeysWhereFactory';
 
 export function utilApplyFindManyFiltersToQuery<EntityT extends RequestEntity>(
   query: SelectQueryBuilder<EntityT>,

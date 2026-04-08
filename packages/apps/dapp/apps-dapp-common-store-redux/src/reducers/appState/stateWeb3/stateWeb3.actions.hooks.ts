@@ -1,15 +1,9 @@
 import { useCallback, useState } from 'react';
-import {
+import { useDispatch } from 'react-redux';
+import type {
   Request,
   UseRequestReducerMetadata,
 } from '@js-modules/common-redux-utils-normalized-reducers';
-import { useDispatch } from 'react-redux';
-import {
-  StateWeb3UpdatePartialReducerMetadataRequestAction,
-  StateWeb3WalletConnectRequestAction,
-  StateWeb3WalletDisconnectRequestAction,
-} from './stateWeb3.actions.types';
-import { StateWeb3Reducer } from './stateWeb3.types';
 import {
   createStateWeb3UpdatePartialReducerMetadataRequestAction,
   createStateWeb3WalletConnectRequestAction,
@@ -17,10 +11,16 @@ import {
   STATE_WEB3__WALLET_CONNECT__REQUEST_ID,
   STATE_WEB3__WALLET_DISCONNECT__REQUEST_ID,
 } from './stateWeb3.actions.creators';
+import type {
+  StateWeb3UpdatePartialReducerMetadataRequestAction,
+  StateWeb3WalletConnectRequestAction,
+  StateWeb3WalletDisconnectRequestAction,
+} from './stateWeb3.actions.types';
 import {
   useStateWeb3ReducerMetadata,
   useStateWeb3Request,
 } from './stateWeb3.hooks';
+import type { StateWeb3Reducer } from './stateWeb3.types';
 
 export function useStateWeb3UpdatePartialReducerMetadata(): UseRequestReducerMetadata<
   StateWeb3UpdatePartialReducerMetadataRequestAction['requestMetadata'],

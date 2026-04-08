@@ -1,16 +1,15 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import Menu from '@mui/material/Menu';
 import Autocomplete from '@mui/material/Autocomplete';
-import TextField from '@mui/material/TextField';
-import upperFirst from 'lodash/upperFirst';
-import lowerCase from 'lodash/lowerCase';
-import isNull from 'lodash/isNull';
 import Divider from '@mui/material/Divider';
-import {
-  FindManyRangesTypes,
-  useFindManyRangesUtils,
-} from '@js-modules/common-react-utils';
+import Menu from '@mui/material/Menu';
+import TextField from '@mui/material/TextField';
+import isNull from 'lodash/isNull';
+import lowerCase from 'lodash/lowerCase';
+import upperFirst from 'lodash/upperFirst';
+import type React from 'react';
+import { cloneElement, useCallback, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import type { FindManyRangesTypes } from '@js-modules/common-react-utils';
+import { useFindManyRangesUtils } from '@js-modules/common-react-utils';
 import { useMenuUtils } from '../hooks/hooksMaterialUi/useMenuUtils';
 import { FindManyRangesMenuItem } from './FindManyRangesMenuItem';
 
@@ -32,7 +31,7 @@ export const FindManyRangesMenu: React.FC<FindManyRangesMenuProps> = ({
   const { menuAnchor, openMenuCallback, closeMenuCallback } = useMenuUtils();
 
   const buttonWithOnClick = useMemo(() => {
-    const buttonWithOnClickTemp = React.cloneElement(button, {
+    const buttonWithOnClickTemp = cloneElement(button, {
       onClick: openMenuCallback,
     } as unknown as React.ReactElement);
 
@@ -64,17 +63,12 @@ export const FindManyRangesMenu: React.FC<FindManyRangesMenuProps> = ({
     [deleteRangeCallback, selectedRangeKey],
   );
 
-  useEffect(() => {
-    if (!isNull(selectedRangeKey)) {
-      const isSelectedRangeKeyActive = rangeKeysActive.some(
-        (rangeKey) => rangeKey === selectedRangeKey,
-      );
-
-      if (isSelectedRangeKeyActive) {
-        setSelectedRangeKey(null);
-      }
-    }
-  }, [rangeKeysActive, selectedRangeKey]);
+  if (
+    !isNull(selectedRangeKey) &&
+    rangeKeysActive.some((rangeKey) => rangeKey === selectedRangeKey)
+  ) {
+    setSelectedRangeKey(null);
+  }
 
   return (
     <>
@@ -95,13 +89,7 @@ export const FindManyRangesMenu: React.FC<FindManyRangesMenuProps> = ({
             options={rangeKeysUnselected}
             getOptionLabel={(option) => upperFirst(lowerCase(option))}
             renderInput={(params) => {
-              return (
-                <TextField
-                  // eslint-disable-next-line react/jsx-props-no-spreading
-                  {...params}
-                  label="Select filter range"
-                />
-              );
+              return <TextField {...params} label="Select filter range" />;
             }}
             value={null}
             onChange={changeSelectedRangeMetadataCallback}

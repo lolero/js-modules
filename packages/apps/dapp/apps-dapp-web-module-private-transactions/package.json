@@ -1,16 +1,14 @@
 {
-  "private": true,
   "name": "@js-modules/apps-dapp-web-module-private-transactions",
-  "description": "Apps Dapp Web Module Private Transactions",
   "version": "0.0.0",
+  "private": true,
+  "description": "Apps Dapp Web Module Private Transactions",
   "license": "MIT",
   "main": "build/index",
   "files": [
     "build"
   ],
-  "scripts": {
-    "build": "tsc -b tsconfig.build.json"
-  },
+  "scripts": {},
   "dependencies": {
     "@fortawesome/free-brands-svg-icons": "^7.2.0",
     "@fortawesome/free-regular-svg-icons": "^7.2.0",
@@ -20,13 +18,13 @@
     "@js-modules/apps-dapp-common-store-redux": "workspace:^",
     "@js-modules/apps-dapp-web-utils": "workspace:^",
     "@js-modules/web-react-nav": "workspace:^",
-    "@mui/material": "^7.3.9",
+    "@mui/material": "^9.0.0",
     "@types/lodash": "^4.17.24",
-    "@types/react": "^19.2.14",
+    "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
-    "lodash": "^4.17.23",
-    "react": "19.2.4",
-    "react-dom": "19.2.4",
-    "react-router-dom": "^7.13.1"
+    "lodash": "^4.18.1",
+    "react": "19.2.5",
+    "react-dom": "19.2.5",
+    "react-router-dom": "^7.14.2"
   }
 }

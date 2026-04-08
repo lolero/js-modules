@@ -1,9 +1,10 @@
-import axios, { CreateAxiosDefaults } from 'axios';
+import type { CreateAxiosDefaults } from 'axios';
+import axios from 'axios';
 import {
-  setupCache,
   buildMemoryStorage,
-  defaultKeyGenerator,
   defaultHeaderInterpreter,
+  defaultKeyGenerator,
+  setupCache,
 } from 'axios-cache-interceptor';
 
 const axiosConfig: CreateAxiosDefaults = {

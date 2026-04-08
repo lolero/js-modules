@@ -1,12 +1,15 @@
-import difference from 'lodash/difference';
 import {
   BadRequestException,
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
+import difference from 'lodash/difference';
+import isEqual from 'lodash/isEqual';
 import sortedUniq from 'lodash/sortedUniq';
-import { isEqual } from 'lodash';
-import { EntityUniqueKeyValue, RequestEntity } from '../types/types.requests';
+import type {
+  EntityUniqueKeyValue,
+  RequestEntity,
+} from '../types/types.requests';
 
 // TODO: generalize this for any unique key names and values
 export function utilCrossCheckIds<

@@ -1,10 +1,10 @@
-import React from 'react';
 import { faBell } from '@fortawesome/free-solid-svg-icons/faBell';
-import { MuiFaIcon, useMenuUtils } from '@js-modules/web-react-utils';
 import IconButton from '@mui/material/IconButton';
+import ListItemText from '@mui/material/ListItemText';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import ListItemText from '@mui/material/ListItemText';
+import type React from 'react';
+import { MuiFaIcon, useMenuUtils } from '@js-modules/web-react-utils';
 
 export const PrivateWorkspaceNotificationsMenu: React.FC = () => {
   const { menuAnchor, openMenuCallback, closeMenuCallback } = useMenuUtils();

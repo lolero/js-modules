@@ -1,13 +1,14 @@
-import React, { useEffect } from 'react';
 import Box from '@mui/material/Box';
+import CircularProgress from '@mui/material/CircularProgress';
 import Typography from '@mui/material/Typography';
+import isUndefined from 'lodash/isUndefined';
+import type React from 'react';
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import {
   useNodeLogEntriesEntity,
   useNodeLogEntriesGetOne,
 } from '@js-modules/apps-travel-log-common-store-redux';
-import isUndefined from 'lodash/isUndefined';
-import CircularProgress from '@mui/material/CircularProgress';
 
 export const LogLogEntryWorkspaceContentBox: React.FC = () => {
   const { logEntryId } = useParams();

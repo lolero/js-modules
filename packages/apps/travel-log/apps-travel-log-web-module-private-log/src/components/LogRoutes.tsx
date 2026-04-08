@@ -1,12 +1,12 @@
-import React from 'react';
+import type React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import {
   WebModulesPrivate,
   WebSubModulesLog,
 } from '@js-modules/apps-travel-log-common-constants';
 import { routesMetadataPrivate } from '@js-modules/apps-travel-log-common-react';
-import { LogWorkspaceBox } from './LogWorkspaceBox';
 import { LogLogEntryRoutes } from './LogLogEntryRoutes';
+import { LogWorkspaceBox } from './LogWorkspaceBox';
 
 export const LogRoutes: React.FunctionComponent = () => {
   return (

@@ -1,5 +1,5 @@
-import { AxiosResponse } from 'axios';
-import { NodeChainRaw } from './nodeChains.types';
+import type { AxiosResponse } from 'axios';
+import type { NodeChainRaw } from './nodeChains.types';
 
 export type NodeChainsGetManyServiceResponse = AxiosResponse<NodeChainRaw[]>;
 

@@ -1,4 +1,7 @@
-import {
+import type { LogEntriesFindManyDto } from '@js-modules/apps-travel-log-api-modules-core/src/modules/logEntries/dtos/logEntries.findMany.dto';
+import type { LogEntriesEntity } from '@js-modules/apps-travel-log-api-modules-core/src/modules/logEntries/logEntries.entity';
+import type { LogEntriesUniqueKeyName } from '@js-modules/apps-travel-log-api-modules-core/src/modules/logEntries/logEntries.types';
+import type {
   ClearReducerRequestsAction,
   CreateOneEntityRequestMetadata,
   DeleteEntitiesAction,
@@ -15,10 +18,10 @@ import {
   UpdateOneWholeEntityRequestMetadata,
   UpdatePartialReducerMetadataRequestMetadata,
 } from '@js-modules/common-redux-utils-normalized-reducers';
-import { LogEntriesFindManyDto } from '@js-modules/apps-travel-log-api-modules-core/src/modules/logEntries/dtos/logEntries.findMany.dto';
-import { LogEntriesEntity } from '@js-modules/apps-travel-log-api-modules-core/src/modules/logEntries/logEntries.entity';
-import { LogEntriesUniqueKeyName } from '@js-modules/apps-travel-log-api-modules-core/src/modules/logEntries/logEntries.types';
-import { NodeLogEntry, NodeLogEntriesReducer } from './nodeLogEntries.types';
+import type {
+  NodeLogEntriesReducer,
+  NodeLogEntry,
+} from './nodeLogEntries.types';
 
 export enum NodeLogEntriesActionTypes {
   NODE_LOG_ENTRIES__CLEAR_REDUCER_REQUESTS = 'NODE_LOG_ENTRIES__CLEAR_REDUCER_REQUESTS',

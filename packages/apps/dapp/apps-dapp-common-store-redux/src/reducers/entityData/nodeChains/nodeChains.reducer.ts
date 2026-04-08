@@ -3,15 +3,12 @@ import {
   handleRequest,
   handleSaveWholeEntities,
 } from '@js-modules/common-redux-utils-normalized-reducers';
-import { NodeChainsReducer } from './nodeChains.types';
+import type { NodeChainsReducerHittingAction } from './nodeChains.actions.types';
+import { NodeChainsActionTypes } from './nodeChains.actions.types';
 import { nodeChainsInitialState } from './nodeChains.initialState';
-import {
-  NodeChainsActionTypes,
-  NodeChainsReducerHittingAction,
-} from './nodeChains.actions.types';
+import type { NodeChainsReducer } from './nodeChains.types';
 
 export function nodeChainsReducer(
-  // eslint-disable-next-line default-param-last
   state: NodeChainsReducer = nodeChainsInitialState,
   action: NodeChainsReducerHittingAction,
 ): NodeChainsReducer {

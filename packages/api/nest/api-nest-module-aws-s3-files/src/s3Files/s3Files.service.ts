@@ -1,12 +1,12 @@
 import {
-  CopyObjectCommand,
-  DeleteObjectCommand,
-  DeleteObjectsCommand,
+  // CopyObjectCommand,
+  // DeleteObjectCommand,
+  // DeleteObjectsCommand,
   GetObjectAclCommandInput,
   GetObjectCommand,
   GetObjectCommandOutput,
-  HeadObjectCommand,
-  ListObjectsV2Command,
+  // HeadObjectCommand,
+  // ListObjectsV2Command,
   PutObjectCommandInput,
   S3Client,
 } from '@aws-sdk/client-s3';
@@ -15,6 +15,9 @@ import { Upload } from '@aws-sdk/lib-storage';
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectAws } from 'aws-sdk-v3-nest';
 import round from 'lodash/round';
+import { Socket } from 'socket.io';
+import { S3FilesGatewayMetadataDto } from './dtos/s3Files.gatewayMetadata.dto';
+import { S3FilesGateway } from './s3Files.gateway';
 // import {
 //   S3FilesGetObjects,
 //   S3FilesMoveFolders,
@@ -23,9 +26,6 @@ import round from 'lodash/round';
 //   S3FilesSignedUrl,
 //   S3FilesUploadFiles,
 // } from './s3Files.types';
-import { DefaultEventsMap, Socket } from 'socket.io';
-import { S3FilesGateway } from './s3Files.gateway';
-import { S3FilesGatewayMetadataDto } from './dtos/s3Files.gatewayMetadata.dto';
 
 @Injectable()
 export class S3FilesService {
@@ -96,9 +96,7 @@ export class S3FilesService {
     file: Express.Multer.File,
     s3FilesGatewayMetadataDto?: S3FilesGatewayMetadataDto,
   ): Promise<void> {
-    let socketClient:
-      | Socket<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>
-      | undefined;
+    let socketClient: Socket | undefined;
 
     if (s3FilesGatewayMetadataDto) {
       socketClient = this.s3FilesGateway.server.sockets.sockets.get(

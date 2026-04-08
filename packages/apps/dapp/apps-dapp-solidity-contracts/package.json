@@ -1,42 +1,22 @@
 {
-  "private": true,
   "name": "@js-modules/apps-dapp-solidity-contracts",
-  "description": "Apps Dapp Solidity Contracts",
   "version": "0.0.0",
+  "private": true,
+  "description": "Apps Dapp Solidity Contracts",
   "license": "MIT",
+  "type": "module",
   "files": [
     "build"
   ],
-  "scripts": {
-    "dev": "pnpx hardhat --tsconfig tsconfig.build.json node",
-    "build": "pnpx hardhat --tsconfig tsconfig.build.json compile",
-    "test": "pnpx hardhat --tsconfig tsconfig.build.json test",
-    "deploy": "pnpm build && pnpx hardhat --tsconfig tsconfig.build.json run ./src/scripts/deploy.ts --network localhost"
-  },
+  "scripts": {},
   "dependencies": {
-    "@nomiclabs/hardhat-ethers": "^2.2.3",
-    "@nomiclabs/hardhat-etherscan": "^3.1.8",
-    "@nomiclabs/hardhat-waffle": "^2.0.6",
+    "@nomicfoundation/hardhat-ethers": "^4.0.10",
+    "@nomicfoundation/hardhat-ethers-chai-matchers": "^3.0.8",
+    "@nomicfoundation/hardhat-mocha": "^3.0.18",
+    "@nomicfoundation/hardhat-verify": "^3.0.16",
     "@openzeppelin/contracts": "^5.6.1",
-    "@typechain/ethers-v5": "^11.1.2",
-    "@typechain/hardhat": "^9.1.0",
-    "@types/chai": "^5.2.3",
-    "dotenv": "^17.3.1",
+    "dotenv": "^17.4.2",
     "ethers": "^6.16.0",
-    "hardhat": "^3.1.12",
-    "hardhat-gas-reporter": "^2.3.0",
-    "solidity-coverage": "^0.8.17"
-  },
-  "devDependencies": {
-    "@types/mocha": "^10.0.10",
-    "chai": "^6.2.2",
-    "eslint": "10.0.3",
-    "ethereum-waffle": "^4.0.10",
-    "typechain": "^8.3.2"
-  },
-  "eslintConfig": {
-    "rules": {
-      "jest/valid-expect": "off"
-    }
+    "hardhat": "^3.4.4"
   }
 }

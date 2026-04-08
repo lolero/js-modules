@@ -1,10 +1,10 @@
-import {
-  ReducerData,
+import type {
   Entity,
-  ReducerPartialData,
-  SubRequest,
+  ReducerData,
   ReducerMetadata,
+  ReducerPartialData,
   RequestMetadata,
+  SubRequest,
 } from './reducers.types';
 
 export type ClearReducerRequestsAction<ActionTypeT extends string> = {

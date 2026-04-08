@@ -1,5 +1,4 @@
-import { AppStateReducers } from './appState.types';
-
+import type { AppStateReducers } from './appState.types';
 import { stateMainInitialState } from './stateMain/stateMain.initialState';
 import { stateWeb3InitialState } from './stateWeb3/stateWeb3.initialState';
 

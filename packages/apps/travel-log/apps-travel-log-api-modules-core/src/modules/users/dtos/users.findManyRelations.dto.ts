@@ -1,5 +1,4 @@
-import { FindManyRelationsDto } from '@js-modules/api-nest-utils';
-import { UsersEntity } from '../users.entity';
+import type { FindManyRelationsDto } from '@js-modules/api-nest-utils';
+import type { UsersEntity } from '../users.entity';
 
-export class UsersFindManyRelationsDto
-  implements FindManyRelationsDto<UsersEntity> {}
+export class UsersFindManyRelationsDto implements FindManyRelationsDto<UsersEntity> {}

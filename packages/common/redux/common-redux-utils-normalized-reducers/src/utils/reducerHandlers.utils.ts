@@ -1,5 +1,5 @@
 import { keyBy, orderBy } from 'lodash';
-import {
+import type {
   DeleteEntitiesAction,
   FailAction,
   RequestAction,
@@ -10,7 +10,7 @@ import {
   SaveWholeEntitiesAction,
   SaveWholeReducerMetadataAction,
 } from '../types/actions.types';
-import {
+import type {
   Entity,
   Reducer,
   ReducerMetadata,
@@ -19,22 +19,11 @@ import {
 } from '../types/reducers.types';
 
 /**
- * Duplicates the state object with shallow copies of the 'data', 'metadata',
- * and 'requests' props
- *
- * @param {Reducer} state - The current state of the reducer
- * @param {
- *          | RequestAction
- *          | SaveNothingaAction
- *          | SaveWholeReducerMetadataAction
- *          | SavePartialReducerMetadataAction
- *          | SaveWholeEntitiesAction
- *          | SavePartialEntitiesAction
- *          | SavePartialPatternToEntitiesAction
- *          | DeleteEntitiesAction
- *          | FailAction
- *        } action - Action to handle
- * @returns {Reducer} Duplicated state object
+ * Duplicates the state object with shallow copies of 'data', 'metadata',
+ * and 'requests'.
+ * @param state - The current state of the reducer.
+ * @param action - Action to handle.
+ * @returns Duplicated state object.
  */
 export function duplicateState<
   ActionTypeT extends string,
@@ -43,10 +32,10 @@ export function duplicateState<
 >(
   state: Reducer<ReducerMetadataT, EntityT>,
   action: // @typescript-eslint/no-explicit-any disabled because the
-  // RequestMetadata type is irrelevant for this function and it needs to be
-  // able to take any request action regardless of its RequestMetadata
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  | RequestAction<ActionTypeT, any>
+    // RequestMetadata type is irrelevant for this function and it needs to be
+    // able to take any request action regardless of its RequestMetadata
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    | RequestAction<ActionTypeT, any>
     | SaveNothingAction<ActionTypeT>
     | SaveWholeReducerMetadataAction<ActionTypeT, ReducerMetadataT>
     | SavePartialReducerMetadataAction<ActionTypeT, ReducerMetadataT>
@@ -88,25 +77,14 @@ export function duplicateState<
 }
 
 /**
- * Updates a reducer's props other than the 'data' prop for success and fail
- * actions.
+ * Updates a reducer's props other than 'data' for success and fail actions.
  * The function mutates the passed state for two reasons:
  * 1. Because it is exclusively used by the other handlers in this file, all of
  * which have already created a copy of the redux state.
  * 2. To avoid an additional and unnecessary duplication of the redux state,
- * which could result in a reduction in performance in the application.
- *
- * @param {Reducer} newState - A copy of the redux state
- * @param {
- *          | SaveNothingAction
- *          | SaveWholeReducerMetadataAction
- *          | SavePartialReducerMetadataAction
- *          | SaveWholeEntitiesAction
- *          | SavePartialEntitiesAction
- *          | SavePartialPatternToEntitiesAction
- *          | DeleteEntitiesAction
- *          | FailAction
- *        } action - Success or fail action
+ * which could result in a performance drag in the application.
+ * @param newState - A copy of the redux state.
+ * @param action - Success/fail action.
  */
 export function handleCommonProps<
   ActionTypeT extends string,
@@ -127,7 +105,6 @@ export function handleCommonProps<
   // no-param-reassign is disabled because the state has already been
   // duplicated in the respective handler that calls this function hence the
   // risk of mutating the state object is already mitigated.
-  /* eslint-disable no-param-reassign */
   if ('partialReducerMetadata' in action) {
     newState.metadata = {
       ...newState.metadata,
@@ -177,15 +154,13 @@ export function handleCommonProps<
       newState.requests[action.requestId].error = action.error;
     }
   }
-  /* eslint-enable no-param-reassign */
 }
 
 /**
- * Updates a reducer's completed requests cache. That is, removes the oldest
+ * Updates reducer's completed requests cache. That is, removes the oldest
  * completed requests according to the reducer config's 'successRequestsCache'
- * and 'failRequestsCache' params.
- *
- * @param {Reducer} newState - A copy of the redux state
+ * and 'failRequestsCache'.
+ * @param newState - Copy of the redux state.
  */
 export function updateCompletedRequestsCache<
   ReducerMetadataT extends ReducerMetadata,
@@ -291,10 +266,6 @@ export function updateCompletedRequestsCache<
     ];
   }
 
-  // no-param-reassign is disabled because the state has already been
-  // duplicated in the respective handler that calls this function hence the
-  // risk of mutating the state object is already mitigated.
-  // eslint-disable-next-line no-param-reassign
   newState.requests = {
     ...keyBy(pendingRequests, 'id'),
     ...keyBy(successRequests, 'id'),

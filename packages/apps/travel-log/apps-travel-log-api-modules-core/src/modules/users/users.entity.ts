@@ -4,14 +4,15 @@ import {
   AfterUpdate,
   Column,
   CreateDateColumn,
-  UpdateDateColumn,
   DeleteDateColumn,
   Entity,
-  PrimaryGeneratedColumn,
   OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
+import type { Relation } from 'typeorm';
 import { RequestEntity } from '@js-modules/api-nest-utils';
-// eslint-disable-next-line import/no-cycle
+// eslint-disable-next-line import-x/no-cycle
 import { LogEntriesEntity } from '../logEntries/logEntries.entity';
 
 @Entity('users')
@@ -77,7 +78,7 @@ export class UsersEntity implements RequestEntity {
     () => LogEntriesEntity,
     (logEntriesEntity) => logEntriesEntity.user,
   )
-  logEntries: Promise<LogEntriesEntity[]>;
+  logEntries: Relation<Promise<LogEntriesEntity[]>>;
 
   @CreateDateColumn({
     name: 'created_at',
@@ -95,17 +96,11 @@ export class UsersEntity implements RequestEntity {
   deletedAt?: Date;
 
   @AfterInsert()
-  logInsert() {
-    console.log('inserted user with id', this.id);
-  }
+  logInsert() {}
 
   @AfterUpdate()
-  logUpdate() {
-    console.log('updated user with id', this.id);
-  }
+  logUpdate() {}
 
   @AfterRemove()
-  logRemove() {
-    console.log('removed user with id', this.id);
-  }
+  logRemove() {}
 }

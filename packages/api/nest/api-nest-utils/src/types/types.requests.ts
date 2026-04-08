@@ -3,7 +3,10 @@ export enum FindManyOrderDirection {
   desc = 'desc',
 }
 
-export type RequestEntity = object;
+// @typescript-eslint/no-explicit-any disabled because this must be a
+// generic type that all entities extend
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type RequestEntity = Record<string, any>;
 
 export type FindManyUniqueKeysDto<
   EntityT extends RequestEntity = RequestEntity,

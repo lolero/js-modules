@@ -1,14 +1,14 @@
 import { Body, Controller, Delete, Get, Patch, Post } from '@nestjs/common';
-import { InterceptorSerialize } from '@js-modules/api-nest-utils';
 import { AuthDecoratorUsersEntityCurrent } from '@js-modules/api-nest-module-auth-keycloak';
+import { InterceptorSerialize } from '@js-modules/api-nest-utils';
 import {
   ApiControllersTravelLog,
   ApiSubHandlersUsersPrivate,
 } from '@js-modules/apps-travel-log-common-constants-cjs';
-import { UsersService } from './users.service';
-import { UsersEntity } from './users.entity';
-import { UsersUpdateOnePartialDto } from './dtos/users.updateOnePartial.dto';
 import { UsersPrivateDto } from './dtos/users.private.dto';
+import { UsersUpdateOnePartialDto } from './dtos/users.updateOnePartial.dto';
+import { UsersEntity } from './users.entity';
+import { UsersService } from './users.service';
 
 @Controller(ApiControllersTravelLog.usersPrivate)
 @InterceptorSerialize<UsersEntity>(UsersPrivateDto)
@@ -16,10 +16,10 @@ export class UsersControllerPrivate {
   constructor(private readonly usersService: UsersService) {}
 
   @Get()
-  async checkIn(
+  checkIn(
     @AuthDecoratorUsersEntityCurrent()
     usersEntityCurrent: UsersEntity,
-  ): Promise<UsersEntity | null> {
+  ): UsersEntity | null {
     return usersEntityCurrent;
   }
 

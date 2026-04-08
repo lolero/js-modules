@@ -1,148 +1,124 @@
-import * as React from 'react';
-import Autocomplete, {
-  autocompleteClasses,
-  AutocompleteProps,
-} from '@mui/material/Autocomplete';
-import useMediaQuery from '@mui/material/useMediaQuery';
+import type { AutocompleteProps } from '@mui/material/Autocomplete';
+import Autocomplete, { autocompleteClasses } from '@mui/material/Autocomplete';
 import ListSubheader from '@mui/material/ListSubheader';
 import Popper from '@mui/material/Popper';
-import { useTheme, styled } from '@mui/material/styles';
-import { VariableSizeList, ListChildComponentProps } from 'react-window';
+import { styled, useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
-import { useCallback, useEffect } from 'react';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useVirtualizer } from '@tanstack/react-virtual';
+import {
+  type CSSProperties,
+  forwardRef,
+  type HTMLAttributes,
+  type Key,
+  type ReactElement,
+  type ReactNode,
+  useImperativeHandle,
+  useRef,
+} from 'react';
 
-function renderRow(props: ListChildComponentProps) {
-  const { data, index, style } = props;
-  const dataSet = data[index];
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const theme = useTheme();
-  const inlineStyle = {
-    ...style,
-    top: (style.top as number) + parseInt(theme.spacing(1), 10),
-  };
+type GroupDataItem = { group: string; key: string };
+type OptionDataItem = [HTMLAttributes<HTMLElement>, ReactNode];
+type RowDataItem = GroupDataItem | OptionDataItem;
 
-  // eslint-disable-next-line no-prototype-builtins
-  if (dataSet.hasOwnProperty('group')) {
+function renderRow(
+  dataSet: RowDataItem,
+  key: Key,
+  style: CSSProperties,
+): ReactElement {
+  if (Array.isArray(dataSet)) {
+    const { key: _key, ...liProps } =
+      dataSet[0] as HTMLAttributes<HTMLElement> & {
+        key?: Key;
+      };
     return (
-      <ListSubheader key={dataSet.key} component="div" style={inlineStyle}>
-        {dataSet.group}
-      </ListSubheader>
+      <Typography key={key} component="li" {...liProps} noWrap style={style}>
+        {dataSet[1]}
+      </Typography>
     );
   }
-
   return (
-    // eslint-disable-next-line react/jsx-props-no-spreading
-    <Typography component="li" {...dataSet[0]} noWrap style={inlineStyle}>
-      {dataSet[1]}
-    </Typography>
+    <ListSubheader key={key} component="div" style={style}>
+      {dataSet.group}
+    </ListSubheader>
   );
 }
 
-const OuterElementContext = React.createContext({});
-
-type OuterElementProps = {
-  onScroll?: (e: React.UIEvent<HTMLDivElement, UIEvent>) => void;
-};
-
-const OuterElement = React.forwardRef<HTMLDivElement, OuterElementProps>(
-  (props, ref) => {
-    const outerProps = React.useContext(
-      OuterElementContext,
-    ) as OuterElementProps;
-
-    const onScrollCallback = useCallback(
-      (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
-        outerProps.onScroll?.(e);
-        props.onScroll?.(e);
-      },
-      [outerProps, props],
-    );
-
-    return (
-      <div
-        ref={ref}
-        // eslint-disable-next-line react/jsx-props-no-spreading
-        {...props}
-        // eslint-disable-next-line react/jsx-props-no-spreading
-        {...outerProps}
-        onScroll={onScrollCallback}
-      />
-    );
-  },
-);
-
-function useResetCache(data: unknown) {
-  const ref = React.useRef<VariableSizeList>(null);
-
-  useEffect(() => {
-    if (ref.current != null) {
-      ref.current.resetAfterIndex(0, true);
-    }
-  }, [data]);
-
-  return ref;
-}
-
-// Adapter for react-window
-const ListboxComponent = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLUListElement> & { overscanCount?: number }
+// Adapter for @tanstack/react-virtual
+const ListboxComponent = forwardRef<
+  HTMLElement,
+  HTMLAttributes<HTMLElement> & { overscanCount?: number; ownerState?: unknown }
 >(function ListboxComponent(props, ref) {
-  const { children, overscanCount = 5, ...other } = props;
-  const itemData: React.ReactElement[] = [];
-  (children as React.ReactElement[]).forEach(
-    (item: React.ReactElement & { children?: React.ReactElement[] }) => {
-      itemData.push(item);
-      itemData.push(...(item.children || []));
+  const {
+    children,
+    overscanCount = 5,
+    ownerState: _ownerState,
+    ...other
+  } = props;
+
+  const itemData: RowDataItem[] = [];
+  (children as ReactElement[]).forEach(
+    (item: ReactElement & { children?: ReactElement[] }) => {
+      itemData.push(item as unknown as RowDataItem);
+      itemData.push(...((item.children ?? []) as unknown as RowDataItem[]));
     },
   );
 
   const theme = useTheme();
-  const smUp = useMediaQuery(theme.breakpoints.up('sm'), {
-    noSsr: true,
-  });
-  const itemCount = itemData.length;
+  const smUp = useMediaQuery(theme.breakpoints.up('sm'), { noSsr: true });
   const itemSize = smUp
     ? parseInt(theme.spacing(4.5), 10)
     : parseInt(theme.spacing(6), 10);
 
-  const getChildSize = (child: React.ReactElement) => {
-    // eslint-disable-next-line no-prototype-builtins
-    if (child.hasOwnProperty('group')) {
-      return parseInt(theme.spacing(6), 10);
-    }
+  const getChildSize = (child: RowDataItem) =>
+    !Array.isArray(child) ? parseInt(theme.spacing(6), 10) : itemSize;
 
-    return itemSize;
-  };
+  const scrollElementRef = useRef<HTMLUListElement>(null);
+  useImperativeHandle(ref, () => scrollElementRef.current as HTMLElement, []);
 
-  const getHeight = () => {
-    if (itemCount > 8) {
-      return 8 * itemSize;
-    }
+  const edgePaddingPx = parseInt(theme.spacing(1), 10);
 
-    return itemData.map(getChildSize).reduce((a, b) => a + b, 0);
-  };
+  const virtualizer = useVirtualizer({
+    count: itemData.length,
+    getScrollElement: () => scrollElementRef.current,
+    estimateSize: (index) => getChildSize(itemData[index]),
+    overscan: overscanCount,
+    paddingStart: edgePaddingPx,
+    paddingEnd: edgePaddingPx,
+  });
 
-  const gridRef = useResetCache(itemCount);
+  const containerHeight = Math.min(
+    virtualizer.getTotalSize(),
+    8 * itemSize + 2 * edgePaddingPx,
+  );
 
   return (
-    <div ref={ref}>
-      <OuterElementContext.Provider value={other}>
-        <VariableSizeList
-          itemData={itemData}
-          height={getHeight() + 2 * parseInt(theme.spacing(1), 10)}
-          width="100%"
-          ref={gridRef}
-          outerElementType={OuterElement}
-          innerElementType="ul"
-          itemSize={(index) => getChildSize(itemData[index])}
-          overscanCount={overscanCount}
-          itemCount={itemCount}
-        >
-          {renderRow}
-        </VariableSizeList>
-      </OuterElementContext.Provider>
-    </div>
+    <ul
+      ref={scrollElementRef}
+      {...other}
+      style={{
+        ...other.style,
+        height: containerHeight,
+        overflow: 'auto',
+        position: 'relative',
+        padding: 0,
+        margin: 0,
+        listStyle: 'none',
+      }}
+    >
+      <div style={{ height: virtualizer.getTotalSize(), position: 'relative' }}>
+        {virtualizer.getVirtualItems().map((virtualItem) =>
+          renderRow(itemData[virtualItem.index], virtualItem.key, {
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: virtualItem.size,
+            transform: `translateY(${virtualItem.start}px)`,
+          }),
+        )}
+      </div>
+    </ul>
   );
 });
 
@@ -163,7 +139,7 @@ export type VirtualizedAutocompleteProps<
   FreeSoloT extends boolean | undefined = undefined,
 > = Omit<
   AutocompleteProps<OptionT, MultipleT, DisableClearableT, FreeSoloT>,
-  'disableListWrap' | 'ListboxComponent' | 'PopperComponent'
+  'disableListWrap' | 'slots'
 > & {
   getOptionLabel: AutocompleteProps<
     OptionT,
@@ -190,19 +166,18 @@ export function VirtualizedAutocomplete<
     MultipleT,
     DisableClearableT,
     FreeSoloT
-  > & {
-    ListboxProps?: React.HTMLAttributes<HTMLUListElement> & {
-      overscanCount?: number;
-    };
-  },
+  >,
 ) {
   return (
     <Autocomplete
-      // eslint-disable-next-line react/jsx-props-no-spreading
       {...props}
       disableListWrap
-      ListboxComponent={ListboxComponent}
-      PopperComponent={StyledPopper}
+      slots={{
+        listbox: ListboxComponent as React.JSXElementConstructor<
+          React.HTMLAttributes<HTMLElement>
+        >,
+        popper: StyledPopper,
+      }}
     />
   );
 }

@@ -1,35 +1,29 @@
-import { call, CallEffect, take, TakeEffect } from 'redux-saga/effects';
+import type { SagaGenerator } from 'typed-redux-saga';
+import { call, take } from 'typed-redux-saga';
+import type { RequestAction } from '../types/actions.types';
+import type { RequestMetadata } from '../types/reducers.types';
 
 /**
- * Get request action type prefix
- *
- * @param {{type: string; requestId: string}} requestAction - Request action
- * @param {string} requestAction.type - Request action type
- * @param {string} requestAction.requestId - Request action request ID
- * @returns {string} Request action type prefix
+ * Get request action type prefix.
+ * @param requestAction - Request action.
+ * @returns Request action type prefix.
  */
-export function getRequestActionTypePrefix(requestAction: {
-  type: string;
-  requestId: string;
-}): string {
+export function getRequestActionTypePrefix(
+  requestAction: RequestAction<string, RequestMetadata>,
+): string {
   return requestAction.type.split('__REQUEST')[0];
 }
 
 /**
- * Checks if success or fail action's type prefix and request ID match request
- * action
- *
- * @param {{type: string; requestId: string}} requestAction - Request action
- * @param {string} requestAction.type - Request action type
- * @param {string} requestAction.requestId - Request action request ID
- * @param {{type: string; requestId: string}} action - Action
- * @param {string} action.type - Action type
- * @param {string} action.requestId - Action request ID
- * @returns {boolean} Whether or not action matches request action
+ * Checks if success/fail action's type prefix and request ID match request
+ * action.
+ * @param requestAction - Request action.
+ * @param action - Action.
+ * @returns Whether or not action matches request action.
  */
 export function doesActionMatchRequest(
-  requestAction: { type: string; requestId: string },
-  action: { type: string; requestId: string },
+  requestAction: RequestAction<string, RequestMetadata>,
+  action: RequestAction<string, RequestMetadata>,
 ): boolean {
   const requestActionTypePrefix = getRequestActionTypePrefix(requestAction);
   return (
@@ -41,44 +35,37 @@ export function doesActionMatchRequest(
 
 /**
  * Waits for success or fail action to be dispatched, corresponding to a
- * request action, and returns whether or not the request was successful
- *
- * @param {{type: string; requestId: string}} requestAction - Request action
- * @param {string} requestAction.type - Request action type
- * @param {string} requestAction.requestId - Request action request ID
- * @returns {boolean} Whether or not request action was successful
+ * request action, and returns whether or not the request was successful.
+ * @param requestAction - Request action.
+ * @returns Whether or not request action was successful.
  */
-export function* wasRequestSuccessful(requestAction: {
-  type: string;
-  requestId: string;
-}): Generator<CallEffect | TakeEffect, boolean, string | { type: string }> {
-  const requestActionTypePrefix = (yield call(
+export function* wasRequestSuccessful(
+  requestAction: RequestAction<string, RequestMetadata>,
+): SagaGenerator<boolean> {
+  const requestActionTypePrefix = yield* call(
     getRequestActionTypePrefix,
     requestAction,
-  )) as string;
-  // @typescript-eslint/no-explicit-any is disabled because I was not able to
-  // find a type that worked with a redux saga's take effect that takes a
-  // function pattern
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { type: resultActionType } = (yield take((action: any) =>
-    doesActionMatchRequest(requestAction, action),
-  )) as { type: string };
+  );
+  const { type: resultActionType } = yield* take(
+    (action: { type: string }) =>
+      'requestId' in action &&
+      doesActionMatchRequest(
+        requestAction,
+        action as unknown as RequestAction<string, RequestMetadata>,
+      ),
+  );
   return resultActionType === `${requestActionTypePrefix}__SUCCESS`;
 }
 
 /**
- * Test function
- *
- * @param {{type: string}} myAction - Test action
- * @param {string} myAction.type - Test action type
- * @returns {boolean} My saga result
+ * Test function.
+ * @param myAction - Test action.
+ * @param myAction.type - The action type to match against.
+ * @returns My saga result.
  */
-export function* mySaga(myAction: {
-  type: string;
-}): Generator<TakeEffect, boolean, { type: string }> {
-  const { type: actionType } = (yield take(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (action: any) => action.type === myAction.type,
-  )) as { type: string };
+export function* mySaga(myAction: { type: string }): SagaGenerator<boolean> {
+  const { type: actionType } = yield* take(
+    (action: { type: string }) => action.type === myAction.type,
+  );
   return actionType === myAction.type;
 }

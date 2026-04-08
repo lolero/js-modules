@@ -1,5 +1,5 @@
-import React from 'react';
-import { Route, Routes, Navigate } from 'react-router-dom';
+import type React from 'react';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import {
   WebModulesPrivate,
   WebSubModulesPortfolio,

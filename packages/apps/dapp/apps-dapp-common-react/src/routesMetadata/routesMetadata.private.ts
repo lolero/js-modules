@@ -1,18 +1,18 @@
-import { RoutesMetadata } from '@js-modules/common-react-nav';
-import upperFirst from 'lodash/upperFirst';
+import type { IconDefinition } from '@fortawesome/fontawesome-common-types';
+import { faChartPie } from '@fortawesome/free-solid-svg-icons/faChartPie';
+import { faClockRotateLeft } from '@fortawesome/free-solid-svg-icons/faClockRotateLeft';
+import { faCoins } from '@fortawesome/free-solid-svg-icons/faCoins';
+import { faMagnifyingGlassChart } from '@fortawesome/free-solid-svg-icons/faMagnifyingGlassChart';
+import { faMoneyBillTransfer } from '@fortawesome/free-solid-svg-icons/faMoneyBillTransfer';
+import { faWaveSquare } from '@fortawesome/free-solid-svg-icons/faWaveSquare';
 import lowerCase from 'lodash/lowerCase';
+import upperFirst from 'lodash/upperFirst';
 import {
   WebModulesPrivate,
   WebSubModulesAnalytics,
   WebSubModulesPortfolio,
 } from '@js-modules/apps-dapp-common-constants';
-import { faChartPie } from '@fortawesome/free-solid-svg-icons/faChartPie';
-import { faCoins } from '@fortawesome/free-solid-svg-icons/faCoins';
-import { faMoneyBillTransfer } from '@fortawesome/free-solid-svg-icons/faMoneyBillTransfer';
-import { faMagnifyingGlassChart } from '@fortawesome/free-solid-svg-icons/faMagnifyingGlassChart';
-import { faClockRotateLeft } from '@fortawesome/free-solid-svg-icons/faClockRotateLeft';
-import { faWaveSquare } from '@fortawesome/free-solid-svg-icons/faWaveSquare';
-import { IconDefinition } from '@fortawesome/fontawesome-common-types';
+import type { RoutesMetadata } from '@js-modules/common-react-nav';
 
 export const routesMetadataPrivate: RoutesMetadata<IconDefinition> = {
   [WebModulesPrivate.portfolio]: {

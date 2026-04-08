@@ -1,15 +1,15 @@
-import {
-  Entity,
-  Reducer,
-  ReducerMetadata,
-} from '@js-modules/common-redux-utils-normalized-reducers';
-import {
+import type {
   KeycloakInitOptions,
   KeycloakLoginOptions,
   KeycloakLogoutOptions,
   KeycloakTokenParsed,
 } from 'keycloak-js';
-import { EventChannel } from 'redux-saga';
+import type { EventChannel } from 'redux-saga';
+import type {
+  Entity,
+  Reducer,
+  ReducerMetadata,
+} from '@js-modules/common-redux-utils-normalized-reducers';
 
 export enum ClientType {
   native = 'native',

@@ -1,10 +1,11 @@
-import React, { useCallback, useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
 import { inputBaseClasses } from '@mui/material/InputBase';
-import trim from 'lodash/trim';
+import TextField from '@mui/material/TextField';
 import isNull from 'lodash/isNull';
 import min from 'lodash/min';
+import trim from 'lodash/trim';
+import type React from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 export type OtpBoxProps = {
   otpLength: number;
@@ -23,9 +24,7 @@ export const OtpBox: React.FunctionComponent<OtpBoxProps> = ({
 
   const focusOtpValueCallback = useCallback(
     (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement, Element>) => {
-      const cursorIndexFocus = Number(
-        e.target.getAttribute('data-key') as string,
-      );
+      const cursorIndexFocus = Number(e.target.getAttribute('data-key'));
       setCursorIndex(cursorIndexFocus);
     },
     [],
@@ -37,15 +36,11 @@ export const OtpBox: React.FunctionComponent<OtpBoxProps> = ({
 
   const changeOtpValueCallback = useCallback(
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      if (e.nativeEvent.inputType === 'insertFromPaste') {
+      if ((e.nativeEvent as InputEvent).inputType === 'insertFromPaste') {
         return;
       }
 
-      const cursorIndexFocus = Number(
-        e.target.getAttribute('data-key') as string,
-      );
+      const cursorIndexFocus = Number(e.target.getAttribute('data-key'));
 
       const otpValueNew = trim(e.target.value).slice(0, 1);
 
@@ -63,7 +58,7 @@ export const OtpBox: React.FunctionComponent<OtpBoxProps> = ({
   const keyDownOptValueCallback = useCallback(
     (e: React.KeyboardEvent<HTMLDivElement>) => {
       const cursorIndexFocus = Number(
-        (e.target as typeof e.currentTarget).getAttribute('data-key') as string,
+        (e.target as typeof e.currentTarget).getAttribute('data-key'),
       );
 
       const otpValue = otp[cursorIndexFocus];
@@ -74,18 +69,18 @@ export const OtpBox: React.FunctionComponent<OtpBoxProps> = ({
           }
           break;
         case 'ArrowLeft':
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          if (cursorIndexFocus > 0 && e.target.selectionEnd === 0) {
+          if (
+            cursorIndexFocus > 0 &&
+            (e.target as HTMLInputElement).selectionEnd === 0
+          ) {
             setCursorIndex(cursorIndexFocus - 1);
           }
           break;
         case 'ArrowRight':
           if (
             cursorIndexFocus < otpLength - 1 &&
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            (e.target.selectionEnd as number) === otpValue.length
+            ((e.target as HTMLInputElement).selectionEnd as number) ===
+              otpValue.length
           ) {
             setCursorIndex(cursorIndexFocus + 1);
           }
@@ -116,7 +111,7 @@ export const OtpBox: React.FunctionComponent<OtpBoxProps> = ({
       ]);
 
       setOtpCallback(otpPaste);
-      setCursorIndex(cursorIndexPaste!);
+      setCursorIndex(cursorIndexPaste);
     }
 
     document.addEventListener('paste', onPaste);
@@ -150,10 +145,10 @@ export const OtpBox: React.FunctionComponent<OtpBoxProps> = ({
               onBlur={blurOtpValueCallback}
               onKeyDown={keyDownOptValueCallback}
               onChange={changeOtpValueCallback}
-              inputProps={{
-                'data-key': otpIndex,
+              slotProps={{
+                htmlInput: { 'data-key': otpIndex },
               }}
-              inputRef={(input) => {
+              inputRef={(input: HTMLInputElement | null) => {
                 if (input && autoFocus) {
                   input.focus();
                 }

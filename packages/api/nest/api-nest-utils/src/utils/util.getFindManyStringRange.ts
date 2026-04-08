@@ -1,5 +1,5 @@
 import sortBy from 'lodash/sortBy';
-import { FindManyRange } from '../types/types.requests';
+import type { FindManyRange } from '../types/types.requests';
 
 export function utilGetFindManyStringRange(
   from: FindManyRange[0],

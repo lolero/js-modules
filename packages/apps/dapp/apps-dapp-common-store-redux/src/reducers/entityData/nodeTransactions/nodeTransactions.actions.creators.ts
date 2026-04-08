@@ -1,6 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import {
-  NodeTransactionsActionTypes,
+import type {
   NodeTransactionsGetManyFailAction,
   NodeTransactionsGetManyRequestAction,
   NodeTransactionsGetManySuccessAction,
@@ -8,6 +7,7 @@ import {
   NodeTransactionsGetOneRequestAction,
   NodeTransactionsGetOneSuccessAction,
 } from './nodeTransactions.actions.types';
+import { NodeTransactionsActionTypes } from './nodeTransactions.actions.types';
 
 export function createNodeTransactionsGetManyRequestAction(): NodeTransactionsGetManyRequestAction {
   return {

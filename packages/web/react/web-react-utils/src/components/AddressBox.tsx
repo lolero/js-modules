@@ -1,21 +1,20 @@
-import React from 'react';
-import Box, { BoxProps } from '@mui/material/Box';
+import type { BoxProps } from '@mui/material/Box';
+import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import { Address } from '@js-modules/common-utils-general';
 import isEmpty from 'lodash/isEmpty';
-import {
-  FormUtils,
-  FormValidator,
-} from '../hooks/hooksMaterialUi/useFormUtils';
+import type React from 'react';
+import type { FormValidator } from '@js-modules/common-react-utils';
+import type { Address } from '@js-modules/common-utils-general';
+import type { FormUtilsWeb } from '../hooks/hooksMaterialUi/useFormUtilsWeb';
+import type { FormTextFieldProps } from '../types/form.types';
 import { CountriesAutocomplete } from './CountriesAutocomplete';
-import { FormTextFieldProps } from '../types/form.types';
 
 export type AddressBoxProps = {
   sx?: BoxProps['sx'];
   renderFields?: (keyof Address)[];
   addressTemp: Address;
-  changeFieldCallback: FormUtils<Address>['changeFieldCallback'];
-  blurFieldCallback: FormUtils<Address>['blurFieldCallback'];
+  changeFieldCallback: FormUtilsWeb<Address>['changeFieldCallback'];
+  blurFieldCallback: FormUtilsWeb<Address>['blurFieldCallback'];
   formErrors: FormValidator<Address>['formErrors'];
   isFormFieldsDisabled: boolean;
   textFieldProps?: {
@@ -50,7 +49,6 @@ export const AddressBox: React.FunctionComponent<AddressBoxProps> = ({
           error={!!formErrors.countryCode?.length}
           helperText={formErrors.countryCode?.join(', ')}
           dataKey="countryCode"
-          // eslint-disable-next-line react/jsx-props-no-spreading
           {...textFieldProps.countryCode}
         />
       )}
@@ -64,10 +62,9 @@ export const AddressBox: React.FunctionComponent<AddressBoxProps> = ({
           onBlur={blurFieldCallback}
           error={!!formErrors.city?.length}
           helperText={formErrors.city?.join(', ')}
-          inputProps={{
-            'data-key': 'city',
+          slotProps={{
+            htmlInput: { 'data-key': 'city' },
           }}
-          // eslint-disable-next-line react/jsx-props-no-spreading
           {...textFieldProps.city}
         />
       )}
@@ -81,10 +78,9 @@ export const AddressBox: React.FunctionComponent<AddressBoxProps> = ({
           onBlur={blurFieldCallback}
           error={!!formErrors.postalCode?.length}
           helperText={formErrors.postalCode?.join(', ')}
-          inputProps={{
-            'data-key': 'postalCode',
+          slotProps={{
+            htmlInput: { 'data-key': 'postalCode' },
           }}
-          // eslint-disable-next-line react/jsx-props-no-spreading
           {...textFieldProps.postalCode}
         />
       )}
@@ -98,10 +94,9 @@ export const AddressBox: React.FunctionComponent<AddressBoxProps> = ({
           onBlur={blurFieldCallback}
           error={!!formErrors.addressLine1?.length}
           helperText={formErrors.addressLine1?.join(', ')}
-          inputProps={{
-            'data-key': 'addressLine1',
+          slotProps={{
+            htmlInput: { 'data-key': 'addressLine1' },
           }}
-          // eslint-disable-next-line react/jsx-props-no-spreading
           {...textFieldProps.addressLine1}
         />
       )}
@@ -114,10 +109,9 @@ export const AddressBox: React.FunctionComponent<AddressBoxProps> = ({
           onBlur={blurFieldCallback}
           error={!!formErrors.addressLine2?.length}
           helperText={formErrors.addressLine2?.join(', ')}
-          inputProps={{
-            'data-key': 'addressLine2',
+          slotProps={{
+            htmlInput: { 'data-key': 'addressLine2' },
           }}
-          // eslint-disable-next-line react/jsx-props-no-spreading
           {...textFieldProps.addressLine2}
         />
       )}

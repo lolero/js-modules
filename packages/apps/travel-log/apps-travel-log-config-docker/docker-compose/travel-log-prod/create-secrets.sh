@@ -12,8 +12,8 @@ SECRETS_DIR="./.secrets"
 
 # Check if docker-compose file exists
 if [ ! -f "$COMPOSE_FILE" ]; then
-    echo "Error: $COMPOSE_FILE not found!"
-    exit 1
+  echo "Error: $COMPOSE_FILE not found!"
+  exit 1
 fi
 
 # Create secrets directory
@@ -38,44 +38,53 @@ in_secrets && /^  [a-zA-Z_][a-zA-Z0-9_]*:/ {
 
 # Check if we found any secrets
 if [ -z "$secret_names" ]; then
-    echo "No secrets found in $COMPOSE_FILE"
-    exit 1
+  echo "No secrets found in $COMPOSE_FILE"
+  exit 1
 fi
 
 # Function to determine if a secret should have hidden input
 should_hide_input() {
-    local secret_name=$1
-    # Hide input for anything with "password" or "secret" in the name
-    if [[ "$secret_name" == *"password"* ]] || [[ "$secret_name" == *"secret"* ]]; then
-        return 0
-    fi
-    return 1
+  local secret_name=$1
+  # Hide input for anything with "password" or "secret" in the name
+  if [[ "$secret_name" == *"password"* ]] || [[ "$secret_name" == *"secret"* ]]; then
+    return 0
+  fi
+  return 1
 }
 
 # Create each secret
 while IFS= read -r secret_name; do
-    secret_file="$SECRETS_DIR/$secret_name"
+  secret_file="$SECRETS_DIR/$secret_name"
 
-    if should_hide_input "$secret_name"; then
-        echo -n "Enter value for $secret_name (or press Enter to skip): "
-        read -rs secret_value </dev/tty || { echo ""; echo "⊘ Skipped $secret_name"; echo ""; continue; }
-        echo ""
-    else
-        echo -n "Enter value for $secret_name (or press Enter to skip): "
-        read -r secret_value </dev/tty || { echo "⊘ Skipped $secret_name"; echo ""; continue; }
-    fi
-
-    # Skip if empty
-    if [ -z "$secret_value" ]; then
-        echo "⊘ Skipped $secret_name"
-        echo ""
-        continue
-    fi
-
-    echo -n "$secret_value" > "$secret_file"
-    chmod 660 "$secret_file"
-    echo "✓ Created $secret_name"
+  if should_hide_input "$secret_name"; then
+    echo -n "Enter value for $secret_name (or press Enter to skip): "
+    read -rs secret_value < /dev/tty || {
+      echo ""
+      echo "⊘ Skipped $secret_name"
+      echo ""
+      continue
+    }
     echo ""
+  else
+    echo -n "Enter value for $secret_name (or press Enter to skip): "
+    read -r secret_value < /dev/tty || {
+      echo "⊘ Skipped $secret_name"
+      echo ""
+      continue
+    }
+  fi
+
+  # Skip if empty
+  if [ -z "$secret_value" ]; then
+    echo "⊘ Skipped $secret_name"
+    echo ""
+    continue
+  fi
+
+  echo -n "$secret_value" > "$secret_file"
+  chmod 660 "$secret_file"
+  echo "✓ Created $secret_name"
+  echo ""
 done <<< "$secret_names"
 
 echo "================================================================"

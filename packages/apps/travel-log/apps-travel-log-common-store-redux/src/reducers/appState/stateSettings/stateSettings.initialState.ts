@@ -1,8 +1,6 @@
-import {
-  createInitialState,
-  Entity,
-} from '@js-modules/common-redux-utils-normalized-reducers';
-import { StateSettingsReducer } from './stateSettings.types';
+import type { Entity } from '@js-modules/common-redux-utils-normalized-reducers';
+import { createInitialState } from '@js-modules/common-redux-utils-normalized-reducers';
+import type { StateSettingsReducer } from './stateSettings.types';
 
 const stateSettingsReducerMetadataInitialState: StateSettingsReducer['metadata'] =
   {

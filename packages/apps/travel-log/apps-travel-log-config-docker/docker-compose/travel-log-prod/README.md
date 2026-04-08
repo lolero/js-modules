@@ -3,6 +3,7 @@
 ## Prepare VM
 
 ### System Requirements
+
 - Ubuntu/Debian-based Linux distribution
 - Docker Engine 20.10+
 - Docker Compose 1.29+
@@ -11,40 +12,46 @@
 - Root or sudo access
 
 ### Connect
+
 ```bash
-ssh <vm-username>@<vm-ip>
+ssh {vm-username}@{vm-ip}
 ```
 
 ### Install deployment tools and start docker
+
 ```bash
 su
 apt update && apt upgrade -y
-apt install docker.io docker-compose ufw rsync -y 
-/usr/sbin/usermod -aG docker <username>
+apt install docker.io docker-compose ufw rsync -y
+/usr/sbin/usermod -aG docker {username}
 systemctl enable docker
 systemctl start docker
 exit
 ```
 
 ### Create Dedicated System User
+
 Create a non-privileged user to run the application:
 
 ```bash
 su
 /usr/sbin/useradd -r -s /bin/false -d /opt/travel-log-app user-travel-log-app
 /usr/sbin/usermod -aG docker user-travel-log-app
-/usr/sbin/usermod -aG user-travel-log-app <username>
+/usr/sbin/usermod -aG user-travel-log-app {username}
 chmod g+w /opt/travel-log-app/
 exit
 ```
 
 ### Set user in nginx Dockerfiles and docker-compose
+
 Get user's uid and gid
+
 ```bash
 id user-travel-log-app
 ```
 
 ### Directory Structure
+
 ```
 /opt/travel-log-app/                          # Main application directory
 ├── docker-compose.prod.yml        # Docker compose file
@@ -57,12 +64,14 @@ id user-travel-log-app
 ```
 
 #### Why `/opt/travel-log-app/`?
+
 - `/opt/` is the standard location for third-party applications
 - Separate from system files
 - Easy to backup and manage
 - Clear separation of concerns
 
 ### Set Up Application Directories
+
 ```bash
 su
 mkdir -p /opt/travel-log-app
@@ -78,11 +87,12 @@ exit
 ```
 
 ### Configure Firewall
+
 ```bash
 su
-/usr/sbin/ufw allow 80/tcp     # HTTP
-/usr/sbin/ufw allow 443/tcp    # HTTPS (if using SSL)
-/usr/sbin/ufw allow 22/tcp     # SSH (IMPORTANT - don't lock yourself out!)
+/usr/sbin/ufw allow 80/tcp  # HTTP
+/usr/sbin/ufw allow 443/tcp # HTTPS (if using SSL)
+/usr/sbin/ufw allow 22/tcp  # SSH (IMPORTANT - don't lock yourself out!)
 /usr/sbin/ufw enable
 /usr/sbin/ufw status
 exit
@@ -91,26 +101,30 @@ exit
 ## Deploy App
 
 ### Create SSL Certificates
+
 ```bash
-  cd packages/apps/travel-log/apps-travel-log-config-docker/docker-compose/ && ./generate-ssl-cert.sh
+cd packages/apps/travel-log/apps-travel-log-config-docker/docker-compose/ && ./generate-ssl-cert.sh
 ```
 
 ### Sync files
+
 Open a new local terminal at the root of the project:
+
 ```bash
-  rsync -avz --progress \
-    --include='ssl/***' \
-    --include='create-secrets.sh' \
-    --include='docker-compose.prod.sh' \
-    --include='docker-compose.prod.yml' \
-    --include='run-backups.sh' \
-    --exclude='*' \
-    packages/apps/travel-log/apps-travel-log-config-docker/docker-compose/travel-log-prod/ <vm-username>@<vm-ip>:/opt/travel-log-app/
+rsync -avz --progress \
+  --include='ssl/***' \
+  --include='create-secrets.sh' \
+  --include='docker-compose.prod.sh' \
+  --include='docker-compose.prod.yml' \
+  --include='run-backups.sh' \
+  --exclude='*' \
+  packages/apps/travel-log/apps-travel-log-config-docker/docker-compose/travel-log-prod/ {vm-username}@{vm-ip}:/opt/travel-log-app/
 ```
 
 After transferring files, on the VM's terminal:
 
 #### Make scripts executable
+
 ```bash
 cd /opt/travel-log-app
 chmod +x create-secrets.sh
@@ -119,6 +133,7 @@ chmod +x run-backups.sh
 ```
 
 #### Set SSL Certificates perimssions
+
 ```bash
 cd /opt/travel-log-app
 su
@@ -127,6 +142,7 @@ exit
 ```
 
 ### Create Secrets
+
 ```bash
 cd /opt/travel-log-app
 ./create-secrets.sh
@@ -138,41 +154,49 @@ exit
 ```
 
 ### Run docker-compose up
+
 ```bash
 cd /opt/travel-log-app
 ./docker-compose.prod.sh up -d
 ```
 
 ### Set prod values in Keycloak Admin Console
+
 #### SMTP Credentials
+
 - From
 - Username
 - Password
 
 ### Update admin-cli and client-api-core secrets
+
 ```bash
 cd /opt/travel-log-app
 ./create-secrets.sh
 ```
 
 ### Restart the api-core service
+
 ```bash
 cd /opt/travel-log-app
 ./docker-compose.prod.sh up -d --force-recreate --no-deps api-core
 ```
 
 ### Execute migrations in api-core container
+
 ```bash
 docker exec -it travel-log-app-api-core-1 /bin/sh -c './typeorm-migration-run.sh'
 ```
 
 ### Restart the api-core service again
+
 ```bash
 cd /opt/travel-log-app
 ./docker-compose.prod.sh up -d --force-recreate --no-deps api-core
 ```
 
 ### Verify Deployment
+
 ```bash
 # Check running containers
 docker ps
@@ -182,12 +206,13 @@ cd /opt/travel-log-app
 ./docker-compose.prod.sh logs -f
 
 # Check specific service
-docker logs travel-log-app-<service name>-1
+docker logs travel-log-app-{service-name}-1
 ```
 
 ## Maintenance
 
 ### Build Updated Images
+
 In local machine, from project root dir:
 
 ```bash
@@ -196,6 +221,7 @@ cd ./packages/apps/travel-log/apps-travel-log-config-docker/
 ```
 
 ### Deploy Updates
+
 ```bash
 cd /opt/travel-log-app
 

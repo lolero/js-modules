@@ -1,8 +1,9 @@
 {
   "compilerOptions": {
+    "types": [],
     "module": "esnext",
     "target": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "strict": true,
     "esModuleInterop": true,
     "isolatedModules": true,
@@ -13,7 +14,17 @@
     "strictPropertyInitialization": false,
     "forceConsistentCasingInFileNames": true,
     "sourceMap": true,
-    "skipLibCheck": true
+    "declaration": true,
+    "skipLibCheck": true,
+    "rootDir": "${configDir}/src",
+    "outDir": "${configDir}/build"
   },
-  "exclude": ["**/*/node_modules", "**/*/build", "**/*/__tests__", "**/*/__spec__"]
+  "exclude": [
+    "**/node_modules",
+    "**/build",
+    "**/__tests__",
+    "**/__specs__",
+    "**/*.test.*",
+    "**/*.spec.*"
+  ]
 }

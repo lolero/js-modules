@@ -1,11 +1,8 @@
-import orderBy from 'lodash/orderBy';
+import type { TCountryCode } from 'countries-list';
+import { countries as countriesList, getEmojiFlag } from 'countries-list';
 import entries from 'lodash/entries';
 import keyBy from 'lodash/keyBy';
-import {
-  countries as countriesList,
-  getEmojiFlag,
-  TCountryCode,
-} from 'countries-list';
+import orderBy from 'lodash/orderBy';
 
 export type Country = {
   code: string;

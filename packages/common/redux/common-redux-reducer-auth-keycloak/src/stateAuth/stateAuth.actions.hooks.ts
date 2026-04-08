@@ -1,10 +1,10 @@
-import {
+import { useCallback } from 'react';
+import { useDispatch } from 'react-redux';
+import type {
   Request,
   RequestMetadata,
   UseRequestReducerMetadata,
 } from '@js-modules/common-redux-utils-normalized-reducers';
-import { useDispatch } from 'react-redux';
-import { useCallback } from 'react';
 import {
   createStateAuthInitializeRequestAction,
   createStateAuthSigninRequestAction,
@@ -13,16 +13,16 @@ import {
   STATE_AUTH__SIGNIN__REQUEST_ID,
   STATE_AUTH__SIGNOUT__REQUEST_ID,
 } from './stateAuth.actions.creators';
-import {
-  SigninAction,
-  StateAuthReducer,
-  StateAuthReducerMetadata,
-} from './stateAuth.types';
-import {
+import type {
   StateAuthInitializeRequestAction,
   StateAuthSigninRequestAction,
   StateAuthSignoutRequestAction,
 } from './stateAuth.actions.types';
+import type {
+  StateAuthReducer,
+  StateAuthReducerMetadata,
+} from './stateAuth.types';
+import { SigninAction } from './stateAuth.types';
 
 export function getStateAuthActionHooks(
   useStateAuthRequest: (

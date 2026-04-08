@@ -1,7 +1,7 @@
 import omit from 'lodash/omit';
-import { AuthUsersEntity } from './auth.types';
-import { AuthDtoSignup } from './auth.dto.signup';
-import { AuthDtoSignin } from './auth.dto.signin';
+import type { AuthDtoSignin } from './auth.dto.signin';
+import type { AuthDtoSignup } from './auth.dto.signup';
+import type { AuthUsersEntity } from './auth.types';
 
 export function getAuthUserEntityFixture(
   overrides: Partial<AuthUsersEntity> = {},

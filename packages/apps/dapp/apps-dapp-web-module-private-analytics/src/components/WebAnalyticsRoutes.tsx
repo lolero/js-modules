@@ -1,12 +1,12 @@
-import React from 'react';
+import type React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import {
   WebModulesPrivate,
   WebSubModulesAnalytics,
 } from '@js-modules/apps-dapp-common-constants';
 import { routesMetadataPrivate } from '@js-modules/apps-dapp-common-react';
-import { WebAnalyticsWorkspaceBox } from './WebAnalyticsWorkspaceBox';
 import { WebAnalyticsTokensRoutes } from './WebAnalyticsTokensRoutes';
+import { WebAnalyticsWorkspaceBox } from './WebAnalyticsWorkspaceBox';
 
 export const WebAnalyticsRoutes: React.FunctionComponent = () => {
   return (

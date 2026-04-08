@@ -1,9 +1,10 @@
-import React from 'react';
-import { WorkspaceBox, WorkspaceBoxProps } from '@js-modules/web-react-nav';
+import type React from 'react';
+import type { WorkspaceBoxProps } from '@js-modules/web-react-nav';
+import { WorkspaceBox } from '@js-modules/web-react-nav';
+import { DappLogoLongBox } from './DappLogoLongBox';
+import { DappLogoShortBox } from './DappLogoShortBox';
 import { DappNavDrawerContentBox } from './DappNavDrawerContentBox';
 import { DappNavDrawerFooterBox } from './DappNavDrawerFooterBox';
-import { DappLogoShortBox } from './DappLogoShortBox';
-import { DappLogoLongBox } from './DappLogoLongBox';
 import { DappNavToolbar } from './DappNavToolbar';
 
 export type DappWorkspaceBoxProps = {

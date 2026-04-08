@@ -1,16 +1,22 @@
-import { useSelector } from 'react-redux';
-import { renderHook } from '@testing-library/react';
-import { createInitialState } from './initialState.utils';
 import {
-  getPkOfTestEntity,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  jest as jestGlobals,
+} from '@jest/globals';
+import { renderHook } from '@testing-library/react';
+import { useSelector } from 'react-redux';
+import type { ReducerHooks } from '../types/hooks.types';
+import type { ReducerSelectors } from '../types/selectors.types';
+import { createReducerHooks } from './hooksCreators';
+import { createInitialState } from './initialState.utils';
+import { createReducerSelectors } from './selectorsCreators';
+import type {
   TestEntity,
-  testEntity1,
-  testEntity2,
   TestEntity2,
-  testEntity3,
   TestEntity3,
   TestEntity4,
-  testInitialReducerMetadata,
   TestReducer,
   TestReducer2,
   TestReducer3,
@@ -18,10 +24,13 @@ import {
   TestReducerMetadata,
   TestState,
 } from './spec.utils';
-import { createReducerSelectors } from './selectorsCreators';
-import { ReducerHooks } from '../types/hooks.types';
-import { createReducerHooks } from './hooksCreators';
-import { ReducerSelectors } from '../types/selectors.types';
+import {
+  getPkOfTestEntity,
+  testEntity1,
+  testEntity2,
+  testEntity3,
+  testInitialReducerMetadata,
+} from './spec.utils';
 
 jest.mock('react-redux');
 
@@ -92,7 +101,10 @@ describe('hooksCreators', () => {
       TestState
     >;
     let reducerHooks: ReducerHooks<TestReducerMetadata, TestEntity>;
-    const useSelectorMock = jest.mocked(useSelector);
+    const useSelectorMock =
+      jestGlobals.mocked<(selector: (state: unknown) => unknown) => unknown>(
+        useSelector,
+      );
 
     beforeEach(() => {
       reducerPropSelectors = createReducerSelectors<

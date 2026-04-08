@@ -1,26 +1,26 @@
 import { DynamicModule, Module } from '@nestjs/common';
+import isNull from 'lodash/isNull';
 import {
-  KeycloakConnectModule,
   KeycloakConnectConfig,
+  KeycloakConnectModule,
 } from 'nest-keycloak-connect';
 import { AuthModuleMetadata } from '@js-modules/api-nest-utils';
-import isNull from 'lodash/isNull';
+import {
+  authProviderAuthGuard,
+  authProviderAuthGuardMultiIssuer,
+  authProviderAuthGuardUsersEntityCurrent,
+  authProviderAuthServiceMultiIssuer,
+  authProviderKeycloakAdminClient,
+  authProviderResourceGuard,
+  authProviderRoleGuard,
+  getAuthProviderKeycloakAdminClientConfig,
+  getAuthProviderKeycloakMultiIssuerConfig,
+} from './auth.providers';
 import {
   AuthUsersService,
   KeycloakAdminClientConfig,
   KeycloakMultiIssuerConfig,
 } from './auth.types';
-import {
-  authProviderKeycloakAdminClient,
-  authProviderAuthGuard,
-  authProviderAuthGuardUsersEntityCurrent,
-  authProviderResourceGuard,
-  authProviderRoleGuard,
-  getAuthProviderKeycloakAdminClientConfig,
-  authProviderAuthServiceMultiIssuer,
-  authProviderAuthGuardMultiIssuer,
-  getAuthProviderKeycloakMultiIssuerConfig,
-} from './auth.providers';
 
 @Module({})
 export class AuthModule {

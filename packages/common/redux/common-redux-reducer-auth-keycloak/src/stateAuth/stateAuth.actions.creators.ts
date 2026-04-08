@@ -1,6 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import {
-  StateAuthActionTypes,
+import type {
   StateAuthInitializeFailAction,
   StateAuthInitializeRequestAction,
   StateAuthInitializeSuccessAction,
@@ -14,6 +13,7 @@ import {
   StateAuthUpdatePartialReducerMetadataRequestAction,
   StateAuthUpdatePartialReducerMetadataSuccessAction,
 } from './stateAuth.actions.types';
+import { StateAuthActionTypes } from './stateAuth.actions.types';
 
 export const STATE_AUTH__INITIALIZE__REQUEST_ID =
   'STATE_AUTH__INITIALIZE__REQUEST_ID';

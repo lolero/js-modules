@@ -1,10 +1,10 @@
-import {
+import type { LogEntriesDto } from '@js-modules/apps-travel-log-api-modules-core';
+import type {
   Entity,
   PkSchema,
   Reducer,
   ReducerMetadata,
 } from '@js-modules/common-redux-utils-normalized-reducers';
-import { LogEntriesDto } from '@js-modules/apps-travel-log-api-modules-core';
 
 export const nodeLogEntryUnsavedEmpty: NodeLogEntry = {
   id: 0,

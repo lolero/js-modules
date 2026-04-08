@@ -1,6 +1,6 @@
-import React from 'react';
+import type React from 'react';
 import { Provider } from 'react-redux';
-import { Store } from 'redux';
+import type { Store } from 'redux';
 
 type ReduxProviderProps = {
   reduxStore: Store;

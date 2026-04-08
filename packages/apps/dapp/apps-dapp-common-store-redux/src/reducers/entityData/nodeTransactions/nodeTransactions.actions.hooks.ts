@@ -1,26 +1,26 @@
-import {
+import { useCallback, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import type {
   Request,
   UseRequestEntities,
 } from '@js-modules/common-redux-utils-normalized-reducers';
-import { useDispatch } from 'react-redux';
-import { useCallback, useState } from 'react';
 import {
+  createNodeTransactionsGetManyRequestAction,
+  createNodeTransactionsGetOneRequestAction,
+} from './nodeTransactions.actions.creators';
+import type {
   NodeTransactionsGetManyRequestAction,
   NodeTransactionsGetOneRequestAction,
 } from './nodeTransactions.actions.types';
-import {
-  NodeTransaction,
-  NodeTransactionsReducer,
-} from './nodeTransactions.types';
 import {
   useNodeTransactionsEntities,
   useNodeTransactionsReducerMetadata,
   useNodeTransactionsRequest,
 } from './nodeTransactions.hooks';
-import {
-  createNodeTransactionsGetManyRequestAction,
-  createNodeTransactionsGetOneRequestAction,
-} from './nodeTransactions.actions.creators';
+import type {
+  NodeTransaction,
+  NodeTransactionsReducer,
+} from './nodeTransactions.types';
 
 export function useNodeTransactionsGetMany(): UseRequestEntities<
   NodeTransactionsGetManyRequestAction['requestMetadata'],

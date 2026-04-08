@@ -3,16 +3,11 @@ import {
   faAnglesRight,
   faXmark,
 } from '@fortawesome/free-solid-svg-icons';
+import type { Theme } from '@mui/material';
+import { Box, Fab, IconButton, svgIconClasses, Tooltip } from '@mui/material';
+import type React from 'react';
+import { useContext, useMemo } from 'react';
 import { MuiFaIcon } from '@js-modules/web-react-utils';
-import {
-  Box,
-  Fab,
-  IconButton,
-  svgIconClasses,
-  Theme,
-  Tooltip,
-} from '@mui/material';
-import React, { useContext, useMemo } from 'react';
 import { NavContext } from '../contexts/NavContext';
 import { WorkspaceContext } from '../contexts/WorkspaceContext';
 import { useNavDisplayMetadata } from '../hooks/useNavDisplayMetadata';
@@ -51,7 +46,7 @@ export const NavRightDrawerDisplayButton: React.FunctionComponent = () => {
         '&:active': {
           boxShadow: 'none',
         },
-      } as const),
+      }) as const,
     [navTopToolbarHeight, workspaceMarginRight],
   );
 

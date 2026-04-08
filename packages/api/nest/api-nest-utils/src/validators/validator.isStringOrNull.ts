@@ -10,7 +10,7 @@ import {
   async: false,
 })
 class ValidatorIsStringOrNull implements ValidatorConstraintInterface {
-  validate(value: any) {
+  validate(value: unknown) {
     return typeof value === 'string' || value === null;
   }
 
@@ -20,7 +20,7 @@ class ValidatorIsStringOrNull implements ValidatorConstraintInterface {
 }
 
 export function isStringOrNull(validationOptions?: ValidationOptions) {
-  return function (object: Object, propertyName: string) {
+  return function (object: object, propertyName: string) {
     registerDecorator({
       target: object.constructor,
       propertyName,

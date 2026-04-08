@@ -1,3 +1,4 @@
+import { describe, expect, it } from '@jest/globals';
 import { camelToSnakeCaseWithAcronyms } from './camelToSnakeCaseWithAcronyms';
 
 describe('camelToSnakeCaseWithUpperCaseAcronyms', () => {

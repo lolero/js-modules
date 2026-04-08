@@ -1,15 +1,16 @@
-import React, { useContext, useMemo } from 'react';
-import Tooltip from '@mui/material/Tooltip';
-import { faAnglesRight } from '@fortawesome/free-solid-svg-icons/faAnglesRight';
 import { faAnglesLeft } from '@fortawesome/free-solid-svg-icons/faAnglesLeft';
+import { faAnglesRight } from '@fortawesome/free-solid-svg-icons/faAnglesRight';
 import { faXmark } from '@fortawesome/free-solid-svg-icons/faXmark';
-import Fab from '@mui/material/Fab';
 import Box from '@mui/material/Box';
-import { svgIconClasses } from '@mui/material/SvgIcon';
+import Fab from '@mui/material/Fab';
 import IconButton from '@mui/material/IconButton';
+import { svgIconClasses } from '@mui/material/SvgIcon';
+import Tooltip from '@mui/material/Tooltip';
+import type React from 'react';
+import { useContext, useMemo } from 'react';
 import { MuiFaIcon } from '@js-modules/web-react-utils';
-import { WorkspaceContext } from '../contexts/WorkspaceContext';
 import { NavContext } from '../contexts/NavContext';
+import { WorkspaceContext } from '../contexts/WorkspaceContext';
 import { useNavDisplayMetadata } from '../hooks/useNavDisplayMetadata';
 
 export const NavLeftDrawerDisplayButton: React.FunctionComponent = () => {
@@ -44,7 +45,7 @@ export const NavLeftDrawerDisplayButton: React.FunctionComponent = () => {
         '&:active': {
           boxShadow: 'none',
         },
-      } as const),
+      }) as const,
     [workspaceMarginLeft],
   );
 

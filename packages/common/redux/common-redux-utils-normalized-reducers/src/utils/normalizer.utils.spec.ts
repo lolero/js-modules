@@ -1,10 +1,11 @@
+import { describe, expect, it } from '@jest/globals';
 import { normalizeEntityArrayByPk } from './normalizer.utils';
 import {
+  getPkOfTestEntity,
   testEntity1,
   testEntity2,
   testEntity3,
   testPkSchema,
-  getPkOfTestEntity,
 } from './spec.utils';
 
 describe('normalizer.utils', () => {

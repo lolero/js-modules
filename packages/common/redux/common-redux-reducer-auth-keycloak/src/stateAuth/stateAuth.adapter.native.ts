@@ -1,22 +1,25 @@
+import type { KeycloakServerConfig } from 'keycloak-js';
+import type { AuthConfiguration } from 'react-native-app-auth';
+import { authorize, refresh, revoke } from 'react-native-app-auth';
+import type { EventChannel } from 'redux-saga';
+import { eventChannel } from 'redux-saga';
 import {
-  AuthConfiguration,
-  authorize,
-  refresh,
-  revoke,
-} from 'react-native-app-auth';
-import { EventChannel, eventChannel } from 'redux-saga';
-import { KeycloakServerConfig } from 'keycloak-js';
-import { AuthAdapter, AuthInitResult, KeycloakTokens } from './stateAuth.types';
-import {
-  createKeycloakTokens,
-  createAuthConfiguration,
   clearKeycloakTokens,
-  isTokenExpired,
+  createAuthConfiguration,
+  createKeycloakTokens,
   getKeycloakTokens,
+  isTokenExpired,
   storeKeycloakTokens,
   TOKEN_REFRESH_BUFFER_SECONDS,
 } from './stateAuth.adapter.native.utils';
+import type {
+  AuthAdapter,
+  AuthInitResult,
+  KeycloakTokens,
+} from './stateAuth.types';
 
+// TODO: pass a logger to this so it can document when the commented out
+//  console errors should document said failures
 /**
  * Native authentication adapter using react-native-app-auth
  * Implements OAuth Authorization Code + PKCE flow for mobile apps
@@ -73,8 +76,9 @@ export class StateAuthAdapter implements AuthAdapter {
         this.isTokenValidEventEmitter!(true);
 
         return keycloakTokensRefreshed;
-      } catch (error) {
-        console.error('Failed to refresh token:', error);
+      } catch {
+        // const message = error instanceof Error ? error.message : String(error);
+        // console.error('Failed to refresh token:', message);
         this.keycloakTokens = null;
         await clearKeycloakTokens();
 
@@ -114,7 +118,7 @@ export class StateAuthAdapter implements AuthAdapter {
     const refreshIn = Math.max(expiresIn - TOKEN_REFRESH_BUFFER_SECONDS, 0);
 
     this.tokenRefreshTimeout = setTimeout(() => {
-      this.refreshAccessToken();
+      void this.refreshAccessToken();
     }, refreshIn * 1000);
   }
 
@@ -140,7 +144,7 @@ export class StateAuthAdapter implements AuthAdapter {
         // The scheduled refresh (scheduleTokenRefresh) handles proactive refreshing
         if (isTokenExpired(this.keycloakTokens.access)) {
           // Token expired - trigger immediate refresh
-          this.refreshAccessToken();
+          void this.refreshAccessToken();
         } else {
           // Token still valid
           emitter(true);
@@ -208,21 +212,20 @@ export class StateAuthAdapter implements AuthAdapter {
       // Emit onAuthError event                                                                                   │
       this.isTokenValidEventEmitter!(false);
 
-      // Log detailed error information                                                                           │
-      console.error('[StateAuthAdapter] Login failed - Full error details:');
-      console.error('[StateAuthAdapter] Error:', error);
-      console.error(
-        '[StateAuthAdapter] Error message:',
-        (error as Error).message,
-      );
-      console.error('[StateAuthAdapter] Error stack:', (error as Error).stack);
-      if (error && typeof error === 'object') {
-        console.error('[StateAuthAdapter] Error keys:', Object.keys(error));
-        console.error(
-          '[StateAuthAdapter] Full error object:',
-          JSON.stringify(error, null, 2),
-        );
-      }
+      // // Log detailed error information
+      // console.error('[StateAuthAdapter] Login failed - Full error details:');
+      // console.error('[StateAuthAdapter] Error:', error);
+      // const message = error instanceof Error ? error.message : String(error);
+      // console.error('[StateAuthAdapter] Error message:', message);
+      // const stack = error instanceof Error ? error.stack : String(error);
+      // console.error('[StateAuthAdapter] Error stack:', stack);
+      // if (error && typeof error === 'object') {
+      //   console.error('[StateAuthAdapter] Error keys:', Object.keys(error));
+      //   console.error(
+      //     '[StateAuthAdapter] Full error object:',
+      //     JSON.stringify(error, null, 2),
+      //   );
+      // }
 
       throw new Error('Login failed', { cause: error });
     }
@@ -235,7 +238,6 @@ export class StateAuthAdapter implements AuthAdapter {
     return this.login();
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async logout(): Promise<void> {
     if (!this.keycloakTokens) {
       // Already logged out
@@ -248,8 +250,8 @@ export class StateAuthAdapter implements AuthAdapter {
         tokenToRevoke: this.keycloakTokens.refresh.token,
         sendClientId: true,
       });
-    } catch (error) {
-      console.error('Token revocation failed (continuing with logout):', error);
+    } catch {
+      // console.error('Token revocation failed (continuing with logout):', error);
     }
 
     // Clear tokens regardless of revocation success

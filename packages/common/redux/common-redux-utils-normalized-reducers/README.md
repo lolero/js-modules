@@ -1,15 +1,17 @@
 # @js-modules/common-redux-utils-normalized-reducers
+
 Utility functions and types for normalized reducers architectures
 
 ## Purpose
+
 1. A standard protocol to interact with an application's front-end state in
    order to make CRUD operations on it consistent, regardless of the data that
    is being stored or consumed. In simple English, this package provides the
    tools to interact with the state in a similar way to how clients interact
    with a RESTful API.
 
-2. A set of strongly typed CRUD action interfaces, reducer handlers, 
-   memoized selector functions, and request action handler hooks which 
+2. A set of strongly typed CRUD action interfaces, reducer handlers,
+   memoized selector functions, and request action handler hooks which
    enforce a consistent reducer architecture and allow for the robust and
    reliable scaling of a web application.
 
@@ -21,6 +23,7 @@ where data is stored in reducers and interactions with the stored data happen
 through actions that get dispatched and hit the reducers.
 
 ## Motivation
+
 Many millions of applications with broad ranges of size, complexity and
 popularity are getting built today with [React](https://reactjs.org) and
 [Redux](https://redux.js.org) because they are the most popular frameworks for
@@ -65,31 +68,39 @@ or any other type of data for any use whatsoever.
 ## Getting started
 
 ### Install
+
 ```shell
 npm install --save @js-modules/common-redux-utils-normalized-reducers
 ```
+
 or
+
 ```shell
 yarn add @js-modules/common-redux-utils-normalized-reducers
 ```
+
 or
+
 ```shell
 pnpm add @js-modules/common-redux-utils-normalized-reducers
 ```
 
 ## Configuration
+
 The initial state of a reducer is created by calling the
 [createInitialState](#createinitialstate) function which takes an optional
 [config](#reducerconfig) object with the following props.
 
 ### `protectedRequestIds`
+
 - Type (optional): string[]
 - Default: undefined
 
-Array of request ids which should always be kept in the 
+Array of request ids which should always be kept in the
 [reducer's requests prop](#requests)
 
 ### `successRequestsCache`
+
 - Type: number | null
 - Default: 10
 
@@ -99,6 +110,7 @@ Number of successfully completed requests to keep in the
 Set to `null` to keep all successfully completed requests.
 
 ### `failRequestsCache`
+
 - Type: number | null
 - Default: null
 
@@ -107,13 +119,16 @@ Number of failed requests to keep in the [reducer's requests prop](#requests)
 Set to `null` to keep all failed requests.
 
 ### `requestsPrettyTimestamps`
+
 - Type (optional):
+
 ```
 {
   format: string;
   timezone: string;
 }
 ```
+
 - Default: undefined
 
 Format of requests' formatted string timestamps.
@@ -121,6 +136,7 @@ Format of requests' formatted string timestamps.
 ## Basic concepts
 
 ### Normalized reducers
+
 Normalized reducers are reducers that have the standard [reducer](#reducer)
 object structure.
 
@@ -130,17 +146,20 @@ data.
 Reducers can contain both types of data or only one of the two.
 
 #### 1. Reducer metadata
+
 Metadata about the reducer itself. This can be data related to the state of
 the reducer, regarding the collection of [entity data](#2-entity-data) stored
 in the reducer, or any other information not related to any particular single
 data entity.
 
 #### 2. Entity data
+
 Entity data, e.g. records from a back-end database table / collection
 
 ### Reducer props
 
 #### `requests`
+
 [Requests](#request) corresponding to [request actions](#requestaction) to
 modify a reducer.
 
@@ -189,10 +208,12 @@ requested CRUD operation that should be performed on the [reducer](#reducer).
   [request action](#requestaction)
 
 #### `metadata`
+
 The [reducer's metadata](#1-reducer-metadata) is a
 [standard object with string keys](#reducermetadata).
 
 #### `data`
+
 The [reducer's entity data](#2-entity-data) is indexed by the entities's
 primary key (PK).
 
@@ -200,10 +221,12 @@ An entity's PK is a concatenated string of the entity's props and/or its
 `__edges__`, as defined in the reducer's [PK schema](#pkschema).
 
 #### `config`
+
 The [reducer configuration](#reducerconfig) object with all
 [config params](#configuration).
 
 ### Reducer actions
+
 As stated above, [normalized reducers](#normalized-reducers) are often used to
 store [entity data](#2-entity-data), usually fetched asynchronously from remote
 RESTful APIs. This is why the [reducer](#reducer) contains a
@@ -217,6 +240,7 @@ RESTful APIs. This is why the [reducer](#reducer) contains a
 ### Actions utils
 
 #### `wasRequestSuccessful`
+
 ```typescript
 function* wasRequestSuccessful(requestAction: {
   type: string;
@@ -228,6 +252,7 @@ An effect to be placed in a saga that takes a [request action](#requestaction)
 and waits for it to be completed
 
 Example:
+
 ```typescript
 function* fetchUser1AndThenUser2(): Generator<
   CallEffect | PutEffect,
@@ -253,6 +278,7 @@ function* fetchUser1AndThenUser2(): Generator<
 ### Initial state utils
 
 #### `createInitialState`
+
 ```typescript
 function createInitialState<
   ReducerMetadataT extends ReducerMetadata,
@@ -274,6 +300,7 @@ types explicitly in function calls.
 ### Normalizer utils
 
 #### `normalizeEntityArrayByPk`
+
 ```typescript
 function normalizeEntityArrayByPk<
   EntityT extends Entity,
@@ -290,6 +317,7 @@ Converts an array of entities into an object, indexed by the entities' PKs.
 ### PK utils
 
 #### `createReducerPkUtils`
+
 ```typescript
 function createReducerPkUtils<
   ReducerMetadataT extends ReducerMetadata,
@@ -306,17 +334,21 @@ Creates an object that contains a reducer's Pk schema as well as PK utility
 functions.
 
 ##### `pkSchema`
+
 The [PK schema](#pkschema) used to create the PK concatenated strings that
 index the entities in the [reducer's data](#data) prop.
 
 ##### `getPkOfEntity`
+
 A function that takes an entity and returns the entity's PK
 
 ##### `destructPk`
+
 A function that takes an entity's PK and returns a
 [destructed entity PK](#destructedpk)
 
 #### `emptyPkSchema`
+
 ```typescript
 const emptyPkSchema: PkSchema<Entity, [], []> = {
   fields: [],
@@ -330,10 +362,12 @@ An empty [PK schema](#pkschema-prop) to initialize reducers that don't store
 entity data.
 
 ### Reducer handlers
+
 An abstraction layer of utility functions that handle the manipulation of the
 reducer's state for CRUD operations on reducer's metadata or on entity data.
 
 Example:
+
 ```typescript
 function UsersReducer(
   state: UsersReducer = usersInitialState,
@@ -353,6 +387,7 @@ function UsersReducer(
 ```
 
 #### `handleDeleteEntities`
+
 ```typescript
 function handleDeleteEntities<
   ActionTypeT extends string,
@@ -365,6 +400,7 @@ function handleDeleteEntities<
 ```
 
 #### `handleFail`
+
 ```typescript
 function handleFail<
   ActionTypeT extends string,
@@ -377,6 +413,7 @@ function handleFail<
 ```
 
 #### `handleRequest`
+
 ```typescript
 function handleRequest<
   ActionTypeT extends string,
@@ -390,6 +427,7 @@ function handleRequest<
 ```
 
 #### `handleSavePartialEntities`
+
 ```typescript
 function handleSavePartialEntities<
   ActionTypeT extends string,
@@ -402,6 +440,7 @@ function handleSavePartialEntities<
 ```
 
 #### `handleSavePartialPatternToEntities`
+
 ```typescript
 function handleSavePartialPatternToEntities<
   ActionTypeT extends string,
@@ -418,6 +457,7 @@ function handleSavePartialPatternToEntities<
 ```
 
 #### `handleSaveNothing`
+
 ```typescript
 function handleSaveNothing<
   ActionTypeT extends string,
@@ -430,6 +470,7 @@ function handleSaveNothing<
 ```
 
 #### `handleSaveWholeReducerMetadata`
+
 ```typescript
 function handleSaveWholeReducerMetadata<
   ActionTypeT extends string,
@@ -442,6 +483,7 @@ function handleSaveWholeReducerMetadata<
 ```
 
 #### `handleSavePartialReducerMetadata`
+
 ```typescript
 function handleSavePartialReducerMetadata<
   ActionTypeT extends string,
@@ -454,6 +496,7 @@ function handleSavePartialReducerMetadata<
 ```
 
 #### `handleSaveWholeEntities`
+
 ```typescript
 function handleSaveWholeEntities<
   ActionTypeT extends string,
@@ -468,6 +511,7 @@ function handleSaveWholeEntities<
 ### Selectors creators
 
 #### `createReducerSelectors`
+
 ```typescript
 function createReducerSelectors<
   ReducerMetadataT extends ReducerMetadata,
@@ -486,6 +530,7 @@ Creates an object that contains
 ### Hooks creators
 
 #### `createReducerSelectors`
+
 ```typescript
 function createReducerHooks<
   ReducerMetadataT extends ReducerMetadata,
@@ -513,6 +558,7 @@ Creates an object that contains
 #### Request actions
 
 ##### `RequestAction`
+
 ```typescript
 type RequestAction<
   ActionTypeT extends string,
@@ -527,6 +573,7 @@ type RequestAction<
 #### Success actions
 
 ##### `DeleteEntitiesAction`
+
 ```typescript
 type DeleteEntitiesAction<
   ActionTypeT extends string,
@@ -542,6 +589,7 @@ type DeleteEntitiesAction<
 ```
 
 ##### `SavePartialEntitiesAction`
+
 ```typescript
 type SavePartialEntitiesAction<
   ActionTypeT extends string,
@@ -558,6 +606,7 @@ type SavePartialEntitiesAction<
 ```
 
 ##### `SavePartialPatternToEntitiesAction`
+
 ```typescript
 type SavePartialPatternToEntitiesAction<
   ActionTypeT extends string,
@@ -579,6 +628,7 @@ type SavePartialPatternToEntitiesAction<
 ```
 
 ##### `SavePartialReducerMetadataAction`
+
 ```typescript
 type SavePartialReducerMetadataAction<
   ActionTypeT extends string,
@@ -593,6 +643,7 @@ type SavePartialReducerMetadataAction<
 ```
 
 ##### `SaveWholeEntitiesAction`
+
 ```typescript
 type SaveWholeEntitiesAction<
   ActionTypeT extends string,
@@ -612,6 +663,7 @@ type SaveWholeEntitiesAction<
 #### Fail actions
 
 ##### `FailAction`
+
 ```typescript
 type FailAction<ActionTypeT extends string> = {
   type: ActionTypeT;
@@ -624,6 +676,7 @@ type FailAction<ActionTypeT extends string> = {
 ### Hook types
 
 #### `ReducerHooks`
+
 ```typescript
 type ReducerHooks<
   ReducerMetadataT extends ReducerMetadata,
@@ -649,6 +702,7 @@ type ReducerHooks<
 #### Request action handler hook types
 
 #### `UseReducerRequest`
+
 ```typescript
 type UseReducerRequest<
   RequestMetadataT extends RequestMetadata,
@@ -665,6 +719,7 @@ type UseReducerRequest<
 ```
 
 #### `UseRequestVoid`
+
 ```typescript
 type UseRequestVoid<
   RequestMetadataT extends RequestMetadata,
@@ -676,6 +731,7 @@ type UseRequestVoid<
 ```
 
 #### `UseRequestReducerMetadata`
+
 ```typescript
 type UseRequestReducerMetadata<
   RequestMetadataT extends RequestMetadata,
@@ -688,6 +744,7 @@ type UseRequestReducerMetadata<
 ```
 
 #### `UseRequestEntities`
+
 ```typescript
 type UseRequestEntities<
   RequestMetadataT extends RequestMetadata,
@@ -701,6 +758,7 @@ type UseRequestEntities<
 ```
 
 #### `UseRequestEntity`
+
 ```typescript
 type UseRequestEntity<
   RequestMetadataT extends RequestMetadata,
@@ -716,6 +774,7 @@ type UseRequestEntity<
 ### PK types
 
 #### `DestructedPk`
+
 ```typescript
 type DestructedPk<
   EntityT extends Entity,
@@ -731,6 +790,7 @@ type DestructedPk<
 ```
 
 #### `PkSchema`
+
 ```typescript
 type PkSchema<
   EntityT extends Entity,
@@ -745,11 +805,13 @@ type PkSchema<
 ```
 
 #### `PkSchemaEdges`
+
 ```typescript
 type PkSchemaEdges<EntityT extends Entity> = (keyof EntityT['__edges__'])[];
 ```
 
 #### `PkSchemaFields`
+
 ```typescript
 type PkSchemaFields<EntityT extends Entity> = Exclude<
   keyof EntityT,
@@ -758,6 +820,7 @@ type PkSchemaFields<EntityT extends Entity> = Exclude<
 ```
 
 #### `ReducerPkUtils`
+
 ```typescript
 type ReducerPkUtils<
   ReducerMetadataT extends ReducerMetadata,
@@ -777,6 +840,7 @@ type ReducerPkUtils<
 ### Reducer types
 
 #### `Entity`
+
 ```typescript
 type Entity<ReducerEdgesT extends ReducerEdges> = {
   [fieldKey: string]: unknown;
@@ -787,6 +851,7 @@ type Entity<ReducerEdgesT extends ReducerEdges> = {
 ```
 
 #### `Reducer`
+
 ```typescript
 type Reducer<
   ReducerMetadataT extends ReducerMetadata,
@@ -800,6 +865,7 @@ type Reducer<
 ```
 
 #### `ReducerConfig`
+
 ```typescript
 type ReducerConfig = {
   protectedRequestIds?: string[];
@@ -813,6 +879,7 @@ type ReducerConfig = {
 ```
 
 #### `ReducerData`
+
 ```typescript
 type ReducerData<EntityT extends Entity> = {
   [entityPk: string]: EntityT;
@@ -820,6 +887,7 @@ type ReducerData<EntityT extends Entity> = {
 ```
 
 #### `ReducerEdge`
+
 ```typescript
 type ReducerEdge = {
   nodeReducerPath: string[];
@@ -829,6 +897,7 @@ type ReducerEdge = {
 ```
 
 #### `ReducerEdges`
+
 ```typescript
 type ReducerEdges = {
   [edgeName: string]: ReducerEdge;
@@ -836,6 +905,7 @@ type ReducerEdges = {
 ```
 
 #### `ReducerGroup`
+
 ```typescript
 type ReducerGroup<
   ReducerMetadataT extends ReducerMetadata,
@@ -849,6 +919,7 @@ type ReducerGroup<
 ```
 
 #### `ReducerMetadata`
+
 ```typescript
 type ReducerMetadata = {
   [metadataKey: string]: unknown;
@@ -856,6 +927,7 @@ type ReducerMetadata = {
 ```
 
 #### `ReducerPartialData`
+
 ```typescript
 type ReducerPartialData<EntityT extends Entity> = {
   [entityPk: string]: Partial<
@@ -867,6 +939,7 @@ type ReducerPartialData<EntityT extends Entity> = {
 ```
 
 #### `EdgeSide`
+
 ```typescript
 enum EdgeSide {
   slave,
@@ -875,6 +948,7 @@ enum EdgeSide {
 ```
 
 #### `Request`
+
 ```typescript
 type Request = {
   id: string;
@@ -897,6 +971,7 @@ type Request = {
 ```
 
 #### `RequestMetadata`
+
 ```typescript
 type RequestMetadata = {
   [requestMetadataKey: string]: unknown;
@@ -904,6 +979,7 @@ type RequestMetadata = {
 ```
 
 #### `SubRequest`
+
 ```typescript
 type SubRequest = {
   reducerName: string;
@@ -914,6 +990,7 @@ type SubRequest = {
 ### Request types
 
 #### `UpdateWholeReducerMetadataRequestMetadata`
+
 ```typescript
 interface UpdateWholeReducerMetadataRequestMetadata<
   ReducerMetadataT extends ReducerMetadata,
@@ -923,6 +1000,7 @@ interface UpdateWholeReducerMetadataRequestMetadata<
 ```
 
 #### `UpdatePartialReducerMetadataRequestMetadata`
+
 ```typescript
 interface UpdatePartialReducerMetadataRequestMetadata<
   ReducerMetadataT extends ReducerMetadata,
@@ -932,22 +1010,27 @@ interface UpdatePartialReducerMetadataRequestMetadata<
 ```
 
 #### `CreateOneEntityRequestMetadata`
+
 ```typescript
-interface CreateOneEntityRequestMetadata<EntityT extends Entity>
-  extends RequestMetadata {
+interface CreateOneEntityRequestMetadata<
+  EntityT extends Entity,
+> extends RequestMetadata {
   entity: EntityT;
 }
 ```
 
 #### `CreateManyEntitiesRequestMetadata`
+
 ```typescript
-interface CreateManyEntitiesRequestMetadata<EntityT extends Entity>
-  extends RequestMetadata {
+interface CreateManyEntitiesRequestMetadata<
+  EntityT extends Entity,
+> extends RequestMetadata {
   wholeEntities: ReducerData<EntityT>;
 }
 ```
 
 #### `GetOneEntityRequestMetadata`
+
 ```typescript
 interface GetOneEntityRequestMetadata extends RequestMetadata {
   entityPk: string;
@@ -955,6 +1038,7 @@ interface GetOneEntityRequestMetadata extends RequestMetadata {
 ```
 
 #### `GetManyEntitiesRequestMetadata`
+
 ```typescript
 interface GetManyEntitiesRequestMetadata extends RequestMetadata {
   entityPks?: string[];
@@ -962,32 +1046,39 @@ interface GetManyEntitiesRequestMetadata extends RequestMetadata {
 ```
 
 #### `UpdateOneWholeEntityRequestMetadata`
+
 ```typescript
-interface UpdateOneWholeEntityRequestMetadata<EntityT extends Entity>
-  extends RequestMetadata {
+interface UpdateOneWholeEntityRequestMetadata<
+  EntityT extends Entity,
+> extends RequestMetadata {
   entityPk: string;
   entity: EntityT;
 }
 ```
 
 #### `UpdateManyWholeEntitiesRequestMetadata`
+
 ```typescript
-interface UpdateManyWholeEntitiesRequestMetadata<EntityT extends Entity>
-  extends RequestMetadata {
+interface UpdateManyWholeEntitiesRequestMetadata<
+  EntityT extends Entity,
+> extends RequestMetadata {
   wholeEntities: ReducerData<EntityT>;
 }
 ```
 
 #### `UpdateOnePartialEntityRequestMetadata`
+
 ```typescript
-interface UpdateOnePartialEntityRequestMetadata<EntityT extends Entity>
-  extends RequestMetadata {
+interface UpdateOnePartialEntityRequestMetadata<
+  EntityT extends Entity,
+> extends RequestMetadata {
   entityPk: string;
   partialEntity: Partial<EntityT>;
 }
 ```
 
 #### `UpdateManyPartialEntitiesRequestMetadata`
+
 ```typescript
 interface UpdateManyPartialEntitiesRequestMetadata<
   EntityT extends Entity,
@@ -997,6 +1088,7 @@ interface UpdateManyPartialEntitiesRequestMetadata<
 ```
 
 #### `DeleteOneEntityRequestMetadata`
+
 ```typescript
 interface DeleteOneEntityRequestMetadata extends RequestMetadata {
   entityPk: string;
@@ -1004,6 +1096,7 @@ interface DeleteOneEntityRequestMetadata extends RequestMetadata {
 ```
 
 #### `DeleteManyEntitiesRequestMetadata`
+
 ```typescript
 interface DeleteManyEntitiesRequestMetadata extends RequestMetadata {
   entityPks: string[];
@@ -1013,6 +1106,7 @@ interface DeleteManyEntitiesRequestMetadata extends RequestMetadata {
 ### Selector types
 
 #### `ReducerSelectors`
+
 ```typescript
 type ReducerSelectors<
   ReducerMetadataT extends ReducerMetadata,
@@ -1054,6 +1148,7 @@ type ReducerSelectors<
 ### Service types
 
 #### `CreateOneServiceResponse`
+
 ```typescript
 type CreateOneServiceResponse<EntityT extends Entity> = {
   data?: EntityT;
@@ -1062,6 +1157,7 @@ type CreateOneServiceResponse<EntityT extends Entity> = {
 ```
 
 #### `GetManyServiceResponse`
+
 ```typescript
 type GetManyServiceResponse<EntityT extends Entity> = {
   data: EntityT[];
@@ -1070,6 +1166,7 @@ type GetManyServiceResponse<EntityT extends Entity> = {
 ```
 
 #### `GetOneServiceResponse`
+
 ```typescript
 type GetOneServiceResponse<EntityT extends Entity> = {
   data: EntityT;
@@ -1078,6 +1175,7 @@ type GetOneServiceResponse<EntityT extends Entity> = {
 ```
 
 #### `UpdateOneWholeServiceResponse`
+
 ```typescript
 type UpdateOneWholeServiceResponse<EntityT extends Entity> = {
   data?: EntityT;
@@ -1086,6 +1184,7 @@ type UpdateOneWholeServiceResponse<EntityT extends Entity> = {
 ```
 
 #### `UpdateOnePartialServiceResponse`
+
 ```typescript
 type UpdateOnePartialServiceResponse<EntityT extends Entity> = {
   data?: EntityT;

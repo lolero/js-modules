@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
-import { clsx } from 'keycloakify/tools/clsx';
-import { kcSanitize } from 'keycloakify/lib/kcSanitize';
-import type { TemplateProps } from 'keycloakify/login/TemplateProps';
-import { getKcClsx } from 'keycloakify/login/lib/kcClsx';
-import { useSetClassName } from 'keycloakify/tools/useSetClassName';
-import { useInitialize } from 'keycloakify/login/Template.useInitialize';
 import Box from '@mui/material/Box';
+import { kcSanitize } from 'keycloakify/lib/kcSanitize';
+import { getKcClsx } from 'keycloakify/login/lib/kcClsx';
+import { useInitialize } from 'keycloakify/login/Template.useInitialize';
+import type { TemplateProps } from 'keycloakify/login/TemplateProps';
+import { clsx } from 'keycloakify/tools/clsx';
+import { useSetClassName } from 'keycloakify/tools/useSetClassName';
+import { useEffect } from 'react';
 import type { I18n } from './i18n';
 import type { KcContext } from './KcContext';
 

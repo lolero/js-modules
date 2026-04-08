@@ -1,19 +1,19 @@
+// import {
+//   DarkTheme as NavigationDarkTheme,
+//   DefaultTheme as NavigationLightTheme,
+// } from '@react-navigation/native';
 import {
-  DefaultTheme as NavigationLightTheme,
-  DarkTheme as NavigationDarkTheme,
-} from '@react-navigation/native';
-import {
-  MD3LightTheme,
+  // adaptNavigationTheme,
   MD3DarkTheme,
-  adaptNavigationTheme,
+  MD3LightTheme,
 } from 'react-native-paper';
+import type { MD3Theme } from 'react-native-paper/src/types';
 import { ThemePalette } from '@js-modules/apps-travel-log-common-constants';
-import { MD3Theme } from 'react-native-paper/src/types';
 
-const { LightTheme, DarkTheme } = adaptNavigationTheme({
-  reactNavigationLight: NavigationLightTheme,
-  reactNavigationDark: NavigationDarkTheme,
-});
+// const { LightTheme, DarkTheme } = adaptNavigationTheme({
+//   reactNavigationLight: NavigationLightTheme,
+//   reactNavigationDark: NavigationDarkTheme,
+// });
 
 export const reactNativePaperThemes: Record<ThemePalette, MD3Theme> = {
   [ThemePalette.light]: MD3LightTheme,

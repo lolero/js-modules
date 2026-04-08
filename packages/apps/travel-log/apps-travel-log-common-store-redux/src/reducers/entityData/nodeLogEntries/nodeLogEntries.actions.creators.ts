@@ -1,12 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import {
-  NODE_LOG_ENTRIES__CREATE_ONE__REQUEST_ID,
-  NODE_LOG_ENTRIES__DELETE_MANY__REQUEST_ID,
-  NODE_LOG_ENTRIES__DELETE_ONE__REQUEST_ID,
-  NODE_LOG_ENTRIES__UPDATE_MANY_PARTIAL_WITH_PATTERN__REQUEST_ID,
-  NODE_LOG_ENTRIES__UPDATE_ONE_PARTIAL__REQUEST_ID,
-  NODE_LOG_ENTRIES__UPDATE_ONE_WHOLE__REQUEST_ID,
-  NodeLogEntriesActionTypes,
+import type {
   NodeLogEntriesClearReducerRequestsAction,
   NodeLogEntriesCreateOneFailAction,
   NodeLogEntriesCreateOneRequestAction,
@@ -35,6 +28,15 @@ import {
   NodeLogEntriesUpdatePartialReducerMetadataFailAction,
   NodeLogEntriesUpdatePartialReducerMetadataRequestAction,
   NodeLogEntriesUpdatePartialReducerMetadataSuccessAction,
+} from './nodeLogEntries.actions.types';
+import {
+  NODE_LOG_ENTRIES__CREATE_ONE__REQUEST_ID,
+  NODE_LOG_ENTRIES__DELETE_MANY__REQUEST_ID,
+  NODE_LOG_ENTRIES__DELETE_ONE__REQUEST_ID,
+  NODE_LOG_ENTRIES__UPDATE_MANY_PARTIAL_WITH_PATTERN__REQUEST_ID,
+  NODE_LOG_ENTRIES__UPDATE_ONE_PARTIAL__REQUEST_ID,
+  NODE_LOG_ENTRIES__UPDATE_ONE_WHOLE__REQUEST_ID,
+  NodeLogEntriesActionTypes,
 } from './nodeLogEntries.actions.types';
 
 export function createNodeLogEntriesClearReducerRequestsAction(

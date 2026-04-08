@@ -1,5 +1,9 @@
-import { SelectQueryBuilder, WhereExpressionBuilder } from 'typeorm';
-import { RequestEntity, FindManyUniqueKeysDto } from '../types/types.requests';
+import { beforeEach, describe, expect, it, jest } from '@jest/globals';
+import type { SelectQueryBuilder, WhereExpressionBuilder } from 'typeorm';
+import type {
+  FindManyUniqueKeysDto,
+  RequestEntity,
+} from '../types/types.requests';
 import { utilGetFindManyUniqueKeysWhereFactory } from './util.getFindManyUniqueKeysWhereFactory';
 
 interface TestEntity extends RequestEntity {

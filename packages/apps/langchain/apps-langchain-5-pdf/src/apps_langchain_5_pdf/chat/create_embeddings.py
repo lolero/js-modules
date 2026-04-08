@@ -5,19 +5,19 @@ from apps_langchain_5_pdf.chat.vector_stores.chroma import vector_store
 
 
 def create_embeddings_for_pdf(pdf_id: str, pdf_path: str):
-    text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=500,
-        chunk_overlap=100,
-    )
+  text_splitter = RecursiveCharacterTextSplitter(
+    chunk_size=500,
+    chunk_overlap=100,
+  )
 
-    loader = PyPDFLoader(pdf_path)
-    docs = loader.load_and_split(text_splitter)
+  loader = PyPDFLoader(pdf_path)
+  docs = loader.load_and_split(text_splitter)
 
-    for doc in docs:
-        doc.metadata = {
-            "page": doc.metadata["page"],
-            "text": doc.page_content,
-            "pdf_id": pdf_id,
-        }
+  for doc in docs:
+    doc.metadata = {
+      "page": doc.metadata["page"],
+      "text": doc.page_content,
+      "pdf_id": pdf_id,
+    }
 
-    vector_store.add_documents(docs)
+  vector_store.add_documents(docs)

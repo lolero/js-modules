@@ -1,8 +1,8 @@
 {
-  "extends": "../../../../tsconfig.json",
-  "compilerOptions": {
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "jsx": "react-jsx"
-  },
+  "extends": [
+    "../../../../tsconfig.json",
+    "../../../../scripts/tsconfig/tsconfig.react.json"
+  ],
+  "compilerOptions": {},
   "include": ["src"]
 }

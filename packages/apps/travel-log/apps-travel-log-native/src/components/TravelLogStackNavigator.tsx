@@ -1,19 +1,19 @@
-import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import type React from 'react';
 import {
   WebModulesPrivate,
   WebModulesPublic,
 } from '@js-modules/apps-travel-log-common-constants';
-import {
-  InitScreenView,
-  StartScreenView,
-} from '@js-modules/apps-travel-log-native-module-public-start';
 import { useInitializeKeycloak } from '@js-modules/apps-travel-log-common-react';
 import {
   ClientType,
   useStateAuthReducerMetadata,
 } from '@js-modules/apps-travel-log-common-store-redux';
 import { FeedsScreenView } from '@js-modules/apps-travel-log-native-module-private-feeds';
+import {
+  InitScreenView,
+  StartScreenView,
+} from '@js-modules/apps-travel-log-native-module-public-start';
 
 const Stack = createNativeStackNavigator();
 

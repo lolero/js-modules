@@ -1,15 +1,15 @@
 // import { writable } from './writeable';
 
 export interface Scores {
-	llm: {
-		[name: string]: number[];
-	};
-	retriever: {
-		[name: string]: number[];
-	};
-	memory: {
-		[name: string]: number[];
-	};
+  llm: {
+    [name: string]: number[];
+  };
+  retriever: {
+    [name: string]: number[];
+  };
+  memory: {
+    [name: string]: number[];
+  };
 }
 
 // const defaultState = {

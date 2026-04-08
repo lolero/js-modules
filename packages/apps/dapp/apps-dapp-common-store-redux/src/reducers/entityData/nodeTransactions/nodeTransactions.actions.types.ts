@@ -1,11 +1,11 @@
-import {
+import type {
   FailAction,
   GetManyEntitiesRequestMetadata,
   GetOneEntityRequestMetadata,
   RequestAction,
   SaveWholeEntitiesAction,
 } from '@js-modules/common-redux-utils-normalized-reducers';
-import {
+import type {
   NodeTransaction,
   NodeTransactionsReducer,
 } from './nodeTransactions.types';

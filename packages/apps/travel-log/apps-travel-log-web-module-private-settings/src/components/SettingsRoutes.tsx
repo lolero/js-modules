@@ -1,12 +1,12 @@
-import React from 'react';
+import type React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import {
   WebModulesPrivate,
   WebSubModulesSettings,
 } from '@js-modules/apps-travel-log-common-constants';
 import { routesMetadataPrivate } from '@js-modules/apps-travel-log-common-react';
-import { SettingsWorkspaceBox } from './SettingsWorkspaceBox';
 import { SettingsProfileRoutes } from './SettingsProfileRoutes';
+import { SettingsWorkspaceBox } from './SettingsWorkspaceBox';
 
 export const SettingsRoutes: React.FunctionComponent = () => {
   return (

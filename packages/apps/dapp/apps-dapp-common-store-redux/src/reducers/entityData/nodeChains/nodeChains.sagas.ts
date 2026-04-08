@@ -1,46 +1,25 @@
-import {
-  all,
-  AllEffect,
-  call,
-  CallEffect,
-  ForkEffect,
-  put,
-  PutEffect,
-  takeLatest,
-} from 'redux-saga/effects';
-import { uniq } from 'lodash';
-import { NodeChainsReducer } from './nodeChains.types';
-import {
-  NodeChainsActionTypes,
-  NodeChainsGetManyRequestAction,
-} from './nodeChains.actions.types';
+import uniq from 'lodash/uniq';
+import type { SagaGenerator } from 'typed-redux-saga';
+import { all, call, put, takeLatest } from 'typed-redux-saga';
 import {
   createNodeChainsGetManyFailAction,
   createNodeChainsGetManySuccessAction,
 } from './nodeChains.actions.creators';
-import {
-  NodeChainsGetIconMetadataServiceResponse,
-  NodeChainsGetManyServiceResponse,
-} from './nodeChains.services.types';
+import type { NodeChainsGetManyRequestAction } from './nodeChains.actions.types';
+import { NodeChainsActionTypes } from './nodeChains.actions.types';
+import { normalizeNodeChainsRawArray } from './nodeChains.normalizer';
 import {
   nodeChainsGetIconMetadataService,
   nodeChainsGetManyService,
 } from './nodeChains.services';
-import { normalizeNodeChainsRawArray } from './nodeChains.normalizer';
 
 export function* nodeChainsGetManySaga({
   requestId,
-}: NodeChainsGetManyRequestAction): Generator<
-  CallEffect | AllEffect<CallEffect> | PutEffect,
-  void,
-  | NodeChainsGetManyServiceResponse
-  | NodeChainsGetIconMetadataServiceResponse[]
-  | NodeChainsReducer['data']
-> {
+}: NodeChainsGetManyRequestAction): SagaGenerator<void> {
   try {
-    const { data: nodeChainsRawArray, status: statusCode } = (yield call(
+    const { data: nodeChainsRawArray, status: statusCode } = yield* call(
       nodeChainsGetManyService,
-    )) as NodeChainsGetManyServiceResponse;
+    );
 
     const iconNames = uniq(
       nodeChainsRawArray
@@ -48,11 +27,11 @@ export function* nodeChainsGetManySaga({
         .map((nodeChainRaw) => nodeChainRaw.icon || ''),
     );
 
-    const iconMetadataResponses = (yield all(
+    const iconMetadataResponses = yield* all(
       iconNames.map((iconName) =>
         call(nodeChainsGetIconMetadataService, iconName),
       ),
-    )) as NodeChainsGetIconMetadataServiceResponse[];
+    );
 
     const iconsMetadata = iconMetadataResponses.map(
       (iconMetadataResponse) => iconMetadataResponse.data[0],
@@ -75,13 +54,13 @@ export function* nodeChainsGetManySaga({
       {},
     );
 
-    const normalizedNodeChains = (yield call(
+    const normalizedNodeChains = yield* call(
       normalizeNodeChainsRawArray,
       nodeChainsRawArray,
       iconUrls,
-    )) as NodeChainsReducer['data'];
+    );
 
-    yield put(
+    yield* put(
       createNodeChainsGetManySuccessAction(
         normalizedNodeChains,
         requestId,
@@ -89,18 +68,18 @@ export function* nodeChainsGetManySaga({
         true,
       ),
     );
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (err: any) {
-    // eslint-disable-next-line no-console
-    console.log(err.message);
-    yield put(createNodeChainsGetManyFailAction(err.message, requestId));
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    console.log(message);
+    yield* put(createNodeChainsGetManyFailAction(message, requestId));
   }
 }
 
-export function* nodeChainsSagas(): Generator<ForkEffect, void, void> {
-  yield takeLatest(
-    NodeChainsActionTypes.NODE_CHAINS__GET_MANY__REQUEST,
-    nodeChainsGetManySaga,
-  );
+export function* nodeChainsSagas(): SagaGenerator<void> {
+  yield* all([
+    takeLatest(
+      NodeChainsActionTypes.NODE_CHAINS__GET_MANY__REQUEST,
+      nodeChainsGetManySaga,
+    ),
+  ]);
 }

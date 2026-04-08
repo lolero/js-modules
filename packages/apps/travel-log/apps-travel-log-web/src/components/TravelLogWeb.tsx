@@ -1,6 +1,6 @@
-import React from 'react';
-import { ReduxProvider } from '@js-modules/common-react-utils';
+import type React from 'react';
 import { createReduxStore } from '@js-modules/apps-travel-log-common-store-redux';
+import { ReduxProvider } from '@js-modules/common-react-utils';
 import { TravelLogThemeProvider } from './TravelLogThemeProvider';
 
 function initApp(): React.FC {

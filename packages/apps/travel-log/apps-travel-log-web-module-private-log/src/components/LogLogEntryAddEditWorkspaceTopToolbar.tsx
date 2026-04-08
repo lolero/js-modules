@@ -1,15 +1,20 @@
-import React, { useCallback, useContext, useMemo } from 'react';
-import Box from '@mui/material/Box';
-import Fab from '@mui/material/Fab';
-import CircularProgress from '@mui/material/CircularProgress';
-import { MuiFaIcon } from '@js-modules/web-react-utils';
 import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck';
 import { faXmark } from '@fortawesome/free-solid-svg-icons/faXmark';
+import Box from '@mui/material/Box';
+import CircularProgress from '@mui/material/CircularProgress';
+import Fab from '@mui/material/Fab';
+import isEmpty from 'lodash/isEmpty';
+import isEqual from 'lodash/isEqual';
+import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
+import type React from 'react';
+import { useCallback, useContext, useMemo } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   WebModulesPrivate,
   WebSubModulesLog,
 } from '@js-modules/apps-travel-log-common-constants';
-import { useNavigate, useParams } from 'react-router-dom';
+import { routesMetadataPrivate } from '@js-modules/apps-travel-log-common-react';
 import {
   nodeLogEntryUnsavedEmpty,
   useNodeLogEntriesCreateOne,
@@ -18,11 +23,7 @@ import {
   useNodeLogEntriesReducerMetadata,
   useNodeLogEntriesUpdateOneWhole,
 } from '@js-modules/apps-travel-log-common-store-redux';
-import isUndefined from 'lodash/isUndefined';
-import isNull from 'lodash/isNull';
-import isEqual from 'lodash/isEqual';
-import isEmpty from 'lodash/isEmpty';
-import { routesMetadataPrivate } from '@js-modules/apps-travel-log-common-react';
+import { MuiFaIcon } from '@js-modules/web-react-utils';
 import { LogLogEntryAddEditContext } from './LogLogEntryAddEditContext';
 
 export const LogLogEntryAddEditWorkspaceTopToolbar: React.FC = () => {
@@ -85,7 +86,7 @@ export const LogLogEntryAddEditWorkspaceTopToolbar: React.FC = () => {
   ]);
 
   const cancelCallback = useCallback(() => {
-    navigate(goBackPath);
+    void navigate(goBackPath);
   }, [goBackPath, navigate]);
 
   const submitCallback = useCallback(() => {
@@ -102,7 +103,7 @@ export const LogLogEntryAddEditWorkspaceTopToolbar: React.FC = () => {
       nodeLogEntriesCreateOneCallback(nodeLogEntryUnsaved!);
     }
 
-    navigate(goBackPath);
+    void navigate(goBackPath);
   }, [
     goBackPath,
     logEntryId,

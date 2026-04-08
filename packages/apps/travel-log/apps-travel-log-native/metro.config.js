@@ -1,8 +1,6 @@
-/* eslint-disable @typescript-eslint/no-var-requires, import/no-extraneous-dependencies */
-const { getDefaultConfig, mergeConfig } = require('@react-native/metro-config');
-const path = require('path');
 const fs = require('fs');
-/* eslint-enable @typescript-eslint/no-var-requires, import/no-extraneous-dependencies */
+const path = require('path');
+const { getDefaultConfig, mergeConfig } = require('@react-native/metro-config');
 
 // Path to monorepo root
 const monorepoRoot = path.resolve(__dirname, '../../../..');
@@ -20,7 +18,6 @@ Object.keys(tsconfigPaths).forEach((packageName) => {
   const pathArray = tsconfigPaths[packageName];
   if (Array.isArray(pathArray) && pathArray.length > 0) {
     // Take the first path (tsconfig allows multiple, we use the first one)
-    // eslint-disable-next-line prefer-destructuring
     packageMap[packageName] = pathArray[0];
   }
 });

@@ -1,16 +1,18 @@
-import { Test, TestingModule } from '@nestjs/testing';
+import { beforeEach, describe, expect, it, jest } from '@jest/globals';
+import type { TestingModule } from '@nestjs/testing';
+import { Test } from '@nestjs/testing';
 import { AuthController } from './auth.controller';
+import type { AuthDtoSignin } from './auth.dto.signin';
+import type { AuthDtoSignup } from './auth.dto.signup';
 import { AuthService } from './auth.service';
-import { AuthDtoSignup } from './auth.dto.signup';
-import { AuthUsersEntity } from './auth.types';
-import { AuthDtoSignin } from './auth.dto.signin';
+import type { AuthUsersEntity } from './auth.types';
 import { getAuthUserEntityFixture } from './auth.utils.fixtures';
 
 describe('AuthController', () => {
   let testSession: { userId?: AuthUsersEntity['id'] };
   let authServiceSignupMock: jest.Mock;
   let authServiceSigninMock: jest.Mock;
-  let authServiceMock: Partial<AuthService>;
+  let authServiceMock: AuthService;
   let authController: AuthController;
 
   beforeEach(async () => {
@@ -19,7 +21,7 @@ describe('AuthController', () => {
     authServiceMock = {
       signup: authServiceSignupMock,
       signin: authServiceSigninMock,
-    };
+    } as unknown as AuthService;
 
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -93,12 +95,12 @@ describe('AuthController', () => {
   });
 
   describe('signout', () => {
-    it('Should delete the userId prop in the session', async () => {
+    it('Should delete the userId prop in the session', () => {
       testSession = {
         userId: getAuthUserEntityFixture().id,
       };
 
-      await authController.signout(testSession);
+      authController.signout(testSession);
 
       expect(testSession.userId).toBeUndefined();
     });

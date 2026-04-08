@@ -1,5 +1,5 @@
-import { EntityUniqueKeyName } from '@js-modules/api-nest-utils';
-import { UsersEntity } from './users.entity';
+import type { EntityUniqueKeyName } from '@js-modules/api-nest-utils';
+import type { UsersEntity } from './users.entity';
 
 export type UsersUniqueKeyName = EntityUniqueKeyName<
   UsersEntity,

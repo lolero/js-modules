@@ -1,7 +1,8 @@
-import React from 'react';
-import { ChartsLegend, ChartsLegendProps, useDrawingArea } from '@mui/x-charts';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import type { ChartsLegendProps } from '@mui/x-charts';
+import { ChartsLegend, useDrawingArea } from '@mui/x-charts';
+import type React from 'react';
 
 export type MuiChartLegendWithTitleProps = ChartsLegendProps & {
   title?: string;
@@ -22,7 +23,6 @@ export const MuiChartLegendWithTitle: React.FC<
         </foreignObject>
       )}
       <g transform={title ? 'translate(0, 18)' : undefined}>
-        {/* eslint-disable-next-line react/jsx-props-no-spreading */}
         <ChartsLegend {...legendProps} />
       </g>
     </g>

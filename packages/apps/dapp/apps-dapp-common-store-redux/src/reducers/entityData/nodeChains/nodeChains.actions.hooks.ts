@@ -1,20 +1,20 @@
-import {
+import { useCallback } from 'react';
+import { useDispatch } from 'react-redux';
+import type {
   Request,
   UseRequestEntities,
 } from '@js-modules/common-redux-utils-normalized-reducers';
-import { useDispatch } from 'react-redux';
-import { useCallback } from 'react';
-import { NodeChain, NodeChainsReducer } from './nodeChains.types';
+import {
+  createNodeChainsGetManyRequestAction,
+  NODE_CHAINS__GET_MANY__REQUEST_ID,
+} from './nodeChains.actions.creators';
+import type { NodeChainsGetManyRequestAction } from './nodeChains.actions.types';
 import {
   useNodeChainsEntities,
   useNodeChainsReducerMetadata,
   useNodeChainsRequest,
 } from './nodeChains.hooks';
-import { NodeChainsGetManyRequestAction } from './nodeChains.actions.types';
-import {
-  NODE_CHAINS__GET_MANY__REQUEST_ID,
-  createNodeChainsGetManyRequestAction,
-} from './nodeChains.actions.creators';
+import type { NodeChain, NodeChainsReducer } from './nodeChains.types';
 
 export function useNodeChainsGetMany(): UseRequestEntities<
   NodeChainsGetManyRequestAction['requestMetadata'],

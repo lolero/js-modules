@@ -1,7 +1,7 @@
 import { getStateAuthActionHooks } from '@js-modules/common-redux-reducer-auth-keycloak';
 import {
-  useStateAuthRequest,
   useStateAuthReducerMetadata,
+  useStateAuthRequest,
 } from './stateAuth.hooks';
 
 export const {

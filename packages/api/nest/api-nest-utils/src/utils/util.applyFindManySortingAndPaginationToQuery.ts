@@ -1,7 +1,7 @@
-import { SelectQueryBuilder } from 'typeorm';
-import { camelToSnakeCaseWithAcronyms } from '@js-modules/common-utils-general-cjs';
 import upperCase from 'lodash/upperCase';
-import { FindManyDto, RequestEntity } from '../types/types.requests';
+import type { SelectQueryBuilder } from 'typeorm';
+import { camelToSnakeCaseWithAcronyms } from '@js-modules/common-utils-general-cjs';
+import type { FindManyDto, RequestEntity } from '../types/types.requests';
 
 export function utilApplyFindManySortingAndPaginationToQuery<
   EntityT extends RequestEntity,

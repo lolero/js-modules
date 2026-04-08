@@ -19,17 +19,17 @@ parser.add_argument("--language", default="python")
 args = parser.parse_args()
 
 code_prompt = PromptTemplate.from_template(
-    "Write a very short {language} function that will {task}"
+  "Write a very short {language} function that will {task}"
 )
 test_prompt = PromptTemplate.from_template(
-    "Write a test for the following {language} code:\n{code}"
+  "Write a test for the following {language} code:\n{code}"
 )
 code_chain = code_prompt | llm | StrOutputParser()
 test_chain = test_prompt | llm | StrOutputParser()
 
-chain = RunnablePassthrough.assign(code=code_chain) | RunnablePassthrough.assign(
-    test=test_chain
-)
+chain = RunnablePassthrough.assign(
+  code=code_chain
+) | RunnablePassthrough.assign(test=test_chain)
 
 result = chain.invoke({"language": args.language, "task": args.task})
 

@@ -1,7 +1,7 @@
 import { createReducerSelectors } from '@js-modules/common-redux-utils-normalized-reducers';
-import { NodeUser, NodeUsersReducer } from './nodeUsers.types';
-import { ReduxState } from '../../reducers.types';
+import type { ReduxState } from '../../reducers.types';
 import { nodeUsersReducerPath } from './nodeUsers.reducer.path';
+import type { NodeUser, NodeUsersReducer } from './nodeUsers.types';
 
 export const nodeUsersSelectors = createReducerSelectors<
   NodeUsersReducer['metadata'],

@@ -1,9 +1,7 @@
-import React, { useMemo, useState } from 'react';
-import {
-  NavContextValue,
-  NavDrawerDisplayStatus,
-  NavContext,
-} from '../contexts/NavContext';
+import type React from 'react';
+import { useMemo, useState } from 'react';
+import type { NavContextValue } from '../contexts/NavContext';
+import { NavContext, NavDrawerDisplayStatus } from '../contexts/NavContext';
 
 export type NavContextProviderProps = {
   nonAuthenticatedRedirectPath: string;

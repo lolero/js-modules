@@ -10,7 +10,7 @@ import {
   async: false,
 })
 class ValidatorIsNumberOrString implements ValidatorConstraintInterface {
-  validate(value: any) {
+  validate(value: unknown) {
     return typeof value === 'number' || typeof value === 'string';
   }
 
@@ -20,7 +20,7 @@ class ValidatorIsNumberOrString implements ValidatorConstraintInterface {
 }
 
 export function isNumberOrString(validationOptions?: ValidationOptions) {
-  return function (object: Object, propertyName: string) {
+  return function (object: object, propertyName: string) {
     registerDecorator({
       target: object.constructor,
       propertyName,

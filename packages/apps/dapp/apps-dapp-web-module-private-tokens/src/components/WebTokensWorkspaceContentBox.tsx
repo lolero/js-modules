@@ -1,29 +1,24 @@
-import React, {
-  CSSProperties,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
-import Box from '@mui/material/Box';
-import {
-  NodeChain,
-  useNodeChainsGetMany,
-} from '@js-modules/apps-dapp-common-store-redux';
-import { usePrevious } from '@js-modules/common-react-utils';
+import { faCircleNotch } from '@fortawesome/free-solid-svg-icons/faCircleNotch';
+import { faCloud } from '@fortawesome/free-solid-svg-icons/faCloud';
 import ArrowDropDown from '@mui/icons-material/ArrowDropDown';
+import Avatar, { avatarClasses } from '@mui/material/Avatar';
+import Box from '@mui/material/Box';
+import InputAdornment from '@mui/material/InputAdornment';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+import isNull from 'lodash/isNull';
 import orderBy from 'lodash/orderBy';
 import values from 'lodash/values';
+import type { CSSProperties } from 'react';
+import type React from 'react';
+import { useCallback, useMemo, useState } from 'react';
+import type { NodeChain } from '@js-modules/apps-dapp-common-store-redux';
+import { useNodeChainsGetMany } from '@js-modules/apps-dapp-common-store-redux';
+import { usePrevious } from '@js-modules/common-react-utils';
 import {
   MuiFaIcon,
   VirtualizedAutocomplete,
 } from '@js-modules/web-react-utils';
-import { faCloud } from '@fortawesome/free-solid-svg-icons/faCloud';
-import { faCircleNotch } from '@fortawesome/free-solid-svg-icons/faCircleNotch';
-import TextField from '@mui/material/TextField';
-import InputAdornment from '@mui/material/InputAdornment';
-import Avatar, { avatarClasses } from '@mui/material/Avatar';
-import Typography from '@mui/material/Typography';
 
 export const WebTokensWorkspaceContentBox: React.FC = () => {
   const { request: nodeChainsGetManyRequest, entities: nodeChains } =
@@ -39,25 +34,22 @@ export const WebTokensWorkspaceContentBox: React.FC = () => {
   const [selectedChain, setSelectedChain] = useState<NodeChain | null>(null);
 
   const changeChainCallback = useCallback(
-    (e: React.SyntheticEvent<Element, Event>, nodeChain: NodeChain | null) => {
-      setSelectedChain(nodeChain);
+    (
+      _e: React.SyntheticEvent<Element, Event>,
+      nodeChain: NodeChain | null | undefined,
+    ) => {
+      setSelectedChain(nodeChain ?? null);
     },
     [],
   );
 
-  useEffect(() => {
-    if (
-      nodeChainsGetManyRequestPrevious?.isPending &&
-      !nodeChainsGetManyRequest?.isPending
-    ) {
-      setSelectedChain(nodeChains[1] ?? null);
-    }
-  }, [
-    nodeChainsGetManyRequest,
-    nodeChainsGetManyRequestPrevious,
-    nodeChains,
-    selectedChain,
-  ]);
+  if (
+    nodeChainsGetManyRequestPrevious?.isPending &&
+    !nodeChainsGetManyRequest?.isPending &&
+    isNull(selectedChain)
+  ) {
+    setSelectedChain(nodeChains['1'] ?? null);
+  }
 
   return (
     <Box>
@@ -74,8 +66,8 @@ export const WebTokensWorkspaceContentBox: React.FC = () => {
           mt: '1em',
         }}
         options={sortedNodeChains}
-        getOptionLabel={(nodeChain) => nodeChain.name}
-        groupBy={(nodeChain) => nodeChain.name[0]}
+        getOptionLabel={(nodeChain) => nodeChain?.name ?? ''}
+        groupBy={(nodeChain) => nodeChain?.name[0] ?? ''}
         popupIcon={
           nodeChainsGetManyRequest?.isPending ? (
             <MuiFaIcon icon={faCircleNotch} spin />
@@ -88,43 +80,42 @@ export const WebTokensWorkspaceContentBox: React.FC = () => {
         onChange={changeChainCallback}
         renderInput={(params) => {
           if (!selectedChain) {
-            return (
-              <TextField
-                // eslint-disable-next-line react/jsx-props-no-spreading
-                {...params}
-                label="Chain"
-              />
-            );
+            return <TextField {...params} label="Chain" />;
           }
 
           return (
             <TextField
-              // eslint-disable-next-line react/jsx-props-no-spreading
               {...params}
               label="Chain"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <Avatar
-                      sx={{
-                        width: '1.5em',
-                        height: '1.5em',
-                        // mx: '.5em',
-                        borderRadius: 0,
-                        [`& .${avatarClasses.img}`]: {
-                          objectFit: 'scale-down',
-                        },
-                      }}
-                      src={selectedChain.iconUrl}
-                    />
-                  </InputAdornment>
-                ),
-                endAdornment: params.InputProps.endAdornment,
+              slotProps={{
+                ...params.slotProps,
+                input: {
+                  ...params.slotProps.input,
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <Avatar
+                        sx={{
+                          width: '1.5em',
+                          height: '1.5em',
+                          // mx: '.5em',
+                          borderRadius: 0,
+                          [`& .${avatarClasses.img}`]: {
+                            objectFit: 'scale-down',
+                          },
+                        }}
+                        src={selectedChain.iconUrl}
+                      />
+                    </InputAdornment>
+                  ),
+                },
               }}
             />
           );
         }}
         renderOption={(props, nodeChain) => {
+          if (!nodeChain) {
+            return null;
+          }
           return [
             props,
             <Box

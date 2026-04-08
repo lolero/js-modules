@@ -1,7 +1,7 @@
 import { CanActivate, ExecutionContext, Inject } from '@nestjs/common';
 import { AUTH_USERS_SERVICE } from '@js-modules/api-nest-utils';
 // import { extractRequest } from 'nest-keycloak-connect/util';
-import { AuthUsersService } from './auth.types';
+import type { AuthRequest, AuthUsersService } from './auth.types';
 
 export class AuthGuardUsersEntityCurrent implements CanActivate {
   constructor(
@@ -15,13 +15,12 @@ export class AuthGuardUsersEntityCurrent implements CanActivate {
     //  websocket, graphql, etc. See https://github.com/ferrerojosh/nest-keycloak-connect/blob/master/src/util.ts
     // const [request] = extractRequest(context);
     const httpContext = context.switchToHttp();
-    const request = httpContext.getRequest();
+    const request = httpContext.getRequest<AuthRequest>();
 
     const keycloakTokenParsed = request.user;
     if (keycloakTokenParsed) {
-      const usersEntityCurrent = await this.usersService.checkIn(
-        keycloakTokenParsed,
-      );
+      const usersEntityCurrent =
+        await this.usersService.checkIn(keycloakTokenParsed);
       request.usersEntityCurrent = usersEntityCurrent;
     }
 

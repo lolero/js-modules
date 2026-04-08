@@ -1,6 +1,6 @@
-import sortBy from 'lodash/sortBy';
 import isNaN from 'lodash/isNaN';
-import { FindManyRange } from '../types/types.requests';
+import sortBy from 'lodash/sortBy';
+import type { FindManyRange } from '../types/types.requests';
 
 export function utilGetFindManyNumberRange(
   from: FindManyRange[0],

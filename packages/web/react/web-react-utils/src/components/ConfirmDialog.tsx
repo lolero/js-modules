@@ -1,20 +1,21 @@
-import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import Alert from '@mui/material/Alert';
+import Button from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import CircularProgress from '@mui/material/CircularProgress';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import Alert from '@mui/material/Alert';
 import upperFirst from 'lodash/upperFirst';
-import {
+import type React from 'react';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { usePrevious } from '@js-modules/common-react-utils';
+import type {
   Entity,
   Reducer,
   ReducerMetadata,
 } from '@js-modules/common-redux-utils-normalized-reducers';
-import { usePrevious } from '@js-modules/common-react-utils';
 
 export type ConfirmDialogProps = {
   entityTypeName: string;
@@ -72,8 +73,12 @@ export const ConfirmDialog: React.FunctionComponent<ConfirmDialogProps> = ({
   return (
     <Dialog
       open
-      onClose={onClose}
-      disableEscapeKeyDown={actionRequest?.isPending}
+      onClose={(_e, reason) => {
+        if (reason === 'escapeKeyDown' && actionRequest?.isPending) {
+          return;
+        }
+        onClose();
+      }}
     >
       <DialogTitle>
         {upperFirst(actionName)} {entityTypeName}: {entityName}

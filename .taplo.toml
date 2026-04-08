@@ -1,0 +1,16 @@
+# Prettier does not handle TOML — taplo owns both formatting and schema
+# validation for .toml files.
+# https://taplo.tamasfe.dev/configuration/file.html
+
+[formatting]
+allowed_blank_lines = 1
+
+# run `tsx scripts/toml/toml.download-schemas.ts` to refresh schemas
+# https://taplo.tamasfe.dev/configuration/file.html#rules
+[[rule]]
+include = ["**/pyproject.toml"]
+schema.path = "scripts/toml/toml.schema-pyproject.json"
+
+[[rule]]
+include = ["**/ruff.toml"]
+schema.path = "scripts/toml/toml.schema-ruff.json"

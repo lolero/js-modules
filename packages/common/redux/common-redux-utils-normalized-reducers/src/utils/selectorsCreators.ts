@@ -1,22 +1,19 @@
 import { last } from 'lodash';
 import { createSelector } from 'reselect';
-import {
+import type {
   Entity,
   Reducer,
   ReducerGroup,
   ReducerMetadata,
 } from '../types/reducers.types';
-import { ReducerSelectors } from '../types/selectors.types';
+import type { ReducerSelectors } from '../types/selectors.types';
 import { selectReducerProp } from './selectors';
 
 /**
- * Creates a selector for a given reducer prop.
- *
- * @param {string[]} reducerPath - The path to the reducer in the redux state
- *        object
- * @param {keyof Reducer} reducerPropKey - The key of the reducer prop for
- *        which the selector is created
- * @returns {Function} Selector for the reducer props
+ * Creates reducer prop selector.
+ * @param reducerPath - Path to reducer in redux state.
+ * @param reducerPropKey - Reducer prop key.
+ * @returns Reducer prop selector.
  */
 export function createReducerPropSelector<
   ReducerMetadataT extends ReducerMetadata,
@@ -59,11 +56,9 @@ export function createReducerPropSelector<
 }
 
 /**
- * Creates selectors for the reducer's props.
- *
- * @param {string[]} reducerPath - The path to the reducer in the redux state
- *        object
- * @returns {ReducerSelectors} Selectors for the reducer's props
+ * Creates reducer props selectors.
+ * @param reducerPath - Path to reducer in redux state.
+ * @returns Reducer props selectors.
  */
 export function createReducerSelectors<
   ReducerMetadataT extends ReducerMetadata,

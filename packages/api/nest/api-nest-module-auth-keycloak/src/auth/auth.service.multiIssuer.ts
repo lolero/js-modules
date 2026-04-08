@@ -5,16 +5,18 @@ import {
   Logger,
   UnauthorizedException,
 } from '@nestjs/common';
-import * as jwt from 'jsonwebtoken';
 import axios from 'axios';
-import { KeycloakTokenParsed } from 'keycloak-js';
+import * as jwt from 'jsonwebtoken';
+import type { KeycloakTokenParsed } from 'keycloak-js' with {
+  'resolution-mode': 'import',
+};
 import {
   KEYCLOAK_CONNECT_OPTIONS,
-  KeycloakConnectConfig,
   TokenValidation,
 } from 'nest-keycloak-connect';
-import { AllowedIssuers, KeycloakMultiIssuerConfig } from './auth.types';
+import type { KeycloakConnectConfig } from 'nest-keycloak-connect';
 import { KEYCLOAK_MULTI_ISSUER_CONFIG } from './auth.constants';
+import type { AllowedIssuers, KeycloakMultiIssuerConfig } from './auth.types';
 
 @Injectable()
 export class AuthServiceMultiIssuer {
@@ -100,12 +102,11 @@ export class AuthServiceMultiIssuer {
       this.logger.log('Public key fetched and cached successfully');
       return this.publicKeyCache;
     } catch (error) {
-      this.logger.error(
-        `Failed to fetch Keycloak public key: ${(error as Error).message}`,
-      );
+      const message = error instanceof Error ? error.message : String(error);
+      this.logger.error(`Failed to fetch Keycloak public key: ${message}`);
       throw new InternalServerErrorException(
         'Failed to fetch Keycloak public key',
-        (error as Error).message,
+        message,
       );
     }
   }
@@ -171,12 +172,11 @@ export class AuthServiceMultiIssuer {
 
       return isTokenActive;
     } catch (error) {
-      this.logger.error(
-        `Token introspection failed: ${(error as Error).message}`,
-      );
+      const message = error instanceof Error ? error.message : String(error);
+      this.logger.error(`Token introspection failed: ${message}`);
       throw new InternalServerErrorException(
         'Token introspection failed',
-        (error as Error).message,
+        message,
       );
     }
   }
@@ -301,7 +301,8 @@ export class AuthServiceMultiIssuer {
         );
       }
 
-      this.logger.error(`Token validation failed: ${(error as Error).message}`);
+      const message = error instanceof Error ? error.message : String(error);
+      this.logger.error(`Token validation failed: ${message}`);
       throw new UnauthorizedException('Token validation failed');
     }
   }

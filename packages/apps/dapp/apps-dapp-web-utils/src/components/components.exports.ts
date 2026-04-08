@@ -3,7 +3,7 @@ export * from './DappLogoShortBox';
 export * from './DappNavConnectButton';
 export * from './DappNavDrawerContentBox';
 export * from './DappNavDrawerFooterBox';
-export * from './DappNavSocialMediaMenu';
+export * from './DappNavSocialMediaBox';
 export * from './DappNavSocialMediaMenu';
 export * from './DappNavToolbar';
 export * from './DappWorkspaceBox';

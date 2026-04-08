@@ -1,6 +1,10 @@
-import React, { useCallback, useContext, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
+import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
+import type React from 'react';
+import { useCallback, useContext, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import {
   NODE_LOG_ENTRIES__CREATE_ONE__REQUEST_ID,
   NODE_LOG_ENTRIES__UPDATE_ONE_WHOLE__REQUEST_ID,
@@ -9,11 +13,8 @@ import {
   useNodeLogEntriesIsMutationPendingOrCompleted,
   useNodeLogEntriesUpdatePartialReducerMetadata,
 } from '@js-modules/apps-travel-log-common-store-redux';
-import { useParams } from 'react-router-dom';
-import { useFormUtils } from '@js-modules/web-react-utils';
 import { usePrevious } from '@js-modules/common-react-utils';
-import isUndefined from 'lodash/isUndefined';
-import isNull from 'lodash/isNull';
+import { useFormUtilsWeb } from '@js-modules/web-react-utils';
 import { LogLogEntryAddEditContext } from './LogLogEntryAddEditContext';
 
 export const LogLogEntryAddEditWorkspaceContentBox: React.FC = () => {
@@ -55,7 +56,7 @@ export const LogLogEntryAddEditWorkspaceContentBox: React.FC = () => {
     formDataTemp: nodeLogEntryUnsavedTemp,
     changeFieldCallback: changeFieldCallbackLogEntryUnsaved,
     blurFieldCallback: blurFieldCallbackLogEntryUnsaved,
-  } = useFormUtils(
+  } = useFormUtilsWeb(
     nodeLogEntryUnsaved ?? nodeLogEntryUnsavedEmpty,
     formErrorsNodeLogEntryUnsaved,
     validateCallbackNodeLogEntryUnsaved,
@@ -108,9 +109,7 @@ export const LogLogEntryAddEditWorkspaceContentBox: React.FC = () => {
         onBlur={blurFieldCallbackLogEntryUnsaved}
         error={!!formErrorsNodeLogEntryUnsaved.title?.length}
         helperText={formErrorsNodeLogEntryUnsaved.title?.join(', ')}
-        inputProps={{
-          'data-key': 'title',
-        }}
+        slotProps={{ htmlInput: { 'data-key': 'title' } }}
       />
       <TextField
         required
@@ -121,9 +120,7 @@ export const LogLogEntryAddEditWorkspaceContentBox: React.FC = () => {
         onBlur={blurFieldCallbackLogEntryUnsaved}
         error={!!formErrorsNodeLogEntryUnsaved.description?.length}
         helperText={formErrorsNodeLogEntryUnsaved.description?.join(', ')}
-        inputProps={{
-          'data-key': 'description',
-        }}
+        slotProps={{ htmlInput: { 'data-key': 'description' } }}
       />
     </Box>
   );

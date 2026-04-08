@@ -1,16 +1,14 @@
 {
   "name": "@js-modules/common-react-nav",
-  "description": "Common React Nav",
   "version": "0.0.0",
+  "private": true,
+  "description": "Common React Nav",
   "license": "MIT",
   "main": "build/index",
   "react-native": "src/index.ts",
   "files": [
     "build"
   ],
-  "scripts": {
-    "build": "tsc -b tsconfig.build.json"
-  },
-  "dependencies": {},
-  "eslintConfig": {}
+  "scripts": {},
+  "dependencies": {}
 }

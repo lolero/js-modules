@@ -1,5 +1,5 @@
-import React from 'react';
 import Box from '@mui/material/Box';
+import type React from 'react';
 import { useStateAuthReducerMetadata } from '@js-modules/apps-travel-log-common-store-redux';
 
 export const FeedsWorkspaceContentBox: React.FC = () => {

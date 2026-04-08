@@ -1,10 +1,8 @@
 {
-  "extends": "../../../../tsconfig.build.json",
-  "compilerOptions": {
-    "module": "commonjs",
-    "composite": true,
-    "rootDir": "src",
-    "outDir": "build"
-  },
+  "extends": [
+    "../../../../tsconfig.build.json",
+    "../../../../scripts/tsconfig/tsconfig.nest.build.json"
+  ],
+  "compilerOptions": {},
   "include": ["src"]
 }

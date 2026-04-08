@@ -1,16 +1,16 @@
+import type { KeycloakInitOptions, KeycloakServerConfig } from 'keycloak-js';
 import { useEffect, useMemo } from 'react';
-import { KeycloakServerConfig, KeycloakInitOptions } from 'keycloak-js';
+import {
+  AUTH__URI__TRAVEL_LOG,
+  WebModulesPrivate,
+  WebModulesPublic,
+} from '@js-modules/apps-travel-log-common-constants';
 import {
   ClientType,
   useStateAuthInitializeKeycloak,
   useStateSettingsGetProfile,
   useStateSettingsSignout,
 } from '@js-modules/apps-travel-log-common-store-redux';
-import {
-  AUTH__URI__TRAVEL_LOG,
-  WebModulesPrivate,
-  WebModulesPublic,
-} from '@js-modules/apps-travel-log-common-constants';
 import {
   routesMetadataPrivate,
   routesMetadataPublic,
@@ -43,7 +43,7 @@ export function useInitializeKeycloak(clientType: ClientType): {
     {
       ...keycloakServerConfig,
       clientId: `client-${clientType}`,
-    } as KeycloakServerConfig,
+    },
     clientType === ClientType.web ? keycloakInitOptions : {},
     stateSettingsGetProfileCallback,
     stateSettingsSignoutCallback,

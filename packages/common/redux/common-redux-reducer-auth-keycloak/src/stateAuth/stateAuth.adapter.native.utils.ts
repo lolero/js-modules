@@ -1,4 +1,6 @@
-import {
+import type { KeycloakServerConfig, KeycloakTokenParsed } from 'keycloak-js';
+import words from 'lodash/words';
+import type {
   AuthConfiguration,
   AuthorizeResult,
   RefreshResult,
@@ -9,14 +11,13 @@ import {
   resetGenericPassword,
   setGenericPassword,
 } from 'react-native-keychain';
-import { KeycloakServerConfig, KeycloakTokenParsed } from 'keycloak-js';
-import camelCase from 'lodash/camelCase';
-import lowerCase from 'lodash/lowerCase';
-import { KeycloakTokens } from './stateAuth.types';
+import type { KeycloakTokens } from './stateAuth.types';
 
 export const KEYCHAIN_SERVICE = 'com.travellog.auth';
 export const TOKEN_REFRESH_BUFFER_SECONDS = 60;
 
+// TODO: pass a logger to this so it can document when the commented out
+//  console errors should document said failures
 export function getKeycloakTokenParsed(jwt: string): KeycloakTokenParsed {
   try {
     const base64Url = jwt.split('.')[1];
@@ -29,8 +30,9 @@ export function getKeycloakTokenParsed(jwt: string): KeycloakTokenParsed {
         })
         .join(''),
     );
-    const keycloakTokenParsed: KeycloakTokenParsed =
-      JSON.parse(keycloakTokenJson);
+    const keycloakTokenParsed = JSON.parse(
+      keycloakTokenJson,
+    ) as KeycloakTokenParsed;
     return keycloakTokenParsed;
   } catch (error) {
     throw new Error('Failed to get KeycloakTokenParsed from JWT', {
@@ -67,7 +69,7 @@ export function createAuthConfiguration({
   const authConfiguration: AuthConfiguration = {
     issuer: `${url}/realms/${realm}`,
     clientId,
-    redirectUrl: `${lowerCase(camelCase(realm))}://oauth-callback`,
+    redirectUrl: `${words(realm).join('').toLowerCase()}://oauth-callback`,
     scopes: ['openid', 'profile', 'email'],
     serviceConfiguration: {
       authorizationEndpoint: `${url}/realms/${realm}/protocol/openid-connect/auth`,
@@ -113,8 +115,8 @@ export async function clearKeycloakTokens(): Promise<void> {
     await resetGenericPassword({
       service: KEYCHAIN_SERVICE,
     });
-  } catch (error) {
-    console.error('Failed to clear tokens:', error);
+  } catch {
+    // console.error('Failed to clear tokens:', error);
   }
 }
 

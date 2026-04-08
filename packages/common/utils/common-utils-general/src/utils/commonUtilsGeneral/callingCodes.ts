@@ -1,8 +1,8 @@
-import orderBy from 'lodash/orderBy';
+import { countries as countriesList } from 'countries-list';
 import entries from 'lodash/entries';
 import keyBy from 'lodash/keyBy';
+import orderBy from 'lodash/orderBy';
 import values from 'lodash/values';
-import { countries as countriesList } from 'countries-list';
 
 export type CallingCode = {
   callingCode: string;

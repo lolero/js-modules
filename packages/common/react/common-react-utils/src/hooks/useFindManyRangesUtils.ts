@@ -1,9 +1,9 @@
-import { useCallback, useMemo } from 'react';
-import isEqual from 'lodash/isEqual';
-import { FindManyRange } from '@js-modules/api-nest-utils/src/types/types.requests';
-import keys from 'lodash/keys';
 import difference from 'lodash/difference';
-import { FindManyRangesTypes } from '../types/findManyRanges.types';
+import isEqual from 'lodash/isEqual';
+import keys from 'lodash/keys';
+import { useCallback, useMemo } from 'react';
+import type { FindManyRange } from '@js-modules/api-nest-utils/src/types/types.requests';
+import type { FindManyRangesTypes } from '../types/findManyRanges.types';
 
 export const useFindManyRangesUtils = (
   searchParams: URLSearchParams,
@@ -25,7 +25,7 @@ export const useFindManyRangesUtils = (
 
   const rangeKeysActive = useMemo(() => {
     const activeKeys: string[] = [];
-    searchParams.entries().forEach(([key]) => {
+    Array.from(searchParams.entries()).forEach(([key]) => {
       if (key.endsWith('Range')) {
         const rangeKey = key.slice(0, -5);
         if (rangeKeys.includes(rangeKey)) {

@@ -1,24 +1,26 @@
+<script context="module" lang="ts">
+  export const ssr = false;
+</script>
+
 <script lang="ts">
-	import '../app.css';
-	import 'material-icons/iconfont/material-icons.css';
-	import { onMount } from 'svelte';
-	import Navbar from '$c/Navbar.svelte';
-	import ErrorModal from '$c/ErrorModal.svelte';
-	import { getUser, auth } from '$s/auth';
+  import '../app.css';
+  import 'material-icons/iconfont/material-icons.css';
+  import { onMount } from 'svelte';
+  import ErrorModal from '$c/ErrorModal.svelte';
+  import Navbar from '$c/Navbar.svelte';
+  import { auth, getUser } from '$s/auth';
 
-	export const ssr = false;
+  $: user = $auth.user;
 
-	$: user = $auth.user;
-
-	onMount(() => {
-		if (user === null) {
-			getUser();
-		}
-	});
+  onMount(() => {
+    if (user === null) {
+      getUser();
+    }
+  });
 </script>
 
 <ErrorModal />
 <div class="container mx-auto h-screen">
-	<Navbar />
-	<slot />
+  <Navbar />
+  <slot />
 </div>

@@ -1,9 +1,9 @@
-import {
+import type { ThemePalette } from '@js-modules/apps-travel-log-common-constants';
+import type {
   Entity,
   Reducer,
   ReducerMetadata,
 } from '@js-modules/common-redux-utils-normalized-reducers';
-import { ThemePalette } from '@js-modules/apps-travel-log-common-constants';
 
 export interface StateMainReducerMetadata extends ReducerMetadata {
   themePalette: ThemePalette;

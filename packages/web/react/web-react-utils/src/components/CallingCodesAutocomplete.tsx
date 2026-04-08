@@ -1,20 +1,21 @@
-import React, { useCallback } from 'react';
-import {
-  AutocompleteProps,
-  createFilterOptions,
-} from '@mui/material/Autocomplete';
+import type { AutocompleteProps } from '@mui/material/Autocomplete';
+import { createFilterOptions } from '@mui/material/Autocomplete';
 import ListItemText from '@mui/material/ListItemText';
-import TextField, { TextFieldProps } from '@mui/material/TextField';
+import type { TextFieldProps } from '@mui/material/TextField';
+import TextField from '@mui/material/TextField';
+import noop from 'lodash/noop';
+import pick from 'lodash/pick';
+import values from 'lodash/values';
+import type React from 'react';
+import { useCallback } from 'react';
+import type { FormData } from '@js-modules/common-react-utils';
+import type { CallingCode } from '@js-modules/common-utils-general';
 import {
-  CallingCode,
   callingCodes,
   callingCodesArray,
   countries,
 } from '@js-modules/common-utils-general';
-import noop from 'lodash/noop';
-import pick from 'lodash/pick';
-import values from 'lodash/values';
-import { FormUtils } from '../hooks/hooksMaterialUi/useFormUtils';
+import type { FormUtilsWeb } from '../hooks/hooksMaterialUi/useFormUtilsWeb';
 import { VirtualizedAutocomplete } from './VirtualizedAutocomplete';
 
 const filterOptions = createFilterOptions({
@@ -58,8 +59,8 @@ export type CallingCodesAutocompleteProps<
   value: string;
   error?: TextFieldProps['error'];
   helperText?: TextFieldProps['helperText'];
-  onChange?: FormUtils<Record<string, any>>['changeFieldCallback'];
-  onBlur?: FormUtils<Record<string, any>>['blurFieldCallback'];
+  onChange?: FormUtilsWeb<FormData<string>>['changeFieldCallback'];
+  onBlur?: FormUtilsWeb<FormData<string>>['blurFieldCallback'];
   optionProp?: keyof CallingCode;
   dataKey?: string;
 };
@@ -121,7 +122,7 @@ export function CallingCodesAutocomplete<
           .join(' ');
         return [
           props,
-          <ListItemText>
+          <ListItemText key={option.callingCode}>
             {option.callingCode} ({calllingCodeFlags})
           </ListItemText>,
         ] as React.ReactNode;
@@ -129,7 +130,6 @@ export function CallingCodesAutocomplete<
       renderInput={(params) => {
         return (
           <TextField
-            // eslint-disable-next-line react/jsx-props-no-spreading
             {...params}
             required={required}
             label={label}
@@ -142,7 +142,7 @@ export function CallingCodesAutocomplete<
       onChange={changeCallback}
       onBlur={onBlur as React.FocusEventHandler<HTMLDivElement>}
       data-key={dataKey}
-      componentsProps={{
+      slotProps={{
         paper: {
           sx: {
             width: '180px',

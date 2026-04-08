@@ -6,8 +6,6 @@ import {
   IsStrongPassword,
   Length,
 } from 'class-validator';
-// eslint-disable-next-line import/no-cycle
-import { AuthUsersEntity } from './auth.types';
 import {
   AUTH_USERS_EMAIL_MAX_LENGTH,
   AUTH_USERS_FIRST_NAME_MAX_LENGTH,
@@ -17,6 +15,7 @@ import {
   AUTH_USERS_PHONE_NUMBER_MAX_LENGTH,
   AUTH_USERS_USERNAME_MAX_LENGTH,
 } from './auth.constants';
+import { AuthUsersEntity } from './auth.types';
 
 export class AuthDtoSignup {
   @IsString()

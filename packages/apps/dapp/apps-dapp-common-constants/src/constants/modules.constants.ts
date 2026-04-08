@@ -1,3 +1,8 @@
+export enum WebModulesPublic {
+  home = 'home',
+  purpose = 'purpose',
+}
+
 export enum WebModulesPrivate {
   portfolio = 'portfolio',
   analytics = 'analytics',

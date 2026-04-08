@@ -1,5 +1,5 @@
-import { AxiosResponse } from 'axios';
-import { NodeTransactionRaw } from './nodeTransactions.types';
+import type { AxiosResponse } from 'axios';
+import type { NodeTransactionRaw } from './nodeTransactions.types';
 
 export type NodeTransactionsGetManyServiceResponse = AxiosResponse<
   NodeTransactionRaw[]

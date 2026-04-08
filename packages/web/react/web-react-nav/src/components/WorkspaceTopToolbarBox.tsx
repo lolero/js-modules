@@ -1,5 +1,6 @@
-import React, { forwardRef, useContext } from 'react';
 import Box from '@mui/material/Box';
+import type React from 'react';
+import { forwardRef, useContext } from 'react';
 import { NavContext } from '../contexts/NavContext';
 import { WorkspaceContext } from '../contexts/WorkspaceContext';
 import { useNavDisplayMetadata } from '../hooks/useNavDisplayMetadata';
@@ -14,7 +15,7 @@ type WorkspaceTopToolbarBoxProps = {
 export const WorkspaceTopToolbarBox = forwardRef<
   HTMLDivElement,
   WorkspaceTopToolbarBoxProps
->(({ children }, ref) => {
+>(function WorkspaceTopToolbarBox({ children }, ref) {
   const { workspaceTopToolbarPaddingYSpacing, workspacePaddingXSpacing } =
     useContext(NavContext);
 

@@ -1,16 +1,17 @@
-import React from 'react';
-import values from 'lodash/values';
-import flatten from 'lodash/flatten';
+import type { IconDefinition } from '@fortawesome/fontawesome-common-types';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
-import { Link } from 'react-router-dom';
+import flatten from 'lodash/flatten';
+import intersection from 'lodash/intersection';
 import isEqual from 'lodash/isEqual';
 import isNull from 'lodash/isNull';
-import intersection from 'lodash/intersection';
 import pick from 'lodash/pick';
-import { RoutesMetadata } from '@js-modules/common-react-nav';
+import values from 'lodash/values';
+import type React from 'react';
+import { Link } from 'react-router-dom';
+import type { RoutesMetadata } from '@js-modules/common-react-nav';
 import { MuiFaIcon } from '@js-modules/web-react-utils';
-import { ReactRouterNavUtils } from '../types/routes.types';
+import type { ReactRouterNavUtils } from '../types/routes.types';
 
 export type NavLeftDrawerTabs = {
   tabsValue: string | null;
@@ -21,7 +22,7 @@ export type NavLeftDrawerTabs = {
  * Get array of Material UI vertical <Tab />s to populate the <NavLeftDrawer/>,
  * through the 'navLeftDrawerContent' prop of <WorkspaceBox />
  *
- * @param {RoutesMetadata} routesMetadata - The metadata for the
+ * @param {RoutesMetadata<IconDefinition>} routesMetadata - The metadata for the
  * navigation's <Tab /> tree
  * @param {number} depthLevel - The navigation tree's depth level for which tabs
  * are being retrieved in the function call
@@ -38,7 +39,7 @@ export type NavLeftDrawerTabs = {
  * @returns {React.ReactNode[]} Array of <Tab />s
  */
 export function getNavLeftDrawerTabs(
-  routesMetadata: RoutesMetadata,
+  routesMetadata: RoutesMetadata<IconDefinition>,
   depthLevel: number,
   routerPath: string,
   isNavLeftDrawerExpanded: boolean,

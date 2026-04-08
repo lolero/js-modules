@@ -1,89 +1,66 @@
-import {
-  AllEffect,
-  call,
-  CallEffect,
-  ForkEffect,
-  put,
-  PutEffect,
-  takeLatest,
-} from 'redux-saga/effects';
-import { NodeUsersReducer } from './nodeUsers.types';
-import {
-  NodeUsersActionTypes,
-  NodeUsersGetManyRequestAction,
-  NodeUsersGetOneRequestAction,
-} from './nodeUsers.actions.types';
+import type { SagaGenerator } from 'typed-redux-saga';
+import { all, call, put, takeLatest } from 'typed-redux-saga';
 import {
   createNodeUsersGetManyFailAction,
   createNodeUsersGetManySuccessAction,
   createNodeUsersGetOneFailAction,
   createNodeUsersGetOneSuccessAction,
 } from './nodeUsers.actions.creators';
-import {
-  NodeUsersGetManyServiceResponse,
-  NodeUsersGetOneServiceResponse,
-} from './nodeUsers.services.types';
+import type {
+  NodeUsersGetManyRequestAction,
+  NodeUsersGetOneRequestAction,
+} from './nodeUsers.actions.types';
+import { NodeUsersActionTypes } from './nodeUsers.actions.types';
+import { normalizeUsersPublicDtoArray } from './nodeUsers.normalizer';
 import {
   nodeUsersGetManyService,
   nodeUsersGetOneService,
 } from './nodeUsers.services';
-import { normalizeUsersPublicDtoArray } from './nodeUsers.normalizer';
 
 export function* nodeUsersGetOneSaga({
   requestMetadata,
   requestId,
-}: NodeUsersGetOneRequestAction): Generator<
-  CallEffect | AllEffect<CallEffect> | PutEffect,
-  void,
-  NodeUsersGetOneServiceResponse | NodeUsersReducer['data']
-> {
+}: NodeUsersGetOneRequestAction): SagaGenerator<void> {
   const { uniqueKeyValue, uniqueKeyName } = requestMetadata;
 
   try {
-    const { data: usersPublicDto, status: statusCode } = (yield call(
+    const { data: usersPublicDto, status: statusCode } = yield* call(
       nodeUsersGetOneService,
       uniqueKeyValue,
       uniqueKeyName,
-    )) as NodeUsersGetOneServiceResponse;
+    );
 
-    const normalizedNodeUsers = (yield call(normalizeUsersPublicDtoArray, [
+    const normalizedNodeUsers = yield* call(normalizeUsersPublicDtoArray, [
       usersPublicDto,
-    ])) as NodeUsersReducer['data'];
+    ]);
 
-    yield put(
+    yield* put(
       createNodeUsersGetOneSuccessAction(
         normalizedNodeUsers,
         requestId,
         statusCode,
       ),
     );
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (err: any) {
-    // eslint-disable-next-line no-console
-    console.log(err.message);
-    yield put(createNodeUsersGetOneFailAction(err.message, requestId));
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    yield* put(createNodeUsersGetOneFailAction(message, requestId));
   }
 }
 
 export function* nodeUsersGetManySaga({
   requestId,
-}: NodeUsersGetManyRequestAction): Generator<
-  CallEffect | AllEffect<CallEffect> | PutEffect,
-  void,
-  NodeUsersGetManyServiceResponse | NodeUsersReducer['data']
-> {
+}: NodeUsersGetManyRequestAction): SagaGenerator<void> {
   try {
-    const { data: usersPublicDtoArray, status: statusCode } = (yield call(
+    const { data: usersPublicDtoArray, status: statusCode } = yield* call(
       nodeUsersGetManyService,
-    )) as NodeUsersGetManyServiceResponse;
+    );
 
-    const normalizedNodeUsers = (yield call(
+    const normalizedNodeUsers = yield* call(
       normalizeUsersPublicDtoArray,
       usersPublicDtoArray,
-    )) as NodeUsersReducer['data'];
+    );
 
-    yield put(
+    yield* put(
       createNodeUsersGetManySuccessAction(
         normalizedNodeUsers,
         requestId,
@@ -91,22 +68,21 @@ export function* nodeUsersGetManySaga({
         true,
       ),
     );
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (err: any) {
-    // eslint-disable-next-line no-console
-    console.log(err.message);
-    yield put(createNodeUsersGetManyFailAction(err.message, requestId));
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    yield* put(createNodeUsersGetManyFailAction(message, requestId));
   }
 }
 
-export function* nodeUsersSagas(): Generator<ForkEffect, void, void> {
-  yield takeLatest(
-    NodeUsersActionTypes.NODE_USERS__GET_ONE__REQUEST,
-    nodeUsersGetOneSaga,
-  );
-  yield takeLatest(
-    NodeUsersActionTypes.NODE_USERS__GET_MANY__REQUEST,
-    nodeUsersGetManySaga,
-  );
+export function* nodeUsersSagas(): SagaGenerator<void> {
+  yield* all([
+    takeLatest(
+      NodeUsersActionTypes.NODE_USERS__GET_ONE__REQUEST,
+      nodeUsersGetOneSaga,
+    ),
+    takeLatest(
+      NodeUsersActionTypes.NODE_USERS__GET_MANY__REQUEST,
+      nodeUsersGetManySaga,
+    ),
+  ]);
 }

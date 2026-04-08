@@ -1,12 +1,14 @@
-import { Test, TestingModule } from '@nestjs/testing';
+import { beforeEach, describe, expect, it, jest } from '@jest/globals';
+import type { TestingModule } from '@nestjs/testing';
+import { Test } from '@nestjs/testing';
+import type { UsersUpdateOnePartialDto } from './dtos/users.updateOnePartial.dto';
+import { UsersControllerPrivate } from './users.controller.private';
+import type { UsersEntity } from './users.entity';
 import { UsersService } from './users.service';
 import {
-  getUsersUpdateOnePartialDtoFixture,
   getUsersEntityFixture,
+  getUsersUpdateOnePartialDtoFixture,
 } from './users.utils.fixtures';
-import { UsersEntity } from './users.entity';
-import { UsersUpdateOnePartialDto } from './dtos/users.updateOnePartial.dto';
-import { UsersControllerPrivate } from './users.controller.private';
 
 describe('UsersControllerPrivate', () => {
   const currentUser = getUsersEntityFixture({ id: 1000 });
@@ -15,7 +17,7 @@ describe('UsersControllerPrivate', () => {
   let usersServiceUpdateOnePartialMock: jest.Mock;
   let usersServiceResetPasswordMock: jest.Mock;
   let usersServiceDeleteOneMock: jest.Mock;
-  let usersServiceMock: Partial<UsersService>;
+  let usersServiceMock: UsersService;
   let usersControllerPrivate: UsersControllerPrivate;
 
   beforeEach(async () => {
@@ -26,7 +28,7 @@ describe('UsersControllerPrivate', () => {
       updateOnePartial: usersServiceUpdateOnePartialMock,
       resetPassword: usersServiceResetPasswordMock,
       deleteOne: usersServiceDeleteOneMock,
-    };
+    } as unknown as UsersService;
 
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -48,8 +50,8 @@ describe('UsersControllerPrivate', () => {
   });
 
   describe('checkIn', () => {
-    it('Should return the usersEntityCurrent', async () => {
-      usersEntity = await usersControllerPrivate.checkIn(currentUser);
+    it('Should return the usersEntityCurrent', () => {
+      usersEntity = usersControllerPrivate.checkIn(currentUser);
 
       expect(usersEntity).toBe(currentUser);
     });

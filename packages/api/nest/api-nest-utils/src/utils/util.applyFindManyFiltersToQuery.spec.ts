@@ -1,15 +1,24 @@
-import { Brackets, SelectQueryBuilder } from 'typeorm';
-import noop from 'lodash/noop';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  jest as jestGlobals,
+} from '@jest/globals';
 import { BadRequestException } from '@nestjs/common';
+import noop from 'lodash/noop';
+import type { SelectQueryBuilder } from 'typeorm';
+import { Brackets } from 'typeorm';
+import type { FindManyDto, RequestEntity } from '../types/types.requests';
 import { utilApplyFindManyFiltersToQuery } from './util.applyFindManyFiltersToQuery';
-import { FindManyDto, RequestEntity } from '../types/types.requests';
-import { utilGetFindManyUniqueKeysWhereFactory } from './util.getFindManyUniqueKeysWhereFactory';
-import { utilGetFindManySearchWhereFactory } from './util.getFindManySearchWhereFactory';
+import { utilApplyFindManyRelationsFiltersToQuery } from './util.applyFindManyRelationsFiltersToQuery';
 import {
   FindManyRangeType,
   utilGetFindManyRangesWhereFactory,
 } from './util.getFindManyRangesWhereFactory';
-import { utilApplyFindManyRelationsFiltersToQuery } from './util.applyFindManyRelationsFiltersToQuery';
+import { utilGetFindManySearchWhereFactory } from './util.getFindManySearchWhereFactory';
+import { utilGetFindManyUniqueKeysWhereFactory } from './util.getFindManyUniqueKeysWhereFactory';
 
 jest.mock('./util.applyFindManyRelationsFiltersToQuery');
 jest.mock('./util.getFindManyUniqueKeysWhereFactory');
@@ -26,31 +35,33 @@ type TestEntity = RequestEntity & {
 describe('utilApplyFindManyFiltersToQuery', () => {
   let dtoFindMany: FindManyDto<TestEntity>;
 
-  const utilApplyFindManyRelationsFiltersToQueryMock = jest.mocked(
+  const utilApplyFindManyRelationsFiltersToQueryMock = jestGlobals.mocked(
     utilApplyFindManyRelationsFiltersToQuery,
   );
-  const utilGetFindManyUniqueKeysWhereFactoryMock = jest.mocked(
+  const utilGetFindManyUniqueKeysWhereFactoryMock = jestGlobals.mocked(
     utilGetFindManyUniqueKeysWhereFactory,
   );
-  const utilGetFindManySearchWhereFactoryMock = jest.mocked(
+  const utilGetFindManySearchWhereFactoryMock = jestGlobals.mocked(
     utilGetFindManySearchWhereFactory,
   );
-  const utilGetFindManyRangesWhereFactoryMock = jest.mocked(
+  const utilGetFindManyRangesWhereFactoryMock = jestGlobals.mocked(
     utilGetFindManyRangesWhereFactory,
   );
 
-  let queryBuilderSelectMock: jest.Mock;
-  let queryBuilderAndWhereMock: jest.Mock;
-  let queryBuilderMock: Partial<SelectQueryBuilder<TestEntity>>;
+  let queryBuilderSelectMock: jestGlobals.Mock;
+  let queryBuilderAndWhereMock: jestGlobals.Mock;
+  let queryBuilderMock: SelectQueryBuilder<TestEntity>;
 
   beforeEach(() => {
     queryBuilderMock = {
-      select: jest.fn(),
-      where: jest.fn(),
-      andWhere: jest.fn(),
-    };
-    queryBuilderSelectMock = jest.fn().mockReturnValue(queryBuilderMock);
-    queryBuilderAndWhereMock = jest.fn().mockReturnValue(queryBuilderMock);
+      select: jestGlobals.fn(),
+      where: jestGlobals.fn(),
+      andWhere: jestGlobals.fn(),
+    } as unknown as SelectQueryBuilder<TestEntity>;
+    queryBuilderSelectMock = jestGlobals.fn().mockReturnValue(queryBuilderMock);
+    queryBuilderAndWhereMock = jestGlobals
+      .fn()
+      .mockReturnValue(queryBuilderMock);
     Object.assign(queryBuilderMock, {
       select: queryBuilderSelectMock,
       andWhere: queryBuilderAndWhereMock,
@@ -78,15 +89,12 @@ describe('utilApplyFindManyFiltersToQuery', () => {
         utilGetFindManyUniqueKeysWhereFactoryMockReturnValue,
       );
 
-      utilApplyFindManyFiltersToQuery(
-        queryBuilderMock as SelectQueryBuilder<TestEntity>,
-        dtoFindMany,
-      );
+      utilApplyFindManyFiltersToQuery(queryBuilderMock, dtoFindMany);
 
       expect(utilGetFindManyUniqueKeysWhereFactoryMock).toHaveBeenNthCalledWith(
         1,
         queryBuilderMock,
-        dtoFindMany.uniqueKeys,
+        dtoFindMany.uniqueKeys!,
       );
       expect(queryBuilderAndWhereMock).toHaveBeenNthCalledWith(
         1,
@@ -102,10 +110,7 @@ describe('utilApplyFindManyFiltersToQuery', () => {
         utilGetFindManyUniqueKeysWhereFactoryMockReturnValue,
       );
 
-      utilApplyFindManyFiltersToQuery(
-        queryBuilderMock as SelectQueryBuilder<TestEntity>,
-        dtoFindMany,
-      );
+      utilApplyFindManyFiltersToQuery(queryBuilderMock, dtoFindMany);
 
       expect(utilGetFindManyUniqueKeysWhereFactoryMock).not.toHaveBeenCalled();
       expect(queryBuilderAndWhereMock).not.toHaveBeenCalled();
@@ -119,10 +124,7 @@ describe('utilApplyFindManyFiltersToQuery', () => {
         utilGetFindManyUniqueKeysWhereFactoryMockReturnValue,
       );
 
-      utilApplyFindManyFiltersToQuery(
-        queryBuilderMock as SelectQueryBuilder<TestEntity>,
-        dtoFindMany,
-      );
+      utilApplyFindManyFiltersToQuery(queryBuilderMock, dtoFindMany);
 
       expect(utilGetFindManyUniqueKeysWhereFactoryMock).not.toHaveBeenCalled();
       expect(queryBuilderAndWhereMock).not.toHaveBeenCalled();
@@ -140,10 +142,7 @@ describe('utilApplyFindManyFiltersToQuery', () => {
       };
 
       expect(() =>
-        utilApplyFindManyFiltersToQuery(
-          queryBuilderMock as SelectQueryBuilder<TestEntity>,
-          dtoFindMany,
-        ),
+        utilApplyFindManyFiltersToQuery(queryBuilderMock, dtoFindMany),
       ).toThrow(BadRequestException);
     });
 
@@ -156,10 +155,7 @@ describe('utilApplyFindManyFiltersToQuery', () => {
       };
 
       expect(() =>
-        utilApplyFindManyFiltersToQuery(
-          queryBuilderMock as SelectQueryBuilder<TestEntity>,
-          dtoFindMany,
-        ),
+        utilApplyFindManyFiltersToQuery(queryBuilderMock, dtoFindMany),
       ).toThrow(BadRequestException);
     });
 
@@ -174,10 +170,7 @@ describe('utilApplyFindManyFiltersToQuery', () => {
       };
 
       expect(() =>
-        utilApplyFindManyFiltersToQuery(
-          queryBuilderMock as SelectQueryBuilder<TestEntity>,
-          dtoFindMany,
-        ),
+        utilApplyFindManyFiltersToQuery(queryBuilderMock, dtoFindMany),
       ).toThrow(BadRequestException);
     });
 
@@ -192,10 +185,7 @@ describe('utilApplyFindManyFiltersToQuery', () => {
       };
 
       expect(() =>
-        utilApplyFindManyFiltersToQuery(
-          queryBuilderMock as SelectQueryBuilder<TestEntity>,
-          dtoFindMany,
-        ),
+        utilApplyFindManyFiltersToQuery(queryBuilderMock, dtoFindMany),
       ).toThrow(BadRequestException);
     });
 
@@ -210,10 +200,7 @@ describe('utilApplyFindManyFiltersToQuery', () => {
       };
 
       expect(() =>
-        utilApplyFindManyFiltersToQuery(
-          queryBuilderMock as SelectQueryBuilder<TestEntity>,
-          dtoFindMany,
-        ),
+        utilApplyFindManyFiltersToQuery(queryBuilderMock, dtoFindMany),
       ).toThrow(BadRequestException);
     });
   });
@@ -228,14 +215,11 @@ describe('utilApplyFindManyFiltersToQuery', () => {
         },
       };
 
-      utilApplyFindManyFiltersToQuery(
-        queryBuilderMock as SelectQueryBuilder<TestEntity>,
-        dtoFindMany,
-      );
+      utilApplyFindManyFiltersToQuery(queryBuilderMock, dtoFindMany);
 
       expect(
         utilApplyFindManyRelationsFiltersToQueryMock,
-      ).toHaveBeenNthCalledWith(1, queryBuilderMock, dtoFindMany.relations);
+      ).toHaveBeenNthCalledWith(1, queryBuilderMock, dtoFindMany.relations!);
     });
 
     it('Should not call utilApplyFindManyRelationsFiltersToQuery if the dateRelations FindManyRelationsDto if it is not defined', () => {
@@ -243,10 +227,7 @@ describe('utilApplyFindManyFiltersToQuery', () => {
         relations: undefined,
       };
 
-      utilApplyFindManyFiltersToQuery(
-        queryBuilderMock as SelectQueryBuilder<TestEntity>,
-        dtoFindMany,
-      );
+      utilApplyFindManyFiltersToQuery(queryBuilderMock, dtoFindMany);
 
       expect(
         utilApplyFindManyRelationsFiltersToQueryMock,
@@ -268,15 +249,12 @@ describe('utilApplyFindManyFiltersToQuery', () => {
         utilGetFindManySearchWhereFactoryMockReturnValue,
       );
 
-      utilApplyFindManyFiltersToQuery(
-        queryBuilderMock as SelectQueryBuilder<TestEntity>,
-        dtoFindMany,
-      );
+      utilApplyFindManyFiltersToQuery(queryBuilderMock, dtoFindMany);
 
       expect(utilGetFindManySearchWhereFactoryMock).toHaveBeenNthCalledWith(
         1,
         queryBuilderMock,
-        dtoFindMany.search,
+        dtoFindMany.search!,
       );
       expect(queryBuilderAndWhereMock).toHaveBeenNthCalledWith(
         1,
@@ -292,10 +270,7 @@ describe('utilApplyFindManyFiltersToQuery', () => {
         utilGetFindManySearchWhereFactoryMockReturnValue,
       );
 
-      utilApplyFindManyFiltersToQuery(
-        queryBuilderMock as SelectQueryBuilder<TestEntity>,
-        dtoFindMany,
-      );
+      utilApplyFindManyFiltersToQuery(queryBuilderMock, dtoFindMany);
 
       expect(utilGetFindManySearchWhereFactoryMock).not.toHaveBeenCalled();
       expect(queryBuilderAndWhereMock).not.toHaveBeenCalled();
@@ -315,15 +290,12 @@ describe('utilApplyFindManyFiltersToQuery', () => {
         utilGetFindManyRangesWhereFactoryMockReturnValue,
       );
 
-      utilApplyFindManyFiltersToQuery(
-        queryBuilderMock as SelectQueryBuilder<TestEntity>,
-        dtoFindMany,
-      );
+      utilApplyFindManyFiltersToQuery(queryBuilderMock, dtoFindMany);
 
       expect(utilGetFindManyRangesWhereFactoryMock).toHaveBeenNthCalledWith(
         1,
         queryBuilderMock,
-        dtoFindMany.dateRanges,
+        dtoFindMany.dateRanges!,
         FindManyRangeType.date,
       );
       expect(queryBuilderAndWhereMock).toHaveBeenNthCalledWith(
@@ -340,10 +312,7 @@ describe('utilApplyFindManyFiltersToQuery', () => {
         utilGetFindManyRangesWhereFactoryMockReturnValue,
       );
 
-      utilApplyFindManyFiltersToQuery(
-        queryBuilderMock as SelectQueryBuilder<TestEntity>,
-        dtoFindMany,
-      );
+      utilApplyFindManyFiltersToQuery(queryBuilderMock, dtoFindMany);
 
       expect(utilGetFindManyRangesWhereFactoryMock).not.toHaveBeenCalled();
       expect(queryBuilderAndWhereMock).not.toHaveBeenCalled();
@@ -363,15 +332,12 @@ describe('utilApplyFindManyFiltersToQuery', () => {
         utilGetFindManyRangesWhereFactoryMockReturnValue,
       );
 
-      utilApplyFindManyFiltersToQuery(
-        queryBuilderMock as SelectQueryBuilder<TestEntity>,
-        dtoFindMany,
-      );
+      utilApplyFindManyFiltersToQuery(queryBuilderMock, dtoFindMany);
 
       expect(utilGetFindManyRangesWhereFactoryMock).toHaveBeenNthCalledWith(
         1,
         queryBuilderMock,
-        dtoFindMany.numberRanges,
+        dtoFindMany.numberRanges!,
         FindManyRangeType.number,
       );
       expect(queryBuilderAndWhereMock).toHaveBeenNthCalledWith(
@@ -388,10 +354,7 @@ describe('utilApplyFindManyFiltersToQuery', () => {
         utilGetFindManyRangesWhereFactoryMockReturnValue,
       );
 
-      utilApplyFindManyFiltersToQuery(
-        queryBuilderMock as SelectQueryBuilder<TestEntity>,
-        dtoFindMany,
-      );
+      utilApplyFindManyFiltersToQuery(queryBuilderMock, dtoFindMany);
 
       expect(utilGetFindManyRangesWhereFactoryMock).not.toHaveBeenCalled();
       expect(queryBuilderAndWhereMock).not.toHaveBeenCalled();
@@ -411,15 +374,12 @@ describe('utilApplyFindManyFiltersToQuery', () => {
         utilGetFindManyRangesWhereFactoryMockReturnValue,
       );
 
-      utilApplyFindManyFiltersToQuery(
-        queryBuilderMock as SelectQueryBuilder<TestEntity>,
-        dtoFindMany,
-      );
+      utilApplyFindManyFiltersToQuery(queryBuilderMock, dtoFindMany);
 
       expect(utilGetFindManyRangesWhereFactoryMock).toHaveBeenNthCalledWith(
         1,
         queryBuilderMock,
-        dtoFindMany.stringRanges,
+        dtoFindMany.stringRanges!,
         FindManyRangeType.string,
       );
       expect(queryBuilderAndWhereMock).toHaveBeenNthCalledWith(
@@ -436,10 +396,7 @@ describe('utilApplyFindManyFiltersToQuery', () => {
         utilGetFindManyRangesWhereFactoryMockReturnValue,
       );
 
-      utilApplyFindManyFiltersToQuery(
-        queryBuilderMock as SelectQueryBuilder<TestEntity>,
-        dtoFindMany,
-      );
+      utilApplyFindManyFiltersToQuery(queryBuilderMock, dtoFindMany);
 
       expect(utilGetFindManyRangesWhereFactoryMock).not.toHaveBeenCalled();
       expect(queryBuilderAndWhereMock).not.toHaveBeenCalled();

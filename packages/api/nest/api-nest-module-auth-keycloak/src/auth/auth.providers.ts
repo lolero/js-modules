@@ -1,19 +1,19 @@
-import { Provider } from '@nestjs/common';
+import type { Provider } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard, ResourceGuard, RoleGuard } from 'nest-keycloak-connect';
 import { KeycloakAdminClient } from '@js-modules/api-nest-keycloak-admin-client-cjs';
-import {
-  KeycloakAdminClientConfig,
-  KeycloakMultiIssuerConfig,
-} from './auth.types';
 import {
   KEYCLOAK_ADMIN_CLIENT,
   KEYCLOAK_ADMIN_CLIENT_CONFIG,
   KEYCLOAK_MULTI_ISSUER_CONFIG,
 } from './auth.constants';
+import { AuthGuardMultiIssuer } from './auth.guard.multiIssuer';
 import { AuthGuardUsersEntityCurrent } from './auth.guard.usersEntityCurrent';
 import { AuthServiceMultiIssuer } from './auth.service.multiIssuer';
-import { AuthGuardMultiIssuer } from './auth.guard.multiIssuer';
+import type {
+  KeycloakAdminClientConfig,
+  KeycloakMultiIssuerConfig,
+} from './auth.types';
 
 export function getAuthProviderKeycloakAdminClientConfig(
   keycloakAdminClientConfig: KeycloakAdminClientConfig,

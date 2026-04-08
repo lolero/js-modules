@@ -2,106 +2,133 @@
   "name": "js-modules",
   "private": true,
   "scripts": {
-    "clean:main-docker": "pnpm dlx rimraf .dockerignore",
-    "clean:main-js": "pnpm dlx rimraf --glob **/node_modules .husky .eslintignore .prettierignore .solhintignore",
-    "clean:main-nx": "pnpm dlx rimraf --glob **/.nx .nxignore",
-    "clean:main-py": "pnpm dlx rimraf .venv",
-    "clean:main-react-native": "pnpm dlx rimraf --glob **/Pods vendor/bundle",
-    "clean:main": "pnpm clean:main-js & pnpm clean:main-py & pnpm clean:main-react-native & pnpm clean:main-nx & pnpm clean:main-docker & wait",
-    "clean:build-js": "pnpm dlx rimraf --glob **/build **/dist **/coverage **/build_keycloak **/*.tsbuildinfo",
-    "clean:build-py": "pnpm dlx rimraf --glob **/__pycache__ **/.pytest_cache **/*.egg-info **/.ruff_cache",
+    "clean:build": "pnpm clean:build-javascript && pnpm clean:build-python && pnpm clean:build-react-native",
+    "clean:build-javascript": "pnpm dlx rimraf --glob **/build **/dist **/coverage **/build_keycloak **/*.tsbuildinfo",
+    "clean:build-python": "pnpm dlx rimraf --glob **/__pycache__ **/.pytest_cache **/*.egg-info **/.ruff_cache",
     "clean:build-react-native": "pnpm dlx rimraf --glob **/.gradle **/.kotlin **/.cxx",
-    "clean:build": "pnpm clean:build-js & pnpm clean:build-py & pnpm clean:build-react-native & wait",
     "clean:graph": "pnpm dlx rimraf --glob **/dependency-graph*",
-    "clean:lock-files-js": "pnpm dlx rimraf --glob **/package-lock.json **/pnpm-lock.yaml **/yarn.lock",
-    "clean:lock-files-py": "pnpm dlx rimraf --glob **/uv.lock",
-    "clean:lock-files": "pnpm clean:lock-files-js & pnpm clean:lock-files-py & wait",
-    "clean:git-hooks": "git config --unset core.hooksPath",
-    "install:js": "pnpm install",
-    "install:py": "uv sync --all-packages ",
-    "reset:clean": "pnpm clean:main && pnpm clean:build",
-    "reset:install": "ln -s .gitignore .eslintignore && ln -s .gitignore .prettierignore && ln -s .gitignore .nxignore && ln -s .gitignore .dockerignore && ln -s .gitignore .solhintignore && (pnpm install:js & pnpm install:py & wait)",
-    "reset:reset": "pnpm reset:clean && pnpm reset:install",
-    "git-hooks:set": "husky install && pnpm husky add .husky/pre-commit 'pnpm lint:fix' && pnpm husky add .husky/pre-commit 'pnpm commitlint --edit $1'",
-    "git-hooks:reset": "pnpm clean:git-hooks && pnpm git-hooks:set",
+    "clean:lock-files": "pnpm clean:lock-files-javascript && pnpm clean:lock-files-python",
+    "clean:lock-files-javascript": "pnpm dlx rimraf --glob **/package-lock.json **/pnpm-lock.yaml **/yarn.lock",
+    "clean:lock-files-python": "pnpm dlx rimraf --glob **/uv.lock",
+    "clean:main": "pnpm clean:main-javascript && pnpm clean:main-python && pnpm clean:main-react-native && pnpm clean:main-nx && pnpm clean:main-docker",
+    "clean:main-docker": "pnpm dlx rimraf .dockerignore",
+    "clean:main-javascript": "pnpm dlx rimraf --glob **/node_modules .prettierignore .solhintignore",
+    "clean:main-nx": "pnpm dlx rimraf --glob **/.nx .nxignore",
+    "clean:main-python": "pnpm dlx rimraf .venv",
+    "clean:main-react-native": "pnpm dlx rimraf --glob **/Pods vendor/bundle",
+    "git-hooks:clean": "tsx scripts/pkg-root/git-hooks.clean.ts",
+    "git-hooks:reset": "pnpm git-hooks:clean && pnpm git-hooks:set",
+    "git-hooks:set": "tsx scripts/pkg-root/git-hooks.set.ts",
     "graph:dependency-map": "monorepo-mapper --format pdf",
     "graph:nx": "pnpm nx graph",
-    "graph:package-tree": " tree -d -L 3 packages",
-    "lint:check": "(eslint       './**/*.{js,jsx,ts,tsx}' && prettier --list-different './**/*.{js,jsx,ts,tsx,css,scss,less,json,md,yml,yaml}') & (prettier --config ./prettier-config-solidity.js --list-different './**/*.sol' && solhint       './**/*.sol') & (uv run ruff check .       && uv run ruff format --check .) & wait",
-    "lint:fix": "  (eslint --fix './**/*.{js,jsx,ts,tsx}' && prettier --write          './**/*.{js,jsx,ts,tsx,css,scss,less,json,md,yml,yaml}') & (prettier --config ./prettier-config-solidity.js --write          './**/*.sol' && solhint --fix './**/*.sol') & (uv run ruff check --fix . && uv run ruff format .        ) & wait"
+    "graph:package-tree": "tsx scripts/pkg-root/graph.package-tree.ts",
+    "install:all": "pnpm install:javascript && pnpm install:python",
+    "install:javascript": "pnpm install",
+    "install:python": "tsx scripts/toml/toml.download-schemas.ts && uv sync --all-packages",
+    "lint:check": "pnpm nx run-many -t lint:check",
+    "lint:fix": "pnpm nx run-many -t lint:fix",
+    "lint:health": "pnpm nx run-many -t lint:health",
+    "lint:staged-check": "tsx scripts/nx/nx.lint-staged.ts --mode check",
+    "lint:staged-fix": "tsx scripts/nx/nx.lint-staged.ts --mode fix",
+    "reset": "pnpm reset:clean && pnpm reset:install",
+    "reset:clean": "pnpm clean:main && pnpm clean:build",
+    "reset:install": "pnpm install:all && tsx scripts/pkg-root/reset.ignore-symlinks.ts && tsx scripts/pkg-root/reset.package-references.ts && pnpm nx run root:lint:fix",
+    "test": "pnpm nx run-many -t test",
+    "test:coverage": "pnpm nx run-many -t test:coverage",
+    "test:health": "pnpm nx run-many -t test:health",
+    "test:watch": "pnpm nx run-many -t test:watch",
+    "types:check": "pnpm nx run-many -t types:check"
   },
-  "dependencies": {
-    "@types/node": "^25.5.0"
-  },
-  "devDependencies": {
-    "@commitlint/cli": "^20.5.0",
-    "@commitlint/config-angular": "^20.5.0",
-    "@types/jest": "^30.0.0",
-    "eslint": "10.0.3",
-    "eslint-config-airbnb-typescript-prettier": "^5.0.0",
-    "eslint-import-resolver-typescript": "^4.4.4",
-    "eslint-plugin-jest": "^29.15.0",
-    "eslint-plugin-jsdoc": "^62.8.0",
-    "husky": "^9.1.7",
-    "jest": "^30.3.0",
-    "monorepo-mapper": "^1.0.5",
-    "nx": "^22.5.4",
-    "prettier": "3.8.1",
-    "prettier-plugin-solidity": "^2.3.1",
-    "solhint": "^6.0.3",
-    "ts-jest": "^29.4.6",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.9.3"
-  },
-  "peerDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.6.0",
-    "@typescript-eslint/parser": "^5.6.0",
-    "eslint-config-airbnb": "^19.0.2",
-    "eslint-config-prettier": "^6.15.0",
-    "eslint-plugin-import": "^2.25.3",
-    "eslint-plugin-jsx-a11y": "^6.5.1",
-    "eslint-plugin-prettier": "^3.1.4",
-    "eslint-plugin-react": "^7.27.1",
-    "eslint-plugin-react-hooks": "^4.3.0"
-  },
-  "eslintConfig": {
-    "root": true,
-    "extends": [
-      "plugin:jest/recommended",
-      "plugin:jest/style",
-      "airbnb-typescript-prettier"
-    ],
-    "settings": {
-      "import/resolver": {
-        "typescript": {}
-      }
-    },
-    "env": {
-      "jest/globals": true
-    },
-    "rules": {
-      "no-underscore-dangle": "off",
-      "import/prefer-default-export": "off",
-      "react/require-default-props": "off",
-      "react/function-component-definition": "off",
-      "@typescript-eslint/no-non-null-assertion": "off"
-    }
+  "lint-staged": {
+    "*": "tsx scripts/nx/nx.lint-staged.ts"
   },
   "prettier": {
-    "singleQuote": true,
-    "trailingComma": "all"
+    "plugins": [
+      "@prettier/plugin-xml",
+      "prettier-plugin-packagejson",
+      "prettier-plugin-sh",
+      "prettier-plugin-solidity",
+      "prettier-plugin-sql",
+      "prettier-plugin-svelte",
+      "prettier-plugin-tailwindcss"
+    ],
+    "trailingComma": "all",
+    "xmlWhitespaceSensitivity": "ignore",
+    "overrides": [
+      {
+        "files": "*.{js,jsx,mjs,cjs,ts,tsx,mts,cts,svelte,vue,md,markdown,mdx,yml,yaml,sql}",
+        "options": {
+          "singleQuote": true
+        }
+      }
+    ]
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^20.5.3",
+    "@commitlint/config-angular": "^20.5.3",
+    "@html-eslint/eslint-plugin": "^0.60.0",
+    "@jest/globals": "^30.3.0",
+    "@nx/devkit": "^22.7.1",
+    "@prettier/plugin-xml": "^3.4.2",
+    "@react-native/jest-preset": "^0.85.3",
+    "@swc-node/register": "^1.11.1",
+    "@swc/core": "^1.15.33",
+    "@swc/jest": "^0.2.39",
+    "@taplo/cli": "^0.7.0",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/chai": "^5.2.3",
+    "@types/jest": "^30.0.0",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^25.6.0",
+    "chai": "^6.2.2",
+    "cross-env": "^10.1.0",
+    "esbuild-register": "^3.6.0",
+    "eslint": "10.3.0",
+    "eslint-config-flat-gitignore": "^2.3.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-import-resolver-typescript": "^4.4.4",
+    "eslint-plugin-chai-friendly": "^1.2.0",
+    "eslint-plugin-import-x": "^4.16.2",
+    "eslint-plugin-jest": "^29.15.2",
+    "eslint-plugin-jsdoc": "^62.9.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-mocha": "^11.2.0",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-svelte": "^3.17.1",
+    "eslint-plugin-vue": "^10.9.0",
+    "globals": "^17.6.0",
+    "husky": "^9.1.7",
+    "jest": "^30.3.0",
+    "lint-staged": "^16.4.0",
+    "mocha": "^11.7.5",
+    "monorepo-mapper": "^1.0.5",
+    "nx": "^22.7.1",
+    "prettier": "3.8.3",
+    "prettier-plugin-packagejson": "^3.0.2",
+    "prettier-plugin-sh": "^0.18.1",
+    "prettier-plugin-solidity": "^2.3.1",
+    "prettier-plugin-sql": "^0.20.0",
+    "prettier-plugin-svelte": "^3.5.1",
+    "prettier-plugin-tailwindcss": "^0.8.0",
+    "shellcheck": "^4.1.0",
+    "solhint": "^6.2.1",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.59.2"
   },
   "pnpm": {
+    "onlyBuiltDependencies": [
+      "@swc/core"
+    ],
     "overrides": {
       "@types/react": "19.2.14",
       "@types/react-dom": "19.2.3",
-      "@types/react-window": "1.8.8",
-      "eslint": "8.57.0",
-      "prettier": "2.8.8",
+      "eslint": "9.39.4",
       "react": "19.2.3",
-      "react-dom": "19.2.3",
-      "react-window": "1.8.11",
-      "vite-tsconfig-paths": "4.3.2"
+      "react-dom": "19.2.3"
     }
   }
 }

@@ -1,18 +1,16 @@
-import React, { useCallback } from 'react';
-import {
-  AutocompleteProps,
-  createFilterOptions,
-} from '@mui/material/Autocomplete';
+import type { AutocompleteProps } from '@mui/material/Autocomplete';
+import { createFilterOptions } from '@mui/material/Autocomplete';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import TextField, { TextFieldProps } from '@mui/material/TextField';
-import {
-  countries,
-  countriesArray,
-  Country,
-} from '@js-modules/common-utils-general';
+import type { TextFieldProps } from '@mui/material/TextField';
+import TextField from '@mui/material/TextField';
 import noop from 'lodash/noop';
-import { FormUtils } from '../hooks/hooksMaterialUi/useFormUtils';
+import type React from 'react';
+import { useCallback } from 'react';
+import type { FormData } from '@js-modules/common-react-utils';
+import type { Country } from '@js-modules/common-utils-general';
+import { countries, countriesArray } from '@js-modules/common-utils-general';
+import type { FormUtilsWeb } from '../hooks/hooksMaterialUi/useFormUtilsWeb';
 import { VirtualizedAutocomplete } from './VirtualizedAutocomplete';
 
 const filterOptions = createFilterOptions({
@@ -47,8 +45,8 @@ export type CountriesAutocompleteProps<
   value: string;
   error?: TextFieldProps['error'];
   helperText?: TextFieldProps['helperText'];
-  onChange?: FormUtils<Record<string, any>>['changeFieldCallback'];
-  onBlur?: FormUtils<Record<string, any>>['blurFieldCallback'];
+  onChange?: FormUtilsWeb<FormData<string>>['changeFieldCallback'];
+  onBlur?: FormUtilsWeb<FormData<string>>['blurFieldCallback'];
   optionProp?: keyof Country;
   dataKey?: string;
 };
@@ -110,7 +108,6 @@ export function CountriesAutocomplete<
       renderInput={(params) => {
         return (
           <TextField
-            // eslint-disable-next-line react/jsx-props-no-spreading
             {...params}
             required={required}
             label={label}

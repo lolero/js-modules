@@ -1,4 +1,4 @@
-import {
+import type {
   Entity,
   Reducer,
   ReducerConfig,
@@ -17,11 +17,10 @@ export const defaultReducerConfig: ReducerConfig = {
  * the function's arguments when 'initialReducerData' is an empty object,
  * therefore it is recommended that consumers declare the function's generic
  * types explicitly in function calls.
- *
- * @param {ReducerMetadata} initialReducerMetadata - Initial reducer metadata
- * @param {ReducerData} initialReducerData - Initial reducer data
- * @param {ReducerConfig} [config] - Custom config params
- * @returns {Reducer} Reducer's initial state
+ * @param initialReducerMetadata - Initial reducer metadata.
+ * @param initialReducerData - Initial reducer data.
+ * @param config - Reducer config.
+ * @returns Reducer's initial state.
  */
 export function createInitialState<
   ReducerMetadataT extends ReducerMetadata,

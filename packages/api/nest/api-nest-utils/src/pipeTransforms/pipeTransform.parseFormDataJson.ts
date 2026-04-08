@@ -1,16 +1,18 @@
-import { BadRequestException, PipeTransform } from '@nestjs/common';
-import { validate } from 'class-validator';
+import type { PipeTransform } from '@nestjs/common';
+import { BadRequestException } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
+import { validate } from 'class-validator';
 import isUndefined from 'lodash/isUndefined';
-import { values } from 'lodash';
+import values from 'lodash/values';
 
+// TODO: delete this utility if not used or needed anywhere
 export class PipeTransformParseFormDataJson implements PipeTransform {
   constructor(
     private readonly isRequired: boolean,
-    private readonly dtoClass?: new () => any,
+    private readonly dtoClass?: new () => Record<string, unknown>,
   ) {}
 
-  async transform(value: any) {
+  async transform(value: unknown) {
     if (isUndefined(value)) {
       if (this.isRequired) {
         throw new BadRequestException('Value is undefined but not optional');
@@ -23,9 +25,9 @@ export class PipeTransformParseFormDataJson implements PipeTransform {
       throw new BadRequestException('Not a string');
     }
 
-    let parsedJsonObject: any;
+    let parsedJsonObject: unknown;
     try {
-      parsedJsonObject = JSON.parse(value);
+      parsedJsonObject = JSON.parse(value) as unknown;
     } catch (error) {
       throw new BadRequestException(error, 'Invalid JSON format');
     }

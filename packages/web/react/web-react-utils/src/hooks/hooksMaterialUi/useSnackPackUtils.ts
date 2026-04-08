@@ -1,5 +1,6 @@
-import { AlertProps } from '@mui/material';
-import React, { useCallback, useEffect, useState } from 'react';
+import type { AlertProps } from '@mui/material';
+import type React from 'react';
+import { useCallback, useState } from 'react';
 
 export type SnackbarMessageMetadata = {
   unixMilliseconds: number;
@@ -23,7 +24,7 @@ export function useSnackPackUtils(autoHideDuration = 5000): SnackPackUtils {
     useState<SnackbarMessageMetadata | null>(null);
   const [isSnackbarOpen, setIsSnackbarOpen] = useState<boolean>(false);
 
-  const closeSnackbarCallback = useCallback((e: any, reason?: string) => {
+  const closeSnackbarCallback = useCallback((_e: unknown, reason?: string) => {
     if (reason === 'clickaway') {
       return;
     }
@@ -34,15 +35,13 @@ export function useSnackPackUtils(autoHideDuration = 5000): SnackPackUtils {
     setSnackbarMessageMetadata(null);
   }, []);
 
-  useEffect(() => {
-    if (snackPack.length && !snackbarMessageMetadata) {
-      setSnackbarMessageMetadata({ ...snackPack[0] });
-      setSnackPack((prev) => prev.slice(1));
-      setIsSnackbarOpen(true);
-    } else if (snackPack.length && snackbarMessageMetadata && isSnackbarOpen) {
-      setIsSnackbarOpen(false);
-    }
-  }, [isSnackbarOpen, snackPack, snackbarMessageMetadata]);
+  if (snackPack.length && !snackbarMessageMetadata) {
+    setSnackbarMessageMetadata({ ...snackPack[0] });
+    setSnackPack((prev) => prev.slice(1));
+    setIsSnackbarOpen(true);
+  } else if (snackPack.length && snackbarMessageMetadata && isSnackbarOpen) {
+    setIsSnackbarOpen(false);
+  }
 
   return {
     autoHideDuration,

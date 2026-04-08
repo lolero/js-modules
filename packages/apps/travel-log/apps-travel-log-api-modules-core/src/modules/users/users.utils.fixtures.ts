@@ -1,10 +1,10 @@
-import { utilGetFindManyDtoFixture } from '@js-modules/api-nest-utils';
 import omit from 'lodash/omit';
-import { UserRepresentation } from '@js-modules/api-nest-keycloak-admin-client-cjs';
-import { UsersFindManyDto } from './dtos/users.findMany.dto';
-import { UsersUpdateOnePartialDto } from './dtos/users.updateOnePartial.dto';
-import { UsersEntity } from './users.entity';
-import { KeycloakUser, UsersEntityType } from './users.types';
+import type { UserRepresentation } from '@js-modules/api-nest-keycloak-admin-client-cjs';
+import { utilGetFindManyDtoFixture } from '@js-modules/api-nest-utils';
+import type { UsersFindManyDto } from './dtos/users.findMany.dto';
+import type { UsersUpdateOnePartialDto } from './dtos/users.updateOnePartial.dto';
+import type { UsersEntity } from './users.entity';
+import type { KeycloakUser, UsersEntityType } from './users.types';
 
 export function getUsersEntityFixture(
   overrides: Partial<UsersEntityType> = {},

@@ -1,6 +1,6 @@
 import { axiosRequest } from '@js-modules/common-utils-general';
 import { destructNodeTransactionPk } from './nodeTransactions.pkUtils';
-import {
+import type {
   NodeTransactionsGetManyServiceResponse,
   NodeTransactionsGetOneServiceResponse,
 } from './nodeTransactions.services.types';

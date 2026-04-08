@@ -1,9 +1,9 @@
-import React from 'react';
+import type React from 'react';
 import { Navigate, Route, Routes, useParams } from 'react-router-dom';
 import {
   WebModulesPrivate,
-  WebSubModulesLogLogEntry,
   WebSubModulesLog,
+  WebSubModulesLogLogEntry,
 } from '@js-modules/apps-travel-log-common-constants';
 import { routesMetadataPrivate } from '@js-modules/apps-travel-log-common-react';
 import { LogLogEntryAddEditWorkspaceBox } from './LogLogEntryAddEditWorkspaceBox';

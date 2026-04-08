@@ -4,15 +4,12 @@ import {
   handleSavePartialEntities,
   handleSaveWholeEntities,
 } from '@js-modules/common-redux-utils-normalized-reducers';
-import { NodeUsersReducer } from './nodeUsers.types';
+import type { NodeUsersReducerHittingAction } from './nodeUsers.actions.types';
+import { NodeUsersActionTypes } from './nodeUsers.actions.types';
 import { nodeUsersInitialState } from './nodeUsers.initialState';
-import {
-  NodeUsersActionTypes,
-  NodeUsersReducerHittingAction,
-} from './nodeUsers.actions.types';
+import type { NodeUsersReducer } from './nodeUsers.types';
 
 export function nodeUsersReducer(
-  // eslint-disable-next-line default-param-last
   state: NodeUsersReducer = nodeUsersInitialState,
   action: NodeUsersReducerHittingAction,
 ): NodeUsersReducer {

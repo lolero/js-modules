@@ -1,8 +1,13 @@
 {
-  "extends": "../../../../tsconfig.json",
-  "compilerOptions": {
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "jsx": "react-jsx"
-  },
-  "include": ["./src", "vite.config.ts"]
+  "extends": [
+    "../../../../tsconfig.json",
+    "../../../../scripts/tsconfig/tsconfig.react.json"
+  ],
+  "compilerOptions": {},
+  "include": ["src", ".storybook/**/*"],
+  "files": [
+    "vite.config.ts",
+    "../../../../scripts/types/css.d.ts",
+    "../../../../scripts/types/svg.d.ts"
+  ]
 }

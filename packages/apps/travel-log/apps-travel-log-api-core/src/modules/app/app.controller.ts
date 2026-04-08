@@ -8,7 +8,6 @@ export class AppController {
   @Get('/hello-world')
   @Public()
   usersHelloWorld() {
-    console.log('Hello world!');
     return 'Hello world!';
   }
 

@@ -1,6 +1,6 @@
 import { base64EncodeBuffer } from './base64EncodeBuffer';
-import { base64EncodeString } from './base64EncodeString';
 import { base64EncodeObject } from './base64EncodeObject';
+import { base64EncodeString } from './base64EncodeString';
 
 /**
  *  Encodes the supplied buffer, string, or object into a base64 string.

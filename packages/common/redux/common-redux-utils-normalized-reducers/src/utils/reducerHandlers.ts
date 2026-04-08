@@ -1,10 +1,4 @@
-import {
-  Entity,
-  Reducer,
-  ReducerMetadata,
-  RequestMetadata,
-} from '../types/reducers.types';
-import {
+import type {
   ClearReducerRequestsAction,
   DeleteEntitiesAction,
   FailAction,
@@ -16,6 +10,12 @@ import {
   SaveWholeEntitiesAction,
   SaveWholeReducerMetadataAction,
 } from '../types/actions.types';
+import type {
+  Entity,
+  Reducer,
+  ReducerMetadata,
+  RequestMetadata,
+} from '../types/reducers.types';
 import {
   duplicateState,
   handleCommonProps,
@@ -23,11 +23,10 @@ import {
 } from './reducerHandlers.utils';
 
 /**
- * Clears a set of the reducer's 'requests'
- *
- * @param {Reducer} state - The current state of the reducer
- * @param {RequestAction} action - Request action
- * @returns {Reducer} Updated reducer state
+ * Clears a set of the reducer's 'requests'.
+ * @param state - The current state of the reducer.
+ * @param action - Request action.
+ * @returns Updated reducer state.
  */
 export function handleClearReducerRequests<
   ActionTypeT extends string,
@@ -46,20 +45,9 @@ export function handleClearReducerRequests<
 }
 
 /**
- * Accessory function that simply calls handleCommonProps and
- * updateCompletedRequestsCache
- *
- * @param {Reducer} newState - A copy of the redux state
- * @param {
- *          | SaveNothingAction
- *          | SaveWholeReducerMetadataAction
- *          | SavePartialReducerMetadataAction
- *          | SaveWholeEntitiesAction
- *          | SavePartialEntitiesAction
- *          | SavePartialPatternToEntitiesAction
- *          | DeleteEntitiesAction
- *          | FailAction
- *        } action - Success or fail action
+ * Calls handleCommonProps and updateCompletedRequestsCache.
+ * @param newState - A copy of the redux state.
+ * @param action - Success or fail action.
  */
 function handleCompletedRequest<
   ActionTypeT extends string,
@@ -82,12 +70,10 @@ function handleCompletedRequest<
 }
 
 /**
- * Updates a reducer's 'requests' prop and sets the 'isPending' property of
- * the request object, corresponding to the action's request id, to true.
- *
- * @param {Reducer} state - The current state of the reducer
- * @param {RequestAction} action - Request action
- * @returns {Reducer} Updated reducer state
+ * Creates pending request.
+ * @param state - The current state of the reducer.
+ * @param action - Request action.
+ * @returns Updated reducer state.
  */
 export function handleRequest<
   ActionTypeT extends string,
@@ -118,13 +104,10 @@ export function handleRequest<
 }
 
 /**
- * Updates nothing in the reducer's 'metadata' nor 'data' props, but updates
- * the 'requests' prop to reflect that the corresponding request
- * has been completed successfully.
- *
- * @param {Reducer} state - The current state of the reducer
- * @param {SaveNothingAction} action - Save nothing success action
- * @returns {Reducer} Updated reducer state
+ * Completes request and leaves reducer's 'metadata' and 'data' unchanged.
+ * @param state - The current state of the reducer.
+ * @param action - Save nothing success action.
+ * @returns Updated reducer state.
  */
 export function handleSaveNothing<
   ActionTypeT extends string,
@@ -141,14 +124,10 @@ export function handleSaveNothing<
 }
 
 /**
- * Updates a reducer's 'metadata' prop,
- * as well as the 'requests' prop to reflect that the corresponding request
- * has been completed successfully.
- *
- * @param {Reducer} state - The current state of the reducer
- * @param {SaveWholeReducerMetadataAction} action - Save whole reducer metadata
- *        success action
- * @returns {Reducer} Updated reducer state
+ * Updates reducer's 'metadata' and completes request.
+ * @param state - The current state of the reducer.
+ * @param action - Save whole reducer metadata success action.
+ * @returns Updated reducer state.
  */
 export function handleSaveWholeReducerMetadata<
   ActionTypeT extends string,
@@ -166,14 +145,10 @@ export function handleSaveWholeReducerMetadata<
 }
 
 /**
- * Updates a subset of properties in a reducer's 'metadata' prop,
- * as well as the 'requests' prop to reflect that the corresponding request
- * has been completed successfully.
- *
- * @param {Reducer} state - The current state of the reducer
- * @param {SavePartialReducerMetadataAction} action - Save partial reducer
- *        metadata success action
- * @returns {Reducer} Updated reducer state
+ * Partially updates reducer's 'metadata' and completes request.
+ * @param state - The current state of the reducer.
+ * @param action - Save partial reducer metadata success action.
+ * @returns Updated reducer state.
  */
 export function handleSavePartialReducerMetadata<
   ActionTypeT extends string,
@@ -190,14 +165,11 @@ export function handleSavePartialReducerMetadata<
 }
 
 /**
- * Updates a reducer's 'data' prop with whole entities' data,
- * the 'metadata' prop with the corresponding partial reducer metadata,
- * and the 'requests' prop to reflect that the corresponding request has been
- * completed successfully.
- *
- * @param {Reducer} state - The current state of the reducer
- * @param {SaveWholeEntitiesAction} action - Save whole entities success action
- * @returns {Reducer} Updated reducer state
+ * Updates reducer's 'data' whole entities, reducer's 'metadata' and
+ * completes request.
+ * @param state - The current state of the reducer.
+ * @param action - Save whole entities success action.
+ * @returns Updated reducer state.
  */
 export function handleSaveWholeEntities<
   ActionTypeT extends string,
@@ -217,16 +189,11 @@ export function handleSaveWholeEntities<
 }
 
 /**
- * Updates a subset of props in a reducer's entities,
- * as well as the 'requests' prop to reflect that the corresponding request
- * has been completed successfully. The '__edges__' prop of the entities is
- * not replaced completely. Instead, only the provided subset of __edges__ is
- * updated.
- *
- * @param {Reducer} state - The current state of the reducer
- * @param {SavePartialEntitiesAction} action - Save partial entity success
- *        action
- * @returns {Reducer} Updated reducer state
+ * Updates reducer's 'data' partial entities (with the entities' '__edges__'
+ * also updated partially), reducer's 'metadata' and completes request.
+ * @param state - The current state of the reducer.
+ * @param action - Save partial entity success action.
+ * @returns Updated reducer state.
  */
 export function handleSavePartialEntities<
   ActionTypeT extends string,
@@ -268,16 +235,12 @@ export function handleSavePartialEntities<
 }
 
 /**
- * Updates one subset of props in many reducers' entities,
- * as well as the 'requests' prop to reflect that the corresponding request
- * has been completed successfully. The '__edges__' prop of the entities is
- * not replaced completely. Instead, only the provided subset of __edges__ is
- * updated.
- *
- * @param {Reducer} state - The current state of the reducer
- * @param {SavePartialEntitiesAction} action - Save partial entity success
- *        action
- * @returns {Reducer} Updated reducer state
+ * Updates reducer's 'data' partial entities (with the entities' '__edges__'
+ * also updated partially) with the same partial entity pattern, reducer's
+ * 'metadata' and completes request.
+ * @param state - The current state of the reducer.
+ * @param action - Save partial entity success action.
+ * @returns Updated reducer state.
  */
 export function handleSavePartialPatternToEntities<
   ActionTypeT extends string,
@@ -323,13 +286,11 @@ export function handleSavePartialPatternToEntities<
 }
 
 /**
- * Deletes a set of a reducer's entities,
- * as well as the 'requests' prop to reflect that the corresponding request
- * has been completed successfully.
- *
- * @param {Reducer} state - The current state of the reducer
- * @param {DeleteEntitiesAction} action - Delete entities success action
- * @returns {Reducer} Updated reducer state
+ * Deletes reducer's 'data' entities, updates reducer's 'metadata' and
+ * completes request.
+ * @param state - The current state of the reducer.
+ * @param action - Delete entities success action.
+ * @returns Updated reducer state.
  */
 export function handleDeleteEntities<
   ActionTypeT extends string,
@@ -347,12 +308,11 @@ export function handleDeleteEntities<
 }
 
 /**
- * Updates a reducer's 'requests' prop to reflect that the corresponding
- * request has failed.
  *
- * @param {Reducer} state - The current state of the reducer
- * @param {FailAction} action - Fail action
- * @returns {Reducer} Updated reducer state
+ * Updates pending request to reflect that it has failed.
+ * @param state - The current state of the reducer.
+ * @param action - Fail action.
+ * @returns Updated reducer state.
  */
 export function handleFail<
   ActionTypeT extends string,

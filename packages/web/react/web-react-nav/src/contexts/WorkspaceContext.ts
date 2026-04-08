@@ -1,5 +1,4 @@
-import React from 'react';
-import { Theme } from '@mui/material/styles';
+import { createContext } from 'react';
 
 export enum ScrollDirection {
   down = 'down',
@@ -11,14 +10,14 @@ export type WorkspaceContextValue = {
   navLeftDrawerWidth: number;
   navRightDrawerWidth: number;
   workspaceTopToolbarHeight: number;
-  workspaceMarginLeft: string | ((theme: Theme) => string);
-  workspaceMarginRight: string | ((theme: Theme) => string);
+  workspaceMarginLeft: string | number;
+  workspaceMarginRight: string | number;
   isWorkspaceScroll: boolean;
   workspaceScrollTop: number;
   workspaceScrollDirection?: ScrollDirection;
 };
 
-export const WorkspaceContext = React.createContext<WorkspaceContextValue>({
+export const WorkspaceContext = createContext<WorkspaceContextValue>({
   navTopToolbarHeight: 0,
   navLeftDrawerWidth: 0,
   navRightDrawerWidth: 0,

@@ -19,4 +19,4 @@ async function bootstrap() {
     API_CORE_SERVER__IP__TRAVEL_LOG,
   );
 }
-bootstrap();
+void bootstrap();

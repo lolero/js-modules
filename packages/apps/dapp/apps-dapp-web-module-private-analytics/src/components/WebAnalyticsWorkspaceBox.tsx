@@ -1,6 +1,6 @@
-import React from 'react';
-import { DappWorkspaceBox } from '@js-modules/apps-dapp-web-utils';
+import type React from 'react';
 import { WebModulesPrivate } from '@js-modules/apps-dapp-common-constants';
+import { DappWorkspaceBox } from '@js-modules/apps-dapp-web-utils';
 import { WebAnalyticsWorkspaceContentBox } from './WebAnalyticsWorkspaceContentBox';
 import { WebAnalyticsWorkspaceTopToolbar } from './WebAnalyticsWorkspaceTopToolbar';
 

@@ -1,12 +1,12 @@
-import {
+import type { UsersUpdateOnePartialDto } from '@js-modules/apps-travel-log-api-modules-core/src/modules/users/dtos/users.updateOnePartial.dto';
+import type {
   FailAction,
   RequestAction,
   SaveNothingAction,
   SavePartialReducerMetadataAction,
   UpdatePartialReducerMetadataRequestMetadata,
 } from '@js-modules/common-redux-utils-normalized-reducers';
-import { UsersUpdateOnePartialDto } from '@js-modules/apps-travel-log-api-modules-core/src/modules/users/dtos/users.updateOnePartial.dto';
-import { StateSettingsReducer } from './stateSettings.types';
+import type { StateSettingsReducer } from './stateSettings.types';
 
 export enum StateSettingsActionTypes {
   STATE_SETTINGS__UPDATE_PARTIAL_REDUCER_METADATA__REQUEST = 'STATE_SETTINGS__UPDATE_PARTIAL_REDUCER_METADATA__REQUEST',

@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react';
 import { NavContextProvider } from '@js-modules/web-react-nav';
 import { DappBrowserRouter } from './DappBrowserRouter';
 

@@ -1,6 +1,6 @@
-import { UsersPublicDto } from '@js-modules/apps-travel-log-api-modules-core/src/modules/users/dtos/users.public.dto';
-import { NodeUser, NodeUsersReducer } from './nodeUsers.types';
+import type { UsersPublicDto } from '@js-modules/apps-travel-log-api-modules-core/src/modules/users/dtos/users.public.dto';
 import { getPkOfNodeUser } from './nodeUsers.pkUtils';
+import type { NodeUser, NodeUsersReducer } from './nodeUsers.types';
 
 export function normalizeUsersPublicDtoArray(
   usersPublicDtoArray: UsersPublicDto[],

@@ -1,33 +1,33 @@
 {
-  "private": true,
   "name": "@js-modules/apps-dapp-common-store-redux",
-  "description": "Apps Dapp Common Stores Redux",
   "version": "0.0.0",
+  "private": true,
+  "description": "Apps Dapp Common Stores Redux",
   "license": "MIT",
   "main": "build/index",
   "react-native": "src/index.ts",
   "files": [
     "build"
   ],
-  "scripts": {
-    "build": "tsc -b tsconfig.build.json"
-  },
+  "scripts": {},
   "dependencies": {
     "@js-modules/common-redux-utils-normalized-reducers": "workspace:^",
     "@js-modules/common-utils-general": "workspace:^",
     "@metamask/detect-provider": "^2.0.0",
     "@metamask/providers": "^22.1.1",
     "@types/lodash": "^4.17.24",
+    "@types/react": "19.2.14",
     "@types/uuid": "^11.0.0",
-    "axios": "^1.13.6",
+    "axios": "^1.16.0",
     "ethers": "^6.16.0",
-    "lodash": "^4.17.23",
-    "react": "19.2.4",
+    "lodash": "^4.18.1",
+    "react": "19.2.5",
     "react-redux": "^9.2.0",
     "redux": "^5.0.1",
     "redux-devtools-extension": "^2.13.9",
     "redux-saga": "^1.4.2",
     "reselect": "^5.1.1",
-    "uuid": "^13.0.0"
+    "typed-redux-saga": "^1.5.0",
+    "uuid": "^14.0.0"
   }
 }

@@ -1,31 +1,34 @@
-import {
-  testInitialReducerMetadata,
-  TestEntity,
-  testEntity1,
-  testEntity2,
-  testPkSchema,
-  TestReducer,
-  testEntity3,
-  TestRequestMetadata,
-  getPkOfTestEntity,
-  testReducerPath,
-} from './spec.utils';
+import { beforeEach, describe, expect, it } from '@jest/globals';
+import type {
+  DeleteEntitiesAction,
+  FailAction,
+  RequestAction,
+  SavePartialEntitiesAction,
+  SavePartialPatternToEntitiesAction,
+  SavePartialReducerMetadataAction,
+  SaveWholeEntitiesAction,
+} from '../types/actions.types';
 import { createInitialState, defaultReducerConfig } from './initialState.utils';
+import { getPkOfEntity } from './pk.utils';
 import {
   duplicateState,
   handleCommonProps,
   updateCompletedRequestsCache,
 } from './reducerHandlers.utils';
+import type {
+  TestEntity,
+  TestReducer,
+  TestRequestMetadata,
+} from './spec.utils';
 import {
-  SavePartialReducerMetadataAction,
-  SaveWholeEntitiesAction,
-  SavePartialEntitiesAction,
-  SavePartialPatternToEntitiesAction,
-  DeleteEntitiesAction,
-  FailAction,
-  RequestAction,
-} from '../types/actions.types';
-import { getPkOfEntity } from './pk.utils';
+  getPkOfTestEntity,
+  testEntity1,
+  testEntity2,
+  testEntity3,
+  testInitialReducerMetadata,
+  testPkSchema,
+  testReducerPath,
+} from './spec.utils';
 
 describe('reducerHandlers.utils', () => {
   let state: TestReducer;
@@ -564,8 +567,8 @@ describe('reducerHandlers.utils', () => {
         statusCode: 500,
       };
 
-      state.requests[testFailAction.requestId as string] = {
-        id: testFailAction.requestId as string,
+      state.requests[testFailAction.requestId] = {
+        id: testFailAction.requestId,
         createdAt: {
           unixMilliseconds: createdDate.valueOf(),
         },
@@ -578,8 +581,8 @@ describe('reducerHandlers.utils', () => {
       expect(state).toEqual(
         expect.objectContaining({
           requests: {
-            [testFailAction.requestId as string]: {
-              id: testFailAction.requestId as string,
+            [testFailAction.requestId]: {
+              id: testFailAction.requestId,
               createdAt: {
                 unixMilliseconds: createdDate.valueOf(),
               },
@@ -608,8 +611,8 @@ describe('reducerHandlers.utils', () => {
           statusCode: 500,
         };
 
-        state.requests[testFailAction.requestId as string] = {
-          id: testFailAction.requestId as string,
+        state.requests[testFailAction.requestId] = {
+          id: testFailAction.requestId,
           createdAt: {
             unixMilliseconds: createdDate.valueOf(),
           },
@@ -629,9 +632,8 @@ describe('reducerHandlers.utils', () => {
 
         handleCommonProps(state, testFailAction);
 
-        const requestCompletedAt = state.requests[
-          testFailAction.requestId as string
-        ].completedAt as {
+        const requestCompletedAt = state.requests[testFailAction.requestId]
+          .completedAt as {
           unixMilliseconds: number;
           formattedString?: string;
         };

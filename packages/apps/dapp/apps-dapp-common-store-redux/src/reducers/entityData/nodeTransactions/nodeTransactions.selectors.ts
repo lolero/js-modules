@@ -1,10 +1,10 @@
 import { createReducerSelectors } from '@js-modules/common-redux-utils-normalized-reducers';
-import {
+import type { ReduxState } from '../../reducers.types';
+import { nodeTransactionsReducerPath } from './nodeTransactions.reducerPath';
+import type {
   NodeTransaction,
   NodeTransactionsReducer,
 } from './nodeTransactions.types';
-import { ReduxState } from '../../reducers.types';
-import { nodeTransactionsReducerPath } from './nodeTransactions.reducerPath';
 
 export const nodeTransactionsSelectors = createReducerSelectors<
   NodeTransactionsReducer['metadata'],

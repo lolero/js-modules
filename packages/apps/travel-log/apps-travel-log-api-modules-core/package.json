@@ -1,43 +1,34 @@
 {
-  "private": true,
   "name": "@js-modules/apps-travel-log-api-modules-core",
-  "description": "Apps Travel Log Api Modules Core",
   "version": "0.0.0",
+  "private": true,
+  "description": "Apps Travel Log Api Modules Core",
   "license": "MIT",
   "main": "build/index",
   "files": [
     "build"
   ],
-  "scripts": {
-    "build": "tsc -b tsconfig.build.json"
-  },
+  "scripts": {},
   "dependencies": {
     "@js-modules/api-nest-keycloak-admin-client-cjs": "workspace:^",
     "@js-modules/api-nest-module-auth-keycloak": "workspace:^",
     "@js-modules/api-nest-utils": "workspace:^",
     "@js-modules/apps-travel-log-common-constants-cjs": "workspace:^",
-    "@nestjs/common": "^11.1.17",
-    "@nestjs/config": "^4.0.3",
-    "@nestjs/swagger": "^11.2.6",
-    "@nestjs/testing": "^11.1.17",
-    "@nestjs/typeorm": "^11.0.0",
+    "@nestjs/common": "^11.1.19",
+    "@nestjs/config": "^4.0.4",
+    "@nestjs/swagger": "^11.4.2",
+    "@nestjs/testing": "^11.1.19",
+    "@nestjs/typeorm": "^11.0.1",
     "@types/express": "^5.0.6",
     "@types/lodash": "^4.17.24",
     "@types/supertest": "^7.2.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.15.1",
     "express": "^5.2.1",
-    "keycloak-js": "26.2.3",
-    "lodash": "^4.17.23",
+    "keycloak-js": "26.2.4",
+    "lodash": "^4.18.1",
     "nest-keycloak-connect": "^1.10.1",
     "reflect-metadata": "^0.2.2",
     "typeorm": "^0.3.28"
-  },
-  "eslintConfig": {
-    "rules": {
-      "class-methods-use-this": "off",
-      "no-useless-constructor": "off",
-      "no-param-reassign": "off"
-    }
   }
 }

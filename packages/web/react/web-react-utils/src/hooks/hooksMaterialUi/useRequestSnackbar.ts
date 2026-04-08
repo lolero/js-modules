@@ -1,11 +1,12 @@
-import {
+import type React from 'react';
+import { useEffect } from 'react';
+import { usePrevious } from '@js-modules/common-react-utils';
+import type {
   ReducerMetadata,
   Request,
   RequestMetadata,
 } from '@js-modules/common-redux-utils-normalized-reducers';
-import React, { useEffect } from 'react';
-import { usePrevious } from '@js-modules/common-react-utils';
-import { SnackbarMessageMetadata } from './useSnackPackUtils';
+import type { SnackbarMessageMetadata } from './useSnackPackUtils';
 
 export type SnackbarMessage = { success: string; error: string };
 

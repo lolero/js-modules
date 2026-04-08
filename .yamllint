@@ -1,0 +1,42 @@
+# Formatting (indentation, spacing, blank lines, comment alignment, line
+# wrapping, final newline) is owned by prettier for YAML. yamllint focuses on
+# semantic rules prettier can't express: quote convention, truthy values,
+# duplicate keys, etc.
+
+extends: default
+
+ignore-from-file:
+  - .gitignore
+  - scripts/nx/nx.lint-ignore
+
+rules:
+  # Owned by prettier — disable to avoid double-enforcement.
+  braces: disable
+  brackets: disable
+  colons: disable
+  commas: disable
+  comments: disable
+  comments-indentation: disable
+  empty-lines: disable
+  empty-values: disable
+  hyphens: disable
+  indentation: disable
+  line-length: disable
+  new-line-at-end-of-file: disable
+  new-lines: disable
+  trailing-spaces: disable
+
+  # docker-compose and most app yaml files skip the `---` marker.
+  document-start: disable
+
+  # Enforce "only-when-needed" quoting — quotes only appear where YAML parsing
+  # would otherwise change the value's meaning.
+  # https://yamllint.readthedocs.io/en/stable/rules.html#module-yamllint.rules.quoted_strings
+  quoted-strings:
+    required: only-when-needed
+    quote-type: single
+
+  # Only true/false should be interpretable as booleans; reject yes/no/on/off.
+  truthy:
+    allowed-values: ['true', 'false']
+    check-keys: false

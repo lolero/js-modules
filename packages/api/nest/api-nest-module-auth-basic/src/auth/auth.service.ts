@@ -1,16 +1,16 @@
+import { randomBytes } from 'crypto';
 import {
   BadRequestException,
   Inject,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { randomBytes } from 'crypto';
 import { AUTH_USERS_SERVICE } from '@js-modules/api-nest-utils';
-import type { AuthUsersEntity, AuthUsersService } from './auth.types';
-import { AuthDtoSignup } from './auth.dto.signup';
 import { AuthDtoSignin } from './auth.dto.signin';
-import { authUtilValidatePassword } from './auth.util.validatePassword';
+import { AuthDtoSignup } from './auth.dto.signup';
+import type { AuthUsersEntity, AuthUsersService } from './auth.types';
 import { authUtilScrypt } from './auth.util.scrypt';
+import { authUtilValidatePassword } from './auth.util.validatePassword';
 
 @Injectable()
 export class AuthService {

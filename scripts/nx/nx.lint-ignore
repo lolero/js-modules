@@ -1,0 +1,6 @@
+# Shared ignore list for the nx lint targets
+# Neither tool discovers this file by default, so IDE format-on-save and
+# ad-hoc CLI runs do NOT respect these entries.
+package-lock.json
+pnpm-lock.yaml
+toml.schema-*

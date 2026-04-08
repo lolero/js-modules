@@ -5,8 +5,8 @@ source ../../../apps-travel-log-api-core/.env.dev
 
 # Download third-party providers before starting services
 if [[ "$1" == "up" ]]; then
-    echo "Downloading third-party providers..."
-    cd ../../service-images/auth-service && ./download-providers.sh && cd -
+  echo "Downloading third-party providers..."
+  cd ../../service-images/auth-service && ./download-providers.sh && cd - || exit
 fi
 
 docker compose -f docker-compose.dev.yml "$@"

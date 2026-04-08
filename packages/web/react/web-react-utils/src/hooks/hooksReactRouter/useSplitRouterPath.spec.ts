@@ -1,12 +1,14 @@
+import { describe, expect, it, jest as jestGlobals } from '@jest/globals';
 import { useLocation } from 'react-router-dom';
 import { useSplitRouterPath } from './useSplitRouterPath';
 
 jest.mock('react-router-dom');
 
 describe('useSplitRouterPath', () => {
-  const useLocationMock = jest.mocked<() => { pathname: string }>(useLocation);
+  const useLocationMock =
+    jestGlobals.mocked<() => { pathname: string }>(useLocation);
 
-  it('Should split empty router path', async () => {
+  it('Should split empty router path', () => {
     useLocationMock.mockReturnValue({
       pathname: 'localhost:8000',
     });
@@ -16,7 +18,7 @@ describe('useSplitRouterPath', () => {
     expect(splitRouterPath).toHaveLength(0);
   });
 
-  it('Should split empty router path with query params', async () => {
+  it('Should split empty router path with query params', () => {
     useLocationMock.mockReturnValue({
       pathname: 'localhost:8000?queryParam1=test1&queryParam2=test2',
     });
@@ -26,7 +28,7 @@ describe('useSplitRouterPath', () => {
     expect(splitRouterPath).toHaveLength(0);
   });
 
-  it('Should split router path', async () => {
+  it('Should split router path', () => {
     useLocationMock.mockReturnValue({
       pathname:
         'localhost:8000/pathSection1/pathSection2/pathSection3/pathSection4?queryParam1=test1&queryParam2=test2',

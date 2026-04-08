@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { AUTH_USERS_SERVICE } from '@js-modules/api-nest-utils';
-import type { AuthUsersService } from './auth.types';
+import type { AuthRequest, AuthUsersService } from './auth.types';
 
 @Injectable()
 export class AuthInterceptorCurrentUser implements NestInterceptor {
@@ -20,7 +20,7 @@ export class AuthInterceptorCurrentUser implements NestInterceptor {
     context: ExecutionContext,
     next: CallHandler<never>,
   ): Promise<Observable<never>> {
-    const request = context.switchToHttp().getRequest();
+    const request = context.switchToHttp().getRequest<AuthRequest>();
     const { userId } = request.session || {};
 
     if (userId) {

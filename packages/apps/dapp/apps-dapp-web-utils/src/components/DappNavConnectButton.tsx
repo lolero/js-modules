@@ -1,12 +1,13 @@
-import React, { useCallback } from 'react';
+import { faCircleNotch } from '@fortawesome/free-solid-svg-icons/faCircleNotch';
+import { faLink } from '@fortawesome/free-solid-svg-icons/faLink';
 import Button, { buttonClasses } from '@mui/material/Button';
+import type React from 'react';
+import { useCallback } from 'react';
 import {
   useStateWeb3WalletConnect,
   WalletType,
 } from '@js-modules/apps-dapp-common-store-redux';
 import { MuiFaIcon } from '@js-modules/web-react-utils';
-import { faCircleNotch } from '@fortawesome/free-solid-svg-icons/faCircleNotch';
-import { faLink } from '@fortawesome/free-solid-svg-icons/faLink';
 
 export const DappNavConnectButton: React.FC = () => {
   const {

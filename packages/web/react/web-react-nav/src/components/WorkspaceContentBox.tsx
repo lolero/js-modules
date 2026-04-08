@@ -1,13 +1,15 @@
-import React, { useCallback, useContext, useRef } from 'react';
-import Box, { BoxProps } from '@mui/material/Box';
-import IconButton from '@mui/material/IconButton';
 import { faAngleUp } from '@fortawesome/free-solid-svg-icons/faAngleUp';
+import type { BoxProps } from '@mui/material/Box';
+import Box from '@mui/material/Box';
+import IconButton from '@mui/material/IconButton';
+import type React from 'react';
+import { useCallback, useContext, useRef } from 'react';
 import { MuiFaIcon } from '@js-modules/web-react-utils';
+import { NavContext, NavDrawerDisplayStatus } from '../contexts/NavContext';
 import {
-  WorkspaceContext,
   ScrollDirection,
+  WorkspaceContext,
 } from '../contexts/WorkspaceContext';
-import { NavDrawerDisplayStatus, NavContext } from '../contexts/NavContext';
 import { useNavDisplayMetadata } from '../hooks/useNavDisplayMetadata';
 
 export const CSS_CLASSNAME__WORKSPACE_CONTENT_BOX = 'workspace-content-box';

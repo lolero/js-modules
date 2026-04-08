@@ -1,23 +1,22 @@
 {
   "name": "@js-modules/native-react-utils",
-  "description": "Native React Utils",
   "version": "0.0.0",
+  "private": true,
+  "description": "Native React Utils",
   "license": "MIT",
   "main": "build/index",
   "react-native": "src/index.ts",
   "files": [
     "build"
   ],
-  "scripts": {
-    "build": "tsc -b tsconfig.build.json"
-  },
+  "scripts": {},
   "dependencies": {
     "@fortawesome/fontawesome-common-types": "^7.2.0",
-    "@react-native-vector-icons/fontawesome6": "^12.3.3",
+    "@react-native-vector-icons/fontawesome6": "^13.1.1",
     "@types/lodash": "^4.17.24",
-    "@types/react": "^19.2.14",
-    "lodash": "^4.17.23",
-    "react": "19.2.4",
-    "react-native-paper": "^5.15.0"
+    "@types/react": "19.2.14",
+    "lodash": "^4.18.1",
+    "react": "19.2.5",
+    "react-native-paper": "^5.15.1"
   }
 }

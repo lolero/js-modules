@@ -1,13 +1,13 @@
-import { axiosRequest } from '@js-modules/common-utils-general';
 import {
   API_CORE__URI__TRAVEL_LOG,
   ApiControllersTravelLog,
 } from '@js-modules/apps-travel-log-common-constants';
-import {
+import { axiosRequest } from '@js-modules/common-utils-general';
+import type { NodeUsersGetOneRequestAction } from './nodeUsers.actions.types';
+import type {
   NodeUsersGetManyServiceResponse,
   NodeUsersGetOneServiceResponse,
 } from './nodeUsers.services.types';
-import { NodeUsersGetOneRequestAction } from './nodeUsers.actions.types';
 
 export async function nodeUsersGetOneService(
   uniqueKeyValue: NodeUsersGetOneRequestAction['requestMetadata']['uniqueKeyValue'],

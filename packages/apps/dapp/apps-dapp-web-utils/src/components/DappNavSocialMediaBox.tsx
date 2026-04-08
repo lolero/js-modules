@@ -1,18 +1,18 @@
-import React from 'react';
-import Box from '@mui/material/Box';
-import IconButton from '@mui/material/IconButton';
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import MuiLink from '@mui/material/Link';
-import { MuiFaIcon } from '@js-modules/web-react-utils';
+import type { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faDiscord } from '@fortawesome/free-brands-svg-icons/faDiscord';
-import { faInstagram } from '@fortawesome/free-brands-svg-icons/faInstagram';
 import { faFacebook } from '@fortawesome/free-brands-svg-icons/faFacebook';
 import { faGithub } from '@fortawesome/free-brands-svg-icons/faGithub';
-import { faTwitter } from '@fortawesome/free-brands-svg-icons/faTwitter';
+import { faInstagram } from '@fortawesome/free-brands-svg-icons/faInstagram';
 import { faMedium } from '@fortawesome/free-brands-svg-icons/faMedium';
 import { faTelegram } from '@fortawesome/free-brands-svg-icons/faTelegram';
-import { useNavDisplayMetadata } from '@js-modules/web-react-nav';
+import { faTwitter } from '@fortawesome/free-brands-svg-icons/faTwitter';
+import Box from '@mui/material/Box';
+import IconButton from '@mui/material/IconButton';
+import MuiLink from '@mui/material/Link';
 import entries from 'lodash/entries';
+import type React from 'react';
+import { useNavDisplayMetadata } from '@js-modules/web-react-nav';
+import { MuiFaIcon } from '@js-modules/web-react-utils';
 
 export const socialMediaMetadata: Record<
   string,

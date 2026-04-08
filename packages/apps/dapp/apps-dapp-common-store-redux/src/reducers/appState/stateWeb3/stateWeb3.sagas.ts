@@ -1,26 +1,17 @@
+import detectEthereumProvider from '@metamask/detect-provider';
+import type { MetaMaskInpageProvider } from '@metamask/providers';
+import { BrowserProvider } from 'ethers';
+import type { SagaGenerator } from 'typed-redux-saga';
 import {
   all,
-  AllEffect,
-  ChannelTakeEffect,
+  call,
   fork,
-  ForkEffect,
   put,
-  PutEffect,
   select,
-  SelectEffect,
   take,
   takeEvery,
   takeLatest,
-} from 'redux-saga/effects';
-import { BrowserProvider, Network } from 'ethers';
-import detectEthereumProvider from '@metamask/detect-provider';
-import { MetaMaskInpageProvider } from '@metamask/providers';
-import { Maybe } from '@metamask/providers/dist/utils';
-import {
-  StateWeb3ActionTypes,
-  StateWeb3UpdatePartialReducerMetadataRequestAction,
-  StateWeb3WalletConnectRequestAction,
-} from './stateWeb3.actions.types';
+} from 'typed-redux-saga';
 import {
   createStateWeb3UpdatePartialReducerMetadataFailAction,
   createStateWeb3UpdatePartialReducerMetadataSuccessAction,
@@ -28,25 +19,23 @@ import {
   createStateWeb3WalletConnectSuccessAction,
   createStateWeb3WalletDisconnectSuccessAction,
 } from './stateWeb3.actions.creators';
+import type {
+  StateWeb3UpdatePartialReducerMetadataRequestAction,
+  StateWeb3WalletConnectRequestAction,
+} from './stateWeb3.actions.types';
+import { StateWeb3ActionTypes } from './stateWeb3.actions.types';
 import {
   createNetworkConnectionMetadataChannel,
   createWalletAccountChannel,
-  NetworkConnectionMetadata,
 } from './stateWeb3.sagas.utils';
-import { StateWeb3Reducer, WalletType } from './stateWeb3.types';
 import { selectStateWeb3Metadata } from './stateWeb3.selectors';
+import type { StateWeb3Reducer } from './stateWeb3.types';
+import { WalletType } from './stateWeb3.types';
 
-export function* stateWeb3NetworkConnectionSaga(): Generator<
-  | SelectEffect
-  | ChannelTakeEffect<NetworkConnectionMetadata>
-  | Promise<Network>
-  | PutEffect,
-  void,
-  StateWeb3Reducer['metadata'] | NetworkConnectionMetadata | Network
-> {
-  const { metamaskProvider, web3Provider } = (yield select(
+export function* stateWeb3NetworkConnectionSaga(): SagaGenerator<void> {
+  const { metamaskProvider, web3Provider } = yield* select(
     selectStateWeb3Metadata,
-  )) as StateWeb3Reducer['metadata'];
+  );
 
   if (!metamaskProvider || !web3Provider) {
     return;
@@ -56,13 +45,13 @@ export function* stateWeb3NetworkConnectionSaga(): Generator<
     createNetworkConnectionMetadataChannel(metamaskProvider);
 
   while (true) {
-    const networkConnectionMetadata = (yield take(
+    const networkConnectionMetadata = yield* take(
       networkConnectionMetadataChannel,
-    )) as NetworkConnectionMetadata;
+    );
 
-    const network = (yield web3Provider.getNetwork()) as Network;
+    const network = yield* call([web3Provider, web3Provider.getNetwork]);
 
-    yield put(
+    yield* put(
       createStateWeb3UpdatePartialReducerMetadataSuccessAction(
         {
           network: {
@@ -76,14 +65,8 @@ export function* stateWeb3NetworkConnectionSaga(): Generator<
   }
 }
 
-export function* stateWeb3WalletConnectionSaga(): Generator<
-  SelectEffect | ChannelTakeEffect<string> | PutEffect,
-  void,
-  StateWeb3Reducer['metadata'] | string
-> {
-  const { metamaskProvider } = (yield select(
-    selectStateWeb3Metadata,
-  )) as StateWeb3Reducer['metadata'];
+export function* stateWeb3WalletConnectionSaga(): SagaGenerator<void> {
+  const { metamaskProvider } = yield* select(selectStateWeb3Metadata);
 
   if (!metamaskProvider) {
     return;
@@ -92,29 +75,24 @@ export function* stateWeb3WalletConnectionSaga(): Generator<
   const walletAccountChannel = createWalletAccountChannel(metamaskProvider);
 
   while (true) {
-    const walletAccount = (yield take(walletAccountChannel)) as string;
+    const walletAccount = yield* take(walletAccountChannel);
 
     if (!walletAccount) {
-      yield put(createStateWeb3WalletDisconnectSuccessAction(''));
+      yield* put(createStateWeb3WalletDisconnectSuccessAction(''));
     }
   }
 }
 
-export function* stateWeb3InitSaga(): Generator<
-  | Promise<unknown>
-  | ChannelTakeEffect<MetaMaskInpageProvider>
-  | Promise<Network>
-  | PutEffect
-  | AllEffect<ForkEffect>,
-  void,
-  MetaMaskInpageProvider | Network
-> {
-  const metamaskProvider = (yield detectEthereumProvider({
-    mustBeMetaMask: true,
-  })) as MetaMaskInpageProvider | null;
+export function* stateWeb3InitSaga(): SagaGenerator<void> {
+  const metamaskProvider = yield* call(
+    detectEthereumProvider<MetaMaskInpageProvider>,
+    {
+      mustBeMetaMask: true,
+    },
+  );
 
   if (!metamaskProvider) {
-    yield put(
+    yield* put(
       createStateWeb3UpdatePartialReducerMetadataSuccessAction(
         {
           metamaskProvider: null,
@@ -126,7 +104,7 @@ export function* stateWeb3InitSaga(): Generator<
   }
 
   const web3Provider = new BrowserProvider(metamaskProvider);
-  const network = (yield web3Provider.getNetwork()) as Network;
+  const network = yield* call([web3Provider, web3Provider.getNetwork]);
 
   const partialStateWeb3ReducerMetadata: Partial<StateWeb3Reducer['metadata']> =
     {
@@ -145,14 +123,15 @@ export function* stateWeb3InitSaga(): Generator<
     };
   }
 
-  yield put(
+  yield* put(
     createStateWeb3UpdatePartialReducerMetadataSuccessAction(
       partialStateWeb3ReducerMetadata,
+
       '',
     ),
   );
 
-  yield all([
+  yield* all([
     fork(stateWeb3NetworkConnectionSaga),
     fork(stateWeb3WalletConnectionSaga),
   ]);
@@ -161,29 +140,21 @@ export function* stateWeb3InitSaga(): Generator<
 export function* stateWeb3UpdatePartialReducerMetadataSaga({
   requestMetadata,
   requestId,
-}: StateWeb3UpdatePartialReducerMetadataRequestAction): Generator<
-  PutEffect,
-  void,
-  void
-> {
+}: StateWeb3UpdatePartialReducerMetadataRequestAction): SagaGenerator<void> {
   try {
     const { partialReducerMetadata } = requestMetadata;
 
-    yield put(
+    yield* put(
       createStateWeb3UpdatePartialReducerMetadataSuccessAction(
         partialReducerMetadata,
         requestId,
       ),
     );
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (err: any) {
-    // eslint-disable-next-line no-console
-    console.error(err.message);
-    yield put(
-      createStateWeb3UpdatePartialReducerMetadataFailAction(
-        err.message,
-        requestId,
-      ),
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    console.error(message);
+    yield* put(
+      createStateWeb3UpdatePartialReducerMetadataFailAction(message, requestId),
     );
   }
 }
@@ -191,15 +162,9 @@ export function* stateWeb3UpdatePartialReducerMetadataSaga({
 export function* stateWeb3WalletConnectSaga({
   requestMetadata,
   requestId,
-}: StateWeb3WalletConnectRequestAction): Generator<
-  SelectEffect | Promise<Maybe<unknown>> | PutEffect,
-  void,
-  StateWeb3Reducer['metadata'] | string[]
-> {
+}: StateWeb3WalletConnectRequestAction): SagaGenerator<void> {
   try {
-    const { metamaskProvider } = (yield select(
-      selectStateWeb3Metadata,
-    )) as StateWeb3Reducer['metadata'];
+    const { metamaskProvider } = yield* select(selectStateWeb3Metadata);
 
     if (!metamaskProvider) {
       throw new Error('Metamask is not installed');
@@ -207,11 +172,12 @@ export function* stateWeb3WalletConnectSaga({
 
     const { walletType } = requestMetadata;
 
-    const accounts = (yield metamaskProvider.request({
-      method: 'eth_requestAccounts',
-    })) as string[];
+    const accounts = (yield* call(
+      [metamaskProvider, metamaskProvider.request],
+      { method: 'eth_requestAccounts' },
+    )) as string[];
 
-    yield put(
+    yield* put(
       createStateWeb3WalletConnectSuccessAction(
         {
           wallet: {
@@ -222,22 +188,23 @@ export function* stateWeb3WalletConnectSaga({
         requestId,
       ),
     );
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (err: any) {
-    // eslint-disable-next-line no-console
-    console.error(err.message);
-    yield put(createStateWeb3WalletConnectFailAction(err.message, requestId));
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    console.error(message);
+    yield* put(createStateWeb3WalletConnectFailAction(message, requestId));
   }
 }
 
-export function* stateWeb3Sagas(): Generator<ForkEffect, void, void> {
-  yield fork(stateWeb3InitSaga);
-  yield takeEvery(
-    StateWeb3ActionTypes.STATE_WEB3__UPDATE_PARTIAL_REDUCER_METADATA__REQUEST,
-    stateWeb3UpdatePartialReducerMetadataSaga,
-  );
-  yield takeLatest(
-    StateWeb3ActionTypes.STATE_WEB3__WALLET_CONNECT__REQUEST,
-    stateWeb3WalletConnectSaga,
-  );
+export function* stateWeb3Sagas(): SagaGenerator<void> {
+  yield* all([
+    fork(stateWeb3InitSaga),
+    takeEvery(
+      StateWeb3ActionTypes.STATE_WEB3__UPDATE_PARTIAL_REDUCER_METADATA__REQUEST,
+      stateWeb3UpdatePartialReducerMetadataSaga,
+    ),
+    takeLatest(
+      StateWeb3ActionTypes.STATE_WEB3__WALLET_CONNECT__REQUEST,
+      stateWeb3WalletConnectSaga,
+    ),
+  ]);
 }

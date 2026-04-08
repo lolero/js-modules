@@ -1,9 +1,9 @@
-import { RoutesMetadata } from '@js-modules/common-react-nav';
-import { WebModulesPublic } from '@js-modules/apps-travel-log-common-constants';
+import type { IconDefinition } from '@fortawesome/fontawesome-common-types';
+import { faHandsHoldingCircle } from '@fortawesome/free-solid-svg-icons/faHandsHoldingCircle';
 import { faHouse } from '@fortawesome/free-solid-svg-icons/faHouse';
 import upperFirst from 'lodash/upperFirst';
-import { faHandsHoldingCircle } from '@fortawesome/free-solid-svg-icons/faHandsHoldingCircle';
-import { IconDefinition } from '@fortawesome/fontawesome-common-types';
+import { WebModulesPublic } from '@js-modules/apps-dapp-common-constants';
+import type { RoutesMetadata } from '@js-modules/common-react-nav';
 
 export const routesMetadataPublic: RoutesMetadata<IconDefinition> = {
   [WebModulesPublic.home]: {

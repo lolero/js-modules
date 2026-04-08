@@ -1,6 +1,6 @@
-export type RoutesMetadata<IconT = any> = Record<string, RouteMetadata<IconT>>;
+export type RoutesMetadata<IconT> = Record<string, RouteMetadata<IconT>>;
 
-export type RouteMetadata<IconT = any> = {
+export type RouteMetadata<IconT> = {
   path: string;
   icon: IconT;
   label: string;

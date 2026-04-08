@@ -1,6 +1,27 @@
-import { RoutesMetadata } from '@js-modules/common-react-nav';
-import upperFirst from 'lodash/upperFirst';
+import type { IconDefinition } from '@fortawesome/fontawesome-common-types';
+import { faAddressCard } from '@fortawesome/free-solid-svg-icons/faAddressCard';
+import { faClipboard } from '@fortawesome/free-solid-svg-icons/faClipboard';
+import { faClipboardList } from '@fortawesome/free-solid-svg-icons/faClipboardList';
+import { faDiagramProject } from '@fortawesome/free-solid-svg-icons/faDiagramProject';
+import { faFileInvoice } from '@fortawesome/free-solid-svg-icons/faFileInvoice';
+import { faFish } from '@fortawesome/free-solid-svg-icons/faFish';
+import { faGear } from '@fortawesome/free-solid-svg-icons/faGear';
+import { faGlobe } from '@fortawesome/free-solid-svg-icons/faGlobe';
+import { faHandshake } from '@fortawesome/free-solid-svg-icons/faHandshake';
+import { faLink } from '@fortawesome/free-solid-svg-icons/faLink';
+import { faPeopleArrows } from '@fortawesome/free-solid-svg-icons/faPeopleArrows';
+import { faPeopleGroup } from '@fortawesome/free-solid-svg-icons/faPeopleGroup';
+import { faPersonArrowDownToLine } from '@fortawesome/free-solid-svg-icons/faPersonArrowDownToLine';
+import { faPersonArrowUpFromLine } from '@fortawesome/free-solid-svg-icons/faPersonArrowUpFromLine';
+import { faPersonChalkboard } from '@fortawesome/free-solid-svg-icons/faPersonChalkboard';
+import { faPlaneDeparture } from '@fortawesome/free-solid-svg-icons/faPlaneDeparture';
+import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
+import { faRss } from '@fortawesome/free-solid-svg-icons/faRss';
+import { faUserPen } from '@fortawesome/free-solid-svg-icons/faUserPen';
+import { faUserSecret } from '@fortawesome/free-solid-svg-icons/faUserSecret';
+import { faWallet } from '@fortawesome/free-solid-svg-icons/faWallet';
 import lowerCase from 'lodash/lowerCase';
+import upperFirst from 'lodash/upperFirst';
 import {
   WebModulesPrivate,
   WebModulesPublic,
@@ -12,28 +33,7 @@ import {
   WebSubModulesSettings,
   WebSubModulesSettingsProfile,
 } from '@js-modules/apps-travel-log-common-constants';
-import { faRss } from '@fortawesome/free-solid-svg-icons/faRss';
-import { faGlobe } from '@fortawesome/free-solid-svg-icons/faGlobe';
-import { faPersonChalkboard } from '@fortawesome/free-solid-svg-icons/faPersonChalkboard';
-import { faPersonArrowDownToLine } from '@fortawesome/free-solid-svg-icons/faPersonArrowDownToLine';
-import { faHandshake } from '@fortawesome/free-solid-svg-icons/faHandshake';
-import { faClipboardList } from '@fortawesome/free-solid-svg-icons/faClipboardList';
-import { faClipboard } from '@fortawesome/free-solid-svg-icons/faClipboard';
-import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
-import { faUserPen } from '@fortawesome/free-solid-svg-icons/faUserPen';
-import { faPlaneDeparture } from '@fortawesome/free-solid-svg-icons/faPlaneDeparture';
-import { faFish } from '@fortawesome/free-solid-svg-icons/faFish';
-import { faDiagramProject } from '@fortawesome/free-solid-svg-icons/faDiagramProject';
-import { faLink } from '@fortawesome/free-solid-svg-icons/faLink';
-import { faPeopleArrows } from '@fortawesome/free-solid-svg-icons/faPeopleArrows';
-import { faPersonArrowUpFromLine } from '@fortawesome/free-solid-svg-icons/faPersonArrowUpFromLine';
-import { faPeopleGroup } from '@fortawesome/free-solid-svg-icons/faPeopleGroup';
-import { faGear } from '@fortawesome/free-solid-svg-icons/faGear';
-import { faAddressCard } from '@fortawesome/free-solid-svg-icons/faAddressCard';
-import { faFileInvoice } from '@fortawesome/free-solid-svg-icons/faFileInvoice';
-import { faWallet } from '@fortawesome/free-solid-svg-icons/faWallet';
-import { faUserSecret } from '@fortawesome/free-solid-svg-icons/faUserSecret';
-import { IconDefinition } from '@fortawesome/fontawesome-common-types';
+import type { RoutesMetadata } from '@js-modules/common-react-nav';
 import { routesMetadataPublic } from './routesMetadata.pubilc';
 
 export const routesMetadataPrivate: RoutesMetadata<IconDefinition> = {

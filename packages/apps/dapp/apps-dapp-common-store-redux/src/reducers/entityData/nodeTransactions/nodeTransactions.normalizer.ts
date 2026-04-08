@@ -1,9 +1,9 @@
-import {
+import { getPkOfNodeTransaction } from './nodeTransactions.pkUtils';
+import type {
   NodeTransaction,
   NodeTransactionRaw,
   NodeTransactionsReducer,
 } from './nodeTransactions.types';
-import { getPkOfNodeTransaction } from './nodeTransactions.pkUtils';
 
 export function normalizeNodeTransactionsRawArray(
   nodeTransactionsRaw: NodeTransactionRaw[],

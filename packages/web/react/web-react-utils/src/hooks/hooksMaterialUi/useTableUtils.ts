@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 
 export function useTableUtils<SortByT>(initialSortBy: SortByT): {
   tableMetadata: {
@@ -7,7 +7,7 @@ export function useTableUtils<SortByT>(initialSortBy: SortByT): {
   };
   onSortCallback: (column: SortByT) => void;
 } {
-  const [tableMetadata, setTableMetadata] = React.useState<{
+  const [tableMetadata, setTableMetadata] = useState<{
     sortBy: SortByT;
     sortDirection: 'asc' | 'desc';
   }>({

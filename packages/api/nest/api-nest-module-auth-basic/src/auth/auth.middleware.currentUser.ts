@@ -1,7 +1,11 @@
 import { Inject, Injectable, NestMiddleware } from '@nestjs/common';
 import { NextFunction, Request, Response } from 'express';
 import { AUTH_USERS_SERVICE } from '@js-modules/api-nest-utils';
-import type { AuthUsersEntity, AuthUsersService } from './auth.types';
+import type {
+  AuthUsersEntity,
+  AuthUsersService,
+  AuthUsersUniqueKeyValue,
+} from './auth.types';
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -20,7 +24,12 @@ export class AuthMiddlewareCurrentUser implements NestMiddleware {
   ) {}
 
   async use(req: Request, res: Response, next: NextFunction): Promise<void> {
-    const { userId } = req.session ?? {};
+    const { userId } =
+      (
+        req as Request & {
+          session?: { userId?: AuthUsersUniqueKeyValue } | null;
+        }
+      ).session ?? {};
 
     if (userId) {
       const currentUser = await this.usersService.findOne('id', userId);

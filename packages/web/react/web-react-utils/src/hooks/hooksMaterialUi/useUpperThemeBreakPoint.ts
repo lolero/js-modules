@@ -1,6 +1,6 @@
+import type { ContainerProps } from '@mui/material/Container';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { ContainerProps } from '@mui/material/Container';
 
 /**
  * Get the Material UI upper theme breakpoint code from the client's viewport

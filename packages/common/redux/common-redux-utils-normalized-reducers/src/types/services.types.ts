@@ -1,4 +1,4 @@
-import { Entity } from './reducers.types';
+import type { Entity } from './reducers.types';
 
 export type CreateOneServiceResponse<EntityT extends Entity> = {
   data?: EntityT;

@@ -1,23 +1,11 @@
+import type { SagaGenerator } from 'typed-redux-saga';
+import { all, call, put, takeEvery, takeLatest } from 'typed-redux-saga';
 import {
-  all,
-  AllEffect,
-  CallEffect,
-  call,
-  ForkEffect,
-  put,
-  PutEffect,
-  takeEvery,
-  takeLatest,
-} from 'redux-saga/effects';
-import { NodeUsersReducer } from '../../entityData/nodeUsers/nodeUsers.types';
-import {
-  StateSettingsActionTypes,
-  StateSettingsGetProfileRequestAction,
-  StateSettingsResetPasswordRequestAction,
-  StateSettingsSignoutRequestAction,
-  StateSettingsUpdatePartialReducerMetadataRequestAction,
-  StateSettingsUpdateProfileRequestAction,
-} from './stateSettings.actions.types';
+  createNodeUsersGetManySuccessAction,
+  createNodeUsersGetOneSuccessAction,
+  createNodeUsersUpdateOnePartialSuccessAction,
+} from '../../entityData/nodeUsers/nodeUsers.actions.creators';
+import { normalizeUsersPublicDtoArray } from '../../entityData/nodeUsers/nodeUsers.normalizer';
 import {
   createStateSettingsGetProfileFailAction,
   createStateSettingsGetProfileSuccessAction,
@@ -30,47 +18,38 @@ import {
   createStateSettingsUpdateProfileFailAction,
   createStateSettingsUpdateProfileSuccessAction,
 } from './stateSettings.actions.creators';
-import {
-  StateSettingsGetProfileServiceResponse,
-  StateSettingsResetPasswordServiceResponse,
-  StateSettingsUpdateProfileServiceResponse,
-} from './stateSettings.services.types';
+import type {
+  StateSettingsGetProfileRequestAction,
+  StateSettingsResetPasswordRequestAction,
+  StateSettingsSignoutRequestAction,
+  StateSettingsUpdatePartialReducerMetadataRequestAction,
+  StateSettingsUpdateProfileRequestAction,
+} from './stateSettings.actions.types';
+import { StateSettingsActionTypes } from './stateSettings.actions.types';
 import {
   stateSettingsGetProfileService,
   stateSettingsResetPasswordService,
   stateSettingsUpdateProfileService,
 } from './stateSettings.services';
-import {
-  createNodeUsersGetManySuccessAction,
-  createNodeUsersGetOneSuccessAction,
-  createNodeUsersUpdateOnePartialSuccessAction,
-} from '../../entityData/nodeUsers/nodeUsers.actions.creators';
-import { normalizeUsersPublicDtoArray } from '../../entityData/nodeUsers/nodeUsers.normalizer';
 
 export function* stateSettingsUpdatePartialReducerMetadataSaga({
   requestMetadata,
   requestId,
-}: StateSettingsUpdatePartialReducerMetadataRequestAction): Generator<
-  PutEffect,
-  void,
-  void
-> {
+}: StateSettingsUpdatePartialReducerMetadataRequestAction): SagaGenerator<void> {
   try {
     const { partialReducerMetadata } = requestMetadata;
 
-    yield put(
+    yield* put(
       createStateSettingsUpdatePartialReducerMetadataSuccessAction(
         partialReducerMetadata,
         requestId,
       ),
     );
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (err: any) {
-    // eslint-disable-next-line no-console
-    console.error(err.message);
-    yield put(
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    yield* put(
       createStateSettingsUpdatePartialReducerMetadataFailAction(
-        err.message,
+        message,
         requestId,
       ),
     );
@@ -79,21 +58,17 @@ export function* stateSettingsUpdatePartialReducerMetadataSaga({
 
 export function* stateSettingsGetProfileSaga({
   requestId,
-}: StateSettingsGetProfileRequestAction): Generator<
-  CallEffect | AllEffect<PutEffect> | PutEffect,
-  void,
-  StateSettingsGetProfileServiceResponse | NodeUsersReducer['data']
-> {
+}: StateSettingsGetProfileRequestAction): SagaGenerator<void> {
   try {
-    const { data: profile, status: statusCode } = (yield call(
+    const { data: profile, status: statusCode } = yield* call(
       stateSettingsGetProfileService,
-    )) as StateSettingsGetProfileServiceResponse;
+    );
 
-    const normalizedNodeUsers = (yield call(normalizeUsersPublicDtoArray, [
+    const normalizedNodeUsers = yield* call(normalizeUsersPublicDtoArray, [
       profile,
-    ])) as NodeUsersReducer['data'];
+    ]);
 
-    yield all([
+    yield* all([
       put(
         createStateSettingsGetProfileSuccessAction(
           {
@@ -105,36 +80,29 @@ export function* stateSettingsGetProfileSaga({
       ),
       put(createNodeUsersGetOneSuccessAction(normalizedNodeUsers, '')),
     ]);
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (err: any) {
-    // eslint-disable-next-line no-console
-    console.error(err.message);
-    yield put(createStateSettingsGetProfileFailAction(err.message, requestId));
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    yield* put(createStateSettingsGetProfileFailAction(message, requestId));
   }
 }
 
 export function* stateSettingsUpdateProfileSaga({
   requestMetadata,
   requestId,
-}: StateSettingsUpdateProfileRequestAction): Generator<
-  CallEffect | AllEffect<PutEffect> | PutEffect,
-  void,
-  StateSettingsUpdateProfileServiceResponse | NodeUsersReducer['data']
-> {
+}: StateSettingsUpdateProfileRequestAction): SagaGenerator<void> {
   const { usersUpdateOnePartialDto } = requestMetadata;
 
   try {
-    const { data: profile, status: statusCode } = (yield call(
+    const { data: profile, status: statusCode } = yield* call(
       stateSettingsUpdateProfileService,
       usersUpdateOnePartialDto,
-    )) as StateSettingsUpdateProfileServiceResponse;
+    );
 
-    const normalizedNodeUsers = (yield call(normalizeUsersPublicDtoArray, [
+    const normalizedNodeUsers = yield* call(normalizeUsersPublicDtoArray, [
       profile,
-    ])) as NodeUsersReducer['data'];
+    ]);
 
-    yield all([
+    yield* all([
       put(
         createStateSettingsUpdateProfileSuccessAction(
           {
@@ -146,52 +114,34 @@ export function* stateSettingsUpdateProfileSaga({
       ),
       put(createNodeUsersUpdateOnePartialSuccessAction(normalizedNodeUsers)),
     ]);
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (err: any) {
-    // eslint-disable-next-line no-console
-    console.error(err.message);
-    yield put(
-      createStateSettingsUpdateProfileFailAction(err.message, requestId),
-    );
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    yield* put(createStateSettingsUpdateProfileFailAction(message, requestId));
   }
 }
 
 export function* stateSettingsResetPasswordSaga({
   requestId,
-}: StateSettingsResetPasswordRequestAction): Generator<
-  CallEffect | PutEffect,
-  void,
-  StateSettingsResetPasswordServiceResponse
-> {
+}: StateSettingsResetPasswordRequestAction): SagaGenerator<void> {
   try {
-    const { status: statusCode } = (yield call(
+    const { status: statusCode } = yield* call(
       stateSettingsResetPasswordService,
-    )) as StateSettingsResetPasswordServiceResponse;
+    );
 
-    yield put(
+    yield* put(
       createStateSettingsResetPasswordSuccessAction(requestId, statusCode),
     );
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (err: any) {
-    // eslint-disable-next-line no-console
-    console.error(err.message);
-    yield put(
-      createStateSettingsResetPasswordFailAction(err.message, requestId),
-    );
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    yield* put(createStateSettingsResetPasswordFailAction(message, requestId));
   }
 }
 
 export function* stateSettingsSignoutSaga({
   requestId,
-}: StateSettingsSignoutRequestAction): Generator<
-  CallEffect | AllEffect<PutEffect> | PutEffect,
-  void,
-  void
-> {
+}: StateSettingsSignoutRequestAction): SagaGenerator<void> {
   try {
-    yield all([
+    yield* all([
       put(createNodeUsersGetManySuccessAction({}, '', undefined, true)),
       put(
         createStateSettingsSignoutSuccessAction(
@@ -202,34 +152,33 @@ export function* stateSettingsSignoutSaga({
         ),
       ),
     ]);
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (err: any) {
-    // eslint-disable-next-line no-console
-    console.error(err.message);
-    yield put(createStateSettingsSignoutFailAction(err.message, requestId));
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    yield* put(createStateSettingsSignoutFailAction(message, requestId));
   }
 }
 
-export function* stateSettingsSagas(): Generator<ForkEffect, void, void> {
-  yield takeEvery(
-    StateSettingsActionTypes.STATE_SETTINGS__UPDATE_PARTIAL_REDUCER_METADATA__REQUEST,
-    stateSettingsUpdatePartialReducerMetadataSaga,
-  );
-  yield takeLatest(
-    StateSettingsActionTypes.STATE_SETTINGS__GET_PROFILE__REQUEST,
-    stateSettingsGetProfileSaga,
-  );
-  yield takeLatest(
-    StateSettingsActionTypes.STATE_SETTINGS__UPDATE_PROFILE__REQUEST,
-    stateSettingsUpdateProfileSaga,
-  );
-  yield takeLatest(
-    StateSettingsActionTypes.STATE_SETTINGS__RESET_PASSWORD__REQUEST,
-    stateSettingsResetPasswordSaga,
-  );
-  yield takeLatest(
-    StateSettingsActionTypes.STATE_SETTINGS__SIGNOUT__REQUEST,
-    stateSettingsSignoutSaga,
-  );
+export function* stateSettingsSagas(): SagaGenerator<void> {
+  yield* all([
+    takeEvery(
+      StateSettingsActionTypes.STATE_SETTINGS__UPDATE_PARTIAL_REDUCER_METADATA__REQUEST,
+      stateSettingsUpdatePartialReducerMetadataSaga,
+    ),
+    takeLatest(
+      StateSettingsActionTypes.STATE_SETTINGS__GET_PROFILE__REQUEST,
+      stateSettingsGetProfileSaga,
+    ),
+    takeLatest(
+      StateSettingsActionTypes.STATE_SETTINGS__UPDATE_PROFILE__REQUEST,
+      stateSettingsUpdateProfileSaga,
+    ),
+    takeLatest(
+      StateSettingsActionTypes.STATE_SETTINGS__RESET_PASSWORD__REQUEST,
+      stateSettingsResetPasswordSaga,
+    ),
+    takeLatest(
+      StateSettingsActionTypes.STATE_SETTINGS__SIGNOUT__REQUEST,
+      stateSettingsSignoutSaga,
+    ),
+  ]);
 }

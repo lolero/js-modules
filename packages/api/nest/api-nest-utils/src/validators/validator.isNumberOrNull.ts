@@ -10,7 +10,7 @@ import {
   async: false,
 })
 class ValidatorIsNumberOrNull implements ValidatorConstraintInterface {
-  validate(value: any) {
+  validate(value: unknown) {
     return typeof value === 'number' || value === null;
   }
 
@@ -20,7 +20,7 @@ class ValidatorIsNumberOrNull implements ValidatorConstraintInterface {
 }
 
 export function isNumberOrNull(validationOptions?: ValidationOptions) {
-  return function (object: Object, propertyName: string) {
+  return function (object: object, propertyName: string) {
     registerDecorator({
       target: object.constructor,
       propertyName,

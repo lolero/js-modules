@@ -1,23 +1,19 @@
+import { pick } from 'lodash';
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { pick } from 'lodash';
-import { ReducerSelectors } from '../types/selectors.types';
-import {
+import type { ReducerHooks } from '../types/hooks.types';
+import type {
   Entity,
   ReducerGroup,
   ReducerMetadata,
-  Request,
 } from '../types/reducers.types';
-import { ReducerHooks } from '../types/hooks.types';
+import type { ReducerSelectors } from '../types/selectors.types';
 
 /**
  * Creates React hooks to retrieve a reducer's props, as well as individual
- * requests and entities.
- *
- * @param {ReducerSelectors} reducerSelectors - The reducerSelectors object for
- *        the reducer's props
- * @returns {ReducerHooks} React hooks for the reducer's props, as well as
- *          individual requests and entities.
+ * requests & entities.
+ * @param reducerSelectors - Selectors object for the reducer's props.
+ * @returns Hooks for the reducer's props plus individual requests & entities.
  */
 export function createReducerHooks<
   ReducerMetadataT extends ReducerMetadata,
@@ -36,11 +32,9 @@ export function createReducerHooks<
     reducerSelectors;
 
   /**
-   * React hook to retrieve an individual request from the reducer's requests
-   * prop.
-   *
-   * @param {string} requestId - The ID of the request being fetched
-   * @returns {Request} The request being fetched
+   * Retrieves an individual request from the reducer's requests.
+   * @param requestId - Request ID.
+   * @returns Request.
    */
   function useRequest(requestId: string) {
     const reducerRequests = useSelector(selectRequests);
@@ -54,11 +48,9 @@ export function createReducerHooks<
   }
 
   /**
-   * React hook to retrieve multiple requests from the reducer's requests prop.
-   *
-   * @param {string[] | undefined} requestIds - The IDs of the requests being
-   *        fetched. 'undefined' if all requests are being fetched
-   * @returns {Record<string, Request>} The requests being fetched
+   * Retrieves multiple requests from the reducer's requests.
+   * @param requestIds - Request IDs. 'undefined' to retrieve all requests.
+   * @returns Requests.
    */
   function useRequests(requestIds?: string[]) {
     const reducerRequests = useSelector(selectRequests);
@@ -75,9 +67,8 @@ export function createReducerHooks<
   }
 
   /**
-   * React hook to retrieve a reducer's metadata prop.
-   *
-   * @returns {ReducerMetadata} The reducer's metadata
+   * Retrieves a reducer's metadata.
+   * @returns Reducer's metadata.
    */
   function useReducerMetadata() {
     const reducerMetadata = useSelector(selectMetadata);
@@ -86,10 +77,9 @@ export function createReducerHooks<
   }
 
   /**
-   * React hook to retrieve an individual entity from the reducer's data prop.
-   *
-   * @param {string} entityPk - The PK of the entity being fetched
-   * @returns {Entity} The entity being fetched
+   * Retrieves an individual entity from the reducer's data.
+   * @param entityPk - Entity PK.
+   * @returns Entity.
    */
   function useEntity(entityPk: string) {
     const reducerData = useSelector(selectData);
@@ -103,11 +93,9 @@ export function createReducerHooks<
   }
 
   /**
-   * React hook to retrieve multiple entities from the reducer's data prop.
-   *
-   * @param {string[] | undefined} entityPks - The PKs of the entities being
-   *        fetched. 'undefined' if all entities are being fetched
-   * @returns {Record<string, Entity>} The entities being fetched
+   * Retrieves multiple entities from the reducer's data.
+   * @param entityPks - Entity PKs. 'undefined' to retrieve all entities.
+   * @returns Entities.
    */
   function useEntities(entityPks?: string[]) {
     const reducerData = useSelector(selectData);
@@ -124,9 +112,8 @@ export function createReducerHooks<
   }
 
   /**
-   * React hook to retrieve a reducer's config prop.
-   *
-   * @returns {object} The reducer's config
+   * Retrieves a reducer's config.
+   * @returns Reducer's config.
    */
   function useReducerConfig() {
     const reducerConfig = useSelector(selectConfig);

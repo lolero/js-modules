@@ -1,13 +1,14 @@
-import React from 'react';
-import { WorkspaceBox, WorkspaceBoxProps } from '@js-modules/web-react-nav';
+import type React from 'react';
 import {
   TravelLogLogoLongBox,
   TravelLogLogoShortBox,
   TravelLogNavDrawerFooterBox,
   TravelLogNavToolbar,
 } from '@js-modules/apps-travel-log-web-utils';
-import { PublicWorkspaceNavDrawerContentBox } from './PublicWorkspaceNavDrawerContentBox';
+import type { WorkspaceBoxProps } from '@js-modules/web-react-nav';
+import { WorkspaceBox } from '@js-modules/web-react-nav';
 import { PublicNavToolbarActionsBox } from './PublicNavToolbarActionsBox';
+import { PublicWorkspaceNavDrawerContentBox } from './PublicWorkspaceNavDrawerContentBox';
 
 export type PublicWorkspaceBoxProps = {
   title: string;

@@ -1,3 +1,4 @@
+import { describe, expect, it } from '@jest/globals';
 import { utilGetFindManyStringRange } from './util.getFindManyStringRange';
 
 describe('utilsGetFindManyStringRange', () => {

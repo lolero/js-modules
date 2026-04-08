@@ -1,5 +1,11 @@
-import { Expose, Transform } from 'class-transformer';
-import { AuthSystemRolesEntity, AuthUsersEntity } from './auth.types';
+import {
+  Expose,
+  // Transform
+} from 'class-transformer';
+import {
+  // AuthSystemRolesEntity,
+  AuthUsersEntity,
+} from './auth.types';
 
 export class AuthDtoPublicUser {
   @Expose()

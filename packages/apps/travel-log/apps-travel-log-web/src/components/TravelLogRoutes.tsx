@@ -1,19 +1,19 @@
-import React from 'react';
+import CircularProgress from '@mui/material/CircularProgress';
+import type React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import {
   WebModulesPrivate,
   WebModulesPublic,
 } from '@js-modules/apps-travel-log-common-constants';
-import CircularProgress from '@mui/material/CircularProgress';
+import { useInitializeKeycloak } from '@js-modules/apps-travel-log-common-react';
+import { ClientType } from '@js-modules/apps-travel-log-common-store-redux';
 import { FeedsRoutes } from '@js-modules/apps-travel-log-web-module-private-feeds';
+import { LogRoutes } from '@js-modules/apps-travel-log-web-module-private-log';
+import { SettingsRoutes } from '@js-modules/apps-travel-log-web-module-private-settings';
 import {
   HomeWorkspaceBox,
   PurposeWorkspaceBox,
 } from '@js-modules/apps-travel-log-web-module-public-site';
-import { SettingsRoutes } from '@js-modules/apps-travel-log-web-module-private-settings';
-import { LogRoutes } from '@js-modules/apps-travel-log-web-module-private-log';
-import { useInitializeKeycloak } from '@js-modules/apps-travel-log-common-react';
-import { ClientType } from '@js-modules/apps-travel-log-common-store-redux';
 
 export const TravelLogRoutes: React.FunctionComponent = () => {
   const { isKeycloakReady, rootPath } = useInitializeKeycloak(ClientType.web);

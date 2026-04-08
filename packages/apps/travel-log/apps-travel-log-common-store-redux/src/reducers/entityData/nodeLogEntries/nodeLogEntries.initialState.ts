@@ -1,5 +1,4 @@
 import { createInitialState } from '@js-modules/common-redux-utils-normalized-reducers';
-import { NodeLogEntry, NodeLogEntriesReducer } from './nodeLogEntries.types';
 import {
   NODE_LOG_ENTRIES__CREATE_ONE__REQUEST_ID,
   NODE_LOG_ENTRIES__DELETE_MANY__REQUEST_ID,
@@ -8,6 +7,10 @@ import {
   NODE_LOG_ENTRIES__UPDATE_ONE_PARTIAL__REQUEST_ID,
   NODE_LOG_ENTRIES__UPDATE_ONE_WHOLE__REQUEST_ID,
 } from './nodeLogEntries.actions.types';
+import type {
+  NodeLogEntriesReducer,
+  NodeLogEntry,
+} from './nodeLogEntries.types';
 
 const nodeLogEntriesReducerMetadataInitialState: NodeLogEntriesReducer['metadata'] =
   {

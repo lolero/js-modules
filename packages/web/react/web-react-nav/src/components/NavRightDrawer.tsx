@@ -1,11 +1,13 @@
-import React, { forwardRef, useContext, useMemo } from 'react';
-import Drawer, { DrawerProps } from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
-import { NavBoxShadowVerticalSx } from '../styles/navStyles';
+import type { DrawerProps } from '@mui/material/Drawer';
+import Drawer from '@mui/material/Drawer';
+import type React from 'react';
+import { forwardRef, useContext, useMemo } from 'react';
+import { NavContext, NavDrawerDisplayStatus } from '../contexts/NavContext';
 import { WorkspaceContext } from '../contexts/WorkspaceContext';
 import { useNavDisplayMetadata } from '../hooks/useNavDisplayMetadata';
-import { NavContext, NavDrawerDisplayStatus } from '../contexts/NavContext';
+import { NavBoxShadowVerticalSx } from '../styles/navStyles';
 
 type NavRightDrawerProps = {
   navRightDrawerContent?: React.ReactNode;
@@ -13,7 +15,10 @@ type NavRightDrawerProps = {
 };
 
 export const NavRightDrawer = forwardRef<HTMLDivElement, NavRightDrawerProps>(
-  ({ navRightDrawerContent, navRightDrawerFooter }, ref) => {
+  function NavRightDrawer(
+    { navRightDrawerContent, navRightDrawerFooter },
+    ref,
+  ) {
     const {
       navRightDrawerDisplayStatus,
       navRightDrawerCollapsedWidth,
@@ -66,14 +71,16 @@ export const NavRightDrawer = forwardRef<HTMLDivElement, NavRightDrawerProps>(
         variant={drawerVariant}
         anchor={isMobile ? 'left' : 'right'}
         open={navRightDrawerDisplayStatus !== NavDrawerDisplayStatus.hidden}
-        PaperProps={{
-          sx: {
-            top: navTopToolbarHeight,
-            height: `calc(100% - ${navTopToolbarHeight}px)`,
-            width: navDrawerWidth,
-            overflow: 'visible',
-            border: 'none',
-            ...NavBoxShadowVerticalSx,
+        slotProps={{
+          paper: {
+            sx: {
+              top: navTopToolbarHeight,
+              height: `calc(100% - ${navTopToolbarHeight}px)`,
+              width: navDrawerWidth,
+              overflow: 'visible',
+              border: 'none',
+              ...NavBoxShadowVerticalSx,
+            },
           },
         }}
         onClose={closeNavRightDrawerCallback}

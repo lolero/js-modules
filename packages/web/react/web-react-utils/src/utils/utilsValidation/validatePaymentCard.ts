@@ -1,10 +1,10 @@
-import { PaymentCard } from '@js-modules/common-utils-general';
 import _isEmpty from 'lodash/isEmpty';
 import pickBy from 'lodash/pickBy';
-import isEmpty from 'validator/lib/isEmpty';
 import isCreditCard from 'validator/lib/isCreditCard';
+import isEmpty from 'validator/lib/isEmpty';
 import isInt from 'validator/lib/isInt';
-import { FormErrors } from '../../hooks/hooksMaterialUi/useFormUtils';
+import type { FormErrors } from '@js-modules/common-react-utils';
+import type { PaymentCard } from '@js-modules/common-utils-general';
 
 export function validatePaymentCard(
   paymentCard: PaymentCard,

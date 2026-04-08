@@ -10,9 +10,10 @@ import { Reflector } from '@nestjs/core';
 import {
   KEYCLOAK_CONNECT_OPTIONS,
   KEYCLOAK_COOKIE_DEFAULT,
-  KeycloakConnectConfig,
 } from 'nest-keycloak-connect';
+import type { KeycloakConnectConfig } from 'nest-keycloak-connect';
 import { AuthServiceMultiIssuer } from './auth.service.multiIssuer';
+import type { AuthRequest } from './auth.types';
 
 @Injectable()
 export class AuthGuardMultiIssuer implements CanActivate {
@@ -44,7 +45,7 @@ export class AuthGuardMultiIssuer implements CanActivate {
       return true;
     }
 
-    const request = context.switchToHttp().getRequest();
+    const request = context.switchToHttp().getRequest<AuthRequest>();
 
     // Extract token from cookies or Authorization header
     const token =
@@ -66,9 +67,8 @@ export class AuthGuardMultiIssuer implements CanActivate {
     }
 
     // Validate token and attach parsed token to request
-    const keycloakTokenParsed = await this.authServiceMultiIssuer.validateToken(
-      token,
-    );
+    const keycloakTokenParsed =
+      await this.authServiceMultiIssuer.validateToken(token);
     request.user = keycloakTokenParsed;
     // Attach raw JWT for compatibility with nest-keycloak-connect
     request.accessTokenJWT = token;

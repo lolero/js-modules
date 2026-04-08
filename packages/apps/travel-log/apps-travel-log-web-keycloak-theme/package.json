@@ -1,21 +1,13 @@
 {
-  "private": true,
   "name": "@js-modules/apps-travel-log-web-keycloak-theme",
-  "description": "Apps Travel Log Web Keycloak Theme",
   "version": "0.0.0",
+  "private": true,
+  "description": "Apps Travel Log Web Keycloak Theme",
   "license": "MIT",
   "files": [
     "build_keycloak"
   ],
-  "scripts": {
-    "dev": "vite --port 5181",
-    "build": "tsc -b tsconfig.build.json && vite build",
-    "preview": "vite preview",
-    "keycloakify:build": "pnpm build && keycloakify build",
-    "keycloakify:add-story": "keycloakify add-story",
-    "keycloakify:eject-page": "keycloakify eject-page",
-    "storybook": "storybook dev -p 5182"
-  },
+  "scripts": {},
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
@@ -25,20 +17,20 @@
     "@js-modules/apps-travel-log-common-constants": "workspace:^",
     "@js-modules/apps-travel-log-common-store-redux": "workspace:^",
     "@js-modules/apps-travel-log-web-utils": "workspace:^",
-    "@mui/icons-material": "^7.3.9",
-    "@mui/material": "^7.3.9",
-    "@storybook/react": "^10.2.19",
-    "@storybook/react-vite": "^10.2.19",
+    "@mui/icons-material": "^9.0.0",
+    "@mui/material": "^9.0.0",
+    "@storybook/react": "^10.3.6",
+    "@storybook/react-vite": "^10.3.6",
     "@types/lodash": "^4.17.24",
-    "@types/react": "^19.2.14",
+    "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "@vitejs/plugin-react": "^6.0.1",
-    "keycloakify": "^11.15.1",
-    "lodash": "^4.17.23",
-    "react": "19.2.4",
-    "react-dom": "19.2.4",
-    "storybook": "^10.2.19",
-    "vite": "^8.0.0",
-    "vite-tsconfig-paths": "6.1.1"
+    "keycloakify": "^11.15.3",
+    "lodash": "^4.18.1",
+    "react": "19.2.5",
+    "react-dom": "19.2.5",
+    "storybook": "^10.3.6",
+    "vite": "^8.0.10",
+    "vite-plugin-svgr": "^5.2.0"
   }
 }

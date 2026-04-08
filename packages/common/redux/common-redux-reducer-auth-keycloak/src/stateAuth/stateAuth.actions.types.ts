@@ -1,17 +1,17 @@
-import {
+import type {
+  KeycloakInitOptions,
+  KeycloakLoginOptions,
+  KeycloakLogoutOptions,
+  KeycloakServerConfig,
+} from 'keycloak-js';
+import type {
   FailAction,
   RequestAction,
   SaveNothingAction,
   SavePartialReducerMetadataAction,
   UpdatePartialReducerMetadataRequestMetadata,
 } from '@js-modules/common-redux-utils-normalized-reducers';
-import {
-  KeycloakInitOptions,
-  KeycloakLoginOptions,
-  KeycloakLogoutOptions,
-  KeycloakServerConfig,
-} from 'keycloak-js';
-import { SigninAction, StateAuthReducer } from './stateAuth.types';
+import type { SigninAction, StateAuthReducer } from './stateAuth.types';
 
 export enum StateAuthActionTypes {
   STATE_AUTH__INITIALIZE__REQUEST = 'STATE_AUTH__INITIALIZE__REQUEST',

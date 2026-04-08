@@ -1,8 +1,8 @@
-import React from 'react';
 import { faEthereum } from '@fortawesome/free-brands-svg-icons/faEthereum';
-import { MuiFaIcon } from '@js-modules/web-react-utils';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import type React from 'react';
+import { MuiFaIcon } from '@js-modules/web-react-utils';
 
 export const DappLogoLongBox: React.FunctionComponent = () => {
   return (

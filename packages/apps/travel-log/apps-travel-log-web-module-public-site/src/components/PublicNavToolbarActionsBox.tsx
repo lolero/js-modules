@@ -1,27 +1,27 @@
-import React from 'react';
+import { faRightToBracket } from '@fortawesome/free-solid-svg-icons/faRightToBracket';
+import { faUserPlus } from '@fortawesome/free-solid-svg-icons/faUserPlus';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import { faUserPlus } from '@fortawesome/free-solid-svg-icons/faUserPlus';
-import { faRightToBracket } from '@fortawesome/free-solid-svg-icons/faRightToBracket';
-import { MuiFaIcon, useMenuUtils } from '@js-modules/web-react-utils';
-import { useNavDisplayMetadata } from '@js-modules/web-react-nav';
 import IconButton from '@mui/material/IconButton';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import type React from 'react';
 import { Link } from 'react-router-dom';
 import {
   WEB_CLIENT__URI__TRAVEL_LOG,
   WebModulesPrivate,
 } from '@js-modules/apps-travel-log-common-constants';
+import { routesMetadataPrivate } from '@js-modules/apps-travel-log-common-react';
+import type { StateAuthSigninRequestAction } from '@js-modules/apps-travel-log-common-store-redux';
 import {
-  StateAuthSigninRequestAction,
   useStateAuthLogin,
   useStateAuthSignup,
   useStateSettingsGetProfile,
 } from '@js-modules/apps-travel-log-common-store-redux';
-import { routesMetadataPrivate } from '@js-modules/apps-travel-log-common-react';
+import { useNavDisplayMetadata } from '@js-modules/web-react-nav';
+import { MuiFaIcon, useMenuUtils } from '@js-modules/web-react-utils';
 
 const redirectUri = `${WEB_CLIENT__URI__TRAVEL_LOG}${
   routesMetadataPrivate[WebModulesPrivate.feeds].path

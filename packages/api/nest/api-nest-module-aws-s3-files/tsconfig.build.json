@@ -1,10 +1,10 @@
 {
-  "extends": "../../../../tsconfig.build.json",
+  "extends": [
+    "../../../../tsconfig.build.json",
+    "../../../../scripts/tsconfig/tsconfig.nest.build.json"
+  ],
   "compilerOptions": {
-    "module": "commonjs",
-    "composite": true,
-    "rootDir": "src",
-    "outDir": "build"
+    "types": ["node", "multer"]
   },
   "include": ["src"]
 }

@@ -1,6 +1,6 @@
-import { AxiosResponse } from 'axios';
-import { LogEntriesDto } from '@js-modules/apps-travel-log-api-modules-core/src/modules/logEntries/dtos/logEntries.dto';
-import { FindManyResponse } from '@js-modules/api-nest-utils/src/types/types.requests';
+import type { AxiosResponse } from 'axios';
+import type { FindManyResponse } from '@js-modules/api-nest-utils/src/types/types.requests';
+import type { LogEntriesDto } from '@js-modules/apps-travel-log-api-modules-core/src/modules/logEntries/dtos/logEntries.dto';
 
 export type NodeLogEntriesCreateOneServiceResponse =
   AxiosResponse<LogEntriesDto>;

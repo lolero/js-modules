@@ -5,7 +5,7 @@
  *
  *  @returns {object | string} The decoded object or string
  */
-export function base64Decode(str: string): object | string {
+export function base64Decode(str: string): unknown {
   const decodedStr = Buffer.from(str, 'base64').toString();
   try {
     return JSON.parse(decodedStr);

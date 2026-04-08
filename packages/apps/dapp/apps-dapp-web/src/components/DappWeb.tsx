@@ -1,6 +1,6 @@
-import React from 'react';
-import { ReduxProvider } from '@js-modules/common-react-utils';
+import type React from 'react';
 import { createReduxStore } from '@js-modules/apps-dapp-common-store-redux';
+import { ReduxProvider } from '@js-modules/common-react-utils';
 import { DappThemeProvider } from './DappThemeProvider';
 
 function initApp(): React.FC {

@@ -1,21 +1,21 @@
-import React from 'react';
+import { faRightToBracket } from '@fortawesome/free-solid-svg-icons/faRightToBracket';
+import type React from 'react';
 import { View } from 'react-native';
 import { ActivityIndicator, Button, Icon, Text } from 'react-native-paper';
+import type { IconSource } from 'react-native-paper/lib/typescript/components/Icon';
 import {
-  useStateAuthLogin,
-  useStateSettingsGetProfile,
-} from '@js-modules/apps-travel-log-common-store-redux';
+  WebModulesPrivate,
+  WebModulesPublic,
+} from '@js-modules/apps-travel-log-common-constants';
 import {
   routesMetadataPrivate,
   routesMetadataPublic,
 } from '@js-modules/apps-travel-log-common-react';
 import {
-  WebModulesPrivate,
-  WebModulesPublic,
-} from '@js-modules/apps-travel-log-common-constants';
-import { faRightToBracket } from '@fortawesome/free-solid-svg-icons/faRightToBracket';
+  useStateAuthLogin,
+  useStateSettingsGetProfile,
+} from '@js-modules/apps-travel-log-common-store-redux';
 import { NativeFaIcon } from '@js-modules/native-react-utils';
-import { IconSource } from 'react-native-paper/lib/typescript/components/Icon';
 
 export const StartScreenView: React.FC = () => {
   const { callback: stateSettingsGetProfileCallback } =

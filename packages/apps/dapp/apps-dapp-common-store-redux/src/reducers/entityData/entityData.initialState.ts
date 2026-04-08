@@ -1,5 +1,4 @@
-import { EntityDataReducers } from './entityData.types';
-
+import type { EntityDataReducers } from './entityData.types';
 import { nodeChainsInitialState } from './nodeChains/nodeChains.initialState';
 import { nodeTransactionsInitialState } from './nodeTransactions/nodeTransactions.initialState';
 

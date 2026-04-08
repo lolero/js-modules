@@ -1,11 +1,11 @@
+import { describe, expect, it } from '@jest/globals';
 import { createInitialState, defaultReducerConfig } from './initialState.utils';
+import type { TestEntity, TestReducer } from './spec.utils';
 import {
+  getPkOfTestEntity,
   testEntity1,
   testInitialReducerMetadata,
-  TestEntity,
-  TestReducer,
   testReducerConfig,
-  getPkOfTestEntity,
 } from './spec.utils';
 
 describe('initialState.utils', () => {

@@ -1,8 +1,8 @@
 import { UnauthorizedException } from '@nestjs/common';
 import isEqual from 'lodash/isEqual';
-import pick from 'lodash/pick';
 import keys from 'lodash/keys';
-import { RequestEntity } from '../types/types.requests';
+import pick from 'lodash/pick';
+import type { RequestEntity } from '../types/types.requests';
 
 export function utilVerifyEntitiesPartialRelation<
   EntityT extends RequestEntity,

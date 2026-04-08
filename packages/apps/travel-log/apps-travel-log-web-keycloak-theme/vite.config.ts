@@ -1,30 +1,36 @@
-import { defineConfig, PluginOption } from 'vite';
-import reactPlugin from '@vitejs/plugin-react';
+import pluginReact from '@vitejs/plugin-react';
 import { keycloakify } from 'keycloakify/vite-plugin';
-import tsconfigPathsPlugin from 'vite-tsconfig-paths';
-
-const plugins: (PluginOption | PluginOption[])[] = [
-  reactPlugin(),
-  keycloakify({
-    accountThemeImplementation: 'none',
-  }),
-];
-
-if (process.env.NODE_ENV !== 'production') {
-  plugins.push(
-    tsconfigPathsPlugin({
-      projects: ['../../../../tsconfig.json'],
-    }),
-  );
-}
+import { defineConfig } from 'vite';
+import svgr from 'vite-plugin-svgr';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins,
+  plugins: [
+    pluginReact(),
+    svgr({
+      svgrOptions: {
+        exportType: 'named',
+      },
+      include: '**/*.svg',
+    }),
+    keycloakify({
+      accountThemeImplementation: 'none',
+    }),
+  ],
+  resolve: {
+    tsconfigPaths: process.env.NODE_ENV !== 'production',
+  },
   build: {
     outDir: 'build',
   },
   define: {
     'process.env': {},
+  },
+  optimizeDeps: {
+    exclude: ['react-native'],
+  },
+  server: {
+    port: 5181,
+    strictPort: true,
   },
 });

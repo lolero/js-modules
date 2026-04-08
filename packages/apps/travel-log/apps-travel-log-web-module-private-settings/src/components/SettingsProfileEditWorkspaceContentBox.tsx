@@ -1,12 +1,14 @@
-import React, { useCallback, useMemo } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
+import type React from 'react';
+import { useCallback, useMemo } from 'react';
+import type { StateSettingsReducer } from '@js-modules/apps-travel-log-common-store-redux';
 import {
-  StateSettingsReducer,
   useStateSettingsUpdatePartialReducerMetadata,
   useStateSettingsValidateProfilePartialUnsaved,
 } from '@js-modules/apps-travel-log-common-store-redux';
-import { useFormUtils } from '@js-modules/web-react-utils';
+import type { ClassObject } from '@js-modules/common-utils-general';
+import { useFormUtilsWeb } from '@js-modules/web-react-utils';
 
 export const SettingsProfileEditWorkspaceContentBox: React.FC = () => {
   const {
@@ -30,14 +32,15 @@ export const SettingsProfileEditWorkspaceContentBox: React.FC = () => {
     [settingsUpdatePartialReducerMetadataCallback],
   );
 
-  const profilePartialUnsavedNonNull = useMemo(() => {
-    return profilePartialUnsaved ?? {};
-  }, [profilePartialUnsaved]);
+  const profilePartialUnsavedNonNull = useMemo(
+    () => profilePartialUnsaved ?? {},
+    [profilePartialUnsaved],
+  );
   const {
     formDataTemp: profilePartialUnsavedTemp,
     changeFieldCallback: changeFieldCallbackProfilePartialUnsaved,
     blurFieldCallback: blurFieldCallbackProfilePartialUnsaved,
-  } = useFormUtils(
+  } = useFormUtilsWeb<ClassObject<typeof profilePartialUnsavedNonNull>>(
     profilePartialUnsavedNonNull,
     formErrorsProfilePartialUnsaved,
     validateCallbackProfilePartialUnsaved,
@@ -55,9 +58,7 @@ export const SettingsProfileEditWorkspaceContentBox: React.FC = () => {
         onBlur={blurFieldCallbackProfilePartialUnsaved}
         error={!!formErrorsProfilePartialUnsaved.email?.length}
         helperText={formErrorsProfilePartialUnsaved.email?.join(', ')}
-        inputProps={{
-          'data-key': 'email',
-        }}
+        slotProps={{ htmlInput: { 'data-key': 'email' } }}
       />
     </Box>
   );

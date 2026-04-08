@@ -1,21 +1,24 @@
-import React, { useCallback, useMemo } from 'react';
-import { useSplitRouterPath } from '@js-modules/web-react-utils';
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import type { IconDefinition } from '@fortawesome/fontawesome-common-types';
 import intersection from 'lodash/intersection';
 import isEmpty from 'lodash/isEmpty';
-import { RouteMetadata, RoutesMetadata } from '@js-modules/common-react-nav';
+import type React from 'react';
+import { useCallback, useMemo } from 'react';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import type {
+  RouteMetadata,
+  RoutesMetadata,
+} from '@js-modules/common-react-nav';
+import { useSplitRouterPath } from '@js-modules/web-react-utils';
+import type { ReactRouterNavUtils } from '../types/routes.types';
+import type { NavLeftDrawerTabs } from '../utils/getNavLeftDrawerTabs';
+import { getNavLeftDrawerTabs } from '../utils/getNavLeftDrawerTabs';
 import { useNavDisplayMetadata } from './useNavDisplayMetadata';
-import { ReactRouterNavUtils } from '../types/routes.types';
-import {
-  getNavLeftDrawerTabs,
-  NavLeftDrawerTabs,
-} from '../utils/getNavLeftDrawerTabs';
 
 /**
  * React hook to get array of Material UI vertical <Tab />s to populate the
  * <NavLeftDrawer/>,
  *
- * @param {RoutesMetadata} tabsMetadata - The metadata for the
+ * @param {RoutesMetadata<IconDefinition>} tabsMetadata - The metadata for the
  * navigation's <Tab /> tree
  * @param {string[]} userRoles - Access roles of the current authenticated user
  * @param {function} translateCallback - Translation callback function
@@ -23,7 +26,7 @@ import {
  * @returns {NavLeftDrawerTabs} Tabs value and array of tabs
  */
 export function useNavLeftDrawerTabs(
-  tabsMetadata: RoutesMetadata,
+  tabsMetadata: RoutesMetadata<IconDefinition>,
   userRoles?: string[],
   translateCallback?: (translationKey: string) => string,
 ): NavLeftDrawerTabs {
@@ -53,7 +56,7 @@ export function useNavLeftDrawerTabs(
         event.currentTarget.getAttribute('data-key');
       const routeMetadataPartial = JSON.parse(
         routeMetadataPartialJson!,
-      ) as Pick<RouteMetadata, 'path' | 'keepQueryParamsKeys'>;
+      ) as Pick<RouteMetadata<IconDefinition>, 'path' | 'keepQueryParamsKeys'>;
 
       if (!routeMetadataPartial.keepQueryParamsKeys) {
         closeNavLeftDrawerCallback();
@@ -84,7 +87,7 @@ export function useNavLeftDrawerTabs(
 
       event.preventDefault();
 
-      reactRouterNavUtils.navigate(newPath);
+      void reactRouterNavUtils.navigate(newPath);
     },
     [closeNavLeftDrawerCallback, reactRouterNavUtils],
   );

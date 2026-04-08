@@ -1,3 +1,6 @@
+export type ClassObject<ClassT> = Pick<ClassT, keyof ClassT>;
+export type Enum<T> = T[keyof T];
+
 export enum AppPlatform {
   node = 'node',
   web = 'web',

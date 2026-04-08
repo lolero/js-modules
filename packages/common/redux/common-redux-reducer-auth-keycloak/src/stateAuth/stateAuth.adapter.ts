@@ -1,11 +1,17 @@
-import Keycloak, {
+import type {
   KeycloakInitOptions,
   KeycloakLoginOptions,
   KeycloakLogoutOptions,
   KeycloakServerConfig,
 } from 'keycloak-js';
-import { EventChannel, eventChannel } from 'redux-saga';
-import { AuthAdapter, AuthInitResult, KeycloakTokens } from './stateAuth.types';
+import Keycloak from 'keycloak-js';
+import type { EventChannel } from 'redux-saga';
+import { eventChannel } from 'redux-saga';
+import type {
+  AuthAdapter,
+  AuthInitResult,
+  KeycloakTokens,
+} from './stateAuth.types';
 
 /**
  * Web authentication adapter using keycloak-js
@@ -43,21 +49,22 @@ export class StateAuthAdapter implements AuthAdapter {
       }
 
       // Set up token refresh interval
-      const updateTokenInterval = setInterval(async () => {
-        try {
+      const updateTokenInterval = setInterval(() => {
+        void keycloakInstance
           // Try to refresh token 70 seconds before expiration
-          await keycloakInstance.updateToken(70);
-
-          // Check if still authenticated
-          if (keycloakInstance.authenticated && keycloakInstance.token) {
-            emit(true);
-          } else {
+          .updateToken(70)
+          .then(() => {
+            // Check if still authenticated
+            if (keycloakInstance.authenticated && keycloakInstance.token) {
+              emit(true);
+            } else {
+              clearTokenAndEmitFalse();
+            }
+          })
+          .catch(() => {
+            // console.error('Failed to refresh token:', error);
             clearTokenAndEmitFalse();
-          }
-        } catch (error) {
-          console.error('Failed to refresh token:', error);
-          clearTokenAndEmitFalse();
-        }
+          });
       }, 60000); // Check every minute
 
       // Keycloak events

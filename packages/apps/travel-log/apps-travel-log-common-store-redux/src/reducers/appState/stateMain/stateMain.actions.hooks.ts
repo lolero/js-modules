@@ -1,16 +1,16 @@
-import {
+import { useCallback, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import type {
   Request,
   UseRequestReducerMetadata,
 } from '@js-modules/common-redux-utils-normalized-reducers';
-import { useCallback, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { StateMainUpdatePartialReducerMetadataRequestAction } from './stateMain.actions.types';
-import { StateMainReducer } from './stateMain.types';
 import { createStateMainUpdatePartialReducerMetadataRequestAction } from './stateMain.actions.creators';
+import type { StateMainUpdatePartialReducerMetadataRequestAction } from './stateMain.actions.types';
 import {
-  useStateMainRequest,
   useStateMainReducerMetadata,
+  useStateMainRequest,
 } from './stateMain.hooks';
+import type { StateMainReducer } from './stateMain.types';
 
 export function useStateMainUpdatePartialReducerMetadata(): UseRequestReducerMetadata<
   StateMainUpdatePartialReducerMetadataRequestAction['requestMetadata'],

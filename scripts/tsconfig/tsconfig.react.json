@@ -1,0 +1,6 @@
+{
+  "extends": "./tsconfig.react.build.json",
+  "compilerOptions": {
+    "types": ["node", "jest", "@testing-library/jest-dom/jest-globals"]
+  }
+}

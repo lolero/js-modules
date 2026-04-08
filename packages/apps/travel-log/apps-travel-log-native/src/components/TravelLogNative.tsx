@@ -1,7 +1,7 @@
-import React from 'react';
+import type React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { ReduxProvider } from '@js-modules/common-react-utils';
 import { createReduxStore } from '@js-modules/apps-travel-log-common-store-redux';
+import { ReduxProvider } from '@js-modules/common-react-utils';
 import { TravelLogPaperProvider } from './TravelLogPaperProvider';
 
 function initApp(): React.FC {

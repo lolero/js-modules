@@ -1,6 +1,7 @@
-import { eventChannel, EventChannel } from 'redux-saga';
-import { MetaMaskInpageProvider } from '@metamask/providers';
-import { noop } from 'lodash';
+import type { MetaMaskInpageProvider } from '@metamask/providers';
+import noop from 'lodash/noop';
+import type { EventChannel } from 'redux-saga';
+import { eventChannel } from 'redux-saga';
 
 export type NetworkConnectionMetadata = {
   isConnected: boolean;

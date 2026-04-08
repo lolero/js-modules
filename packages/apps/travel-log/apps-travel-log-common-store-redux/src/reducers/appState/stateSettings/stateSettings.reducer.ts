@@ -4,15 +4,12 @@ import {
   handleSaveNothing,
   handleSavePartialReducerMetadata,
 } from '@js-modules/common-redux-utils-normalized-reducers';
-import { StateSettingsReducer } from './stateSettings.types';
+import type { StateSettingsReducerHittingAction } from './stateSettings.actions.types';
+import { StateSettingsActionTypes } from './stateSettings.actions.types';
 import { stateSettingsInitialState } from './stateSettings.initialState';
-import {
-  StateSettingsActionTypes,
-  StateSettingsReducerHittingAction,
-} from './stateSettings.actions.types';
+import type { StateSettingsReducer } from './stateSettings.types';
 
 export function stateSettingsReducer(
-  // eslint-disable-next-line default-param-last
   state: StateSettingsReducer = stateSettingsInitialState,
   action: StateSettingsReducerHittingAction,
 ): StateSettingsReducer {

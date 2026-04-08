@@ -1,13 +1,19 @@
-import {
+import type {
   CallHandler,
   ExecutionContext,
   NestInterceptor,
-  UseInterceptors,
 } from '@nestjs/common';
-import { map, Observable } from 'rxjs';
-import { ClassConstructor, plainToInstance } from 'class-transformer';
-import { FindManyResponse } from '../types/types.requests';
+import { UseInterceptors } from '@nestjs/common';
+import type { ClassConstructor } from 'class-transformer';
+import { plainToInstance } from 'class-transformer';
+import type { Observable } from 'rxjs';
+import { map } from 'rxjs';
+import type { FindManyResponse } from '../types/types.requests';
 
+// @typescript-eslint/no-explicit-any disabled because the specific entity
+// type being serialized is irrelevant for the serializer function and it needs
+// to be able to take any Entity regardless of its type
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Dto = ClassConstructor<any>;
 
 class Serialize<EntityT> implements NestInterceptor {
@@ -30,7 +36,7 @@ class Serialize<EntityT> implements NestInterceptor {
           'entities' in dto &&
           'total' in dto
         ) {
-          const findManyResponse = dto as FindManyResponse<EntityT>;
+          const findManyResponse = dto;
           return {
             entities: plainToInstance<Dto, EntityT>(
               this.dto,

@@ -1,10 +1,10 @@
-import { UserContact } from '@js-modules/common-utils-general';
 import _isEmpty from 'lodash/isEmpty';
 import pickBy from 'lodash/pickBy';
-import isEmpty from 'validator/lib/isEmpty';
 import isEmail from 'validator/lib/isEmail';
+import isEmpty from 'validator/lib/isEmpty';
 import isMobilePhone from 'validator/lib/isMobilePhone';
-import { FormErrors } from '../../hooks/hooksMaterialUi/useFormUtils';
+import type { FormErrors } from '@js-modules/common-react-utils';
+import type { UserContact } from '@js-modules/common-utils-general';
 
 export function validateUserContact(
   userContact: UserContact,

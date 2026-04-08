@@ -1,5 +1,5 @@
-import React from 'react';
 import noop from 'lodash/noop';
+import { createContext } from 'react';
 
 export enum NavDrawerDisplayStatus {
   expanded = 'expanded',
@@ -29,7 +29,7 @@ export type NavContextValue = {
   workspacePaddingXSpacing: number;
 };
 
-export const NavContext = React.createContext<NavContextValue>({
+export const NavContext = createContext<NavContextValue>({
   nonAuthorizedRedirectPath: '/',
   navLeftDrawerDisplayStatus: NavDrawerDisplayStatus.expanded,
   setNavLeftDrawerDisplayStatus: noop,

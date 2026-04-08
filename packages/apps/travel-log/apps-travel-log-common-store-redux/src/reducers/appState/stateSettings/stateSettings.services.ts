@@ -1,11 +1,11 @@
-import { axiosRequest } from '@js-modules/common-utils-general';
+import type { UsersUpdateOnePartialDto } from '@js-modules/apps-travel-log-api-modules-core/src/modules/users/dtos/users.updateOnePartial.dto';
 import {
   API_CORE__URI__TRAVEL_LOG,
   ApiControllersTravelLog,
   ApiSubHandlersUsersPrivate,
 } from '@js-modules/apps-travel-log-common-constants';
-import { UsersUpdateOnePartialDto } from '@js-modules/apps-travel-log-api-modules-core/src/modules/users/dtos/users.updateOnePartial.dto';
-import {
+import { axiosRequest } from '@js-modules/common-utils-general';
+import type {
   StateSettingsGetProfileServiceResponse,
   StateSettingsResetPasswordServiceResponse,
   StateSettingsUpdateProfileServiceResponse,

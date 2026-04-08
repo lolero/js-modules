@@ -1,11 +1,8 @@
-import {
-  TestEntity,
-  testEntity1,
-  testEntity2,
-  testPkSchema,
-} from './spec.utils';
+import { describe, expect, it } from '@jest/globals';
+import type { PkSchema } from '../types/reducers.types';
 import { createReducerPkUtils, destructPk, getPkOfEntity } from './pk.utils';
-import { PkSchema } from '../types/reducers.types';
+import type { TestEntity } from './spec.utils';
+import { testEntity1, testEntity2, testPkSchema } from './spec.utils';
 
 describe('pk.utils', () => {
   describe('getPkOfEntity', () => {

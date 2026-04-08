@@ -1,9 +1,13 @@
-import {
+import type {
   EntityUniqueKeyValue,
   FindManyDto,
   RequestEntity,
 } from '@js-modules/api-nest-utils/src/types/types.requests';
-import { Entity, RequestMetadata, ReducerMetadata } from './reducers.types';
+import type {
+  Entity,
+  ReducerMetadata,
+  RequestMetadata,
+} from './reducers.types';
 
 export interface UpdateWholeReducerMetadataRequestMetadata<
   ReducerMetadataT extends ReducerMetadata,
@@ -17,8 +21,9 @@ export interface UpdatePartialReducerMetadataRequestMetadata<
   partialReducerMetadata: Partial<ReducerMetadataT>;
 }
 
-export interface CreateOneEntityRequestMetadata<EntityT extends Entity>
-  extends RequestMetadata {
+export interface CreateOneEntityRequestMetadata<
+  EntityT extends Entity,
+> extends RequestMetadata {
   entity: EntityT;
 }
 
@@ -37,8 +42,9 @@ export interface GetManyEntitiesRequestMetadata<
   findManyDto?: findManyDtoT;
 }
 
-export interface UpdateOneWholeEntityRequestMetadata<EntityT extends Entity>
-  extends RequestMetadata {
+export interface UpdateOneWholeEntityRequestMetadata<
+  EntityT extends Entity,
+> extends RequestMetadata {
   entity: EntityT;
 }
 
@@ -49,8 +55,9 @@ export interface UpdateManyPartialEntitiesWithPatternRequestMetadata<
   partialEntity: Partial<EntityT>;
 }
 
-export interface UpdateOnePartialEntityRequestMetadata<EntityT extends Entity>
-  extends RequestMetadata {
+export interface UpdateOnePartialEntityRequestMetadata<
+  EntityT extends Entity,
+> extends RequestMetadata {
   entityPk: string;
   partialEntity: Partial<EntityT>;
 }

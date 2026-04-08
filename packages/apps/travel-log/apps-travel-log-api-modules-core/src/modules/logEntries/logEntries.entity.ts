@@ -1,15 +1,16 @@
 import {
   Column,
   CreateDateColumn,
-  UpdateDateColumn,
   DeleteDateColumn,
   Entity,
-  PrimaryGeneratedColumn,
-  ManyToOne,
   JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
+import type { Relation } from 'typeorm';
 import { RequestEntity } from '@js-modules/api-nest-utils';
-// eslint-disable-next-line import/no-cycle
+// eslint-disable-next-line import-x/no-cycle
 import { UsersEntity } from '../users/users.entity';
 
 @Entity('log_entries')
@@ -39,7 +40,7 @@ export class LogEntriesEntity implements RequestEntity {
   @JoinColumn({
     name: 'user_id',
   })
-  user: UsersEntity;
+  user: Relation<UsersEntity>;
 
   @CreateDateColumn({
     name: 'created_at',

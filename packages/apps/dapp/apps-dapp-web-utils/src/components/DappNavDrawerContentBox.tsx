@@ -1,7 +1,7 @@
-import React from 'react';
 import Tabs from '@mui/material/Tabs';
-import { useNavLeftDrawerTabs } from '@js-modules/web-react-nav';
+import type React from 'react';
 import { routesMetadataPrivate } from '@js-modules/apps-dapp-common-react';
+import { useNavLeftDrawerTabs } from '@js-modules/web-react-nav';
 
 export const DappNavDrawerContentBox: React.FunctionComponent = () => {
   const { tabsValue, tabs } = useNavLeftDrawerTabs(routesMetadataPrivate);

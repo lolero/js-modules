@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { In, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+import pick from 'lodash/pick';
+import { In, Repository } from 'typeorm';
 import {
   EntityUniqueKeyValue,
   FindManyResponse,
@@ -8,16 +9,15 @@ import {
   utilApplyFindManySortingAndPaginationToQuery,
   utilVerifyEntitiesPartialRelation,
 } from '@js-modules/api-nest-utils';
-import { pick } from 'lodash';
+import { UsersEntity } from '../users/users.entity';
+import { LogEntriesCreateOneDto } from './dtos/logEntries.createOne.dto';
+import { LogEntriesDeleteManyDto } from './dtos/logEntries.deleteMany.dto';
+import { LogEntriesFindManyDto } from './dtos/logEntries.findMany.dto';
+import { LogEntriesUpdateManyPartialWithPatternDto } from './dtos/logEntries.updateManyPartialWithPattern.dto';
+import { LogEntriesUpdateOnePartialDto } from './dtos/logEntries.updateOnePartial.dto';
+import { LogEntriesUpdateOneWholeDto } from './dtos/logEntries.updateOneWhole.dto';
 import { LogEntriesEntity } from './logEntries.entity';
 import { LogEntriesUniqueKeyName } from './logEntries.types';
-import { LogEntriesFindManyDto } from './dtos/logEntries.findMany.dto';
-import { LogEntriesUpdateOnePartialDto } from './dtos/logEntries.updateOnePartial.dto';
-import { LogEntriesCreateOneDto } from './dtos/logEntries.createOne.dto';
-import { UsersEntity } from '../users/users.entity';
-import { LogEntriesUpdateOneWholeDto } from './dtos/logEntries.updateOneWhole.dto';
-import { LogEntriesUpdateManyPartialWithPatternDto } from './dtos/logEntries.updateManyPartialWithPattern.dto';
-import { LogEntriesDeleteManyDto } from './dtos/logEntries.deleteMany.dto';
 
 @Injectable()
 export class LogEntriesService {
@@ -34,9 +34,8 @@ export class LogEntriesService {
       ...logEntriesCreateOneDto,
       user: usersEntityCurrent,
     });
-    const logEntriesEntityCreated = await this.logEntriesRepository.save(
-      logEntriesEntity,
-    );
+    const logEntriesEntityCreated =
+      await this.logEntriesRepository.save(logEntriesEntity);
 
     return logEntriesEntityCreated;
   }

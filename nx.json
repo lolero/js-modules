@@ -1,12 +1,86 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
-  "plugins": ["./nx-plugin.ts"],
+  "plugins": ["./scripts/nx/nx.plugin.ts"],
   "targetDefaults": {
     "build": {
       "dependsOn": ["^build"]
     },
+    "hardhat:deploy": {
+      "dependsOn": ["build"]
+    },
+    "keycloakify:build": {
+      "dependsOn": ["build"]
+    },
+    "lint:check": {
+      "cache": true
+    },
+    "lint:health": {
+      "cache": true,
+      "inputs": [
+        "{workspaceRoot}/package.json",
+        "{workspaceRoot}/pnpm-lock.yaml",
+        "{workspaceRoot}/pyproject.toml",
+        "{workspaceRoot}/ruff.toml",
+        "{workspaceRoot}/.shellcheckrc",
+        "{workspaceRoot}/.solhint.json",
+        "{workspaceRoot}/.taplo.toml",
+        "{workspaceRoot}/uv.lock",
+        "{workspaceRoot}/.yamllint",
+        "{projectRoot}/eslint.config.ts",
+        "{projectRoot}/package.json",
+        "{projectRoot}/pyproject.toml",
+        "{projectRoot}/ruff.toml",
+        "{projectRoot}/.shellcheckrc"
+      ]
+    },
+    "nest:prod": {
+      "dependsOn": ["build"]
+    },
+    "nest:typeorm": {
+      "dependsOn": ["build"]
+    },
     "test": {
       "cache": true
+    },
+    "test:coverage": {
+      "cache": true
+    },
+    "react-native:android:emulator-app-install": {
+      "dependsOn": ["build"]
+    },
+    "react-native:android:emulator-app-reinstall": {
+      "dependsOn": ["build"]
+    },
+    "react-native:android:emulator-app-reinstall-clean": {
+      "dependsOn": ["build"]
+    },
+    "react-native:android:emulator-app-reinstall-clean-deep": {
+      "dependsOn": ["build"]
+    },
+    "react-native:android:emulator-app-restart": {
+      "dependsOn": ["build"]
+    },
+    "react-native:android:emulator-app-restart-clean": {
+      "dependsOn": ["build"]
+    },
+    "react-native:android:emulator-app-restart-clean-deep": {
+      "dependsOn": ["build"]
+    },
+    "types:check": {
+      "cache": true
+    },
+    "test:health": {
+      "cache": true,
+      "inputs": [
+        "{workspaceRoot}/package.json",
+        "{workspaceRoot}/pnpm-lock.yaml",
+        "{workspaceRoot}/pyproject.toml",
+        "{workspaceRoot}/uv.lock",
+        "{projectRoot}/jest.config.ts",
+        "{projectRoot}/package.json",
+        "{projectRoot}/pyproject.toml",
+        "{projectRoot}/hardhat.config.ts"
+      ]
     }
   },
   "analytics": false

@@ -1,12 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { KeycloakTokenParsed } from 'keycloak-js';
+import type { KeycloakTokenParsed } from 'keycloak-js' with {
+  'resolution-mode': 'import',
+};
+import keys from 'lodash/keys';
+import { Repository } from 'typeorm';
 import { UserRepresentation } from '@js-modules/api-nest-keycloak-admin-client-cjs';
-import entries from 'lodash/entries';
+import { UsersUpdateOnePartialDto } from './dtos/users.updateOnePartial.dto';
 import { UsersEntity } from './users.entity';
 import { KeycloakUser } from './users.types';
-import { UsersUpdateOnePartialDto } from './dtos/users.updateOnePartial.dto';
 
 @Injectable()
 export class UsersServiceUtils {
@@ -20,12 +22,12 @@ export class UsersServiceUtils {
   ): KeycloakUser {
     const keycloakUser: KeycloakUser = {
       keycloakId: keycloakTokenParsed.sub!,
-      username: keycloakTokenParsed.preferred_username ?? null,
-      email: keycloakTokenParsed.email,
-      phoneNumber: keycloakTokenParsed.phone_number ?? null,
-      firstName: keycloakTokenParsed.given_name ?? null,
-      middleName: keycloakTokenParsed.middle_name ?? null,
-      lastName: keycloakTokenParsed.family_name ?? null,
+      username: keycloakTokenParsed.preferred_username as string | undefined,
+      email: keycloakTokenParsed.email as string,
+      phoneNumber: keycloakTokenParsed.phone_number as string | undefined,
+      firstName: keycloakTokenParsed.given_name as string | undefined,
+      middleName: keycloakTokenParsed.middle_name as string | undefined,
+      lastName: keycloakTokenParsed.family_name as string | undefined,
     };
 
     return keycloakUser;
@@ -43,16 +45,17 @@ export class UsersServiceUtils {
       lastName: userRepresentation.lastName,
     };
 
-    entries(usersUpdateOnePartialDto).forEach(
-      ([usersEntityKey, usersEntityValue]) => {
-        if (usersEntityValue === undefined) {
-          return;
-        }
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        userKeycloak[usersEntityKey] = usersEntityValue;
-      },
-    );
+    (
+      keys(usersUpdateOnePartialDto) as (keyof KeycloakUser &
+        keyof UsersUpdateOnePartialDto)[]
+    ).forEach((usersEntityKey) => {
+      const usersEntityValue = usersUpdateOnePartialDto[usersEntityKey];
+      if (usersEntityValue === undefined) {
+        return;
+      }
+
+      userKeycloak[usersEntityKey] = usersEntityValue;
+    });
 
     const updatedUserRepresentation: UserRepresentation = {
       ...userRepresentation,

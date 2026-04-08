@@ -1,18 +1,16 @@
-import pickBy from 'lodash/pickBy';
+import { validate } from 'class-validator';
 import isEmpty from 'lodash/isEmpty';
 import keys from 'lodash/keys';
+import pickBy from 'lodash/pickBy';
 import values from 'lodash/values';
-import { validate } from 'class-validator';
-import { FormErrors } from '../../hooks/hooksMaterialUi/useFormUtils';
+import type { FormData, FormErrors } from '@js-modules/common-react-utils';
 
-export async function validateDto<DtoT extends Record<string, any>>(
+export async function validateDto<DtoT extends FormData>(
   dto: DtoT,
   formErrors: FormErrors<DtoT>,
   fieldNames: (keyof DtoT)[] = [],
 ): Promise<FormErrors<DtoT>> {
-  const fieldNamesValidate = isEmpty(fieldNames)
-    ? keys(dto)
-    : (fieldNames as (keyof DtoT)[]);
+  const fieldNamesValidate = isEmpty(fieldNames) ? keys(dto) : fieldNames;
 
   const formErrorsEmpty = fieldNamesValidate.reduce(
     (formErrorsEmptyTemp: FormErrors<DtoT>, fieldName) => {

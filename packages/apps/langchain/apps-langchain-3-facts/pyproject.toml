@@ -3,16 +3,16 @@ name = "apps-langchain-3-facts"
 version = "0.0.0"
 requires-python = ">=3.11"
 dependencies = [
-    "langchain>=0.3.0",
-    "langchain-anthropic>=0.3.0",
-    "langchain-chroma>=0.2.0",
-    "langchain-community>=0.3.0",
-    "langchain-huggingface>=0.1.0",
-    "matplotlib>=3.9.0",
-    "matplotlib-inline>=0.1.0",
-    "sentence-transformers>=3.0.0",
-    "langchain-text-splitters>=0.3.0",
-    "python-dotenv>=1.0.0",
+  "langchain>=0.3.0",
+  "langchain-anthropic>=0.3.0",
+  "langchain-chroma>=0.2.0",
+  "langchain-community>=0.3.0",
+  "langchain-huggingface>=0.1.0",
+  "matplotlib>=3.9.0",
+  "matplotlib-inline>=0.1.0",
+  "sentence-transformers>=3.0.0",
+  "langchain-text-splitters>=0.3.0",
+  "python-dotenv>=1.0.0",
 ]
 
 [build-system]

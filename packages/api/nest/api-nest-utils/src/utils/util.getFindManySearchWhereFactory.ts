@@ -1,7 +1,7 @@
-import { SelectQueryBuilder, WhereExpressionBuilder } from 'typeorm';
+import type { SelectQueryBuilder, WhereExpressionBuilder } from 'typeorm';
 import { camelToSnakeCaseWithAcronyms } from '@js-modules/common-utils-general-cjs';
-import { DtoFindManySearch } from '../dtos/dto.findManySearch';
-import { RequestEntity } from '../types/types.requests';
+import type { DtoFindManySearch } from '../dtos/dto.findManySearch';
+import type { RequestEntity } from '../types/types.requests';
 
 export function utilGetFindManySearchWhereFactory<
   EntityT extends RequestEntity,

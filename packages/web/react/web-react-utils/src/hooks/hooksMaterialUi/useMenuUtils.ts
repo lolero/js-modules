@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 
 export type MenuAnchor = EventTarget & HTMLElement;
 
@@ -29,14 +29,12 @@ export type MenuUtils<MenuMetadataT> = {
 export function useMenuUtils<
   MenuMetadataT = never,
 >(): MenuUtils<MenuMetadataT> {
-  const [menuAnchor, setMenuAnchor] = React.useState<MenuAnchor | null>(null);
+  const [menuAnchor, setMenuAnchor] = useState<MenuAnchor | null>(null);
 
   const [menuCoordinates, setMenuCoordinates] =
-    React.useState<MenuCoordinates | null>(null);
+    useState<MenuCoordinates | null>(null);
 
-  const [menuMetadata, setMenuMetadata] = React.useState<MenuMetadataT | null>(
-    null,
-  );
+  const [menuMetadata, setMenuMetadata] = useState<MenuMetadataT | null>(null);
 
   const openMenuCallback = useCallback(
     (

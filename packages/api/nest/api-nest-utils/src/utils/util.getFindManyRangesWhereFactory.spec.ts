@@ -1,11 +1,19 @@
-import { SelectQueryBuilder, WhereExpressionBuilder } from 'typeorm';
-import { FindManyRangesDto, RequestEntity } from '../types/types.requests';
 import {
-  utilGetFindManyRangesWhereFactory,
-  FindManyRangeType,
-} from './util.getFindManyRangesWhereFactory';
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  jest as jestGlobals,
+} from '@jest/globals';
+import type { SelectQueryBuilder, WhereExpressionBuilder } from 'typeorm';
+import type { FindManyRangesDto, RequestEntity } from '../types/types.requests';
 import { utilGetFindManyDateRange } from './util.getFindManyDateRange';
 import { utilGetFindManyNumberRange } from './util.getFindManyNumberRange';
+import {
+  FindManyRangeType,
+  utilGetFindManyRangesWhereFactory,
+} from './util.getFindManyRangesWhereFactory';
 import { utilGetFindManyStringRange } from './util.getFindManyStringRange';
 
 jest.mock('../utils/util.getFindManyDateRange');
@@ -31,21 +39,23 @@ describe('utilGetFindManyRangesWhereFactory', () => {
     new Date('2000-01-01'),
     new Date('2020-02-01'),
   ];
-  const utilGetFindManyDateRangeMock = jest.mocked(utilGetFindManyDateRange);
+  const utilGetFindManyDateRangeMock = jestGlobals.mocked(
+    utilGetFindManyDateRange,
+  );
   const utilGetFindManyNumberRangeMockReturnValue: [number, number] = [1, 10];
-  const utilGetFindManyNumberRangeMock = jest.mocked(
+  const utilGetFindManyNumberRangeMock = jestGlobals.mocked(
     utilGetFindManyNumberRange,
   );
   const utilGetFindManyStringRangeMockReturnValue: [string, string] = [
     'a',
     'd',
   ];
-  const utilGetFindManyStringRangeMock = jest.mocked(
+  const utilGetFindManyStringRangeMock = jestGlobals.mocked(
     utilGetFindManyStringRange,
   );
 
-  let whereMock: jest.Mock;
-  let andWhereMock: jest.Mock;
+  let whereMock: jestGlobals.Mock;
+  let andWhereMock: jestGlobals.Mock;
   let whereExpressionBuilder: WhereExpressionBuilder;
 
   beforeEach(() => {
@@ -58,8 +68,8 @@ describe('utilGetFindManyRangesWhereFactory', () => {
     utilGetFindManyStringRangeMock.mockReturnValue(
       utilGetFindManyStringRangeMockReturnValue,
     );
-    whereMock = jest.fn();
-    andWhereMock = jest.fn();
+    whereMock = jestGlobals.fn();
+    andWhereMock = jestGlobals.fn();
     whereExpressionBuilder = {
       where: whereMock,
       andWhere: andWhereMock,

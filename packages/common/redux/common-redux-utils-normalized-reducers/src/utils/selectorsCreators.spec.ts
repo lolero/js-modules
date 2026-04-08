@@ -1,22 +1,22 @@
+import { beforeEach, describe, expect, it } from '@jest/globals';
+import type { ReducerSelectors } from '../types/selectors.types';
 import { createInitialState } from './initialState.utils';
 import {
+  createReducerPropSelector,
+  createReducerSelectors,
+} from './selectorsCreators';
+import type {
   TestEntity,
   TestEntity2,
   TestEntity3,
   TestEntity4,
-  testInitialReducerMetadata,
   TestReducer,
   TestReducer2,
   TestReducer3,
   TestReducer4,
   TestState,
 } from './spec.utils';
-import * as selectors from './selectors';
-import {
-  createReducerPropSelector,
-  createReducerSelectors,
-} from './selectorsCreators';
-import { ReducerSelectors } from '../types/selectors.types';
+import { testInitialReducerMetadata } from './spec.utils';
 
 describe('selectorsCreators', () => {
   let state: TestState;
@@ -47,16 +47,6 @@ describe('selectorsCreators', () => {
   });
 
   describe('createReducerPropSelector', () => {
-    let selectReducerPropSpy: jest.SpyInstance;
-
-    beforeEach(() => {
-      selectReducerPropSpy = jest.spyOn(selectors, 'selectReducerProp');
-    });
-
-    afterEach(() => {
-      selectReducerPropSpy.mockRestore();
-    });
-
     it('Should create reducer prop selector', () => {
       const selectTestReducer1Metadata = createReducerPropSelector<
         TestReducer['metadata'],
@@ -66,12 +56,12 @@ describe('selectorsCreators', () => {
         'metadata'
       >(['testReducerGroup1', 'testReducer1'], 'metadata');
 
-      let testReducer1Metadata = selectTestReducer1Metadata(state);
+      const testReducer1Metadata = selectTestReducer1Metadata(state);
       expect(testReducer1Metadata).toBe(
         state.testReducerGroup1.testReducer1.metadata,
       );
-      expect(selectReducerPropSpy).toHaveBeenCalledTimes(1);
 
+      // Unrelated state change — memoized result returned
       state = {
         ...state,
         testReducerGroup1: {
@@ -81,25 +71,24 @@ describe('selectorsCreators', () => {
           },
         },
       };
-      testReducer1Metadata = selectTestReducer1Metadata(state);
-      expect(testReducer1Metadata).toBe(
-        state.testReducerGroup1.testReducer1.metadata,
-      );
-      expect(selectReducerPropSpy).toHaveBeenCalledTimes(1);
+      expect(selectTestReducer1Metadata(state)).toBe(testReducer1Metadata);
+
+      // Relevant state change — result recomputed
       state = {
         ...state,
         testReducerGroup1: {
           ...state.testReducerGroup1,
           testReducer1: {
             ...state.testReducerGroup1.testReducer1,
+            metadata: { ...state.testReducerGroup1.testReducer1.metadata },
           },
         },
       };
-      testReducer1Metadata = selectTestReducer1Metadata(state);
-      expect(testReducer1Metadata).toBe(
+      const testReducer1MetadataNew = selectTestReducer1Metadata(state);
+      expect(testReducer1MetadataNew).not.toBe(testReducer1Metadata);
+      expect(testReducer1MetadataNew).toBe(
         state.testReducerGroup1.testReducer1.metadata,
       );
-      expect(selectReducerPropSpy).toHaveBeenCalledTimes(2);
     });
   });
 

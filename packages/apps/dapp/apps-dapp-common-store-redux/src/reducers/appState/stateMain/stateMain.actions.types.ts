@@ -1,10 +1,10 @@
-import {
+import type {
   FailAction,
   RequestAction,
   SavePartialReducerMetadataAction,
   UpdatePartialReducerMetadataRequestMetadata,
 } from '@js-modules/common-redux-utils-normalized-reducers';
-import { StateMainReducer } from './stateMain.types';
+import type { StateMainReducer } from './stateMain.types';
 
 export enum StateMainActionTypes {
   STATE_MAIN__UPDATE_PARTIAL_REDUCER_METADATA__REQUEST = 'STATE_MAIN__UPDATE_PARTIAL_REDUCER_METADATA__REQUEST',

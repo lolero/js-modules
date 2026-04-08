@@ -1,12 +1,14 @@
 //SPDX-License-Identifier: Unlicense
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.20;
 
+// solhint-disable-next-line no-console
 import "hardhat/console.sol";
 
 contract Greeter {
     string private greeting;
 
     constructor(string memory _greeting) {
+      // solhint-disable-next-line no-console
         console.log("Deploying a Greeter with greeting:", _greeting);
         greeting = _greeting;
     }
@@ -16,6 +18,7 @@ contract Greeter {
     }
 
     function setGreeting(string memory _greeting) public {
+        // solhint-disable-next-line no-console
         console.log("Changing greeting from '%s' to '%s'", greeting, _greeting);
         greeting = _greeting;
     }

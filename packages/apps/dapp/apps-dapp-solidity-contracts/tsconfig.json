@@ -1,6 +1,8 @@
 {
-  "extends": "../../../../tsconfig.json",
-  "compilerOptions": {},
-  "include": ["./src"],
-  "files": ["./hardhat.config.ts"]
+  "extends": [
+    "../../../../tsconfig.json",
+    "../../../../scripts/tsconfig/tsconfig.hardhat.json"
+  ],
+  "include": ["src"],
+  "files": ["hardhat.config.ts", "../../../../scripts/types/hardhat.d.ts"]
 }

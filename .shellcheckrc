@@ -1,0 +1,6 @@
+# Shellcheck walks upward from each script to find this file.
+# https://www.shellcheck.net/wiki/Ignore
+
+# Can't statically follow sources outside the repo (e.g. from PATH).
+# https://www.shellcheck.net/wiki/SC1091
+disable=SC1091

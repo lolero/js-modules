@@ -1,6 +1,6 @@
-import { useCallback, useContext, useMemo } from 'react';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { useCallback, useContext, useMemo } from 'react';
 import { NavContext, NavDrawerDisplayStatus } from '../contexts/NavContext';
 
 export type NavDisplayMetadata = {

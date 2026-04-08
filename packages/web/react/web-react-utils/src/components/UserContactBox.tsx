@@ -1,21 +1,20 @@
-import React from 'react';
-import Box, { BoxProps } from '@mui/material/Box';
+import type { BoxProps } from '@mui/material/Box';
+import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import { UserContact } from '@js-modules/common-utils-general';
 import isEmpty from 'lodash/isEmpty';
-import {
-  FormUtils,
-  FormValidator,
-} from '../hooks/hooksMaterialUi/useFormUtils';
+import type React from 'react';
+import type { FormValidator } from '@js-modules/common-react-utils';
+import type { UserContact } from '@js-modules/common-utils-general';
+import type { FormUtilsWeb } from '../hooks/hooksMaterialUi/useFormUtilsWeb';
+import type { FormTextFieldProps } from '../types/form.types';
 import { CallingCodesAutocomplete } from './CallingCodesAutocomplete';
-import { FormTextFieldProps } from '../types/form.types';
 
 export type UserContactBoxProps = {
   sx?: BoxProps['sx'];
   renderFields?: (keyof UserContact)[];
   contactTemp: UserContact;
-  changeFieldCallback: FormUtils<UserContact>['changeFieldCallback'];
-  blurFieldCallback: FormUtils<UserContact>['blurFieldCallback'];
+  changeFieldCallback: FormUtilsWeb<UserContact>['changeFieldCallback'];
+  blurFieldCallback: FormUtilsWeb<UserContact>['blurFieldCallback'];
   formErrors: FormValidator<UserContact>['formErrors'];
   isFormFieldsDisabled: boolean;
   textFieldProps?: {
@@ -49,10 +48,9 @@ export const UserContactBox: React.FunctionComponent<UserContactBoxProps> = ({
           onBlur={blurFieldCallback}
           error={!!formErrors.email?.length}
           helperText={formErrors.email?.join(', ')}
-          inputProps={{
-            'data-key': 'email',
+          slotProps={{
+            htmlInput: { 'data-key': 'email' },
           }}
-          // eslint-disable-next-line react/jsx-props-no-spreading
           {...textFieldProps.email}
         />
       )}
@@ -66,10 +64,9 @@ export const UserContactBox: React.FunctionComponent<UserContactBoxProps> = ({
           onBlur={blurFieldCallback}
           error={!!formErrors.firstName?.length}
           helperText={formErrors.firstName?.join(', ')}
-          inputProps={{
-            'data-key': 'firstName',
+          slotProps={{
+            htmlInput: { 'data-key': 'firstName' },
           }}
-          // eslint-disable-next-line react/jsx-props-no-spreading
           {...textFieldProps.firstName}
         />
       )}
@@ -83,10 +80,9 @@ export const UserContactBox: React.FunctionComponent<UserContactBoxProps> = ({
           onBlur={blurFieldCallback}
           error={!!formErrors.lastName?.length}
           helperText={formErrors.lastName?.join(', ')}
-          inputProps={{
-            'data-key': 'lastName',
+          slotProps={{
+            htmlInput: { 'data-key': 'lastName' },
           }}
-          // eslint-disable-next-line react/jsx-props-no-spreading
           {...textFieldProps.lastName}
         />
       )}
@@ -107,7 +103,6 @@ export const UserContactBox: React.FunctionComponent<UserContactBoxProps> = ({
             error={!!formErrors.callingCode?.length}
             helperText={formErrors.callingCode?.join(', ')}
             dataKey="callingCode"
-            // eslint-disable-next-line react/jsx-props-no-spreading
             {...textFieldProps.callingCode}
           />
           <TextField
@@ -120,10 +115,9 @@ export const UserContactBox: React.FunctionComponent<UserContactBoxProps> = ({
             onBlur={blurFieldCallback}
             error={!!formErrors.phoneNumber?.length}
             helperText={formErrors.phoneNumber?.join(', ')}
-            inputProps={{
-              'data-key': 'phoneNumber',
+            slotProps={{
+              htmlInput: { 'data-key': 'phoneNumber' },
             }}
-            // eslint-disable-next-line react/jsx-props-no-spreading
             {...textFieldProps.phoneNumber}
           />
         </Box>

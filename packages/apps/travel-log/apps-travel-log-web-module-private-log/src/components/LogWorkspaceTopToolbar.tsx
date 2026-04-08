@@ -1,8 +1,8 @@
-import React, { useMemo } from 'react';
+import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
 import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
-import { MuiFaIcon } from '@js-modules/web-react-utils';
-import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
+import type React from 'react';
+import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import {
   WebModulesPrivate,
@@ -10,8 +10,9 @@ import {
   WebSubModulesLogLogEntry,
 } from '@js-modules/apps-travel-log-common-constants';
 import { routesMetadataPrivate } from '@js-modules/apps-travel-log-common-react';
-import { LogWorkspaceActionsMenu } from './LogWorkspaceActionsMenu';
+import { MuiFaIcon } from '@js-modules/web-react-utils';
 import { LogPagination } from './LogPagination';
+import { LogWorkspaceActionsMenu } from './LogWorkspaceActionsMenu';
 
 export const LogWorkspaceTopToolbar: React.FC = () => {
   const routeMetadata = useMemo(

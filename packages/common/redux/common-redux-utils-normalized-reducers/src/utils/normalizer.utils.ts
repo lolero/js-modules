@@ -1,18 +1,17 @@
-import {
-  PkSchema,
-  ReducerData,
+import type {
   Entity,
-  PkSchemaFields,
+  PkSchema,
   PkSchemaEdges,
+  PkSchemaFields,
+  ReducerData,
 } from '../types/reducers.types';
 import { getPkOfEntity } from './pk.utils';
 
 /**
  * Convert entity array into a normalized entities object.
- *
- * @param {PkSchema} pkSchema - PK schema of reducer's entities
- * @param {Entity[]} entityArray - Entity array
- * @returns {ReducerData} Normalized entities object
+ * @param pkSchema - PK schema of reducer's entities
+ * @param entityArray - Entity array
+ * @returns Normalized entities object
  */
 export function normalizeEntityArrayByPk<
   EntityT extends Entity,

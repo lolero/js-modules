@@ -1,4 +1,4 @@
-import {
+import type {
   FailAction,
   GetManyEntitiesRequestMetadata,
   GetOneEntityRequestMetadata,
@@ -6,7 +6,7 @@ import {
   SavePartialEntitiesAction,
   SaveWholeEntitiesAction,
 } from '@js-modules/common-redux-utils-normalized-reducers';
-import { NodeUser, NodeUsersReducer } from './nodeUsers.types';
+import type { NodeUser, NodeUsersReducer } from './nodeUsers.types';
 
 export enum NodeUsersActionTypes {
   NODE_USERS__GET_ONE__REQUEST = 'NODE_USERS__GET_ONE__REQUEST',

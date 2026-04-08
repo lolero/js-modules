@@ -1,9 +1,7 @@
-import {
-  createInitialState,
-  Entity,
-} from '@js-modules/common-redux-utils-normalized-reducers';
 import { ThemePalette } from '@js-modules/apps-travel-log-common-constants';
-import { StateMainReducer } from './stateMain.types';
+import type { Entity } from '@js-modules/common-redux-utils-normalized-reducers';
+import { createInitialState } from '@js-modules/common-redux-utils-normalized-reducers';
+import type { StateMainReducer } from './stateMain.types';
 
 const stateMainReducerMetadataInitialState: StateMainReducer['metadata'] = {
   themePalette: ThemePalette.light,

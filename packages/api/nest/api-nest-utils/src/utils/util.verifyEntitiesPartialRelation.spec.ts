@@ -1,4 +1,5 @@
-import { RequestEntity } from '../types/types.requests';
+import { beforeEach, describe, expect, it } from '@jest/globals';
+import type { RequestEntity } from '../types/types.requests';
 import { utilVerifyEntitiesPartialRelation } from './util.verifyEntitiesPartialRelation';
 
 interface Relation extends RequestEntity {

@@ -1,16 +1,17 @@
-import React, { useCallback } from 'react';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
 import { faHashtag } from '@fortawesome/free-solid-svg-icons/faHashtag';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import Tooltip from '@mui/material/Tooltip';
-import { useMenuUtils, MuiFaIcon } from '@js-modules/web-react-utils';
 import IconButton from '@mui/material/IconButton';
 import MuiLink from '@mui/material/Link';
-import { useNavDisplayMetadata } from '@js-modules/web-react-nav';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Tooltip from '@mui/material/Tooltip';
 import entries from 'lodash/entries';
 import upperFirst from 'lodash/upperFirst';
+import type React from 'react';
+import { useCallback } from 'react';
+import { useNavDisplayMetadata } from '@js-modules/web-react-nav';
+import { MuiFaIcon, useMenuUtils } from '@js-modules/web-react-utils';
 import { socialMediaMetadata } from './DappNavSocialMediaBox';
 
 export const DappNavSocialMediaMenu: React.FunctionComponent = () => {

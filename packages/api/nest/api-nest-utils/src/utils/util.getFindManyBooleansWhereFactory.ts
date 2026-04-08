@@ -1,7 +1,10 @@
 import keys from 'lodash/keys';
-import { SelectQueryBuilder, WhereExpressionBuilder } from 'typeorm';
+import type { SelectQueryBuilder, WhereExpressionBuilder } from 'typeorm';
 import { camelToSnakeCaseWithAcronyms } from '@js-modules/common-utils-general-cjs';
-import { FindManyBooleansDto, RequestEntity } from '../types/types.requests';
+import type {
+  FindManyBooleansDto,
+  RequestEntity,
+} from '../types/types.requests';
 
 export function utilGetFindManyBooleansWhereFactory<
   EntityT extends RequestEntity,
@@ -19,8 +22,8 @@ export function utilGetFindManyBooleansWhereFactory<
         ? 1
         : 0;
       const whereStr = `${query.alias}.${camelToSnakeCaseWithAcronyms(
-        booleanName as string,
-      )} = :${booleanName as string}`;
+        booleanName,
+      )} = :${booleanName}`;
       const whereParams = {
         [booleanName]: booleanKeyValue,
       };

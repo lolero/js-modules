@@ -1,5 +1,5 @@
 import { axiosRequest } from '@js-modules/common-utils-general';
-import {
+import type {
   NodeChainsGetIconMetadataServiceResponse,
   NodeChainsGetManyServiceResponse,
 } from './nodeChains.services.types';

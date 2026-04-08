@@ -1,5 +1,5 @@
-import React from 'react';
 import Box from '@mui/material/Box';
+import type React from 'react';
 import { useSearchParamLogDate } from '@js-modules/apps-travel-log-common-utils';
 import {
   SearchParamPaginationKeys,
@@ -10,10 +10,8 @@ import { LogPagination } from './LogPagination';
 export const LogWorkspaceContentBox: React.FC = () => {
   const logDate = useSearchParamLogDate();
 
-  const {
-    [SearchParamPaginationKeys.pageNumber]: pageNumber,
-    [SearchParamPaginationKeys.resultsPerPage]: resultsPerPage,
-  } = useSearchParamsPagination();
+  const { [SearchParamPaginationKeys.pageNumber]: pageNumber } =
+    useSearchParamsPagination();
 
   return (
     <Box>

@@ -55,7 +55,10 @@ export type Request<RequestMetadataT extends RequestMetadata> = {
   subRequests?: SubRequest[];
 };
 
-export type Entity = Record<string, unknown> & {
+// @typescript-eslint/no-explicit-any disabled because this must be a
+// generic type that all entities extend
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type Entity = Record<string, any> & {
   __edges__?: Record<string, string[] | null>;
 };
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { DappRoutes } from './DappRoutes';
 

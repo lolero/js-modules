@@ -1,10 +1,10 @@
-import {
+import type { MetaMaskInpageProvider } from '@metamask/providers';
+import type { BrowserProvider } from 'ethers';
+import type {
   Entity,
   Reducer,
   ReducerMetadata,
 } from '@js-modules/common-redux-utils-normalized-reducers';
-import { BrowserProvider } from 'ethers';
-import { MetaMaskInpageProvider } from '@metamask/providers';
 
 export enum WalletType {
   metamask = 'metamask',

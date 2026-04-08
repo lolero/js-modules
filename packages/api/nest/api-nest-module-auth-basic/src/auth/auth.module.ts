@@ -1,9 +1,9 @@
 import { DynamicModule, MiddlewareConsumer, Module } from '@nestjs/common';
 import { AuthModuleMetadata } from '@js-modules/api-nest-utils';
-import { AuthService } from './auth.service';
-import { AuthUsersService } from './auth.types';
 import { AuthController } from './auth.controller';
 import { AuthMiddlewareCurrentUser } from './auth.middleware.currentUser';
+import { AuthService } from './auth.service';
+import { AuthUsersService } from './auth.types';
 
 @Module({})
 export class AuthModule {

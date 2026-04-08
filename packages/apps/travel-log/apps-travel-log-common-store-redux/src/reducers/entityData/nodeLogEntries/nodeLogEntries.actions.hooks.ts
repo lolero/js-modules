@@ -1,37 +1,12 @@
-import { useDispatch } from 'react-redux';
 import { useCallback, useState } from 'react';
-import {
+import { useDispatch } from 'react-redux';
+import type {
   Request,
   UseCallback,
   UseRequestEntities,
   UseRequestEntity,
   UseRequestReducerMetadata,
 } from '@js-modules/common-redux-utils-normalized-reducers';
-import {
-  NODE_LOG_ENTRIES__CREATE_ONE__REQUEST_ID,
-  NODE_LOG_ENTRIES__DELETE_MANY__REQUEST_ID,
-  NODE_LOG_ENTRIES__DELETE_ONE__REQUEST_ID,
-  NODE_LOG_ENTRIES__UPDATE_MANY_PARTIAL_WITH_PATTERN__REQUEST_ID,
-  NODE_LOG_ENTRIES__UPDATE_ONE_PARTIAL__REQUEST_ID,
-  NODE_LOG_ENTRIES__UPDATE_ONE_WHOLE__REQUEST_ID,
-  NodeLogEntriesClearReducerRequestsAction,
-  NodeLogEntriesCreateOneRequestAction,
-  NodeLogEntriesDeleteManyRequestAction,
-  NodeLogEntriesDeleteOneRequestAction,
-  NodeLogEntriesGetManyRequestAction,
-  NodeLogEntriesGetOneRequestAction,
-  NodeLogEntriesUpdateManyPartialWithPatternRequestAction,
-  NodeLogEntriesUpdateOnePartialRequestAction,
-  NodeLogEntriesUpdateOneWholeRequestAction,
-  NodeLogEntriesUpdatePartialReducerMetadataRequestAction,
-} from './nodeLogEntries.actions.types';
-import { NodeLogEntriesReducer, NodeLogEntry } from './nodeLogEntries.types';
-import {
-  useNodeLogEntriesEntities,
-  useNodeLogEntriesEntity,
-  useNodeLogEntriesReducerMetadata,
-  useNodeLogEntriesRequest,
-} from './nodeLogEntries.hooks';
 import {
   createNodeLogEntriesClearReducerRequestsAction,
   createNodeLogEntriesCreateOneRequestAction,
@@ -44,7 +19,37 @@ import {
   createNodeLogEntriesUpdateOneWholeRequestAction,
   createNodeLogEntriesUpdatePartialReducerMetadataRequestAction,
 } from './nodeLogEntries.actions.creators';
+import type {
+  NodeLogEntriesClearReducerRequestsAction,
+  NodeLogEntriesCreateOneRequestAction,
+  NodeLogEntriesDeleteManyRequestAction,
+  NodeLogEntriesDeleteOneRequestAction,
+  NodeLogEntriesGetManyRequestAction,
+  NodeLogEntriesGetOneRequestAction,
+  NodeLogEntriesUpdateManyPartialWithPatternRequestAction,
+  NodeLogEntriesUpdateOnePartialRequestAction,
+  NodeLogEntriesUpdateOneWholeRequestAction,
+  NodeLogEntriesUpdatePartialReducerMetadataRequestAction,
+} from './nodeLogEntries.actions.types';
+import {
+  NODE_LOG_ENTRIES__CREATE_ONE__REQUEST_ID,
+  NODE_LOG_ENTRIES__DELETE_MANY__REQUEST_ID,
+  NODE_LOG_ENTRIES__DELETE_ONE__REQUEST_ID,
+  NODE_LOG_ENTRIES__UPDATE_MANY_PARTIAL_WITH_PATTERN__REQUEST_ID,
+  NODE_LOG_ENTRIES__UPDATE_ONE_PARTIAL__REQUEST_ID,
+  NODE_LOG_ENTRIES__UPDATE_ONE_WHOLE__REQUEST_ID,
+} from './nodeLogEntries.actions.types';
+import {
+  useNodeLogEntriesEntities,
+  useNodeLogEntriesEntity,
+  useNodeLogEntriesReducerMetadata,
+  useNodeLogEntriesRequest,
+} from './nodeLogEntries.hooks';
 import { getPkOfNodeLogEntry } from './nodeLogEntries.pkUtils';
+import type {
+  NodeLogEntriesReducer,
+  NodeLogEntry,
+} from './nodeLogEntries.types';
 
 export function useNodeLogEntriesClearReducerRequests(): UseCallback<
   (requestIds: NodeLogEntriesClearReducerRequestsAction['requestIds']) => void

@@ -1,8 +1,9 @@
-import React, { forwardRef } from 'react';
-import { SvgIcon, SvgIconProps } from '@mui/material';
-import { FontAwesomeIconProps } from '@fortawesome/react-fontawesome';
-import clsx from 'clsx';
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import type { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import type { FontAwesomeIconProps } from '@fortawesome/react-fontawesome';
+import type { SvgIconProps } from '@mui/material';
+import { SvgIcon } from '@mui/material';
+import { clsx } from 'clsx';
+import { forwardRef } from 'react';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 
 export type MuiFaIconProps = Omit<SvgIconProps, 'viewBox'> &
@@ -30,7 +31,7 @@ export type MuiFaIconProps = Omit<SvgIconProps, 'viewBox'> &
   };
 
 export const MuiFaIcon = forwardRef<SVGSVGElement, MuiFaIconProps>(
-  (props, ref) => {
+  function MuiFaIcon(props, ref) {
     const {
       className,
       beat,
@@ -86,14 +87,17 @@ export const MuiFaIcon = forwardRef<SVGSVGElement, MuiFaIconProps>(
           spinReverse && 'fa-spin fa-spin-reverse',
           swapOpacity && 'fa-swap-opacity',
         )}
-        // eslint-disable-next-line react/jsx-props-no-spreading
         {...muiProps}
       >
         {typeof svgPathData === 'string' ? (
           <path d={svgPathData} />
         ) : (
           svgPathData.map((d: string, i: number) => (
-            <path style={{ opacity: i === 0 ? 0.4 : 1 }} d={d} />
+            <path
+              key={`${d}-${i}`}
+              style={{ opacity: i === 0 ? 0.4 : 1 }}
+              d={d}
+            />
           ))
         )}
       </SvgIcon>

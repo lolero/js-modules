@@ -1,8 +1,8 @@
-import { Address } from '@js-modules/common-utils-general';
 import _isEmpty from 'lodash/isEmpty';
 import pickBy from 'lodash/pickBy';
 import isEmpty from 'validator/lib/isEmpty';
-import { FormErrors } from '../../hooks/hooksMaterialUi/useFormUtils';
+import type { FormErrors } from '@js-modules/common-react-utils';
+import type { Address } from '@js-modules/common-utils-general';
 
 export function validateAddress(
   address: Address,

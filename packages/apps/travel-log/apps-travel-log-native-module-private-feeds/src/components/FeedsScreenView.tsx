@@ -1,10 +1,10 @@
-import React from 'react';
+import type React from 'react';
 import { View } from 'react-native';
 import { Icon, Text } from 'react-native-paper';
+import { WebModulesPrivate } from '@js-modules/apps-travel-log-common-constants';
+import { routesMetadataPrivate } from '@js-modules/apps-travel-log-common-react';
 import { useStateSettingsReducerMetadata } from '@js-modules/apps-travel-log-common-store-redux';
 import { NativeFaIcon } from '@js-modules/native-react-utils';
-import { routesMetadataPrivate } from '@js-modules/apps-travel-log-common-react';
-import { WebModulesPrivate } from '@js-modules/apps-travel-log-common-constants';
 
 export const FeedsScreenView: React.FC = () => {
   const { profile } = useStateSettingsReducerMetadata();

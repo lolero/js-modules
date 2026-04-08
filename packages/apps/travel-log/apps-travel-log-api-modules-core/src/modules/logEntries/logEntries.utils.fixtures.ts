@@ -1,9 +1,9 @@
 import { utilGetFindManyDtoFixture } from '@js-modules/api-nest-utils';
 import { getUsersEntityFixture } from '../users/users.utils.fixtures';
-import { LogEntriesFindManyDto } from './dtos/logEntries.findMany.dto';
-import { LogEntriesUpdateOnePartialDto } from './dtos/logEntries.updateOnePartial.dto';
-import { LogEntriesEntity } from './logEntries.entity';
-import { LogEntriesEntityType } from './logEntries.types';
+import type { LogEntriesFindManyDto } from './dtos/logEntries.findMany.dto';
+import type { LogEntriesUpdateOnePartialDto } from './dtos/logEntries.updateOnePartial.dto';
+import type { LogEntriesEntity } from './logEntries.entity';
+import type { LogEntriesEntityType } from './logEntries.types';
 
 export function getLogEntriesEntityFixture(
   overrides: Partial<LogEntriesEntityType> = {},
@@ -19,7 +19,7 @@ export function getLogEntriesEntityFixture(
 
   const logEntriesEntity = Object.assign(logEntriesEntityDefault, overrides);
 
-  return logEntriesEntity as LogEntriesEntity;
+  return logEntriesEntity;
 }
 
 export function getLogEntriesFindManyDtoFixture(

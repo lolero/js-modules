@@ -4,15 +4,12 @@ import {
   handleSaveNothing,
   handleSavePartialReducerMetadata,
 } from '@js-modules/common-redux-utils-normalized-reducers';
-import { StateAuthReducer } from './stateAuth.types';
+import type { StateAuthReducerHittingAction } from './stateAuth.actions.types';
+import { StateAuthActionTypes } from './stateAuth.actions.types';
 import { stateAuthInitialState } from './stateAuth.initialState';
-import {
-  StateAuthActionTypes,
-  StateAuthReducerHittingAction,
-} from './stateAuth.actions.types';
+import type { StateAuthReducer } from './stateAuth.types';
 
 export function stateAuthReducer(
-  // eslint-disable-next-line default-param-last
   state: StateAuthReducer = stateAuthInitialState,
   action: StateAuthReducerHittingAction,
 ): StateAuthReducer {

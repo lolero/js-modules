@@ -1,5 +1,9 @@
-import { NodeChain, NodeChainRaw, NodeChainsReducer } from './nodeChains.types';
 import { getPkOfNodeChain } from './nodeChains.pkUtils';
+import type {
+  NodeChain,
+  NodeChainRaw,
+  NodeChainsReducer,
+} from './nodeChains.types';
 
 export function normalizeNodeChainsRawArray(
   nodeChainsRaw: NodeChainRaw[],

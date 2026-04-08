@@ -1,17 +1,19 @@
-import { Repository } from 'typeorm';
-import { Test, TestingModule } from '@nestjs/testing';
+import { beforeEach, describe, expect, it, jest } from '@jest/globals';
+import type { TestingModule } from '@nestjs/testing';
+import { Test } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { KeycloakTokenParsed } from 'keycloak-js';
-import { UserRepresentation } from '@js-modules/api-nest-keycloak-admin-client-cjs';
+import type { KeycloakTokenParsed } from 'keycloak-js';
+import type { Repository } from 'typeorm';
+import type { UserRepresentation } from '@js-modules/api-nest-keycloak-admin-client-cjs';
+import type { UsersUpdateOnePartialDto } from './dtos/users.updateOnePartial.dto';
 import { UsersEntity } from './users.entity';
 import { UsersServiceUtils } from './users.service.utils';
 import { getUsersEntityFixture } from './users.utils.fixtures';
-import { UsersUpdateOnePartialDto } from './dtos/users.updateOnePartial.dto';
 
 describe('UsersServiceUtils', () => {
   let usersRepositoryFindOneByMockReturnValue: UsersEntity | null;
   let usersRepositoryFindOneByMock: jest.Mock;
-  let usersRepositoryMock: Partial<Repository<UsersEntity>>;
+  let usersRepositoryMock: Repository<UsersEntity>;
 
   let usersServiceUtils: UsersServiceUtils;
 
@@ -19,7 +21,7 @@ describe('UsersServiceUtils', () => {
     usersRepositoryFindOneByMock = jest.fn();
     usersRepositoryMock = {
       findOneBy: usersRepositoryFindOneByMock,
-    };
+    } as unknown as Repository<UsersEntity>;
 
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -43,9 +45,8 @@ describe('UsersServiceUtils', () => {
         usersRepositoryFindOneByMockReturnValue,
       );
 
-      const isValidUsername = await usersServiceUtils.validateUsername(
-        testUsername,
-      );
+      const isValidUsername =
+        await usersServiceUtils.validateUsername(testUsername);
 
       expect(usersRepositoryFindOneByMock).toHaveBeenNthCalledWith(1, {
         username: testUsername,
@@ -59,9 +60,8 @@ describe('UsersServiceUtils', () => {
         usersRepositoryFindOneByMockReturnValue,
       );
 
-      const isValidUsername = await usersServiceUtils.validateUsername(
-        testUsername,
-      );
+      const isValidUsername =
+        await usersServiceUtils.validateUsername(testUsername);
 
       expect(usersRepositoryFindOneByMock).toHaveBeenNthCalledWith(1, {
         username: testUsername,
@@ -86,13 +86,13 @@ describe('UsersServiceUtils', () => {
         usersServiceUtils.getKeycloakUserFromTokenParsed(keycloakTokenParsed);
 
       expect(keycloakUser).toEqual({
-        keycloakId: keycloakTokenParsed.sub,
-        username: keycloakTokenParsed.preferred_username,
-        email: keycloakTokenParsed.email,
-        phoneNumber: keycloakTokenParsed.phone_number,
-        firstName: keycloakTokenParsed.given_name,
-        middleName: keycloakTokenParsed.middle_name,
-        lastName: keycloakTokenParsed.family_name,
+        keycloakId: keycloakTokenParsed.sub!,
+        username: keycloakTokenParsed.preferred_username as string,
+        email: keycloakTokenParsed.email as string,
+        phoneNumber: keycloakTokenParsed.phone_number as string,
+        firstName: keycloakTokenParsed.given_name as string,
+        middleName: keycloakTokenParsed.middle_name as string,
+        lastName: keycloakTokenParsed.family_name as string,
       });
     });
   });
@@ -171,9 +171,8 @@ describe('UsersServiceUtils', () => {
         usersRepositoryFindOneByMockReturnValue,
       );
 
-      const isValidPhoneNumber = await usersServiceUtils.validatePhoneNumber(
-        testPhoneNumber,
-      );
+      const isValidPhoneNumber =
+        await usersServiceUtils.validatePhoneNumber(testPhoneNumber);
 
       expect(usersRepositoryFindOneByMock).toHaveBeenNthCalledWith(1, {
         phoneNumber: testPhoneNumber,
@@ -187,9 +186,8 @@ describe('UsersServiceUtils', () => {
         usersRepositoryFindOneByMockReturnValue,
       );
 
-      const isValidPhoneNumber = await usersServiceUtils.validatePhoneNumber(
-        testPhoneNumber,
-      );
+      const isValidPhoneNumber =
+        await usersServiceUtils.validatePhoneNumber(testPhoneNumber);
 
       expect(usersRepositoryFindOneByMock).toHaveBeenNthCalledWith(1, {
         phoneNumber: testPhoneNumber,

@@ -1,40 +1,50 @@
-import { Test } from '@nestjs/testing';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  jest as jestGlobals,
+} from '@jest/globals';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
+import { Test } from '@nestjs/testing';
 import { AUTH_USERS_SERVICE } from '@js-modules/api-nest-utils';
+import type { AuthDtoSignin } from './auth.dto.signin';
+import type { AuthDtoSignup } from './auth.dto.signup';
 import { AuthService } from './auth.service';
-import { AuthUsersEntity, AuthUsersService } from './auth.types';
-import { AuthDtoSignup } from './auth.dto.signup';
+import type { AuthUsersEntity, AuthUsersService } from './auth.types';
+import { authUtilScrypt } from './auth.util.scrypt';
+import { authUtilValidatePassword } from './auth.util.validatePassword';
 import {
   getAuthDtoSigninFixture,
   getAuthDtoSignupFixture,
   getAuthUserEntityFixture,
 } from './auth.utils.fixtures';
-import { AuthDtoSignin } from './auth.dto.signin';
-import { authUtilValidatePassword } from './auth.util.validatePassword';
-import { authUtilScrypt } from './auth.util.scrypt';
 
 jest.mock('./auth.util.scrypt');
 jest.mock('./auth.util.validatePassword');
 
 describe('AuthService', () => {
-  const authUtilScryptMock = jest.mocked(authUtilScrypt);
-  const authUtilValidatePasswordMock = jest.mocked(authUtilValidatePassword);
+  const authUtilScryptMock = jestGlobals.mocked(authUtilScrypt);
+  const authUtilValidatePasswordMock = jestGlobals.mocked(
+    authUtilValidatePassword,
+  );
 
   let testAuthDtoSignup: AuthDtoSignup;
 
-  let authUsersServiceCreateManyMock: jest.Mock;
-  let authUsersServiceFindOneMock: jest.Mock;
-  let authUsersServiceMock: Partial<AuthUsersService>;
+  let authUsersServiceCreateManyMock: jestGlobals.Mock;
+  let authUsersServiceFindOneMock: jestGlobals.Mock;
+  let authUsersServiceMock: AuthUsersService;
 
   let authService: AuthService;
 
   beforeEach(async () => {
-    authUsersServiceCreateManyMock = jest.fn();
-    authUsersServiceFindOneMock = jest.fn();
+    authUsersServiceCreateManyMock = jestGlobals.fn();
+    authUsersServiceFindOneMock = jestGlobals.fn();
     authUsersServiceMock = {
       createMany: authUsersServiceCreateManyMock,
       findOne: authUsersServiceFindOneMock,
-    };
+    } as unknown as AuthUsersService;
 
     const module = await Test.createTestingModule({
       providers: [
@@ -54,7 +64,7 @@ describe('AuthService', () => {
     authUtilValidatePasswordMock.mockRestore();
   });
 
-  it('Should create an instance of AuthService', async () => {
+  it('Should create an instance of AuthService', () => {
     expect(authService).toBeDefined();
   });
 

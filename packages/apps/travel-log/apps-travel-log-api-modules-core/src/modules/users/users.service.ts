@@ -1,25 +1,26 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+import type { KeycloakTokenParsed } from 'keycloak-js' with {
+  'resolution-mode': 'import',
+};
+import keys from 'lodash/keys';
+import { Repository } from 'typeorm';
+import { KeycloakAdminClient } from '@js-modules/api-nest-keycloak-admin-client-cjs';
+import {
+  AuthUsersService,
+  KEYCLOAK_ADMIN_CLIENT,
+} from '@js-modules/api-nest-module-auth-keycloak';
 import {
   EntityUniqueKeyValue,
   FindManyResponse,
   utilApplyFindManyFiltersToQuery,
   utilApplyFindManySortingAndPaginationToQuery,
 } from '@js-modules/api-nest-utils';
-import {
-  AuthUsersService,
-  KEYCLOAK_ADMIN_CLIENT,
-} from '@js-modules/api-nest-module-auth-keycloak';
-import { KeycloakTokenParsed } from 'keycloak-js';
-import { KeycloakAdminClient } from '@js-modules/api-nest-keycloak-admin-client-cjs';
-import keys from 'lodash/keys';
-import entries from 'lodash/entries';
-import { UsersEntity } from './users.entity';
-import { UsersUniqueKeyName } from './users.types';
 import { UsersFindManyDto } from './dtos/users.findMany.dto';
-import { UsersServiceUtils } from './users.service.utils';
 import { UsersUpdateOnePartialDto } from './dtos/users.updateOnePartial.dto';
+import { UsersEntity } from './users.entity';
+import { UsersServiceUtils } from './users.service.utils';
+import { UsersUniqueKeyName } from './users.types';
 
 @Injectable()
 export class UsersService implements AuthUsersService {
@@ -44,7 +45,7 @@ export class UsersService implements AuthUsersService {
     });
 
     if (!usersEntity) {
-      usersEntity = await this.usersRepository.create(keycloakUser);
+      usersEntity = this.usersRepository.create(keycloakUser);
       usersEntity = await this.usersRepository.save(usersEntity);
       return usersEntity;
     }
@@ -104,23 +105,22 @@ export class UsersService implements AuthUsersService {
     usersEntityCurrent: UsersEntity,
   ): Promise<UsersEntity> {
     let isUsersEntityFieldChanged = false;
-    entries(usersUpdateOnePartialDto).forEach(
-      ([usersEntityKey, usersEntityValue]) => {
-        const usersEntityCurrentValue =
-          usersEntityCurrent[usersEntityKey as keyof UsersEntity];
-        if (
-          usersEntityValue === undefined ||
-          usersEntityCurrentValue === usersEntityValue
-        ) {
-          return;
-        }
+    (
+      keys(usersUpdateOnePartialDto) as (keyof UsersEntity &
+        keyof UsersUpdateOnePartialDto)[]
+    ).forEach((usersEntityKey) => {
+      const usersEntityValue = usersUpdateOnePartialDto[usersEntityKey];
+      const usersEntityCurrentValue = usersEntityCurrent[usersEntityKey];
+      if (
+        usersEntityValue === undefined ||
+        usersEntityCurrentValue === usersEntityValue
+      ) {
+        return;
+      }
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        usersEntityCurrent[usersEntityKey] = usersEntityValue;
-        isUsersEntityFieldChanged = true;
-      },
-    );
+      usersEntityCurrent[usersEntityKey] = usersEntityValue;
+      isUsersEntityFieldChanged = true;
+    });
 
     if (!isUsersEntityFieldChanged) {
       return usersEntityCurrent;
@@ -142,9 +142,8 @@ export class UsersService implements AuthUsersService {
       },
       updatedKeycloakUserRepresentation,
     );
-    const usersEntityUpdated = await this.usersRepository.save(
-      usersEntityCurrent,
-    );
+    const usersEntityUpdated =
+      await this.usersRepository.save(usersEntityCurrent);
 
     return usersEntityUpdated;
   }

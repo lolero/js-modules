@@ -1,29 +1,28 @@
-import React, { useEffect, useMemo } from 'react';
-import { PrivateWorkspaceBox } from '@js-modules/apps-travel-log-web-workspace-private';
+import CircularProgress from '@mui/material/CircularProgress';
+import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
+import type React from 'react';
+import { useEffect, useMemo } from 'react';
+import { useParams } from 'react-router-dom';
 import {
   WebModulesPrivate,
   WebSubModulesLog,
   WebSubModulesLogLogEntry,
 } from '@js-modules/apps-travel-log-common-constants';
-import { useParams } from 'react-router-dom';
+import { routesMetadataPrivate } from '@js-modules/apps-travel-log-common-react';
+import type { NodeLogEntry } from '@js-modules/apps-travel-log-common-store-redux';
 import {
-  NodeLogEntry,
   nodeLogEntryUnsavedEmpty,
   useNodeLogEntriesEntity,
   useNodeLogEntriesGetOne,
   useNodeLogEntriesUpdatePartialReducerMetadata,
   useNodeLogEntriesValidateNodeLogEntryUnsaved,
 } from '@js-modules/apps-travel-log-common-store-redux';
-import isUndefined from 'lodash/isUndefined';
-import CircularProgress from '@mui/material/CircularProgress';
-import isNull from 'lodash/isNull';
-import { routesMetadataPrivate } from '@js-modules/apps-travel-log-common-react';
-import { LogLogEntryAddEditWorkspaceTopToolbar } from './LogLogEntryAddEditWorkspaceTopToolbar';
+import { PrivateWorkspaceBox } from '@js-modules/apps-travel-log-web-workspace-private';
+import type { LogLogEntryAddEditContextValue } from './LogLogEntryAddEditContext';
+import { LogLogEntryAddEditContext } from './LogLogEntryAddEditContext';
 import { LogLogEntryAddEditWorkspaceContentBox } from './LogLogEntryAddEditWorkspaceContentBox';
-import {
-  LogLogEntryAddEditContext,
-  LogLogEntryAddEditContextValue,
-} from './LogLogEntryAddEditContext';
+import { LogLogEntryAddEditWorkspaceTopToolbar } from './LogLogEntryAddEditWorkspaceTopToolbar';
 
 export const LogLogEntryAddEditWorkspaceBox: React.FC = () => {
   const { logEntryId } = useParams();

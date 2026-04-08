@@ -1,14 +1,10 @@
 {
-  "private": true,
   "name": "@js-modules/apps-dapp-web",
-  "description": "Apps Dapp Web",
   "version": "0.0.0",
+  "private": true,
+  "description": "Apps Dapp Web",
   "license": "MIT",
-  "scripts": {
-    "dev:dapp-web": "vite",
-    "build": "tsc -b tsconfig.build.json && vite build",
-    "preview": "vite preview"
-  },
+  "scripts": {},
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
@@ -24,18 +20,17 @@
     "@js-modules/common-utils-general": "workspace:^",
     "@js-modules/web-react-nav": "workspace:^",
     "@js-modules/web-react-utils": "workspace:^",
-    "@mui/icons-material": "^7.3.9",
-    "@mui/material": "^7.3.9",
+    "@mui/icons-material": "^9.0.0",
+    "@mui/material": "^9.0.0",
     "@types/lodash": "^4.17.24",
-    "@types/react": "^19.2.14",
+    "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "@vitejs/plugin-react": "^6.0.1",
-    "lodash": "^4.17.23",
-    "react": "19.2.4",
-    "react-dom": "19.2.4",
-    "react-router-dom": "^7.13.1",
-    "vite": "^8.0.0",
-    "vite-plugin-svgr": "^4.5.0",
-    "vite-tsconfig-paths": "6.1.1"
+    "lodash": "^4.18.1",
+    "react": "19.2.5",
+    "react-dom": "19.2.5",
+    "react-router-dom": "^7.14.2",
+    "vite": "^8.0.10",
+    "vite-plugin-svgr": "^5.2.0"
   }
 }

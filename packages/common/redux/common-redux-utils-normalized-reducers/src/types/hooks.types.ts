@@ -1,4 +1,4 @@
-import {
+import type {
   Entity,
   Reducer,
   ReducerMetadata,
@@ -26,7 +26,7 @@ export type ReducerHooks<
   useReducerConfig: () => Reducer<ReducerMetadataT, EntityT>['config'];
 };
 
-export type UseCallback<CallbackT extends (...args: any[]) => void> = Pick<
+export type UseCallback<CallbackT extends (...args: never[]) => void> = Pick<
   UseReducerRequest<RequestMetadata, never, never, CallbackT>,
   'callback'
 >;
@@ -35,7 +35,7 @@ export type UseReducerRequest<
   RequestMetadataT extends RequestMetadata,
   ReducerMetadataT extends ReducerMetadata,
   EntityT extends Entity,
-  CallbackT extends (...args: any[]) => void,
+  CallbackT extends (...args: never[]) => void,
 > = {
   request?: Request<RequestMetadataT>;
   reducerMetadata: ReducerMetadataT;
@@ -46,7 +46,7 @@ export type UseReducerRequest<
 
 export type UseRequestVoid<
   RequestMetadataT extends RequestMetadata,
-  CallbackT extends (...args: any[]) => void,
+  CallbackT extends (...args: never[]) => void,
 > = Pick<
   UseReducerRequest<RequestMetadataT, never, never, CallbackT>,
   'request' | 'callback'
@@ -55,7 +55,7 @@ export type UseRequestVoid<
 export type UseRequestReducerMetadata<
   RequestMetadataT extends RequestMetadata,
   ReducerMetadataT extends ReducerMetadata,
-  CallbackT extends (...args: any[]) => void,
+  CallbackT extends (...args: never[]) => void,
 > = Pick<
   UseReducerRequest<RequestMetadataT, ReducerMetadataT, never, CallbackT>,
   'request' | 'reducerMetadata' | 'callback'
@@ -65,7 +65,7 @@ export type UseRequestEntities<
   RequestMetadataT extends RequestMetadata,
   ReducerMetadataT extends ReducerMetadata,
   EntityT extends Entity,
-  CallbackT extends (...args: any[]) => void,
+  CallbackT extends (...args: never[]) => void,
 > = Pick<
   UseReducerRequest<RequestMetadataT, ReducerMetadataT, EntityT, CallbackT>,
   'request' | 'reducerMetadata' | 'entities' | 'callback'
@@ -75,7 +75,7 @@ export type UseRequestEntity<
   RequestMetadataT extends RequestMetadata,
   ReducerMetadataT extends ReducerMetadata,
   EntityT extends Entity,
-  CallbackT extends (...args: any[]) => void,
+  CallbackT extends (...args: never[]) => void,
 > = Pick<
   UseReducerRequest<RequestMetadataT, ReducerMetadataT, EntityT, CallbackT>,
   'request' | 'reducerMetadata' | 'entity' | 'callback'

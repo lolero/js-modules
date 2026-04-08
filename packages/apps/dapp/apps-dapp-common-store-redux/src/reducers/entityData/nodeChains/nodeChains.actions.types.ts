@@ -1,10 +1,10 @@
-import {
+import type {
   FailAction,
   GetManyEntitiesRequestMetadata,
   RequestAction,
   SaveWholeEntitiesAction,
 } from '@js-modules/common-redux-utils-normalized-reducers';
-import { NodeChain, NodeChainsReducer } from './nodeChains.types';
+import type { NodeChain, NodeChainsReducer } from './nodeChains.types';
 
 export enum NodeChainsActionTypes {
   NODE_CHAINS__GET_MANY__REQUEST = 'NODE_CHAINS__GET_MANY__REQUEST',

@@ -1,4 +1,4 @@
-import { FindManyDto, RequestEntity } from '../types/types.requests';
+import type { FindManyDto, RequestEntity } from '../types/types.requests';
 
 export function utilGetFindManyDtoFixture<
   EntityT extends RequestEntity,
@@ -11,7 +11,7 @@ export function utilGetFindManyDtoFixture<
   const requestsDtoQueryParamsFindMany = Object.assign(
     requestsDtoQueryParamsFindManyDefault,
     overrides,
-  ) as FindManyDtoT;
+  );
 
   return requestsDtoQueryParamsFindMany;
 }

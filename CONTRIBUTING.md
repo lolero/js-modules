@@ -3,7 +3,7 @@
 ## Setup
 
 ```bash
-pnpm reset:install    # Install JS + Python dependencies
+pnpm reset:install # Install JS + Python dependencies
 ```
 
 ## Pull Requests
@@ -11,7 +11,7 @@ pnpm reset:install    # Install JS + Python dependencies
 1. Create a feature branch from `main`
 2. Make your changes
 3. Run `pnpm lint:fix` before committing
-4. Run `pnpm nx run-many -t test:test` to verify tests pass
+4. Run `pnpm nx run-many -t test` to verify tests pass
 5. Submit PR with a clear description
 
 ## Commit Conventions

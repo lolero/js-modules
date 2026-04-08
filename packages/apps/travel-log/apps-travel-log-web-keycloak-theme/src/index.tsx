@@ -1,9 +1,9 @@
-import { createRoot } from 'react-dom/client';
-import React, { StrictMode } from 'react';
-import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { materialUiThemes } from '@js-modules/apps-travel-log-web-utils';
+import { ThemeProvider } from '@mui/material/styles';
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
 import { ThemePalette } from '@js-modules/apps-travel-log-common-constants/src/constants/theme.constants';
+import { materialUiThemes } from '@js-modules/apps-travel-log-web-utils';
 import { KcPage } from './kc.gen';
 
 // The following block can be uncommented to test a specific page with `yarn dev`

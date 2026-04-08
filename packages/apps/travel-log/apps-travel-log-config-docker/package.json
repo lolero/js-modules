@@ -1,0 +1,8 @@
+{
+  "name": "@js-modules/apps-travel-log-config-docker",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Apps Travel Log Config Docker",
+  "license": "MIT",
+  "scripts": {}
+}

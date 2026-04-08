@@ -3,15 +3,12 @@ import {
   handleRequest,
   handleSavePartialReducerMetadata,
 } from '@js-modules/common-redux-utils-normalized-reducers';
-import { StateWeb3Reducer } from './stateWeb3.types';
+import type { StateWeb3ReducerHittingAction } from './stateWeb3.actions.types';
+import { StateWeb3ActionTypes } from './stateWeb3.actions.types';
 import { stateWeb3InitialState } from './stateWeb3.initialState';
-import {
-  StateWeb3ActionTypes,
-  StateWeb3ReducerHittingAction,
-} from './stateWeb3.actions.types';
+import type { StateWeb3Reducer } from './stateWeb3.types';
 
 export function stateWeb3Reducer(
-  // eslint-disable-next-line default-param-last
   state: StateWeb3Reducer = stateWeb3InitialState,
   action: StateWeb3ReducerHittingAction,
 ): StateWeb3Reducer {

@@ -1,12 +1,4 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { JestConfigWithTsJest } from 'ts-jest';
-// eslint-disable-next-line import/no-relative-packages
-import { jestConfigCommon } from '../../../../jest.config-common';
+/** @jest-config-loader esbuild-register */
+import { createJestConfig } from '../../../../scripts/jest/jest.configs';
 
-const jestConfigProject: JestConfigWithTsJest = {
-  ...jestConfigCommon,
-  testEnvironment: 'jsdom',
-  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
-};
-
-export default jestConfigProject;
+export default createJestConfig(__dirname);

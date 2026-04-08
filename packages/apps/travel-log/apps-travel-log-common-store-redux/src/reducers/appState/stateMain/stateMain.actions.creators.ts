@@ -1,10 +1,10 @@
 import { v4 as uuidv4 } from 'uuid';
-import {
-  StateMainActionTypes,
+import type {
   StateMainUpdatePartialReducerMetadataFailAction,
   StateMainUpdatePartialReducerMetadataRequestAction,
   StateMainUpdatePartialReducerMetadataSuccessAction,
 } from './stateMain.actions.types';
+import { StateMainActionTypes } from './stateMain.actions.types';
 
 export function createStateMainUpdatePartialReducerMetadataRequestAction(
   partialReducerMetadata: StateMainUpdatePartialReducerMetadataRequestAction['requestMetadata']['partialReducerMetadata'],

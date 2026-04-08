@@ -1,51 +1,67 @@
+// once TS supports ${configDir} outside compilerOptions, move exclude and
+// files from tsconfig.build.json and tsconfig.json to
+// tsconfig.hardhat.build.json and tsconfig.hardhat.json mixins
+// Same for vite packages
+// https://github.com/microsoft/TypeScript/issues/56436
+// TODO: monitor ${configDir} support (see above)
+import hardhatEthers from '@nomicfoundation/hardhat-ethers';
+import hardhatEthersChaiMatchers from '@nomicfoundation/hardhat-ethers-chai-matchers';
+import hardhatMocha from '@nomicfoundation/hardhat-mocha';
+import hardhatVerify from '@nomicfoundation/hardhat-verify';
 import * as dotenv from 'dotenv';
-
-import { HardhatUserConfig, task } from 'hardhat/config';
-import '@nomiclabs/hardhat-etherscan';
-import '@nomiclabs/hardhat-waffle';
-import '@typechain/hardhat';
-import 'hardhat-gas-reporter';
-import 'solidity-coverage';
+import type { HardhatUserConfig } from 'hardhat/config';
+import { defineConfig, task } from 'hardhat/config';
+import type { HardhatPlugin } from 'hardhat/types/plugins';
 
 dotenv.config();
 
-// This is a sample Hardhat task. To learn how to create your own go to
-// https://hardhat.org/guides/create-task.html
-task('accounts', 'Prints the list of accounts', async (taskArgs, hre) => {
-  const accounts = await hre.ethers.getSigners();
+const pluginAccounts: HardhatPlugin = {
+  id: 'local:accounts',
+  tasks: [
+    task('accounts', 'Prints the list of accounts')
+      .setAction(async () => import('./src/tasks/accounts.js'))
+      .build(),
+  ],
+};
 
-  // eslint-disable-next-line no-console
-  accounts.forEach((account) => console.log(account.address));
-});
-
-// You need to export an object to set up your config
-// Go to https://hardhat.org/config/ to learn more
-
-const config: HardhatUserConfig = {
-  solidity: '0.8.4',
-  networks: {
-    ropsten: {
-      url: process.env.ROPSTEN_URL || '',
-      accounts:
-        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+const hardhatUserConfig: HardhatUserConfig = defineConfig({
+  plugins: [
+    hardhatEthers,
+    hardhatEthersChaiMatchers,
+    hardhatMocha,
+    hardhatVerify,
+    pluginAccounts,
+  ],
+  solidity: '0.8.28',
+  ...(process.env.ROPSTEN_URL && {
+    networks: {
+      ropsten: {
+        type: 'http',
+        url: process.env.ROPSTEN_URL,
+        accounts:
+          process.env.PRIVATE_KEY !== undefined
+            ? [process.env.PRIVATE_KEY]
+            : [],
+      },
     },
-  },
-  gasReporter: {
-    enabled: process.env.REPORT_GAS !== undefined,
-    currency: 'USD',
-  },
-  etherscan: {
-    apiKey: process.env.ETHERSCAN_API_KEY,
-  },
+  }),
+  ...(process.env.ETHERSCAN_API_KEY && {
+    verify: {
+      etherscan: {
+        apiKey: process.env.ETHERSCAN_API_KEY,
+      },
+    },
+  }),
   paths: {
     sources: 'src/contracts',
-    tests: 'src/contracts/__soltests__',
     cache: 'build/cache',
     artifacts: 'build/artifacts',
   },
-  typechain: {
-    outDir: 'build/types',
+  test: {
+    mocha: {
+      spec: ['src/**/*.soltest.ts', 'src/**/__soltests__/**/*.ts'],
+    },
   },
-};
+});
 
-export default config;
+export default hardhatUserConfig;

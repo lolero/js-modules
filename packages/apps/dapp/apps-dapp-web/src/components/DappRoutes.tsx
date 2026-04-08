@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import type React from 'react';
+import { useEffect } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { WebModulesPrivate } from '@js-modules/apps-dapp-common-constants';
-import { useNodeChainsGetMany } from '@js-modules/apps-dapp-common-store-redux';
-import { WebPortfolioRoutes } from '@js-modules/apps-dapp-web-module-private-portfolio';
-import { WebAnalyticsRoutes } from '@js-modules/apps-dapp-web-module-private-analytics';
 import { routesMetadataPrivate } from '@js-modules/apps-dapp-common-react';
+import { useNodeChainsGetMany } from '@js-modules/apps-dapp-common-store-redux';
+import { WebAnalyticsRoutes } from '@js-modules/apps-dapp-web-module-private-analytics';
+import { WebPortfolioRoutes } from '@js-modules/apps-dapp-web-module-private-portfolio';
 
 export const DappRoutes: React.FunctionComponent = () => {
   const {

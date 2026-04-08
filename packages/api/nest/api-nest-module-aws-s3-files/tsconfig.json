@@ -1,7 +1,10 @@
 {
-  "extends": "../../../../tsconfig.json",
+  "extends": [
+    "../../../../tsconfig.json",
+    "../../../../scripts/tsconfig/tsconfig.nest.json"
+  ],
   "compilerOptions": {
-    "module": "commonjs"
+    "types": ["node", "jest", "multer"]
   },
   "include": ["src"]
 }

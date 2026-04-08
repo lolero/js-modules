@@ -3,9 +3,9 @@ name = "apps-langchain-1-basics"
 version = "0.0.0"
 requires-python = ">=3.11"
 dependencies = [
-    "langchain>=0.3.0",
-    "langchain-anthropic>=0.3.0",
-    "python-dotenv>=1.0.0",
+  "langchain>=0.3.0",
+  "langchain-anthropic>=0.3.0",
+  "python-dotenv>=1.0.0",
 ]
 
 [build-system]

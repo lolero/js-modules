@@ -1,20 +1,9 @@
-import {
+import { useCallback, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import type {
   Request,
   UseRequestReducerMetadata,
 } from '@js-modules/common-redux-utils-normalized-reducers';
-import { useDispatch } from 'react-redux';
-import { useCallback, useState } from 'react';
-import {
-  useStateSettingsReducerMetadata,
-  useStateSettingsRequest,
-} from './stateSettings.hooks';
-import {
-  StateSettingsGetProfileRequestAction,
-  StateSettingsResetPasswordRequestAction,
-  StateSettingsSignoutRequestAction,
-  StateSettingsUpdatePartialReducerMetadataRequestAction,
-} from './stateSettings.actions.types';
-import { StateSettingsReducer } from './stateSettings.types';
 import {
   createStateSettingsGetProfileRequestAction,
   createStateSettingsResetPasswordRequestAction,
@@ -24,6 +13,17 @@ import {
   STATE_SETTINGS__RESET_PASSWORD__REQUEST_ID,
   STATE_SETTINGS__SIGNOUT__REQUEST_ID,
 } from './stateSettings.actions.creators';
+import type {
+  StateSettingsGetProfileRequestAction,
+  StateSettingsResetPasswordRequestAction,
+  StateSettingsSignoutRequestAction,
+  StateSettingsUpdatePartialReducerMetadataRequestAction,
+} from './stateSettings.actions.types';
+import {
+  useStateSettingsReducerMetadata,
+  useStateSettingsRequest,
+} from './stateSettings.hooks';
+import type { StateSettingsReducer } from './stateSettings.types';
 
 export function useStateSettingsUpdatePartialReducerMetadata(): UseRequestReducerMetadata<
   StateSettingsUpdatePartialReducerMetadataRequestAction['requestMetadata'],

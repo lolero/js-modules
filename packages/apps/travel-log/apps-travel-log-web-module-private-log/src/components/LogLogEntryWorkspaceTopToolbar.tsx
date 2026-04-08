@@ -1,17 +1,18 @@
-import React, { useMemo } from 'react';
-import Button from '@mui/material/Button';
+import { faAngleLeft } from '@fortawesome/free-solid-svg-icons/faAngleLeft';
+import { faPenToSquare } from '@fortawesome/free-solid-svg-icons/faPenToSquare';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Fab from '@mui/material/Fab';
-import { MuiFaIcon } from '@js-modules/web-react-utils';
+import type React from 'react';
+import { useMemo } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import {
   WebModulesPrivate,
   WebSubModulesLog,
   WebSubModulesLogLogEntry,
 } from '@js-modules/apps-travel-log-common-constants';
-import { Link, useParams } from 'react-router-dom';
-import { faPenToSquare } from '@fortawesome/free-solid-svg-icons/faPenToSquare';
-import { faAngleLeft } from '@fortawesome/free-solid-svg-icons/faAngleLeft';
 import { routesMetadataPrivate } from '@js-modules/apps-travel-log-common-react';
+import { MuiFaIcon } from '@js-modules/web-react-utils';
 
 export const LogLogEntryWorkspaceTopToolbar: React.FC = () => {
   const { logEntryId } = useParams();

@@ -1,13 +1,15 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { FindManyResponse } from '@js-modules/api-nest-utils';
+import { beforeEach, describe, expect, it, jest } from '@jest/globals';
+import type { TestingModule } from '@nestjs/testing';
+import { Test } from '@nestjs/testing';
+import type { FindManyResponse } from '@js-modules/api-nest-utils';
+import type { UsersFindManyDto } from './dtos/users.findMany.dto';
 import { UsersController } from './users.controller';
+import type { UsersEntity } from './users.entity';
 import { UsersService } from './users.service';
 import {
-  getUsersFindManyDtoFixture,
   getUsersEntityFixture,
+  getUsersFindManyDtoFixture,
 } from './users.utils.fixtures';
-import { UsersFindManyDto } from './dtos/users.findMany.dto';
-import { UsersEntity } from './users.entity';
 
 describe('UsersController', () => {
   let usersEntities: UsersEntity[];
@@ -15,7 +17,7 @@ describe('UsersController', () => {
 
   let usersServiceFindOneMock: jest.Mock;
   let usersServiceFindManyMock: jest.Mock;
-  let usersServiceMock: Partial<UsersService>;
+  let usersServiceMock: UsersService;
   let usersController: UsersController;
 
   beforeEach(async () => {
@@ -24,7 +26,7 @@ describe('UsersController', () => {
     usersServiceMock = {
       findOne: usersServiceFindOneMock,
       findMany: usersServiceFindManyMock,
-    };
+    } as unknown as UsersService;
 
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -58,8 +60,8 @@ describe('UsersController', () => {
 
       expect(usersServiceFindOneMock).toHaveBeenNthCalledWith(
         1,
-        'id',
         usersServiceFindOneMockReturnValue.id,
+        'id',
       );
       expect(usersEntity).toEqual(usersServiceFindOneMockReturnValue);
     });
@@ -77,8 +79,8 @@ describe('UsersController', () => {
 
       expect(usersServiceFindOneMock).toHaveBeenNthCalledWith(
         1,
-        'username',
         usersServiceFindOneMockReturnValue.username,
+        'username',
       );
       expect(usersEntity).toEqual(usersServiceFindOneMockReturnValue);
     });
@@ -98,9 +100,8 @@ describe('UsersController', () => {
       );
 
       testUsersFindManyDto = getUsersFindManyDtoFixture();
-      const { entities, total } = await usersController.findMany(
-        testUsersFindManyDto,
-      );
+      const { entities, total } =
+        await usersController.findMany(testUsersFindManyDto);
 
       usersEntities = entities;
 

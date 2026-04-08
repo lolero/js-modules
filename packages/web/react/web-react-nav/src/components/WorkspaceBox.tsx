@@ -1,21 +1,23 @@
-import React, { useContext, useEffect, useMemo, useState } from 'react';
-import Box, { BoxProps } from '@mui/material/Box';
-import { useChildNodeSize } from '@js-modules/web-react-utils';
-import { usePrevious } from '@js-modules/common-react-utils';
+import type { BoxProps } from '@mui/material/Box';
+import Box from '@mui/material/Box';
+import type React from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  WorkspaceContext,
+import { usePrevious } from '@js-modules/common-react-utils';
+import { useChildNodeSize } from '@js-modules/web-react-utils';
+import { NavContext, NavDrawerDisplayStatus } from '../contexts/NavContext';
+import type {
   ScrollDirection,
   WorkspaceContextValue,
 } from '../contexts/WorkspaceContext';
-import { WorkspaceTopToolbarBox } from './WorkspaceTopToolbarBox';
-import { NavTopAppbar } from './NavTopAppbar';
-import { NavLeftDrawer } from './NavLeftDrawer';
-import { NavDrawerDisplayStatus, NavContext } from '../contexts/NavContext';
+import { WorkspaceContext } from '../contexts/WorkspaceContext';
 import { useNavDisplayMetadata } from '../hooks/useNavDisplayMetadata';
-import { WorkspaceContentBox } from './WorkspaceContentBox';
+import { NavLeftDrawer } from './NavLeftDrawer';
 import { NavRightDrawer } from './NavRightDrawer';
 import { NavRightDrawerDisplayButton } from './NavRightDrawerDisplayButton';
+import { NavTopAppbar } from './NavTopAppbar';
+import { WorkspaceContentBox } from './WorkspaceContentBox';
+import { WorkspaceTopToolbarBox } from './WorkspaceTopToolbarBox';
 
 export type WorkspaceBoxProps = {
   shortLogo: React.ReactNode;
@@ -146,7 +148,7 @@ export const WorkspaceBox: React.FC<WorkspaceBoxProps> = ({
       if (onNotAuthorizedCallback) {
         onNotAuthorizedCallback();
       } else {
-        navigate(nonAuthorizedRedirectPath, { replace: true });
+        void navigate(nonAuthorizedRedirectPath, { replace: true });
       }
     }
   }, [
