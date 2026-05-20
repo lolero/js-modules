@@ -3933,7 +3933,7 @@
               "deprecated": true
             },
             "line-length": {
-              "description": "The line length to use when enforcing long-lines violations (like `E501`)\nand at which `isort` and the formatter prefers to wrap lines.\n\nThe length is determined by the number of characters per line, except for lines containing East Asian characters or emojis.\nFor these lines, the [unicode width](https://unicode.org/reports/tr11/) of each character is added up to determine the length.\n\nThe value must be greater than `0` and less than or equal to `320`.\n\nNote: While the formatter will attempt to format lines such that they remain\nwithin the `line-length`, it isn't a hard upper bound, and formatted lines may\nexceed the `line-length`.\n\nSee [`pycodestyle.max-line-length`](#lint_pycodestyle_max-line-length) to configure different lengths for `E501` and the formatter.",
+              "description": "The line length to use when enforcing long-lines violations (like `E501`)\nand at which `isort` and the formatter prefers to wrap lines.\n\nThe length is determined by the number of characters per line, except for lines containing East Asian characters or emojis.\nFor these lines, the [unicode width](https://unicode.org/reports/tr11/) of each character is added up to determine the length.\n\nThe value must be greater than `0`.\n\nNote: While the formatter will attempt to format lines such that they remain\nwithin the `line-length`, it isn't a hard upper bound, and formatted lines may\nexceed the `line-length`.\n\nSee [`pycodestyle.max-line-length`](#lint_pycodestyle_max-line-length) to configure different lengths for `E501` and the formatter.",
               "anyOf": [
                 {
                   "$ref": "#/definitions/LineLength"
@@ -5536,10 +5536,10 @@
               ]
             },
             "LineLength": {
-              "description": "The length of a line of text that is considered too long.\n\nThe allowed range of values is 1..=320",
+              "description": "The length of a line of text that is considered too long.\n\nThe allowed range of values is 1..=65535",
               "type": "integer",
               "format": "uint16",
-              "maximum": 320,
+              "maximum": 65535,
               "minimum": 1
             },
             "LineWidth": {
@@ -6557,6 +6557,10 @@
                 "AIR001",
                 "AIR002",
                 "AIR003",
+                "AIR004",
+                "AIR2",
+                "AIR20",
+                "AIR201",
                 "AIR3",
                 "AIR30",
                 "AIR301",
@@ -7868,6 +7872,7 @@
                 "TID252",
                 "TID253",
                 "TID254",
+                "TID255",
                 "TRY",
                 "TRY0",
                 "TRY00",
@@ -8757,7 +8762,7 @@
                 },
                 "invalid-key": {
                   "title": "detects invalid subscript accesses or TypedDict literal keys",
-                  "description": "## What it does\nChecks for subscript accesses with invalid keys and `TypedDict` construction with an\nunknown key.\n\n## Why is this bad?\nSubscripting with an invalid key will raise a `KeyError` at runtime.\n\nCreating a `TypedDict` with an unknown key is likely a mistake; if the `TypedDict` is\n`closed=true` it also violates the expectations of the type.\n\n## Examples\n```python\nfrom typing import TypedDict\n\nclass Person(TypedDict):\n    name: str\n    age: int\n\nalice = Person(name=\"Alice\", age=30)\nalice[\"height\"]  # KeyError: 'height'\n\nbob: Person = { \"namee\": \"Bob\", \"age\": 30 }  # typo!\n\ncarol = Person(name=\"Carol\", aeg=25)  # typo!\n```",
+                  "description": "## What it does\nChecks for subscript accesses with invalid keys and `TypedDict` construction with an\nunknown key.\n\n## Why is this bad?\nSubscripting with an invalid key will raise a `KeyError` at runtime.\n\nCreating a `TypedDict` with an unknown key is likely a mistake; if the `TypedDict` is\n`closed=true` it also violates the expectations of the type.\n\n## Examples\n```python\nfrom typing import TypedDict\n\nclass Person(TypedDict):\n    name: str\n    age: int\n\nalice = Person(name=\"Alice\", age=30)\nalice[\"height\"]  # KeyError: 'height'\n\nbob: Person = { \"nickname\": \"Bob\", \"age\": 30 }  # typo!\n\ncarol = Person(name=\"Carol\", aeg=25)  # typo!\n```",
                   "default": "error",
                   "oneOf": [
                     {
@@ -19722,9 +19727,8 @@
           ],
           "definitions": {
             "LegacyConfig": {
-              "description": "Legacy configuration using ini_options table (pytest <9)",
+              "description": "INI-style configuration using the ini_options table (pytest >=6)",
               "type": "object",
-              "deprecated": true,
               "properties": {
                 "ini_options": {
                   "allOf": [
@@ -19735,8 +19739,8 @@
                       "$ref": "#/definitions/IniOptionsAsyncio"
                     }
                   ],
-                  "title": "Bridge Configuration Options for `pytest.ini` File",
-                  "description": "The `ini_options` table is used as a bridge between the existing `pytest.ini` configuration system and future configuration formats. `pytest.ini` takes precedence over `[tool.pytest.ini_options]` in `pyproject.toml`."
+                  "title": "INI-style pytest Configuration Options",
+                  "description": "Use `[tool.pytest.ini_options]` for INI-style pytest configuration in `pyproject.toml` (supported since pytest 6.0). `pytest.ini` takes precedence over `[tool.pytest.ini_options]` in `pyproject.toml`."
                 }
               },
               "required": [
@@ -19747,7 +19751,6 @@
             },
             "IniOptionsPytest": {
               "type": "object",
-              "deprecated": true,
               "properties": {
                 "addopts": {
                   "oneOf": [
@@ -20416,9 +20419,7 @@
             },
             "IniOptionsAsyncio": {
               "$comment": "additionalProperties is true because the schema is merged with other schemas",
-              "description": "Configuration options for pytest-asyncio.\nhttps://pytest-asyncio.readthedocs.io/en/latest/reference/configuration.html",
               "type": "object",
-              "deprecated": true,
               "properties": {
                 "asyncio_default_fixture_loop_scope": {
                   "$ref": "#/definitions/AsyncioScope",
@@ -20928,7 +20929,6 @@
             },
             "ConfigOptionsAsyncio": {
               "type": "object",
-              "description": "Configuration options for pytest-asyncio.\nhttps://pytest-asyncio.readthedocs.io/en/latest/reference/configuration.html",
               "properties": {
                 "asyncio_default_fixture_loop_scope": {
                   "$ref": "#/definitions/AsyncioScope",

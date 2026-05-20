@@ -6,36 +6,42 @@ const defaultTheme = createTheme();
 export type GetThemeComponents = (theme: Theme) => Theme['components'];
 
 function getThemeBreakpointValues(
-  themeBreakpointValuesOverrides: Partial<Theme['breakpoints']['values']> = {},
+  breakpointsValuesOverrides: Partial<Theme['breakpoints']['values']> = {},
 ): Theme['breakpoints']['values'] {
   return {
     ...defaultTheme.breakpoints.values,
-    ...themeBreakpointValuesOverrides,
+    ...breakpointsValuesOverrides,
   };
 }
 
 export type CreateMaterialUiThemeConfig = {
   paletteOverrides?: Partial<Theme['palette']>;
   typographyOverrides?: Partial<Theme['typography']>;
+  shapeOverrides?: Partial<Theme['shape']>;
+  shadowsOverrides?: Theme['shadows'];
+  breakpointsValuesOverrides?: Partial<Theme['breakpoints']['values']>;
   getThemeComponents?: GetThemeComponents;
-  themeBreakpointValuesOverrides?: Partial<Theme['breakpoints']['values']>;
 };
 
 export function createMaterialUiTheme({
-  getThemeComponents = () => ({}),
   paletteOverrides = {},
   typographyOverrides = {},
-  themeBreakpointValuesOverrides = {},
+  shapeOverrides,
+  shadowsOverrides,
+  breakpointsValuesOverrides = {},
+  getThemeComponents = () => ({}),
 }: CreateMaterialUiThemeConfig): Theme {
   const baseTheme: Theme = createTheme({
     palette: paletteOverrides,
     typography: typographyOverrides,
+    ...(shapeOverrides ? { shape: shapeOverrides } : {}),
+    ...(shadowsOverrides ? { shadows: shadowsOverrides } : {}),
   });
 
   return createTheme(baseTheme, {
     components: getThemeComponents(baseTheme),
     breakpoints: {
-      values: getThemeBreakpointValues(themeBreakpointValuesOverrides),
+      values: getThemeBreakpointValues(breakpointsValuesOverrides),
     },
   });
 }

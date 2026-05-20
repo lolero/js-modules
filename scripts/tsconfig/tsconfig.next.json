@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.next.build.json",
+  "compilerOptions": {
+    "types": ["node"],
+    "allowJs": true,
+    "baseUrl": "../../",
+    "ignoreDeprecations": "6.0"
+  }
+}

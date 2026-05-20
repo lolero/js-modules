@@ -55,6 +55,12 @@ export const TargetModeNest = {
 export type TargetModeNest =
   (typeof TargetModeNest)[keyof typeof TargetModeNest];
 
+export const TargetModeNext = {
+  start: 'start',
+} as const;
+export type TargetModeNext =
+  (typeof TargetModeNext)[keyof typeof TargetModeNext];
+
 export const TargetModeTest = {
   watch: 'watch',
   coverage: 'coverage',
@@ -93,6 +99,7 @@ export const TargetType = {
   keycloakify: 'keycloakify',
   lint: 'lint',
   nest: 'nest',
+  next: 'next',
   reactNative: 'react-native',
   test: 'test',
   types: 'types',
@@ -111,6 +118,7 @@ export type TargetBuilders = {
   [TargetType.keycloakify]: Record<typeof Language.javascript, TargetBuilder>;
   [TargetType.lint]: TargetBuilder;
   [TargetType.nest]: Record<typeof Language.javascript, TargetBuilder>;
+  [TargetType.next]: Record<typeof Language.javascript, TargetBuilder>;
   [TargetType.reactNative]: Record<typeof Language.javascript, TargetBuilder>;
   [TargetType.test]: Record<
     typeof Language.javascript | typeof Language.python,
@@ -126,6 +134,7 @@ export const ProjectTypeJs = {
   icons: 'icons',
   keycloakify: 'keycloakify',
   nest: 'nest',
+  next: 'next',
   reactNative: 'react-native',
   vite: 'vite',
 } as const;
@@ -166,6 +175,17 @@ export function getProjectTypeJs(
 
   if (existsSync(join(projectPathRel, 'nest-cli.json'))) {
     return ProjectTypeJs.nest;
+  }
+
+  if (
+    [
+      'next.config.ts',
+      'next.config.js',
+      'next.config.mts',
+      'next.config.mjs',
+    ].some((file) => existsSync(join(projectPathRel, file)))
+  ) {
+    return ProjectTypeJs.next;
   }
 
   if (existsSync(join(projectPathRel, 'metro.config.js'))) {
@@ -256,6 +276,9 @@ export const targetBuilders: TargetBuilders = {
         case ProjectTypeJs.nest:
           command = 'nest build -p tsconfig.build.json';
           break;
+        case ProjectTypeJs.next:
+          command = 'next build';
+          break;
         case ProjectTypeJs.reactNative:
           command = "echo 'Building dependency packages...'";
           break;
@@ -290,16 +313,20 @@ export const targetBuilders: TargetBuilders = {
       const projectType = getProjectTypeJs(projectPathRel);
       let command: string;
       switch (projectType) {
+        case ProjectTypeJs.hardhat:
+          command = 'pnpm hardhat node';
+          break;
         case ProjectTypeJs.nest: {
           command = `cross-env NODE_ENV=development NODE_TLS_REJECT_UNAUTHORIZED=0 nest start --watch`;
           break;
         }
+        case ProjectTypeJs.next:
+          command = 'next dev';
+          break;
+        // Necessary fallthrough so keycloakify projects get vite dev command
         case ProjectTypeJs.keycloakify:
         case ProjectTypeJs.vite:
           command = 'vite';
-          break;
-        case ProjectTypeJs.hardhat:
-          command = 'pnpm hardhat node';
           break;
         default:
           return {};
@@ -372,6 +399,17 @@ export const targetBuilders: TargetBuilders = {
             `cross-env NODE_ENV=development typeorm -d build/config/config.typeorm.dataSource.js`,
             projectPathRel,
           ),
+      };
+    },
+  },
+  [TargetType.next]: {
+    [Language.javascript]: (projectPathRel) => {
+      if (getProjectTypeJs(projectPathRel) !== ProjectTypeJs.next) {
+        return {};
+      }
+      return {
+        [`${TargetType.next}:${TargetModeNext.start}`]:
+          buildTargetConfiguration('next start', projectPathRel),
       };
     },
   },

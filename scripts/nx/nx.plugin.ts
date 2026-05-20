@@ -126,6 +126,12 @@ export const createNodesV2: CreateNodesV2 = [
                   ),
                   ...filterExistingTargets(
                     scripts,
+                    targetBuilders[TargetType.next][Language.javascript](
+                      projectPathRel,
+                    ),
+                  ),
+                  ...filterExistingTargets(
+                    scripts,
                     targetBuilders[TargetType.reactNative][Language.javascript](
                       projectPathRel,
                     ),

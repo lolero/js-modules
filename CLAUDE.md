@@ -32,9 +32,17 @@ import { X } from '../../other-package/src/X'; // wrong
 
 **NestJS gotcha**: NestJS apps build for production even in dev mode. When you change a dependency package, you must rebuild it before changes appear in the NestJS app.
 
+**tsconfig hygiene**: Before adding any compiler option to a package `tsconfig.json`, read every file in its `extends` chain (typically `scripts/tsconfig/tsconfig.*.json` and the root `tsconfig.json`) and confirm the option is not already defined there. Never duplicate an option that is already covered by a mixin.
+
+## Follow travel-log Patterns
+
+**travel-log is the reference implementation for this monorepo.** Before writing any new file or code, read the equivalent in `apps-travel-log-*` — web → `apps-travel-log-web*`, native → `apps-travel-log-native*`, API → `apps-travel-log-api*`. Match its file/directory structure and naming (files, dirs, variables, types, functions). When no direct analogue exists, infer the pattern from conventions observed across travel-log packages.
+
 ## Code Style
 
 - Conventional commits (Angular convention)
 - Index files only in package `src/` directories
 - **No lint disable comments** of any kind unless strictly necessary and explicitly authorized by the user. Fix the underlying issue instead.
 - **After completing code changes**, run `pnpm lint:staged-fix` — lints and auto-fixes only the files changed since HEAD. Run once per task, not after every file edit.
+- **MUI styling**: use theme tokens (`primary.main`, `background.paper`, `spacing`, etc.) — never hardcode colors or sizes that the theme already defines. Structural or repeated styles belong in `getThemeComponents` overrides in the theme file; `sx` props are for layout and one-off adjustments specific to a single usage.
+- **Icons**: React+MUI apps use `<MuiFaIcon />` from `@js-modules/web-react-utils`. React Native apps use `<NativeFaIcon />` from `@js-modules/native-react-utils`. Both accept Font Awesome `IconDefinition` objects. Do not use MUI's built-in icon set or any other icon library.

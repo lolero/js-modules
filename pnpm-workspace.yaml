@@ -1,2 +1,20 @@
 packages:
   - packages/**
+allowBuilds:
+  '@clerk/shared': true
+  '@mui/x-telemetry': false
+  '@nestjs/core': true
+  '@parcel/watcher': true
+  '@scarf/scarf': false
+  '@swc/core': true
+  chromedriver: true
+  esbuild: true
+  nx: true
+  sharp: true
+  unrs-resolver: true
+overrides:
+  '@types/react': 19.2.14
+  '@types/react-dom': 19.2.3
+  eslint: 9.39.4
+  react: 19.2.3
+  react-dom: 19.2.3

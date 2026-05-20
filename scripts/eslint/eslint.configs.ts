@@ -102,10 +102,12 @@ export function createEslintConfig(
 }
 
 const repoRoot = join(__dirname, '../..');
-const rootPkg = JSON.parse(
-  readFileSync(join(repoRoot, 'package.json'), 'utf-8'),
-) as { pnpm: { overrides: { react: string } } };
-const reactVersion = rootPkg.pnpm.overrides.react.replace(/[^\d.]/g, '');
+const workspaceYaml = readFileSync(
+  join(repoRoot, 'pnpm-workspace.yaml'),
+  'utf-8',
+);
+const reactVersion =
+  workspaceYaml.match(/^\s*react:\s*['"]?([\d.]+)/m)?.[1] ?? '';
 
 const extensionsJsTs = [
   ...extensions[Language.typescript],

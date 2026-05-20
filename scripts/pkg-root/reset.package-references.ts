@@ -54,6 +54,9 @@ for (const filePackage of findFiles('package.json')) {
   }
 
   const packageFiles = readdirSync(packageDir);
+  const hasNextConfig = packageFiles.some((file) =>
+    /^next\.config\./.test(file),
+  );
   const hasViteConfig = packageFiles.some((file) =>
     /^vite\.config\./.test(file),
   );
@@ -64,7 +67,13 @@ for (const filePackage of findFiles('package.json')) {
   const hasHardhatConfig = packageFiles.some((file) =>
     /^hardhat\.config\./.test(file),
   );
-  if (hasViteConfig || hasNestCli || hasMetroConfig || hasHardhatConfig) {
+  if (
+    hasNextConfig ||
+    hasViteConfig ||
+    hasNestCli ||
+    hasMetroConfig ||
+    hasHardhatConfig
+  ) {
     continue;
   }
 

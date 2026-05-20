@@ -118,17 +118,5 @@
     "tsx": "^4.21.0",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.59.2"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "@swc/core"
-    ],
-    "overrides": {
-      "@types/react": "19.2.14",
-      "@types/react-dom": "19.2.3",
-      "eslint": "9.39.4",
-      "react": "19.2.3",
-      "react-dom": "19.2.3"
-    }
   }
 }
