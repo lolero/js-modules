@@ -1,0 +1,27 @@
+{
+  "name": "@js-modules/web-react-docs-mui-internal-core-docs",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Web React Docs Mui Internal Core Docs",
+  "license": "MIT",
+  "exports": {
+    "./ApiPage": "./src/ApiPage.tsx",
+    "./AppLayout": "./src/AppLayout.tsx",
+    "./branding": "./src/branding.tsx",
+    "./HighlightedCode": "./src/HighlightedCode.tsx",
+    "./HighlightedCodeWithTabs": "./src/HighlightedCodeWithTabs.tsx",
+    "./i18n": "./src/i18n.tsx",
+    "./IconImage": "./src/IconImage.tsx",
+    "./MarkdownDocs": "./src/MarkdownDocs.tsx",
+    "./SectionHeadline": "./src/SectionHeadline.tsx",
+    "./SectionTitle": "./src/SectionTitle.tsx"
+  },
+  "scripts": {},
+  "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/material": "^9.0.0",
+    "@types/react": "19.2.14",
+    "react": "19.2.5"
+  }
+}

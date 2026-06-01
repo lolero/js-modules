@@ -30,7 +30,7 @@ export default defineConfig({
     exclude: ['react-native'],
   },
   server: {
-    port: 5181,
+    port: 5182,
     strictPort: true,
   },
 });

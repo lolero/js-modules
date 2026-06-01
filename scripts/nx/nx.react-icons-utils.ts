@@ -33,7 +33,7 @@ function getIconNames(iconFileName: string): {
   iconComponentNameSVG: string;
 } {
   const iconName = iconFileName.split('.')[0];
-  const iconComponentName = toPascalCase(`${iconName}Icon`);
+  const iconComponentName = toPascalCase(`MuiIcon ${iconName}`);
   const iconComponentNameSVG = `${iconComponentName}Svg`;
   return {
     iconName,
@@ -107,6 +107,6 @@ function generateMuiSvgIcons(
 const basePath = path.resolve('src');
 const iconsDirPath = `${basePath}/assets/`;
 const buildPath = `${basePath}/icons`;
-const iconsTsxPath = `${buildPath}/dynamically-generated-icons-DO-NOT-EDIT.tsx`;
+const iconsTsxPath = `${buildPath}/_dynamically-generated-icons-DO-NOT-EDIT.tsx`;
 
 generateMuiSvgIcons(iconsDirPath, buildPath, iconsTsxPath);

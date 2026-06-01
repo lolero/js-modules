@@ -1,0 +1,44 @@
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import { upperFirst } from 'lodash';
+import type React from 'react';
+import { DocsMuiThemeAutocomplete } from './DocsMuiThemeAutocomplete';
+
+export type DocsMuiNavToolbarProps = {
+  title: string;
+};
+
+export function DocsMuiNavToolbar({
+  title,
+}: DocsMuiNavToolbarProps): React.ReactNode {
+  return (
+    <Toolbar
+      sx={{
+        py: 1,
+        px: '0px !important',
+        flexGrow: 1,
+      }}
+      variant="dense"
+    >
+      <Box
+        sx={{
+          flexGrow: 1,
+          display: 'flex',
+          alignItems: 'center',
+          height: '100%',
+        }}
+      >
+        <Typography
+          sx={{
+            fontWeight: 'bold',
+          }}
+          variant="h5"
+        >
+          {upperFirst(title)}
+        </Typography>
+      </Box>
+      <DocsMuiThemeAutocomplete />
+    </Toolbar>
+  );
+}

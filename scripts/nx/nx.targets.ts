@@ -158,7 +158,8 @@ export function getProjectTypeJs(
 
   const assetsDir = join(projectPathRel, 'src/assets');
   if (
-    basename(projectPathRel).endsWith('-icons') &&
+    (basename(projectPathRel).endsWith('-icons') ||
+      basename(projectPathRel).endsWith('-icons-mui')) &&
     existsSync(assetsDir) &&
     readdirSync(assetsDir).some((file) => file.endsWith('.svg'))
   ) {
@@ -368,7 +369,7 @@ export const targetBuilders: TargetBuilders = {
         [`${TargetType.keycloakify}:${TargetModeKeycloakify.ejectPage}`]:
           buildTargetConfiguration('keycloakify eject-page', projectPathRel),
         [`${TargetType.keycloakify}:${TargetModeKeycloakify.storybook}`]:
-          buildTargetConfiguration('storybook dev -p 5182', projectPathRel),
+          buildTargetConfiguration('storybook dev -p 5183', projectPathRel),
       };
     },
   },

@@ -2,6 +2,7 @@ import Box from '@mui/material/Box';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import type { PickerValidDate } from '@mui/x-date-pickers/models';
 import { format, parse } from 'date-fns';
 import isNull from 'lodash/isNull';
 import type React from 'react';
@@ -27,10 +28,14 @@ export const FindManyRangeBoxDate: React.FC<FindManyRangeBoxDateProps> = ({
     return rangeTemp;
   }, [getRangeCallback, rangeKey]);
 
+  // The picker uses `AdapterDateFns`, so values are always `Date` at runtime.
+  // Typing the param as the picker's own `PickerValidDate` (and narrowing with
+  // `instanceof Date`) keeps `onChange` assignable even when another package's
+  // typecheck pulls in adapters that widen the global `PickerValidDate` union.
   const changeDateRangeFromCallback = useCallback(
-    (value: Date | null) => {
+    (value: PickerValidDate | null) => {
       setRangeCallback(rangeKey, [
-        value ? format(value, 'yyyyMMdd') : 'null',
+        value instanceof Date ? format(value, 'yyyyMMdd') : 'null',
         range[1],
       ]);
     },
@@ -38,10 +43,10 @@ export const FindManyRangeBoxDate: React.FC<FindManyRangeBoxDateProps> = ({
   );
 
   const changeDateRangeToCallback = useCallback(
-    (value: Date | null) => {
+    (value: PickerValidDate | null) => {
       setRangeCallback(rangeKey, [
         range[0],
-        value ? format(value, 'yyyyMMdd') : 'null',
+        value instanceof Date ? format(value, 'yyyyMMdd') : 'null',
       ]);
     },
     [range, rangeKey, setRangeCallback],

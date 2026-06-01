@@ -398,7 +398,7 @@ build_keycloak/
 *.sqlite
 
 # Automatically generated icons
-dynamically-generated-icons-DO-NOT-EDIT.tsx
+_dynamically-generated-icons-DO-NOT-EDIT.tsx
 
 # dotenv
 .env.dev

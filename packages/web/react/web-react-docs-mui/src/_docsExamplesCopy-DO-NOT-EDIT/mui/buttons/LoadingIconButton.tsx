@@ -1,0 +1,24 @@
+// @ts-nocheck
+// Verbatim MUI docs example — copied by mui.copy-docs-examples.ts; not type-checked.
+
+import * as React from 'react';
+import Tooltip from '@mui/material/Tooltip';
+import IconButton from '@mui/material/IconButton';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+
+export default function LoadingIconButton() {
+  const [loading, setLoading] = React.useState(false);
+  React.useEffect(() => {
+    const timeout = setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+    return () => clearTimeout(timeout);
+  });
+  return (
+    <Tooltip title="Click to see loading">
+      <IconButton onClick={() => setLoading(true)} loading={loading}>
+        <ShoppingCartIcon />
+      </IconButton>
+    </Tooltip>
+  );
+}

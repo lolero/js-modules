@@ -24,7 +24,7 @@
     "@js-modules/web-react-nav": "workspace:^",
     "@js-modules/web-react-utils": "workspace:^",
     "@mui/material": "^9.0.0",
-    "@mui/x-date-pickers": "^9.0.4",
+    "@mui/x-date-pickers": "^9.4.0",
     "@types/lodash": "^4.17.24",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",

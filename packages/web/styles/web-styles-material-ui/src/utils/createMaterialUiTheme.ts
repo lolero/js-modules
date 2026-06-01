@@ -1,12 +1,16 @@
-import type { Theme } from '@mui/material/styles';
+import type { Theme, ThemeOptions } from '@mui/material/styles';
 import { createTheme } from '@mui/material/styles';
 
 const defaultTheme = createTheme();
 
 export type GetThemeComponents = (theme: Theme) => Theme['components'];
 
+export type BreakpointsValuesOverrides = Partial<
+  Theme['breakpoints']['values']
+>;
+
 function getThemeBreakpointValues(
-  breakpointsValuesOverrides: Partial<Theme['breakpoints']['values']> = {},
+  breakpointsValuesOverrides: Partial<Theme['breakpoints']['values']>,
 ): Theme['breakpoints']['values'] {
   return {
     ...defaultTheme.breakpoints.values,
@@ -14,29 +18,12 @@ function getThemeBreakpointValues(
   };
 }
 
-export type CreateMaterialUiThemeConfig = {
-  paletteOverrides?: Partial<Theme['palette']>;
-  typographyOverrides?: Partial<Theme['typography']>;
-  shapeOverrides?: Partial<Theme['shape']>;
-  shadowsOverrides?: Theme['shadows'];
-  breakpointsValuesOverrides?: Partial<Theme['breakpoints']['values']>;
-  getThemeComponents?: GetThemeComponents;
-};
-
-export function createMaterialUiTheme({
-  paletteOverrides = {},
-  typographyOverrides = {},
-  shapeOverrides,
-  shadowsOverrides,
-  breakpointsValuesOverrides = {},
-  getThemeComponents = () => ({}),
-}: CreateMaterialUiThemeConfig): Theme {
-  const baseTheme: Theme = createTheme({
-    palette: paletteOverrides,
-    typography: typographyOverrides,
-    ...(shapeOverrides ? { shape: shapeOverrides } : {}),
-    ...(shadowsOverrides ? { shadows: shadowsOverrides } : {}),
-  });
+export function createMaterialUiTheme(
+  themeOptions: ThemeOptions,
+  getThemeComponents: GetThemeComponents = () => ({}),
+  breakpointsValuesOverrides: BreakpointsValuesOverrides = {},
+): Theme {
+  const baseTheme: Theme = createTheme(themeOptions);
 
   return createTheme(baseTheme, {
     components: getThemeComponents(baseTheme),

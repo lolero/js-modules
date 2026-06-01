@@ -1,0 +1,91 @@
+{
+  "name": "@js-modules/web-react-docs-mui",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Web React Docs Mui",
+  "license": "MIT",
+  "exports": {
+    ".": "./src/index.ts",
+    "./vite": {
+      "types": "./src/vite/docsMuiStaticAssets.d.mts",
+      "default": "./src/vite/docsMuiStaticAssets.mjs"
+    }
+  },
+  "scripts": {
+    "mui:copy-docs-examples": "tsx scripts/mui.copy-docs-examples.ts"
+  },
+  "dependencies": {
+    "@base-ui/react": "^1.5.0",
+    "@emotion/cache": "^11.14.0",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@fortawesome/fontawesome-common-types": "^7.2.0",
+    "@fortawesome/free-brands-svg-icons": "^7.2.0",
+    "@fortawesome/free-solid-svg-icons": "^7.2.0",
+    "@js-modules/common-react-nav": "workspace:^",
+    "@js-modules/web-react-icons-mui": "workspace:^",
+    "@js-modules/web-react-nav": "workspace:^",
+    "@js-modules/web-react-utils": "workspace:^",
+    "@mui/icons-material": "^9.0.0",
+    "@mui/internal-core-docs": "workspace:@js-modules/web-react-docs-mui-internal-core-docs@*",
+    "@mui/lab": "9.0.0-beta.3",
+    "@mui/material": "^9.0.0",
+    "@mui/stylis-plugin-rtl": "^9.0.1",
+    "@mui/system": "^9.0.1",
+    "@mui/utils": "^9.0.1",
+    "@mui/x-charts": "^9.4.0",
+    "@mui/x-charts-premium": "^9.4.0",
+    "@mui/x-charts-pro": "^9.4.0",
+    "@mui/x-charts-vendor": "^9.4.0",
+    "@mui/x-chat": "9.0.0-alpha.8",
+    "@mui/x-data-grid": "^9.4.0",
+    "@mui/x-data-grid-generator": "^9.4.0",
+    "@mui/x-data-grid-premium": "^9.4.0",
+    "@mui/x-data-grid-pro": "^9.4.0",
+    "@mui/x-date-pickers": "^9.4.0",
+    "@mui/x-date-pickers-pro": "^9.4.0",
+    "@mui/x-scheduler": "9.0.0-alpha.7",
+    "@mui/x-scheduler-premium": "9.0.0-alpha.7",
+    "@mui/x-tree-view": "^9.4.0",
+    "@mui/x-tree-view-pro": "^9.4.0",
+    "@react-spring/web": "^10.1.0",
+    "@tanstack/react-query": "^5.100.14",
+    "@tanstack/react-virtual": "^3.13.24",
+    "@types/lodash": "^4.17.24",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "autosuggest-highlight": "^3.3.4",
+    "css-mediaquery": "^0.1.2",
+    "d3-scale-chromatic": "^3.1.0",
+    "date-fns": "^4.1.0",
+    "date-fns-jalali": "^4.1.0-0",
+    "dayjs": "^1.11.21",
+    "fg-loadcss": "^3.1.0",
+    "json2mq": "^0.2.0",
+    "lodash": "^4.18.1",
+    "material-ui-popup-state": "^5.3.7",
+    "moment-hijri": "^3.0.0",
+    "moment-jalaali": "^0.10.4",
+    "notistack": "^3.0.2",
+    "prop-types": "^15.8.1",
+    "react": "19.2.5",
+    "react-draggable": "^4.6.0",
+    "react-imask": "^7.6.1",
+    "react-number-format": "^5.4.5",
+    "react-router-dom": "^7.14.2",
+    "react-transition-group": "^4.4.5",
+    "react-window": "^2.2.7",
+    "stylis": "^4.4.0",
+    "topojson-client": "^3.1.0",
+    "us-atlas": "^3.0.1",
+    "visionscarto-world-atlas": "^1.0.0"
+  },
+  "devDependencies": {
+    "vite": "^8.0.10"
+  },
+  "nx": {
+    "implicitDependencies": [
+      "@js-modules/web-react-docs-mui-internal-core-docs"
+    ]
+  }
+}

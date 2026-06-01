@@ -1,0 +1,14 @@
+// @ts-nocheck
+// Verbatim MUI docs example — copied by mui.copy-docs-examples.ts; not type-checked.
+
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
+
+export default function PaginationButtons() {
+  return (
+    <Stack spacing={2}>
+      <Pagination count={10} showFirstButton showLastButton />
+      <Pagination count={10} hidePrevButton hideNextButton />
+    </Stack>
+  );
+}

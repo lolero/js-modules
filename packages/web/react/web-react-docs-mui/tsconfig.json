@@ -1,0 +1,9 @@
+{
+  "extends": [
+    "../../../../tsconfig.json",
+    "../../../../scripts/tsconfig/tsconfig.react.json"
+  ],
+  "compilerOptions": {},
+  "include": ["src"],
+  "exclude": ["src/_docsExamplesCopy-DO-NOT-EDIT"]
+}

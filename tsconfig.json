@@ -112,6 +112,15 @@
       "@js-modules/native-react-utils": [
         "./packages/native/react/native-react-utils/src"
       ],
+      "@js-modules/web-react-docs-mui": [
+        "./packages/web/react/web-react-docs-mui/src"
+      ],
+      "@js-modules/web-react-docs-mui-internal-core-docs": [
+        "./packages/web/react/web-react-docs-mui-internal-core-docs/src"
+      ],
+      "@js-modules/web-react-icons-mui": [
+        "./packages/web/react/web-react-icons-mui/src"
+      ],
       "@js-modules/web-react-nav": ["./packages/web/react/web-react-nav/src"],
       "@js-modules/web-react-utils": [
         "./packages/web/react/web-react-utils/src"

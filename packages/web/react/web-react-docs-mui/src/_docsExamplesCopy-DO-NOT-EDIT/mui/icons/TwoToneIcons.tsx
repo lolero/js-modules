@@ -1,0 +1,23 @@
+// @ts-nocheck
+// Verbatim MUI docs example — copied by mui.copy-docs-examples.ts; not type-checked.
+
+import { useTheme } from '@mui/material/styles';
+import Icon from '@mui/material/Icon';
+
+const useIsDarkMode = () => {
+  const theme = useTheme();
+  return theme.palette.mode === 'dark';
+};
+
+export default function TwoToneIcons() {
+  const isDarkMode = useIsDarkMode();
+
+  return (
+    <Icon
+      sx={[isDarkMode && { filter: 'invert(1)' }]}
+      baseClassName="material-icons-two-tone"
+    >
+      add_circle
+    </Icon>
+  );
+}

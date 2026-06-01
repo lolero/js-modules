@@ -1,0 +1,19 @@
+// @ts-nocheck
+// Verbatim MUI docs example — copied by mui.copy-docs-examples.ts; not type-checked.
+
+import { SparkLineChart } from '@mui/x-charts/SparkLineChart';
+import { GridRenderCellParams } from '@mui/x-data-grid';
+
+export function renderSparkline(params: GridRenderCellParams) {
+  if (params.value == null) {
+    return '';
+  }
+
+  return (
+    <SparkLineChart
+      data={params.value}
+      width={params.colDef.computedWidth}
+      plotType="bar"
+    />
+  );
+}

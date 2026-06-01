@@ -1,0 +1,9 @@
+{
+  "extends": [
+    "../../../../tsconfig.json",
+    "../../../../scripts/tsconfig/tsconfig.react.json"
+  ],
+  "compilerOptions": {},
+  "include": ["src"],
+  "files": ["vite.config.ts", "../../../../scripts/types/css.d.ts"]
+}

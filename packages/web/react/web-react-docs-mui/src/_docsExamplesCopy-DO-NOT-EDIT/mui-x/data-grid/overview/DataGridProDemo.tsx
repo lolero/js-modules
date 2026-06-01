@@ -1,0 +1,27 @@
+// @ts-nocheck
+// Verbatim MUI docs example — copied by mui.copy-docs-examples.ts; not type-checked.
+
+import Box from '@mui/material/Box';
+import { DataGridPro } from '@mui/x-data-grid-pro';
+import { useDemoData } from '@mui/x-data-grid-generator';
+
+export default function DataGridProDemo() {
+  const { data, loading } = useDemoData({
+    dataSet: 'Commodity',
+    rowLength: 100000,
+    editable: true,
+    multiSelect: true,
+  });
+
+  return (
+    <Box sx={{ height: 520, width: '100%' }}>
+      <DataGridPro
+        {...data}
+        loading={loading}
+        rowHeight={38}
+        checkboxSelection
+        disableRowSelectionOnClick
+      />
+    </Box>
+  );
+}

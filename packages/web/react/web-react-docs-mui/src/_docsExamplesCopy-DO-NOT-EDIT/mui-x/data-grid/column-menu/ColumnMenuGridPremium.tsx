@@ -1,0 +1,51 @@
+// @ts-nocheck
+// Verbatim MUI docs example — copied by mui.copy-docs-examples.ts; not type-checked.
+
+import {
+  DataGridPremium,
+  GridGroupingColDefOverride,
+  GridValidRowModel,
+  useGridApiRef,
+  useKeepGroupedColumnsHidden,
+} from '@mui/x-data-grid-premium';
+import { useMovieData } from '@mui/x-data-grid-generator';
+
+const groupingColDef: GridGroupingColDefOverride<GridValidRowModel> = {
+  leafField: 'title',
+};
+
+export default function ColumnMenuGridPremium() {
+  const apiRef = useGridApiRef();
+  const data = useMovieData();
+
+  const initialState = useKeepGroupedColumnsHidden({
+    apiRef,
+    initialState: {
+      aggregation: {
+        model: {
+          gross: 'avg',
+        },
+      },
+      columns: {
+        columnVisibilityModel: {
+          cinematicUniverse: false,
+          title: false,
+        },
+      },
+      rowGrouping: {
+        model: ['company'],
+      },
+    },
+  });
+
+  return (
+    <div style={{ height: 400, width: '100%' }}>
+      <DataGridPremium
+        {...data}
+        apiRef={apiRef}
+        groupingColDef={groupingColDef}
+        initialState={initialState}
+      />
+    </div>
+  );
+}
