@@ -18,13 +18,17 @@ import {
   useNodeLogEntriesUpdatePartialReducerMetadata,
   useNodeLogEntriesValidateNodeLogEntryUnsaved,
 } from '@js-modules/apps-travel-log-common-store-redux';
-import { PrivateWorkspaceBox } from '@js-modules/apps-travel-log-web-workspace-private';
+import {
+  Workspace,
+  WorkspaceSlotName,
+  WorkspaceTitle,
+} from '@js-modules/web-react-nav';
 import type { LogLogEntryAddEditContextValue } from './LogLogEntryAddEditContext';
 import { LogLogEntryAddEditContext } from './LogLogEntryAddEditContext';
 import { LogLogEntryAddEditWorkspaceContentBox } from './LogLogEntryAddEditWorkspaceContentBox';
 import { LogLogEntryAddEditWorkspaceTopToolbar } from './LogLogEntryAddEditWorkspaceTopToolbar';
 
-export const LogLogEntryAddEditWorkspaceBox: React.FC = () => {
+export const LogLogEntryAddEditWorkspace: React.FC = () => {
   const { logEntryId } = useParams();
 
   const nodeLogEntry = useNodeLogEntriesEntity(logEntryId ?? '');
@@ -49,15 +53,19 @@ export const LogLogEntryAddEditWorkspaceBox: React.FC = () => {
       };
     }, [nodeLogEntryUnsavedFormValidator]);
 
-  const title = useMemo(() => {
-    const routeMetadataLabel = logEntryId
+  const routeMetadata = useMemo(() => {
+    let routeMetadataTemp = logEntryId
       ? routesMetadataPrivate[WebModulesPrivate.log].subRoutes![
           WebSubModulesLog.logEntry
-        ].subRoutes![WebSubModulesLogLogEntry.edit].label
+        ].subRoutes![WebSubModulesLogLogEntry.edit]
       : routesMetadataPrivate[WebModulesPrivate.log].subRoutes![
           WebSubModulesLog.logEntry
-        ].subRoutes![WebSubModulesLogLogEntry.addNew].label;
-    return `${routeMetadataLabel} log entry`;
+        ].subRoutes![WebSubModulesLogLogEntry.addNew];
+    routeMetadataTemp = {
+      ...routeMetadataTemp,
+      label: `${routeMetadataTemp.label} log entry`,
+    };
+    return routeMetadataTemp;
   }, [logEntryId]);
 
   useEffect(() => {
@@ -100,11 +108,18 @@ export const LogLogEntryAddEditWorkspaceBox: React.FC = () => {
 
   return (
     <LogLogEntryAddEditContext.Provider value={logLogEntryAddEditContextValue}>
-      <PrivateWorkspaceBox
-        title={title}
-        workspaceTopToolbar={<LogLogEntryAddEditWorkspaceTopToolbar />}
-        workspaceContent={workspaceContent}
-      />
+      <Workspace
+        slots={{
+          [WorkspaceSlotName.title]: (
+            <WorkspaceTitle routeMetadata={routeMetadata} />
+          ),
+          [WorkspaceSlotName.workspaceTopToolbar]: (
+            <LogLogEntryAddEditWorkspaceTopToolbar />
+          ),
+        }}
+      >
+        {workspaceContent}
+      </Workspace>
     </LogLogEntryAddEditContext.Provider>
   );
 };

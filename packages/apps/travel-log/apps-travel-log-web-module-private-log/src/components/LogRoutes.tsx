@@ -6,18 +6,18 @@ import {
 } from '@js-modules/apps-travel-log-common-constants';
 import { routesMetadataPrivate } from '@js-modules/apps-travel-log-common-react';
 import { LogLogEntryRoutes } from './LogLogEntryRoutes';
-import { LogWorkspaceBox } from './LogWorkspaceBox';
+import { LogWorkspace } from './LogWorkspace';
 
 export const LogRoutes: React.FunctionComponent = () => {
   return (
     <Routes>
-      <Route index element={<LogWorkspaceBox />} />
+      <Route index element={<LogWorkspace />} />
       <Route
         path={`${WebSubModulesLog.logEntry}/*`}
         element={<LogLogEntryRoutes />}
       />
-      <Route path={`${WebSubModulesLog.trips}`} element={<LogWorkspaceBox />} />
-      <Route path={`${WebSubModulesLog.dives}`} element={<LogWorkspaceBox />} />
+      <Route path={`${WebSubModulesLog.trips}`} element={<LogWorkspace />} />
+      <Route path={`${WebSubModulesLog.dives}`} element={<LogWorkspace />} />
       <Route
         path="*"
         element={

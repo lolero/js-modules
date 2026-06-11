@@ -1,8 +1,5 @@
 import type { IconDefinition } from '@fortawesome/fontawesome-common-types';
 import { fa1 } from '@fortawesome/free-solid-svg-icons/fa1';
-import { fa2 } from '@fortawesome/free-solid-svg-icons/fa2';
-import { fa3 } from '@fortawesome/free-solid-svg-icons/fa3';
-import { fa4 } from '@fortawesome/free-solid-svg-icons/fa4';
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons/faAngleRight';
 import { faArrowDownShortWide } from '@fortawesome/free-solid-svg-icons/faArrowDownShortWide';
 import { faArrowRightArrowLeft } from '@fortawesome/free-solid-svg-icons/faArrowRightArrowLeft';
@@ -333,110 +330,6 @@ export const routesMetadataMui = {
         path: `/${WebModules.navigation}/${WebSubModulesNavigation.menu}`,
         icon: faEllipsisVertical,
         label: upperFirst(lowerCase(WebSubModulesNavigation.menu)),
-        subRoutes: {
-          'test-1': {
-            path: `/${WebModules.navigation}/${WebSubModulesNavigation.menu}/test-1`,
-            icon: fa1,
-            label: 'test-1',
-          },
-          'test-2': {
-            path: `/${WebModules.navigation}/${WebSubModulesNavigation.menu}/test-2`,
-            icon: fa2,
-            label: 'test-2',
-          },
-          'test-3': {
-            path: `/${WebModules.navigation}/${WebSubModulesNavigation.menu}/test-3`,
-            icon: fa3,
-            label: 'test-3',
-          },
-          'test-4': {
-            path: `/${WebModules.navigation}/${WebSubModulesNavigation.menu}/test-4`,
-            icon: fa4,
-            label: 'test-4',
-          },
-          'test-5': {
-            path: `/${WebModules.navigation}/${WebSubModulesNavigation.menu}/test-5`,
-            icon: fa1,
-            label: 'test-5',
-          },
-          'test-6': {
-            path: `/${WebModules.navigation}/${WebSubModulesNavigation.menu}/test-6`,
-            icon: fa2,
-            label: 'test-6',
-          },
-          'test-7': {
-            path: `/${WebModules.navigation}/${WebSubModulesNavigation.menu}/test-7`,
-            icon: fa3,
-            label: 'test-7',
-          },
-          'test-8': {
-            path: `/${WebModules.navigation}/${WebSubModulesNavigation.menu}/test-8`,
-            icon: fa4,
-            label: 'test-8',
-          },
-          'test-9': {
-            path: `/${WebModules.navigation}/${WebSubModulesNavigation.menu}/test-9`,
-            icon: fa1,
-            label: 'test-9',
-          },
-          'test-10': {
-            path: `/${WebModules.navigation}/${WebSubModulesNavigation.menu}/test-10`,
-            icon: fa2,
-            label: 'test-10',
-            subRoutes: {
-              'test-11': {
-                path: `/${WebModules.navigation}/${WebSubModulesNavigation.menu}/test-11`,
-                icon: fa1,
-                label: 'test-11',
-              },
-              'test-12': {
-                path: `/${WebModules.navigation}/${WebSubModulesNavigation.menu}/test-12`,
-                icon: fa2,
-                label: 'test-12',
-              },
-              'test-13': {
-                path: `/${WebModules.navigation}/${WebSubModulesNavigation.menu}/test-13`,
-                icon: fa3,
-                label: 'test-13',
-              },
-              'test-14': {
-                path: `/${WebModules.navigation}/${WebSubModulesNavigation.menu}/test-14`,
-                icon: fa4,
-                label: 'test-14',
-              },
-              'test-15': {
-                path: `/${WebModules.navigation}/${WebSubModulesNavigation.menu}/test-15`,
-                icon: fa1,
-                label: 'test-15',
-              },
-              'test-16': {
-                path: `/${WebModules.navigation}/${WebSubModulesNavigation.menu}/test-16`,
-                icon: fa2,
-                label: 'test-16',
-              },
-              'test-17': {
-                path: `/${WebModules.navigation}/${WebSubModulesNavigation.menu}/test-17`,
-                icon: fa3,
-                label: 'test-17',
-              },
-              'test-18': {
-                path: `/${WebModules.navigation}/${WebSubModulesNavigation.menu}/test-18`,
-                icon: fa4,
-                label: 'test-18',
-              },
-              'test-19': {
-                path: `/${WebModules.navigation}/${WebSubModulesNavigation.menu}/test-19`,
-                icon: fa1,
-                label: 'test-19',
-              },
-              'test-20': {
-                path: `/${WebModules.navigation}/${WebSubModulesNavigation.menu}/test-20`,
-                icon: fa2,
-                label: 'test-20',
-              },
-            },
-          },
-        },
       },
       [WebSubModulesNavigation.menubar]: {
         path: `/${WebModules.navigation}/${WebSubModulesNavigation.menubar}`,

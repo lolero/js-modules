@@ -8,6 +8,11 @@ type BoxShadow = {
   spreadRadius: string;
 };
 
+/**
+ * Serialize a list of box-shadow parts into a single CSS `box-shadow` value.
+ * @param boxShadows - The individual box shadows to combine.
+ * @returns The comma-separated CSS `box-shadow` string.
+ */
 function getBoxShadowString(boxShadows: BoxShadow[]): string {
   const shadowStrings = boxShadows.map((boxShadow) => {
     return `

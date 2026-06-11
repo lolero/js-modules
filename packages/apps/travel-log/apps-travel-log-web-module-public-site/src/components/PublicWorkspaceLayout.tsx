@@ -1,39 +1,31 @@
 import type React from 'react';
+import { Outlet } from 'react-router-dom';
 import {
   TravelLogLogoLongBox,
   TravelLogLogoShortBox,
   TravelLogNavDrawerFooterBox,
   TravelLogNavToolbar,
 } from '@js-modules/apps-travel-log-web-utils';
-import type { WorkspaceBoxProps } from '@js-modules/web-react-nav';
-import { WorkspaceBox } from '@js-modules/web-react-nav';
+import { WorkspaceLayout } from '@js-modules/web-react-nav';
 import { PublicNavToolbarActionsBox } from './PublicNavToolbarActionsBox';
 import { PublicWorkspaceNavDrawerContentBox } from './PublicWorkspaceNavDrawerContentBox';
 
-export type PublicWorkspaceBoxProps = {
-  title: string;
-} & Pick<WorkspaceBoxProps, 'workspaceContent'>;
-
-export const PublicWorkspaceBox: React.FunctionComponent<
-  PublicWorkspaceBoxProps
-> = ({ title, workspaceContent }) => {
+export const PublicWorkspaceLayout: React.FunctionComponent = () => {
   return (
-    <WorkspaceBox
+    <WorkspaceLayout
       shortLogo={<TravelLogLogoShortBox />}
       longLogo={<TravelLogLogoLongBox />}
       homePath="/"
       navTopToolbar={
-        <TravelLogNavToolbar
-          title={title}
-          navActions={<PublicNavToolbarActionsBox />}
-        />
+        <TravelLogNavToolbar navActions={<PublicNavToolbarActionsBox />} />
       }
       navLeftDrawerContent={<PublicWorkspaceNavDrawerContentBox />}
       navLeftDrawerFooter={<TravelLogNavDrawerFooterBox />}
       navRightDrawerContent={null}
       navRightDrawerFooter={null}
       workspaceTopToolbar={null}
-      workspaceContent={workspaceContent}
-    />
+    >
+      <Outlet />
+    </WorkspaceLayout>
   );
 };

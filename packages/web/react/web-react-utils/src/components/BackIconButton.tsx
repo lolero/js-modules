@@ -12,9 +12,12 @@ export type BackIconButtonProps = IconButtonProps & {
   icon?: IconDefinition;
 };
 
-export const BackIconButton: React.FC<BackIconButtonProps> = (props) => {
-  const { icon, edge, onClick, ...iconButtonProps } = props;
-
+export const BackIconButton: React.FC<BackIconButtonProps> = ({
+  icon,
+  edge,
+  onClick,
+  ...iconButtonProps
+}) => {
   const navigate = useNavigate();
 
   const goBackCallback = useCallback(

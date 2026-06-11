@@ -5,15 +5,15 @@ import {
   WebSubModulesFeeds,
 } from '@js-modules/apps-travel-log-common-constants';
 import { routesMetadataPrivate } from '@js-modules/apps-travel-log-common-react';
-import { FeedsWorkspaceBox } from './FeedsWorkspaceBox';
+import { FeedsWorkspace } from './FeedsWorkspace';
 
 export const FeedsRoutes: React.FunctionComponent = () => {
   return (
     <Routes>
-      <Route index element={<FeedsWorkspaceBox />} />
+      <Route index element={<FeedsWorkspace />} />
       <Route
         path={`${WebSubModulesFeeds.general}`}
-        element={<FeedsWorkspaceBox />}
+        element={<FeedsWorkspace />}
       />
       <Route
         path="*"

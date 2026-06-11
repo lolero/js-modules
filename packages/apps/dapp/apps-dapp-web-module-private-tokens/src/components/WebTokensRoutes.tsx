@@ -5,12 +5,12 @@ import {
   WebSubModulesPortfolio,
 } from '@js-modules/apps-dapp-common-constants';
 import { routesMetadataPrivate } from '@js-modules/apps-dapp-common-react';
-import { WebTokensWorkspaceBox } from './WebTokensWorkspaceBox';
+import { WebTokensWorkspace } from './WebTokensWorkspace';
 
 export const WebTokensRoutes: React.FunctionComponent = () => {
   return (
     <Routes>
-      <Route index element={<WebTokensWorkspaceBox />} />
+      <Route index element={<WebTokensWorkspace />} />
       <Route
         path="*"
         element={

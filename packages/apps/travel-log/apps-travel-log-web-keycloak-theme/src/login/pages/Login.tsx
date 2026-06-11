@@ -8,11 +8,13 @@ import { useState } from 'react';
 import type { I18n } from '../i18n';
 import type { KcContext } from '../KcContext';
 
-export default function Login(
-  props: PageProps<Extract<KcContext, { pageId: 'login.ftl' }>, I18n>,
-) {
-  const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
-
+export default function Login({
+  kcContext,
+  i18n,
+  doUseDefaultCss,
+  Template,
+  classes,
+}: PageProps<Extract<KcContext, { pageId: 'login.ftl' }>, I18n>) {
   const { kcClsx } = getKcClsx({
     doUseDefaultCss,
     classes,
@@ -267,14 +269,17 @@ export default function Login(
   );
 }
 
-function PasswordWrapper(props: {
+function PasswordWrapper({
+  kcClsx,
+  i18n,
+  passwordInputId,
+  children,
+}: {
   kcClsx: KcClsx;
   i18n: I18n;
   passwordInputId: string;
   children: JSX.Element;
 }) {
-  const { kcClsx, i18n, passwordInputId, children } = props;
-
   const { msgStr } = i18n;
 
   const { isPasswordRevealed, toggleIsPasswordRevealed } =

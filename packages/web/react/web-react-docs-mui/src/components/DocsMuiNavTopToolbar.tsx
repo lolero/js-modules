@@ -1,17 +1,9 @@
-import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import { upperFirst } from 'lodash';
 import type React from 'react';
+import { WorkspaceSlotBox, WorkspaceSlotName } from '@js-modules/web-react-nav';
 import { DocsMuiThemeAutocomplete } from './DocsMuiThemeAutocomplete';
 
-export type DocsMuiNavToolbarProps = {
-  title: string;
-};
-
-export function DocsMuiNavToolbar({
-  title,
-}: DocsMuiNavToolbarProps): React.ReactNode {
+export function DocsMuiNavTopToolbar(): React.ReactNode {
   return (
     <Toolbar
       sx={{
@@ -21,23 +13,16 @@ export function DocsMuiNavToolbar({
       }}
       variant="dense"
     >
-      <Box
+      <WorkspaceSlotBox
+        name={WorkspaceSlotName.title}
         sx={{
           flexGrow: 1,
           display: 'flex',
           alignItems: 'center',
           height: '100%',
+          minWidth: 0,
         }}
-      >
-        <Typography
-          sx={{
-            fontWeight: 'bold',
-          }}
-          variant="h5"
-        >
-          {upperFirst(title)}
-        </Typography>
-      </Box>
+      />
       <DocsMuiThemeAutocomplete />
     </Toolbar>
   );

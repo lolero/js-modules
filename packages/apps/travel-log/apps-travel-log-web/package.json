@@ -16,6 +16,7 @@
     "@js-modules/apps-travel-log-web-module-private-settings": "workspace:^",
     "@js-modules/apps-travel-log-web-module-public-site": "workspace:^",
     "@js-modules/apps-travel-log-web-utils": "workspace:^",
+    "@js-modules/apps-travel-log-web-workspace-private": "workspace:^",
     "@js-modules/common-react-utils": "workspace:^",
     "@js-modules/common-utils-general": "workspace:^",
     "@js-modules/web-react-nav": "workspace:^",

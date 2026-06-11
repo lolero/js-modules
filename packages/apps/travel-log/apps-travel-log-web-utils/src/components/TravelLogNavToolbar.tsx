@@ -1,19 +1,13 @@
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import lowerCase from 'lodash/lowerCase';
-import upperFirst from 'lodash/upperFirst';
 import type React from 'react';
+import { WorkspaceSlotBox, WorkspaceSlotName } from '@js-modules/web-react-nav';
 
 export type TravelLogNavToolbarProps = {
-  icon?: React.ReactNode;
-  title: string;
   navActions: React.ReactNode;
 };
 
 export const TravelLogNavToolbar: React.FC<TravelLogNavToolbarProps> = ({
-  icon,
-  title,
   navActions,
 }) => {
   return (
@@ -25,25 +19,16 @@ export const TravelLogNavToolbar: React.FC<TravelLogNavToolbarProps> = ({
       }}
       variant="dense"
     >
-      <Box
+      <WorkspaceSlotBox
+        name={WorkspaceSlotName.title}
         sx={{
           flexGrow: 1,
           display: 'flex',
           alignItems: 'center',
           height: '100%',
+          minWidth: 0,
         }}
-      >
-        {icon ?? null}
-        <Typography
-          sx={{
-            fontWeight: 'bold',
-            ml: 1,
-          }}
-          variant="h5"
-        >
-          {upperFirst(lowerCase(title))}
-        </Typography>
-      </Box>
+      />
       <Box>{navActions}</Box>
     </Toolbar>
   );

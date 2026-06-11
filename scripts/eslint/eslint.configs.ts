@@ -259,6 +259,10 @@ const eslintConfigs: Record<EslintConfigType, EslintConfig> = {
           'import-x/no-cycle': 'error',
           'import-x/no-extraneous-dependencies': 'error',
           'import-x/no-relative-packages': 'error',
+          // `*-DO-NOT-EDIT` files are generated at dev/build time but absent
+          // during CI lint, so their imports are unresolvable there.
+          // https://github.com/un-ts/eslint-plugin-import-x/blob/master/docs/rules/no-unresolved.md
+          'import-x/no-unresolved': ['error', { ignore: ['-DO-NOT-EDIT$'] }],
           'import-x/order': [
             'error',
             {
@@ -472,19 +476,42 @@ const eslintConfigs: Record<EslintConfigType, EslintConfig> = {
       pluginJsdoc.configs['flat/recommended-typescript'],
       {
         rules: {
-          // https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/no-types.md
-          'jsdoc/no-types': 'error',
-          // https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/tag-lines.md
-          'jsdoc/tag-lines': ['error', 'never', { startLines: 0 }],
-          // TypeScript generator return types already encode yield types.
-          // https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/require-yields.md
-          'jsdoc/require-yields': 'off',
+          // Validate documented property paths so `@param props.bogus` fails.
+          // https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/check-param-names.md
+          'jsdoc/check-param-names': 'error',
           // Allow jest.config.ts loader directives alongside standard JSDoc tags.
           // https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/check-tag-names.md
           'jsdoc/check-tag-names': [
             'error',
             { definedTags: ['jest-config-loader'] },
           ],
+          // https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/no-types.md
+          'jsdoc/no-types': 'error',
+          // Only require JSDoc on non-nested function declarations.
+          // `:function :function` matches a function nested inside another
+          // function (declaration, expression, or arrow), so `:not(...)` exempts
+          // those; top-level `export function Foo()` stays required.
+          // https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/require-jsdoc.md
+          'jsdoc/require-jsdoc': [
+            'error',
+            {
+              require: { FunctionDeclaration: false },
+              contexts: ['FunctionDeclaration:not(:function :function)'],
+            },
+          ],
+          // When a function has destructured object params, name the first one
+          // `props` and require all of them (`@param props`), as well as all
+          // their nested props (`@param props.x`), to be documented.
+          // https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/require-param.md
+          'jsdoc/require-param': [
+            'error',
+            { unnamedRootBase: ['props'], checkDestructured: true },
+          ],
+          // TypeScript generator return types already encode yield types.
+          // https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/require-yields.md
+          'jsdoc/require-yields': 'off',
+          // https://github.com/gajus/eslint-plugin-jsdoc/blob/main/docs/rules/tag-lines.md
+          'jsdoc/tag-lines': ['error', 'never', { startLines: 0 }],
         },
       },
     ],
@@ -554,8 +581,18 @@ const eslintConfigs: Record<EslintConfigType, EslintConfig> = {
       },
 
       {
-        // React Compiler rules are irrelevant without the react compiler plugin
-        rules: { 'react-hooks/incompatible-library': 'off' },
+        rules: {
+          // Always destructure props in the component signature (whole-object
+          // uses like `{...props}` or passing `props` onward stay allowed).
+          // https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/destructuring-assignment.md
+          'react/destructuring-assignment': [
+            'error',
+            'always',
+            { destructureInSignature: 'always' },
+          ],
+          // React Compiler rules are irrelevant without the react compiler plugin
+          'react-hooks/incompatible-library': 'off',
+        },
       },
     ],
   },

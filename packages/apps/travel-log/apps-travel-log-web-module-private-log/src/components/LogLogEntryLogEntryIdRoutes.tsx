@@ -6,18 +6,18 @@ import {
   WebSubModulesLogLogEntry,
 } from '@js-modules/apps-travel-log-common-constants';
 import { routesMetadataPrivate } from '@js-modules/apps-travel-log-common-react';
-import { LogLogEntryAddEditWorkspaceBox } from './LogLogEntryAddEditWorkspaceBox';
-import { LogLogEntryWorkspaceBox } from './LogLogEntryWorkspaceBox';
+import { LogLogEntryAddEditWorkspace } from './LogLogEntryAddEditWorkspace';
+import { LogLogEntryWorkspace } from './LogLogEntryWorkspace';
 
 export const LogLogEntryLogEntryIdRoutes: React.FunctionComponent = () => {
   const { logEntryId } = useParams();
 
   return (
     <Routes>
-      <Route index element={<LogLogEntryWorkspaceBox />} />
+      <Route index element={<LogLogEntryWorkspace />} />
       <Route
         path={`${WebSubModulesLogLogEntry.edit}`}
-        element={<LogLogEntryAddEditWorkspaceBox />}
+        element={<LogLogEntryAddEditWorkspace />}
       />
       <Route
         path="*"

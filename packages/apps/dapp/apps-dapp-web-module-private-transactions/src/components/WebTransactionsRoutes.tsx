@@ -5,12 +5,12 @@ import {
   WebSubModulesPortfolio,
 } from '@js-modules/apps-dapp-common-constants';
 import { routesMetadataPrivate } from '@js-modules/apps-dapp-common-react';
-import { WebTransactionsWorkspaceBox } from './WebTransactionsWorkspaceBox';
+import { WebTransactionsWorkspace } from './WebTransactionsWorkspace';
 
 export const WebTransactionsRoutes: React.FunctionComponent = () => {
   return (
     <Routes>
-      <Route index element={<WebTransactionsWorkspaceBox />} />
+      <Route index element={<WebTransactionsWorkspace />} />
       <Route
         path="*"
         element={

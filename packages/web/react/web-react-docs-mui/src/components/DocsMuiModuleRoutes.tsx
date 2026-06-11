@@ -4,12 +4,16 @@ import type React from 'react';
 import { useMemo } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import type { RoutesMetadata } from '@js-modules/common-react-nav';
+import {
+  Workspace,
+  WorkspaceSlotName,
+  WorkspaceTitle,
+} from '@js-modules/web-react-nav';
 import type {
   SubModuleOf,
   WebModuleWithSubRoutes,
 } from '../routesMetadata/routesMetadata';
 import { routesMetadataMui } from '../routesMetadata/routesMetadata';
-import { DocsMuiWorkspaceBox } from './DocsMuiWorkspaceBox';
 
 export type DocsMuiModuleRoutesProps<
   WebModuleT extends WebModuleWithSubRoutes,
@@ -24,28 +28,22 @@ export function DocsMuiModuleRoutes<WebModuleT extends WebModuleWithSubRoutes>({
   subModuleBoxes,
   moduleBox,
 }: DocsMuiModuleRoutesProps<WebModuleT>): React.ReactNode {
-  const {
-    moduleLabel,
-    modulePath,
-    subRoutes,
-    subModuleBoxesEntries,
-    subModuleFirst,
-  } = useMemo(() => {
-    const moduleLabelTemp = routesMetadataMui[webModule].label;
-    const modulePathTemp = routesMetadataMui[webModule].path;
-    const subRoutesTemp: RoutesMetadata<IconDefinition> =
-      routesMetadataMui[webModule].subRoutes;
-    const subModuleBoxesEntriesTemp = entries<React.ReactNode>(subModuleBoxes);
-    const [subModuleFirstTemp] = subModuleBoxesEntriesTemp[0];
+  const { modulePath, subRoutes, subModuleBoxesEntries, subModuleFirst } =
+    useMemo(() => {
+      const modulePathTemp = routesMetadataMui[webModule].path;
+      const subRoutesTemp: RoutesMetadata<IconDefinition> =
+        routesMetadataMui[webModule].subRoutes;
+      const subModuleBoxesEntriesTemp =
+        entries<React.ReactNode>(subModuleBoxes);
+      const [subModuleFirstTemp] = subModuleBoxesEntriesTemp[0];
 
-    return {
-      moduleLabel: moduleLabelTemp,
-      modulePath: modulePathTemp,
-      subRoutes: subRoutesTemp,
-      subModuleBoxesEntries: subModuleBoxesEntriesTemp,
-      subModuleFirst: subModuleFirstTemp,
-    };
-  }, [webModule, subModuleBoxes]);
+      return {
+        modulePath: modulePathTemp,
+        subRoutes: subRoutesTemp,
+        subModuleBoxesEntries: subModuleBoxesEntriesTemp,
+        subModuleFirst: subModuleFirstTemp,
+      };
+    }, [webModule, subModuleBoxes]);
 
   return (
     <Routes>
@@ -53,10 +51,17 @@ export function DocsMuiModuleRoutes<WebModuleT extends WebModuleWithSubRoutes>({
         <Route
           index
           element={
-            <DocsMuiWorkspaceBox
-              title={moduleLabel}
-              workspaceContent={moduleBox}
-            />
+            <Workspace
+              slots={{
+                [WorkspaceSlotName.title]: (
+                  <WorkspaceTitle
+                    routeMetadata={routesMetadataMui[webModule]}
+                  />
+                ),
+              }}
+            >
+              {moduleBox}
+            </Workspace>
           }
         />
       )}
@@ -65,10 +70,15 @@ export function DocsMuiModuleRoutes<WebModuleT extends WebModuleWithSubRoutes>({
           key={subModule}
           path={subModule}
           element={
-            <DocsMuiWorkspaceBox
-              title={subRoutes[subModule].label}
-              workspaceContent={subModuleBox}
-            />
+            <Workspace
+              slots={{
+                [WorkspaceSlotName.title]: (
+                  <WorkspaceTitle routeMetadata={subRoutes[subModule]} />
+                ),
+              }}
+            >
+              {subModuleBox}
+            </Workspace>
           }
         />
       ))}

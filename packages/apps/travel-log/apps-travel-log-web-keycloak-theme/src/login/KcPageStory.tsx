@@ -28,11 +28,11 @@ export function createKcPageStory<PageId extends KcContext['pageId']>(params: {
 }) {
   const { pageId } = params;
 
-  function KcPageStory(props: {
+  function KcPageStory({
+    kcContext: overrides,
+  }: {
     kcContext?: DeepPartial<Extract<KcContext, { pageId: PageId }>>;
   }) {
-    const { kcContext: overrides } = props;
-
     const kcContextMock = getKcContextMock({
       pageId,
       overrides,

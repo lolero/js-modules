@@ -10,7 +10,6 @@ import { DrawerBox } from './DrawerBox';
 import { LinkBox } from './LinkBox';
 import { MenubarBox } from './MenubarBox';
 import { MenuBox } from './MenuBox';
-import { NavigationBox } from './NavigationBox';
 import { PaginationBox } from './PaginationBox';
 import { SpeedDialBox } from './SpeedDialBox';
 import { StepperBox } from './StepperBox';
@@ -34,7 +33,6 @@ export function NavigationRoutes(): React.ReactNode {
     <DocsMuiModuleRoutes
       webModule={WebModules.navigation}
       subModuleBoxes={subModuleBoxes}
-      moduleBox={<NavigationBox />}
     />
   );
 }

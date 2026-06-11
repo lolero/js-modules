@@ -43,6 +43,9 @@ import { X } from '../../other-package/src/X'; // wrong
 - Conventional commits (Angular convention)
 - Index files only in package `src/` directories
 - **No lint disable comments** of any kind unless strictly necessary and explicitly authorized by the user. Fix the underlying issue instead.
-- **After completing code changes**, run `pnpm lint:staged-fix` — lints and auto-fixes only the files changed since HEAD. Run once per task, not after every file edit.
+- **After completing code changes**, run `pnpm lint:staged-fix` to lint and auto-fixe only the files changed since HEAD. Run once per task, not after every file edit.
+- **JSDoc**: Give every non-nested function you create or edit a JSDoc block.
+- **JSDoc currency**: When you edit a function, or review my changes to one, verify its JSDoc is still accurate and valid. Run once per task, not after every file edit.
+- **JSDoc React components**: The root `@param props` description is always `Component props.`
 - **MUI styling**: use theme tokens (`primary.main`, `background.paper`, `spacing`, etc.) — never hardcode colors or sizes that the theme already defines. Structural or repeated styles belong in `getThemeComponents` overrides in the theme file; `sx` props are for layout and one-off adjustments specific to a single usage.
 - **Icons**: React+MUI apps use `<MuiFaIcon />` from `@js-modules/web-react-utils`. React Native apps use `<NativeFaIcon />` from `@js-modules/native-react-utils`. Both accept Font Awesome `IconDefinition` objects. Do not use MUI's built-in icon set or any other icon library.

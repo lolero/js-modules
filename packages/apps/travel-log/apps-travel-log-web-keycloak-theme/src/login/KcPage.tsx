@@ -13,9 +13,7 @@ const Login = lazy(() => import('./pages/Login'));
 
 const doMakeUserConfirmPassword = true;
 
-export default function KcPage(props: { kcContext: KcContext }) {
-  const { kcContext } = props;
-
+export default function KcPage({ kcContext }: { kcContext: KcContext }) {
   const { i18n } = useI18n({ kcContext });
 
   return (

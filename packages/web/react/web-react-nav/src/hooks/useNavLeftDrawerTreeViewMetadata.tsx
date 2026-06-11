@@ -15,15 +15,11 @@ import { getNavLeftDrawerTreeViewMetadata } from '../utils/getNavLeftDrawerTreeV
 import { useNavDisplayMetadata } from './useNavDisplayMetadata';
 
 /**
- * React hook to get metadata of nested <TreeItem />s to populate the
- * <NavLeftDrawer/>
- *
- * @param routesMetadata - The metadata for the
- * navigation's <TreeItem /> tree
- * @param userRoles - Access roles of the current authenticated user
- * @param translateCallback - Translation callback function
- *
- * @returns Tree view metadata
+ * React hook to get metadata of nested <TreeItem />s for <NavLeftDrawer />.
+ * @param routesMetadata - RoutesMetadata for the navigation TreeView.
+ * @param userRoles - Access roles of the current authenticated user.
+ * @param translateCallback - Translation callback function.
+ * @returns Tree view metadata.
  */
 export function useNavLeftDrawerTreeViewMetadata(
   routesMetadata: RoutesMetadata<IconDefinition>,

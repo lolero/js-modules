@@ -1,0 +1,29 @@
+import type React from 'react';
+import { WebModulesPrivate } from '@js-modules/apps-dapp-common-constants';
+import { routesMetadataPrivate } from '@js-modules/apps-dapp-common-react';
+import {
+  Workspace,
+  WorkspaceSlotName,
+  WorkspaceTitle,
+} from '@js-modules/web-react-nav';
+import { WebAnalyticsWorkspaceContentBox } from './WebAnalyticsWorkspaceContentBox';
+import { WebAnalyticsWorkspaceTopToolbar } from './WebAnalyticsWorkspaceTopToolbar';
+
+export const WebAnalyticsWorkspace: React.FC = () => {
+  return (
+    <Workspace
+      slots={{
+        [WorkspaceSlotName.title]: (
+          <WorkspaceTitle
+            routeMetadata={routesMetadataPrivate[WebModulesPrivate.analytics]}
+          />
+        ),
+        [WorkspaceSlotName.workspaceTopToolbar]: (
+          <WebAnalyticsWorkspaceTopToolbar />
+        ),
+      }}
+    >
+      <WebAnalyticsWorkspaceContentBox />
+    </Workspace>
+  );
+};

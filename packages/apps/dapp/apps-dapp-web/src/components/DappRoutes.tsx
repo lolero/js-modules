@@ -6,6 +6,7 @@ import { routesMetadataPrivate } from '@js-modules/apps-dapp-common-react';
 import { useNodeChainsGetMany } from '@js-modules/apps-dapp-common-store-redux';
 import { WebAnalyticsRoutes } from '@js-modules/apps-dapp-web-module-private-analytics';
 import { WebPortfolioRoutes } from '@js-modules/apps-dapp-web-module-private-portfolio';
+import { DappWorkspaceLayout } from '@js-modules/apps-dapp-web-utils';
 
 export const DappRoutes: React.FunctionComponent = () => {
   const {
@@ -21,23 +22,25 @@ export const DappRoutes: React.FunctionComponent = () => {
 
   return (
     <Routes>
-      <Route
-        path={`${WebModulesPrivate.portfolio}/*`}
-        element={<WebPortfolioRoutes />}
-      />
-      <Route
-        path={`${WebModulesPrivate.analytics}/*`}
-        element={<WebAnalyticsRoutes />}
-      />
-      <Route
-        path="*"
-        element={
-          <Navigate
-            replace
-            to={routesMetadataPrivate[WebModulesPrivate.portfolio].path}
-          />
-        }
-      />
+      <Route element={<DappWorkspaceLayout />}>
+        <Route
+          path={`${WebModulesPrivate.portfolio}/*`}
+          element={<WebPortfolioRoutes />}
+        />
+        <Route
+          path={`${WebModulesPrivate.analytics}/*`}
+          element={<WebAnalyticsRoutes />}
+        />
+        <Route
+          path="*"
+          element={
+            <Navigate
+              replace
+              to={routesMetadataPrivate[WebModulesPrivate.portfolio].path}
+            />
+          }
+        />
+      </Route>
     </Routes>
   );
 };

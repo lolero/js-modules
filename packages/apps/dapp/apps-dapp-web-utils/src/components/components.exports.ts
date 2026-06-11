@@ -6,4 +6,4 @@ export * from './DappNavDrawerFooterBox';
 export * from './DappNavSocialMediaBox';
 export * from './DappNavSocialMediaMenu';
 export * from './DappNavToolbar';
-export * from './DappWorkspaceBox';
+export * from './DappWorkspaceLayout';

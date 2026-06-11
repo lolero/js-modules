@@ -23,6 +23,12 @@ export type NavDisplayMetadata = {
   closeNavRightDrawerCallback: () => void;
 };
 
+/**
+ * React hook deriving the responsive display state of both nav drawers from the
+ * current breakpoint and NavContext, plus the callbacks to hide/collapse/expand
+ * them.
+ * @returns The NavDisplayMetadata with drawer display callbacks.
+ */
 export function useNavDisplayMetadata(): NavDisplayMetadata {
   const {
     navLeftDrawerDisplayStatus,

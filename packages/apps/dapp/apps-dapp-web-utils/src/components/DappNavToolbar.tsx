@@ -1,15 +1,9 @@
-import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import { upperFirst } from 'lodash';
 import type React from 'react';
+import { WorkspaceSlotBox, WorkspaceSlotName } from '@js-modules/web-react-nav';
 import { DappNavConnectButton } from './DappNavConnectButton';
 
-export type DappNavToolbarProps = {
-  title: string;
-};
-
-export const DappNavToolbar: React.FC<DappNavToolbarProps> = ({ title }) => {
+export const DappNavToolbar: React.FunctionComponent = () => {
   return (
     <Toolbar
       sx={{
@@ -19,23 +13,16 @@ export const DappNavToolbar: React.FC<DappNavToolbarProps> = ({ title }) => {
       }}
       variant="dense"
     >
-      <Box
+      <WorkspaceSlotBox
+        name={WorkspaceSlotName.title}
         sx={{
           flexGrow: 1,
           display: 'flex',
           alignItems: 'center',
           height: '100%',
+          minWidth: 0,
         }}
-      >
-        <Typography
-          sx={{
-            fontWeight: 'bold',
-          }}
-          variant="h5"
-        >
-          {upperFirst(title)}
-        </Typography>
-      </Box>
+      />
       <DappNavConnectButton />
     </Toolbar>
   );

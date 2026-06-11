@@ -1,0 +1,27 @@
+import type React from 'react';
+import { WebModulesPrivate } from '@js-modules/apps-travel-log-common-constants';
+import { routesMetadataPrivate } from '@js-modules/apps-travel-log-common-react';
+import {
+  Workspace,
+  WorkspaceSlotName,
+  WorkspaceTitle,
+} from '@js-modules/web-react-nav';
+import { FeedsWorkspaceContentBox } from './FeedsWorkspaceContentBox';
+import { FeedsWorkspaceTopToolbar } from './FeedsWorkspaceTopToolbar';
+
+export const FeedsWorkspace: React.FC = () => {
+  return (
+    <Workspace
+      slots={{
+        [WorkspaceSlotName.title]: (
+          <WorkspaceTitle
+            routeMetadata={routesMetadataPrivate[WebModulesPrivate.feeds]}
+          />
+        ),
+        [WorkspaceSlotName.workspaceTopToolbar]: <FeedsWorkspaceTopToolbar />,
+      }}
+    >
+      <FeedsWorkspaceContentBox />
+    </Workspace>
+  );
+};

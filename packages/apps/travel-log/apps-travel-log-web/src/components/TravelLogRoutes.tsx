@@ -11,9 +11,11 @@ import { FeedsRoutes } from '@js-modules/apps-travel-log-web-module-private-feed
 import { LogRoutes } from '@js-modules/apps-travel-log-web-module-private-log';
 import { SettingsRoutes } from '@js-modules/apps-travel-log-web-module-private-settings';
 import {
-  HomeWorkspaceBox,
-  PurposeWorkspaceBox,
+  HomeWorkspace,
+  PublicWorkspaceLayout,
+  PurposeWorkspace,
 } from '@js-modules/apps-travel-log-web-module-public-site';
+import { PrivateWorkspaceLayout } from '@js-modules/apps-travel-log-web-workspace-private';
 
 export const TravelLogRoutes: React.FunctionComponent = () => {
   const { isKeycloakReady, rootPath } = useInitializeKeycloak(ClientType.web);
@@ -26,22 +28,32 @@ export const TravelLogRoutes: React.FunctionComponent = () => {
 
   return (
     <Routes>
-      <Route path={`${WebModulesPublic.home}`} element={<HomeWorkspaceBox />} />
-      <Route
-        path={`${WebModulesPublic.purpose}`}
-        element={<PurposeWorkspaceBox />}
-      />
-      <Route path={`${WebModulesPrivate.feeds}/*`} element={<FeedsRoutes />} />
-      <Route path={`${WebModulesPrivate.boards}/*`} element={<FeedsRoutes />} />
-      <Route path={`${WebModulesPrivate.log}/*`} element={<LogRoutes />} />
-      <Route
-        path={`${WebModulesPrivate.network}/*`}
-        element={<FeedsRoutes />}
-      />
-      <Route
-        path={`${WebModulesPrivate.settings}/*`}
-        element={<SettingsRoutes />}
-      />
+      <Route element={<PublicWorkspaceLayout />}>
+        <Route path={`${WebModulesPublic.home}`} element={<HomeWorkspace />} />
+        <Route
+          path={`${WebModulesPublic.purpose}`}
+          element={<PurposeWorkspace />}
+        />
+      </Route>
+      <Route element={<PrivateWorkspaceLayout />}>
+        <Route
+          path={`${WebModulesPrivate.feeds}/*`}
+          element={<FeedsRoutes />}
+        />
+        <Route
+          path={`${WebModulesPrivate.boards}/*`}
+          element={<FeedsRoutes />}
+        />
+        <Route path={`${WebModulesPrivate.log}/*`} element={<LogRoutes />} />
+        <Route
+          path={`${WebModulesPrivate.network}/*`}
+          element={<FeedsRoutes />}
+        />
+        <Route
+          path={`${WebModulesPrivate.settings}/*`}
+          element={<SettingsRoutes />}
+        />
+      </Route>
       <Route path="*" element={<Navigate replace to={rootPath} />} />
     </Routes>
   );

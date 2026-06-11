@@ -9,23 +9,21 @@ import { useEffect } from 'react';
 import type { I18n } from './i18n';
 import type { KcContext } from './KcContext';
 
-export default function Template(props: TemplateProps<KcContext, I18n>) {
-  const {
-    displayInfo = false,
-    displayMessage = true,
-    displayRequiredFields = false,
-    headerNode,
-    socialProvidersNode = null,
-    infoNode = null,
-    documentTitle,
-    bodyClassName,
-    kcContext,
-    i18n,
-    doUseDefaultCss,
-    classes,
-    children,
-  } = props;
-
+export default function Template({
+  displayInfo = false,
+  displayMessage = true,
+  displayRequiredFields = false,
+  headerNode,
+  socialProvidersNode = null,
+  infoNode = null,
+  documentTitle,
+  bodyClassName,
+  kcContext,
+  i18n,
+  doUseDefaultCss,
+  classes,
+  children,
+}: TemplateProps<KcContext, I18n>) {
   const { kcClsx } = getKcClsx({ doUseDefaultCss, classes });
 
   const { msg, msgStr, currentLanguage, enabledLanguages } = i18n;

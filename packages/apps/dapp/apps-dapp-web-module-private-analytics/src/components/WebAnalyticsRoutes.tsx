@@ -6,12 +6,12 @@ import {
 } from '@js-modules/apps-dapp-common-constants';
 import { routesMetadataPrivate } from '@js-modules/apps-dapp-common-react';
 import { WebAnalyticsTokensRoutes } from './WebAnalyticsTokensRoutes';
-import { WebAnalyticsWorkspaceBox } from './WebAnalyticsWorkspaceBox';
+import { WebAnalyticsWorkspace } from './WebAnalyticsWorkspace';
 
 export const WebAnalyticsRoutes: React.FunctionComponent = () => {
   return (
     <Routes>
-      <Route index element={<WebAnalyticsWorkspaceBox />} />
+      <Route index element={<WebAnalyticsWorkspace />} />
       <Route
         path={`${WebSubModulesAnalytics.tokens}/*`}
         element={<WebAnalyticsTokensRoutes />}

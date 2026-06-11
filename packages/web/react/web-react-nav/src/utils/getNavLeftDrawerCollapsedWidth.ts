@@ -9,6 +9,11 @@ import {
   NAV_LEFT_DRAWER_TREE_VIEW_ITEM_PADDING_X_SPACING,
 } from '../constants/nav.constants';
 
+/**
+ * Recursively find the deepest level of visible nested routes.
+ * @param routesMetadata - The RoutesMetadata to measure.
+ * @returns The maximum nesting level among visible routes.
+ */
 function getRoutesMetadataMaxNestingLevel<IconT>(
   routesMetadata: RoutesMetadata<IconT>,
 ): number {
@@ -28,6 +33,15 @@ function getRoutesMetadataMaxNestingLevel<IconT>(
   );
 }
 
+/**
+ * Compute the collapsed <NavLeftDrawer /> width as a theme-faithful `calc()`: a
+ * fixed pixel part (icon-to-expand gap, expand button, per-depth indentation),
+ * the icon size in `rem`, and the row's horizontal padding in theme spacing.
+ * @param spacing - The theme's `spacing` function, kept theme-faithful.
+ * @param routesMetadatas - The RoutesMetadata whose deepest nesting sets the
+ * indentation reserved in the collapsed width.
+ * @returns The collapsed drawer width as a CSS `calc()` string.
+ */
 export function getNavLeftDrawerCollapsedWidth<IconT>(
   spacing: Theme['spacing'],
   routesMetadatas: RoutesMetadata<IconT>[] = [],

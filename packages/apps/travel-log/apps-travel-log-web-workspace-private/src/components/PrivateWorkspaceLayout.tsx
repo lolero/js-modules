@@ -1,6 +1,6 @@
 import type React from 'react';
 import { useCallback } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import { WEB_CLIENT__URI__TRAVEL_LOG } from '@js-modules/apps-travel-log-common-constants';
 import {
   useStateAuthLogin,
@@ -13,21 +13,15 @@ import {
   TravelLogNavDrawerFooterBox,
   TravelLogNavToolbar,
 } from '@js-modules/apps-travel-log-web-utils';
-import type { WorkspaceBoxProps } from '@js-modules/web-react-nav';
-import { WorkspaceBox } from '@js-modules/web-react-nav';
+import {
+  WorkspaceLayout,
+  WorkspaceSlotBox,
+  WorkspaceSlotName,
+} from '@js-modules/web-react-nav';
 import { PrivateWorkspaceNavDrawerContentBox } from './PrivateWorkspaceNavDrawerContentBox';
 import { PrivateWorkspaceNavToolbarActionsBox } from './PrivateWorkspaceNavToolbarActionsBox';
 
-export type PrivateWorkspaceBoxProps = {
-  title: string;
-} & Pick<
-  WorkspaceBoxProps,
-  'workspaceTopToolbar' | 'workspaceContent' | 'contentSx'
->;
-
-export const PrivateWorkspaceBox: React.FunctionComponent<
-  PrivateWorkspaceBoxProps
-> = ({ title, workspaceTopToolbar, workspaceContent, contentSx }) => {
+export const PrivateWorkspaceLayout: React.FunctionComponent = () => {
   const { pathname } = useLocation();
   const { isAuthenticated } = useStateAuthReducerMetadata();
 
@@ -46,13 +40,12 @@ export const PrivateWorkspaceBox: React.FunctionComponent<
   }, [isAuthenticated]);
 
   return (
-    <WorkspaceBox
+    <WorkspaceLayout
       shortLogo={<TravelLogLogoShortBox />}
       longLogo={<TravelLogLogoLongBox />}
       homePath="/"
       navTopToolbar={
         <TravelLogNavToolbar
-          title={title}
           navActions={<PrivateWorkspaceNavToolbarActionsBox />}
         />
       }
@@ -60,12 +53,17 @@ export const PrivateWorkspaceBox: React.FunctionComponent<
       navLeftDrawerFooter={<TravelLogNavDrawerFooterBox />}
       navRightDrawerContent={null}
       navRightDrawerFooter={null}
-      workspaceTopToolbar={workspaceTopToolbar}
-      workspaceContent={workspaceContent}
+      workspaceTopToolbar={
+        <WorkspaceSlotBox
+          name={WorkspaceSlotName.workspaceTopToolbar}
+          sx={{ display: 'flex', flexGrow: 1, minWidth: 0 }}
+        />
+      }
       isAuthorizedRequired
       getIsAuthorizedCallback={getIsAuthorizedCallback}
       onNotAuthorizedCallback={stateAuthLoginCallback}
-      contentSx={contentSx}
-    />
+    >
+      <Outlet />
+    </WorkspaceLayout>
   );
 };

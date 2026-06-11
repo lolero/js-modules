@@ -6,12 +6,12 @@ import {
 } from '@js-modules/apps-travel-log-common-constants';
 import { routesMetadataPrivate } from '@js-modules/apps-travel-log-common-react';
 import { SettingsProfileRoutes } from './SettingsProfileRoutes';
-import { SettingsWorkspaceBox } from './SettingsWorkspaceBox';
+import { SettingsWorkspace } from './SettingsWorkspace';
 
 export const SettingsRoutes: React.FunctionComponent = () => {
   return (
     <Routes>
-      <Route index element={<SettingsWorkspaceBox />} />
+      <Route index element={<SettingsWorkspace />} />
       <Route
         path={`${WebSubModulesSettings.profile}/*`}
         element={<SettingsProfileRoutes />}
