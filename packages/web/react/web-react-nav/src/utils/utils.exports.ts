@@ -1,1 +1,1 @@
-export * from './getNavLeftDrawerTabs';
+export * from './getNavLeftDrawerTreeViewMetadata';

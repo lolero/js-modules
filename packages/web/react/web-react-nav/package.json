@@ -19,6 +19,7 @@
     "@js-modules/common-react-utils": "workspace:^",
     "@js-modules/web-react-utils": "workspace:^",
     "@mui/material": "^9.0.0",
+    "@mui/x-tree-view": "^9.4.0",
     "@types/lodash": "^4.17.24",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",

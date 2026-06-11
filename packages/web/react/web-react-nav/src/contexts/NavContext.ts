@@ -23,6 +23,7 @@ export type NavContextValue = {
   hideNavRightDrawerString: string;
   navLeftDrawerCollapsedWidth: string;
   navLeftDrawerExpandedWidth: string;
+  navLeftDrawerTreeViewItemHeightMin: string;
   navRightDrawerCollapsedWidth: string;
   navRightDrawerExpandedWidth: string;
   workspaceTopToolbarPaddingYSpacing: number;
@@ -41,6 +42,7 @@ export const NavContext = createContext<NavContextValue>({
   hideNavRightDrawerString: '',
   navLeftDrawerCollapsedWidth: '0',
   navLeftDrawerExpandedWidth: '0',
+  navLeftDrawerTreeViewItemHeightMin: '0',
   navRightDrawerCollapsedWidth: '0',
   navRightDrawerExpandedWidth: '0',
   workspaceTopToolbarPaddingYSpacing: 0,

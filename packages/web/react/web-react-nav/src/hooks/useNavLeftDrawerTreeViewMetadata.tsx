@@ -10,26 +10,26 @@ import type {
 } from '@js-modules/common-react-nav';
 import { useSplitRouterPath } from '@js-modules/web-react-utils';
 import type { ReactRouterNavUtils } from '../types/routes.types';
-import type { NavLeftDrawerTabs } from '../utils/getNavLeftDrawerTabs';
-import { getNavLeftDrawerTabs } from '../utils/getNavLeftDrawerTabs';
+import type { TreeViewMetadata } from '../utils/getNavLeftDrawerTreeViewMetadata';
+import { getNavLeftDrawerTreeViewMetadata } from '../utils/getNavLeftDrawerTreeViewMetadata';
 import { useNavDisplayMetadata } from './useNavDisplayMetadata';
 
 /**
- * React hook to get array of Material UI vertical <Tab />s to populate the
- * <NavLeftDrawer/>,
+ * React hook to get metadata of nested <TreeItem />s to populate the
+ * <NavLeftDrawer/>
  *
- * @param {RoutesMetadata<IconDefinition>} tabsMetadata - The metadata for the
- * navigation's <Tab /> tree
- * @param {string[]} userRoles - Access roles of the current authenticated user
- * @param {function} translateCallback - Translation callback function
+ * @param routesMetadata - The metadata for the
+ * navigation's <TreeItem /> tree
+ * @param userRoles - Access roles of the current authenticated user
+ * @param translateCallback - Translation callback function
  *
- * @returns {NavLeftDrawerTabs} Tabs value and array of tabs
+ * @returns Tree view metadata
  */
-export function useNavLeftDrawerTabs(
-  tabsMetadata: RoutesMetadata<IconDefinition>,
+export function useNavLeftDrawerTreeViewMetadata(
+  routesMetadata: RoutesMetadata<IconDefinition>,
   userRoles?: string[],
   translateCallback?: (translationKey: string) => string,
-): NavLeftDrawerTabs {
+): TreeViewMetadata {
   const navigate = useNavigate();
   const location = useLocation();
   const [searchParams] = useSearchParams();
@@ -46,7 +46,7 @@ export function useNavLeftDrawerTabs(
 
   const splitRouterPath = useSplitRouterPath();
 
-  const routerPath = useMemo(() => {
+  const pathRouter = useMemo(() => {
     return `/${splitRouterPath.join('/')}`;
   }, [splitRouterPath]);
 
@@ -92,11 +92,19 @@ export function useNavLeftDrawerTabs(
     [closeNavLeftDrawerCallback, reactRouterNavUtils],
   );
 
-  const { tabsValue, tabs } = useMemo(() => {
-    return getNavLeftDrawerTabs(
-      tabsMetadata,
+  const {
+    pathActive,
+    treeViewItems,
+    pathsExpandedActive,
+    activeLineTreeViewItemMetadatas,
+    pathsExpandable,
+    pathsParentByPath,
+  } = useMemo(() => {
+    return getNavLeftDrawerTreeViewMetadata(
+      routesMetadata,
       0,
-      routerPath,
+      pathRouter,
+      null,
       isNavLeftDrawerExpanded,
       reactRouterNavUtils,
       onClickCallback,
@@ -104,8 +112,8 @@ export function useNavLeftDrawerTabs(
       translateCallback,
     );
   }, [
-    tabsMetadata,
-    routerPath,
+    routesMetadata,
+    pathRouter,
     isNavLeftDrawerExpanded,
     reactRouterNavUtils,
     onClickCallback,
@@ -114,7 +122,11 @@ export function useNavLeftDrawerTabs(
   ]);
 
   return {
-    tabsValue,
-    tabs,
+    activeLineTreeViewItemMetadatas,
+    pathActive,
+    pathsExpandable,
+    pathsExpandedActive,
+    pathsParentByPath,
+    treeViewItems,
   };
 }

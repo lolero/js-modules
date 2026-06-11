@@ -1,2 +1,2 @@
 export * from './useNavDisplayMetadata';
-export * from './useNavLeftDrawerTabs';
+export * from './useNavLeftDrawerTreeViewMetadata';

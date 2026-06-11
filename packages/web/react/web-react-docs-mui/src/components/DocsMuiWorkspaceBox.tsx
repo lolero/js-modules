@@ -4,6 +4,7 @@ import { WorkspaceBox } from '@js-modules/web-react-nav';
 import { DocsMuiLogoLongBox } from './DocsMuiLogoLongBox';
 import { DocsMuiLogoShortBox } from './DocsMuiLogoShortBox';
 import { DocsMuiNavDrawerContentBox } from './DocsMuiNavDrawerContentBox';
+import { DocsMuiNavDrawerFooterBox } from './DocsMuiNavDrawerFooterBox';
 import { DocsMuiNavToolbar } from './DocsMuiNavToolbar';
 
 export type DocsMuiWorkspaceBoxProps = {
@@ -21,7 +22,7 @@ export function DocsMuiWorkspaceBox({
       homePath={`/`}
       navTopToolbar={<DocsMuiNavToolbar title={title} />}
       navLeftDrawerContent={<DocsMuiNavDrawerContentBox />}
-      navLeftDrawerFooter={null}
+      navLeftDrawerFooter={<DocsMuiNavDrawerFooterBox />}
       navRightDrawerContent={null}
       navRightDrawerFooter={null}
       workspaceTopToolbar={null}

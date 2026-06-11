@@ -79,7 +79,15 @@ export const NavLeftDrawer = forwardRef<HTMLDivElement, NavLeftDrawerProps>(
               width: navDrawerWidth,
               overflow: 'visible',
               border: 'none',
-              ...NavBoxShadowVerticalSx,
+              // NavBoxShadowVerticalSx on the ::after pseudo-element so the
+              // expand/collapse buttons display outside the drawer's top edge
+              '&::after': {
+                content: '""',
+                position: 'absolute',
+                inset: 0,
+                pointerEvents: 'none',
+                ...NavBoxShadowVerticalSx,
+              },
             },
           },
         }}
@@ -92,6 +100,7 @@ export const NavLeftDrawer = forwardRef<HTMLDivElement, NavLeftDrawerProps>(
             overflow: 'auto',
             display: 'flex',
             flexDirection: 'column',
+            scrollbarWidth: 'none',
           }}
         >
           {navLeftDrawerContent}
