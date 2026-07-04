@@ -7,6 +7,7 @@ export type LintMode = (typeof LintMode)[keyof typeof LintMode];
 
 export const LinterName = {
   eslint: 'eslint',
+  packageJson: 'packageJson',
   prettier: 'prettier',
   ruff: 'ruff',
   shellcheck: 'shellcheck',

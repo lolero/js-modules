@@ -16,11 +16,22 @@
     "@js-modules/common-redux-utils-normalized-reducers": "workspace:^",
     "@js-modules/common-utils-general": "workspace:^",
     "@js-modules/web-react-utils": "workspace:^",
-    "@types/lodash": "^4.17.24",
-    "@types/react": "19.2.14",
-    "date-fns": "^4.1.0",
-    "lodash": "^4.18.1",
-    "react": "19.2.5",
-    "react-router-dom": "^7.14.2"
+    "date-fns": "catalog:",
+    "lodash": "catalog:"
+  },
+  "devDependencies": {
+    "@types/lodash": "catalog:",
+    "@types/react": "catalog:",
+    "react": "catalog:",
+    "react-router-dom": "catalog:"
+  },
+  "peerDependencies": {
+    "react": "catalog:",
+    "react-router-dom": "catalog:"
+  },
+  "nx": {
+    "tags": [
+      "type:lib"
+    ]
   }
 }

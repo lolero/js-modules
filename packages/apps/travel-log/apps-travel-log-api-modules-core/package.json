@@ -14,21 +14,38 @@
     "@js-modules/api-nest-module-auth-keycloak": "workspace:^",
     "@js-modules/api-nest-utils": "workspace:^",
     "@js-modules/apps-travel-log-common-constants-cjs": "workspace:^",
-    "@nestjs/common": "^11.1.19",
-    "@nestjs/config": "^4.0.4",
-    "@nestjs/swagger": "^11.4.2",
-    "@nestjs/testing": "^11.1.19",
-    "@nestjs/typeorm": "^11.0.1",
-    "@types/express": "^5.0.6",
-    "@types/lodash": "^4.17.24",
-    "@types/supertest": "^7.2.0",
-    "class-transformer": "^0.5.1",
-    "class-validator": "^0.15.1",
-    "express": "^5.2.1",
-    "keycloak-js": "26.2.4",
-    "lodash": "^4.18.1",
-    "nest-keycloak-connect": "^1.10.1",
-    "reflect-metadata": "^0.2.2",
-    "typeorm": "^0.3.28"
+    "express": "catalog:",
+    "keycloak-js": "catalog:",
+    "lodash": "catalog:",
+    "nest-keycloak-connect": "catalog:"
+  },
+  "devDependencies": {
+    "@nestjs/common": "catalog:",
+    "@nestjs/config": "catalog:",
+    "@nestjs/swagger": "catalog:",
+    "@nestjs/testing": "catalog:",
+    "@nestjs/typeorm": "catalog:",
+    "@types/express": "catalog:",
+    "@types/lodash": "catalog:",
+    "@types/supertest": "catalog:",
+    "class-transformer": "catalog:",
+    "class-validator": "catalog:",
+    "reflect-metadata": "catalog:",
+    "typeorm": "catalog:"
+  },
+  "peerDependencies": {
+    "@nestjs/common": "catalog:",
+    "@nestjs/config": "catalog:",
+    "@nestjs/swagger": "catalog:",
+    "@nestjs/typeorm": "catalog:",
+    "class-transformer": "catalog:",
+    "class-validator": "catalog:",
+    "reflect-metadata": "catalog:",
+    "typeorm": "catalog:"
+  },
+  "nx": {
+    "tags": [
+      "type:lib"
+    ]
   }
 }

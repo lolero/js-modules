@@ -9,9 +9,18 @@
     "build"
   ],
   "scripts": {},
-  "dependencies": {
-    "@mui/material": "^9.0.0",
-    "@types/react": "19.2.14",
-    "react": "19.2.5"
+  "devDependencies": {
+    "@mui/material": "catalog:",
+    "@types/react": "catalog:",
+    "react": "catalog:"
+  },
+  "peerDependencies": {
+    "@mui/material": "catalog:",
+    "react": "catalog:"
+  },
+  "nx": {
+    "tags": [
+      "type:lib"
+    ]
   }
 }

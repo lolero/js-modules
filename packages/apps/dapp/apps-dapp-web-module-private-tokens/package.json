@@ -10,9 +10,9 @@
   ],
   "scripts": {},
   "dependencies": {
-    "@fortawesome/free-brands-svg-icons": "^7.2.0",
-    "@fortawesome/free-regular-svg-icons": "^7.2.0",
-    "@fortawesome/free-solid-svg-icons": "^7.2.0",
+    "@fortawesome/free-brands-svg-icons": "catalog:",
+    "@fortawesome/free-regular-svg-icons": "catalog:",
+    "@fortawesome/free-solid-svg-icons": "catalog:",
     "@js-modules/apps-dapp-common-constants": "workspace:^",
     "@js-modules/apps-dapp-common-react": "workspace:^",
     "@js-modules/apps-dapp-common-store-redux": "workspace:^",
@@ -20,16 +20,31 @@
     "@js-modules/common-react-utils": "workspace:^",
     "@js-modules/web-react-nav": "workspace:^",
     "@js-modules/web-react-utils": "workspace:^",
-    "@mui/icons-material": "^9.0.0",
-    "@mui/material": "^9.0.0",
-    "@types/lodash": "^4.17.24",
-    "@types/react": "19.2.14",
-    "@types/react-dom": "19.2.3",
-    "@types/react-redux": "^7.1.34",
-    "lodash": "^4.18.1",
-    "react": "19.2.5",
-    "react-dom": "19.2.5",
-    "react-redux": "^9.2.0",
-    "react-router-dom": "^7.14.2"
+    "lodash": "catalog:"
+  },
+  "devDependencies": {
+    "@mui/icons-material": "catalog:",
+    "@mui/material": "catalog:",
+    "@types/lodash": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@types/react-redux": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "react-redux": "catalog:",
+    "react-router-dom": "catalog:"
+  },
+  "peerDependencies": {
+    "@mui/icons-material": "catalog:",
+    "@mui/material": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "react-redux": "catalog:",
+    "react-router-dom": "catalog:"
+  },
+  "nx": {
+    "tags": [
+      "type:lib"
+    ]
   }
 }

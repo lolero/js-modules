@@ -10,37 +10,50 @@
   ],
   "scripts": {},
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^7.2.0",
-    "@fortawesome/free-regular-svg-icons": "^7.2.0",
-    "@fortawesome/free-solid-svg-icons": "^7.2.0",
-    "@fortawesome/react-fontawesome": "^3.3.1",
+    "@fortawesome/fontawesome-svg-core": "catalog:",
+    "@fortawesome/free-regular-svg-icons": "catalog:",
+    "@fortawesome/free-solid-svg-icons": "catalog:",
+    "@fortawesome/react-fontawesome": "catalog:",
     "@js-modules/api-nest-utils": "workspace:^",
     "@js-modules/common-react-utils": "workspace:^",
     "@js-modules/common-redux-utils-normalized-reducers": "workspace:^",
     "@js-modules/common-utils-general": "workspace:^",
-    "@js-modules/web-react-utils": "workspace:^",
     "@js-modules/web-styles-material-ui": "workspace:^",
-    "@mui/material": "^9.0.0",
-    "@mui/x-charts": "^9.4.0",
-    "@mui/x-date-pickers": "^9.4.0",
-    "@mui/x-date-pickers-pro": "^9.0.4",
-    "@tanstack/react-virtual": "^3.13.24",
-    "@types/lodash": "^4.17.24",
-    "@types/react": "19.2.14",
-    "@types/react-dom": "19.2.3",
-    "@types/react-redux": "^7.1.34",
-    "@types/validator": "^13.15.10",
-    "class-validator": "^0.15.1",
-    "clsx": "^2.1.1",
-    "date-fns": "^4.1.0",
-    "lodash": "^4.18.1",
-    "react": "19.2.5",
-    "react-dom": "19.2.5",
-    "react-redux": "^9.2.0",
-    "react-router-dom": "^7.14.2",
-    "validator": "^13.15.35"
+    "@tanstack/react-virtual": "catalog:",
+    "clsx": "catalog:",
+    "date-fns": "catalog:",
+    "lodash": "catalog:",
+    "validator": "catalog:"
   },
   "devDependencies": {
-    "jest-environment-jsdom": "^30.3.0"
+    "@mui/material": "catalog:",
+    "@mui/x-date-pickers": "catalog:",
+    "@mui/x-date-pickers-pro": "catalog:",
+    "@types/lodash": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@types/react-redux": "catalog:",
+    "@types/validator": "catalog:",
+    "class-validator": "catalog:",
+    "jest-environment-jsdom": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "react-redux": "catalog:",
+    "react-router-dom": "catalog:"
+  },
+  "peerDependencies": {
+    "@mui/material": "catalog:",
+    "@mui/x-date-pickers": "catalog:",
+    "@mui/x-date-pickers-pro": "catalog:",
+    "class-validator": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "react-redux": "catalog:",
+    "react-router-dom": "catalog:"
+  },
+  "nx": {
+    "tags": [
+      "type:lib"
+    ]
   }
 }

@@ -10,31 +10,36 @@
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
   },
   "dependencies": {
-    "@microsoft/fetch-event-source": "^2.0.1",
-    "@types/marked": "^6.0.0",
-    "axios": "^1.16.0",
-    "chart.js": "^4.5.1",
-    "classnames": "^2.5.1",
-    "dompurify": "^3.4.2",
-    "immer": "^11.1.6",
-    "marked": "^18.0.3",
-    "material-icons": "^1.13.14",
-    "pdfjs-dist": "^5.7.284",
-    "preline": "^4.1.3",
-    "uuid": "^14.0.0"
+    "@microsoft/fetch-event-source": "catalog:",
+    "axios": "catalog:",
+    "chart.js": "catalog:",
+    "classnames": "catalog:",
+    "dompurify": "catalog:",
+    "immer": "catalog:",
+    "marked": "catalog:",
+    "material-icons": "catalog:",
+    "pdfjs-dist": "catalog:",
+    "preline": "catalog:",
+    "uuid": "catalog:"
   },
   "devDependencies": {
-    "@sveltejs/adapter-auto": "^7.0.1",
-    "@sveltejs/adapter-static": "^3.0.10",
-    "@sveltejs/kit": "^2.59.0",
-    "@sveltejs/vite-plugin-svelte": "^7.0.0",
-    "@types/uuid": "^11.0.0",
-    "autoprefixer": "^10.5.0",
-    "postcss": "^8.5.14",
-    "svelte": "^5.55.5",
-    "svelte-check": "^4.4.8",
-    "tailwindcss": "^4.2.4",
-    "tslib": "^2.8.1",
-    "vite": "^8.0.10"
+    "@sveltejs/adapter-auto": "catalog:",
+    "@sveltejs/adapter-static": "catalog:",
+    "@sveltejs/kit": "catalog:",
+    "@sveltejs/vite-plugin-svelte": "catalog:",
+    "@tailwindcss/vite": "catalog:",
+    "@types/marked": "catalog:",
+    "@types/uuid": "catalog:",
+    "postcss": "catalog:",
+    "svelte": "catalog:",
+    "svelte-check": "catalog:",
+    "tailwindcss": "catalog:",
+    "tslib": "catalog:",
+    "vite": "catalog:"
+  },
+  "nx": {
+    "tags": [
+      "type:app"
+    ]
   }
 }

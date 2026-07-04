@@ -11,13 +11,20 @@
   ],
   "scripts": {},
   "dependencies": {
-    "@types/d3-format": "^3.0.4",
-    "@types/lodash": "^4.17.24",
-    "axios": "^1.16.0",
-    "axios-cache-interceptor": "^1.12.0",
-    "countries-list": "^3.3.0",
-    "d3-format": "^3.1.2",
-    "dotenv": "^17.4.2",
-    "lodash": "^4.18.1"
+    "axios": "catalog:",
+    "axios-cache-interceptor": "catalog:",
+    "countries-list": "catalog:",
+    "d3-format": "catalog:",
+    "dotenv": "catalog:",
+    "lodash": "catalog:"
+  },
+  "devDependencies": {
+    "@types/d3-format": "catalog:",
+    "@types/lodash": "catalog:"
+  },
+  "nx": {
+    "tags": [
+      "type:lib"
+    ]
   }
 }

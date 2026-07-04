@@ -18,21 +18,33 @@
     "@js-modules/common-redux-reducer-auth-keycloak": "workspace:^",
     "@js-modules/common-redux-utils-normalized-reducers": "workspace:^",
     "@js-modules/common-utils-general": "workspace:^",
-    "@types/lodash": "^4.17.24",
-    "@types/react": "19.2.14",
-    "@types/react-redux": "^7.1.34",
-    "@types/uuid": "^11.0.0",
-    "@types/validator": "^13.15.10",
-    "axios": "^1.16.0",
-    "lodash": "^4.18.1",
-    "react": "19.2.5",
-    "react-redux": "^9.2.0",
-    "redux": "^5.0.1",
-    "redux-devtools-extension": "^2.13.9",
-    "redux-saga": "^1.4.2",
-    "reselect": "^5.1.1",
-    "typed-redux-saga": "^1.5.0",
-    "uuid": "^14.0.0",
-    "validator": "^13.15.35"
+    "axios": "catalog:",
+    "lodash": "catalog:",
+    "redux-devtools-extension": "catalog:",
+    "redux-saga": "catalog:",
+    "reselect": "catalog:",
+    "typed-redux-saga": "catalog:",
+    "uuid": "catalog:",
+    "validator": "catalog:"
+  },
+  "devDependencies": {
+    "@types/lodash": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-redux": "catalog:",
+    "@types/uuid": "catalog:",
+    "@types/validator": "catalog:",
+    "react": "catalog:",
+    "react-redux": "catalog:",
+    "redux": "catalog:"
+  },
+  "peerDependencies": {
+    "react": "catalog:",
+    "react-redux": "catalog:",
+    "redux": "catalog:"
+  },
+  "nx": {
+    "tags": [
+      "type:lib"
+    ]
   }
 }

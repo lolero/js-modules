@@ -12,5 +12,10 @@
   "scripts": {},
   "dependencies": {
     "@js-modules/common-utils-general": "workspace:^"
+  },
+  "nx": {
+    "tags": [
+      "type:lib"
+    ]
   }
 }

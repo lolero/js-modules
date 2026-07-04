@@ -6,17 +6,24 @@
   "license": "MIT",
   "scripts": {},
   "dependencies": {
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.1",
+    "@emotion/react": "catalog:",
+    "@emotion/styled": "catalog:",
     "@js-modules/apps-dapp-common-constants": "workspace:^",
     "@js-modules/apps-dapp-web-utils": "workspace:^",
     "@js-modules/web-react-docs-mui": "workspace:^",
-    "@types/react": "19.2.14",
-    "@types/react-dom": "19.2.3",
-    "@vitejs/plugin-react": "^6.0.1",
-    "react": "19.2.5",
-    "react-dom": "19.2.5",
-    "vite": "^8.0.10",
-    "vite-plugin-svgr": "^5.2.0"
+    "react": "catalog:",
+    "react-dom": "catalog:"
+  },
+  "devDependencies": {
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@vitejs/plugin-react": "catalog:",
+    "vite": "catalog:",
+    "vite-plugin-svgr": "catalog:"
+  },
+  "nx": {
+    "tags": [
+      "type:app"
+    ]
   }
 }

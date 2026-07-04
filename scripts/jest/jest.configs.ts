@@ -125,6 +125,9 @@ const jestConfigs: Record<JestConfigType, JestConfig> = {
         `<rootDir>/src/**/*.{test,spec}.{${extensionsJestStr}}`,
         `<rootDir>/src/**/__{tests,specs}__/**/*.{${extensionsJestStr}}`,
       ],
+      // `*-DO-NOT-EDIT` are generated copies (e.g. MUI doc examples that ship
+      // their own Vitest tests); they are not run under this repo's Jest.
+      testPathIgnorePatterns: ['/node_modules/', '-DO-NOT-EDIT'],
       collectCoverageFrom: [
         `<rootDir>/src/**/*.{${extensionsJestStr}}`,
         '!<rootDir>/node_modules/**',

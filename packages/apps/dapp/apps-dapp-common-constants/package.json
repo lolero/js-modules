@@ -9,5 +9,10 @@
   "files": [
     "build"
   ],
-  "scripts": {}
+  "scripts": {},
+  "nx": {
+    "tags": [
+      "type:lib"
+    ]
+  }
 }

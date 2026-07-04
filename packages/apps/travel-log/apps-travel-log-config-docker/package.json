@@ -4,5 +4,10 @@
   "private": true,
   "description": "Apps Travel Log Config Docker",
   "license": "MIT",
-  "scripts": {}
+  "scripts": {},
+  "nx": {
+    "tags": [
+      "type:app"
+    ]
+  }
 }

@@ -140,6 +140,32 @@ const globs = {
   ],
 };
 
+/**
+ * Builds a no-extraneous-dependencies override for a framework's build-config
+ * files (vite, metro, hardhat, etc.).
+ * @param packageDir - Absolute path to the package directory.
+ * @param files - Config-file globs the override applies to.
+ * @returns Flat config entry for those config files.
+ */
+function configFilesOverride(
+  packageDir: string,
+  files: string[],
+): Linter.Config {
+  return {
+    files,
+    rules: {
+      'import-x/no-extraneous-dependencies': [
+        'error',
+        {
+          packageDir: [repoRoot, packageDir],
+          devDependencies: true,
+          peerDependencies: true,
+        },
+      ],
+    },
+  };
+}
+
 const eslintConfigs: Record<EslintConfigType, EslintConfig> = {
   [EslintConfigType.commonBefore]: {
     isEnabled: () => true,
@@ -257,7 +283,13 @@ const eslintConfigs: Record<EslintConfigType, EslintConfig> = {
           // turns it on. https://typescript-eslint.io/rules/#extension-rules
           'no-shadow': 'off',
           'import-x/no-cycle': 'error',
-          'import-x/no-extraneous-dependencies': 'error',
+          'import-x/no-extraneous-dependencies': [
+            'error',
+            {
+              devDependencies: false,
+              peerDependencies: true,
+            },
+          ],
           'import-x/no-relative-packages': 'error',
           // `*-DO-NOT-EDIT` files are generated at dev/build time but absent
           // during CI lint, so their imports are unresolvable there.
@@ -337,6 +369,7 @@ const eslintConfigs: Record<EslintConfigType, EslintConfig> = {
             'error',
             {
               devDependencies: true,
+              peerDependencies: true,
             },
           ],
         },
@@ -345,12 +378,12 @@ const eslintConfigs: Record<EslintConfigType, EslintConfig> = {
       {
         files: [...globs.tests],
         rules: {
-          // https://github.com/un-ts/eslint-plugin-import-x/blob/master/docs/rules/no-extraneous-dependencies.md
           'import-x/no-extraneous-dependencies': [
             'error',
             {
               packageDir: [repoRoot, packageDir],
               devDependencies: true,
+              peerDependencies: true,
             },
           ],
           // Enforce @jest/globals imports for all categories except 'jest'.
@@ -380,11 +413,22 @@ const eslintConfigs: Record<EslintConfigType, EslintConfig> = {
             {
               packageDir: [repoRoot],
               devDependencies: true,
+              peerDependencies: true,
             },
           ],
           'import-x/no-relative-packages': 'off',
         },
       },
+
+      // Cross-cutting build tooling with no single owning framework: vite
+      // (react-web / Vue / SvelteKit) and babel (RN and others). Imports its
+      // tooling from the package's devDependencies. Framework-exclusive configs
+      // live in their framework's type (metro → react, svelte.config → svelte,
+      // hardhat.config → hardhat).
+      configFilesOverride(packageDir, [
+        '**/babel.config.*',
+        '**/vite.config.*',
+      ]),
 
       // Disable type-checked rules for files with no (or partial) TS program
       // coverage: plain JS, and framework SFCs where type-aware rules on the
@@ -449,24 +493,14 @@ const eslintConfigs: Record<EslintConfigType, EslintConfig> = {
             {
               packageDir: [repoRoot, packageDir],
               devDependencies: true,
+              peerDependencies: true,
             },
           ],
           'jest/valid-expect': 'off',
         },
       },
 
-      {
-        files: ['**/hardhat.config.ts'],
-        rules: {
-          'import-x/no-extraneous-dependencies': [
-            'error',
-            {
-              packageDir: [repoRoot, packageDir],
-              devDependencies: true,
-            },
-          ],
-        },
-      },
+      configFilesOverride(packageDir, ['**/hardhat.config.ts']),
     ],
   },
 
@@ -567,7 +601,7 @@ const eslintConfigs: Record<EslintConfigType, EslintConfig> = {
 
   [EslintConfigType.react]: {
     isEnabled: (deps) => deps.has('react'),
-    buildConfig: () => [
+    buildConfig: (packageDir) => [
       pluginReact.configs.flat.recommended,
       pluginReact.configs.flat['jsx-runtime'],
       pluginReactHooks.configs.flat['recommended-latest'],
@@ -594,6 +628,8 @@ const eslintConfigs: Record<EslintConfigType, EslintConfig> = {
           'react-hooks/incompatible-library': 'off',
         },
       },
+
+      configFilesOverride(packageDir, ['**/metro.config.*']),
     ],
   },
 
@@ -623,6 +659,7 @@ const eslintConfigs: Record<EslintConfigType, EslintConfig> = {
             'error',
             {
               devDependencies: true,
+              peerDependencies: true,
             },
           ],
         },
@@ -632,7 +669,7 @@ const eslintConfigs: Record<EslintConfigType, EslintConfig> = {
 
   [EslintConfigType.svelte]: {
     isEnabled: (deps) => deps.has('svelte'),
-    buildConfig: () => [
+    buildConfig: (packageDir) => [
       ...pluginSvelte.configs['flat/recommended'],
 
       {
@@ -658,7 +695,10 @@ const eslintConfigs: Record<EslintConfigType, EslintConfig> = {
           // https://kit.svelte.dev/docs/project-structure
           'import-x/no-extraneous-dependencies': [
             'error',
-            { devDependencies: true },
+            {
+              devDependencies: true,
+              peerDependencies: true,
+            },
           ],
           // SvelteKit virtual modules (`$app/*`, `$env/*`, `$service-worker`) are
           // generated by `svelte-kit sync` and aren't resolvable as regular files.
@@ -669,6 +709,8 @@ const eslintConfigs: Record<EslintConfigType, EslintConfig> = {
           ],
         },
       },
+
+      configFilesOverride(packageDir, ['**/svelte.config.*']),
     ],
   },
 

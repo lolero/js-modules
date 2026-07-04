@@ -11,39 +11,42 @@
     "@js-modules/apps-travel-log-api-modules-core": "workspace:^",
     "@js-modules/apps-travel-log-common-constants-cjs": "workspace:^",
     "@js-modules/common-utils-general-cjs": "workspace:^",
-    "@nestjs/common": "^11.1.19",
-    "@nestjs/config": "^4.0.4",
-    "@nestjs/core": "^11.1.19",
-    "@nestjs/platform-express": "^11.1.19",
-    "@nestjs/swagger": "^11.4.2",
-    "@nestjs/testing": "^11.1.19",
-    "@nestjs/typeorm": "^11.0.1",
-    "@types/cookie-session": "^2.0.49",
-    "@types/express": "^5.0.6",
-    "@types/lodash": "^4.17.24",
-    "@types/supertest": "^7.2.0",
-    "class-transformer": "^0.5.1",
-    "class-validator": "^0.15.1",
-    "cookie-session": "^2.1.1",
-    "express": "^5.2.1",
-    "keycloak-connect": "^26.1.1",
-    "keycloak-js": "26.2.4",
-    "lodash": "^4.18.1",
-    "nest-keycloak-connect": "^1.10.1",
-    "pg": "^8.20.0",
-    "reflect-metadata": "^0.2.2",
-    "typeorm": "^0.3.28"
+    "@nestjs/common": "catalog:",
+    "@nestjs/config": "catalog:",
+    "@nestjs/core": "catalog:",
+    "@nestjs/platform-express": "catalog:",
+    "@nestjs/swagger": "catalog:",
+    "@nestjs/typeorm": "catalog:",
+    "class-transformer": "catalog:",
+    "class-validator": "catalog:",
+    "cookie-session": "catalog:",
+    "express": "catalog:",
+    "keycloak-connect": "catalog:",
+    "keycloak-js": "catalog:",
+    "lodash": "catalog:",
+    "nest-keycloak-connect": "catalog:",
+    "pg": "catalog:",
+    "reflect-metadata": "catalog:",
+    "typeorm": "catalog:"
   },
   "devDependencies": {
-    "@nestjs/cli": "^11.0.21",
-    "@nestjs/schematics": "^11.1.0",
-    "source-map-support": "^0.5.21",
-    "supertest": "^7.2.2",
-    "ts-loader": "^9.5.7"
+    "@nestjs/cli": "catalog:",
+    "@nestjs/schematics": "catalog:",
+    "@nestjs/testing": "catalog:",
+    "@types/cookie-session": "catalog:",
+    "@types/express": "catalog:",
+    "@types/lodash": "catalog:",
+    "@types/supertest": "catalog:",
+    "source-map-support": "catalog:",
+    "supertest": "catalog:",
+    "ts-loader": "catalog:"
   },
   "nx": {
     "targetParams": {
       "allowUnauthorizedTls": true
-    }
+    },
+    "tags": [
+      "type:app"
+    ]
   }
 }

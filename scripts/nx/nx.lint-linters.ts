@@ -17,6 +17,11 @@ import {
   HealthCheckType,
   isOkToStatus,
 } from './nx.lint-health';
+import {
+  packageJsonCheck,
+  packageJsonFix,
+  packageJsonHealth,
+} from './nx.lint-linters-package-json';
 import { LinterName, ScanMode } from './nx.lint-types';
 import type { Linter, LintFunction } from './nx.lint-types';
 
@@ -36,6 +41,7 @@ export const linterExtensions: Record<LinterName, readonly string[]> = {
     ...extensions[Language.vue],
     ...extensions[Language.html],
   ],
+  [LinterName.packageJson]: extensions[Language.json],
   [LinterName.prettier]: Object.values(extensionsPrettier).flat(),
   [LinterName.ruff]: extensions[Language.python],
   [LinterName.shellcheck]: extensions[Language.shell],
@@ -173,6 +179,17 @@ export const linters = {
             ),
           [HealthCheckType.targets]: () => healthChecksHelpers.targets(targets),
         }),
+    },
+  },
+  // Run packageJson before prettier so fixes get prettier-normalized after
+  [LinterName.packageJson]: {
+    isEnabled: (files) => files.some((file) => file.endsWith('package.json')),
+    buildTargets: ({ files }) =>
+      files.filter((file) => file.endsWith('package.json')),
+    lintFunctions: {
+      check: packageJsonCheck,
+      fix: packageJsonFix,
+      health: packageJsonHealth,
     },
   },
   [LinterName.prettier]: {

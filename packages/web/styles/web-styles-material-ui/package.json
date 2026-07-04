@@ -9,7 +9,15 @@
     "build"
   ],
   "scripts": {},
-  "dependencies": {
-    "@mui/material": "^9.0.0"
+  "devDependencies": {
+    "@mui/material": "catalog:"
+  },
+  "peerDependencies": {
+    "@mui/material": "catalog:"
+  },
+  "nx": {
+    "tags": [
+      "type:lib"
+    ]
   }
 }

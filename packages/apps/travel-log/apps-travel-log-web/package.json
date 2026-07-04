@@ -6,8 +6,8 @@
   "license": "MIT",
   "scripts": {},
   "dependencies": {
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.1",
+    "@emotion/react": "catalog:",
+    "@emotion/styled": "catalog:",
     "@js-modules/apps-travel-log-common-constants": "workspace:^",
     "@js-modules/apps-travel-log-common-react": "workspace:^",
     "@js-modules/apps-travel-log-common-store-redux": "workspace:^",
@@ -21,17 +21,24 @@
     "@js-modules/common-utils-general": "workspace:^",
     "@js-modules/web-react-nav": "workspace:^",
     "@js-modules/web-react-utils": "workspace:^",
-    "@mui/icons-material": "^9.0.0",
-    "@mui/material": "^9.0.0",
-    "@types/lodash": "^4.17.24",
-    "@types/react": "19.2.14",
-    "@types/react-dom": "19.2.3",
-    "@vitejs/plugin-react": "^6.0.1",
-    "lodash": "^4.18.1",
-    "react": "19.2.5",
-    "react-dom": "19.2.5",
-    "react-router-dom": "^7.14.2",
-    "vite": "^8.0.10",
-    "vite-plugin-svgr": "^5.2.0"
+    "@mui/icons-material": "catalog:",
+    "@mui/material": "catalog:",
+    "lodash": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "react-router-dom": "catalog:"
+  },
+  "devDependencies": {
+    "@types/lodash": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@vitejs/plugin-react": "catalog:",
+    "vite": "catalog:",
+    "vite-plugin-svgr": "catalog:"
+  },
+  "nx": {
+    "tags": [
+      "type:app"
+    ]
   }
 }

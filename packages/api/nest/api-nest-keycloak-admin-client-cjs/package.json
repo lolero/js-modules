@@ -10,9 +10,14 @@
   ],
   "scripts": {},
   "dependencies": {
-    "@keycloak/keycloak-admin-client": "^26.6.1"
+    "@keycloak/keycloak-admin-client": "catalog:"
   },
   "devDependencies": {
-    "esbuild": "^0.28.0"
+    "esbuild": "catalog:"
+  },
+  "nx": {
+    "tags": [
+      "type:lib"
+    ]
   }
 }

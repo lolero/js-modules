@@ -10,5 +10,9 @@
     "build"
   ],
   "scripts": {},
-  "dependencies": {}
+  "nx": {
+    "tags": [
+      "type:lib"
+    ]
+  }
 }

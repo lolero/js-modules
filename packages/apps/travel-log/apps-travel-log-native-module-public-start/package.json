@@ -11,18 +11,29 @@
   ],
   "scripts": {},
   "dependencies": {
-    "@fortawesome/free-brands-svg-icons": "^7.2.0",
-    "@fortawesome/free-regular-svg-icons": "^7.2.0",
-    "@fortawesome/free-solid-svg-icons": "^7.2.0",
+    "@fortawesome/free-brands-svg-icons": "catalog:",
+    "@fortawesome/free-regular-svg-icons": "catalog:",
+    "@fortawesome/free-solid-svg-icons": "catalog:",
     "@js-modules/apps-travel-log-common-constants": "workspace:^",
     "@js-modules/apps-travel-log-common-react": "workspace:^",
     "@js-modules/apps-travel-log-common-store-redux": "workspace:^",
     "@js-modules/native-react-utils": "workspace:^",
-    "@types/lodash": "^4.17.24",
-    "@types/react": "19.2.14",
-    "lodash": "^4.18.1",
-    "react": "19.2.5",
-    "react-native": "0.85.2",
-    "react-native-paper": "^5.15.1"
+    "lodash": "catalog:",
+    "react-native-paper": "catalog:"
+  },
+  "devDependencies": {
+    "@types/lodash": "catalog:",
+    "@types/react": "catalog:",
+    "react": "catalog:",
+    "react-native": "catalog:"
+  },
+  "peerDependencies": {
+    "react": "catalog:",
+    "react-native": "catalog:"
+  },
+  "nx": {
+    "tags": [
+      "type:lib"
+    ]
   }
 }

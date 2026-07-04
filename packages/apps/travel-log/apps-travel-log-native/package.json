@@ -12,41 +12,44 @@
     "@js-modules/apps-travel-log-native-module-private-feeds": "workspace:^",
     "@js-modules/apps-travel-log-native-module-public-start": "workspace:^",
     "@js-modules/common-react-utils": "workspace:^",
-    "@react-native-vector-icons/fontawesome6": "^13.1.1",
-    "@react-native-vector-icons/material-design-icons": "^13.1.1",
-    "@react-navigation/native": "^7.2.2",
-    "@react-navigation/native-stack": "^7.14.12",
-    "@types/react": "19.2.14",
-    "react": "19.2.5",
-    "react-native": "0.85.2",
-    "react-native-app-auth": "^8.1.0",
-    "react-native-get-random-values": "^2.0.0",
-    "react-native-keychain": "^10.0.0",
-    "react-native-paper": "^5.15.1",
-    "react-native-safe-area-context": "^5.7.0",
-    "react-native-screens": "^4.24.0"
+    "@react-native-vector-icons/fontawesome6": "catalog:",
+    "@react-native-vector-icons/material-design-icons": "catalog:",
+    "@react-navigation/native": "catalog:",
+    "@react-navigation/native-stack": "catalog:",
+    "react": "catalog:",
+    "react-native": "catalog:",
+    "react-native-app-auth": "catalog:",
+    "react-native-get-random-values": "catalog:",
+    "react-native-keychain": "catalog:",
+    "react-native-paper": "catalog:",
+    "react-native-safe-area-context": "catalog:",
+    "react-native-screens": "catalog:"
   },
   "devDependencies": {
-    "@babel/core": "^7.29.0",
-    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
-    "@babel/preset-env": "^7.29.3",
-    "@babel/runtime": "^7.29.2",
-    "@react-native-community/cli": "20.1.3",
-    "@react-native-community/cli-platform-android": "20.1.3",
-    "@react-native-community/cli-platform-ios": "20.1.3",
-    "@react-native/babel-preset": "0.85.2",
-    "@react-native/codegen": "0.85.2",
-    "@react-native/eslint-config": "0.85.2",
-    "@react-native/gradle-plugin": "0.85.2",
-    "@react-native/metro-config": "0.85.2",
-    "@react-native/typescript-config": "0.85.2",
-    "@types/react-test-renderer": "^19.1.0",
-    "react-test-renderer": "19.2.5"
+    "@babel/core": "catalog:",
+    "@babel/plugin-syntax-dynamic-import": "catalog:",
+    "@babel/preset-env": "catalog:",
+    "@babel/runtime": "catalog:",
+    "@react-native-community/cli": "catalog:",
+    "@react-native-community/cli-platform-android": "catalog:",
+    "@react-native-community/cli-platform-ios": "catalog:",
+    "@react-native/babel-preset": "catalog:",
+    "@react-native/codegen": "catalog:",
+    "@react-native/eslint-config": "catalog:",
+    "@react-native/gradle-plugin": "catalog:",
+    "@react-native/metro-config": "catalog:",
+    "@react-native/typescript-config": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-test-renderer": "catalog:",
+    "react-test-renderer": "catalog:"
   },
   "nx": {
     "targetParams": {
       "avd": "Medium_Phone",
       "pathCertificate": "../apps-travel-log-config-docker/docker-compose/travel-log-dev/ssl/nginx-selfsigned.crt"
-    }
+    },
+    "tags": [
+      "type:app"
+    ]
   }
 }

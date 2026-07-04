@@ -9,28 +9,35 @@
   ],
   "scripts": {},
   "dependencies": {
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.1",
-    "@fortawesome/free-brands-svg-icons": "^7.2.0",
-    "@fortawesome/free-regular-svg-icons": "^7.2.0",
-    "@fortawesome/free-solid-svg-icons": "^7.2.0",
+    "@emotion/react": "catalog:",
+    "@emotion/styled": "catalog:",
+    "@fortawesome/free-brands-svg-icons": "catalog:",
+    "@fortawesome/free-regular-svg-icons": "catalog:",
+    "@fortawesome/free-solid-svg-icons": "catalog:",
     "@js-modules/apps-travel-log-common-constants": "workspace:^",
     "@js-modules/apps-travel-log-common-store-redux": "workspace:^",
     "@js-modules/apps-travel-log-web-utils": "workspace:^",
-    "@mui/icons-material": "^9.0.0",
-    "@mui/material": "^9.0.0",
-    "@storybook/react": "^10.3.6",
-    "@storybook/react-vite": "^10.3.6",
-    "@types/lodash": "^4.17.24",
-    "@types/react": "19.2.14",
-    "@types/react-dom": "19.2.3",
-    "@vitejs/plugin-react": "^6.0.1",
-    "keycloakify": "^11.15.3",
-    "lodash": "^4.18.1",
-    "react": "19.2.5",
-    "react-dom": "19.2.5",
-    "storybook": "^10.3.6",
-    "vite": "^8.0.10",
-    "vite-plugin-svgr": "^5.2.0"
+    "@mui/icons-material": "catalog:",
+    "@mui/material": "catalog:",
+    "keycloakify": "catalog:",
+    "lodash": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:"
+  },
+  "devDependencies": {
+    "@storybook/react": "catalog:",
+    "@storybook/react-vite": "catalog:",
+    "@types/lodash": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@vitejs/plugin-react": "catalog:",
+    "storybook": "catalog:",
+    "vite": "catalog:",
+    "vite-plugin-svgr": "catalog:"
+  },
+  "nx": {
+    "tags": [
+      "type:app"
+    ]
   }
 }

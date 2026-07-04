@@ -17,11 +17,22 @@
     "./SectionTitle": "./src/SectionTitle.tsx"
   },
   "scripts": {},
-  "dependencies": {
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.1",
-    "@mui/material": "^9.0.0",
-    "@types/react": "19.2.14",
-    "react": "19.2.5"
+  "devDependencies": {
+    "@emotion/react": "catalog:",
+    "@emotion/styled": "catalog:",
+    "@mui/material": "catalog:",
+    "@types/react": "catalog:",
+    "react": "catalog:"
+  },
+  "peerDependencies": {
+    "@emotion/react": "catalog:",
+    "@emotion/styled": "catalog:",
+    "@mui/material": "catalog:",
+    "react": "catalog:"
+  },
+  "nx": {
+    "tags": [
+      "type:lib"
+    ]
   }
 }
