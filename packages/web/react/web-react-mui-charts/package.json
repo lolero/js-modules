@@ -1,0 +1,29 @@
+{
+  "name": "@js-modules/web-react-mui-charts",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Web React MUI Charts",
+  "license": "MIT",
+  "main": "build/index",
+  "files": [
+    "build"
+  ],
+  "scripts": {},
+  "devDependencies": {
+    "@mui/material": "catalog:",
+    "@mui/x-charts": "catalog:",
+    "@types/react": "catalog:",
+    "jest-environment-jsdom": "catalog:",
+    "react": "catalog:"
+  },
+  "peerDependencies": {
+    "@mui/material": "catalog:",
+    "@mui/x-charts": "catalog:",
+    "react": "catalog:"
+  },
+  "nx": {
+    "tags": [
+      "type:lib"
+    ]
+  }
+}

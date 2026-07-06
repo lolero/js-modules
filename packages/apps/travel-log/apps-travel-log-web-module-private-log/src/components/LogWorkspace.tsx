@@ -5,7 +5,7 @@ import {
   Workspace,
   WorkspaceSlotName,
   WorkspaceTitle,
-} from '@js-modules/web-react-nav';
+} from '@js-modules/web-react-mui-workspace';
 import { LogWorkspaceContentBox } from './LogWorkspaceContentBox';
 import { LogWorkspaceTopToolbar } from './LogWorkspaceTopToolbar';
 

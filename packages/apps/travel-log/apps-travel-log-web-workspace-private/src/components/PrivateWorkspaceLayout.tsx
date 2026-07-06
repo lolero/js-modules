@@ -17,7 +17,7 @@ import {
   WorkspaceLayout,
   WorkspaceSlotBox,
   WorkspaceSlotName,
-} from '@js-modules/web-react-nav';
+} from '@js-modules/web-react-mui-workspace';
 import { PrivateWorkspaceNavDrawerContentBox } from './PrivateWorkspaceNavDrawerContentBox';
 import { PrivateWorkspaceNavToolbarActionsBox } from './PrivateWorkspaceNavToolbarActionsBox';
 

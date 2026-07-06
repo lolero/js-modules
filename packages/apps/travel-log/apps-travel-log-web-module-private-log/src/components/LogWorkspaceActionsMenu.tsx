@@ -24,7 +24,7 @@ import {
   FindManyRangesMenu,
   MuiFaIcon,
   useMenuUtils,
-} from '@js-modules/web-react-utils';
+} from '@js-modules/web-react-mui';
 import { LogDatePicker } from './LogDatePicker';
 
 const rangeTypes: FindManyRangesTypes = {
@@ -93,7 +93,12 @@ export const LogWorkspaceActionsMenu: React.FC = () => {
           <ListItemText>{routeMetadataAddNew.label}</ListItemText>
         </MenuItem>
         <LogDatePicker />
-        <FindManyRangesMenu rangeTypes={rangeTypes} button={rangesMenuButton} />
+        <FindManyRangesMenu
+          rangeTypes={rangeTypes}
+          button={rangesMenuButton}
+          searchParams={searchParams}
+          setSearchParams={setSearchParams}
+        />
       </Menu>
     </>
   );

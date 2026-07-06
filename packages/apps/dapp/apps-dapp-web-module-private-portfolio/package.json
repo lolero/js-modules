@@ -19,7 +19,7 @@
     "@js-modules/apps-dapp-web-module-private-tokens": "workspace:^",
     "@js-modules/apps-dapp-web-module-private-transactions": "workspace:^",
     "@js-modules/apps-dapp-web-utils": "workspace:^",
-    "@js-modules/web-react-nav": "workspace:^",
+    "@js-modules/web-react-mui-workspace": "workspace:^",
     "lodash": "catalog:"
   },
   "devDependencies": {

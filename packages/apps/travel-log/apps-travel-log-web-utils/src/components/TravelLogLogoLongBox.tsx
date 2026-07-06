@@ -2,7 +2,7 @@ import { faEthereum } from '@fortawesome/free-brands-svg-icons/faEthereum';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import type React from 'react';
-import { MuiFaIcon } from '@js-modules/web-react-utils';
+import { MuiFaIcon } from '@js-modules/web-react-mui';
 
 export const TravelLogLogoLongBox: React.FunctionComponent = () => {
   return (

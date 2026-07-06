@@ -3,7 +3,7 @@ import { routesMetadataPublic } from '@js-modules/apps-travel-log-common-react';
 import {
   NavLeftDrawerTreeView,
   useNavLeftDrawerTreeViewMetadata,
-} from '@js-modules/web-react-nav';
+} from '@js-modules/web-react-mui-workspace';
 
 export const PublicWorkspaceNavDrawerContentBox: React.FunctionComponent =
   () => {

@@ -18,8 +18,8 @@
     "@js-modules/apps-travel-log-common-react": "workspace:^",
     "@js-modules/apps-travel-log-common-store-redux": "workspace:^",
     "@js-modules/apps-travel-log-web-utils": "workspace:^",
-    "@js-modules/web-react-nav": "workspace:^",
-    "@js-modules/web-react-utils": "workspace:^",
+    "@js-modules/web-react-mui": "workspace:^",
+    "@js-modules/web-react-mui-workspace": "workspace:^",
     "lodash": "catalog:"
   },
   "devDependencies": {

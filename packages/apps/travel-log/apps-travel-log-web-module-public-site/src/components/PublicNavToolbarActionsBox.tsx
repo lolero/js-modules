@@ -20,8 +20,8 @@ import {
   useStateAuthSignup,
   useStateSettingsGetProfile,
 } from '@js-modules/apps-travel-log-common-store-redux';
-import { useNavDisplayMetadata } from '@js-modules/web-react-nav';
-import { MuiFaIcon, useMenuUtils } from '@js-modules/web-react-utils';
+import { MuiFaIcon, useMenuUtils } from '@js-modules/web-react-mui';
+import { useNavDisplayMetadata } from '@js-modules/web-react-mui-workspace';
 
 const redirectUri = `${WEB_CLIENT__URI__TRAVEL_LOG}${
   routesMetadataPrivate[WebModulesPrivate.feeds].path

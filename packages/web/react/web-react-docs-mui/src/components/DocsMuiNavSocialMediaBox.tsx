@@ -11,8 +11,8 @@ import IconButton from '@mui/material/IconButton';
 import MuiLink from '@mui/material/Link';
 import entries from 'lodash/entries';
 import type React from 'react';
-import { useNavDisplayMetadata } from '@js-modules/web-react-nav';
-import { MuiFaIcon } from '@js-modules/web-react-utils';
+import { MuiFaIcon } from '@js-modules/web-react-mui';
+import { useNavDisplayMetadata } from '@js-modules/web-react-mui-workspace';
 
 export const socialMediaMetadata: Record<
   string,

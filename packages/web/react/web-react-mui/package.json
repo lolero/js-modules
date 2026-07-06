@@ -1,0 +1,48 @@
+{
+  "name": "@js-modules/web-react-mui",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Web React Mui",
+  "license": "MIT",
+  "main": "build/index",
+  "files": [
+    "build"
+  ],
+  "scripts": {},
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "catalog:",
+    "@fortawesome/free-regular-svg-icons": "catalog:",
+    "@fortawesome/free-solid-svg-icons": "catalog:",
+    "@fortawesome/react-fontawesome": "catalog:",
+    "@js-modules/common-react-utils": "workspace:^",
+    "@js-modules/common-redux-utils-normalized-reducers": "workspace:^",
+    "@js-modules/common-utils-general": "workspace:^",
+    "@tanstack/react-virtual": "catalog:",
+    "clsx": "catalog:",
+    "date-fns": "catalog:",
+    "lodash": "catalog:"
+  },
+  "devDependencies": {
+    "@mui/material": "catalog:",
+    "@mui/x-date-pickers": "catalog:",
+    "@types/lodash": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@types/react-redux": "catalog:",
+    "jest-environment-jsdom": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "react-redux": "catalog:"
+  },
+  "peerDependencies": {
+    "@mui/material": "catalog:",
+    "@mui/x-date-pickers": "catalog:",
+    "react": "catalog:",
+    "react-redux": "catalog:"
+  },
+  "nx": {
+    "tags": [
+      "type:lib"
+    ]
+  }
+}

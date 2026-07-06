@@ -5,7 +5,7 @@ import {
   Workspace,
   WorkspaceSlotName,
   WorkspaceTitle,
-} from '@js-modules/web-react-nav';
+} from '@js-modules/web-react-mui-workspace';
 import { SettingsWorkspaceContentBox } from './SettingsWorkspaceContentBox';
 import { SettingsWorkspaceTopToolbar } from './SettingsWorkspaceTopToolbar';
 

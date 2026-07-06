@@ -1,5 +1,5 @@
 import type React from 'react';
-import { NavContextProvider } from '@js-modules/web-react-nav';
+import { NavContextProvider } from '@js-modules/web-react-mui-workspace';
 import { routesMetadataMui } from '../routesMetadata/routesMetadata';
 import { DocsMuiBrowserRouter } from './DocsMuiBrowserRouter';
 

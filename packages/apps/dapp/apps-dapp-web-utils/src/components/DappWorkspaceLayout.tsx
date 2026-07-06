@@ -4,7 +4,7 @@ import {
   WorkspaceLayout,
   WorkspaceSlotBox,
   WorkspaceSlotName,
-} from '@js-modules/web-react-nav';
+} from '@js-modules/web-react-mui-workspace';
 import { DappLogoLongBox } from './DappLogoLongBox';
 import { DappLogoShortBox } from './DappLogoShortBox';
 import { DappNavDrawerContentBox } from './DappNavDrawerContentBox';

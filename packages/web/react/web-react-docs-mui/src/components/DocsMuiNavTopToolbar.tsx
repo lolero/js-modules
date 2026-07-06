@@ -1,6 +1,9 @@
 import Toolbar from '@mui/material/Toolbar';
 import type React from 'react';
-import { WorkspaceSlotBox, WorkspaceSlotName } from '@js-modules/web-react-nav';
+import {
+  WorkspaceSlotBox,
+  WorkspaceSlotName,
+} from '@js-modules/web-react-mui-workspace';
 import { DocsMuiThemeAutocomplete } from './DocsMuiThemeAutocomplete';
 
 export function DocsMuiNavTopToolbar(): React.ReactNode {

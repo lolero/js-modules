@@ -1,11 +1,19 @@
 import Box from '@mui/material/Box';
 import type React from 'react';
-import { BackIconButton } from '@js-modules/web-react-utils';
+import { useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { BackIconButton } from '@js-modules/web-react-mui';
 
 export const SettingsProfileEditWorkspaceTopToolbar: React.FC = () => {
+  const navigate = useNavigate();
+
+  const navigateBackCallback = useCallback(() => {
+    void navigate(-1);
+  }, [navigate]);
+
   return (
     <Box>
-      <BackIconButton />
+      <BackIconButton onClick={navigateBackCallback} />
     </Box>
   );
 };

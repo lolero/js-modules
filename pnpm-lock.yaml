@@ -1381,9 +1381,9 @@ importers:
       '@js-modules/common-utils-general':
         specifier: workspace:^
         version: link:../../../common/utils/common-utils-general
-      '@js-modules/web-react-nav':
+      '@js-modules/web-react-mui-workspace':
         specifier: workspace:^
-        version: link:../../../web/react/web-react-nav
+        version: link:../../../web/react/web-react-mui-workspace
       '@js-modules/web-react-utils':
         specifier: workspace:^
         version: link:../../../web/react/web-react-utils
@@ -1485,9 +1485,9 @@ importers:
       '@js-modules/apps-dapp-web-utils':
         specifier: workspace:^
         version: link:../apps-dapp-web-utils
-      '@js-modules/web-react-nav':
+      '@js-modules/web-react-mui-workspace':
         specifier: workspace:^
-        version: link:../../../web/react/web-react-nav
+        version: link:../../../web/react/web-react-mui-workspace
       lodash:
         specifier: 'catalog:'
         version: 4.18.1
@@ -1543,9 +1543,9 @@ importers:
       '@js-modules/apps-dapp-web-utils':
         specifier: workspace:^
         version: link:../apps-dapp-web-utils
-      '@js-modules/web-react-nav':
+      '@js-modules/web-react-mui-workspace':
         specifier: workspace:^
-        version: link:../../../web/react/web-react-nav
+        version: link:../../../web/react/web-react-mui-workspace
       lodash:
         specifier: 'catalog:'
         version: 4.18.1
@@ -1598,12 +1598,12 @@ importers:
       '@js-modules/common-react-utils':
         specifier: workspace:^
         version: link:../../../common/react/common-react-utils
-      '@js-modules/web-react-nav':
+      '@js-modules/web-react-mui':
         specifier: workspace:^
-        version: link:../../../web/react/web-react-nav
-      '@js-modules/web-react-utils':
+        version: link:../../../web/react/web-react-mui
+      '@js-modules/web-react-mui-workspace':
         specifier: workspace:^
-        version: link:../../../web/react/web-react-utils
+        version: link:../../../web/react/web-react-mui-workspace
       lodash:
         specifier: 'catalog:'
         version: 4.18.1
@@ -1662,9 +1662,9 @@ importers:
       '@js-modules/apps-dapp-web-utils':
         specifier: workspace:^
         version: link:../apps-dapp-web-utils
-      '@js-modules/web-react-nav':
+      '@js-modules/web-react-mui-workspace':
         specifier: workspace:^
-        version: link:../../../web/react/web-react-nav
+        version: link:../../../web/react/web-react-mui-workspace
       lodash:
         specifier: 'catalog:'
         version: 4.18.1
@@ -1714,12 +1714,12 @@ importers:
       '@js-modules/apps-dapp-common-store-redux':
         specifier: workspace:^
         version: link:../apps-dapp-common-store-redux
-      '@js-modules/web-react-nav':
+      '@js-modules/web-react-mui':
         specifier: workspace:^
-        version: link:../../../web/react/web-react-nav
-      '@js-modules/web-react-utils':
+        version: link:../../../web/react/web-react-mui
+      '@js-modules/web-react-mui-workspace':
         specifier: workspace:^
-        version: link:../../../web/react/web-react-utils
+        version: link:../../../web/react/web-react-mui-workspace
       '@js-modules/web-styles-material-ui':
         specifier: workspace:^
         version: link:../../../web/styles/web-styles-material-ui
@@ -2399,9 +2399,9 @@ importers:
       '@js-modules/common-utils-general':
         specifier: workspace:^
         version: link:../../../common/utils/common-utils-general
-      '@js-modules/web-react-nav':
+      '@js-modules/web-react-mui-workspace':
         specifier: workspace:^
-        version: link:../../../web/react/web-react-nav
+        version: link:../../../web/react/web-react-mui-workspace
       '@js-modules/web-react-utils':
         specifier: workspace:^
         version: link:../../../web/react/web-react-utils
@@ -2557,9 +2557,9 @@ importers:
       '@js-modules/apps-travel-log-web-workspace-private':
         specifier: workspace:^
         version: link:../apps-travel-log-web-workspace-private
-      '@js-modules/web-react-nav':
+      '@js-modules/web-react-mui-workspace':
         specifier: workspace:^
-        version: link:../../../web/react/web-react-nav
+        version: link:../../../web/react/web-react-mui-workspace
       '@js-modules/web-react-utils':
         specifier: workspace:^
         version: link:../../../web/react/web-react-utils
@@ -2630,12 +2630,12 @@ importers:
       '@js-modules/common-react-utils':
         specifier: workspace:^
         version: link:../../../common/react/common-react-utils
-      '@js-modules/web-react-nav':
+      '@js-modules/web-react-mui':
         specifier: workspace:^
-        version: link:../../../web/react/web-react-nav
-      '@js-modules/web-react-utils':
+        version: link:../../../web/react/web-react-mui
+      '@js-modules/web-react-mui-workspace':
         specifier: workspace:^
-        version: link:../../../web/react/web-react-utils
+        version: link:../../../web/react/web-react-mui-workspace
       date-fns:
         specifier: 'catalog:'
         version: 4.1.0
@@ -2709,12 +2709,12 @@ importers:
       '@js-modules/common-utils-general':
         specifier: workspace:^
         version: link:../../../common/utils/common-utils-general
-      '@js-modules/web-react-nav':
+      '@js-modules/web-react-mui':
         specifier: workspace:^
-        version: link:../../../web/react/web-react-nav
-      '@js-modules/web-react-utils':
+        version: link:../../../web/react/web-react-mui
+      '@js-modules/web-react-mui-workspace':
         specifier: workspace:^
-        version: link:../../../web/react/web-react-utils
+        version: link:../../../web/react/web-react-mui-workspace
       lodash:
         specifier: 'catalog:'
         version: 4.18.1
@@ -2776,12 +2776,12 @@ importers:
       '@js-modules/apps-travel-log-web-utils':
         specifier: workspace:^
         version: link:../apps-travel-log-web-utils
-      '@js-modules/web-react-nav':
+      '@js-modules/web-react-mui':
         specifier: workspace:^
-        version: link:../../../web/react/web-react-nav
-      '@js-modules/web-react-utils':
+        version: link:../../../web/react/web-react-mui
+      '@js-modules/web-react-mui-workspace':
         specifier: workspace:^
-        version: link:../../../web/react/web-react-utils
+        version: link:../../../web/react/web-react-mui-workspace
       lodash:
         specifier: 'catalog:'
         version: 4.18.1
@@ -2834,12 +2834,12 @@ importers:
       '@js-modules/apps-travel-log-common-store-redux':
         specifier: workspace:^
         version: link:../apps-travel-log-common-store-redux
-      '@js-modules/web-react-nav':
+      '@js-modules/web-react-mui':
         specifier: workspace:^
-        version: link:../../../web/react/web-react-nav
-      '@js-modules/web-react-utils':
+        version: link:../../../web/react/web-react-mui
+      '@js-modules/web-react-mui-workspace':
         specifier: workspace:^
-        version: link:../../../web/react/web-react-utils
+        version: link:../../../web/react/web-react-mui-workspace
       '@js-modules/web-styles-material-ui':
         specifier: workspace:^
         version: link:../../../web/styles/web-styles-material-ui
@@ -2901,12 +2901,12 @@ importers:
       '@js-modules/apps-travel-log-web-utils':
         specifier: workspace:^
         version: link:../apps-travel-log-web-utils
-      '@js-modules/web-react-nav':
+      '@js-modules/web-react-mui':
         specifier: workspace:^
-        version: link:../../../web/react/web-react-nav
-      '@js-modules/web-react-utils':
+        version: link:../../../web/react/web-react-mui
+      '@js-modules/web-react-mui-workspace':
         specifier: workspace:^
-        version: link:../../../web/react/web-react-utils
+        version: link:../../../web/react/web-react-mui-workspace
       lodash:
         specifier: 'catalog:'
         version: 4.18.1
@@ -3235,12 +3235,12 @@ importers:
       '@js-modules/web-react-icons-mui':
         specifier: workspace:^
         version: link:../web-react-icons-mui
-      '@js-modules/web-react-nav':
+      '@js-modules/web-react-mui':
         specifier: workspace:^
-        version: link:../web-react-nav
-      '@js-modules/web-react-utils':
+        version: link:../web-react-mui
+      '@js-modules/web-react-mui-workspace':
         specifier: workspace:^
-        version: link:../web-react-utils
+        version: link:../web-react-mui-workspace
       '@mui/icons-material':
         specifier: 'catalog:'
         version: 9.0.1(@mui/material@9.0.1(@emotion/react@11.14.0(@types/react@19.2.14)(react@19.2.3))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.14)(react@19.2.3))(@types/react@19.2.14)(react@19.2.3))(@types/react@19.2.14)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(@types/react@19.2.14)(react@19.2.3)
@@ -3456,6 +3456,73 @@ importers:
         specifier: 19.2.3
         version: 19.2.3
 
+  packages/web/react/web-react-mui:
+    dependencies:
+      '@fortawesome/fontawesome-svg-core':
+        specifier: 'catalog:'
+        version: 7.2.0
+      '@fortawesome/free-regular-svg-icons':
+        specifier: 'catalog:'
+        version: 7.2.0
+      '@fortawesome/free-solid-svg-icons':
+        specifier: 'catalog:'
+        version: 7.2.0
+      '@fortawesome/react-fontawesome':
+        specifier: 'catalog:'
+        version: 3.3.1(@fortawesome/fontawesome-svg-core@7.2.0)(react@19.2.3)
+      '@js-modules/common-react-utils':
+        specifier: workspace:^
+        version: link:../../../common/react/common-react-utils
+      '@js-modules/common-redux-utils-normalized-reducers':
+        specifier: workspace:^
+        version: link:../../../common/redux/common-redux-utils-normalized-reducers
+      '@js-modules/common-utils-general':
+        specifier: workspace:^
+        version: link:../../../common/utils/common-utils-general
+      '@tanstack/react-virtual':
+        specifier: 'catalog:'
+        version: 3.13.24(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      clsx:
+        specifier: 'catalog:'
+        version: 2.1.1
+      date-fns:
+        specifier: 'catalog:'
+        version: 4.1.0
+      lodash:
+        specifier: 'catalog:'
+        version: 4.18.1
+    devDependencies:
+      '@mui/material':
+        specifier: 'catalog:'
+        version: 9.0.1(@emotion/react@11.14.0(@types/react@19.2.14)(react@19.2.3))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.14)(react@19.2.3))(@types/react@19.2.14)(react@19.2.3))(@types/react@19.2.14)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      '@mui/x-date-pickers':
+        specifier: 'catalog:'
+        version: 9.4.0(@emotion/react@11.14.0(@types/react@19.2.14)(react@19.2.3))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.14)(react@19.2.3))(@types/react@19.2.14)(react@19.2.3))(@mui/material@9.0.1(@emotion/react@11.14.0(@types/react@19.2.14)(react@19.2.3))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.14)(react@19.2.3))(@types/react@19.2.14)(react@19.2.3))(@types/react@19.2.14)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(@mui/system@9.0.1(@emotion/react@11.14.0(@types/react@19.2.14)(react@19.2.3))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.14)(react@19.2.3))(@types/react@19.2.14)(react@19.2.3))(@types/react@19.2.14)(react@19.2.3))(@types/react@19.2.14)(date-fns-jalali@4.1.0-0)(date-fns@4.1.0)(dayjs@1.11.21)(luxon@3.7.2)(moment-hijri@3.0.0)(moment-jalaali@0.10.4)(moment@2.30.1)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      '@types/lodash':
+        specifier: 'catalog:'
+        version: 4.17.24
+      '@types/react':
+        specifier: 19.2.14
+        version: 19.2.14
+      '@types/react-dom':
+        specifier: 19.2.3
+        version: 19.2.3(@types/react@19.2.14)
+      '@types/react-redux':
+        specifier: 'catalog:'
+        version: 7.1.34
+      jest-environment-jsdom:
+        specifier: 'catalog:'
+        version: 30.4.1
+      react:
+        specifier: 19.2.3
+        version: 19.2.3
+      react-dom:
+        specifier: 19.2.3
+        version: 19.2.3(react@19.2.3)
+      react-redux:
+        specifier: 'catalog:'
+        version: 9.2.0(@types/react@19.2.14)(react@19.2.3)(redux@5.0.1)
+
   packages/web/react/web-react-mui-charts:
     devDependencies:
       '@mui/material':
@@ -3474,7 +3541,7 @@ importers:
         specifier: 19.2.3
         version: 19.2.3
 
-  packages/web/react/web-react-nav:
+  packages/web/react/web-react-mui-workspace:
     dependencies:
       '@fortawesome/fontawesome-common-types':
         specifier: 'catalog:'
@@ -3497,6 +3564,12 @@ importers:
       '@js-modules/common-react-utils':
         specifier: workspace:^
         version: link:../../../common/react/common-react-utils
+      '@js-modules/web-react-mui':
+        specifier: workspace:^
+        version: link:../web-react-mui
+      '@js-modules/web-react-router':
+        specifier: workspace:^
+        version: link:../web-react-router
       '@js-modules/web-react-utils':
         specifier: workspace:^
         version: link:../web-react-utils
@@ -3529,60 +3602,12 @@ importers:
         specifier: 'catalog:'
         version: 7.15.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
 
-  packages/web/react/web-react-utils:
+  packages/web/react/web-react-router:
     dependencies:
-      '@fortawesome/fontawesome-svg-core':
-        specifier: 'catalog:'
-        version: 7.2.0
-      '@fortawesome/free-regular-svg-icons':
-        specifier: 'catalog:'
-        version: 7.2.0
-      '@fortawesome/free-solid-svg-icons':
-        specifier: 'catalog:'
-        version: 7.2.0
-      '@fortawesome/react-fontawesome':
-        specifier: 'catalog:'
-        version: 3.3.1(@fortawesome/fontawesome-svg-core@7.2.0)(react@19.2.3)
-      '@js-modules/api-nest-utils':
-        specifier: workspace:^
-        version: link:../../../api/nest/api-nest-utils
-      '@js-modules/common-react-utils':
-        specifier: workspace:^
-        version: link:../../../common/react/common-react-utils
-      '@js-modules/common-redux-utils-normalized-reducers':
-        specifier: workspace:^
-        version: link:../../../common/redux/common-redux-utils-normalized-reducers
-      '@js-modules/common-utils-general':
-        specifier: workspace:^
-        version: link:../../../common/utils/common-utils-general
-      '@js-modules/web-styles-material-ui':
-        specifier: workspace:^
-        version: link:../../styles/web-styles-material-ui
-      '@tanstack/react-virtual':
-        specifier: 'catalog:'
-        version: 3.13.24(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
-      clsx:
-        specifier: 'catalog:'
-        version: 2.1.1
-      date-fns:
-        specifier: 'catalog:'
-        version: 4.1.0
       lodash:
         specifier: 'catalog:'
         version: 4.18.1
-      validator:
-        specifier: 'catalog:'
-        version: 13.15.35
     devDependencies:
-      '@mui/material':
-        specifier: 'catalog:'
-        version: 9.0.1(@emotion/react@11.14.0(@types/react@19.2.14)(react@19.2.3))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.14)(react@19.2.3))(@types/react@19.2.14)(react@19.2.3))(@types/react@19.2.14)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
-      '@mui/x-date-pickers':
-        specifier: 'catalog:'
-        version: 9.4.0(@emotion/react@11.14.0(@types/react@19.2.14)(react@19.2.3))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.14)(react@19.2.3))(@types/react@19.2.14)(react@19.2.3))(@mui/material@9.0.1(@emotion/react@11.14.0(@types/react@19.2.14)(react@19.2.3))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.14)(react@19.2.3))(@types/react@19.2.14)(react@19.2.3))(@types/react@19.2.14)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(@mui/system@9.0.1(@emotion/react@11.14.0(@types/react@19.2.14)(react@19.2.3))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.14)(react@19.2.3))(@types/react@19.2.14)(react@19.2.3))(@types/react@19.2.14)(react@19.2.3))(@types/react@19.2.14)(date-fns-jalali@4.1.0-0)(date-fns@4.1.0)(dayjs@1.11.21)(luxon@3.7.2)(moment-hijri@3.0.0)(moment-jalaali@0.10.4)(moment@2.30.1)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
-      '@mui/x-date-pickers-pro':
-        specifier: 'catalog:'
-        version: 9.4.0(@emotion/react@11.14.0(@types/react@19.2.14)(react@19.2.3))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.14)(react@19.2.3))(@types/react@19.2.14)(react@19.2.3))(@mui/material@9.0.1(@emotion/react@11.14.0(@types/react@19.2.14)(react@19.2.3))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.14)(react@19.2.3))(@types/react@19.2.14)(react@19.2.3))(@types/react@19.2.14)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(@mui/system@9.0.1(@emotion/react@11.14.0(@types/react@19.2.14)(react@19.2.3))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.14)(react@19.2.3))(@types/react@19.2.14)(react@19.2.3))(@types/react@19.2.14)(react@19.2.3))(@types/react@19.2.14)(date-fns-jalali@4.1.0-0)(date-fns@4.1.0)(dayjs@1.11.21)(luxon@3.7.2)(moment-hijri@3.0.0)(moment-jalaali@0.10.4)(moment@2.30.1)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       '@types/lodash':
         specifier: 'catalog:'
         version: 4.17.24
@@ -3592,9 +3617,40 @@ importers:
       '@types/react-dom':
         specifier: 19.2.3
         version: 19.2.3(@types/react@19.2.14)
-      '@types/react-redux':
+      jest-environment-jsdom:
         specifier: 'catalog:'
-        version: 7.1.34
+        version: 30.4.1
+      react:
+        specifier: 19.2.3
+        version: 19.2.3
+      react-dom:
+        specifier: 19.2.3
+        version: 19.2.3(react@19.2.3)
+      react-router-dom:
+        specifier: 'catalog:'
+        version: 7.15.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+
+  packages/web/react/web-react-utils:
+    dependencies:
+      '@js-modules/common-react-utils':
+        specifier: workspace:^
+        version: link:../../../common/react/common-react-utils
+      '@js-modules/common-utils-general':
+        specifier: workspace:^
+        version: link:../../../common/utils/common-utils-general
+      lodash:
+        specifier: 'catalog:'
+        version: 4.18.1
+      validator:
+        specifier: 'catalog:'
+        version: 13.15.35
+    devDependencies:
+      '@types/lodash':
+        specifier: 'catalog:'
+        version: 4.17.24
+      '@types/react':
+        specifier: 19.2.14
+        version: 19.2.14
       '@types/validator':
         specifier: 'catalog:'
         version: 13.15.10
@@ -3607,15 +3663,6 @@ importers:
       react:
         specifier: 19.2.3
         version: 19.2.3
-      react-dom:
-        specifier: 19.2.3
-        version: 19.2.3(react@19.2.3)
-      react-redux:
-        specifier: 'catalog:'
-        version: 9.2.0(@types/react@19.2.14)(react@19.2.3)(redux@5.0.1)
-      react-router-dom:
-        specifier: 'catalog:'
-        version: 7.15.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
 
   packages/web/styles/web-styles-material-ui:
     devDependencies:

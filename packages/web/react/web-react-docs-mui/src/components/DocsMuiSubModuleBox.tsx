@@ -4,7 +4,7 @@ import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import type React from 'react';
-import { MuiFaIcon } from '@js-modules/web-react-utils';
+import { MuiFaIcon } from '@js-modules/web-react-mui';
 
 export type SubModuleBoxExample = {
   name: string;

@@ -4,7 +4,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import type React from 'react';
-import { MuiFaIcon, useMenuUtils } from '@js-modules/web-react-utils';
+import { MuiFaIcon, useMenuUtils } from '@js-modules/web-react-mui';
 
 export const PrivateWorkspaceNotificationsMenu: React.FC = () => {
   const { menuAnchor, openMenuCallback, closeMenuCallback } = useMenuUtils();

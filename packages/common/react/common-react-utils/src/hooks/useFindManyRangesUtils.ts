@@ -4,12 +4,11 @@ import keys from 'lodash/keys';
 import { useCallback, useMemo } from 'react';
 import type { FindManyRange } from '@js-modules/api-nest-utils/src/types/types.requests';
 import type { FindManyRangesTypes } from '../types/findManyRanges.types';
+import type { SetSearchParams } from '../types/searchParams.types';
 
 export const useFindManyRangesUtils = (
   searchParams: URLSearchParams,
-  setSearchParams: (
-    params: URLSearchParams | ((prev: URLSearchParams) => URLSearchParams),
-  ) => void,
+  setSearchParams: SetSearchParams,
   rangeTypes: FindManyRangesTypes = {},
 ): {
   rangeKeys: string[];

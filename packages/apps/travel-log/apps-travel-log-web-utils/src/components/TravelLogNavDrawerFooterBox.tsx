@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box';
 import type React from 'react';
-import { useNavDisplayMetadata } from '@js-modules/web-react-nav';
+import { useNavDisplayMetadata } from '@js-modules/web-react-mui-workspace';
 import { TravelLogNavSocialMediaBox } from './TravelLogNavSocialMediaBox';
 import { TravelLogNavSocialMediaMenu } from './TravelLogNavSocialMediaMenu';
 

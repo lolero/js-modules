@@ -121,7 +121,16 @@
       "@js-modules/web-react-icons-mui": [
         "./packages/web/react/web-react-icons-mui/src"
       ],
-      "@js-modules/web-react-nav": ["./packages/web/react/web-react-nav/src"],
+      "@js-modules/web-react-mui": ["./packages/web/react/web-react-mui/src"],
+      "@js-modules/web-react-mui-charts": [
+        "./packages/web/react/web-react-mui-charts/src"
+      ],
+      "@js-modules/web-react-mui-workspace": [
+        "./packages/web/react/web-react-mui-workspace/src"
+      ],
+      "@js-modules/web-react-router": [
+        "./packages/web/react/web-react-router/src"
+      ],
       "@js-modules/web-react-utils": [
         "./packages/web/react/web-react-utils/src"
       ],

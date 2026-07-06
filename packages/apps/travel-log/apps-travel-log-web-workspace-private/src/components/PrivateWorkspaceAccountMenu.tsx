@@ -22,7 +22,7 @@ import {
   useStateMainUpdatePartialReducerMetadata,
   useStateSettingsSignout,
 } from '@js-modules/apps-travel-log-common-store-redux';
-import { MuiFaIcon, useMenuUtils } from '@js-modules/web-react-utils';
+import { MuiFaIcon, useMenuUtils } from '@js-modules/web-react-mui';
 
 export const PrivateWorkspaceAccountMenu: React.FC = () => {
   const { menuAnchor, openMenuCallback, closeMenuCallback } = useMenuUtils();

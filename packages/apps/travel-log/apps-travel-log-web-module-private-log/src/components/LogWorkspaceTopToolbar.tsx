@@ -10,7 +10,7 @@ import {
   WebSubModulesLogLogEntry,
 } from '@js-modules/apps-travel-log-common-constants';
 import { routesMetadataPrivate } from '@js-modules/apps-travel-log-common-react';
-import { MuiFaIcon } from '@js-modules/web-react-utils';
+import { MuiFaIcon } from '@js-modules/web-react-mui';
 import { LogPagination } from './LogPagination';
 import { LogWorkspaceActionsMenu } from './LogWorkspaceActionsMenu';
 

@@ -19,7 +19,7 @@
     "@js-modules/apps-travel-log-common-store-redux": "workspace:^",
     "@js-modules/apps-travel-log-web-utils": "workspace:^",
     "@js-modules/apps-travel-log-web-workspace-private": "workspace:^",
-    "@js-modules/web-react-nav": "workspace:^",
+    "@js-modules/web-react-mui-workspace": "workspace:^",
     "@js-modules/web-react-utils": "workspace:^",
     "lodash": "catalog:"
   },

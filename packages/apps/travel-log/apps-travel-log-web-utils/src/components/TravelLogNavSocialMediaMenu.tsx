@@ -10,8 +10,8 @@ import entries from 'lodash/entries';
 import upperFirst from 'lodash/upperFirst';
 import type React from 'react';
 import { useCallback } from 'react';
-import { useNavDisplayMetadata } from '@js-modules/web-react-nav';
-import { MuiFaIcon, useMenuUtils } from '@js-modules/web-react-utils';
+import { MuiFaIcon, useMenuUtils } from '@js-modules/web-react-mui';
+import { useNavDisplayMetadata } from '@js-modules/web-react-mui-workspace';
 import { socialMediaMetadata } from './TravelLogNavSocialMediaBox';
 
 export const TravelLogNavSocialMediaMenu: React.FunctionComponent = () => {

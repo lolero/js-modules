@@ -22,7 +22,7 @@ import {
   Workspace,
   WorkspaceSlotName,
   WorkspaceTitle,
-} from '@js-modules/web-react-nav';
+} from '@js-modules/web-react-mui-workspace';
 import type { LogLogEntryAddEditContextValue } from './LogLogEntryAddEditContext';
 import { LogLogEntryAddEditContext } from './LogLogEntryAddEditContext';
 import { LogLogEntryAddEditWorkspaceContentBox } from './LogLogEntryAddEditWorkspaceContentBox';

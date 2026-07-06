@@ -4,7 +4,7 @@ import {
   Workspace,
   WorkspaceSlotName,
   WorkspaceTitle,
-} from '@js-modules/web-react-nav';
+} from '@js-modules/web-react-mui-workspace';
 import { WebModules } from '../constants/modules.constants';
 import { routesMetadataMui } from '../routesMetadata/routesMetadata';
 import { ChartRoutes } from './chart/ChartRoutes';

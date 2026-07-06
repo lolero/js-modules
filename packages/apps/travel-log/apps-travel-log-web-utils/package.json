@@ -16,8 +16,8 @@
     "@fortawesome/free-solid-svg-icons": "catalog:",
     "@js-modules/apps-travel-log-common-constants": "workspace:^",
     "@js-modules/apps-travel-log-common-store-redux": "workspace:^",
-    "@js-modules/web-react-nav": "workspace:^",
-    "@js-modules/web-react-utils": "workspace:^",
+    "@js-modules/web-react-mui": "workspace:^",
+    "@js-modules/web-react-mui-workspace": "workspace:^",
     "@js-modules/web-styles-material-ui": "workspace:^",
     "lodash": "catalog:"
   },

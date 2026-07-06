@@ -2,7 +2,7 @@ import type React from 'react';
 import {
   NavLeftDrawerTreeView,
   useNavLeftDrawerTreeViewMetadata,
-} from '@js-modules/web-react-nav';
+} from '@js-modules/web-react-mui-workspace';
 import { routesMetadataMui } from '../routesMetadata/routesMetadata';
 
 export function DocsMuiNavDrawerContentBox(): React.ReactNode {

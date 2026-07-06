@@ -15,10 +15,7 @@ import { useCallback, useMemo, useState } from 'react';
 import type { NodeChain } from '@js-modules/apps-dapp-common-store-redux';
 import { useNodeChainsGetMany } from '@js-modules/apps-dapp-common-store-redux';
 import { usePrevious } from '@js-modules/common-react-utils';
-import {
-  MuiFaIcon,
-  VirtualizedAutocomplete,
-} from '@js-modules/web-react-utils';
+import { MuiFaIcon, VirtualizedAutocomplete } from '@js-modules/web-react-mui';
 
 export const WebTokensWorkspaceContentBox: React.FC = () => {
   const { request: nodeChainsGetManyRequest, entities: nodeChains } =

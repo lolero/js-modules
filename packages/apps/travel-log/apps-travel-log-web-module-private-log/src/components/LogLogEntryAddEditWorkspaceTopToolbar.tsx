@@ -23,7 +23,7 @@ import {
   useNodeLogEntriesReducerMetadata,
   useNodeLogEntriesUpdateOneWhole,
 } from '@js-modules/apps-travel-log-common-store-redux';
-import { MuiFaIcon } from '@js-modules/web-react-utils';
+import { MuiFaIcon } from '@js-modules/web-react-mui';
 import { LogLogEntryAddEditContext } from './LogLogEntryAddEditContext';
 
 export const LogLogEntryAddEditWorkspaceTopToolbar: React.FC = () => {

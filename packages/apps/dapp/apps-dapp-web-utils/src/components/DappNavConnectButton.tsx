@@ -7,7 +7,7 @@ import {
   useStateWeb3WalletConnect,
   WalletType,
 } from '@js-modules/apps-dapp-common-store-redux';
-import { MuiFaIcon } from '@js-modules/web-react-utils';
+import { MuiFaIcon } from '@js-modules/web-react-mui';
 
 export const DappNavConnectButton: React.FC = () => {
   const {

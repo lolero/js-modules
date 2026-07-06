@@ -10,46 +10,22 @@
   ],
   "scripts": {},
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "catalog:",
-    "@fortawesome/free-regular-svg-icons": "catalog:",
-    "@fortawesome/free-solid-svg-icons": "catalog:",
-    "@fortawesome/react-fontawesome": "catalog:",
-    "@js-modules/api-nest-utils": "workspace:^",
     "@js-modules/common-react-utils": "workspace:^",
-    "@js-modules/common-redux-utils-normalized-reducers": "workspace:^",
     "@js-modules/common-utils-general": "workspace:^",
-    "@js-modules/web-styles-material-ui": "workspace:^",
-    "@tanstack/react-virtual": "catalog:",
-    "clsx": "catalog:",
-    "date-fns": "catalog:",
     "lodash": "catalog:",
     "validator": "catalog:"
   },
   "devDependencies": {
-    "@mui/material": "catalog:",
-    "@mui/x-date-pickers": "catalog:",
-    "@mui/x-date-pickers-pro": "catalog:",
     "@types/lodash": "catalog:",
     "@types/react": "catalog:",
-    "@types/react-dom": "catalog:",
-    "@types/react-redux": "catalog:",
     "@types/validator": "catalog:",
     "class-validator": "catalog:",
     "jest-environment-jsdom": "catalog:",
-    "react": "catalog:",
-    "react-dom": "catalog:",
-    "react-redux": "catalog:",
-    "react-router-dom": "catalog:"
+    "react": "catalog:"
   },
   "peerDependencies": {
-    "@mui/material": "catalog:",
-    "@mui/x-date-pickers": "catalog:",
-    "@mui/x-date-pickers-pro": "catalog:",
     "class-validator": "catalog:",
-    "react": "catalog:",
-    "react-dom": "catalog:",
-    "react-redux": "catalog:",
-    "react-router-dom": "catalog:"
+    "react": "catalog:"
   },
   "nx": {
     "tags": [

@@ -14,7 +14,7 @@ import {
   useNodeLogEntriesUpdatePartialReducerMetadata,
 } from '@js-modules/apps-travel-log-common-store-redux';
 import { usePrevious } from '@js-modules/common-react-utils';
-import { useFormUtilsWeb } from '@js-modules/web-react-utils';
+import { useFormUtilsWeb } from '@js-modules/web-react-mui';
 import { LogLogEntryAddEditContext } from './LogLogEntryAddEditContext';
 
 export const LogLogEntryAddEditWorkspaceContentBox: React.FC = () => {

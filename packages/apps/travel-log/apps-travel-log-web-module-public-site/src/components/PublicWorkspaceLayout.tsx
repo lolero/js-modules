@@ -6,7 +6,7 @@ import {
   TravelLogNavDrawerFooterBox,
   TravelLogNavToolbar,
 } from '@js-modules/apps-travel-log-web-utils';
-import { WorkspaceLayout } from '@js-modules/web-react-nav';
+import { WorkspaceLayout } from '@js-modules/web-react-mui-workspace';
 import { PublicNavToolbarActionsBox } from './PublicNavToolbarActionsBox';
 import { PublicWorkspaceNavDrawerContentBox } from './PublicWorkspaceNavDrawerContentBox';
 

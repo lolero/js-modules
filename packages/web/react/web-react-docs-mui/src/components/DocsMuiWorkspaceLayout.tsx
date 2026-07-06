@@ -1,6 +1,6 @@
 import type React from 'react';
 import { Outlet } from 'react-router-dom';
-import { WorkspaceLayout } from '@js-modules/web-react-nav';
+import { WorkspaceLayout } from '@js-modules/web-react-mui-workspace';
 import { DocsMuiLogoLongBox } from './DocsMuiLogoLongBox';
 import { DocsMuiLogoShortBox } from './DocsMuiLogoShortBox';
 import { DocsMuiNavDrawerContentBox } from './DocsMuiNavDrawerContentBox';

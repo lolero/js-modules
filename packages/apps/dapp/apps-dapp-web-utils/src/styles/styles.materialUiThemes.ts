@@ -1,6 +1,6 @@
 import type { Theme } from '@mui/material/styles';
 import { ThemePalette } from '@js-modules/apps-dapp-common-constants';
-import { getThemeComponentsWorkspace } from '@js-modules/web-react-nav';
+import { getThemeComponentsWorkspace } from '@js-modules/web-react-mui-workspace';
 import type { GetThemeComponents } from '@js-modules/web-styles-material-ui';
 import { createMaterialUiTheme } from '@js-modules/web-styles-material-ui';
 

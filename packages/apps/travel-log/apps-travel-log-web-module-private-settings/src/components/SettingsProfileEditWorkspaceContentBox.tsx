@@ -8,7 +8,7 @@ import {
   useStateSettingsValidateProfilePartialUnsaved,
 } from '@js-modules/apps-travel-log-common-store-redux';
 import type { ClassObject } from '@js-modules/common-utils-general';
-import { useFormUtilsWeb } from '@js-modules/web-react-utils';
+import { useFormUtilsWeb } from '@js-modules/web-react-mui';
 
 export const SettingsProfileEditWorkspaceContentBox: React.FC = () => {
   const {
