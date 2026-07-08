@@ -8,7 +8,6 @@ import ListItemText from '@mui/material/ListItemText';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import type React from 'react';
-import { Link } from 'react-router-dom';
 import {
   WEB_CLIENT__URI__TRAVEL_LOG,
   WebModulesPrivate,
@@ -22,6 +21,7 @@ import {
 } from '@js-modules/apps-travel-log-common-store-redux';
 import { MuiFaIcon, useMenuUtils } from '@js-modules/web-react-mui';
 import { useNavDisplayMetadata } from '@js-modules/web-react-mui-workspace';
+import { WebLink } from '@js-modules/web-react-router';
 
 const redirectUri = `${WEB_CLIENT__URI__TRAVEL_LOG}${
   routesMetadataPrivate[WebModulesPrivate.feeds].path
@@ -53,8 +53,8 @@ export const PublicNavToolbarActionsBox: React.FC = () => {
     <Box>
       {isAuthenticated && (
         <Button
-          component={Link}
-          to={routesMetadataPrivate[WebModulesPrivate.feeds].path}
+          component={WebLink}
+          href={routesMetadataPrivate[WebModulesPrivate.feeds].path}
           size="small"
         >
           Enter app

@@ -15,6 +15,7 @@
     "@js-modules/apps-travel-log-common-constants": "workspace:^",
     "@js-modules/common-redux-utils-normalized-reducers": "workspace:^",
     "@js-modules/common-utils-general": "workspace:^",
+    "@js-modules/web-react-router": "workspace:^",
     "@js-modules/web-react-utils": "workspace:^",
     "date-fns": "catalog:",
     "lodash": "catalog:"
@@ -22,12 +23,10 @@
   "devDependencies": {
     "@types/lodash": "catalog:",
     "@types/react": "catalog:",
-    "react": "catalog:",
-    "react-router-dom": "catalog:"
+    "react": "catalog:"
   },
   "peerDependencies": {
-    "react": "catalog:",
-    "react-router-dom": "catalog:"
+    "react": "catalog:"
   },
   "nx": {
     "tags": [

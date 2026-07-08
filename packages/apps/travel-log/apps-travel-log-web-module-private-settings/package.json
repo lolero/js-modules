@@ -23,6 +23,7 @@
     "@js-modules/common-utils-general": "workspace:^",
     "@js-modules/web-react-mui": "workspace:^",
     "@js-modules/web-react-mui-workspace": "workspace:^",
+    "@js-modules/web-react-router": "workspace:^",
     "lodash": "catalog:"
   },
   "devDependencies": {

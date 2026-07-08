@@ -23,6 +23,7 @@
     "@js-modules/common-react-utils": "workspace:^",
     "@js-modules/web-react-mui": "workspace:^",
     "@js-modules/web-react-mui-workspace": "workspace:^",
+    "@js-modules/web-react-router": "workspace:^",
     "date-fns": "catalog:",
     "lodash": "catalog:"
   },

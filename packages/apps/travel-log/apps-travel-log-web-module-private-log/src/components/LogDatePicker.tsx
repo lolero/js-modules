@@ -4,11 +4,11 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { format, parse } from 'date-fns';
 import type React from 'react';
 import { useCallback } from 'react';
-import { useSearchParams } from 'react-router-dom';
 import { useSearchParamLogDate } from '@js-modules/apps-travel-log-common-utils';
+import { useWebRouter } from '@js-modules/web-react-router';
 
 export const LogDatePicker: React.FC = () => {
-  const [, setSearchParams] = useSearchParams();
+  const { setSearchParams } = useWebRouter();
 
   const logDate = useSearchParamLogDate();
 

@@ -624,6 +624,11 @@ const eslintConfigs: Record<EslintConfigType, EslintConfig> = {
             'always',
             { destructureInSignature: 'always' },
           ],
+          // TypeScript validates props via types, so this rule is redundant and
+          // misfires on typed components (e.g. `React.FC<Props>`, contextually
+          // typed components)
+          // https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/prop-types.md
+          'react/prop-types': 'off',
           // React Compiler rules are irrelevant without the react compiler plugin
           'react-hooks/incompatible-library': 'off',
         },

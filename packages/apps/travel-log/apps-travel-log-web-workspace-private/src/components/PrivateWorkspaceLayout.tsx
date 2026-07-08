@@ -1,6 +1,6 @@
 import type React from 'react';
 import { useCallback } from 'react';
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import { WEB_CLIENT__URI__TRAVEL_LOG } from '@js-modules/apps-travel-log-common-constants';
 import {
   useStateAuthLogin,
@@ -18,11 +18,12 @@ import {
   WorkspaceSlotBox,
   WorkspaceSlotName,
 } from '@js-modules/web-react-mui-workspace';
+import { useWebRouter } from '@js-modules/web-react-router';
 import { PrivateWorkspaceNavDrawerContentBox } from './PrivateWorkspaceNavDrawerContentBox';
 import { PrivateWorkspaceNavToolbarActionsBox } from './PrivateWorkspaceNavToolbarActionsBox';
 
 export const PrivateWorkspaceLayout: React.FunctionComponent = () => {
-  const { pathname } = useLocation();
+  const { pathname } = useWebRouter();
   const { isAuthenticated } = useStateAuthReducerMetadata();
 
   const { callback: stateSettingsGetProfileCallback } =

@@ -4,7 +4,6 @@ import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import type React from 'react';
 import { useCallback, useContext, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 import {
   NODE_LOG_ENTRIES__CREATE_ONE__REQUEST_ID,
   NODE_LOG_ENTRIES__UPDATE_ONE_WHOLE__REQUEST_ID,
@@ -15,6 +14,7 @@ import {
 } from '@js-modules/apps-travel-log-common-store-redux';
 import { usePrevious } from '@js-modules/common-react-utils';
 import { useFormUtilsWeb } from '@js-modules/web-react-mui';
+import { useWebParams } from '@js-modules/web-react-router';
 import { LogLogEntryAddEditContext } from './LogLogEntryAddEditContext';
 
 export const LogLogEntryAddEditWorkspaceContentBox: React.FC = () => {
@@ -22,7 +22,7 @@ export const LogLogEntryAddEditWorkspaceContentBox: React.FC = () => {
     LogLogEntryAddEditContext,
   );
 
-  const { logEntryId } = useParams();
+  const { logEntryId } = useWebParams();
 
   const nodeLogEntriesIsMutationPendingOrCompleted =
     useNodeLogEntriesIsMutationPendingOrCompleted();

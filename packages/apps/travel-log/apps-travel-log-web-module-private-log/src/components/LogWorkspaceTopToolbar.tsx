@@ -3,7 +3,6 @@ import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
 import type React from 'react';
 import { useMemo } from 'react';
-import { Link } from 'react-router-dom';
 import {
   WebModulesPrivate,
   WebSubModulesLog,
@@ -11,6 +10,7 @@ import {
 } from '@js-modules/apps-travel-log-common-constants';
 import { routesMetadataPrivate } from '@js-modules/apps-travel-log-common-react';
 import { MuiFaIcon } from '@js-modules/web-react-mui';
+import { WebLink } from '@js-modules/web-react-router';
 import { LogPagination } from './LogPagination';
 import { LogWorkspaceActionsMenu } from './LogWorkspaceActionsMenu';
 
@@ -32,8 +32,8 @@ export const LogWorkspaceTopToolbar: React.FC = () => {
           title={routeMetadata.label}
           color="primary"
           size="small"
-          component={Link}
-          to={routeMetadata.path}
+          component={WebLink}
+          href={routeMetadata.path}
         >
           <MuiFaIcon icon={faPlus} />
         </Fab>

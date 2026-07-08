@@ -1,8 +1,25 @@
 import { execSync } from 'child_process';
-import { existsSync, readdirSync, readFileSync, writeFileSync } from 'fs';
+import { existsSync, readFileSync, writeFileSync } from 'fs';
 import { join, relative } from 'path';
 
 const root = join(__dirname, '../..');
+
+/**
+ * Map a package `exports` target (e.g. `./build/reactRouter/index.js` or
+ * `./src/vite/foo.mjs`) to its source path relative to the package, so subpath
+ * aliases resolve to `src` like the main alias: build output is rewritten to
+ * `src`, the file extension is dropped, and a trailing `/index` collapses to
+ * its directory.
+ * @param target - Export target path from the package's `exports` map.
+ * @returns Source path relative to the package (e.g. `src/reactRouter`).
+ */
+function exportTargetToSrcPath(target: string): string {
+  return target
+    .replace(/^\.\//, '')
+    .replace(/^build\//, 'src/')
+    .replace(/\.(d\.m?ts|[cm]?tsx?|[cm]?jsx?)$/, '')
+    .replace(/\/index$/, '');
+}
 
 /**
  * Search for files with file name.
@@ -42,9 +59,17 @@ for (const filePackage of findFiles('package.json')) {
   const packageFilePath = join(root, filePackage);
   const packageObject = JSON.parse(readFileSync(packageFilePath, 'utf8')) as {
     name?: string;
+    exports?: Record<string, unknown>;
+    nx?: { tags?: string[] };
   };
 
   if (!packageObject.name?.startsWith('@js-modules/')) {
+    continue;
+  }
+
+  // Only libraries are importable, so only they get path aliases; apps
+  // (`type:app`) are skipped.
+  if (!(packageObject.nx?.tags ?? []).includes('type:lib')) {
     continue;
   }
 
@@ -53,32 +78,31 @@ for (const filePackage of findFiles('package.json')) {
     continue;
   }
 
-  const packageFiles = readdirSync(packageDir);
-  const hasNextConfig = packageFiles.some((file) =>
-    /^next\.config\./.test(file),
-  );
-  const hasViteConfig = packageFiles.some((file) =>
-    /^vite\.config\./.test(file),
-  );
-  const hasNestCli = packageFiles.includes('nest-cli.json');
-  const hasMetroConfig = packageFiles.some((file) =>
-    /^metro\.config\./.test(file),
-  );
-  const hasHardhatConfig = packageFiles.some((file) =>
-    /^hardhat\.config\./.test(file),
-  );
-  if (
-    hasNextConfig ||
-    hasViteConfig ||
-    hasNestCli ||
-    hasMetroConfig ||
-    hasHardhatConfig
-  ) {
-    continue;
-  }
-
   const pathFromRoot = relative(root, packageDir);
   packagePaths[packageObject.name] = [`./${pathFromRoot}/src`];
+
+  // Also alias every `exports` subpath (e.g. `@js-modules/pkg/export-subapath`)
+  // to its source, so subpath imports resolve without a prior build.
+  for (const [exportKey, exportValue] of Object.entries(
+    packageObject.exports ?? {},
+  )) {
+    if (exportKey === '.') {
+      continue;
+    }
+
+    const target =
+      typeof exportValue === 'string'
+        ? exportValue
+        : ((exportValue as { types?: string; default?: string }).types ??
+          (exportValue as { default?: string }).default);
+    if (!target) {
+      continue;
+    }
+
+    packagePaths[`${packageObject.name}${exportKey.slice(1)}`] = [
+      `./${pathFromRoot}/${exportTargetToSrcPath(target)}`,
+    ];
+  }
 }
 
 const sortedPaths = Object.fromEntries(

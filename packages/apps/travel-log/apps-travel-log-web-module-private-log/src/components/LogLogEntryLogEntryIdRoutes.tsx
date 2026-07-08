@@ -1,16 +1,17 @@
 import type React from 'react';
-import { Navigate, Route, Routes, useParams } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import {
   WebModulesPrivate,
   WebSubModulesLog,
   WebSubModulesLogLogEntry,
 } from '@js-modules/apps-travel-log-common-constants';
 import { routesMetadataPrivate } from '@js-modules/apps-travel-log-common-react';
+import { useWebParams } from '@js-modules/web-react-router';
 import { LogLogEntryAddEditWorkspace } from './LogLogEntryAddEditWorkspace';
 import { LogLogEntryWorkspace } from './LogLogEntryWorkspace';
 
 export const LogLogEntryLogEntryIdRoutes: React.FunctionComponent = () => {
-  const { logEntryId } = useParams();
+  const { logEntryId } = useWebParams();
 
   return (
     <Routes>

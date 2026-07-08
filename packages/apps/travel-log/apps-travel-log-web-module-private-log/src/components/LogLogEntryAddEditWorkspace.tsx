@@ -3,7 +3,6 @@ import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import type React from 'react';
 import { useEffect, useMemo } from 'react';
-import { useParams } from 'react-router-dom';
 import {
   WebModulesPrivate,
   WebSubModulesLog,
@@ -23,13 +22,14 @@ import {
   WorkspaceSlotName,
   WorkspaceTitle,
 } from '@js-modules/web-react-mui-workspace';
+import { useWebParams } from '@js-modules/web-react-router';
 import type { LogLogEntryAddEditContextValue } from './LogLogEntryAddEditContext';
 import { LogLogEntryAddEditContext } from './LogLogEntryAddEditContext';
 import { LogLogEntryAddEditWorkspaceContentBox } from './LogLogEntryAddEditWorkspaceContentBox';
 import { LogLogEntryAddEditWorkspaceTopToolbar } from './LogLogEntryAddEditWorkspaceTopToolbar';
 
 export const LogLogEntryAddEditWorkspace: React.FC = () => {
-  const { logEntryId } = useParams();
+  const { logEntryId } = useWebParams();
 
   const nodeLogEntry = useNodeLogEntriesEntity(logEntryId ?? '');
 

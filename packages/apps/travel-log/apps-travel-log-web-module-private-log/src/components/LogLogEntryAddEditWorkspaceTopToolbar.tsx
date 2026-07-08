@@ -9,7 +9,6 @@ import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import type React from 'react';
 import { useCallback, useContext, useMemo } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
 import {
   WebModulesPrivate,
   WebSubModulesLog,
@@ -24,6 +23,7 @@ import {
   useNodeLogEntriesUpdateOneWhole,
 } from '@js-modules/apps-travel-log-common-store-redux';
 import { MuiFaIcon } from '@js-modules/web-react-mui';
+import { useWebParams, useWebRouter } from '@js-modules/web-react-router';
 import { LogLogEntryAddEditContext } from './LogLogEntryAddEditContext';
 
 export const LogLogEntryAddEditWorkspaceTopToolbar: React.FC = () => {
@@ -31,9 +31,9 @@ export const LogLogEntryAddEditWorkspaceTopToolbar: React.FC = () => {
     LogLogEntryAddEditContext,
   );
 
-  const navigate = useNavigate();
+  const { pathPush } = useWebRouter();
 
-  const { logEntryId } = useParams();
+  const { logEntryId } = useWebParams();
 
   const nodeLogEntriesIsMutationPendingOrCompleted =
     useNodeLogEntriesIsMutationPendingOrCompleted();
@@ -86,8 +86,8 @@ export const LogLogEntryAddEditWorkspaceTopToolbar: React.FC = () => {
   ]);
 
   const cancelCallback = useCallback(() => {
-    void navigate(goBackPath);
-  }, [goBackPath, navigate]);
+    pathPush(goBackPath);
+  }, [goBackPath, pathPush]);
 
   const submitCallback = useCallback(() => {
     const formErrorsNodeLogEntryUnsavedTemp =
@@ -103,11 +103,11 @@ export const LogLogEntryAddEditWorkspaceTopToolbar: React.FC = () => {
       nodeLogEntriesCreateOneCallback(nodeLogEntryUnsaved!);
     }
 
-    void navigate(goBackPath);
+    pathPush(goBackPath);
   }, [
     goBackPath,
     logEntryId,
-    navigate,
+    pathPush,
     nodeLogEntriesCreateOneCallback,
     nodeLogEntriesUpdateOneWholeCallback,
     nodeLogEntryUnsaved,

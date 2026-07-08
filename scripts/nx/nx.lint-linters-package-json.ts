@@ -20,6 +20,7 @@ const DEPS_PEER_LIB = new Set([
   '@reduxjs/toolkit',
   'class-transformer',
   'class-validator',
+  'next',
   'react',
   'react-dom',
   'react-native',

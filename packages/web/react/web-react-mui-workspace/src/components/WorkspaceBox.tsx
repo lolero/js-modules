@@ -2,8 +2,8 @@ import type { BoxProps } from '@mui/material/Box';
 import Box from '@mui/material/Box';
 import type React from 'react';
 import { useContext, useEffect, useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { usePrevious } from '@js-modules/common-react-utils';
+import { useWebRouter } from '@js-modules/web-react-router';
 import { useChildNodeSize } from '@js-modules/web-react-utils';
 import { NavContext, NavDrawerDisplayStatus } from '../contexts/NavContext';
 import type {
@@ -52,7 +52,7 @@ export const WorkspaceBox: React.FC<WorkspaceBoxProps> = ({
   onNotAuthorizedCallback,
   contentSx,
 }) => {
-  const navigate = useNavigate();
+  const { pathReplace } = useWebRouter();
 
   const {
     nonAuthorizedRedirectPath,
@@ -148,13 +148,13 @@ export const WorkspaceBox: React.FC<WorkspaceBoxProps> = ({
       if (onNotAuthorizedCallback) {
         onNotAuthorizedCallback();
       } else {
-        void navigate(nonAuthorizedRedirectPath, { replace: true });
+        pathReplace(nonAuthorizedRedirectPath);
       }
     }
   }, [
     getIsAuthorizedCallback,
     isAuthorizedRequired,
-    navigate,
+    pathReplace,
     nonAuthorizedRedirectPath,
     onNotAuthorizedCallback,
   ]);

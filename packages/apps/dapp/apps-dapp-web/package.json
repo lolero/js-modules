@@ -19,6 +19,7 @@
     "@js-modules/common-react-utils": "workspace:^",
     "@js-modules/common-utils-general": "workspace:^",
     "@js-modules/web-react-mui-workspace": "workspace:^",
+    "@js-modules/web-react-router": "workspace:^",
     "@js-modules/web-react-utils": "workspace:^",
     "@mui/icons-material": "catalog:",
     "@mui/material": "catalog:",

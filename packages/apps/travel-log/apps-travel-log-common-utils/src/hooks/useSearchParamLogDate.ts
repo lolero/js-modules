@@ -1,9 +1,9 @@
 import { format } from 'date-fns';
 import { useMemo } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useWebRouter } from '@js-modules/web-react-router';
 
 export function useSearchParamLogDate(): string {
-  const [searchParams] = useSearchParams();
+  const { searchParams } = useWebRouter();
 
   const logDateDate = useMemo(() => {
     const logDateDateTemp =

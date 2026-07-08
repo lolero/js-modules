@@ -7,8 +7,8 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import type React from 'react';
 import { forwardRef, useCallback, useContext, useMemo } from 'react';
-import { Link } from 'react-router-dom';
 import { MuiFaIcon } from '@js-modules/web-react-mui';
+import { useWebRouter } from '@js-modules/web-react-router';
 import { NavContext, NavDrawerDisplayStatus } from '../contexts/NavContext';
 import {
   ScrollDirection,
@@ -43,6 +43,8 @@ export const NavTopAppbar = forwardRef<HTMLDivElement, NavTopAppbarProps>(
 
     const { navTopToolbarHeight, workspaceScrollDirection } =
       useContext(WorkspaceContext);
+
+    const { LinkComponent } = useWebRouter();
 
     const {
       isMobile,
@@ -118,8 +120,8 @@ export const NavTopAppbar = forwardRef<HTMLDivElement, NavTopAppbarProps>(
                 : {}),
             }}
             className={CSS_CLASSNAME__NAV_APPBAR_LOGO_BOX}
-            component={Link}
-            to={homePath}
+            component={LinkComponent}
+            href={homePath}
           >
             {isMobile || isNavLeftDrawerCollapsed ? shortLogo : longLogo}
           </Box>

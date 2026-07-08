@@ -8,7 +8,6 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import type React from 'react';
 import { useMemo } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
 import {
   WebModulesPrivate,
   WebSubModulesLog,
@@ -25,6 +24,7 @@ import {
   MuiFaIcon,
   useMenuUtils,
 } from '@js-modules/web-react-mui';
+import { useWebRouter, WebLink } from '@js-modules/web-react-router';
 import { LogDatePicker } from './LogDatePicker';
 
 const rangeTypes: FindManyRangesTypes = {
@@ -46,7 +46,7 @@ export const LogWorkspaceActionsMenu: React.FC = () => {
 
   const { menuAnchor, openMenuCallback, closeMenuCallback } = useMenuUtils();
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  const { searchParams, setSearchParams } = useWebRouter();
 
   const { rangeKeysActive } = useFindManyRangesUtils(
     searchParams,
@@ -86,7 +86,7 @@ export const LogWorkspaceActionsMenu: React.FC = () => {
         anchorEl={menuAnchor}
         onClose={closeMenuCallback}
       >
-        <MenuItem component={Link} to={routeMetadataAddNew.path}>
+        <MenuItem component={WebLink} href={routeMetadataAddNew.path}>
           <ListItemIcon>
             <MuiFaIcon icon={routeMetadataAddNew.icon} />
           </ListItemIcon>

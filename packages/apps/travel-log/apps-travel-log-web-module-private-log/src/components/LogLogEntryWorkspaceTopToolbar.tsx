@@ -5,7 +5,6 @@ import Button from '@mui/material/Button';
 import Fab from '@mui/material/Fab';
 import type React from 'react';
 import { useMemo } from 'react';
-import { Link, useParams } from 'react-router-dom';
 import {
   WebModulesPrivate,
   WebSubModulesLog,
@@ -13,9 +12,10 @@ import {
 } from '@js-modules/apps-travel-log-common-constants';
 import { routesMetadataPrivate } from '@js-modules/apps-travel-log-common-react';
 import { MuiFaIcon } from '@js-modules/web-react-mui';
+import { useWebParams, WebLink } from '@js-modules/web-react-router';
 
 export const LogLogEntryWorkspaceTopToolbar: React.FC = () => {
-  const { logEntryId } = useParams();
+  const { logEntryId } = useWebParams();
 
   const routeMetadataEdit = useMemo(
     () =>
@@ -41,8 +41,8 @@ export const LogLogEntryWorkspaceTopToolbar: React.FC = () => {
         <Button
           color="secondary"
           size="small"
-          component={Link}
-          to={routeMetadataLog.path}
+          component={WebLink}
+          href={routeMetadataLog.path}
           startIcon={<MuiFaIcon icon={faAngleLeft} />}
           endIcon={<MuiFaIcon icon={routeMetadataLog.icon} />}
         >
@@ -55,8 +55,8 @@ export const LogLogEntryWorkspaceTopToolbar: React.FC = () => {
           title={routeMetadataEdit.label}
           color="primary"
           size="small"
-          component={Link}
-          to={routeMetadataEditPath}
+          component={WebLink}
+          href={routeMetadataEditPath}
         >
           <MuiFaIcon icon={faPenToSquare} />
         </Fab>

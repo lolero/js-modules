@@ -118,6 +118,39 @@
       "@js-modules/web-react-docs-mui-internal-core-docs": [
         "./packages/web/react/web-react-docs-mui-internal-core-docs/src"
       ],
+      "@js-modules/web-react-docs-mui-internal-core-docs/ApiPage": [
+        "./packages/web/react/web-react-docs-mui-internal-core-docs/src/ApiPage"
+      ],
+      "@js-modules/web-react-docs-mui-internal-core-docs/AppLayout": [
+        "./packages/web/react/web-react-docs-mui-internal-core-docs/src/AppLayout"
+      ],
+      "@js-modules/web-react-docs-mui-internal-core-docs/branding": [
+        "./packages/web/react/web-react-docs-mui-internal-core-docs/src/branding"
+      ],
+      "@js-modules/web-react-docs-mui-internal-core-docs/HighlightedCode": [
+        "./packages/web/react/web-react-docs-mui-internal-core-docs/src/HighlightedCode"
+      ],
+      "@js-modules/web-react-docs-mui-internal-core-docs/HighlightedCodeWithTabs": [
+        "./packages/web/react/web-react-docs-mui-internal-core-docs/src/HighlightedCodeWithTabs"
+      ],
+      "@js-modules/web-react-docs-mui-internal-core-docs/i18n": [
+        "./packages/web/react/web-react-docs-mui-internal-core-docs/src/i18n"
+      ],
+      "@js-modules/web-react-docs-mui-internal-core-docs/IconImage": [
+        "./packages/web/react/web-react-docs-mui-internal-core-docs/src/IconImage"
+      ],
+      "@js-modules/web-react-docs-mui-internal-core-docs/MarkdownDocs": [
+        "./packages/web/react/web-react-docs-mui-internal-core-docs/src/MarkdownDocs"
+      ],
+      "@js-modules/web-react-docs-mui-internal-core-docs/SectionHeadline": [
+        "./packages/web/react/web-react-docs-mui-internal-core-docs/src/SectionHeadline"
+      ],
+      "@js-modules/web-react-docs-mui-internal-core-docs/SectionTitle": [
+        "./packages/web/react/web-react-docs-mui-internal-core-docs/src/SectionTitle"
+      ],
+      "@js-modules/web-react-docs-mui/vite": [
+        "./packages/web/react/web-react-docs-mui/src/vite/docsMuiStaticAssets"
+      ],
       "@js-modules/web-react-icons-mui": [
         "./packages/web/react/web-react-icons-mui/src"
       ],
@@ -130,6 +163,12 @@
       ],
       "@js-modules/web-react-router": [
         "./packages/web/react/web-react-router/src"
+      ],
+      "@js-modules/web-react-router/next": [
+        "./packages/web/react/web-react-router/src/next"
+      ],
+      "@js-modules/web-react-router/react-router": [
+        "./packages/web/react/web-react-router/src/reactRouter"
       ],
       "@js-modules/web-react-utils": [
         "./packages/web/react/web-react-utils/src"

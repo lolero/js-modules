@@ -1,27 +1,13 @@
-import { last } from 'lodash';
-import { useLocation } from 'react-router-dom';
+import { useMemo } from 'react';
+import { splitRouterPath } from '../utils/splitRouterPath';
+import { useWebRouter } from './useWebRouter';
 
 /**
- * Split the router path, excluding query params
- * @returns Array of router path parts
+ * Split the current path into its route segments, excluding query params.
+ * @returns Array of router path parts.
  */
 export function useSplitRouterPath(): string[] {
-  const { pathname } = useLocation();
+  const { pathname } = useWebRouter();
 
-  const splitRouterPath = pathname.split('/').slice(1);
-  if (last(splitRouterPath) === '') {
-    splitRouterPath.splice(-1);
-  }
-
-  let lastPath = last(splitRouterPath)?.split('#')[0] ?? null;
-  if (lastPath) {
-    splitRouterPath[splitRouterPath.length - 1] = lastPath;
-  }
-
-  lastPath = last(splitRouterPath)?.split('?')[0] ?? null;
-  if (lastPath) {
-    splitRouterPath[splitRouterPath.length - 1] = lastPath;
-  }
-
-  return splitRouterPath;
+  return useMemo(() => splitRouterPath(pathname), [pathname]);
 }

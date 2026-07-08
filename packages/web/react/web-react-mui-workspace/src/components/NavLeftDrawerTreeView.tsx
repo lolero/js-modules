@@ -16,8 +16,8 @@ import {
   useRef,
   useState,
 } from 'react';
-import { Link } from 'react-router-dom';
 import { MuiFaIcon } from '@js-modules/web-react-mui';
+import { useWebRouter } from '@js-modules/web-react-router';
 import {
   NAV_LEFT_DRAWER_TREE_VIEW_ITEM_EXPAND_BUTTON_SIZE_PIXELS as EXPAND_BUTTON_SIZE_PIXELS,
   NAV_LEFT_DRAWER_TREE_VIEW_ITEM_EXPAND_ICON_SIZE_PIXELS as EXPAND_ICON_SIZE_PIXELS,
@@ -230,6 +230,7 @@ function ActiveLineStickyBreadcrumb({
 }: ActiveLineStickyBreadcrumbProps): React.ReactNode {
   const { path, icon, label, depth, isExpandable } =
     activeLineTreeViewItemMetadata;
+  const { LinkComponent } = useWebRouter();
   let borderRightWidth = 0;
   if (isActive) {
     borderRightWidth = 4;
@@ -255,8 +256,8 @@ function ActiveLineStickyBreadcrumb({
       })}
     >
       <ButtonBase
-        component={Link}
-        to={path}
+        component={LinkComponent}
+        href={path}
         title={isNavLeftDrawerExpanded ? undefined : label}
         sx={{
           ...navLeftDrawerTreeViewItemLinkSx,

@@ -8,9 +8,9 @@ import isNull from 'lodash/isNull';
 import pick from 'lodash/pick';
 import values from 'lodash/values';
 import type React from 'react';
-import { Link } from 'react-router-dom';
 import type { RoutesMetadata } from '@js-modules/common-react-nav';
 import { MuiFaIcon } from '@js-modules/web-react-mui';
+import type { WebRouterLinkComponent } from '@js-modules/web-react-router';
 import {
   NAV_LEFT_DRAWER_TREE_VIEW_ITEM_ICON_SIZE_REM,
   NAV_LEFT_DRAWER_TREE_VIEW_ITEM_PADDING_X_SPACING,
@@ -19,7 +19,6 @@ import {
   navLeftDrawerTreeViewItemLabelSx,
   navLeftDrawerTreeViewItemLinkSx,
 } from '../styles/navLeftDrawerTreeViewItemStyles';
-import type { ReactRouterNavUtils } from '../types/routes.types';
 
 export const CSS_CLASSNAME__NAV_LEFT_DRAWER_TREE_VIEW =
   'nav-left-drawer-tree-view';
@@ -55,8 +54,8 @@ export type TreeViewMetadata = {
  * @param pathRouter - Router path.
  * @param pathRouteMetadata - Path of current RouteMetadata.
  * @param isNavLeftDrawerExpanded - Whether <NavLeftDrawer /> is expanded.
- * @param reactRouterNavUtils - Necessary utilities to check if all required
- * query params are present and redicrect if necessary.
+ * @param LinkComponent - Router-agnostic link component that renders each
+ * TreeViewItem as a navigable anchor (supplied by the app's router adapter).
  * @param onClickCallback - TreeViewItem navigation callback function.
  * @param userRoles - Access roles of the current authenticated user.
  * @param translateCallback - Translation callback function.
@@ -68,7 +67,7 @@ export function getNavLeftDrawerTreeViewMetadata(
   pathRouter: string,
   pathRouteMetadata: string | null,
   isNavLeftDrawerExpanded: boolean,
-  reactRouterNavUtils: ReactRouterNavUtils,
+  LinkComponent: WebRouterLinkComponent,
   onClickCallback: (
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
   ) => void,
@@ -109,7 +108,7 @@ export function getNavLeftDrawerTreeViewMetadata(
         // own ancestor rather than its path.
         routeMetadata.isHidden ? pathRouteMetadata : routeMetadata.path,
         isNavLeftDrawerExpanded,
-        reactRouterNavUtils,
+        LinkComponent,
         onClickCallback,
         userRoles,
         translateCallback,
@@ -209,7 +208,7 @@ export function getNavLeftDrawerTreeViewMetadata(
         className={treeViewItemClassName}
         label={
           <ButtonBase
-            component={Link}
+            component={LinkComponent}
             sx={{
               ...navLeftDrawerTreeViewItemLinkSx,
               width: '100%',
@@ -218,7 +217,7 @@ export function getNavLeftDrawerTreeViewMetadata(
               color: 'inherit',
               ...activeLineTreeViewItemSx,
             }}
-            to={routeMetadata.path}
+            href={routeMetadata.path}
             onClick={onClickCallback}
             title={!isNavLeftDrawerExpanded ? routeMetadata.label : undefined}
             data-key={JSON.stringify(

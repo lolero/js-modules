@@ -4,6 +4,20 @@
   "private": true,
   "description": "Web React Router",
   "license": "MIT",
+  "exports": {
+    ".": {
+      "types": "./build/index.d.ts",
+      "default": "./build/index.js"
+    },
+    "./react-router": {
+      "types": "./build/reactRouter/index.d.ts",
+      "default": "./build/reactRouter/index.js"
+    },
+    "./next": {
+      "types": "./build/next/index.d.ts",
+      "default": "./build/next/index.js"
+    }
+  },
   "main": "build/index",
   "files": [
     "build"
@@ -17,13 +31,23 @@
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "jest-environment-jsdom": "catalog:",
+    "next": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
     "react-router-dom": "catalog:"
   },
   "peerDependencies": {
+    "next": "catalog:",
     "react": "catalog:",
     "react-router-dom": "catalog:"
+  },
+  "peerDependenciesMeta": {
+    "next": {
+      "optional": true
+    },
+    "react-router-dom": {
+      "optional": true
+    }
   },
   "nx": {
     "tags": [

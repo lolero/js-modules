@@ -6,7 +6,6 @@ import ListItemText from '@mui/material/ListItemText';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import type React from 'react';
-import { Link } from 'react-router-dom';
 import {
   WebModulesPrivate,
   WebSubModulesSettings,
@@ -14,6 +13,7 @@ import {
 } from '@js-modules/apps-travel-log-common-constants';
 import { routesMetadataPrivate } from '@js-modules/apps-travel-log-common-react';
 import { MuiFaIcon, useMenuUtils } from '@js-modules/web-react-mui';
+import { WebLink } from '@js-modules/web-react-router';
 
 export const SettingsProfileWorkspaceActionsMenu: React.FC = () => {
   const { menuAnchor, openMenuCallback, closeMenuCallback } = useMenuUtils();
@@ -29,8 +29,8 @@ export const SettingsProfileWorkspaceActionsMenu: React.FC = () => {
         onClose={closeMenuCallback}
       >
         <MenuItem
-          component={Link}
-          to={
+          component={WebLink}
+          href={
             routesMetadataPrivate[WebModulesPrivate.settings].subRoutes![
               WebSubModulesSettings.profile
             ].subRoutes![WebSubModulesSettingsProfile.edit].path

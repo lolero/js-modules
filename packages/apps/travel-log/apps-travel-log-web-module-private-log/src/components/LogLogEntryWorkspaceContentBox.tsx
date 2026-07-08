@@ -4,14 +4,14 @@ import Typography from '@mui/material/Typography';
 import isUndefined from 'lodash/isUndefined';
 import type React from 'react';
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 import {
   useNodeLogEntriesEntity,
   useNodeLogEntriesGetOne,
 } from '@js-modules/apps-travel-log-common-store-redux';
+import { useWebParams } from '@js-modules/web-react-router';
 
 export const LogLogEntryWorkspaceContentBox: React.FC = () => {
-  const { logEntryId } = useParams();
+  const { logEntryId } = useWebParams();
 
   const nodeLogEntry = useNodeLogEntriesEntity(logEntryId ?? '');
 

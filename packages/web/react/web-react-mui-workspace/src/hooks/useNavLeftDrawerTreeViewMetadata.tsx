@@ -3,13 +3,11 @@ import intersection from 'lodash/intersection';
 import isEmpty from 'lodash/isEmpty';
 import type React from 'react';
 import { useCallback, useMemo } from 'react';
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import type {
   RouteMetadata,
   RoutesMetadata,
 } from '@js-modules/common-react-nav';
-import { useSplitRouterPath } from '@js-modules/web-react-router';
-import type { ReactRouterNavUtils } from '../types/routes.types';
+import { useSplitRouterPath, useWebRouter } from '@js-modules/web-react-router';
 import type { TreeViewMetadata } from '../utils/getNavLeftDrawerTreeViewMetadata';
 import { getNavLeftDrawerTreeViewMetadata } from '../utils/getNavLeftDrawerTreeViewMetadata';
 import { useNavDisplayMetadata } from './useNavDisplayMetadata';
@@ -26,21 +24,11 @@ export function useNavLeftDrawerTreeViewMetadata(
   userRoles?: string[],
   translateCallback?: (translationKey: string) => string,
 ): TreeViewMetadata {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const [searchParams] = useSearchParams();
-  const reactRouterNavUtils: ReactRouterNavUtils = useMemo(() => {
-    return {
-      navigate,
-      location,
-      searchParams,
-    };
-  }, [location, navigate, searchParams]);
+  const { LinkComponent, searchParams, pathPush } = useWebRouter();
+  const splitRouterPath = useSplitRouterPath();
 
   const { isNavLeftDrawerExpanded, closeNavLeftDrawerCallback } =
     useNavDisplayMetadata();
-
-  const splitRouterPath = useSplitRouterPath();
 
   const pathRouter = useMemo(() => {
     return `/${splitRouterPath.join('/')}`;
@@ -60,7 +48,7 @@ export function useNavLeftDrawerTreeViewMetadata(
       }
 
       const queryParamsKeys = [
-        ...reactRouterNavUtils.searchParams.keys().map((key: string) => key),
+        ...searchParams.keys().map((key: string) => key),
       ];
       const queryParamsKeysKeep = intersection(
         queryParamsKeys,
@@ -74,7 +62,7 @@ export function useNavLeftDrawerTreeViewMetadata(
 
       const queryParamsKeep: URLSearchParams = new URLSearchParams();
       queryParamsKeysKeep.forEach((key) => {
-        queryParamsKeep.set(key, reactRouterNavUtils.searchParams.get(key)!);
+        queryParamsKeep.set(key, searchParams.get(key)!);
       });
 
       const newPath = `${
@@ -83,9 +71,9 @@ export function useNavLeftDrawerTreeViewMetadata(
 
       event.preventDefault();
 
-      void reactRouterNavUtils.navigate(newPath);
+      pathPush(newPath);
     },
-    [closeNavLeftDrawerCallback, reactRouterNavUtils],
+    [closeNavLeftDrawerCallback, pathPush, searchParams],
   );
 
   const {
@@ -102,7 +90,7 @@ export function useNavLeftDrawerTreeViewMetadata(
       pathRouter,
       null,
       isNavLeftDrawerExpanded,
-      reactRouterNavUtils,
+      LinkComponent,
       onClickCallback,
       userRoles,
       translateCallback,
@@ -111,7 +99,7 @@ export function useNavLeftDrawerTreeViewMetadata(
     routesMetadata,
     pathRouter,
     isNavLeftDrawerExpanded,
-    reactRouterNavUtils,
+    LinkComponent,
     onClickCallback,
     userRoles,
     translateCallback,

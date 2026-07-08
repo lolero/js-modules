@@ -201,6 +201,7 @@ catalog:
   'moment-timezone': ^0.6.2
   'monorepo-mapper': ^1.0.5
   'nest-keycloak-connect': ^1.10.1
+  'next': ^15.5.4
   'notistack': ^3.0.2
   'nx': ^22.7.1
   'pdfjs-dist': ^5.7.284

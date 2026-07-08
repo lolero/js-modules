@@ -3,5 +3,4 @@ export * from './constants/constants.exports';
 export * from './contexts/contexts.exports';
 export * from './hooks/hooks.exports';
 export * from './styles/styles.exports';
-export * from './types/types.exports';
 export * from './utils/utils.exports';

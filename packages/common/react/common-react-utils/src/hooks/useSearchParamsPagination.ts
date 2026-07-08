@@ -1,10 +1,10 @@
 import { useMemo } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useWebRouter } from '@js-modules/web-react-router';
 import type { SearchParamsPagination } from '../types/searchParams.types';
 import { SearchParamPaginationKeys } from '../types/searchParams.types';
 
 export function useSearchParamsPagination(): SearchParamsPagination {
-  const [searchParams] = useSearchParams();
+  const { searchParams } = useWebRouter();
 
   const searchParamsPagination = useMemo(() => {
     const searchParamsPageNumber =
