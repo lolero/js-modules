@@ -2,7 +2,7 @@ import type React from 'react';
 import { View } from 'react-native';
 import { ActivityIndicator, Text } from 'react-native-paper';
 
-export const InitScreenView: React.FC = () => {
+export function InitScreenView(): React.ReactNode {
   return (
     <View
       style={{
@@ -16,4 +16,4 @@ export const InitScreenView: React.FC = () => {
       <ActivityIndicator animating size="large" />
     </View>
   );
-};
+}

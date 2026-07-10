@@ -15,7 +15,7 @@ import { routesMetadataPrivate } from '@js-modules/apps-travel-log-common-react'
 import { MuiFaIcon, useMenuUtils } from '@js-modules/web-react-mui';
 import { WebLink } from '@js-modules/web-react-router';
 
-export const SettingsProfileWorkspaceActionsMenu: React.FC = () => {
+export function SettingsProfileWorkspaceActionsMenu(): React.ReactNode {
   const { menuAnchor, openMenuCallback, closeMenuCallback } = useMenuUtils();
 
   return (
@@ -44,4 +44,4 @@ export const SettingsProfileWorkspaceActionsMenu: React.FC = () => {
       </Menu>
     </>
   );
-};
+}

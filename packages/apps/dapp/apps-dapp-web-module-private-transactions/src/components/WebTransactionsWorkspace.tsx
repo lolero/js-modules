@@ -12,7 +12,7 @@ import {
 import { WebTransactionsWorkspaceContentBox } from './WebTransactionsWorkspaceContentBox';
 import { WebTransactionsWorkspaceTopToolbar } from './WebTransactionsWorkspaceTopToolbar';
 
-export const WebTransactionsWorkspace: React.FC = () => {
+export function WebTransactionsWorkspace(): React.ReactNode {
   return (
     <Workspace
       slots={{
@@ -33,4 +33,4 @@ export const WebTransactionsWorkspace: React.FC = () => {
       <WebTransactionsWorkspaceContentBox />
     </Workspace>
   );
-};
+}

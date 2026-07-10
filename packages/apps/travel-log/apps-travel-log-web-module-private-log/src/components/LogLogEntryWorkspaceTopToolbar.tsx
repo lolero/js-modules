@@ -14,7 +14,7 @@ import { routesMetadataPrivate } from '@js-modules/apps-travel-log-common-react'
 import { MuiFaIcon } from '@js-modules/web-react-mui';
 import { useWebParams, WebLink } from '@js-modules/web-react-router';
 
-export const LogLogEntryWorkspaceTopToolbar: React.FC = () => {
+export function LogLogEntryWorkspaceTopToolbar(): React.ReactNode {
   const { logEntryId } = useWebParams();
 
   const routeMetadataEdit = useMemo(
@@ -63,4 +63,4 @@ export const LogLogEntryWorkspaceTopToolbar: React.FC = () => {
       </Box>
     </>
   );
-};
+}

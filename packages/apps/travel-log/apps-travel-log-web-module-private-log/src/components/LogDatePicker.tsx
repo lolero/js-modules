@@ -7,7 +7,7 @@ import { useCallback } from 'react';
 import { useSearchParamLogDate } from '@js-modules/apps-travel-log-common-utils';
 import { useWebRouter } from '@js-modules/web-react-router';
 
-export const LogDatePicker: React.FC = () => {
+export function LogDatePicker(): React.ReactNode {
   const { setSearchParams } = useWebRouter();
 
   const logDate = useSearchParamLogDate();
@@ -43,4 +43,4 @@ export const LogDatePicker: React.FC = () => {
       />
     </LocalizationProvider>
   );
-};
+}

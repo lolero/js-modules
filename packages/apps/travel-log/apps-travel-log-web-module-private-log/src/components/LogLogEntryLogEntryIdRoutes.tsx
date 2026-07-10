@@ -10,7 +10,7 @@ import { useWebParams } from '@js-modules/web-react-router';
 import { LogLogEntryAddEditWorkspace } from './LogLogEntryAddEditWorkspace';
 import { LogLogEntryWorkspace } from './LogLogEntryWorkspace';
 
-export const LogLogEntryLogEntryIdRoutes: React.FunctionComponent = () => {
+export function LogLogEntryLogEntryIdRoutes(): React.ReactNode {
   const { logEntryId } = useWebParams();
 
   return (
@@ -35,4 +35,4 @@ export const LogLogEntryLogEntryIdRoutes: React.FunctionComponent = () => {
       />
     </Routes>
   );
-};
+}

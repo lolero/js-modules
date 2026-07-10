@@ -14,7 +14,7 @@ import { WebLink } from '@js-modules/web-react-router';
 import { LogPagination } from './LogPagination';
 import { LogWorkspaceActionsMenu } from './LogWorkspaceActionsMenu';
 
-export const LogWorkspaceTopToolbar: React.FC = () => {
+export function LogWorkspaceTopToolbar(): React.ReactNode {
   const routeMetadata = useMemo(
     () =>
       routesMetadataPrivate[WebModulesPrivate.log].subRoutes![
@@ -41,4 +41,4 @@ export const LogWorkspaceTopToolbar: React.FC = () => {
       </Box>
     </>
   );
-};
+}

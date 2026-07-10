@@ -26,7 +26,21 @@ export type AddressBoxProps = {
   };
 };
 
-export const AddressBox: React.FunctionComponent<AddressBoxProps> = ({
+/**
+ * Form fieldset for a postal address (country, city, postal code, address
+ * lines), wired to the web form utils for change/blur handling and errors.
+ * @param props - Component props.
+ * @param props.sx - `sx` overrides for the container.
+ * @param props.renderFields - Subset of address fields to render (all when omitted).
+ * @param props.addressTemp - Current (unsaved) address form values.
+ * @param props.changeFieldCallback - Field change handler from the form utils.
+ * @param props.blurFieldCallback - Field blur handler from the form utils.
+ * @param props.formErrors - Validation errors keyed by field.
+ * @param props.isFormFieldsDisabled - Whether the fields are disabled.
+ * @param props.textFieldProps - Per-field `TextField` prop overrides.
+ * @returns The address fieldset.
+ */
+export function AddressBox({
   sx,
   renderFields = [],
   addressTemp,
@@ -35,7 +49,7 @@ export const AddressBox: React.FunctionComponent<AddressBoxProps> = ({
   formErrors,
   isFormFieldsDisabled,
   textFieldProps = {},
-}) => {
+}: AddressBoxProps): React.ReactNode {
   return (
     <Box sx={sx}>
       {(isEmpty(renderFields) || renderFields.includes('countryCode')) && (
@@ -117,4 +131,4 @@ export const AddressBox: React.FunctionComponent<AddressBoxProps> = ({
       )}
     </Box>
   );
-};
+}

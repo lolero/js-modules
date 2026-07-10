@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import type React from 'react';
 import { MuiFaIcon } from '@js-modules/web-react-mui';
 
-export const DappLogoLongBox: React.FunctionComponent = () => {
+export function DappLogoLongBox(): React.ReactNode {
   return (
     <Box
       sx={{
@@ -24,4 +24,4 @@ export const DappLogoLongBox: React.FunctionComponent = () => {
       </Typography>
     </Box>
   );
-};
+}

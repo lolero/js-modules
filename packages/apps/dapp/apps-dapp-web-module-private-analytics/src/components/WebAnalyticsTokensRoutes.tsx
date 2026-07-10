@@ -7,7 +7,7 @@ import {
 import { routesMetadataPrivate } from '@js-modules/apps-dapp-common-react';
 import { WebAnalyticsTokensWorkspace } from './WebAnalyticsTokensWorkspace';
 
-export const WebAnalyticsTokensRoutes: React.FunctionComponent = () => {
+export function WebAnalyticsTokensRoutes(): React.ReactNode {
   return (
     <Routes>
       <Route index element={<WebAnalyticsTokensWorkspace />} />
@@ -26,4 +26,4 @@ export const WebAnalyticsTokensRoutes: React.FunctionComponent = () => {
       />
     </Routes>
   );
-};
+}

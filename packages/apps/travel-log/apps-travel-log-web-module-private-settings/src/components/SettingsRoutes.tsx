@@ -8,7 +8,7 @@ import { routesMetadataPrivate } from '@js-modules/apps-travel-log-common-react'
 import { SettingsProfileRoutes } from './SettingsProfileRoutes';
 import { SettingsWorkspace } from './SettingsWorkspace';
 
-export const SettingsRoutes: React.FunctionComponent = () => {
+export function SettingsRoutes(): React.ReactNode {
   return (
     <Routes>
       <Route index element={<SettingsWorkspace />} />
@@ -27,4 +27,4 @@ export const SettingsRoutes: React.FunctionComponent = () => {
       />
     </Routes>
   );
-};
+}

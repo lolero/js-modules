@@ -26,7 +26,21 @@ export type UserContactBoxProps = {
   };
 };
 
-export const UserContactBox: React.FunctionComponent<UserContactBoxProps> = ({
+/**
+ * Form fieldset for user contact details (email, name, calling code, phone),
+ * wired to the web form utils for change/blur handling and error display.
+ * @param props - Component props.
+ * @param props.sx - `sx` overrides for the container.
+ * @param props.renderFields - Subset of contact fields to render (all when omitted).
+ * @param props.contactTemp - Current (unsaved) contact form values.
+ * @param props.changeFieldCallback - Field change handler from the form utils.
+ * @param props.blurFieldCallback - Field blur handler from the form utils.
+ * @param props.formErrors - Validation errors keyed by field.
+ * @param props.isFormFieldsDisabled - Whether the fields are disabled.
+ * @param props.textFieldProps - Per-field `TextField` prop overrides.
+ * @returns The user contact fieldset.
+ */
+export function UserContactBox({
   sx,
   renderFields = [],
   contactTemp,
@@ -35,7 +49,7 @@ export const UserContactBox: React.FunctionComponent<UserContactBoxProps> = ({
   formErrors,
   isFormFieldsDisabled,
   textFieldProps = {},
-}) => {
+}: UserContactBoxProps): React.ReactNode {
   return (
     <Box sx={sx}>
       {(isEmpty(renderFields) || renderFields.includes('email')) && (
@@ -124,4 +138,4 @@ export const UserContactBox: React.FunctionComponent<UserContactBoxProps> = ({
       )}
     </Box>
   );
-};
+}

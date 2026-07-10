@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box';
 import type React from 'react';
 
-export const PurposeWorkspaceContentBox: React.FC = () => {
+export function PurposeWorkspaceContentBox(): React.ReactNode {
   return <Box>PurposeWorkspaceContentBox</Box>;
-};
+}

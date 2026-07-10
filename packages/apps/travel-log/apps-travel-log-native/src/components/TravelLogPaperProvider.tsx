@@ -4,7 +4,7 @@ import { useStateMainReducerMetadata } from '@js-modules/apps-travel-log-common-
 import { reactNativePaperThemes } from '../styles/styles.reactNativeThemes';
 import { TravelLogNavigationContainer } from './TravelLogNavigationContainer';
 
-export const TravelLogPaperProvider: React.FC = () => {
+export function TravelLogPaperProvider(): React.ReactNode {
   const { themePalette } = useStateMainReducerMetadata();
 
   return (
@@ -14,4 +14,4 @@ export const TravelLogPaperProvider: React.FC = () => {
       />
     </PaperProvider>
   );
-};
+}

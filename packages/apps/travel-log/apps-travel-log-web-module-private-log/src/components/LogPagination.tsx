@@ -7,7 +7,7 @@ import {
 } from '@js-modules/common-react-utils';
 import { useWebRouter } from '@js-modules/web-react-router';
 
-export const LogPagination: React.FC = () => {
+export function LogPagination(): React.ReactNode {
   const { setSearchParams } = useWebRouter();
 
   const { [SearchParamPaginationKeys.pageNumber]: pageNumber } =
@@ -37,4 +37,4 @@ export const LogPagination: React.FC = () => {
       onChange={changePageNumberCallback}
     />
   );
-};
+}

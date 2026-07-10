@@ -12,7 +12,12 @@ import { NavContext } from '../contexts/NavContext';
 import { WorkspaceContext } from '../contexts/WorkspaceContext';
 import { useNavDisplayMetadata } from '../hooks/useNavDisplayMetadata';
 
-export const NavRightDrawerDisplayButton: React.FunctionComponent = () => {
+/**
+ * Floating toggle for the right nav drawer — expands, collapses, hides, or
+ * shows it depending on the current drawer display state and viewport.
+ * @returns The right-drawer toggle control.
+ */
+export function NavRightDrawerDisplayButton(): React.ReactNode {
   const { showNavRightDrawerString, hideNavRightDrawerString } =
     useContext(NavContext);
 
@@ -92,4 +97,4 @@ export const NavRightDrawerDisplayButton: React.FunctionComponent = () => {
   }
 
   return <Box sx={fabSx} />;
-};
+}

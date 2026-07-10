@@ -6,7 +6,7 @@ import { routesMetadataPrivate } from '@js-modules/apps-travel-log-common-react'
 import { useStateSettingsReducerMetadata } from '@js-modules/apps-travel-log-common-store-redux';
 import { NativeFaIcon } from '@js-modules/native-react-utils';
 
-export const FeedsScreenView: React.FC = () => {
+export function FeedsScreenView(): React.ReactNode {
   const { profile } = useStateSettingsReducerMetadata();
 
   return (
@@ -29,4 +29,4 @@ export const FeedsScreenView: React.FC = () => {
       <Text variant="bodyLarge">eMail: {profile?.email}</Text>
     </View>
   );
-};
+}

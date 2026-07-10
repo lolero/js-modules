@@ -6,11 +6,13 @@ import { DappThemeProvider } from './DappThemeProvider';
 function initApp(): React.FC {
   const reduxStore = createReduxStore();
 
-  const App: React.FC = () => (
-    <ReduxProvider reduxStore={reduxStore}>
-      <DappThemeProvider />
-    </ReduxProvider>
-  );
+  function App(): React.ReactNode {
+    return (
+      <ReduxProvider reduxStore={reduxStore}>
+        <DappThemeProvider />
+      </ReduxProvider>
+    );
+  }
 
   return App;
 }

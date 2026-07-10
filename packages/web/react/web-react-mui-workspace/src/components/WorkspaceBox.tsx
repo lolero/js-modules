@@ -36,7 +36,28 @@ export type WorkspaceBoxProps = {
   contentSx?: BoxProps['sx'];
 };
 
-export const WorkspaceBox: React.FC<WorkspaceBoxProps> = ({
+/**
+ * The app workspace shell: top appbar, optional left/right nav drawers, the
+ * workspace top toolbar, and scrollable content — with optional authorization
+ * gating.
+ * @param props - Component props.
+ * @param props.shortLogo - Logo shown when the left drawer is collapsed or on mobile.
+ * @param props.longLogo - Logo shown when the left drawer is expanded.
+ * @param props.homePath - Path the logo links to.
+ * @param props.navTopToolbar - Content of the top appbar toolbar.
+ * @param props.navLeftDrawerContent - Left nav drawer body; omit to hide the left drawer.
+ * @param props.navLeftDrawerFooter - Left nav drawer footer.
+ * @param props.navRightDrawerContent - Right nav drawer body; omit to hide the right drawer.
+ * @param props.navRightDrawerFooter - Right nav drawer footer.
+ * @param props.workspaceTopToolbar - Content of the workspace top toolbar.
+ * @param props.workspaceContent - Main scrollable workspace content.
+ * @param props.isAuthorizedRequired - Whether the workspace requires authorization to render.
+ * @param props.getIsAuthorizedCallback - Returns whether the current user is authorized.
+ * @param props.onNotAuthorizedCallback - Called when unauthorized; defaults to redirecting.
+ * @param props.contentSx - `sx` overrides for the content container.
+ * @returns The workspace layout shell.
+ */
+export function WorkspaceBox({
   shortLogo,
   longLogo,
   homePath,
@@ -51,7 +72,7 @@ export const WorkspaceBox: React.FC<WorkspaceBoxProps> = ({
   getIsAuthorizedCallback,
   onNotAuthorizedCallback,
   contentSx,
-}) => {
+}: WorkspaceBoxProps): React.ReactNode {
   const { pathReplace } = useWebRouter();
 
   const {
@@ -214,4 +235,4 @@ export const WorkspaceBox: React.FC<WorkspaceBoxProps> = ({
       </Box>
     </WorkspaceContext.Provider>
   );
-};
+}

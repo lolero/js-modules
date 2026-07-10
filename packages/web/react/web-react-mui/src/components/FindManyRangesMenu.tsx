@@ -33,12 +33,12 @@ export type FindManyRangesMenuProps = {
  * @param props.setSearchParams - Setter for the URL search params.
  * @returns FindManyRangesMenu.
  */
-export const FindManyRangesMenu: React.FC<FindManyRangesMenuProps> = ({
+export function FindManyRangesMenu({
   rangeTypes,
   button,
   searchParams,
   setSearchParams,
-}) => {
+}: FindManyRangesMenuProps): React.ReactNode {
   const { rangeKeysActive, rangeKeysUnselected, deleteRangeCallback } =
     useFindManyRangesUtils(searchParams, setSearchParams, rangeTypes);
 
@@ -149,4 +149,4 @@ export const FindManyRangesMenu: React.FC<FindManyRangesMenuProps> = ({
       </Menu>
     </>
   );
-};
+}

@@ -3,7 +3,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { WebRouterProvider } from '@js-modules/web-react-router/react-router';
 import { TravelLogRoutes } from './TravelLogRoutes';
 
-export const TravelLogBrowserRouter: React.FC = () => {
+export function TravelLogBrowserRouter(): React.ReactNode {
   return (
     <BrowserRouter>
       <WebRouterProvider>
@@ -11,4 +11,4 @@ export const TravelLogBrowserRouter: React.FC = () => {
       </WebRouterProvider>
     </BrowserRouter>
   );
-};
+}

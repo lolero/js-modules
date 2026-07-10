@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box';
 import type React from 'react';
 
-export const WebTransactionsWorkspaceContentBox: React.FC = () => {
+export function WebTransactionsWorkspaceContentBox(): React.ReactNode {
   return <Box>WebTransactionsWorkspaceContentBox</Box>;
-};
+}

@@ -17,7 +17,7 @@ import {
 
 const Stack = createNativeStackNavigator();
 
-export const TravelLogStackNavigator: React.FC = () => {
+export function TravelLogStackNavigator(): React.ReactNode {
   const { isKeycloakReady } = useInitializeKeycloak(ClientType.native);
 
   const { isAuthenticated } = useStateAuthReducerMetadata();
@@ -52,4 +52,4 @@ export const TravelLogStackNavigator: React.FC = () => {
       )}
     </Stack.Navigator>
   );
-};
+}

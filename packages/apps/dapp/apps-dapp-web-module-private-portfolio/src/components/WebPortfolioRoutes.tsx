@@ -9,7 +9,7 @@ import { WebTokensRoutes } from '@js-modules/apps-dapp-web-module-private-tokens
 import { WebTransactionsRoutes } from '@js-modules/apps-dapp-web-module-private-transactions';
 import { WebPortfolioWorkspace } from './WebPortfolioWorkspace';
 
-export const WebPortfolioRoutes: React.FunctionComponent = () => {
+export function WebPortfolioRoutes(): React.ReactNode {
   return (
     <Routes>
       <Route index element={<WebPortfolioWorkspace />} />
@@ -32,4 +32,4 @@ export const WebPortfolioRoutes: React.FunctionComponent = () => {
       />
     </Routes>
   );
-};
+}

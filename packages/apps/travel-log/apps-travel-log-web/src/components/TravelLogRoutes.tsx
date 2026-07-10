@@ -17,7 +17,7 @@ import {
 } from '@js-modules/apps-travel-log-web-module-public-site';
 import { PrivateWorkspaceLayout } from '@js-modules/apps-travel-log-web-workspace-private';
 
-export const TravelLogRoutes: React.FunctionComponent = () => {
+export function TravelLogRoutes(): React.ReactNode {
   const { isKeycloakReady, rootPath } = useInitializeKeycloak(ClientType.web);
 
   if (!isKeycloakReady) {
@@ -57,4 +57,4 @@ export const TravelLogRoutes: React.FunctionComponent = () => {
       <Route path="*" element={<Navigate replace to={rootPath} />} />
     </Routes>
   );
-};
+}

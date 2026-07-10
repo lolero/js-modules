@@ -22,7 +22,7 @@ import { useWebRouter } from '@js-modules/web-react-router';
 import { PrivateWorkspaceNavDrawerContentBox } from './PrivateWorkspaceNavDrawerContentBox';
 import { PrivateWorkspaceNavToolbarActionsBox } from './PrivateWorkspaceNavToolbarActionsBox';
 
-export const PrivateWorkspaceLayout: React.FunctionComponent = () => {
+export function PrivateWorkspaceLayout(): React.ReactNode {
   const { pathname } = useWebRouter();
   const { isAuthenticated } = useStateAuthReducerMetadata();
 
@@ -67,4 +67,4 @@ export const PrivateWorkspaceLayout: React.FunctionComponent = () => {
       <Outlet />
     </WorkspaceLayout>
   );
-};
+}

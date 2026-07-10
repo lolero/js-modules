@@ -3,7 +3,7 @@ import Typography from '@mui/material/Typography';
 import type React from 'react';
 import { MuiIconMui } from '@js-modules/web-react-icons-mui';
 
-export const DocsMuiLogoLongBox: React.FunctionComponent = () => {
+export function DocsMuiLogoLongBox(): React.ReactNode {
   return (
     <Box
       sx={{
@@ -23,4 +23,4 @@ export const DocsMuiLogoLongBox: React.FunctionComponent = () => {
       </Typography>
     </Box>
   );
-};
+}

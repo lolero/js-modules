@@ -6,7 +6,7 @@ import {
 } from '@js-modules/web-react-mui-workspace';
 import { DappNavConnectButton } from './DappNavConnectButton';
 
-export const DappNavToolbar: React.FunctionComponent = () => {
+export function DappNavToolbar(): React.ReactNode {
   return (
     <Toolbar
       sx={{
@@ -29,4 +29,4 @@ export const DappNavToolbar: React.FunctionComponent = () => {
       <DappNavConnectButton />
     </Toolbar>
   );
-};
+}

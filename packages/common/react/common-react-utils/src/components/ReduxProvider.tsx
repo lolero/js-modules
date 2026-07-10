@@ -7,9 +7,9 @@ type ReduxProviderProps = {
   children: React.ReactNode;
 };
 
-export const ReduxProvider: React.FC<ReduxProviderProps> = ({
+export function ReduxProvider({
   reduxStore,
   children,
-}) => {
+}: ReduxProviderProps): React.ReactNode {
   return <Provider store={reduxStore}>{children}</Provider>;
-};
+}

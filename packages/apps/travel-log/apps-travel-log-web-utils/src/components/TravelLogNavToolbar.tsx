@@ -10,9 +10,9 @@ export type TravelLogNavToolbarProps = {
   navActions: React.ReactNode;
 };
 
-export const TravelLogNavToolbar: React.FC<TravelLogNavToolbarProps> = ({
+export function TravelLogNavToolbar({
   navActions,
-}) => {
+}: TravelLogNavToolbarProps): React.ReactNode {
   return (
     <Toolbar
       sx={{
@@ -35,4 +35,4 @@ export const TravelLogNavToolbar: React.FC<TravelLogNavToolbarProps> = ({
       <Box>{navActions}</Box>
     </Toolbar>
   );
-};
+}

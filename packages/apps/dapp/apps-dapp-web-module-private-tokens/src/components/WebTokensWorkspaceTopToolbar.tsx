@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box';
 import type React from 'react';
 
-export const WebTokensWorkspaceTopToolbar: React.FC = () => {
+export function WebTokensWorkspaceTopToolbar(): React.ReactNode {
   return <Box>WebTokensWorkspaceTopToolbar</Box>;
-};
+}

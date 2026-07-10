@@ -9,7 +9,7 @@ import {
 import { LogWorkspaceContentBox } from './LogWorkspaceContentBox';
 import { LogWorkspaceTopToolbar } from './LogWorkspaceTopToolbar';
 
-export const LogWorkspace: React.FC = () => {
+export function LogWorkspace(): React.ReactNode {
   // TODO: write filter and sorting logic where the state is maintained in
   //  the url query params.
   return (
@@ -26,4 +26,4 @@ export const LogWorkspace: React.FC = () => {
       <LogWorkspaceContentBox />
     </Workspace>
   );
-};
+}

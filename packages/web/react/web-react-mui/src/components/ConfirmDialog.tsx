@@ -43,7 +43,7 @@ export type ConfirmDialogProps = {
  * @param props.onClose - Callback called upon closing the dialog.
  * @returns Confirmation dialog.
  */
-export const ConfirmDialog: React.FunctionComponent<ConfirmDialogProps> = ({
+export function ConfirmDialog({
   entityTypeName,
   entityName,
   actionName,
@@ -51,7 +51,7 @@ export const ConfirmDialog: React.FunctionComponent<ConfirmDialogProps> = ({
   selectRequests,
   onSubmit,
   onClose,
-}) => {
+}: ConfirmDialogProps): React.ReactNode {
   const entityRequests = useSelector(selectRequests);
   const actionRequest = entityRequests[actionRequestId ?? ''];
   const actionRequestPrevious = usePrevious(actionRequest);
@@ -115,4 +115,4 @@ export const ConfirmDialog: React.FunctionComponent<ConfirmDialogProps> = ({
       </DialogActions>
     </Dialog>
   );
-};
+}

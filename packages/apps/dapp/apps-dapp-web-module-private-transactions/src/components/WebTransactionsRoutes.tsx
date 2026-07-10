@@ -7,7 +7,7 @@ import {
 import { routesMetadataPrivate } from '@js-modules/apps-dapp-common-react';
 import { WebTransactionsWorkspace } from './WebTransactionsWorkspace';
 
-export const WebTransactionsRoutes: React.FunctionComponent = () => {
+export function WebTransactionsRoutes(): React.ReactNode {
   return (
     <Routes>
       <Route index element={<WebTransactionsWorkspace />} />
@@ -26,4 +26,4 @@ export const WebTransactionsRoutes: React.FunctionComponent = () => {
       />
     </Routes>
   );
-};
+}

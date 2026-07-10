@@ -1,3 +1,4 @@
+import type React from 'react';
 import { useCallback, useMemo } from 'react';
 import {
   useLocation,
@@ -8,7 +9,7 @@ import {
 import { WebRouterContext } from '../contexts/WebRouterContext';
 import type {
   WebRouterAdapter,
-  WebRouterProviderComponent,
+  WebRouterProviderProps,
   WebRouterSetSearchParams,
 } from '../types/webRouter.types';
 import { WebRouterLink } from './WebRouterLink';
@@ -21,7 +22,9 @@ import { WebRouterLink } from './WebRouterLink';
  * @param props.children - Subtree that consumes the web router adapter.
  * @returns The provider wrapping `children`.
  */
-export const WebRouterProvider: WebRouterProviderComponent = ({ children }) => {
+export function WebRouterProvider({
+  children,
+}: WebRouterProviderProps): React.ReactNode {
   const location = useLocation();
   const navigate = useNavigate();
   const [searchParams, setReactRouterSearchParams] = useSearchParams();
@@ -76,4 +79,4 @@ export const WebRouterProvider: WebRouterProviderComponent = ({ children }) => {
       {children}
     </WebRouterContext.Provider>
   );
-};
+}

@@ -9,7 +9,7 @@ import {
 import { WebAnalyticsWorkspaceContentBox } from './WebAnalyticsWorkspaceContentBox';
 import { WebAnalyticsWorkspaceTopToolbar } from './WebAnalyticsWorkspaceTopToolbar';
 
-export const WebAnalyticsWorkspace: React.FC = () => {
+export function WebAnalyticsWorkspace(): React.ReactNode {
   return (
     <Workspace
       slots={{
@@ -26,4 +26,4 @@ export const WebAnalyticsWorkspace: React.FC = () => {
       <WebAnalyticsWorkspaceContentBox />
     </Workspace>
   );
-};
+}

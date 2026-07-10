@@ -4,7 +4,7 @@ import { useNavDisplayMetadata } from '@js-modules/web-react-mui-workspace';
 import { DappNavSocialMediaBox } from './DappNavSocialMediaBox';
 import { DappNavSocialMediaMenu } from './DappNavSocialMediaMenu';
 
-export const DappNavDrawerFooterBox: React.FunctionComponent = () => {
+export function DappNavDrawerFooterBox(): React.ReactNode {
   const { isNavLeftDrawerCollapsed, isNavLeftDrawerExpanded } =
     useNavDisplayMetadata();
 
@@ -19,4 +19,4 @@ export const DappNavDrawerFooterBox: React.FunctionComponent = () => {
       {isNavLeftDrawerCollapsed && <DappNavSocialMediaMenu />}
     </Box>
   );
-};
+}

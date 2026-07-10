@@ -29,7 +29,21 @@ export type PaymentCardBoxProps = {
   };
 };
 
-export const PaymentCardBox: React.FunctionComponent<PaymentCardBoxProps> = ({
+/**
+ * Form fieldset for a payment card (holder name, number, expiry, CVV), wired to
+ * the web form utils for change/blur handling and error display.
+ * @param props - Component props.
+ * @param props.sx - `sx` overrides for the container.
+ * @param props.renderFields - Subset of card fields to render (all when omitted).
+ * @param props.paymentCardTemp - Current (unsaved) payment card form values.
+ * @param props.changeFieldCallback - Field change handler from the form utils.
+ * @param props.blurFieldCallback - Field blur handler from the form utils.
+ * @param props.formErrors - Validation errors keyed by field.
+ * @param props.isFormFieldsDisabled - Whether the fields are disabled.
+ * @param props.textFieldProps - Per-field `TextField` prop overrides.
+ * @returns The payment card fieldset.
+ */
+export function PaymentCardBox({
   sx,
   renderFields = [],
   paymentCardTemp,
@@ -38,7 +52,7 @@ export const PaymentCardBox: React.FunctionComponent<PaymentCardBoxProps> = ({
   formErrors,
   isFormFieldsDisabled,
   textFieldProps = {},
-}) => {
+}: PaymentCardBoxProps): React.ReactNode {
   const cardNumberDisplayStr = useMemo(() => {
     const digitGroupSize = 4;
     const digitGroupCount = ceil(paymentCardTemp.cardNumber.length / 4);
@@ -155,4 +169,4 @@ export const PaymentCardBox: React.FunctionComponent<PaymentCardBoxProps> = ({
       </Grid>
     </Box>
   );
-};
+}

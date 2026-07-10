@@ -11,7 +11,7 @@ const formControlSx = {
   gap: 1,
 };
 
-export const SettingsProfileWorkspaceContentBox: React.FC = () => {
+export function SettingsProfileWorkspaceContentBox(): React.ReactNode {
   const { profile } = useStateSettingsReducerMetadata();
 
   return (
@@ -42,4 +42,4 @@ export const SettingsProfileWorkspaceContentBox: React.FC = () => {
       </FormControl>
     </Box>
   );
-};
+}

@@ -19,11 +19,11 @@ export type BackIconButtonProps = IconButtonProps & {
  * @param props.edge - MUI `IconButton` edge (defaults to `start`).
  * @returns Back icon button.
  */
-export const BackIconButton: React.FC<BackIconButtonProps> = ({
+export function BackIconButton({
   icon,
   edge,
   ...iconButtonProps
-}) => {
+}: BackIconButtonProps): React.ReactNode {
   return (
     <Box>
       <IconButton edge={edge ?? 'start'} {...iconButtonProps}>
@@ -31,4 +31,4 @@ export const BackIconButton: React.FC<BackIconButtonProps> = ({
       </IconButton>
     </Box>
   );
-};
+}

@@ -12,7 +12,7 @@ import {
 import { WebTokensWorkspaceContentBox } from './WebTokensWorkspaceContentBox';
 import { WebTokensWorkspaceTopToolbar } from './WebTokensWorkspaceTopToolbar';
 
-export const WebTokensWorkspace: React.FC = () => {
+export function WebTokensWorkspace(): React.ReactNode {
   return (
     <Workspace
       slots={{
@@ -33,4 +33,4 @@ export const WebTokensWorkspace: React.FC = () => {
       <WebTokensWorkspaceContentBox />
     </Workspace>
   );
-};
+}

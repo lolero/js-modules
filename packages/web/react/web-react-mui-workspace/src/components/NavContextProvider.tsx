@@ -24,7 +24,26 @@ export type NavContextProviderProps = {
   children: React.ReactNode;
 };
 
-export const NavContextProvider: React.FC<NavContextProviderProps> = ({
+/**
+ * Provides <NavContext /> — the nav/workspace layout configuration (drawer
+ * labels, widths, spacing) plus left/right drawer display state.
+ * @param props - Component props.
+ * @param props.routesMetadatas - Route metadata used to size the collapsed left drawer.
+ * @param props.nonAuthenticatedRedirectPath - Path to redirect to when access is unauthorized.
+ * @param props.showNavLeftDrawerString - Tooltip label for showing the left drawer.
+ * @param props.hideNavLeftDrawerString - Tooltip label for hiding the left drawer.
+ * @param props.showNavRightDrawerString - Tooltip label for showing the right drawer.
+ * @param props.hideNavRightDrawerString - Tooltip label for hiding the right drawer.
+ * @param props.navLeftDrawerExpandedWidth - Width of the expanded left drawer.
+ * @param props.navLeftDrawerTreeViewItemHeightMin - Minimum height of a left-drawer tree item.
+ * @param props.navRightDrawerCollapsedWidth - Width of the collapsed right drawer.
+ * @param props.navRightDrawerExpandedWidth - Width of the expanded right drawer.
+ * @param props.workspaceTopToolbarPaddingYSpacing - Vertical padding (theme spacing) of the workspace top toolbar.
+ * @param props.workspacePaddingXSpacing - Horizontal padding (theme spacing) of the workspace content.
+ * @param props.children - Subtree that consumes the nav context.
+ * @returns The nav context provider wrapping `children`.
+ */
+export function NavContextProvider({
   routesMetadatas = [],
   nonAuthenticatedRedirectPath,
   showNavLeftDrawerString = 'Show Navigation Menu',
@@ -38,7 +57,7 @@ export const NavContextProvider: React.FC<NavContextProviderProps> = ({
   workspaceTopToolbarPaddingYSpacing = 0.5,
   workspacePaddingXSpacing = 2,
   children,
-}) => {
+}: NavContextProviderProps): React.ReactNode {
   const [navLeftDrawerDisplayStatus, setNavLeftDrawerDisplayStatus] =
     useState<NavDrawerDisplayStatus>(NavDrawerDisplayStatus.expanded);
   const [navRightDrawerDisplayStatus, setNavRightDrawerDisplayStatus] =
@@ -92,4 +111,4 @@ export const NavContextProvider: React.FC<NavContextProviderProps> = ({
       {children}
     </NavContext.Provider>
   );
-};
+}

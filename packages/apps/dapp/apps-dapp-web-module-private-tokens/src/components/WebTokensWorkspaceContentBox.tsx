@@ -17,7 +17,7 @@ import { useNodeChainsGetMany } from '@js-modules/apps-dapp-common-store-redux';
 import { usePrevious } from '@js-modules/common-react-utils';
 import { MuiFaIcon, VirtualizedAutocomplete } from '@js-modules/web-react-mui';
 
-export const WebTokensWorkspaceContentBox: React.FC = () => {
+export function WebTokensWorkspaceContentBox(): React.ReactNode {
   const { request: nodeChainsGetManyRequest, entities: nodeChains } =
     useNodeChainsGetMany();
   const nodeChainsGetManyRequestPrevious = usePrevious(
@@ -188,4 +188,4 @@ export const WebTokensWorkspaceContentBox: React.FC = () => {
       </Typography>
     </Box>
   );
-};
+}

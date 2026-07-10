@@ -51,7 +51,7 @@ export const socialMediaMetadata: Record<
   },
 };
 
-export const DocsMuiNavSocialMediaBox: React.FunctionComponent = () => {
+export function DocsMuiNavSocialMediaBox(): React.ReactNode {
   const { closeNavLeftDrawerCallback } = useNavDisplayMetadata();
 
   return (
@@ -74,4 +74,4 @@ export const DocsMuiNavSocialMediaBox: React.FunctionComponent = () => {
       )}
     </Box>
   );
-};
+}

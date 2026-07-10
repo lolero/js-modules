@@ -5,7 +5,7 @@ import { useStateMainReducerMetadata } from '@js-modules/apps-dapp-common-store-
 import { materialUiThemes } from '@js-modules/apps-dapp-web-utils';
 import { DappNavContextProvider } from './DappNavContextProvider';
 
-export const DappThemeProvider: React.FC = () => {
+export function DappThemeProvider(): React.ReactNode {
   const { themePalette } = useStateMainReducerMetadata();
 
   return (
@@ -14,4 +14,4 @@ export const DappThemeProvider: React.FC = () => {
       <DappNavContextProvider />
     </ThemeProvider>
   );
-};
+}

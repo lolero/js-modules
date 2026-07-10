@@ -7,7 +7,7 @@ import {
 import { routesMetadataPrivate } from '@js-modules/apps-dapp-common-react';
 import { WebTokensWorkspace } from './WebTokensWorkspace';
 
-export const WebTokensRoutes: React.FunctionComponent = () => {
+export function WebTokensRoutes(): React.ReactNode {
   return (
     <Routes>
       <Route index element={<WebTokensWorkspace />} />
@@ -26,4 +26,4 @@ export const WebTokensRoutes: React.FunctionComponent = () => {
       />
     </Routes>
   );
-};
+}

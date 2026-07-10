@@ -10,7 +10,7 @@ import {
 } from '@js-modules/apps-travel-log-common-store-redux';
 import { useWebParams } from '@js-modules/web-react-router';
 
-export const LogLogEntryWorkspaceContentBox: React.FC = () => {
+export function LogLogEntryWorkspaceContentBox(): React.ReactNode {
   const { logEntryId } = useWebParams();
 
   const nodeLogEntry = useNodeLogEntriesEntity(logEntryId ?? '');
@@ -75,4 +75,4 @@ export const LogLogEntryWorkspaceContentBox: React.FC = () => {
       </Box>
     </Box>
   );
-};
+}

@@ -17,7 +17,7 @@ import {
 } from '@js-modules/apps-travel-log-common-store-redux';
 import { NativeFaIcon } from '@js-modules/native-react-utils';
 
-export const StartScreenView: React.FC = () => {
+export function StartScreenView(): React.ReactNode {
   const { callback: stateSettingsGetProfileCallback } =
     useStateSettingsGetProfile();
 
@@ -74,4 +74,4 @@ export const StartScreenView: React.FC = () => {
       )}
     </View>
   );
-};
+}

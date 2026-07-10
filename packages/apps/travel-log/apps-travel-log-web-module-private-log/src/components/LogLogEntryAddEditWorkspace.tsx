@@ -28,7 +28,7 @@ import { LogLogEntryAddEditContext } from './LogLogEntryAddEditContext';
 import { LogLogEntryAddEditWorkspaceContentBox } from './LogLogEntryAddEditWorkspaceContentBox';
 import { LogLogEntryAddEditWorkspaceTopToolbar } from './LogLogEntryAddEditWorkspaceTopToolbar';
 
-export const LogLogEntryAddEditWorkspace: React.FC = () => {
+export function LogLogEntryAddEditWorkspace(): React.ReactNode {
   const { logEntryId } = useWebParams();
 
   const nodeLogEntry = useNodeLogEntriesEntity(logEntryId ?? '');
@@ -122,4 +122,4 @@ export const LogLogEntryAddEditWorkspace: React.FC = () => {
       </Workspace>
     </LogLogEntryAddEditContext.Provider>
   );
-};
+}

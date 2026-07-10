@@ -14,12 +14,22 @@ export type OtpBoxProps = {
   isDisabled?: boolean;
 };
 
-export const OtpBox: React.FunctionComponent<OtpBoxProps> = ({
+/**
+ * One-time-password input — a row of single-character boxes with cursor and
+ * paste handling that reports the assembled OTP via `setOtpCallback`.
+ * @param props - Component props.
+ * @param props.otpLength - Number of OTP characters (boxes) to render.
+ * @param props.otp - Current OTP characters.
+ * @param props.setOtpCallback - Reports the updated OTP characters.
+ * @param props.isDisabled - Whether the inputs are disabled.
+ * @returns The OTP input row.
+ */
+export function OtpBox({
   otpLength,
   otp,
   setOtpCallback,
   isDisabled,
-}) => {
+}: OtpBoxProps): React.ReactNode {
   const [cursorIndex, setCursorIndex] = useState<number | null>(0);
 
   const focusOtpValueCallback = useCallback(
@@ -159,4 +169,4 @@ export const OtpBox: React.FunctionComponent<OtpBoxProps> = ({
       </Box>
     </Box>
   );
-};
+}

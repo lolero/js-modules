@@ -6,7 +6,7 @@ import {
 import { NavContextProvider } from '@js-modules/web-react-mui-workspace';
 import { TravelLogBrowserRouter } from './TravelLogBrowserRouter';
 
-export const TravelLogNavContextProvider: React.FC = () => {
+export function TravelLogNavContextProvider(): React.ReactNode {
   return (
     <NavContextProvider
       nonAuthenticatedRedirectPath="/"
@@ -15,4 +15,4 @@ export const TravelLogNavContextProvider: React.FC = () => {
       <TravelLogBrowserRouter />
     </NavContextProvider>
   );
-};
+}

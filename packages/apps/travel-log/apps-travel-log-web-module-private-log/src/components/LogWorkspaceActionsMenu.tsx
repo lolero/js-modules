@@ -35,7 +35,7 @@ const rangeTypes: FindManyRangesTypes = {
   deletedAt: FindManyRangeType.date,
 };
 
-export const LogWorkspaceActionsMenu: React.FC = () => {
+export function LogWorkspaceActionsMenu(): React.ReactNode {
   const routeMetadataAddNew = useMemo(
     () =>
       routesMetadataPrivate[WebModulesPrivate.log].subRoutes![
@@ -102,4 +102,4 @@ export const LogWorkspaceActionsMenu: React.FC = () => {
       </Menu>
     </>
   );
-};
+}

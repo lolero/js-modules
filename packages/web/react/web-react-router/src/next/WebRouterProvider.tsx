@@ -11,7 +11,6 @@ import { Suspense, useCallback, useMemo } from 'react';
 import { WebRouterContext } from '../contexts/WebRouterContext';
 import type {
   WebRouterAdapter,
-  WebRouterProviderComponent,
   WebRouterProviderProps,
   WebRouterSetSearchParams,
 } from '../types/webRouter.types';
@@ -94,10 +93,12 @@ function WebRouterProviderInner({
  * @param props.children - Subtree that consumes the web router adapter.
  * @returns The provider wrapping `children`.
  */
-export const WebRouterProvider: WebRouterProviderComponent = ({ children }) => {
+export function WebRouterProvider({
+  children,
+}: WebRouterProviderProps): React.ReactNode {
   return (
     <Suspense>
       <WebRouterProviderInner>{children}</WebRouterProviderInner>
     </Suspense>
   );
-};
+}

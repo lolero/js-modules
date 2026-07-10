@@ -7,7 +7,7 @@ import {
 import { routesMetadataPrivate } from '@js-modules/apps-travel-log-common-react';
 import { FeedsWorkspace } from './FeedsWorkspace';
 
-export const FeedsRoutes: React.FunctionComponent = () => {
+export function FeedsRoutes(): React.ReactNode {
   return (
     <Routes>
       <Route index element={<FeedsWorkspace />} />
@@ -26,4 +26,4 @@ export const FeedsRoutes: React.FunctionComponent = () => {
       />
     </Routes>
   );
-};
+}

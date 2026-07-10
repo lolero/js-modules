@@ -18,9 +18,9 @@ export type TravelLogNavigationContainerProps = {
   paperTheme: MD3Theme;
 };
 
-export const TravelLogNavigationContainer: React.FC<
-  TravelLogNavigationContainerProps
-> = ({ paperTheme }) => {
+export function TravelLogNavigationContainer({
+  paperTheme,
+}: TravelLogNavigationContainerProps): React.ReactNode {
   const { themePalette } = useStateMainReducerMetadata();
 
   const theme = useMemo(() => {
@@ -53,4 +53,4 @@ export const TravelLogNavigationContainer: React.FC<
       <TravelLogStackNavigator />
     </NavigationContainer>
   );
-};
+}

@@ -12,7 +12,7 @@ import {
 import { LogLogEntryWorkspaceContentBox } from './LogLogEntryWorkspaceContentBox';
 import { LogLogEntryWorkspaceTopToolbar } from './LogLogEntryWorkspaceTopToolbar';
 
-export const LogLogEntryWorkspace: React.FC = () => {
+export function LogLogEntryWorkspace(): React.ReactNode {
   return (
     <Workspace
       slots={{
@@ -33,4 +33,4 @@ export const LogLogEntryWorkspace: React.FC = () => {
       <LogLogEntryWorkspaceContentBox />
     </Workspace>
   );
-};
+}

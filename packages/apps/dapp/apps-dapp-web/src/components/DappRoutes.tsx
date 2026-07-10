@@ -8,7 +8,7 @@ import { WebAnalyticsRoutes } from '@js-modules/apps-dapp-web-module-private-ana
 import { WebPortfolioRoutes } from '@js-modules/apps-dapp-web-module-private-portfolio';
 import { DappWorkspaceLayout } from '@js-modules/apps-dapp-web-utils';
 
-export const DappRoutes: React.FunctionComponent = () => {
+export function DappRoutes(): React.ReactNode {
   const {
     request: nodeChainsGetManyRequest,
     callback: nodeChainsGetManyCallback,
@@ -43,4 +43,4 @@ export const DappRoutes: React.FunctionComponent = () => {
       </Route>
     </Routes>
   );
-};
+}

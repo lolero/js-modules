@@ -3,7 +3,7 @@ import type React from 'react';
 import { BackIconButton } from '@js-modules/web-react-mui';
 import { useWebRouter } from '@js-modules/web-react-router';
 
-export const SettingsProfileEditWorkspaceTopToolbar: React.FC = () => {
+export function SettingsProfileEditWorkspaceTopToolbar(): React.ReactNode {
   const { back } = useWebRouter();
 
   return (
@@ -11,4 +11,4 @@ export const SettingsProfileEditWorkspaceTopToolbar: React.FC = () => {
       <BackIconButton onClick={back} />
     </Box>
   );
-};
+}

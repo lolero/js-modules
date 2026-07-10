@@ -22,15 +22,24 @@ export type WorkspaceContentBoxProps = {
   children: React.ReactNode;
 };
 
-export const WorkspaceContentBox: React.FunctionComponent<
-  WorkspaceContentBoxProps
-> = ({
+/**
+ * Scrollable workspace content region — lays out beneath the appbar and drawers
+ * and reports its scroll position and direction up via callbacks.
+ * @param props - Component props.
+ * @param props.setIsWorkspaceScroll - Reports whether the content is scrolled.
+ * @param props.setWorkspaceScrollTop - Reports the current scroll offset.
+ * @param props.setWorkspaceScrollDirection - Reports the current scroll direction.
+ * @param props.contentSx - `sx` overrides for the content container.
+ * @param props.children - Workspace content to render.
+ * @returns The scrollable content region.
+ */
+export function WorkspaceContentBox({
   setIsWorkspaceScroll,
   setWorkspaceScrollTop,
   setWorkspaceScrollDirection,
   contentSx,
   children,
-}) => {
+}: WorkspaceContentBoxProps): React.ReactNode {
   const {
     navLeftDrawerDisplayStatus,
     workspaceTopToolbarPaddingYSpacing,
@@ -137,4 +146,4 @@ export const WorkspaceContentBox: React.FunctionComponent<
       )}
     </Box>
   );
-};
+}

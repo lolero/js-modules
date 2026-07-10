@@ -26,7 +26,7 @@ import { MuiFaIcon } from '@js-modules/web-react-mui';
 import { useWebParams, useWebRouter } from '@js-modules/web-react-router';
 import { LogLogEntryAddEditContext } from './LogLogEntryAddEditContext';
 
-export const LogLogEntryAddEditWorkspaceTopToolbar: React.FC = () => {
+export function LogLogEntryAddEditWorkspaceTopToolbar(): React.ReactNode {
   const { nodeLogEntryUnsavedFormValidator } = useContext(
     LogLogEntryAddEditContext,
   );
@@ -166,4 +166,4 @@ export const LogLogEntryAddEditWorkspaceTopToolbar: React.FC = () => {
       </Box>
     </>
   );
-};
+}

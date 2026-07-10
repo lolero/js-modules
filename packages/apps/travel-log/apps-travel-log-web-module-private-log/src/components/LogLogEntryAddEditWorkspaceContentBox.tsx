@@ -17,7 +17,7 @@ import { useFormUtilsWeb } from '@js-modules/web-react-mui';
 import { useWebParams } from '@js-modules/web-react-router';
 import { LogLogEntryAddEditContext } from './LogLogEntryAddEditContext';
 
-export const LogLogEntryAddEditWorkspaceContentBox: React.FC = () => {
+export function LogLogEntryAddEditWorkspaceContentBox(): React.ReactNode {
   const { nodeLogEntryUnsavedFormValidator } = useContext(
     LogLogEntryAddEditContext,
   );
@@ -124,4 +124,4 @@ export const LogLogEntryAddEditWorkspaceContentBox: React.FC = () => {
       />
     </Box>
   );
-};
+}

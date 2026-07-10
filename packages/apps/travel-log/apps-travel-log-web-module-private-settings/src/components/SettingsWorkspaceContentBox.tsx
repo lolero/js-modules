@@ -2,7 +2,7 @@ import Box from '@mui/material/Box';
 import type React from 'react';
 import { useStateAuthReducerMetadata } from '@js-modules/apps-travel-log-common-store-redux';
 
-export const SettingsWorkspaceContentBox: React.FC = () => {
+export function SettingsWorkspaceContentBox(): React.ReactNode {
   const { tokens } = useStateAuthReducerMetadata();
   return (
     <Box>
@@ -19,4 +19,4 @@ export const SettingsWorkspaceContentBox: React.FC = () => {
       </Box>
     </Box>
   );
-};
+}

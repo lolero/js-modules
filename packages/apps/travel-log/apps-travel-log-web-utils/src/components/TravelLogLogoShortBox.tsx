@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import type React from 'react';
 import { MuiFaIcon } from '@js-modules/web-react-mui';
 
-export const TravelLogLogoShortBox: React.FunctionComponent = () => {
+export function TravelLogLogoShortBox(): React.ReactNode {
   return (
     <Box
       sx={{
@@ -16,4 +16,4 @@ export const TravelLogLogoShortBox: React.FunctionComponent = () => {
       <MuiFaIcon icon={faEthereum} fontSize="large" />
     </Box>
   );
-};
+}

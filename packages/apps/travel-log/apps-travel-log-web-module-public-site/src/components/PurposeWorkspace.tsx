@@ -8,7 +8,7 @@ import {
 } from '@js-modules/web-react-mui-workspace';
 import { PurposeWorkspaceContentBox } from './PurposeWorkspaceContentBox';
 
-export const PurposeWorkspace: React.FC = () => {
+export function PurposeWorkspace(): React.ReactNode {
   return (
     <Workspace
       slots={{
@@ -22,4 +22,4 @@ export const PurposeWorkspace: React.FC = () => {
       <PurposeWorkspaceContentBox />
     </Workspace>
   );
-};
+}

@@ -11,7 +11,7 @@ import { DappNavDrawerContentBox } from './DappNavDrawerContentBox';
 import { DappNavDrawerFooterBox } from './DappNavDrawerFooterBox';
 import { DappNavToolbar } from './DappNavToolbar';
 
-export const DappWorkspaceLayout: React.FunctionComponent = () => {
+export function DappWorkspaceLayout(): React.ReactNode {
   return (
     <WorkspaceLayout
       shortLogo={<DappLogoShortBox />}
@@ -33,4 +33,4 @@ export const DappWorkspaceLayout: React.FunctionComponent = () => {
       <Outlet />
     </WorkspaceLayout>
   );
-};
+}

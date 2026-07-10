@@ -9,7 +9,7 @@ import {
 import { FeedsWorkspaceContentBox } from './FeedsWorkspaceContentBox';
 import { FeedsWorkspaceTopToolbar } from './FeedsWorkspaceTopToolbar';
 
-export const FeedsWorkspace: React.FC = () => {
+export function FeedsWorkspace(): React.ReactNode {
   return (
     <Workspace
       slots={{
@@ -24,4 +24,4 @@ export const FeedsWorkspace: React.FC = () => {
       <FeedsWorkspaceContentBox />
     </Workspace>
   );
-};
+}

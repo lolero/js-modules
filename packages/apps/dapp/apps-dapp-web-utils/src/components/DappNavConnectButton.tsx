@@ -9,7 +9,7 @@ import {
 } from '@js-modules/apps-dapp-common-store-redux';
 import { MuiFaIcon } from '@js-modules/web-react-mui';
 
-export const DappNavConnectButton: React.FC = () => {
+export function DappNavConnectButton(): React.ReactNode {
   const {
     request: stateWeb3ConnectWalletRequest,
     reducerMetadata: { wallet },
@@ -58,4 +58,4 @@ export const DappNavConnectButton: React.FC = () => {
   }
 
   return null;
-};
+}

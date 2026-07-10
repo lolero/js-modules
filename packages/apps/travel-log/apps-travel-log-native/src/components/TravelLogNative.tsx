@@ -7,13 +7,15 @@ import { TravelLogPaperProvider } from './TravelLogPaperProvider';
 function initApp(): React.FC {
   const reduxStore = createReduxStore();
 
-  const App: React.FC = () => (
-    <SafeAreaProvider>
-      <ReduxProvider reduxStore={reduxStore}>
-        <TravelLogPaperProvider />
-      </ReduxProvider>
-    </SafeAreaProvider>
-  );
+  function App(): React.ReactNode {
+    return (
+      <SafeAreaProvider>
+        <ReduxProvider reduxStore={reduxStore}>
+          <TravelLogPaperProvider />
+        </ReduxProvider>
+      </SafeAreaProvider>
+    );
+  }
 
   return App;
 }

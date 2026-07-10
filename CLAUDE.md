@@ -2,7 +2,7 @@
 
 ## Tooling
 
-- **pnpm** - Use pnpm, not npm/yarn
+- **pnpm** - JS package manager (not npm/yarn)
 - **uv** - Python package manager (not pip/poetry)
 - **ruff** - Python linting/formatting
 - **Nx** - Task runner for both JS and Python packages

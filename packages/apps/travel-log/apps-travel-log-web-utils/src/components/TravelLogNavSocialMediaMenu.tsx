@@ -14,7 +14,7 @@ import { MuiFaIcon, useMenuUtils } from '@js-modules/web-react-mui';
 import { useNavDisplayMetadata } from '@js-modules/web-react-mui-workspace';
 import { socialMediaMetadata } from './TravelLogNavSocialMediaBox';
 
-export const TravelLogNavSocialMediaMenu: React.FunctionComponent = () => {
+export function TravelLogNavSocialMediaMenu(): React.ReactNode {
   const { closeNavLeftDrawerCallback } = useNavDisplayMetadata();
 
   const { menuAnchor, openMenuCallback, closeMenuCallback } = useMenuUtils();
@@ -62,4 +62,4 @@ export const TravelLogNavSocialMediaMenu: React.FunctionComponent = () => {
       </Menu>
     </>
   );
-};
+}

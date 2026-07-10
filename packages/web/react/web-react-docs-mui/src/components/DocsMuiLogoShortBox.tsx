@@ -2,7 +2,7 @@ import Box from '@mui/material/Box';
 import type React from 'react';
 import { MuiIconMui } from '@js-modules/web-react-icons-mui';
 
-export const DocsMuiLogoShortBox: React.FunctionComponent = () => {
+export function DocsMuiLogoShortBox(): React.ReactNode {
   return (
     <Box
       sx={{
@@ -15,4 +15,4 @@ export const DocsMuiLogoShortBox: React.FunctionComponent = () => {
       <MuiIconMui fontSize="large" />
     </Box>
   );
-};
+}

@@ -24,7 +24,7 @@ import {
 } from '@js-modules/apps-travel-log-common-store-redux';
 import { MuiFaIcon, useMenuUtils } from '@js-modules/web-react-mui';
 
-export const PrivateWorkspaceAccountMenu: React.FC = () => {
+export function PrivateWorkspaceAccountMenu(): React.ReactNode {
   const { menuAnchor, openMenuCallback, closeMenuCallback } = useMenuUtils();
 
   const { callback: stateSettingsSignoutCallback } = useStateSettingsSignout();
@@ -108,4 +108,4 @@ export const PrivateWorkspaceAccountMenu: React.FC = () => {
       </Menu>
     </>
   );
-};
+}

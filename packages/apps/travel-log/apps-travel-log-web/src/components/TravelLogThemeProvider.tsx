@@ -5,7 +5,7 @@ import { useStateMainReducerMetadata } from '@js-modules/apps-travel-log-common-
 import { materialUiThemes } from '@js-modules/apps-travel-log-web-utils';
 import { TravelLogNavContextProvider } from './TravelLogNavContextProvider';
 
-export const TravelLogThemeProvider: React.FC = () => {
+export function TravelLogThemeProvider(): React.ReactNode {
   const { themePalette } = useStateMainReducerMetadata();
 
   return (
@@ -14,4 +14,4 @@ export const TravelLogThemeProvider: React.FC = () => {
       <TravelLogNavContextProvider />
     </ThemeProvider>
   );
-};
+}

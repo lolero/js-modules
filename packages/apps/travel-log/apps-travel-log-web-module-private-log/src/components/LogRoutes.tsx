@@ -8,7 +8,7 @@ import { routesMetadataPrivate } from '@js-modules/apps-travel-log-common-react'
 import { LogLogEntryRoutes } from './LogLogEntryRoutes';
 import { LogWorkspace } from './LogWorkspace';
 
-export const LogRoutes: React.FunctionComponent = () => {
+export function LogRoutes(): React.ReactNode {
   return (
     <Routes>
       <Route index element={<LogWorkspace />} />
@@ -29,4 +29,4 @@ export const LogRoutes: React.FunctionComponent = () => {
       />
     </Routes>
   );
-};
+}

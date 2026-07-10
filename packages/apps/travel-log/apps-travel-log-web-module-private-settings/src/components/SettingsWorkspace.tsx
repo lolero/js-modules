@@ -9,7 +9,7 @@ import {
 import { SettingsWorkspaceContentBox } from './SettingsWorkspaceContentBox';
 import { SettingsWorkspaceTopToolbar } from './SettingsWorkspaceTopToolbar';
 
-export const SettingsWorkspace: React.FC = () => {
+export function SettingsWorkspace(): React.ReactNode {
   return (
     <Workspace
       slots={{
@@ -26,4 +26,4 @@ export const SettingsWorkspace: React.FC = () => {
       <SettingsWorkspaceContentBox />
     </Workspace>
   );
-};
+}

@@ -31,7 +31,7 @@ const keycloakLoginOptions: StateAuthSigninRequestAction['requestMetadata']['key
     redirectUri,
   };
 
-export const PublicNavToolbarActionsBox: React.FC = () => {
+export function PublicNavToolbarActionsBox(): React.ReactNode {
   const { isMobile } = useNavDisplayMetadata();
 
   const { menuAnchor, openMenuCallback, closeMenuCallback } = useMenuUtils();
@@ -110,4 +110,4 @@ export const PublicNavToolbarActionsBox: React.FC = () => {
       )}
     </Box>
   );
-};
+}

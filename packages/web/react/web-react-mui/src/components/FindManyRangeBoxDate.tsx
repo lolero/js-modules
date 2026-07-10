@@ -26,11 +26,11 @@ export type FindManyRangeBoxDateProps = {
  * @param props.setSearchParams - Setter for the URL search params.
  * @returns Paired from/to date pickers.
  */
-export const FindManyRangeBoxDate: React.FC<FindManyRangeBoxDateProps> = ({
+export function FindManyRangeBoxDate({
   rangeKey,
   searchParams,
   setSearchParams,
-}) => {
+}: FindManyRangeBoxDateProps): React.ReactNode {
   const { getRangeCallback, setRangeCallback } = useFindManyRangesUtils(
     searchParams,
     setSearchParams,
@@ -113,4 +113,4 @@ export const FindManyRangeBoxDate: React.FC<FindManyRangeBoxDateProps> = ({
       </LocalizationProvider>
     </Box>
   );
-};
+}

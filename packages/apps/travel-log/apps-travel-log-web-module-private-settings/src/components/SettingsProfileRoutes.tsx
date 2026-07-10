@@ -9,7 +9,7 @@ import { routesMetadataPrivate } from '@js-modules/apps-travel-log-common-react'
 import { SettingsProfileEditWorkspace } from './SettingsProfileEditWorkspace';
 import { SettingsProfileWorkspace } from './SettingsProfileWorkspace';
 
-export const SettingsProfileRoutes: React.FunctionComponent = () => {
+export function SettingsProfileRoutes(): React.ReactNode {
   return (
     <Routes>
       <Route index element={<SettingsProfileWorkspace />} />
@@ -32,4 +32,4 @@ export const SettingsProfileRoutes: React.FunctionComponent = () => {
       />
     </Routes>
   );
-};
+}

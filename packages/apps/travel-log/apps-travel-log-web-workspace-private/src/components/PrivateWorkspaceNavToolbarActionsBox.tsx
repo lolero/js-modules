@@ -3,11 +3,11 @@ import type React from 'react';
 import { PrivateWorkspaceAccountMenu } from './PrivateWorkspaceAccountMenu';
 import { PrivateWorkspaceNotificationsMenu } from './PrivateWorkspaceNotificationsMenu';
 
-export const PrivateWorkspaceNavToolbarActionsBox: React.FC = () => {
+export function PrivateWorkspaceNavToolbarActionsBox(): React.ReactNode {
   return (
     <Box>
       <PrivateWorkspaceNotificationsMenu />
       <PrivateWorkspaceAccountMenu />
     </Box>
   );
-};
+}

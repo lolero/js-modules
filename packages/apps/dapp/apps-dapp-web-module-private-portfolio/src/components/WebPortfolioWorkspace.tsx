@@ -9,7 +9,7 @@ import {
 import { WebPortfolioWorkspaceContentBox } from './WebPortfolioWorkspaceContentBox';
 import { WebPortfolioWorkspaceTopToolbar } from './WebPortfolioWorkspaceTopToolbar';
 
-export const WebPortfolioWorkspace: React.FC = () => {
+export function WebPortfolioWorkspace(): React.ReactNode {
   return (
     <Workspace
       slots={{
@@ -26,4 +26,4 @@ export const WebPortfolioWorkspace: React.FC = () => {
       <WebPortfolioWorkspaceContentBox />
     </Workspace>
   );
-};
+}

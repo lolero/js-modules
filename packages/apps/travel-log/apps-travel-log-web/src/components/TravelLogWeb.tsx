@@ -6,11 +6,13 @@ import { TravelLogThemeProvider } from './TravelLogThemeProvider';
 function initApp(): React.FC {
   const reduxStore = createReduxStore();
 
-  const App: React.FC = () => (
-    <ReduxProvider reduxStore={reduxStore}>
-      <TravelLogThemeProvider />
-    </ReduxProvider>
-  );
+  function App(): React.ReactNode {
+    return (
+      <ReduxProvider reduxStore={reduxStore}>
+        <TravelLogThemeProvider />
+      </ReduxProvider>
+    );
+  }
 
   return App;
 }

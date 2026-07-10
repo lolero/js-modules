@@ -14,7 +14,7 @@ import { MuiFaIcon, useMenuUtils } from '@js-modules/web-react-mui';
 import { useNavDisplayMetadata } from '@js-modules/web-react-mui-workspace';
 import { socialMediaMetadata } from './DappNavSocialMediaBox';
 
-export const DappNavSocialMediaMenu: React.FunctionComponent = () => {
+export function DappNavSocialMediaMenu(): React.ReactNode {
   const { closeNavLeftDrawerCallback } = useNavDisplayMetadata();
 
   const { menuAnchor, openMenuCallback, closeMenuCallback } = useMenuUtils();
@@ -62,4 +62,4 @@ export const DappNavSocialMediaMenu: React.FunctionComponent = () => {
       </Menu>
     </>
   );
-};
+}

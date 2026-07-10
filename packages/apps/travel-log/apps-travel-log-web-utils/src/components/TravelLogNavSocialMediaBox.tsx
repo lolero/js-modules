@@ -51,7 +51,7 @@ export const socialMediaMetadata: Record<
   },
 };
 
-export const TravelLogNavSocialMediaBox: React.FunctionComponent = () => {
+export function TravelLogNavSocialMediaBox(): React.ReactNode {
   const { closeNavLeftDrawerCallback } = useNavDisplayMetadata();
 
   return (
@@ -74,4 +74,4 @@ export const TravelLogNavSocialMediaBox: React.FunctionComponent = () => {
       )}
     </Box>
   );
-};
+}

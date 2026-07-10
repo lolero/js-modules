@@ -8,7 +8,7 @@ import {
 } from '@js-modules/web-react-mui-workspace';
 import { HomeWorkspaceContentBox } from './HomeWorkspaceContentBox';
 
-export const HomeWorkspace: React.FC = () => {
+export function HomeWorkspace(): React.ReactNode {
   return (
     <Workspace
       slots={{
@@ -22,4 +22,4 @@ export const HomeWorkspace: React.FC = () => {
       <HomeWorkspaceContentBox />
     </Workspace>
   );
-};
+}

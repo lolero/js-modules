@@ -13,7 +13,7 @@ import {
 import { SettingsProfileEditWorkspaceContentBox } from './SettingsProfileEditWorkspaceContentBox';
 import { SettingsProfileEditWorkspaceTopToolbar } from './SettingsProfileEditWorkspaceTopToolbar';
 
-export const SettingsProfileEditWorkspace: React.FC = () => {
+export function SettingsProfileEditWorkspace(): React.ReactNode {
   return (
     <Workspace
       slots={{
@@ -34,4 +34,4 @@ export const SettingsProfileEditWorkspace: React.FC = () => {
       <SettingsProfileEditWorkspaceContentBox />
     </Workspace>
   );
-};
+}

@@ -10,7 +10,7 @@ import {
 import type { ClassObject } from '@js-modules/common-utils-general';
 import { useFormUtilsWeb } from '@js-modules/web-react-mui';
 
-export const SettingsProfileEditWorkspaceContentBox: React.FC = () => {
+export function SettingsProfileEditWorkspaceContentBox(): React.ReactNode {
   const {
     reducerMetadata: { profile, profilePartialUnsaved },
     callback: settingsUpdatePartialReducerMetadataCallback,
@@ -62,4 +62,4 @@ export const SettingsProfileEditWorkspaceContentBox: React.FC = () => {
       />
     </Box>
   );
-};
+}

@@ -7,7 +7,7 @@ import {
 } from '@js-modules/common-react-utils';
 import { LogPagination } from './LogPagination';
 
-export const LogWorkspaceContentBox: React.FC = () => {
+export function LogWorkspaceContentBox(): React.ReactNode {
   const logDate = useSearchParamLogDate();
 
   const { [SearchParamPaginationKeys.pageNumber]: pageNumber } =
@@ -22,4 +22,4 @@ export const LogWorkspaceContentBox: React.FC = () => {
       <LogPagination />
     </Box>
   );
-};
+}

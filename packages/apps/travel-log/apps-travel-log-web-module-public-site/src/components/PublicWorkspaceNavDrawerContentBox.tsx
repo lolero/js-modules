@@ -5,10 +5,9 @@ import {
   useNavLeftDrawerTreeViewMetadata,
 } from '@js-modules/web-react-mui-workspace';
 
-export const PublicWorkspaceNavDrawerContentBox: React.FunctionComponent =
-  () => {
-    const treeViewMetadata =
-      useNavLeftDrawerTreeViewMetadata(routesMetadataPublic);
+export function PublicWorkspaceNavDrawerContentBox(): React.ReactNode {
+  const treeViewMetadata =
+    useNavLeftDrawerTreeViewMetadata(routesMetadataPublic);
 
-    return <NavLeftDrawerTreeView treeViewMetadata={treeViewMetadata} />;
-  };
+  return <NavLeftDrawerTreeView treeViewMetadata={treeViewMetadata} />;
+}

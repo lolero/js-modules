@@ -624,6 +624,16 @@ const eslintConfigs: Record<EslintConfigType, EslintConfig> = {
             'always',
             { destructureInSignature: 'always' },
           ],
+          // Named components are function declarations; anonymous/inline ones
+          // stay arrow functions.
+          // https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/function-component-definition.md
+          'react/function-component-definition': [
+            'error',
+            {
+              namedComponents: 'function-declaration',
+              unnamedComponents: 'arrow-function',
+            },
+          ],
           // TypeScript validates props via types, so this rule is redundant and
           // misfires on typed components (e.g. `React.FC<Props>`, contextually
           // typed components)

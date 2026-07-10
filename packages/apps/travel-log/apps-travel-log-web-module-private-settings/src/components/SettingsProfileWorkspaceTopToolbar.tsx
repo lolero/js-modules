@@ -12,7 +12,7 @@ import { BackIconButton, MuiFaIcon } from '@js-modules/web-react-mui';
 import { useWebRouter, WebLink } from '@js-modules/web-react-router';
 import { SettingsProfileWorkspaceActionsMenu } from './SettingsProfileWorkspaceActionsMenu';
 
-export const SettingsProfileWorkspaceTopToolbar: React.FC = () => {
+export function SettingsProfileWorkspaceTopToolbar(): React.ReactNode {
   const { back } = useWebRouter();
 
   return (
@@ -35,4 +35,4 @@ export const SettingsProfileWorkspaceTopToolbar: React.FC = () => {
       </Box>
     </>
   );
-};
+}

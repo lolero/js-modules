@@ -35,15 +35,13 @@ export type FindManyDateRangesMenuItemProps = {
  * @param props.setSearchParams - Setter for the URL search params.
  * @returns FindManyRangesMenuItem.
  */
-export const FindManyRangesMenuItem: React.FC<
-  FindManyDateRangesMenuItemProps
-> = ({
+export function FindManyRangesMenuItem({
   rangeKey,
   rangeType,
   deleteRangeCallback,
   searchParams,
   setSearchParams,
-}) => {
+}: FindManyDateRangesMenuItemProps): React.ReactNode {
   return (
     <MenuItem
       sx={{
@@ -115,4 +113,4 @@ export const FindManyRangesMenuItem: React.FC<
       </Box>
     </MenuItem>
   );
-};
+}

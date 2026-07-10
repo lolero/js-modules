@@ -6,7 +6,7 @@ import MenuItem from '@mui/material/MenuItem';
 import type React from 'react';
 import { MuiFaIcon, useMenuUtils } from '@js-modules/web-react-mui';
 
-export const PrivateWorkspaceNotificationsMenu: React.FC = () => {
+export function PrivateWorkspaceNotificationsMenu(): React.ReactNode {
   const { menuAnchor, openMenuCallback, closeMenuCallback } = useMenuUtils();
 
   return (
@@ -25,4 +25,4 @@ export const PrivateWorkspaceNotificationsMenu: React.FC = () => {
       </Menu>
     </>
   );
-};
+}

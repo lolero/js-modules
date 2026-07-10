@@ -10,7 +10,7 @@ import { WorkspaceLayout } from '@js-modules/web-react-mui-workspace';
 import { PublicNavToolbarActionsBox } from './PublicNavToolbarActionsBox';
 import { PublicWorkspaceNavDrawerContentBox } from './PublicWorkspaceNavDrawerContentBox';
 
-export const PublicWorkspaceLayout: React.FunctionComponent = () => {
+export function PublicWorkspaceLayout(): React.ReactNode {
   return (
     <WorkspaceLayout
       shortLogo={<TravelLogLogoShortBox />}
@@ -28,4 +28,4 @@ export const PublicWorkspaceLayout: React.FunctionComponent = () => {
       <Outlet />
     </WorkspaceLayout>
   );
-};
+}

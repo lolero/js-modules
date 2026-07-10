@@ -12,12 +12,13 @@ export type MuiChartLegendWithTitleProps = ChartsLegendProps & {
  * Renders an `@mui/x-charts` legend with an optional centered title above it,
  * as an SVG group positioned within the chart's drawing area.
  * @param props - Component props.
- * @param props.title
+ * @param props.title - Optional title rendered centered above the legend.
  * @returns Chart legend with optional title.
  */
-export const MuiChartLegendWithTitle: React.FC<
-  MuiChartLegendWithTitleProps
-> = ({ title, ...legendProps }) => {
+export function MuiChartLegendWithTitle({
+  title,
+  ...legendProps
+}: MuiChartLegendWithTitleProps): React.ReactNode {
   const { left, width } = useDrawingArea();
 
   return (
@@ -34,4 +35,4 @@ export const MuiChartLegendWithTitle: React.FC<
       </g>
     </g>
   );
-};
+}
