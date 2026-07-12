@@ -1,6 +1,9 @@
 import keys from 'lodash/keys';
 import type { SelectQueryBuilder, WhereExpressionBuilder } from 'typeorm';
-import { camelToSnakeCaseWithAcronyms } from '@js-modules/common-utils-general-cjs';
+import {
+  camelToSnakeCaseWithAcronyms,
+  type Enum,
+} from '@js-modules/common-utils-general-cjs';
 import type {
   FindManyRange,
   FindManyRangesDto,
@@ -10,11 +13,12 @@ import { utilGetFindManyDateRange } from './util.getFindManyDateRange';
 import { utilGetFindManyNumberRange } from './util.getFindManyNumberRange';
 import { utilGetFindManyStringRange } from './util.getFindManyStringRange';
 
-export enum FindManyRangeType {
-  date = 'date',
-  number = 'number',
-  string = 'string',
-}
+export const FindManyRangeType = {
+  date: 'date',
+  number: 'number',
+  string: 'string',
+} as const;
+export type FindManyRangeType = Enum<typeof FindManyRangeType>;
 
 export function utilGetFindManyRangesWhereFactory<
   EntityT extends RequestEntity,

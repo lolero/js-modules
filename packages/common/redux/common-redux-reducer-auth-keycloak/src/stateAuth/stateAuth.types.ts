@@ -10,16 +10,19 @@ import type {
   Reducer,
   ReducerMetadata,
 } from '@js-modules/common-redux-utils-normalized-reducers';
+import type { Enum } from '@js-modules/common-utils-general';
 
-export enum ClientType {
-  native = 'native',
-  web = 'web',
-}
+export const ClientType = {
+  native: 'native',
+  web: 'web',
+} as const;
+export type ClientType = Enum<typeof ClientType>;
 
-export enum SigninAction {
-  signup = 'signup',
-  login = 'login',
-}
+export const SigninAction = {
+  signup: 'signup',
+  login: 'login',
+} as const;
+export type SigninAction = Enum<typeof SigninAction>;
 
 type KeycloakToken = {
   token: string;

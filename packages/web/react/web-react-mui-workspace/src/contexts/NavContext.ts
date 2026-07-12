@@ -1,11 +1,13 @@
 import noop from 'lodash/noop';
 import { createContext } from 'react';
+import type { Enum } from '@js-modules/common-utils-general';
 
-export enum NavDrawerDisplayStatus {
-  expanded = 'expanded',
-  collapsed = 'collapsed',
-  hidden = 'hidden',
-}
+export const NavDrawerDisplayStatus = {
+  expanded: 'expanded',
+  collapsed: 'collapsed',
+  hidden: 'hidden',
+} as const;
+export type NavDrawerDisplayStatus = Enum<typeof NavDrawerDisplayStatus>;
 
 export type NavContextValue = {
   nonAuthorizedRedirectPath: string;

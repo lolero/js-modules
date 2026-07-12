@@ -1,3 +1,4 @@
+import type { Enum } from '@js-modules/common-utils-general';
 export type PkSchemaFields<EntityT extends Entity> = Exclude<
   keyof EntityT,
   '__edges__'
@@ -68,10 +69,11 @@ export type PartialEntity<EntityT extends Entity> = Partial<
   __edges__?: Partial<EntityT['__edges__']>;
 };
 
-export enum EdgeSide {
-  slave,
-  master,
-}
+export const EdgeSide = {
+  slave: 'slave',
+  master: 'master',
+} as const;
+export type EdgeSide = Enum<typeof EdgeSide>;
 
 export type ReducerEdgeTypeMetadata = {
   nodeReducerPath: readonly string[];

@@ -1,7 +1,10 @@
-export enum FindManyOrderDirection {
-  asc = 'asc',
-  desc = 'desc',
-}
+import type { Enum } from '@js-modules/common-utils-general-cjs';
+
+export const FindManyOrderDirection = {
+  asc: 'asc',
+  desc: 'desc',
+} as const;
+export type FindManyOrderDirection = Enum<typeof FindManyOrderDirection>;
 
 // @typescript-eslint/no-explicit-any disabled because this must be a
 // generic type that all entities extend

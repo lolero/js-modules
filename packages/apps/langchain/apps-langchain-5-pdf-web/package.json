@@ -10,6 +10,7 @@
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
   },
   "dependencies": {
+    "@js-modules/common-utils-general": "workspace:^",
     "@microsoft/fetch-event-source": "catalog:",
     "axios": "catalog:",
     "chart.js": "catalog:",

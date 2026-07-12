@@ -17,6 +17,7 @@
     "@fortawesome/free-solid-svg-icons": "catalog:",
     "@js-modules/common-react-nav": "workspace:^",
     "@js-modules/common-react-utils": "workspace:^",
+    "@js-modules/common-utils-general": "workspace:^",
     "@js-modules/web-react-mui": "workspace:^",
     "@js-modules/web-react-router": "workspace:^",
     "@js-modules/web-react-utils": "workspace:^",

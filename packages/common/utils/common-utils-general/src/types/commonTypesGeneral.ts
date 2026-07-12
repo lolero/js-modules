@@ -1,20 +1,22 @@
 export type ClassObject<ClassT> = Pick<ClassT, keyof ClassT>;
 export type Enum<T> = T[keyof T];
 
-export enum AppPlatform {
-  node = 'node',
-  web = 'web',
-  android = 'android',
-  ios = 'ios',
-}
+export const AppPlatform = {
+  node: 'node',
+  web: 'web',
+  android: 'android',
+  ios: 'ios',
+} as const;
+export type AppPlatform = Enum<typeof AppPlatform>;
 
-export enum ProcessStatus {
-  pending = 'pending',
-  success = 'success',
-  fail = 'fail',
-  expired = 'expired',
-  cancelled = 'cancelled',
-}
+export const ProcessStatus = {
+  pending: 'pending',
+  success: 'success',
+  fail: 'fail',
+  expired: 'expired',
+  cancelled: 'cancelled',
+} as const;
+export type ProcessStatus = Enum<typeof ProcessStatus>;
 
 export type UserContact = {
   email: string;

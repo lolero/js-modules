@@ -1218,7 +1218,11 @@ importers:
         specifier: 'catalog:'
         version: 0.3.29(babel-plugin-macros@3.1.0)(pg@8.20.0)
 
-  packages/apps/dapp/apps-dapp-common-constants: {}
+  packages/apps/dapp/apps-dapp-common-constants:
+    dependencies:
+      '@js-modules/common-utils-general':
+        specifier: workspace:^
+        version: link:../../../common/utils/common-utils-general
 
   packages/apps/dapp/apps-dapp-common-react:
     dependencies:
@@ -1763,6 +1767,9 @@ importers:
 
   packages/apps/langchain/apps-langchain-5-pdf-web:
     dependencies:
+      '@js-modules/common-utils-general':
+        specifier: workspace:^
+        version: link:../../../common/utils/common-utils-general
       '@microsoft/fetch-event-source':
         specifier: 'catalog:'
         version: 2.0.1
@@ -2970,6 +2977,9 @@ importers:
       '@js-modules/api-nest-utils':
         specifier: workspace:^
         version: link:../../../api/nest/api-nest-utils
+      '@js-modules/common-utils-general':
+        specifier: workspace:^
+        version: link:../../utils/common-utils-general
       '@js-modules/web-react-router':
         specifier: workspace:^
         version: link:../../../web/react/web-react-router
@@ -3588,6 +3598,9 @@ importers:
       '@js-modules/common-react-utils':
         specifier: workspace:^
         version: link:../../../common/react/common-react-utils
+      '@js-modules/common-utils-general':
+        specifier: workspace:^
+        version: link:../../../common/utils/common-utils-general
       '@js-modules/web-react-mui':
         specifier: workspace:^
         version: link:../web-react-mui

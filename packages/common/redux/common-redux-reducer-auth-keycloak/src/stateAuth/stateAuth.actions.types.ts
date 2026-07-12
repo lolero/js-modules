@@ -11,25 +11,30 @@ import type {
   SavePartialReducerMetadataAction,
   UpdatePartialReducerMetadataRequestMetadata,
 } from '@js-modules/common-redux-utils-normalized-reducers';
+import type { Enum } from '@js-modules/common-utils-general';
 import type { SigninAction, StateAuthReducer } from './stateAuth.types';
 
-export enum StateAuthActionTypes {
-  STATE_AUTH__INITIALIZE__REQUEST = 'STATE_AUTH__INITIALIZE__REQUEST',
-  STATE_AUTH__INITIALIZE__SUCCESS = 'STATE_AUTH__INITIALIZE__SUCCESS',
-  STATE_AUTH__INITIALIZE__FAIL = 'STATE_AUTH__INITIALIZE__FAIL',
-  STATE_AUTH__SIGNIN__REQUEST = 'STATE_AUTH__SIGNIN__REQUEST',
-  STATE_AUTH__SIGNIN__SUCCESS = 'STATE_AUTH__SIGNIN__SUCCESS',
-  STATE_AUTH__SIGNIN__FAIL = 'STATE_AUTH__SIGNIN__FAIL',
-  STATE_AUTH__SIGNOUT__REQUEST = 'STATE_AUTH__SIGNOUT__REQUEST',
-  STATE_AUTH__SIGNOUT__SUCCESS = 'STATE_AUTH__SIGNOUT__SUCCESS',
-  STATE_AUTH__SIGNOUT__FAIL = 'STATE_AUTH__SIGNOUT__FAIL',
-  STATE_AUTH__UPDATE_PARTIAL_REDUCER_METADATA__REQUEST = 'STATE_AUTH__UPDATE_PARTIAL_REDUCER_METADATA__REQUEST',
-  STATE_AUTH__UPDATE_PARTIAL_REDUCER_METADATA__SUCCESS = 'STATE_AUTH__UPDATE_PARTIAL_REDUCER_METADATA__SUCCESS',
-  STATE_AUTH__UPDATE_PARTIAL_REDUCER_METADATA__FAIL = 'STATE_AUTH__UPDATE_PARTIAL_REDUCER_METADATA__FAIL',
-}
+export const StateAuthActionTypes = {
+  STATE_AUTH__INITIALIZE__REQUEST: 'STATE_AUTH__INITIALIZE__REQUEST',
+  STATE_AUTH__INITIALIZE__SUCCESS: 'STATE_AUTH__INITIALIZE__SUCCESS',
+  STATE_AUTH__INITIALIZE__FAIL: 'STATE_AUTH__INITIALIZE__FAIL',
+  STATE_AUTH__SIGNIN__REQUEST: 'STATE_AUTH__SIGNIN__REQUEST',
+  STATE_AUTH__SIGNIN__SUCCESS: 'STATE_AUTH__SIGNIN__SUCCESS',
+  STATE_AUTH__SIGNIN__FAIL: 'STATE_AUTH__SIGNIN__FAIL',
+  STATE_AUTH__SIGNOUT__REQUEST: 'STATE_AUTH__SIGNOUT__REQUEST',
+  STATE_AUTH__SIGNOUT__SUCCESS: 'STATE_AUTH__SIGNOUT__SUCCESS',
+  STATE_AUTH__SIGNOUT__FAIL: 'STATE_AUTH__SIGNOUT__FAIL',
+  STATE_AUTH__UPDATE_PARTIAL_REDUCER_METADATA__REQUEST:
+    'STATE_AUTH__UPDATE_PARTIAL_REDUCER_METADATA__REQUEST',
+  STATE_AUTH__UPDATE_PARTIAL_REDUCER_METADATA__SUCCESS:
+    'STATE_AUTH__UPDATE_PARTIAL_REDUCER_METADATA__SUCCESS',
+  STATE_AUTH__UPDATE_PARTIAL_REDUCER_METADATA__FAIL:
+    'STATE_AUTH__UPDATE_PARTIAL_REDUCER_METADATA__FAIL',
+} as const;
+export type StateAuthActionTypes = Enum<typeof StateAuthActionTypes>;
 
 export type StateAuthInitializeRequestAction = RequestAction<
-  StateAuthActionTypes.STATE_AUTH__INITIALIZE__REQUEST,
+  typeof StateAuthActionTypes.STATE_AUTH__INITIALIZE__REQUEST,
   {
     keycloakServerConfig: KeycloakServerConfig;
     keycloakInitOptions: KeycloakInitOptions;
@@ -39,15 +44,16 @@ export type StateAuthInitializeRequestAction = RequestAction<
 >;
 
 export type StateAuthInitializeSuccessAction = SavePartialReducerMetadataAction<
-  StateAuthActionTypes.STATE_AUTH__INITIALIZE__SUCCESS,
+  typeof StateAuthActionTypes.STATE_AUTH__INITIALIZE__SUCCESS,
   StateAuthReducer['metadata']
 >;
 
-export type StateAuthInitializeFailAction =
-  FailAction<StateAuthActionTypes.STATE_AUTH__INITIALIZE__FAIL>;
+export type StateAuthInitializeFailAction = FailAction<
+  typeof StateAuthActionTypes.STATE_AUTH__INITIALIZE__FAIL
+>;
 
 export type StateAuthSigninRequestAction = RequestAction<
-  StateAuthActionTypes.STATE_AUTH__SIGNIN__REQUEST,
+  typeof StateAuthActionTypes.STATE_AUTH__SIGNIN__REQUEST,
   {
     signinAction: SigninAction;
     keycloakLoginOptions: KeycloakLoginOptions;
@@ -55,39 +61,44 @@ export type StateAuthSigninRequestAction = RequestAction<
   }
 >;
 
-export type StateAuthSigninSuccessAction =
-  SaveNothingAction<StateAuthActionTypes.STATE_AUTH__SIGNIN__SUCCESS>;
+export type StateAuthSigninSuccessAction = SaveNothingAction<
+  typeof StateAuthActionTypes.STATE_AUTH__SIGNIN__SUCCESS
+>;
 
-export type StateAuthSigninFailAction =
-  FailAction<StateAuthActionTypes.STATE_AUTH__SIGNIN__FAIL>;
+export type StateAuthSigninFailAction = FailAction<
+  typeof StateAuthActionTypes.STATE_AUTH__SIGNIN__FAIL
+>;
 
 export type StateAuthSignoutRequestAction = RequestAction<
-  StateAuthActionTypes.STATE_AUTH__SIGNOUT__REQUEST,
+  typeof StateAuthActionTypes.STATE_AUTH__SIGNOUT__REQUEST,
   {
     keycloakLogoutOptions: KeycloakLogoutOptions;
     onSignoutCallback?: () => void;
   }
 >;
 
-export type StateAuthSignoutSuccessAction =
-  SaveNothingAction<StateAuthActionTypes.STATE_AUTH__SIGNOUT__SUCCESS>;
+export type StateAuthSignoutSuccessAction = SaveNothingAction<
+  typeof StateAuthActionTypes.STATE_AUTH__SIGNOUT__SUCCESS
+>;
 
-export type StateAuthSignoutFailAction =
-  FailAction<StateAuthActionTypes.STATE_AUTH__SIGNOUT__FAIL>;
+export type StateAuthSignoutFailAction = FailAction<
+  typeof StateAuthActionTypes.STATE_AUTH__SIGNOUT__FAIL
+>;
 
 export type StateAuthUpdatePartialReducerMetadataRequestAction = RequestAction<
-  StateAuthActionTypes.STATE_AUTH__UPDATE_PARTIAL_REDUCER_METADATA__REQUEST,
+  typeof StateAuthActionTypes.STATE_AUTH__UPDATE_PARTIAL_REDUCER_METADATA__REQUEST,
   UpdatePartialReducerMetadataRequestMetadata<StateAuthReducer['metadata']>
 >;
 
 export type StateAuthUpdatePartialReducerMetadataSuccessAction =
   SavePartialReducerMetadataAction<
-    StateAuthActionTypes.STATE_AUTH__UPDATE_PARTIAL_REDUCER_METADATA__SUCCESS,
+    typeof StateAuthActionTypes.STATE_AUTH__UPDATE_PARTIAL_REDUCER_METADATA__SUCCESS,
     StateAuthReducer['metadata']
   >;
 
-export type StateAuthUpdatePartialReducerMetadataFailAction =
-  FailAction<StateAuthActionTypes.STATE_AUTH__UPDATE_PARTIAL_REDUCER_METADATA__FAIL>;
+export type StateAuthUpdatePartialReducerMetadataFailAction = FailAction<
+  typeof StateAuthActionTypes.STATE_AUTH__UPDATE_PARTIAL_REDUCER_METADATA__FAIL
+>;
 
 export type StateAuthReducerHittingAction =
   | StateAuthInitializeRequestAction

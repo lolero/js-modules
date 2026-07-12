@@ -13,6 +13,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-common-types": "catalog:",
     "@js-modules/api-nest-utils": "workspace:^",
+    "@js-modules/common-utils-general": "workspace:^",
     "@js-modules/web-react-router": "workspace:^",
     "lodash": "catalog:"
   },

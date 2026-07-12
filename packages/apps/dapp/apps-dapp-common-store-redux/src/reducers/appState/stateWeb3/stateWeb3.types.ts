@@ -5,10 +5,12 @@ import type {
   Reducer,
   ReducerMetadata,
 } from '@js-modules/common-redux-utils-normalized-reducers';
+import type { Enum } from '@js-modules/common-utils-general';
 
-export enum WalletType {
-  metamask = 'metamask',
-}
+export const WalletType = {
+  metamask: 'metamask',
+} as const;
+export type WalletType = Enum<typeof WalletType>;
 
 export interface StateWeb3ReducerMetadata extends ReducerMetadata {
   metamaskProvider?: MetaMaskInpageProvider | null;

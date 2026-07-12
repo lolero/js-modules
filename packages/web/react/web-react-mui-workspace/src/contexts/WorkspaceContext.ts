@@ -1,9 +1,11 @@
 import { createContext } from 'react';
+import type { Enum } from '@js-modules/common-utils-general';
 
-export enum ScrollDirection {
-  down = 'down',
-  up = 'up',
-}
+export const ScrollDirection = {
+  down: 'down',
+  up: 'up',
+} as const;
+export type ScrollDirection = Enum<typeof ScrollDirection>;
 
 export type WorkspaceContextValue = {
   navTopToolbarHeight: number;

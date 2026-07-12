@@ -1,7 +1,10 @@
-export enum SearchParamPaginationKeys {
-  pageNumber = 'page',
-  resultsPerPage = 'results',
-}
+import type { Enum } from '@js-modules/common-utils-general';
+
+export const SearchParamPaginationKeys = {
+  pageNumber: 'page',
+  resultsPerPage: 'results',
+} as const;
+export type SearchParamPaginationKeys = Enum<typeof SearchParamPaginationKeys>;
 
 export type SearchParamsPagination = Record<SearchParamPaginationKeys, number>;
 

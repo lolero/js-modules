@@ -1,20 +1,26 @@
-export enum WebModulesPublic {
-  home = 'home',
-  purpose = 'purpose',
-}
+import type { Enum } from '@js-modules/common-utils-general';
 
-export enum WebModulesPrivate {
-  portfolio = 'portfolio',
-  analytics = 'analytics',
-}
+export const WebModulesPublic = {
+  home: 'home',
+  purpose: 'purpose',
+} as const;
+export type WebModulesPublic = Enum<typeof WebModulesPublic>;
 
-export enum WebSubModulesPortfolio {
-  tokens = 'tokens',
-  transactions = 'transactions',
-}
+export const WebModulesPrivate = {
+  portfolio: 'portfolio',
+  analytics: 'analytics',
+} as const;
+export type WebModulesPrivate = Enum<typeof WebModulesPrivate>;
 
-export enum WebSubModulesAnalytics {
-  tokens = 'tokens',
-  history = 'history',
-  insights = 'insights',
-}
+export const WebSubModulesPortfolio = {
+  tokens: 'tokens',
+  transactions: 'transactions',
+} as const;
+export type WebSubModulesPortfolio = Enum<typeof WebSubModulesPortfolio>;
+
+export const WebSubModulesAnalytics = {
+  tokens: 'tokens',
+  history: 'history',
+  insights: 'insights',
+} as const;
+export type WebSubModulesAnalytics = Enum<typeof WebSubModulesAnalytics>;
