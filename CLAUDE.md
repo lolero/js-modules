@@ -43,7 +43,7 @@ import { X } from '../../other-package/src/X'; // wrong
 - Conventional commits (Angular convention)
 - Index files only in package `src/` directories
 - **No lint disable comments** of any kind unless strictly necessary and explicitly authorized by the user. Fix the underlying issue instead.
-- **After completing code changes**, `git add -N` any files you created and then run `pnpm lint:staged-fix` to lint and auto-fix the files changed since HEAD. Run once per task, not after every file edit.
+- **After completing code changes**, `git add -N` any files you created and then run `pnpm lint:fix-staged` to lint and auto-fix the files changed since HEAD. Run once per task, not after every file edit.
 - **JSDoc**: Give every non-nested function you create or edit a JSDoc block.
 - **JSDoc currency**: When you edit a function, or review my changes to one, verify its JSDoc is still accurate and valid. Run once per task, not after every file edit.
 - **JSDoc React components**: The root `@param props` description is always `Component props.`

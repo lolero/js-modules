@@ -27,10 +27,10 @@
     "install:javascript": "pnpm install",
     "install:python": "tsx scripts/toml/toml.download-schemas.ts && uv sync --all-packages",
     "lint:check": "pnpm nx run-many -t lint:check",
+    "lint:check-staged": "tsx scripts/nx/nx.lint-staged.ts --mode check",
     "lint:fix": "pnpm nx run-many -t lint:fix",
+    "lint:fix-staged": "tsx scripts/nx/nx.lint-staged.ts --mode fix",
     "lint:health": "pnpm nx run-many -t lint:health",
-    "lint:staged-check": "tsx scripts/nx/nx.lint-staged.ts --mode check",
-    "lint:staged-fix": "tsx scripts/nx/nx.lint-staged.ts --mode fix",
     "reset": "pnpm reset:clean && pnpm reset:install",
     "reset:clean": "pnpm clean:main && pnpm clean:build",
     "reset:install": "pnpm install:all && tsx scripts/pkg-root/reset.ignore-symlinks.ts && tsx scripts/pkg-root/reset.package-references.ts && pnpm nx run root:lint:fix",
@@ -38,7 +38,8 @@
     "test:coverage": "pnpm nx run-many -t test:coverage",
     "test:health": "pnpm nx run-many -t test:health",
     "test:watch": "pnpm nx run-many -t test:watch",
-    "types:check": "pnpm nx run-many -t types:check"
+    "types:check": "pnpm nx run-many -t types:check",
+    "types:check-staged": "pnpm nx affected -t types:check --uncommitted"
   },
   "lint-staged": {
     "*": "tsx scripts/nx/nx.lint-staged.ts"
