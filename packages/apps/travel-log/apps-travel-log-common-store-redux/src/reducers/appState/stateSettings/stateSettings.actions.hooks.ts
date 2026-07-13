@@ -9,15 +9,18 @@ import {
   createStateSettingsResetPasswordRequestAction,
   createStateSettingsSignoutRequestAction,
   createStateSettingsUpdatePartialReducerMetadataRequestAction,
+  createStateSettingsUpdateProfileRequestAction,
   STATE_SETTINGS__GET_PROFILE__REQUEST_ID,
   STATE_SETTINGS__RESET_PASSWORD__REQUEST_ID,
   STATE_SETTINGS__SIGNOUT__REQUEST_ID,
+  STATE_SETTINGS__UPDATE_PROFILE__REQUEST_ID,
 } from './stateSettings.actions.creators';
 import type {
   StateSettingsGetProfileRequestAction,
   StateSettingsResetPasswordRequestAction,
   StateSettingsSignoutRequestAction,
   StateSettingsUpdatePartialReducerMetadataRequestAction,
+  StateSettingsUpdateProfileRequestAction,
 } from './stateSettings.actions.types';
 import {
   useStateSettingsReducerMetadata,
@@ -75,6 +78,38 @@ export function useStateSettingsGetProfile(): UseRequestReducerMetadata<
     const action = createStateSettingsGetProfileRequestAction();
     dispatch(action);
   }, [dispatch]);
+
+  return {
+    request,
+    reducerMetadata,
+    callback,
+  };
+}
+
+export function useStateSettingsUpdateProfile(): UseRequestReducerMetadata<
+  StateSettingsUpdateProfileRequestAction['requestMetadata'],
+  StateSettingsReducer['metadata'],
+  (
+    usersUpdateOnePartialDto: StateSettingsUpdateProfileRequestAction['requestMetadata']['usersUpdateOnePartialDto'],
+  ) => void
+> {
+  const dispatch = useDispatch();
+  const request = useStateSettingsRequest(
+    STATE_SETTINGS__UPDATE_PROFILE__REQUEST_ID,
+  ) as Request<StateSettingsUpdateProfileRequestAction['requestMetadata']>;
+  const reducerMetadata = useStateSettingsReducerMetadata();
+
+  const callback = useCallback(
+    (
+      usersUpdateOnePartialDto: StateSettingsUpdateProfileRequestAction['requestMetadata']['usersUpdateOnePartialDto'],
+    ) => {
+      const action = createStateSettingsUpdateProfileRequestAction(
+        usersUpdateOnePartialDto,
+      );
+      dispatch(action);
+    },
+    [dispatch],
+  );
 
   return {
     request,

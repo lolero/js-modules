@@ -4,6 +4,7 @@
   "private": true,
   "description": "Apps Dapp Common Constants",
   "license": "MIT",
+  "sideEffects": false,
   "main": "build/index",
   "react-native": "src/index.ts",
   "files": [

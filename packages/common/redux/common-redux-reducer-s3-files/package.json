@@ -4,37 +4,16 @@
   "private": true,
   "description": "Common Redux Reducer AWS S3 Files",
   "license": "MIT",
+  "sideEffects": false,
   "main": "build/index",
   "react-native": "src/index.ts",
   "files": [
     "build"
   ],
   "scripts": {},
-  "dependencies": {
-    "@js-modules/common-redux-utils-normalized-reducers": "workspace:^",
-    "@js-modules/common-utils-general": "workspace:^",
-    "axios": "catalog:",
-    "keycloak-js": "catalog:",
-    "lodash": "catalog:",
-    "redux-saga": "catalog:",
-    "reselect": "catalog:",
-    "uuid": "catalog:"
-  },
-  "devDependencies": {
-    "@types/lodash": "catalog:",
-    "@types/react": "catalog:",
-    "@types/react-dom": "catalog:",
-    "@types/react-redux": "catalog:",
-    "@types/uuid": "catalog:",
-    "react": "catalog:",
-    "react-redux": "catalog:",
-    "redux": "catalog:"
-  },
-  "peerDependencies": {
-    "react": "catalog:",
-    "react-redux": "catalog:",
-    "redux": "catalog:"
-  },
+  "dependencies": {},
+  "devDependencies": {},
+  "peerDependencies": {},
   "nx": {
     "tags": [
       "type:lib"

@@ -17,7 +17,7 @@ import {
   nodeTransactionsGetOneService,
 } from './nodeTransactions.services';
 
-export function* nodeTransactionsGetManySaga({
+function* nodeTransactionsGetManySaga({
   requestId,
 }: NodeTransactionsGetManyRequestAction): SagaGenerator<void> {
   try {
@@ -40,12 +40,11 @@ export function* nodeTransactionsGetManySaga({
     );
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
-    console.log(message);
     yield* put(createNodeTransactionsGetManyFailAction(message, requestId));
   }
 }
 
-export function* nodeTransactionsGetOneSaga({
+function* nodeTransactionsGetOneSaga({
   requestMetadata,
   requestId,
 }: NodeTransactionsGetOneRequestAction): SagaGenerator<void> {
@@ -71,7 +70,6 @@ export function* nodeTransactionsGetOneSaga({
     );
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
-    console.log(message);
     yield* put(createNodeTransactionsGetOneFailAction(message, requestId));
   }
 }

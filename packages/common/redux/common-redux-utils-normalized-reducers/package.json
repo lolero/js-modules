@@ -4,6 +4,7 @@
   "private": true,
   "description": "Common Redux Utils Normalized Reducers",
   "license": "MIT",
+  "sideEffects": false,
   "main": "build/index",
   "react-native": "src/index.ts",
   "files": [
@@ -13,19 +14,14 @@
   "dependencies": {
     "@js-modules/api-nest-utils": "workspace:^",
     "@js-modules/common-utils-general": "workspace:^",
-    "axios": "catalog:",
     "lodash": "catalog:",
     "redux-saga": "catalog:",
     "reselect": "catalog:",
-    "typed-redux-saga": "catalog:",
-    "uuid": "catalog:"
+    "typed-redux-saga": "catalog:"
   },
   "devDependencies": {
     "@types/lodash": "catalog:",
     "@types/react": "catalog:",
-    "@types/react-dom": "catalog:",
-    "@types/react-redux": "catalog:",
-    "@types/uuid": "catalog:",
     "react": "catalog:",
     "react-redux": "catalog:",
     "redux": "catalog:",

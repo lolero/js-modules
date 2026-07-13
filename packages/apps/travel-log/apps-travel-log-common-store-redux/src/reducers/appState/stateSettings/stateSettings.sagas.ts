@@ -32,7 +32,7 @@ import {
   stateSettingsUpdateProfileService,
 } from './stateSettings.services';
 
-export function* stateSettingsUpdatePartialReducerMetadataSaga({
+function* stateSettingsUpdatePartialReducerMetadataSaga({
   requestMetadata,
   requestId,
 }: StateSettingsUpdatePartialReducerMetadataRequestAction): SagaGenerator<void> {
@@ -56,7 +56,7 @@ export function* stateSettingsUpdatePartialReducerMetadataSaga({
   }
 }
 
-export function* stateSettingsGetProfileSaga({
+function* stateSettingsGetProfileSaga({
   requestId,
 }: StateSettingsGetProfileRequestAction): SagaGenerator<void> {
   try {
@@ -86,7 +86,7 @@ export function* stateSettingsGetProfileSaga({
   }
 }
 
-export function* stateSettingsUpdateProfileSaga({
+function* stateSettingsUpdateProfileSaga({
   requestMetadata,
   requestId,
 }: StateSettingsUpdateProfileRequestAction): SagaGenerator<void> {
@@ -120,7 +120,7 @@ export function* stateSettingsUpdateProfileSaga({
   }
 }
 
-export function* stateSettingsResetPasswordSaga({
+function* stateSettingsResetPasswordSaga({
   requestId,
 }: StateSettingsResetPasswordRequestAction): SagaGenerator<void> {
   try {
@@ -137,7 +137,7 @@ export function* stateSettingsResetPasswordSaga({
   }
 }
 
-export function* stateSettingsSignoutSaga({
+function* stateSettingsSignoutSaga({
   requestId,
 }: StateSettingsSignoutRequestAction): SagaGenerator<void> {
   try {

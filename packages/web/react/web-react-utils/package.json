@@ -4,6 +4,7 @@
   "private": true,
   "description": "Web React Utils",
   "license": "MIT",
+  "sideEffects": false,
   "main": "build/index",
   "files": [
     "build"

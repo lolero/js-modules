@@ -4,19 +4,17 @@
   "private": true,
   "description": "Apps Dapp Web Module Private Tokens",
   "license": "MIT",
+  "sideEffects": false,
   "main": "build/index",
   "files": [
     "build"
   ],
   "scripts": {},
   "dependencies": {
-    "@fortawesome/free-brands-svg-icons": "catalog:",
-    "@fortawesome/free-regular-svg-icons": "catalog:",
     "@fortawesome/free-solid-svg-icons": "catalog:",
     "@js-modules/apps-dapp-common-constants": "workspace:^",
     "@js-modules/apps-dapp-common-react": "workspace:^",
     "@js-modules/apps-dapp-common-store-redux": "workspace:^",
-    "@js-modules/apps-dapp-web-utils": "workspace:^",
     "@js-modules/common-react-utils": "workspace:^",
     "@js-modules/web-react-mui": "workspace:^",
     "@js-modules/web-react-mui-workspace": "workspace:^",
@@ -28,7 +26,6 @@
     "@types/lodash": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
-    "@types/react-redux": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
     "react-redux": "catalog:",

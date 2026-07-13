@@ -17,11 +17,13 @@ import {
   createStateWeb3UpdatePartialReducerMetadataSuccessAction,
   createStateWeb3WalletConnectFailAction,
   createStateWeb3WalletConnectSuccessAction,
+  createStateWeb3WalletDisconnectFailAction,
   createStateWeb3WalletDisconnectSuccessAction,
 } from './stateWeb3.actions.creators';
 import type {
   StateWeb3UpdatePartialReducerMetadataRequestAction,
   StateWeb3WalletConnectRequestAction,
+  StateWeb3WalletDisconnectRequestAction,
 } from './stateWeb3.actions.types';
 import { StateWeb3ActionTypes } from './stateWeb3.actions.types';
 import {
@@ -32,7 +34,7 @@ import { selectStateWeb3Metadata } from './stateWeb3.selectors';
 import type { StateWeb3Reducer } from './stateWeb3.types';
 import { WalletType } from './stateWeb3.types';
 
-export function* stateWeb3NetworkConnectionSaga(): SagaGenerator<void> {
+function* stateWeb3NetworkConnectionSaga(): SagaGenerator<void> {
   const { metamaskProvider, web3Provider } = yield* select(
     selectStateWeb3Metadata,
   );
@@ -65,7 +67,7 @@ export function* stateWeb3NetworkConnectionSaga(): SagaGenerator<void> {
   }
 }
 
-export function* stateWeb3WalletConnectionSaga(): SagaGenerator<void> {
+function* stateWeb3WalletConnectionSaga(): SagaGenerator<void> {
   const { metamaskProvider } = yield* select(selectStateWeb3Metadata);
 
   if (!metamaskProvider) {
@@ -83,7 +85,7 @@ export function* stateWeb3WalletConnectionSaga(): SagaGenerator<void> {
   }
 }
 
-export function* stateWeb3InitSaga(): SagaGenerator<void> {
+function* stateWeb3InitSaga(): SagaGenerator<void> {
   const metamaskProvider = yield* call(
     detectEthereumProvider<MetaMaskInpageProvider>,
     {
@@ -137,7 +139,7 @@ export function* stateWeb3InitSaga(): SagaGenerator<void> {
   ]);
 }
 
-export function* stateWeb3UpdatePartialReducerMetadataSaga({
+function* stateWeb3UpdatePartialReducerMetadataSaga({
   requestMetadata,
   requestId,
 }: StateWeb3UpdatePartialReducerMetadataRequestAction): SagaGenerator<void> {
@@ -152,14 +154,13 @@ export function* stateWeb3UpdatePartialReducerMetadataSaga({
     );
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
-    console.error(message);
     yield* put(
       createStateWeb3UpdatePartialReducerMetadataFailAction(message, requestId),
     );
   }
 }
 
-export function* stateWeb3WalletConnectSaga({
+function* stateWeb3WalletConnectSaga({
   requestMetadata,
   requestId,
 }: StateWeb3WalletConnectRequestAction): SagaGenerator<void> {
@@ -190,8 +191,29 @@ export function* stateWeb3WalletConnectSaga({
     );
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
-    console.error(message);
     yield* put(createStateWeb3WalletConnectFailAction(message, requestId));
+  }
+}
+
+function* stateWeb3WalletDisconnectSaga({
+  requestId,
+}: StateWeb3WalletDisconnectRequestAction): SagaGenerator<void> {
+  try {
+    const { metamaskProvider } = yield* select(selectStateWeb3Metadata);
+
+    if (!metamaskProvider) {
+      throw new Error('Metamask is not installed');
+    }
+
+    // yield* call(
+    //   [metamaskProvider, metamaskProvider.disconnect],
+    //   { method: 'eth_requestAccounts' },
+    // );
+
+    yield* put(createStateWeb3WalletDisconnectSuccessAction(requestId));
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    yield* put(createStateWeb3WalletDisconnectFailAction(message, requestId));
   }
 }
 
@@ -205,6 +227,10 @@ export function* stateWeb3Sagas(): SagaGenerator<void> {
     takeLatest(
       StateWeb3ActionTypes.STATE_WEB3__WALLET_CONNECT__REQUEST,
       stateWeb3WalletConnectSaga,
+    ),
+    takeLatest(
+      StateWeb3ActionTypes.STATE_WEB3__WALLET_DISCONNECT__REQUEST,
+      stateWeb3WalletDisconnectSaga,
     ),
   ]);
 }

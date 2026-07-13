@@ -4,34 +4,26 @@
   "private": true,
   "description": "Apps Travel Log Web Module Private Settings",
   "license": "MIT",
+  "sideEffects": false,
   "main": "build/index",
   "files": [
     "build"
   ],
   "scripts": {},
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "catalog:",
-    "@fortawesome/free-brands-svg-icons": "catalog:",
-    "@fortawesome/free-regular-svg-icons": "catalog:",
     "@fortawesome/free-solid-svg-icons": "catalog:",
-    "@js-modules/apps-travel-log-api-modules-core": "workspace:^",
     "@js-modules/apps-travel-log-common-constants": "workspace:^",
     "@js-modules/apps-travel-log-common-react": "workspace:^",
     "@js-modules/apps-travel-log-common-store-redux": "workspace:^",
-    "@js-modules/apps-travel-log-web-utils": "workspace:^",
-    "@js-modules/apps-travel-log-web-workspace-private": "workspace:^",
     "@js-modules/common-utils-general": "workspace:^",
     "@js-modules/web-react-mui": "workspace:^",
     "@js-modules/web-react-mui-workspace": "workspace:^",
-    "@js-modules/web-react-router": "workspace:^",
-    "lodash": "catalog:"
+    "@js-modules/web-react-router": "workspace:^"
   },
   "devDependencies": {
     "@mui/material": "catalog:",
-    "@types/lodash": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
-    "@types/react-redux": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
     "react-redux": "catalog:",

@@ -44,7 +44,7 @@ import {
   nodeLogEntriesUpdateOneWholeService,
 } from './nodeLogEntries.services';
 
-export function* nodeLogEntriesUpdatePartialReducerMetadataSaga({
+function* nodeLogEntriesUpdatePartialReducerMetadataSaga({
   requestMetadata,
   requestId,
 }: NodeLogEntriesUpdatePartialReducerMetadataRequestAction): SagaGenerator<void> {
@@ -68,7 +68,7 @@ export function* nodeLogEntriesUpdatePartialReducerMetadataSaga({
   }
 }
 
-export function* nodeLogEntriesCreateOneSaga({
+function* nodeLogEntriesCreateOneSaga({
   requestMetadata,
   requestId,
 }: NodeLogEntriesCreateOneRequestAction): SagaGenerator<void> {
@@ -98,7 +98,7 @@ export function* nodeLogEntriesCreateOneSaga({
   }
 }
 
-export function* nodeLogEntriesGetOneSaga({
+function* nodeLogEntriesGetOneSaga({
   requestMetadata,
   requestId,
 }: NodeLogEntriesGetOneRequestAction): SagaGenerator<void> {
@@ -129,7 +129,7 @@ export function* nodeLogEntriesGetOneSaga({
   }
 }
 
-export function* nodeLogEntriesGetManySaga({
+function* nodeLogEntriesGetManySaga({
   requestMetadata,
   requestId,
 }: NodeLogEntriesGetManyRequestAction): SagaGenerator<void> {
@@ -164,7 +164,7 @@ export function* nodeLogEntriesGetManySaga({
   }
 }
 
-export function* nodeLogEntriesUpdateOneWholeSaga({
+function* nodeLogEntriesUpdateOneWholeSaga({
   requestMetadata,
   requestId,
 }: NodeLogEntriesUpdateOneWholeRequestAction): SagaGenerator<void> {
@@ -196,7 +196,7 @@ export function* nodeLogEntriesUpdateOneWholeSaga({
   }
 }
 
-export function* nodeLogEntriesUpdateOnePartialSaga({
+function* nodeLogEntriesUpdateOnePartialSaga({
   requestMetadata,
   requestId,
 }: NodeLogEntriesUpdateOnePartialRequestAction): SagaGenerator<void> {
@@ -229,7 +229,7 @@ export function* nodeLogEntriesUpdateOnePartialSaga({
   }
 }
 
-export function* nodeLogEntriesUpdateManyPartialWithPatternSaga({
+function* nodeLogEntriesUpdateManyPartialWithPatternSaga({
   requestMetadata,
   requestId,
 }: NodeLogEntriesUpdateManyPartialWithPatternRequestAction): SagaGenerator<void> {
@@ -265,7 +265,7 @@ export function* nodeLogEntriesUpdateManyPartialWithPatternSaga({
   }
 }
 
-export function* nodeLogEntriesDeleteOneSaga({
+function* nodeLogEntriesDeleteOneSaga({
   requestMetadata,
   requestId,
 }: NodeLogEntriesDeleteOneRequestAction): SagaGenerator<void> {
@@ -290,7 +290,7 @@ export function* nodeLogEntriesDeleteOneSaga({
   }
 }
 
-export function* nodeLogEntriesDeleteManySaga({
+function* nodeLogEntriesDeleteManySaga({
   requestMetadata,
   requestId,
 }: NodeLogEntriesDeleteManyRequestAction): SagaGenerator<void> {

@@ -4,6 +4,7 @@
   "private": true,
   "description": "Apps Travel Log Api Modules Core",
   "license": "MIT",
+  "sideEffects": false,
   "main": "build/index",
   "files": [
     "build"
@@ -14,20 +15,15 @@
     "@js-modules/api-nest-module-auth-keycloak": "workspace:^",
     "@js-modules/api-nest-utils": "workspace:^",
     "@js-modules/apps-travel-log-common-constants-cjs": "workspace:^",
-    "express": "catalog:",
     "keycloak-js": "catalog:",
-    "lodash": "catalog:",
-    "nest-keycloak-connect": "catalog:"
+    "lodash": "catalog:"
   },
   "devDependencies": {
     "@nestjs/common": "catalog:",
-    "@nestjs/config": "catalog:",
     "@nestjs/swagger": "catalog:",
     "@nestjs/testing": "catalog:",
     "@nestjs/typeorm": "catalog:",
-    "@types/express": "catalog:",
     "@types/lodash": "catalog:",
-    "@types/supertest": "catalog:",
     "class-transformer": "catalog:",
     "class-validator": "catalog:",
     "reflect-metadata": "catalog:",
@@ -35,7 +31,6 @@
   },
   "peerDependencies": {
     "@nestjs/common": "catalog:",
-    "@nestjs/config": "catalog:",
     "@nestjs/swagger": "catalog:",
     "@nestjs/typeorm": "catalog:",
     "class-transformer": "catalog:",

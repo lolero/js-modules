@@ -17,7 +17,7 @@ import {
   nodeUsersGetOneService,
 } from './nodeUsers.services';
 
-export function* nodeUsersGetOneSaga({
+function* nodeUsersGetOneSaga({
   requestMetadata,
   requestId,
 }: NodeUsersGetOneRequestAction): SagaGenerator<void> {
@@ -47,7 +47,7 @@ export function* nodeUsersGetOneSaga({
   }
 }
 
-export function* nodeUsersGetManySaga({
+function* nodeUsersGetManySaga({
   requestId,
 }: NodeUsersGetManyRequestAction): SagaGenerator<void> {
   try {

@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from 'react';
 import {
   CSS_CLASSNAME__NAV_LEFT_DRAWER_ACTIVE,
   CSS_CLASSNAME__NAV_LEFT_DRAWER_ACTIVE_LINE,
-} from '../utils/getNavLeftDrawerTreeViewMetadata';
+} from '../styles/cssClassNames';
 import type { ActiveLineTreeViewItemMetadata } from '../utils/getNavLeftDrawerTreeViewMetadata';
 
 export type NavLeftDrawerStickyBreadcrumbsActiveLines = {

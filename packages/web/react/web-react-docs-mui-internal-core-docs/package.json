@@ -4,6 +4,7 @@
   "private": true,
   "description": "Web React Docs Mui Internal Core Docs",
   "license": "MIT",
+  "sideEffects": false,
   "exports": {
     "./ApiPage": "./src/ApiPage.tsx",
     "./AppLayout": "./src/AppLayout.tsx",

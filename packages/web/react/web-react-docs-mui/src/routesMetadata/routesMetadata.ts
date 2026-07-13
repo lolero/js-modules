@@ -100,7 +100,7 @@ export type WebModuleWithSubRoutes = {
 export type SubModuleOf<WebModuleT extends WebModuleWithSubRoutes> =
   keyof RoutesMetadataMui[WebModuleT]['subRoutes'] & string;
 
-export type RoutesMetadataMui = typeof routesMetadataMui;
+type RoutesMetadataMui = typeof routesMetadataMui;
 
 export const routesMetadataMui = {
   [WebModules.palette]: {

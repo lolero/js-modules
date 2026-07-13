@@ -1,4 +1,6 @@
 import { execSync, spawnSync } from 'child_process';
+import { existsSync, readdirSync, readFileSync } from 'fs';
+import { basename, join } from 'path';
 
 export const Language = {
   graphql: 'graphql',
@@ -38,6 +40,103 @@ export const extensions = {
   [Language.xml]: ['xml', 'svg'],
   [Language.yaml]: ['yml', 'yaml'],
 } as const;
+
+// Comma-separated JS + TS extensions for building `*.{…}` globs.
+export const extensionsJsTs = [
+  ...extensions[Language.typescript],
+  ...extensions[Language.javascript],
+].join(',');
+
+/**
+ * Maps a package `exports` target (e.g. `./build/reactRouter/index.js` or
+ * `./src/branding.tsx`) to its source path without extension: `./` is stripped,
+ * build output is rewritten to `src`, and the file extension is dropped (e.g.
+ * `src/reactRouter/index`, `src/branding`).
+ * @param target - Export target path from a package's `exports` map.
+ * @returns Source path relative to the package, without extension.
+ */
+export function exportTargetToSrcBase(target: string): string {
+  return target
+    .replace(/^\.\//, '')
+    .replace(/^build\//, 'src/')
+    .replace(/\.(d\.m?ts|[cm]?tsx?|[cm]?jsx?)$/, '');
+}
+
+export const ProjectTypeJs = {
+  cjs: 'cjs',
+  hardhat: 'hardhat',
+  icons: 'icons',
+  keycloakify: 'keycloakify',
+  nest: 'nest',
+  next: 'next',
+  reactNative: 'react-native',
+  vite: 'vite',
+} as const;
+export type ProjectTypeJs = (typeof ProjectTypeJs)[keyof typeof ProjectTypeJs];
+
+/**
+ * Detects the JS project type from a project's files and dependencies.
+ * @param projectPathRel - Project path relative to the workspace root.
+ * @returns The detected `ProjectTypeJs`, or `undefined` for standard libraries.
+ */
+export function getProjectTypeJs(
+  projectPathRel: string,
+): ProjectTypeJs | undefined {
+  if (basename(projectPathRel).endsWith('-cjs')) {
+    return ProjectTypeJs.cjs;
+  }
+
+  if (existsSync(join(projectPathRel, 'hardhat.config.ts'))) {
+    return ProjectTypeJs.hardhat;
+  }
+
+  const assetsDir = join(projectPathRel, 'src/assets');
+  if (
+    (basename(projectPathRel).endsWith('-icons') ||
+      basename(projectPathRel).endsWith('-icons-mui')) &&
+    existsSync(assetsDir) &&
+    readdirSync(assetsDir).some((file) => file.endsWith('.svg'))
+  ) {
+    return ProjectTypeJs.icons;
+  }
+
+  const { dependencies } = JSON.parse(
+    readFileSync(join(projectPathRel, 'package.json'), 'utf-8'),
+  ) as { dependencies?: Record<string, string> };
+
+  if (dependencies?.['keycloakify']) {
+    return ProjectTypeJs.keycloakify;
+  }
+
+  if (existsSync(join(projectPathRel, 'nest-cli.json'))) {
+    return ProjectTypeJs.nest;
+  }
+
+  if (
+    [
+      'next.config.ts',
+      'next.config.js',
+      'next.config.mts',
+      'next.config.mjs',
+    ].some((file) => existsSync(join(projectPathRel, file)))
+  ) {
+    return ProjectTypeJs.next;
+  }
+
+  if (existsSync(join(projectPathRel, 'metro.config.js'))) {
+    return ProjectTypeJs.reactNative;
+  }
+
+  if (
+    ['vite.config.ts', 'vite.config.js', 'vite.config.mts'].some((file) =>
+      existsSync(join(projectPathRel, file)),
+    )
+  ) {
+    return ProjectTypeJs.vite;
+  }
+
+  return undefined;
+}
 
 /**
  * Get non-gitignored files in a directory.

@@ -20,10 +20,7 @@
     "class-transformer": "catalog:",
     "class-validator": "catalog:",
     "cookie-session": "catalog:",
-    "express": "catalog:",
     "keycloak-connect": "catalog:",
-    "keycloak-js": "catalog:",
-    "lodash": "catalog:",
     "nest-keycloak-connect": "catalog:",
     "pg": "catalog:",
     "reflect-metadata": "catalog:",
@@ -33,13 +30,7 @@
     "@nestjs/cli": "catalog:",
     "@nestjs/schematics": "catalog:",
     "@nestjs/testing": "catalog:",
-    "@types/cookie-session": "catalog:",
-    "@types/express": "catalog:",
-    "@types/lodash": "catalog:",
-    "@types/supertest": "catalog:",
-    "source-map-support": "catalog:",
-    "supertest": "catalog:",
-    "ts-loader": "catalog:"
+    "@types/cookie-session": "catalog:"
   },
   "nx": {
     "targetParams": {

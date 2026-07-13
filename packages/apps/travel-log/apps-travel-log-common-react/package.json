@@ -4,6 +4,7 @@
   "private": true,
   "description": "Apps Travel Log Common React",
   "license": "MIT",
+  "sideEffects": false,
   "main": "build/index",
   "react-native": "src/index.ts",
   "files": [
@@ -12,8 +13,6 @@
   "scripts": {},
   "dependencies": {
     "@fortawesome/fontawesome-common-types": "catalog:",
-    "@fortawesome/free-brands-svg-icons": "catalog:",
-    "@fortawesome/free-regular-svg-icons": "catalog:",
     "@fortawesome/free-solid-svg-icons": "catalog:",
     "@js-modules/apps-travel-log-common-constants": "workspace:^",
     "@js-modules/apps-travel-log-common-store-redux": "workspace:^",

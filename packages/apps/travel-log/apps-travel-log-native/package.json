@@ -12,36 +12,26 @@
     "@js-modules/apps-travel-log-native-module-private-feeds": "workspace:^",
     "@js-modules/apps-travel-log-native-module-public-start": "workspace:^",
     "@js-modules/common-react-utils": "workspace:^",
-    "@react-native-vector-icons/fontawesome6": "catalog:",
-    "@react-native-vector-icons/material-design-icons": "catalog:",
     "@react-navigation/native": "catalog:",
     "@react-navigation/native-stack": "catalog:",
     "react": "catalog:",
     "react-native": "catalog:",
-    "react-native-app-auth": "catalog:",
     "react-native-get-random-values": "catalog:",
-    "react-native-keychain": "catalog:",
     "react-native-paper": "catalog:",
     "react-native-safe-area-context": "catalog:",
     "react-native-screens": "catalog:"
   },
   "devDependencies": {
     "@babel/core": "catalog:",
-    "@babel/plugin-syntax-dynamic-import": "catalog:",
-    "@babel/preset-env": "catalog:",
     "@babel/runtime": "catalog:",
     "@react-native-community/cli": "catalog:",
     "@react-native-community/cli-platform-android": "catalog:",
     "@react-native-community/cli-platform-ios": "catalog:",
     "@react-native/babel-preset": "catalog:",
     "@react-native/codegen": "catalog:",
-    "@react-native/eslint-config": "catalog:",
     "@react-native/gradle-plugin": "catalog:",
     "@react-native/metro-config": "catalog:",
-    "@react-native/typescript-config": "catalog:",
-    "@types/react": "catalog:",
-    "@types/react-test-renderer": "catalog:",
-    "react-test-renderer": "catalog:"
+    "@types/react": "catalog:"
   },
   "nx": {
     "targetParams": {

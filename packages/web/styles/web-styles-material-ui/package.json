@@ -4,6 +4,7 @@
   "private": true,
   "description": "Web Styles Material UI",
   "license": "MIT",
+  "sideEffects": false,
   "main": "build/index",
   "files": [
     "build"

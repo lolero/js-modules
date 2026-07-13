@@ -11,7 +11,6 @@
   },
   "dependencies": {
     "@js-modules/common-utils-general": "workspace:^",
-    "@microsoft/fetch-event-source": "catalog:",
     "axios": "catalog:",
     "chart.js": "catalog:",
     "classnames": "catalog:",
@@ -20,8 +19,7 @@
     "marked": "catalog:",
     "material-icons": "catalog:",
     "pdfjs-dist": "catalog:",
-    "preline": "catalog:",
-    "uuid": "catalog:"
+    "preline": "catalog:"
   },
   "devDependencies": {
     "@sveltejs/adapter-auto": "catalog:",
@@ -29,8 +27,6 @@
     "@sveltejs/kit": "catalog:",
     "@sveltejs/vite-plugin-svelte": "catalog:",
     "@tailwindcss/vite": "catalog:",
-    "@types/marked": "catalog:",
-    "@types/uuid": "catalog:",
     "postcss": "catalog:",
     "svelte": "catalog:",
     "svelte-check": "catalog:",

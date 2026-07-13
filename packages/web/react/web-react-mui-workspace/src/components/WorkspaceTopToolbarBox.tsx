@@ -4,9 +4,7 @@ import { forwardRef, useContext } from 'react';
 import { NavContext } from '../contexts/NavContext';
 import { WorkspaceContext } from '../contexts/WorkspaceContext';
 import { useNavDisplayMetadata } from '../hooks/useNavDisplayMetadata';
-
-export const CSS_CLASSNAME__WORKSPACE_TOP_TOOLBAR_BOX =
-  'workspace-top-toolbar-box';
+import { CSS_CLASSNAME__WORKSPACE_TOP_TOOLBAR_BOX } from '../styles/cssClassNames';
 
 type WorkspaceTopToolbarBoxProps = {
   children: React.ReactNode;

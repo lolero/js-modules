@@ -4,6 +4,7 @@
   "private": true,
   "description": "Native React Utils",
   "license": "MIT",
+  "sideEffects": false,
   "main": "build/index",
   "react-native": "src/index.ts",
   "files": [
@@ -13,11 +14,9 @@
   "dependencies": {
     "@fortawesome/fontawesome-common-types": "catalog:",
     "@react-native-vector-icons/fontawesome6": "catalog:",
-    "lodash": "catalog:",
     "react-native-paper": "catalog:"
   },
   "devDependencies": {
-    "@types/lodash": "catalog:",
     "@types/react": "catalog:",
     "react": "catalog:"
   },

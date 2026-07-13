@@ -7,9 +7,8 @@ import { forwardRef, useContext, useMemo } from 'react';
 import { NavContext, NavDrawerDisplayStatus } from '../contexts/NavContext';
 import { WorkspaceContext } from '../contexts/WorkspaceContext';
 import { useNavDisplayMetadata } from '../hooks/useNavDisplayMetadata';
+import { CSS_CLASSNAME__NAV_LEFT_DRAWER } from '../styles/cssClassNames';
 import { NavBoxShadowVerticalSx } from '../styles/navStyles';
-
-export const CSS_CLASSNAME__NAV_LEFT_DRAWER = 'nav-left-drawer';
 
 type NavLeftDrawerProps = {
   navLeftDrawerContent?: React.ReactNode;

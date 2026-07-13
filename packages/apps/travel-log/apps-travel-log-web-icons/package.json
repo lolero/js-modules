@@ -4,6 +4,7 @@
   "private": true,
   "description": "Apps Travel Log Web Icons",
   "license": "MIT",
+  "sideEffects": false,
   "main": "build/index",
   "files": [
     "build"

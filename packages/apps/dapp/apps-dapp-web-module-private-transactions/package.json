@@ -4,25 +4,19 @@
   "private": true,
   "description": "Apps Dapp Web Module Private Transactions",
   "license": "MIT",
+  "sideEffects": false,
   "main": "build/index",
   "files": [
     "build"
   ],
   "scripts": {},
   "dependencies": {
-    "@fortawesome/free-brands-svg-icons": "catalog:",
-    "@fortawesome/free-regular-svg-icons": "catalog:",
-    "@fortawesome/free-solid-svg-icons": "catalog:",
     "@js-modules/apps-dapp-common-constants": "workspace:^",
     "@js-modules/apps-dapp-common-react": "workspace:^",
-    "@js-modules/apps-dapp-common-store-redux": "workspace:^",
-    "@js-modules/apps-dapp-web-utils": "workspace:^",
-    "@js-modules/web-react-mui-workspace": "workspace:^",
-    "lodash": "catalog:"
+    "@js-modules/web-react-mui-workspace": "workspace:^"
   },
   "devDependencies": {
     "@mui/material": "catalog:",
-    "@types/lodash": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "react": "catalog:",

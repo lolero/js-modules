@@ -12,7 +12,7 @@ export const stateSettingsSelectors = createReducerSelectors<
 >(stateSettingsReducerPath);
 
 export const {
-  selectRequests: selectStateSettingsRequests,
-  selectMetadata: selectStateSettingsMetadata,
-  selectConfig: selectStateSettingsConfig,
+  // selectRequests: selectStateSettingsRequests,
+  // selectMetadata: selectStateSettingsMetadata,
+  // selectConfig: selectStateSettingsConfig,
 } = stateSettingsSelectors;

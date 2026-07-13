@@ -14,8 +14,8 @@ export const nodeTransactionsSelectors = createReducerSelectors<
 >(nodeTransactionsReducerPath);
 
 export const {
-  selectRequests: selectNodeTransactionsRequests,
-  selectMetadata: selectNodeTransactionsMetadata,
-  selectData: selectNodeTransactionsData,
-  selectConfig: selectNodeTransactionsConfig,
+  // selectRequests: selectNodeTransactionsRequests,
+  // selectMetadata: selectNodeTransactionsMetadata,
+  // selectData: selectNodeTransactionsData,
+  // selectConfig: selectNodeTransactionsConfig,
 } = nodeTransactionsSelectors;

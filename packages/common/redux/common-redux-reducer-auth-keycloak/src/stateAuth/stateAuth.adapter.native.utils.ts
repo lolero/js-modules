@@ -13,12 +13,12 @@ import {
 } from 'react-native-keychain';
 import type { KeycloakTokens } from './stateAuth.types';
 
-export const KEYCHAIN_SERVICE = 'com.travellog.auth';
+const KEYCHAIN_SERVICE = 'com.travellog.auth';
 export const TOKEN_REFRESH_BUFFER_SECONDS = 60;
 
 // TODO: pass a logger to this so it can document when the commented out
 //  console errors should document said failures
-export function getKeycloakTokenParsed(jwt: string): KeycloakTokenParsed {
+function getKeycloakTokenParsed(jwt: string): KeycloakTokenParsed {
   try {
     const base64Url = jwt.split('.')[1];
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');

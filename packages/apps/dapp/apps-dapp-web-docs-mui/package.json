@@ -6,9 +6,6 @@
   "license": "MIT",
   "scripts": {},
   "dependencies": {
-    "@emotion/react": "catalog:",
-    "@emotion/styled": "catalog:",
-    "@js-modules/apps-dapp-common-constants": "workspace:^",
     "@js-modules/apps-dapp-web-utils": "workspace:^",
     "@js-modules/web-react-docs-mui": "workspace:^",
     "react": "catalog:",

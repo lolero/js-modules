@@ -29,17 +29,17 @@ import {
 import { NavContext } from '../contexts/NavContext';
 import { useNavDisplayMetadata } from '../hooks/useNavDisplayMetadata';
 import { useNavLeftDrawerStickyBreadcrumbsActiveLines } from '../hooks/useNavLeftDrawerStickyBreadcrumbsActiveLines';
+import {
+  CSS_CLASSNAME__NAV_LEFT_DRAWER_ACTIVE,
+  CSS_CLASSNAME__NAV_LEFT_DRAWER_ACTIVE_LINE,
+  CSS_CLASSNAME__NAV_LEFT_DRAWER_TREE_VIEW,
+} from '../styles/cssClassNames';
 import { getNavLeftDrawerTreeViewItemExpandButtonSx } from '../styles/getNavLeftDrawerTreeViewItemExpandButtonSx';
 import {
   getNavLeftDrawerTreeViewItemRowSx,
   navLeftDrawerTreeViewItemLabelSx,
   navLeftDrawerTreeViewItemLinkSx,
 } from '../styles/navLeftDrawerTreeViewItemStyles';
-import {
-  CSS_CLASSNAME__NAV_LEFT_DRAWER_ACTIVE,
-  CSS_CLASSNAME__NAV_LEFT_DRAWER_ACTIVE_LINE,
-  CSS_CLASSNAME__NAV_LEFT_DRAWER_TREE_VIEW,
-} from '../utils/getNavLeftDrawerTreeViewMetadata';
 import type {
   ActiveLineTreeViewItemMetadata,
   TreeViewMetadata,

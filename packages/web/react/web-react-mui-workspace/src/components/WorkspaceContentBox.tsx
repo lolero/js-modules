@@ -11,8 +11,7 @@ import {
   WorkspaceContext,
 } from '../contexts/WorkspaceContext';
 import { useNavDisplayMetadata } from '../hooks/useNavDisplayMetadata';
-
-export const CSS_CLASSNAME__WORKSPACE_CONTENT_BOX = 'workspace-content-box';
+import { CSS_CLASSNAME__WORKSPACE_CONTENT_BOX } from '../styles/cssClassNames';
 
 export type WorkspaceContentBoxProps = {
   setIsWorkspaceScroll: (isWorkspaceScroll: boolean) => void;

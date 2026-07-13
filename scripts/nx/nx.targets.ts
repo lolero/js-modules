@@ -1,7 +1,11 @@
-import { existsSync, readdirSync, readFileSync } from 'fs';
+import { existsSync, readFileSync } from 'fs';
 import { basename, join, relative } from 'path';
 import type { TargetConfiguration } from '@nx/devkit';
-import { Language } from '../common/common.utils';
+import {
+  getProjectTypeJs,
+  Language,
+  ProjectTypeJs,
+} from '../common/common.utils';
 import { LintMode } from './nx.lint-types';
 
 export const TargetModeHardhat = {
@@ -20,6 +24,7 @@ export type TargetModeKeycloakify =
   (typeof TargetModeKeycloakify)[keyof typeof TargetModeKeycloakify];
 
 export const TargetModeReactNative = {
+  metroBundle: 'metro:bundle',
   metroStart: 'metro:start',
   metroStartCLean: 'metro:start-clean',
   metroStartCleanDeep: 'metro:start-clean-deep',
@@ -127,82 +132,6 @@ export type TargetBuilders = {
   [TargetType.types]: Record<typeof Language.javascript, TargetBuilder>;
   [TargetType.vite]: Record<typeof Language.javascript, TargetBuilder>;
 };
-
-export const ProjectTypeJs = {
-  cjs: 'cjs',
-  hardhat: 'hardhat',
-  icons: 'icons',
-  keycloakify: 'keycloakify',
-  nest: 'nest',
-  next: 'next',
-  reactNative: 'react-native',
-  vite: 'vite',
-} as const;
-export type ProjectTypeJs = (typeof ProjectTypeJs)[keyof typeof ProjectTypeJs];
-
-/**
- * Detects the JS project type from a project's files and dependencies.
- * @param projectPathRel - Project path relative to the workspace root.
- * @returns The detected `ProjectTypeJs`, or `undefined` for standard libraries.
- */
-export function getProjectTypeJs(
-  projectPathRel: string,
-): ProjectTypeJs | undefined {
-  if (basename(projectPathRel).endsWith('-cjs')) {
-    return ProjectTypeJs.cjs;
-  }
-
-  if (existsSync(join(projectPathRel, 'hardhat.config.ts'))) {
-    return ProjectTypeJs.hardhat;
-  }
-
-  const assetsDir = join(projectPathRel, 'src/assets');
-  if (
-    (basename(projectPathRel).endsWith('-icons') ||
-      basename(projectPathRel).endsWith('-icons-mui')) &&
-    existsSync(assetsDir) &&
-    readdirSync(assetsDir).some((file) => file.endsWith('.svg'))
-  ) {
-    return ProjectTypeJs.icons;
-  }
-
-  const { dependencies } = JSON.parse(
-    readFileSync(join(projectPathRel, 'package.json'), 'utf-8'),
-  ) as { dependencies?: Record<string, string> };
-
-  if (dependencies?.['keycloakify']) {
-    return ProjectTypeJs.keycloakify;
-  }
-
-  if (existsSync(join(projectPathRel, 'nest-cli.json'))) {
-    return ProjectTypeJs.nest;
-  }
-
-  if (
-    [
-      'next.config.ts',
-      'next.config.js',
-      'next.config.mts',
-      'next.config.mjs',
-    ].some((file) => existsSync(join(projectPathRel, file)))
-  ) {
-    return ProjectTypeJs.next;
-  }
-
-  if (existsSync(join(projectPathRel, 'metro.config.js'))) {
-    return ProjectTypeJs.reactNative;
-  }
-
-  if (
-    ['vite.config.ts', 'vite.config.js', 'vite.config.mts'].some((file) =>
-      existsSync(join(projectPathRel, file)),
-    )
-  ) {
-    return ProjectTypeJs.vite;
-  }
-
-  return undefined;
-}
 
 export const ProjectTypeJsTest = {
   hardhat: 'hardhat',
@@ -442,6 +371,14 @@ export const targetBuilders: TargetBuilders = {
       const pathReactNativeScripts = join(pathToRoot, 'scripts/react-native');
 
       return {
+        // One-shot headless JS bundle: exits non-zero on an unresolved module,
+        // so it doubles as a dependency/build check (unlike the metro:start
+        // dev server, which bundles lazily on request and never exits).
+        [`${TargetType.reactNative}:${TargetModeReactNative.metroBundle}`]:
+          buildTargetConfiguration(
+            'react-native bundle --platform android --dev false --entry-file index.js --bundle-output build/index.android.bundle --reset-cache',
+            projectPathRel,
+          ),
         [`${TargetType.reactNative}:${TargetModeReactNative.metroStart}`]:
           buildTargetConfiguration('react-native start', projectPathRel),
         [`${TargetType.reactNative}:${TargetModeReactNative.metroStartCLean}`]:

@@ -4,6 +4,7 @@
   "private": true,
   "description": "Common Redux Reducer Auth Keycloak",
   "license": "MIT",
+  "sideEffects": false,
   "main": "build/index",
   "react-native": "src/index.ts",
   "files": [
@@ -13,22 +14,17 @@
   "dependencies": {
     "@js-modules/common-redux-utils-normalized-reducers": "workspace:^",
     "@js-modules/common-utils-general": "workspace:^",
-    "axios": "catalog:",
     "keycloak-js": "catalog:",
     "lodash": "catalog:",
     "react-native-app-auth": "catalog:",
     "react-native-keychain": "catalog:",
     "redux-saga": "catalog:",
-    "reselect": "catalog:",
     "typed-redux-saga": "catalog:",
     "uuid": "catalog:"
   },
   "devDependencies": {
     "@types/lodash": "catalog:",
     "@types/react": "catalog:",
-    "@types/react-dom": "catalog:",
-    "@types/react-redux": "catalog:",
-    "@types/uuid": "catalog:",
     "react": "catalog:",
     "react-redux": "catalog:",
     "redux": "catalog:"

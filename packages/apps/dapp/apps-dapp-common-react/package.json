@@ -4,6 +4,7 @@
   "private": true,
   "description": "Apps Dapp Common React",
   "license": "MIT",
+  "sideEffects": false,
   "main": "build/index",
   "react-native": "src/index.ts",
   "files": [
@@ -12,23 +13,15 @@
   "scripts": {},
   "dependencies": {
     "@fortawesome/fontawesome-common-types": "catalog:",
-    "@fortawesome/free-brands-svg-icons": "catalog:",
-    "@fortawesome/free-regular-svg-icons": "catalog:",
     "@fortawesome/free-solid-svg-icons": "catalog:",
     "@js-modules/apps-dapp-common-constants": "workspace:^",
-    "@js-modules/apps-dapp-common-store-redux": "workspace:^",
     "@js-modules/common-react-nav": "workspace:^",
-    "keycloak-js": "catalog:",
     "lodash": "catalog:"
   },
   "devDependencies": {
-    "@types/lodash": "catalog:",
-    "@types/react": "catalog:",
-    "react": "catalog:"
+    "@types/lodash": "catalog:"
   },
-  "peerDependencies": {
-    "react": "catalog:"
-  },
+  "peerDependencies": {},
   "nx": {
     "tags": [
       "type:lib"

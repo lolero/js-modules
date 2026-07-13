@@ -15,9 +15,9 @@ import {
   WorkspaceContext,
 } from '../contexts/WorkspaceContext';
 import { useNavDisplayMetadata } from '../hooks/useNavDisplayMetadata';
+import { CSS_CLASSNAME__NAV_APPBAR_LOGO_BOX } from '../styles/cssClassNames';
+import { NavBoxShadowHorizontalSx } from '../styles/navStyles';
 import { NavLeftDrawerDisplayButton } from './NavLeftDrawerDisplayButton';
-
-export const CSS_CLASSNAME__NAV_APPBAR_LOGO_BOX = 'nav-appbar-logo-box';
 
 type NavTopAppbarProps = {
   shortLogo: React.ReactNode;
@@ -94,8 +94,19 @@ export const NavTopAppbar = forwardRef<HTMLDivElement, NavTopAppbarProps>(
           display: appbarDisplay,
           backgroundColor: 'background.default',
           color: 'text.primary',
+          // NavBoxShadowHorizontalSx on the ::after pseudo-element so the
+          // appbar's bottom edge matches the side drawers' shadow, without its
+          // clipPath affecting the appbar's own content
+          '&::after': {
+            content: '""',
+            position: 'absolute',
+            inset: 0,
+            pointerEvents: 'none',
+            ...NavBoxShadowHorizontalSx,
+          },
         }}
         ref={ref}
+        elevation={0}
         position="fixed"
       >
         <Box

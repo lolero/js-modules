@@ -13,7 +13,7 @@ import {
   nodeChainsGetManyService,
 } from './nodeChains.services';
 
-export function* nodeChainsGetManySaga({
+function* nodeChainsGetManySaga({
   requestId,
 }: NodeChainsGetManyRequestAction): SagaGenerator<void> {
   try {
@@ -70,7 +70,6 @@ export function* nodeChainsGetManySaga({
     );
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
-    console.log(message);
     yield* put(createNodeChainsGetManyFailAction(message, requestId));
   }
 }

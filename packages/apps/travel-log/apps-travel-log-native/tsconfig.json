@@ -1,5 +1,4 @@
 {
-  // "extends": "@react-native/typescript-config",
   "extends": [
     "../../../../tsconfig.json",
     "../../../../scripts/tsconfig/tsconfig.react-native.json"

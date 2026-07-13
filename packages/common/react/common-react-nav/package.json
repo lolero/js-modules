@@ -4,6 +4,7 @@
   "private": true,
   "description": "Common React Nav",
   "license": "MIT",
+  "sideEffects": false,
   "main": "build/index",
   "react-native": "src/index.ts",
   "files": [

@@ -16,17 +16,13 @@ import {
   NAV_LEFT_DRAWER_TREE_VIEW_ITEM_PADDING_X_SPACING,
 } from '../constants/nav.constants';
 import {
+  CSS_CLASSNAME__NAV_LEFT_DRAWER_ACTIVE,
+  CSS_CLASSNAME__NAV_LEFT_DRAWER_ACTIVE_LINE,
+} from '../styles/cssClassNames';
+import {
   navLeftDrawerTreeViewItemLabelSx,
   navLeftDrawerTreeViewItemLinkSx,
 } from '../styles/navLeftDrawerTreeViewItemStyles';
-
-export const CSS_CLASSNAME__NAV_LEFT_DRAWER_TREE_VIEW =
-  'nav-left-drawer-tree-view';
-
-export const CSS_CLASSNAME__NAV_LEFT_DRAWER_ACTIVE_LINE =
-  'nav-left-drawer-active-line';
-
-export const CSS_CLASSNAME__NAV_LEFT_DRAWER_ACTIVE = 'nav-left-drawer-active';
 
 export type ActiveLineTreeViewItemMetadata = {
   path: string;

@@ -4,15 +4,13 @@
   "private": true,
   "description": "Apps Travel Log Web Workspace Private",
   "license": "MIT",
+  "sideEffects": false,
   "main": "build/index",
   "files": [
     "build"
   ],
   "scripts": {},
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "catalog:",
-    "@fortawesome/free-brands-svg-icons": "catalog:",
-    "@fortawesome/free-regular-svg-icons": "catalog:",
     "@fortawesome/free-solid-svg-icons": "catalog:",
     "@js-modules/apps-travel-log-common-constants": "workspace:^",
     "@js-modules/apps-travel-log-common-react": "workspace:^",
@@ -28,7 +26,6 @@
     "@types/lodash": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
-    "@types/react-redux": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
     "react-redux": "catalog:",

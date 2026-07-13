@@ -4,6 +4,10 @@
   "private": true,
   "description": "Web React Mui",
   "license": "MIT",
+  "sideEffects": [
+    "**/*.css",
+    "**/MuiFaIcon.*"
+  ],
   "main": "build/index",
   "files": [
     "build"
@@ -28,7 +32,6 @@
     "@types/lodash": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
-    "@types/react-redux": "catalog:",
     "jest-environment-jsdom": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",

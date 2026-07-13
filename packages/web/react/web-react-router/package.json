@@ -4,6 +4,7 @@
   "private": true,
   "description": "Web React Router",
   "license": "MIT",
+  "sideEffects": false,
   "exports": {
     ".": {
       "types": "./build/index.d.ts",

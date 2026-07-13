@@ -4,6 +4,7 @@
   "private": true,
   "description": "Api Nest Module AWS S3 Files",
   "license": "MIT",
+  "sideEffects": false,
   "main": "build/index",
   "files": [
     "build"
@@ -12,48 +13,33 @@
   "dependencies": {
     "@aws-sdk/client-s3": "catalog:",
     "@aws-sdk/lib-storage": "catalog:",
-    "@js-modules/api-nest-utils": "workspace:^",
     "aws-sdk-v3-nest": "catalog:",
-    "express": "catalog:",
     "lodash": "catalog:",
-    "socket.io": "catalog:",
-    "uuid": "catalog:"
+    "socket.io": "catalog:"
   },
   "devDependencies": {
     "@nestjs/common": "catalog:",
-    "@nestjs/config": "catalog:",
     "@nestjs/core": "catalog:",
     "@nestjs/platform-express": "catalog:",
     "@nestjs/platform-socket.io": "catalog:",
-    "@nestjs/swagger": "catalog:",
-    "@nestjs/testing": "catalog:",
-    "@nestjs/typeorm": "catalog:",
     "@nestjs/websockets": "catalog:",
-    "@types/cookie-session": "catalog:",
-    "@types/express": "catalog:",
     "@types/lodash": "catalog:",
     "@types/multer": "catalog:",
-    "@types/supertest": "catalog:",
     "class-transformer": "catalog:",
     "class-validator": "catalog:",
     "reflect-metadata": "catalog:",
-    "rxjs": "catalog:",
-    "typeorm": "catalog:"
+    "rxjs": "catalog:"
   },
   "peerDependencies": {
     "@nestjs/common": "catalog:",
-    "@nestjs/config": "catalog:",
     "@nestjs/core": "catalog:",
     "@nestjs/platform-express": "catalog:",
     "@nestjs/platform-socket.io": "catalog:",
-    "@nestjs/swagger": "catalog:",
-    "@nestjs/typeorm": "catalog:",
     "@nestjs/websockets": "catalog:",
     "class-transformer": "catalog:",
     "class-validator": "catalog:",
     "reflect-metadata": "catalog:",
-    "rxjs": "catalog:",
-    "typeorm": "catalog:"
+    "rxjs": "catalog:"
   },
   "nx": {
     "tags": [

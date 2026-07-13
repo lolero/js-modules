@@ -13,24 +13,24 @@ import type {
 import { StateWeb3ActionTypes } from './stateWeb3.actions.types';
 
 export function createStateWeb3UpdatePartialReducerMetadataRequestAction(
-  partialStateWeb3ReducerMetadata: StateWeb3UpdatePartialReducerMetadataRequestAction['requestMetadata']['partialReducerMetadata'],
+  partialReducerMetadata: StateWeb3UpdatePartialReducerMetadataRequestAction['requestMetadata']['partialReducerMetadata'],
 ): StateWeb3UpdatePartialReducerMetadataRequestAction {
   return {
     type: StateWeb3ActionTypes.STATE_WEB3__UPDATE_PARTIAL_REDUCER_METADATA__REQUEST,
     requestMetadata: {
-      partialReducerMetadata: partialStateWeb3ReducerMetadata,
+      partialReducerMetadata,
     },
     requestId: uuidv4(),
   };
 }
 
 export function createStateWeb3UpdatePartialReducerMetadataSuccessAction(
-  partialStateWeb3ReducerMetadata: StateWeb3UpdatePartialReducerMetadataSuccessAction['partialReducerMetadata'],
+  partialReducerMetadata: StateWeb3UpdatePartialReducerMetadataSuccessAction['partialReducerMetadata'],
   requestId: StateWeb3UpdatePartialReducerMetadataSuccessAction['requestId'],
 ): StateWeb3UpdatePartialReducerMetadataSuccessAction {
   return {
     type: StateWeb3ActionTypes.STATE_WEB3__UPDATE_PARTIAL_REDUCER_METADATA__SUCCESS,
-    partialReducerMetadata: partialStateWeb3ReducerMetadata,
+    partialReducerMetadata,
     requestId,
   };
 }
@@ -61,12 +61,12 @@ export function createStateWeb3WalletConnectRequestAction(
 }
 
 export function createStateWeb3WalletConnectSuccessAction(
-  partialStateWeb3ReducerMetadata: StateWeb3WalletConnectSuccessAction['partialReducerMetadata'],
+  partialReducerMetadata: StateWeb3WalletConnectSuccessAction['partialReducerMetadata'],
   requestId: StateWeb3WalletConnectSuccessAction['requestId'],
 ): StateWeb3WalletConnectSuccessAction {
   return {
     type: StateWeb3ActionTypes.STATE_WEB3__WALLET_CONNECT__SUCCESS,
-    partialReducerMetadata: partialStateWeb3ReducerMetadata,
+    partialReducerMetadata,
     requestId,
   };
 }

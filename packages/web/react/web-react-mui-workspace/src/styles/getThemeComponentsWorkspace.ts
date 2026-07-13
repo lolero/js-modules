@@ -1,7 +1,9 @@
+import { circularProgressClasses } from '@mui/material/CircularProgress';
 import type { Theme } from '@mui/material/styles';
 // Augments MUI's `Components` type with the X TreeView slots (MuiSimpleTreeView).
 // https://mui.com/x/react-tree-view/quickstart/#theme-augmentation
 import type {} from '@mui/x-tree-view/themeAugmentation';
+import { svgIconClasses } from '@mui/material/SvgIcon';
 import { treeItemClasses } from '@mui/x-tree-view/TreeItem';
 import {
   NAV_LEFT_DRAWER_TREE_VIEW_ITEM_EXPAND_ICON_SIZE_PIXELS as EXPAND_ICON_SIZE_PIXELS,
@@ -11,20 +13,50 @@ import {
 import {
   CSS_CLASSNAME__NAV_LEFT_DRAWER_ACTIVE_LINE,
   CSS_CLASSNAME__NAV_LEFT_DRAWER_TREE_VIEW,
-} from '../utils/getNavLeftDrawerTreeViewMetadata';
+  CSS_CLASSNAME__WORKSPACE_TOP_TOOLBAR_BOX,
+} from './cssClassNames';
 import { getNavLeftDrawerTreeViewItemExpandButtonSx } from './getNavLeftDrawerTreeViewItemExpandButtonSx';
 import { getNavLeftDrawerTreeViewItemRowSx } from './navLeftDrawerTreeViewItemStyles';
 
 /**
- * Default MUI theme component overrides for the <NavLeftDrawer/> TreeView.
- * Consumer themes spread the result into their own `getThemeComponents` to
- * inherit the nav's TreeView styling; any override they declare afterwards
- * deep-merges on top. Every rule is scoped to the nav TreeView's own class so
- * it never leaks to other <SimpleTreeView/>s the consumer app renders.
- * @returns The nav TreeView theme component overrides.
+ * Default MUI theme component overrides for the workspace. Consumer themes
+ * spread the result into their own `getThemeComponents` to inherit the
+ * styling; any override they declare afterwards deep-merges on top. Every
+ * rule is scoped to a workspace class so it never leaks to other
+ * <SimpleTreeView/>s, <Fab/>s, etc. the consumer app renders.
+ * @returns The workspace theme component overrides.
  */
 export function getThemeComponentsWorkspace(): Theme['components'] {
   return {
+    MuiFab: {
+      styleOverrides: {
+        // Compact, uniform sizing for any action Fab inside the workspace top
+        // toolbar, with a smaller icon to fit. A descendant selectois used
+        // because the toolbar's content is slot-portaled through a
+        // WorkspaceSlotBox, so the Fab sits a couple of wrappers deep.
+        root: ({ theme }) => {
+          const fabSize = theme.spacing(4);
+
+          return {
+            [`.${CSS_CLASSNAME__WORKSPACE_TOP_TOOLBAR_BOX} &`]: {
+              minHeight: 0,
+              height: fabSize,
+              width: fabSize,
+              [`& .${svgIconClasses.root}`]: {
+                fontSize: theme.spacing(2.5),
+              },
+              // A pending CircularProgress fills the Fab. MUI applies its `size`
+              // as an inline style (default 40px), so `!important` is the only
+              // way a stylesheet rule can override it and match the Fab.
+              [`& .${circularProgressClasses.root}`]: {
+                width: `${fabSize} !important`,
+                height: `${fabSize} !important`,
+              },
+            },
+          };
+        },
+      },
+    },
     MuiSimpleTreeView: {
       styleOverrides: {
         root: ({ theme }) => ({

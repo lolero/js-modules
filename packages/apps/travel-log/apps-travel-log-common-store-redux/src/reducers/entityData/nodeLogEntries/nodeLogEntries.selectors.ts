@@ -14,8 +14,8 @@ export const nodeLogEntriesSelectors = createReducerSelectors<
 >(nodeLogEntriesReducerPath);
 
 export const {
-  selectRequests: selectNodeLogEntriesRequests,
-  selectMetadata: selectNodeLogEntriesMetadata,
-  selectData: selectNodeLogEntriesData,
-  selectConfig: selectNodeLogEntriesConfig,
+  // selectRequests: selectNodeLogEntriesRequests,
+  // selectMetadata: selectNodeLogEntriesMetadata,
+  // selectData: selectNodeLogEntriesData,
+  // selectConfig: selectNodeLogEntriesConfig,
 } = nodeLogEntriesSelectors;

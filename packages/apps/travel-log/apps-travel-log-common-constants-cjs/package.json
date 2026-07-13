@@ -4,6 +4,7 @@
   "private": true,
   "description": "Apps Travel Log Common Constants Cjs",
   "license": "MIT",
+  "sideEffects": false,
   "main": "build/index",
   "react-native": "src/index.ts",
   "files": [

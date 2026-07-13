@@ -158,7 +158,7 @@ export function LogLogEntryAddEditWorkspaceTopToolbar(): React.ReactNode {
           onClick={submitCallback}
         >
           {submitRequest?.isPending ? (
-            <CircularProgress size={40} />
+            <CircularProgress />
           ) : (
             <MuiFaIcon icon={faCheck} />
           )}

@@ -4,6 +4,7 @@
   "private": true,
   "description": "Web React Mui Workspace",
   "license": "MIT",
+  "sideEffects": false,
   "main": "build/index",
   "files": [
     "build"
@@ -11,9 +12,6 @@
   "scripts": {},
   "dependencies": {
     "@fortawesome/fontawesome-common-types": "catalog:",
-    "@fortawesome/fontawesome-svg-core": "catalog:",
-    "@fortawesome/free-brands-svg-icons": "catalog:",
-    "@fortawesome/free-regular-svg-icons": "catalog:",
     "@fortawesome/free-solid-svg-icons": "catalog:",
     "@js-modules/common-react-nav": "workspace:^",
     "@js-modules/common-react-utils": "workspace:^",

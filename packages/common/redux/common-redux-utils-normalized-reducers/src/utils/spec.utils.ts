@@ -35,25 +35,47 @@ export const testReducerPath: ['testReducerGroup1', 'testReducer1'] = [
   'testReducer1',
 ];
 
-const testReducerEdgesWithoutTypes = {
-  parent: {
-    nodeReducerPath: testReducerPath,
-    edgeReducerPath: testReducerPath,
-  },
-  children: {
-    nodeReducerPath: testReducerPath,
-    edgeReducerPath: null,
-  },
-  emergencyContacts: {
-    nodeReducerPath: testReducerPath,
-    edgeReducerPath: null,
-  },
-} as const;
-
-export const testReducerEdges: ReducerEdges<
-  TestEntity,
-  typeof testReducerEdgesWithoutTypes
-> = testReducerEdgesWithoutTypes;
+// TODO: Build "edge resolution" — the feature this fixture (and the
+// `ReducerEdges` type in reducers.types.ts) was created to test but was never
+// implemented. It denormalizes an entity's `__edges__` (arrays of PKs) into the
+// linked entities across reducers, driven by a `ReducerEdges` config.
+//
+// Pieces (read-only first cut; new util beside selectors.ts):
+//   - getReducerAtPath(state, reducerPath): walk the ReducerGroup tree to a Reducer.
+//   - resolveEntityEdge(state, reducerEdge, edgePks): one edge -> { nodes, edges? }.
+//       Look up each pk in the reducer at nodeReducerPath (`.data[pk]`); if
+//       edgeReducerPath is set, also resolve the edge entities there.
+//   - resolveEntityEdges(state, reducerEdges, entity): loop the config, resolving
+//       every edge -> { [edgeName]: { nodes, edges? } }.
+//   - Integration: createReducerEdgeSelectors(reducerEdges), mirroring
+//       createReducerSelectors — this makes `ReducerEdges` a consumed prod type.
+//   - edgeSide (master/slave) is for writes/cascade-delete, not reads — defer it
+//       to a 2nd increment.
+//
+// Test (consumes this fixture + testEntity1/2/3 + testReducerPath): build a
+// TestState with the entities in `data` at testReducerPath, then
+// resolveEntityEdges(state, testReducerEdges, testEntity1) should give
+// children.nodes === [testEntity2, testEntity3], parent.nodes === [] (null edge),
+// emergencyContacts.nodes === [testEntity2, testEntity3].
+// const testReducerEdgesWithoutTypes = {
+//   parent: {
+//     nodeReducerPath: testReducerPath,
+//     edgeReducerPath: testReducerPath,
+//   },
+//   children: {
+//     nodeReducerPath: testReducerPath,
+//     edgeReducerPath: null,
+//   },
+//   emergencyContacts: {
+//     nodeReducerPath: testReducerPath,
+//     edgeReducerPath: null,
+//   },
+// } as const;
+//
+// export const testReducerEdges: ReducerEdges<
+//   TestEntity,
+//   typeof testReducerEdgesWithoutTypes
+// > = testReducerEdgesWithoutTypes;
 
 export interface TestEntity2 extends Entity {
   id2: string;
@@ -144,7 +166,7 @@ export const testPkSchema: PkSchema<TestEntity, ['id'], []> = {
 };
 
 export const {
-  pkSchema: testReducerPkSchema,
+  // pkSchema: testReducerPkSchema,
   getPkOfEntity: getPkOfTestEntity,
-  destructPk: destructTestEntityPk,
+  // destructPk: destructTestEntityPk,
 } = createReducerPkUtils<TestEntity, typeof testPkSchema>(testPkSchema);

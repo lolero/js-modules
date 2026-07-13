@@ -1,24 +1,20 @@
 import { execSync } from 'child_process';
 import { existsSync, readFileSync, writeFileSync } from 'fs';
 import { join, relative } from 'path';
+import { exportTargetToSrcBase } from '../common/common.utils';
 
 const root = join(__dirname, '../..');
 
 /**
  * Map a package `exports` target (e.g. `./build/reactRouter/index.js` or
  * `./src/vite/foo.mjs`) to its source path relative to the package, so subpath
- * aliases resolve to `src` like the main alias: build output is rewritten to
- * `src`, the file extension is dropped, and a trailing `/index` collapses to
- * its directory.
+ * aliases resolve to `src` like the main alias: a trailing `/index` collapses to
+ * its directory so TS resolves it via directory-index resolution.
  * @param target - Export target path from the package's `exports` map.
  * @returns Source path relative to the package (e.g. `src/reactRouter`).
  */
 function exportTargetToSrcPath(target: string): string {
-  return target
-    .replace(/^\.\//, '')
-    .replace(/^build\//, 'src/')
-    .replace(/\.(d\.m?ts|[cm]?tsx?|[cm]?jsx?)$/, '')
-    .replace(/\/index$/, '');
+  return exportTargetToSrcBase(target).replace(/\/index$/, '');
 }
 
 /**

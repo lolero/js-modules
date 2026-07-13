@@ -4,6 +4,7 @@
   "private": true,
   "description": "Apps Dapp Web Utils",
   "license": "MIT",
+  "sideEffects": false,
   "main": "build/index",
   "files": [
     "build"
@@ -12,7 +13,6 @@
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "catalog:",
     "@fortawesome/free-brands-svg-icons": "catalog:",
-    "@fortawesome/free-regular-svg-icons": "catalog:",
     "@fortawesome/free-solid-svg-icons": "catalog:",
     "@js-modules/apps-dapp-common-constants": "workspace:^",
     "@js-modules/apps-dapp-common-react": "workspace:^",
@@ -27,7 +27,6 @@
     "@types/lodash": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
-    "@types/react-redux": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
     "react-redux": "catalog:",

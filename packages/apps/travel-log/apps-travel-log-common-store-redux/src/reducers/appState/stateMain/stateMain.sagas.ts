@@ -7,7 +7,7 @@ import {
 import type { StateMainUpdatePartialReducerMetadataRequestAction } from './stateMain.actions.types';
 import { StateMainActionTypes } from './stateMain.actions.types';
 
-export function* stateMainUpdatePartialReducerMetadataSaga({
+function* stateMainUpdatePartialReducerMetadataSaga({
   requestMetadata,
   requestId,
 }: StateMainUpdatePartialReducerMetadataRequestAction): SagaGenerator<void> {

@@ -17,7 +17,7 @@ export const stateAuthSelectors = createReducerSelectors<
 >(stateAuthReducerPath);
 
 export const {
-  selectRequests: selectStateAuthRequests,
-  selectMetadata: selectStateAuthMetadata,
-  selectConfig: selectStateAuthConfig,
+  // selectRequests: selectStateAuthRequests,
+  // selectMetadata: selectStateAuthMetadata,
+  // selectConfig: selectStateAuthConfig,
 } = stateAuthSelectors;

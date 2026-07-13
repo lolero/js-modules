@@ -4,6 +4,7 @@
   "private": true,
   "description": "Apps Travel Log Native Module Private Feeds",
   "license": "MIT",
+  "sideEffects": false,
   "main": "build/index",
   "react-native": "src/index.ts",
   "files": [
@@ -11,18 +12,13 @@
   ],
   "scripts": {},
   "dependencies": {
-    "@fortawesome/free-brands-svg-icons": "catalog:",
-    "@fortawesome/free-regular-svg-icons": "catalog:",
-    "@fortawesome/free-solid-svg-icons": "catalog:",
     "@js-modules/apps-travel-log-common-constants": "workspace:^",
     "@js-modules/apps-travel-log-common-react": "workspace:^",
     "@js-modules/apps-travel-log-common-store-redux": "workspace:^",
     "@js-modules/native-react-utils": "workspace:^",
-    "lodash": "catalog:",
     "react-native-paper": "catalog:"
   },
   "devDependencies": {
-    "@types/lodash": "catalog:",
     "@types/react": "catalog:",
     "react": "catalog:",
     "react-native": "catalog:"

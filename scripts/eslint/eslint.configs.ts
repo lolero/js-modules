@@ -24,7 +24,7 @@ import {
   configs as configsTsEslint,
   parser as parserTsEslint,
 } from 'typescript-eslint';
-import { extensions, Language } from '../common/common.utils';
+import { extensions, extensionsJsTs, Language } from '../common/common.utils';
 
 // The order of EslintConfigType matters!!!
 export const EslintConfigType = {
@@ -108,11 +108,6 @@ const workspaceYaml = readFileSync(
 );
 const reactVersion =
   workspaceYaml.match(/^\s*react:\s*['"]?([\d.]+)/m)?.[1] ?? '';
-
-const extensionsJsTs = [
-  ...extensions[Language.typescript],
-  ...extensions[Language.javascript],
-].join(',');
 
 /**
  * Converts file extensions to a recursive glob pattern, working around the

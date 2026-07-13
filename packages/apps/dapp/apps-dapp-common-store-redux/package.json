@@ -4,6 +4,7 @@
   "private": true,
   "description": "Apps Dapp Common Stores Redux",
   "license": "MIT",
+  "sideEffects": false,
   "main": "build/index",
   "react-native": "src/index.ts",
   "files": [
@@ -20,14 +21,12 @@
     "lodash": "catalog:",
     "redux-devtools-extension": "catalog:",
     "redux-saga": "catalog:",
-    "reselect": "catalog:",
     "typed-redux-saga": "catalog:",
     "uuid": "catalog:"
   },
   "devDependencies": {
     "@types/lodash": "catalog:",
     "@types/react": "catalog:",
-    "@types/uuid": "catalog:",
     "react": "catalog:",
     "react-redux": "catalog:",
     "redux": "catalog:"

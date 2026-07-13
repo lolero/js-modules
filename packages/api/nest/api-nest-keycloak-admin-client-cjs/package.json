@@ -4,6 +4,7 @@
   "private": true,
   "description": "Api Nest Keycloak Admin Client Cjs",
   "license": "MIT",
+  "sideEffects": false,
   "main": "build/index",
   "files": [
     "build"

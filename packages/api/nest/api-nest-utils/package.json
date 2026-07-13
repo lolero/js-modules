@@ -4,6 +4,7 @@
   "private": true,
   "description": "Api Nest Utils",
   "license": "MIT",
+  "sideEffects": false,
   "main": "build/index",
   "files": [
     "build"
@@ -11,22 +12,12 @@
   "scripts": {},
   "dependencies": {
     "@js-modules/common-utils-general-cjs": "workspace:^",
-    "cookie-session": "catalog:",
-    "express": "catalog:",
     "lodash": "catalog:",
     "pg": "catalog:"
   },
   "devDependencies": {
     "@nestjs/common": "catalog:",
-    "@nestjs/config": "catalog:",
-    "@nestjs/core": "catalog:",
-    "@nestjs/platform-express": "catalog:",
-    "@nestjs/swagger": "catalog:",
-    "@nestjs/testing": "catalog:",
-    "@nestjs/typeorm": "catalog:",
-    "@types/cookie-session": "catalog:",
     "@types/lodash": "catalog:",
-    "@types/supertest": "catalog:",
     "class-transformer": "catalog:",
     "class-validator": "catalog:",
     "reflect-metadata": "catalog:",
@@ -35,11 +26,6 @@
   },
   "peerDependencies": {
     "@nestjs/common": "catalog:",
-    "@nestjs/config": "catalog:",
-    "@nestjs/core": "catalog:",
-    "@nestjs/platform-express": "catalog:",
-    "@nestjs/swagger": "catalog:",
-    "@nestjs/typeorm": "catalog:",
     "class-transformer": "catalog:",
     "class-validator": "catalog:",
     "reflect-metadata": "catalog:",

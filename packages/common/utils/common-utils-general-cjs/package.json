@@ -4,6 +4,7 @@
   "private": true,
   "description": "Common Utils General Cjs",
   "license": "MIT",
+  "sideEffects": false,
   "main": "build/index",
   "react-native": "src/index.ts",
   "files": [

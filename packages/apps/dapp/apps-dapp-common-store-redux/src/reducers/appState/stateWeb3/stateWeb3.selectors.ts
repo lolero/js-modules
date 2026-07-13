@@ -12,7 +12,7 @@ export const stateWeb3Selectors = createReducerSelectors<
 >(stateWeb3ReducerPath);
 
 export const {
-  selectRequests: selectStateWeb3Requests,
+  // selectRequests: selectStateWeb3Requests,
   selectMetadata: selectStateWeb3Metadata,
-  selectConfig: selectStateWeb3Config,
+  // selectConfig: selectStateWeb3Config,
 } = stateWeb3Selectors;
