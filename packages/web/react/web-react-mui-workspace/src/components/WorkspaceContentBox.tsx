@@ -2,10 +2,11 @@ import { faAngleUp } from '@fortawesome/free-solid-svg-icons/faAngleUp';
 import type { BoxProps } from '@mui/material/Box';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
+import { useTheme } from '@mui/material/styles';
 import type React from 'react';
 import { useCallback, useContext, useRef } from 'react';
 import { MuiFaIcon } from '@js-modules/web-react-mui';
-import { NavContext, NavDrawerDisplayStatus } from '../contexts/NavContext';
+import { NavContext } from '../contexts/NavContext';
 import {
   ScrollDirection,
   WorkspaceContext,
@@ -39,11 +40,8 @@ export function WorkspaceContentBox({
   contentSx,
   children,
 }: WorkspaceContentBoxProps): React.ReactNode {
-  const {
-    navLeftDrawerDisplayStatus,
-    workspaceTopToolbarPaddingYSpacing,
-    workspacePaddingXSpacing,
-  } = useContext(NavContext);
+  const { workspaceTopToolbarPaddingYSpacing, workspacePaddingXSpacing } =
+    useContext(NavContext);
 
   const {
     navTopToolbarHeight,
@@ -55,7 +53,9 @@ export function WorkspaceContentBox({
     workspaceScrollDirection,
   } = useContext(WorkspaceContext);
 
-  const { isMobile } = useNavDisplayMetadata();
+  const { isMobile, isNavLeftDrawerHidden } = useNavDisplayMetadata();
+
+  const theme = useTheme();
 
   const scrollableBoxRef = useRef<HTMLDivElement>(null);
 
@@ -105,10 +105,9 @@ export function WorkspaceContentBox({
         overflow: 'hidden',
         mr: workspaceMarginRight,
         ml: workspaceMarginLeft,
-        height: (t) =>
-          `calc(100% - ${
-            navTopToolbarHeight + workspaceTopToolbarHeight
-          }px - ${t.spacing(workspaceTopToolbarPaddingYSpacing * 2)})`,
+        height: `calc(100% - ${
+          navTopToolbarHeight + workspaceTopToolbarHeight
+        }px - ${theme.spacing(workspaceTopToolbarPaddingYSpacing * 2)})`,
         backgroundColor: 'background.default',
         color: 'text.primary',
       }}
@@ -118,12 +117,8 @@ export function WorkspaceContentBox({
         sx={{
           height: '100%',
           overflow: 'auto',
-          pt: (t) => t.spacing(1),
-          px: (t) =>
-            isMobile ||
-            navLeftDrawerDisplayStatus === NavDrawerDisplayStatus.hidden
-              ? t.spacing(1)
-              : t.spacing(workspacePaddingXSpacing),
+          pt: 1,
+          px: isMobile || isNavLeftDrawerHidden ? 1 : workspacePaddingXSpacing,
           ...contentSx,
         }}
         ref={scrollableBoxRef}

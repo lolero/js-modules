@@ -1,6 +1,7 @@
 import type { CSSObject, Theme } from '@mui/material/styles';
 import {
   NAV_LEFT_DRAWER_TREE_VIEW_ITEM_CONTENT_PADDING_Y_SPACING,
+  NAV_LEFT_DRAWER_TREE_VIEW_ITEM_ICON_SIZE_REM,
   NAV_LEFT_DRAWER_TREE_VIEW_ITEM_LABEL_PADDING_Y_SPACING,
 } from '../constants/nav.constants';
 
@@ -51,4 +52,12 @@ export const navLeftDrawerTreeViewItemLabelSx = {
   lineHeight: 1.25,
   minWidth: 0,
   overflowWrap: 'break-word',
+} as const;
+
+/**
+ * Shared styles for a nav TreeView row's leading icon, used by both the real
+ * TreeViewItem and the sticky breadcrumb so the two size identically.
+ */
+export const navLeftDrawerTreeViewItemIconSx = {
+  fontSize: `${NAV_LEFT_DRAWER_TREE_VIEW_ITEM_ICON_SIZE_REM}rem`,
 } as const;

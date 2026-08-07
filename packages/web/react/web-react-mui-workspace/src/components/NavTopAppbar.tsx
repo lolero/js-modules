@@ -4,12 +4,13 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
+import { useTheme } from '@mui/material/styles';
 import Tooltip from '@mui/material/Tooltip';
 import type React from 'react';
 import { useCallback, useContext, useMemo } from 'react';
 import { MuiFaIcon } from '@js-modules/web-react-mui';
 import { useWebRouter } from '@js-modules/web-react-router';
-import { NavContext, NavDrawerDisplayStatus } from '../contexts/NavContext';
+import { NavContext } from '../contexts/NavContext';
 import {
   ScrollDirection,
   WorkspaceContext,
@@ -48,7 +49,6 @@ export function NavTopAppbar({
   children,
 }: NavTopAppbarProps) {
   const {
-    navLeftDrawerDisplayStatus,
     showNavLeftDrawerString,
     hideNavLeftDrawerString,
     navLeftDrawerCollapsedWidth,
@@ -82,6 +82,8 @@ export function NavTopAppbar({
     isNavLeftDrawerHidden,
   ]);
 
+  const theme = useTheme();
+
   const appbarDisplay = useMemo(() => {
     if (isMobile && workspaceScrollDirection === ScrollDirection.down) {
       return 'none';
@@ -109,9 +111,9 @@ export function NavTopAppbar({
         display: appbarDisplay,
         backgroundColor: 'background.default',
         color: 'text.primary',
-        // NavBoxShadowHorizontalSx on the ::after pseudo-element so the
-        // appbar's bottom edge matches the side drawers' shadow, without its
-        // clipPath affecting the appbar's own content
+        // NavBoxShadowHorizontalSx on the ::after pseudo-element so the appbar's
+        // bottom edge matches the side drawers' shadow, without its clipPath
+        // affecting the appbar's own content
         '&::after': {
           content: '""',
           position: 'absolute',
@@ -137,13 +139,9 @@ export function NavTopAppbar({
             display: 'flex',
             alignItems: 'center',
             height: `${navTopToolbarHeight}px`,
-            pr: (t) => t.spacing(1.5),
+            pr: 1.5,
             textDecoration: 'none !important',
-            ...(isNavLeftDrawerCollapsed
-              ? {
-                  justifyContent: 'center',
-                }
-              : {}),
+            ...(isNavLeftDrawerCollapsed ? { justifyContent: 'center' } : {}),
           }}
           className={CSS_CLASSNAME__NAV_APPBAR_LOGO_BOX}
           component={LinkComponent}
@@ -153,10 +151,10 @@ export function NavTopAppbar({
         </Box>
         <Divider
           sx={{
-            my: (t) => t.spacing(0.5),
-            ml: (t) => t.spacing(-0.15),
+            my: 0.5,
+            ml: -0.15,
             backgroundColor: 'background.default',
-            width: (t) => t.spacing(0.25),
+            width: theme.spacing(0.25),
           }}
           orientation="vertical"
           flexItem
@@ -164,11 +162,8 @@ export function NavTopAppbar({
         <NavLeftDrawerDisplayButton />
         <Box
           sx={{
-            px: (t) =>
-              isMobile ||
-              navLeftDrawerDisplayStatus === NavDrawerDisplayStatus.hidden
-                ? t.spacing(1)
-                : t.spacing(workspacePaddingXSpacing),
+            px:
+              isMobile || isNavLeftDrawerHidden ? 1 : workspacePaddingXSpacing,
             display: 'flex',
             flexGrow: 1,
             justifyContent: 'space-between',

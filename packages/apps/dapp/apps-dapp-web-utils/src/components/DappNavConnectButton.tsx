@@ -9,6 +9,10 @@ import {
 } from '@js-modules/apps-dapp-common-store-redux';
 import { MuiFaIcon } from '@js-modules/web-react-mui';
 
+// WATCH: react-compiler-computed-keys
+// Hoisted so the key position holds a plain identifier.
+const cssSelectorButtonDisabled = `&.${buttonClasses.disabled}`;
+
 export function DappNavConnectButton(): React.ReactNode {
   const {
     request: stateWeb3ConnectWalletRequest,
@@ -44,7 +48,7 @@ export function DappNavConnectButton(): React.ReactNode {
     return (
       <Button
         sx={{
-          [`&.${buttonClasses.disabled}`]: {
+          [cssSelectorButtonDisabled]: {
             color: 'background.default',
           },
         }}

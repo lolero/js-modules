@@ -3,6 +3,7 @@ import { faAngleRight } from '@fortawesome/free-solid-svg-icons/faAngleRight';
 import { faAngleUp } from '@fortawesome/free-solid-svg-icons/faAngleUp';
 import Box from '@mui/material/Box';
 import ButtonBase from '@mui/material/ButtonBase';
+import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import { SimpleTreeView } from '@mui/x-tree-view/SimpleTreeView';
 import { treeItemClasses } from '@mui/x-tree-view/TreeItem';
@@ -22,7 +23,6 @@ import {
   NAV_LEFT_DRAWER_TREE_VIEW_ITEM_EXPAND_BUTTON_SIZE_PIXELS as EXPAND_BUTTON_SIZE_PIXELS,
   NAV_LEFT_DRAWER_TREE_VIEW_ITEM_EXPAND_ICON_SIZE_PIXELS as EXPAND_ICON_SIZE_PIXELS,
   NAV_LEFT_DRAWER_TREE_VIEW_ITEM_CONTENT_PADDING_RIGHT_SPACING,
-  NAV_LEFT_DRAWER_TREE_VIEW_ITEM_ICON_SIZE_REM,
   NAV_LEFT_DRAWER_TREE_VIEW_ITEM_INDENTATION_PIXELS,
   NAV_LEFT_DRAWER_TREE_VIEW_ITEM_PADDING_LEFT_BASE_PIXELS,
 } from '../constants/nav.constants';
@@ -37,6 +37,7 @@ import {
 import { getNavLeftDrawerTreeViewItemExpandButtonSx } from '../styles/getNavLeftDrawerTreeViewItemExpandButtonSx';
 import {
   getNavLeftDrawerTreeViewItemRowSx,
+  navLeftDrawerTreeViewItemIconSx,
   navLeftDrawerTreeViewItemLabelSx,
   navLeftDrawerTreeViewItemLinkSx,
 } from '../styles/navLeftDrawerTreeViewItemStyles';
@@ -109,6 +110,10 @@ function IconCollapse(): React.ReactNode {
   return <MuiFaIcon icon={faAngleDown} fontSize="small" />;
 }
 
+// WATCH: react-compiler-computed-keys
+// Hoisted so the key position holds a plain identifier.
+const cssSelectorTreeItemContent = `& .${treeItemClasses.content}`;
+
 const iconCompositionBoxSx = {
   display: 'inline-flex',
   flexDirection: 'column',
@@ -169,6 +174,8 @@ function ExpandButton({
   children,
   disabled,
 }: ExpandButtonProps): React.ReactNode {
+  const theme = useTheme();
+
   return (
     <Box
       component="button"
@@ -177,7 +184,7 @@ function ExpandButton({
       title={ariaLabel}
       onClick={onClick}
       disabled={disabled}
-      sx={(theme) => ({
+      sx={{
         p: 0,
         border: 0,
         color: 'inherit',
@@ -189,7 +196,7 @@ function ExpandButton({
           pointerEvents: 'none',
         },
         ...getNavLeftDrawerTreeViewItemExpandButtonSx(theme),
-      })}
+      }}
     >
       {children}
     </Box>
@@ -231,6 +238,7 @@ function ActiveLineStickyBreadcrumb({
   const { path, icon, label, depth, isExpandable } =
     activeLineTreeViewItemMetadata;
   const { LinkComponent } = useWebRouter();
+  const theme = useTheme();
   let borderRightWidth = 0;
   if (isActive) {
     borderRightWidth = 4;
@@ -242,7 +250,7 @@ function ActiveLineStickyBreadcrumb({
     <Box
       data-sticky-breadcrumb-path={path}
       data-sticky-breadcrumb-edge={edge}
-      sx={(theme) => ({
+      sx={{
         ...getNavLeftDrawerTreeViewItemRowSx(theme),
         display: 'flex',
         alignItems: 'center',
@@ -253,7 +261,7 @@ function ActiveLineStickyBreadcrumb({
         borderColor: 'primary.main',
         borderRightStyle: 'solid',
         borderRightWidth: `${borderRightWidth}px`,
-      })}
+      }}
     >
       <ButtonBase
         component={LinkComponent}
@@ -268,12 +276,7 @@ function ActiveLineStickyBreadcrumb({
           color: 'primary.main',
         }}
       >
-        <MuiFaIcon
-          icon={icon}
-          sx={{
-            fontSize: `${NAV_LEFT_DRAWER_TREE_VIEW_ITEM_ICON_SIZE_REM}rem`,
-          }}
-        />
+        <MuiFaIcon icon={icon} sx={navLeftDrawerTreeViewItemIconSx} />
         {isNavLeftDrawerExpanded && (
           <Typography variant="body1" sx={navLeftDrawerTreeViewItemLabelSx}>
             {label}
@@ -289,9 +292,7 @@ function ActiveLineStickyBreadcrumb({
         >
           <MuiFaIcon
             icon={isExpanded ? faAngleDown : faAngleRight}
-            sx={{
-              fontSize: `${EXPAND_ICON_SIZE_PIXELS}px`,
-            }}
+            sx={{ fontSize: `${EXPAND_ICON_SIZE_PIXELS}px` }}
           />
         </ExpandButton>
       )}
@@ -323,6 +324,7 @@ export function NavLeftDrawerTreeView({
   } = treeViewMetadata;
   const { isNavLeftDrawerExpanded } = useNavDisplayMetadata();
   const { navLeftDrawerTreeViewItemHeightMin } = useContext(NavContext);
+  const theme = useTheme();
   const treeRef = useRef<HTMLUListElement>(null);
   const scrollContainerRef = useRef<HTMLElement | null>(null);
   const stickyBreadcrumbExpandingPathRef = useRef<string | null>(null);
@@ -464,7 +466,7 @@ export function NavLeftDrawerTreeView({
           sx={{
             position: 'absolute',
             top: `${-(EXPAND_BUTTON_SIZE_PIXELS / 2)}px`,
-            right: (theme) => theme.spacing(1),
+            right: theme.spacing(1),
             zIndex: 3,
             display: 'flex',
             gap: 0.5,
@@ -478,8 +480,7 @@ export function NavLeftDrawerTreeView({
               // translucent).
               '&:has(svg):hover': {
                 backgroundColor: 'background.paper',
-                backgroundImage: (theme) =>
-                  `linear-gradient(${theme.palette.action.hover}, ${theme.palette.action.hover})`,
+                backgroundImage: `linear-gradient(${theme.palette.action.hover}, ${theme.palette.action.hover})`,
               },
             },
           }}
@@ -560,7 +561,7 @@ export function NavLeftDrawerTreeView({
         }}
         sx={{
           paddingTop: `${headerOffset}px`,
-          [`& .${treeItemClasses.content}`]: {
+          [cssSelectorTreeItemContent]: {
             // Min-height drives single-line rows; rows grow when labels wrap.
             minHeight: navLeftDrawerTreeViewItemHeightMin,
           },

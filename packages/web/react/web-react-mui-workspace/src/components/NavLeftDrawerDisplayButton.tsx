@@ -4,14 +4,19 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons/faXmark';
 import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
 import IconButton from '@mui/material/IconButton';
+import { useTheme } from '@mui/material/styles';
 import { svgIconClasses } from '@mui/material/SvgIcon';
 import Tooltip from '@mui/material/Tooltip';
 import type React from 'react';
-import { useContext, useMemo } from 'react';
+import { useContext } from 'react';
 import { MuiFaIcon } from '@js-modules/web-react-mui';
 import { NavContext } from '../contexts/NavContext';
 import { WorkspaceContext } from '../contexts/WorkspaceContext';
 import { useNavDisplayMetadata } from '../hooks/useNavDisplayMetadata';
+
+// WATCH: react-compiler-computed-keys
+// Hoisted so the key position holds a plain identifier.
+const cssSelectorSvgIconRoot = `& .${svgIconClasses.root}`;
 
 /**
  * Floating toggle for the left nav drawer — expands, collapses, hides, or
@@ -35,24 +40,22 @@ export function NavLeftDrawerDisplayButton(): React.ReactNode {
     hideNavLeftDrawerCallback,
   } = useNavDisplayMetadata();
 
-  const fabSx = useMemo(
-    () =>
-      ({
-        boxShadow: 'none',
-        minHeight: '20px',
-        height: '20px',
-        width: '20px',
-        position: 'absolute',
-        left: `calc(${workspaceMarginLeft} - 10px)`,
-        [`& .${svgIconClasses.root}`]: {
-          height: '14px',
-        },
-        '&:active': {
-          boxShadow: 'none',
-        },
-      }) as const,
-    [workspaceMarginLeft],
-  );
+  const theme = useTheme();
+
+  const fabSx = {
+    boxShadow: 'none',
+    minHeight: '20px',
+    height: '20px',
+    width: '20px',
+    position: 'absolute',
+    left: `calc(${workspaceMarginLeft} - 10px)`,
+    [cssSelectorSvgIconRoot]: {
+      height: '14px',
+    },
+    '&:active': {
+      boxShadow: 'none',
+    },
+  } as const;
 
   if (isNavLeftDrawerCollapsed) {
     return (
@@ -80,8 +83,8 @@ export function NavLeftDrawerDisplayButton(): React.ReactNode {
         <IconButton
           sx={{
             position: 'absolute',
-            top: (t) => `calc(${navTopToolbarHeight}px + ${t.spacing(1)})`,
-            right: (t) => t.spacing(1),
+            top: `calc(${navTopToolbarHeight}px + ${theme.spacing(1)})`,
+            right: theme.spacing(1),
           }}
           onClick={hideNavLeftDrawerCallback}
         >

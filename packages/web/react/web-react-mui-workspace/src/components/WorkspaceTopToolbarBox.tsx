@@ -32,20 +32,17 @@ export function WorkspaceTopToolbarBox({
 
   return (
     <Box
-      sx={(t) => ({
+      sx={{
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
         backgroundColor: 'background.default',
-        py: t.spacing(workspaceTopToolbarPaddingYSpacing),
-        px:
-          isMobile || isNavLeftDrawerHidden
-            ? t.spacing(1)
-            : t.spacing(workspacePaddingXSpacing),
+        py: workspaceTopToolbarPaddingYSpacing,
+        px: isMobile || isNavLeftDrawerHidden ? 1 : workspacePaddingXSpacing,
         mt: `${navTopToolbarHeight}px`,
         ml: workspaceMarginLeft,
         mr: workspaceMarginRight,
-      })}
+      }}
       ref={ref}
       className={CSS_CLASSNAME__WORKSPACE_TOP_TOOLBAR_BOX}
     >

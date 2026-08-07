@@ -10,8 +10,11 @@ import { LogPagination } from './LogPagination';
 export function LogWorkspaceContentBox(): React.ReactNode {
   const logDate = useSearchParamLogDate();
 
-  const { [SearchParamPaginationKeys.pageNumber]: pageNumber } =
-    useSearchParamsPagination();
+  // WATCH: react-compiler-computed-keys
+  // Indexed rather than destructured with a computed key.
+  const searchParamsPagination = useSearchParamsPagination();
+  const pageNumber =
+    searchParamsPagination[SearchParamPaginationKeys.pageNumber];
 
   return (
     <Box>

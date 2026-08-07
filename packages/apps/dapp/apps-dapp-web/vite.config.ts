@@ -1,4 +1,5 @@
-import pluginReact from '@vitejs/plugin-react';
+import pluginBabel from '@rolldown/plugin-babel';
+import pluginReact, { reactCompilerPreset } from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 import svgr from 'vite-plugin-svgr';
 
@@ -6,6 +7,7 @@ import svgr from 'vite-plugin-svgr';
 export default defineConfig({
   plugins: [
     pluginReact(),
+    pluginBabel({ presets: [reactCompilerPreset()] }),
     svgr({
       svgrOptions: {
         exportType: 'named',

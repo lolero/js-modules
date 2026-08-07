@@ -3,14 +3,18 @@ import {
   faAnglesRight,
   faXmark,
 } from '@fortawesome/free-solid-svg-icons';
-import type { Theme } from '@mui/material';
 import { Box, Fab, IconButton, svgIconClasses, Tooltip } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import type React from 'react';
-import { useContext, useMemo } from 'react';
+import { useContext } from 'react';
 import { MuiFaIcon } from '@js-modules/web-react-mui';
 import { NavContext } from '../contexts/NavContext';
 import { WorkspaceContext } from '../contexts/WorkspaceContext';
 import { useNavDisplayMetadata } from '../hooks/useNavDisplayMetadata';
+
+// WATCH: react-compiler-computed-keys
+// Hoisted so the key position holds a plain identifier.
+const cssSelectorSvgIconRoot = `& .${svgIconClasses.root}`;
 
 /**
  * Floating toggle for the right nav drawer — expands, collapses, hides, or
@@ -34,26 +38,24 @@ export function NavRightDrawerDisplayButton(): React.ReactNode {
     hideNavRightDrawerCallback,
   } = useNavDisplayMetadata();
 
-  const fabSx = useMemo(
-    () =>
-      ({
-        boxShadow: 'none',
-        minHeight: '20px',
-        height: '20px',
-        width: '20px',
-        position: 'absolute',
-        top: (t: Theme) => `calc(${navTopToolbarHeight}px + ${t.spacing(1)})`,
-        right: `calc(${workspaceMarginRight} - 10px)`,
-        zIndex: 1301,
-        [`& .${svgIconClasses.root}`]: {
-          height: '14px',
-        },
-        '&:active': {
-          boxShadow: 'none',
-        },
-      }) as const,
-    [navTopToolbarHeight, workspaceMarginRight],
-  );
+  const theme = useTheme();
+
+  const fabSx = {
+    boxShadow: 'none',
+    minHeight: '20px',
+    height: '20px',
+    width: '20px',
+    position: 'absolute',
+    top: `calc(${navTopToolbarHeight}px + ${theme.spacing(1)})`,
+    right: `calc(${workspaceMarginRight} - 10px)`,
+    zIndex: 1301,
+    [cssSelectorSvgIconRoot]: {
+      height: '14px',
+    },
+    '&:active': {
+      boxShadow: 'none',
+    },
+  } as const;
 
   if (isNavRightDrawerCollapsed) {
     return (
@@ -85,8 +87,8 @@ export function NavRightDrawerDisplayButton(): React.ReactNode {
         <IconButton
           sx={{
             position: 'absolute',
-            top: (t) => `calc(${navTopToolbarHeight}px + ${t.spacing(1)})`,
-            right: (t) => t.spacing(1),
+            top: `calc(${navTopToolbarHeight}px + ${theme.spacing(1)})`,
+            right: theme.spacing(1),
           }}
           onClick={hideNavRightDrawerCallback}
         >

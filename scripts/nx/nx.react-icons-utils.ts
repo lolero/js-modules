@@ -96,9 +96,11 @@ function generateMuiSvgIcons(
     if (iconFileIndex > 0) {
       iconsTsx += '\n';
     }
-    iconsTsx += `export const ${iconComponentName}: React.FunctionComponent<SvgIconProps> = (props) => (\n`;
-    iconsTsx += `  <SvgIcon component={${iconComponentNameSVG}} viewBox="${viewBoxValues}" {...props} />\n`;
-    iconsTsx += ');\n';
+    iconsTsx += `export function ${iconComponentName}(props: SvgIconProps) {\n`;
+    iconsTsx += `  return (\n`;
+    iconsTsx += `    <SvgIcon component={${iconComponentNameSVG}} viewBox="${viewBoxValues}" {...props} />\n`;
+    iconsTsx += `  );\n`;
+    iconsTsx += '}\n';
   });
 
   appendFileSync(iconsTsxPath, iconsTsx);

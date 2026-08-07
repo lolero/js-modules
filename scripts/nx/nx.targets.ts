@@ -186,6 +186,16 @@ export const targetBuilders: TargetBuilders = {
   [TargetType.build]: {
     [Language.javascript]: (projectPathRel) => {
       const projectType = getProjectTypeJs(projectPathRel);
+      const pathToRoot = relative(projectPathRel, '.') || '.';
+      const configBabelReactLib = join(
+        pathToRoot,
+        'scripts/babel/babel.react-lib.json',
+      );
+      // React libraries emit their JS through Babel rather than tsc: the React
+      // Compiler runs as a Babel plugin and needs JSX, which tsc's `react-jsx`
+      // emit has already lowered to `_jsx()` calls. tsc keeps the `.d.ts`.
+      const commandTscEmit = 'tsc -p tsconfig.build.json --emitDeclarationOnly';
+      const commandBabelReactLibBuild = `babel src --out-dir build --extensions .ts,.tsx --source-maps --config-file ${configBabelReactLib} --ignore "**/*.spec.ts,**/*.spec.tsx,**/*.test.ts,**/*.test.tsx,**/__tests__,**/__specs__"`;
       const hasTsconfigBuild = existsSync(
         join(projectPathRel, 'tsconfig.build.json'),
       );
@@ -199,8 +209,12 @@ export const targetBuilders: TargetBuilders = {
           command = 'pnpm hardhat compile';
           break;
         case ProjectTypeJs.icons: {
-          const pathToRoot = relative(projectPathRel, '.') || '.';
-          command = `tsx ${join(pathToRoot, 'scripts/nx/nx.react-icons-utils.ts')} && tsc -p tsconfig.build.json && node -e "require('fs').cpSync('src/assets','build/assets', { recursive:true })"`;
+          command = [
+            `tsx ${join(pathToRoot, 'scripts/nx/nx.react-icons-utils.ts')}`,
+            commandTscEmit,
+            commandBabelReactLibBuild,
+            `node -e "require('fs').cpSync('src/assets','build/assets', { recursive:true })"`,
+          ].join(' && ');
           break;
         }
         case ProjectTypeJs.nest:
@@ -208,6 +222,11 @@ export const targetBuilders: TargetBuilders = {
           break;
         case ProjectTypeJs.next:
           command = 'next build';
+          break;
+        case ProjectTypeJs.reactLib:
+          if (hasTsconfigBuild) {
+            command = [commandTscEmit, commandBabelReactLibBuild].join(' && ');
+          }
           break;
         case ProjectTypeJs.reactNative:
           command = "echo 'Building dependency packages...'";

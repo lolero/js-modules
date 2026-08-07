@@ -74,9 +74,7 @@ export function NavRightDrawer({
   return (
     <Drawer
       ref={ref}
-      sx={{
-        width: navDrawerWidth,
-      }}
+      sx={{ width: navDrawerWidth }}
       variant={drawerVariant}
       anchor={isMobile ? 'left' : 'right'}
       open={navRightDrawerDisplayStatus !== NavDrawerDisplayStatus.hidden}

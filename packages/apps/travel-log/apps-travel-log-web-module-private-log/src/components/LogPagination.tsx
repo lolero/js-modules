@@ -10,8 +10,11 @@ import { useWebRouter } from '@js-modules/web-react-router';
 export function LogPagination(): React.ReactNode {
   const { setSearchParams } = useWebRouter();
 
-  const { [SearchParamPaginationKeys.pageNumber]: pageNumber } =
-    useSearchParamsPagination();
+  // WATCH: react-compiler-computed-keys
+  // Indexed rather than destructured with a computed key.
+  const searchParamsPagination = useSearchParamsPagination();
+  const pageNumber =
+    searchParamsPagination[SearchParamPaginationKeys.pageNumber];
 
   const changePageNumberCallback = useCallback(
     (_e: React.ChangeEvent<unknown>, pageNumberNew: number) => {

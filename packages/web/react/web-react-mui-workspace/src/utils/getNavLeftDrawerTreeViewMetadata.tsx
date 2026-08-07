@@ -11,18 +11,29 @@ import type React from 'react';
 import type { RoutesMetadata } from '@js-modules/common-react-nav';
 import { MuiFaIcon } from '@js-modules/web-react-mui';
 import type { WebRouterLinkComponent } from '@js-modules/web-react-router';
-import {
-  NAV_LEFT_DRAWER_TREE_VIEW_ITEM_ICON_SIZE_REM,
-  NAV_LEFT_DRAWER_TREE_VIEW_ITEM_PADDING_X_SPACING,
-} from '../constants/nav.constants';
+import { NAV_LEFT_DRAWER_TREE_VIEW_ITEM_PADDING_X_SPACING } from '../constants/nav.constants';
 import {
   CSS_CLASSNAME__NAV_LEFT_DRAWER_ACTIVE,
   CSS_CLASSNAME__NAV_LEFT_DRAWER_ACTIVE_LINE,
 } from '../styles/cssClassNames';
 import {
+  navLeftDrawerTreeViewItemIconSx,
   navLeftDrawerTreeViewItemLabelSx,
   navLeftDrawerTreeViewItemLinkSx,
 } from '../styles/navLeftDrawerTreeViewItemStyles';
+
+const treeViewItemLinkBaseSx = {
+  ...navLeftDrawerTreeViewItemLinkSx,
+  width: '100%',
+  height: '100%',
+  px: NAV_LEFT_DRAWER_TREE_VIEW_ITEM_PADDING_X_SPACING,
+  color: 'inherit',
+} as const;
+
+const treeViewItemLinkActiveLineSx = {
+  ...treeViewItemLinkBaseSx,
+  color: 'primary.main',
+} as const;
 
 export type ActiveLineTreeViewItemMetadata = {
   path: string;
@@ -163,11 +174,9 @@ export function getNavLeftDrawerTreeViewMetadata(
     if (isActive) {
       pathActive = `/${splitRouteMetadataPath.join('/')}`;
     }
-    const activeLineTreeViewItemSx = isActiveLine
-      ? {
-          color: 'primary.main',
-        }
-      : {};
+    const treeViewItemLinkSx = isActiveLine
+      ? treeViewItemLinkActiveLineSx
+      : treeViewItemLinkBaseSx;
 
     if (isActiveLine) {
       activeLineTreeViewItemMetadatas = [
@@ -205,14 +214,7 @@ export function getNavLeftDrawerTreeViewMetadata(
         label={
           <ButtonBase
             component={LinkComponent}
-            sx={{
-              ...navLeftDrawerTreeViewItemLinkSx,
-              width: '100%',
-              height: '100%',
-              px: NAV_LEFT_DRAWER_TREE_VIEW_ITEM_PADDING_X_SPACING,
-              color: 'inherit',
-              ...activeLineTreeViewItemSx,
-            }}
+            sx={treeViewItemLinkSx}
             href={routeMetadata.path}
             onClick={onClickCallback}
             title={!isNavLeftDrawerExpanded ? routeMetadata.label : undefined}
@@ -224,9 +226,7 @@ export function getNavLeftDrawerTreeViewMetadata(
           >
             <MuiFaIcon
               icon={routeMetadata.icon}
-              sx={{
-                fontSize: `${NAV_LEFT_DRAWER_TREE_VIEW_ITEM_ICON_SIZE_REM}rem`,
-              }}
+              sx={navLeftDrawerTreeViewItemIconSx}
             />
             {label}
           </ButtonBase>

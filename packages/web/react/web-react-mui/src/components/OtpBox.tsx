@@ -7,6 +7,10 @@ import trim from 'lodash/trim';
 import type React from 'react';
 import { useCallback, useEffect, useState } from 'react';
 
+// WATCH: react-compiler-computed-keys
+// Hoisted so the key position holds a plain identifier.
+const cssSelectorInputBaseInput = `& .${inputBaseClasses.input}`;
+
 export type OtpBoxProps = {
   otpLength: number;
   otp: string[];
@@ -145,7 +149,7 @@ export function OtpBox({
             <TextField
               key={textFieldKey}
               sx={{
-                [`& .${inputBaseClasses.input}`]: {
+                [cssSelectorInputBaseInput]: {
                   textAlign: 'center',
                 },
               }}

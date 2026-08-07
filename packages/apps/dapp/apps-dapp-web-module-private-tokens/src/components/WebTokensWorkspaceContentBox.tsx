@@ -17,6 +17,20 @@ import { useNodeChainsGetMany } from '@js-modules/apps-dapp-common-store-redux';
 import { usePrevious } from '@js-modules/common-react-utils';
 import { MuiFaIcon, VirtualizedAutocomplete } from '@js-modules/web-react-mui';
 
+// WATCH: react-compiler-computed-keys
+// Hoisted so the key position holds a plain identifier.
+const cssPropFaAnimationDuration =
+  '--fa-animation-duration' as keyof CSSProperties;
+
+const chainIconSx = {
+  width: '1.5em',
+  height: '1.5em',
+  borderRadius: 0,
+  [`& .${avatarClasses.img}`]: {
+    objectFit: 'scale-down',
+  },
+} as const;
+
 export function WebTokensWorkspaceContentBox(): React.ReactNode {
   const { request: nodeChainsGetManyRequest, entities: nodeChains } =
     useNodeChainsGetMany();
@@ -54,7 +68,7 @@ export function WebTokensWorkspaceContentBox(): React.ReactNode {
         icon={faCloud}
         beat
         style={{
-          ['--fa-animation-duration' as keyof CSSProperties]: '5s',
+          [cssPropFaAnimationDuration]: '5s',
         }}
       />
       <MuiFaIcon icon={faCloud} beat />
@@ -90,18 +104,7 @@ export function WebTokensWorkspaceContentBox(): React.ReactNode {
                   ...params.slotProps.input,
                   startAdornment: (
                     <InputAdornment position="start">
-                      <Avatar
-                        sx={{
-                          width: '1.5em',
-                          height: '1.5em',
-                          // mx: '.5em',
-                          borderRadius: 0,
-                          [`& .${avatarClasses.img}`]: {
-                            objectFit: 'scale-down',
-                          },
-                        }}
-                        src={selectedChain.iconUrl}
-                      />
+                      <Avatar sx={chainIconSx} src={selectedChain.iconUrl} />
                     </InputAdornment>
                   ),
                 },
@@ -117,21 +120,10 @@ export function WebTokensWorkspaceContentBox(): React.ReactNode {
             props,
             <Box
               key={nodeChain.id}
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-              }}
+              sx={{ display: 'flex', alignItems: 'center' }}
             >
               <Avatar
-                sx={{
-                  width: '1.5em',
-                  height: '1.5em',
-                  mx: '.5em',
-                  borderRadius: 0,
-                  [`& .${avatarClasses.img}`]: {
-                    objectFit: 'scale-down',
-                  },
-                }}
+                sx={{ ...chainIconSx, mx: '.5em' }}
                 src={nodeChain.iconUrl}
               />
               <Typography>{nodeChain.name}</Typography>

@@ -174,9 +174,17 @@ const config: KnipConfig = {
       project: [`scripts/**/*.{${extensionsJsTs}}`],
       // Used outside the import graph, so knip can't trace them: husky hooks
       // (commitlint, lint-staged), nx command strings (cross-env), the
-      // jest-config-loader comment (esbuild-register), the lint pipeline (solhint).
+      // jest-config-loader comment (esbuild-register), the lint pipeline
+      // (solhint), and the React library build — an nx command string invoking
+      // `@babel/cli` against `scripts/babel/babel.react-lib.json`, which names
+      // its presets and the compiler plugin as strings (@babel/*, react-compiler).
       ignoreDependencies: [
+        '@babel/cli',
+        '@babel/core',
+        '@babel/preset-react',
+        '@babel/preset-typescript',
         '@commitlint/cli',
+        'babel-plugin-react-compiler',
         'cross-env',
         'esbuild-register',
         'lint-staged',

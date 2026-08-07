@@ -67,6 +67,10 @@
     ]
   },
   "devDependencies": {
+    "@babel/cli": "catalog:",
+    "@babel/core": "catalog:",
+    "@babel/preset-react": "catalog:",
+    "@babel/preset-typescript": "catalog:",
     "@commitlint/cli": "catalog:",
     "@commitlint/config-angular": "catalog:",
     "@html-eslint/eslint-plugin": "catalog:",
@@ -85,6 +89,7 @@
     "@types/jest": "catalog:",
     "@types/mocha": "catalog:",
     "@types/node": "catalog:",
+    "babel-plugin-react-compiler": "catalog:",
     "chai": "catalog:",
     "cross-env": "catalog:",
     "esbuild-register": "catalog:",

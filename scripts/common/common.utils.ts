@@ -69,6 +69,7 @@ export const ProjectTypeJs = {
   keycloakify: 'keycloakify',
   nest: 'nest',
   next: 'next',
+  reactLib: 'react-lib',
   reactNative: 'react-native',
   vite: 'vite',
 } as const;
@@ -100,9 +101,12 @@ export function getProjectTypeJs(
     return ProjectTypeJs.icons;
   }
 
-  const { dependencies } = JSON.parse(
+  const { dependencies, peerDependencies } = JSON.parse(
     readFileSync(join(projectPathRel, 'package.json'), 'utf-8'),
-  ) as { dependencies?: Record<string, string> };
+  ) as {
+    dependencies?: Record<string, string>;
+    peerDependencies?: Record<string, string>;
+  };
 
   if (dependencies?.['keycloakify']) {
     return ProjectTypeJs.keycloakify;
@@ -133,6 +137,23 @@ export function getProjectTypeJs(
     )
   ) {
     return ProjectTypeJs.vite;
+  }
+
+  // Terminal case: a plain library that ships React code. Checked last so the
+  // tooling-specific types above keep precedence.
+  //
+  // Cost of modeling React-ness as a type rather than an orthogonal predicate:
+  // it is erased for any project an earlier check claims. Several of those are
+  // React too — `icons` libraries, and the `vite`/`keycloakify`/`reactNative`
+  // apps — so each must arrange its own React Compiler pass rather than
+  // inheriting one from here (`icons` share `commandTscEmit` and
+  // `commandBabelReactLibBuild`; the apps wire the compiler into their own
+  // bundler). Adding a React project under a new type, or giving an
+  // existing React library a `vite.config.ts`, silently opts it out. If "is
+  // this React?" is ever needed for something other than the build command,
+  // reintroduce it as a separate predicate instead of widening this enum.
+  if (dependencies?.react ?? peerDependencies?.react) {
+    return ProjectTypeJs.reactLib;
   }
 
   return undefined;
