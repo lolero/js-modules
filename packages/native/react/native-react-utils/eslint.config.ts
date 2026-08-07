@@ -1,3 +1,6 @@
-import { createEslintConfig } from '../../../../scripts/eslint/eslint.configs';
+import {
+  createEslintConfig,
+  EslintConfigType,
+} from '../../../../scripts/eslint/eslint.configs';
 
-export default createEslintConfig(__dirname);
+export default createEslintConfig(__dirname, [EslintConfigType.jsdoc]);

@@ -2203,7 +2203,40 @@
                   "$ref": "#/properties/before-test"
                 },
                 "build-frontend": {
-                  "$ref": "#/properties/build-frontend"
+                  "default": "pyodide-build",
+                  "description": "On the pyodide platform, the build frontend must be \"pyodide-build\"",
+                  "oneOf": [
+                    {
+                      "enum": [
+                        "pyodide-build"
+                      ]
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^pyodide-build; ?args:"
+                    },
+                    {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "name"
+                      ],
+                      "properties": {
+                        "name": {
+                          "enum": [
+                            "pyodide-build"
+                          ]
+                        },
+                        "args": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "title": "CIBW_BUILD_FRONTEND"
                 },
                 "build-verbosity": {
                   "$ref": "#/properties/build-verbosity"
@@ -3125,6 +3158,11 @@
                 }
               ]
             },
+            "native_parser": {
+              "description": "This enables fast Rust-based parser that parses directly to mypy AST. It will become the default parser in one of the next mypy releases.",
+              "x-intellij-html-description": "This enables fast Rust-based parser that parses directly to mypy AST. It will become the default parser in one of the next mypy releases.",
+              "type": "boolean"
+            },
             "overrides": {
               "type": "array",
               "items": {
@@ -3542,7 +3580,7 @@
               }
             },
             "extend-select": {
-              "description": "A list of rule codes or prefixes to enable, in addition to those\nspecified by [`select`](#lint_select).\n\nUnlike [`select`](#lint_select), which _replaces_ the default rule set\nwhen specified, `extend-select` _adds_ to whatever rules are already\nactive. This makes `extend-select` the preferred option when you want\nto enable additional rules on top of the defaults without having to\nenumerate them.\n\nFor example, to enable the defaults plus flake8-bugbear:\n\n```toml\n[tool.ruff.lint]\n# Adds flake8-bugbear on top of the default rules (E4, E7, E9, F).\nextend-select = [\"B\"]\n```\n\nUsing `select = [\"B\"]` instead would _replace_ the defaults, enabling\nonly flake8-bugbear.",
+              "description": "A list of rule codes or prefixes to enable, in addition to those\nspecified by [`select`](#lint_select).\n\nUnlike [`select`](#lint_select), which _replaces_ the default rule set\nwhen specified, `extend-select` _adds_ to whatever rules are already\nactive. This makes `extend-select` the preferred option when you want\nto enable additional rules on top of the defaults without having to\nenumerate them.\n\nFor example, to enable the defaults plus flake8-bugbear:\n\n```toml\n[tool.ruff.lint]\n# Adds flake8-bugbear on top of the default rules.\nextend-select = [\"B\"]\n```\n\nUsing `select = [\"B\"]` instead would _replace_ the defaults, enabling\nonly flake8-bugbear.",
               "type": [
                 "array",
                 "null"
@@ -3862,7 +3900,7 @@
               "deprecated": true
             },
             "include": {
-              "description": "A list of file patterns to include when linting.\n\nInclusion are based on globs, and should be single-path patterns, like\n`*.pyw`, to include any file with the `.pyw` extension. `pyproject.toml` is\nincluded here not for configuration but because we lint whether e.g. the\n`[project]` matches the schema.\n\nNotebook files (`.ipynb` extension) are included by default on Ruff 0.6.0+.\n\nFor more information on the glob syntax, refer to the [`globset` documentation](https://docs.rs/globset/latest/globset/#syntax).",
+              "description": "A list of file patterns to include when linting.\n\nInclusion are based on globs, and should be single-path patterns, like\n`*.pyw`, to include any file with the `.pyw` extension.\n`pyproject.toml`, `ruff.toml`, and `.ruff.toml` are included here not for\nconfiguration but because we lint whether e.g. the `[project]` matches\nthe schema in `pyproject.toml` or that rule names are used as selectors.\n\nNotebook files (`.ipynb` extension) are included by default on Ruff 0.6.0+.\n\nFor more information on the glob syntax, refer to the [`globset` documentation](https://docs.rs/globset/latest/globset/#syntax).",
               "type": [
                 "array",
                 "null"
@@ -3957,6 +3995,13 @@
                 {
                   "type": "null"
                 }
+              ]
+            },
+            "output-prefer-rule-codes": {
+              "description": "Whether to prefer rule codes over human-readable rule names in diagnostic output, even\nwhen preview mode is enabled.\n\nDiagnostics without rule codes, such as syntax errors and formatting diagnostics, will\ncontinue to use the human-readable name, but those corresponding to lint rules will use the\nrule's code. For example, the concise diagnostic for an unused import will use the code\n`F401` instead of the name `unused-import`:\n\n```console\n$ ruff check --preview --config 'output-prefer-rule-codes = true' --output-format=concise example.py\nexample.py:1:8: F401 [*] `math` imported but unused\n$ ruff check --preview --config 'output-prefer-rule-codes = false' --output-format=concise example.py\nexample.py:1:8: unused-import: [*] `math` imported but unused\n```",
+              "type": [
+                "boolean",
+                "null"
               ]
             },
             "pep8-naming": {
@@ -4585,7 +4630,7 @@
                     "null"
                   ],
                   "items": {
-                    "type": "string"
+                    "$ref": "#/definitions/Name"
                   }
                 },
                 "function-names": {
@@ -4595,7 +4640,7 @@
                     "null"
                   ],
                   "items": {
-                    "type": "string"
+                    "$ref": "#/definitions/Name"
                   }
                 }
               },
@@ -4651,7 +4696,7 @@
                   "uniqueItems": true
                 },
                 "extend-aliases": {
-                  "description": "A mapping from module to conventional import alias. These aliases will\nbe added to the [`aliases`](#lint_flake8-import-conventions_aliases) mapping.",
+                  "description": "A mapping from module to conventional import alias. These aliases will\nbe added to the [`aliases`](#lint_flake8-import-conventions_aliases) mapping\nand will override any existing `aliases` if the two settings overlap.",
                   "type": [
                     "object",
                     "null"
@@ -4815,7 +4860,7 @@
                     "null"
                   ],
                   "items": {
-                    "type": "string"
+                    "$ref": "#/definitions/Name"
                   }
                 },
                 "ignore-names": {
@@ -4825,7 +4870,7 @@
                     "null"
                   ],
                   "items": {
-                    "type": "string"
+                    "$ref": "#/definitions/Name"
                   }
                 }
               },
@@ -5596,7 +5641,7 @@
                   }
                 },
                 "extend-select": {
-                  "description": "A list of rule codes or prefixes to enable, in addition to those\nspecified by [`select`](#lint_select).\n\nUnlike [`select`](#lint_select), which _replaces_ the default rule set\nwhen specified, `extend-select` _adds_ to whatever rules are already\nactive. This makes `extend-select` the preferred option when you want\nto enable additional rules on top of the defaults without having to\nenumerate them.\n\nFor example, to enable the defaults plus flake8-bugbear:\n\n```toml\n[tool.ruff.lint]\n# Adds flake8-bugbear on top of the default rules (E4, E7, E9, F).\nextend-select = [\"B\"]\n```\n\nUsing `select = [\"B\"]` instead would _replace_ the defaults, enabling\nonly flake8-bugbear.",
+                  "description": "A list of rule codes or prefixes to enable, in addition to those\nspecified by [`select`](#lint_select).\n\nUnlike [`select`](#lint_select), which _replaces_ the default rule set\nwhen specified, `extend-select` _adds_ to whatever rules are already\nactive. This makes `extend-select` the preferred option when you want\nto enable additional rules on top of the defaults without having to\nenumerate them.\n\nFor example, to enable the defaults plus flake8-bugbear:\n\n```toml\n[tool.ruff.lint]\n# Adds flake8-bugbear on top of the default rules.\nextend-select = [\"B\"]\n```\n\nUsing `select = [\"B\"]` instead would _replace_ the defaults, enabling\nonly flake8-bugbear.",
                   "type": [
                     "array",
                     "null"
@@ -6063,6 +6108,10 @@
                 }
               },
               "additionalProperties": false
+            },
+            "Name": {
+              "description": "An immutable name.\n\n# Choosing a string representation\n\nOn 64-bit targets, [`CharStr`] occupies 16 bytes and stores up to 16 UTF-8 bytes inline. Longer\nvalues use an exactly-sized, reference-counted allocation, so cloning a heap-backed value\nreuses its allocation. [`compact_str::CompactString`] occupies 24 bytes, stores up to 24 bytes\ninline, and remains mutable; cloning a heap-backed value copies its contents into a new\nallocation.\n\nPrefer `CharStr` for immutable text that is retained densely or passed between owners, when\neither the smaller handle or structural sharing offsets the extra heap allocations for values\nbetween 17 and 24 bytes. Prefer `CompactString` for uniquely owned text, especially when it is\nbuilt incrementally, mutated, or commonly falls in that 17-to-24-byte range.\n\n`Name` uses `CharStr` because names appear throughout the AST and repeated heap-backed parser\nnames share an allocation. By contrast, [`crate::DebugText`] uses `CompactString` because it\nbuilds a uniquely owned buffer incrementally, and `ty_module_resolver::ModuleName` uses\n`CompactString` because module names can be extended in place.\n\nConverting a borrowed `&str` into `CharStr` creates a new value and does not preserve structural\nsharing. When an API retains text already held in a `CharStr` (including a `Name`), pass or clone\nthe owned value rather than converting it through `&str`. This is especially relevant at Salsa\ninterning boundaries.",
+              "type": "string"
             },
             "NameImports": {
               "type": "string"
@@ -7662,9 +7711,12 @@
                 "RUF102",
                 "RUF103",
                 "RUF104",
+                "RUF105",
+                "RUF106",
                 "RUF2",
                 "RUF20",
                 "RUF200",
+                "RUF201",
                 "S",
                 "S1",
                 "S10",
@@ -7921,6 +7973,7 @@
                 "UP049",
                 "UP05",
                 "UP050",
+                "UP051",
                 "W",
                 "W1",
                 "W19",
@@ -8094,6 +8147,7 @@
                 "default-factory-kwarg",
                 "del-attr-with-constant",
                 "delete-full-slice",
+                "deprecated-abc-decorator",
                 "deprecated-c-element-tree",
                 "deprecated-import",
                 "deprecated-mock-import",
@@ -8432,6 +8486,7 @@
                 "none-not-at-end-of-union",
                 "nonlocal-and-global",
                 "nonlocal-without-binding",
+                "noqa-comments",
                 "not-in-test",
                 "not-is-test",
                 "numeric-literal-too-long",
@@ -8601,6 +8656,8 @@
                 "return-outside-function",
                 "reuse-of-groupby-generator",
                 "root-logger-call",
+                "rule-codes-in-selectors",
+                "rule-codes-in-suppression-comments",
                 "run-process-in-async-function",
                 "runtime-cast-value",
                 "runtime-import-in-type-checking-block",
@@ -8959,7 +9016,7 @@
               ]
             },
             "rules": {
-              "description": "Configures the enabled rules and their severity.\n\nThe keys are either rule names or `all` to set a default severity for all rules.\nSee [the rules documentation](https://ty.dev/rules) for a list of all available rules.\n\nValid severities are:\n\n* `ignore`: Disable the rule.\n* `warn`: Enable the rule and create a warning diagnostic.\n* `error`: Enable the rule and create an error diagnostic.\n  ty will exit with a non-zero code if any error diagnostics are emitted.",
+              "description": "Configures the enabled rules and their severity.\n\nThe keys are either rule names or `all` to set a default severity for all rules.\nSee [the rules documentation](https://ty.dev/rules) for a list of all available rules.\n\nValid severities are:\n\n* `ignore`: Disable the rule.\n* `warn`: Enable the rule and create a warning diagnostic.\n* `error`: Enable the rule and create an error diagnostic.\n\nBy default, ty exits with code 1 if it emits any warning or error diagnostics.\nSet `terminal.error-on-warning` to `false` to exit with code 0 if all diagnostics have `warning` severity.",
               "anyOf": [
                 {
                   "$ref": "#/definitions/Rules"
@@ -9021,6 +9078,20 @@
                     "boolean",
                     "null"
                   ]
+                },
+                "strict-equality-semantics": {
+                  "description": "Configure ty's behavior regarding type inference and narrowing of equality\nchecks. Defaults to `false`.\n\nBy default, ty makes various assumptions about equality checks that match the\nintuitions of most Python programmers, but may not be fully sound in all situations.\nEnabling this option makes ty more conservative about these assumptions, making it\nless likely to infer `Literal[True]` or `Literal[False]` as the result of an\nequality check. This has various effects on type checking, including fewer type\nnarrowing opportunities and more conservative assumptions regarding control flow.\n\nOne way in which ty will by default make unsound assumptions is by narrowing an\nobject `x` of type `str` to `Literal[\"a\"]` after an `if x == \"a\"` check. This is\nunsound because a subclass of `str` with value `\"a\"` will (by default) compare equal\nto `\"a\"`, but will not be of type `Literal[\"a\"]`:\n\n```pycon\n>>> # `Literal[\"a\"]` can only be inhabited by instances of exactly `str`, not\n>>> # subclasses, but str subclasses compare equal by default:\n>>> class StringSubclass(str): ...\n...\n>>> StringSubclass(\"a\") == \"a\"\nTrue\n>>>\n>>> # This also applies to `StrEnum`s:\n>>> from enum import StrEnum\n>>> class MyEnum(StrEnum):\n...     A = \"a\"\n...\n>>> MyEnum.A == \"a\"\nTrue\n```\n\nEnabling this option prevents the unsound narrowing of `x` to `Literal[\"a\"]`,\nand instead keeps it as `str`:\n\n```python\nfrom typing import Literal\n\ndef parse(value: str) -> Literal[\"a\"] | None:\n    # with `strict-equality-semantics = true`, no narrowing will occur here,\n    # and an error will be emitted on the `return` statement.\n    if value == \"a\":\n        return value\n    return None\n```\n\nAnother assumption ty makes by default is that subclasses will never override `__eq__` or\n`__ne__`. This allows ty to narrow the following union based on an equality check, despite\nthe fact that an instance of a subclass of `Foo` could compare equal to `None`, and it's\nperfectly valid to pass an instance of a subclass into the `x` parameter of this function:\n\n```python\ndef narrow(x: Foo | None, other: Foo) -> None:\n    if x == other:\n        # with this option enabled, `x` will still have type `Foo | None` here,\n        # since it is legal to subclass `Foo` and override its `__eq__` method.\n        reveal_type(x)\n```\n\nMany operations in Python implicitly call `__eq__` under the hood; enabling this option\nwill also impact those operations. For example, this option will also impact narrowing from\n`in` checks, and narrowing in `match` statements that use value patterns:\n\n```python\ndef narrow_in(x: Foo | None, other: list[Foo]) -> None:\n    if x in other:\n        # with this option enabled, `x` will still have type `Foo | None` here,\n        # since the `in` operator implicitly calls `__eq__` on each element of `other`.\n        reveal_type(x)\n\n\ndef narrow_match(x: str) -> None:\n    match x:\n        case \"a\":\n            # with this option enabled, `x` will still have type `str` here,\n            # since this `case` branch will be taken by any object that compares\n            # equal to `\"a\"`, including subclasses of `str`.\n            reveal_type(x)\n```",
+                  "type": [
+                    "boolean",
+                    "null"
+                  ]
+                },
+                "strict-generic-narrowing": {
+                  "description": "Whether ty should use strict narrowing for unspecialized generic classes in\n`isinstance()` and `issubclass()` checks, as well as `match` class patterns.\n\nWhen enabled, ty narrows to the top materialization of the class. For example,\n`isinstance(value, list)` narrows a value of type `object` to `Top[list[Unknown]]`,\nrepresenting the (infinite) union of all possible `list` specializations. Iterating\nover the list would yield values of type `object`.\n\nWhen disabled, ty uses gradual generic narrowing, preserving compatible type\narguments from the original type where possible. For example,\n`isinstance(value, list)` narrows a value of type `Sequence[int]` to `list[int]`.\nIf no specialization is available, the same check narrows a value of type `object`\nto `list[Unknown]`; items of any type can then be appended to the list. Class\npatterns such as `case list():` follow the same behavior.\n\nDefaults to `false`.",
+                  "type": [
+                    "boolean",
+                    "null"
+                  ]
                 }
               },
               "additionalProperties": false
@@ -9067,7 +9138,7 @@
                   ]
                 },
                 "python-version": {
-                  "description": "Specifies the version of Python that will be used to analyze the source code.\nThe version should be specified as a string in the format `M.m` where `M` is the major version\nand `m` is the minor (e.g. `\"3.7\"` or `\"3.12\"`).\nIf a version is provided, ty will generate errors if the source code makes use of language features\nthat are not supported in that version.\n\nIf a version is not specified, ty will try the following techniques in order of preference\nto determine a value:\n1. Check for the `project.requires-python` setting in a `pyproject.toml` file\n   and use the minimum version from the specified range\n2. Check for an activated or configured Python environment\n   and attempt to infer the Python version of that environment\n3. Fall back to the default value (see below)\n\nFor some language features, ty can also understand conditionals based on comparisons\nwith `sys.version_info`. These are commonly found in typeshed, for example,\nto reflect the differing contents of the standard library across Python versions.",
+                  "description": "Specifies the version of Python that will be used to analyze the source code.\nThe version should be specified as a string in the format `M.m` where `M` is the major version\nand `m` is the minor (e.g. `\"3.7\"` or `\"3.12\"`).\nIf a version is provided, ty will generate errors if the source code makes use of language features\nthat are not supported in that version.\n\nty officially supports type checking code that targets Python 3.10 and later. Python 3.7\nthrough 3.9 can still be selected, but ty may produce false positives or false negatives for\nstandard-library APIs because its bundled stubs do not fully describe those versions.\n\nIf a version is not specified, ty will try the following techniques in order of preference\nto determine a value:\n1. Check for the `project.requires-python` setting in a `pyproject.toml` file\n   and use the minimum version from the specified range\n2. Check for an activated or configured Python environment\n   and attempt to infer the Python version of that environment\n3. Fall back to the default value (see below)\n\nFor some language features, ty can also understand conditionals based on comparisons\nwith `sys.version_info`. These are commonly found in typeshed, for example,\nto reflect the differing contents of the standard library across Python versions.",
                   "anyOf": [
                     {
                       "$ref": "#/definitions/SupportedPythonVersion"
@@ -9244,6 +9315,16 @@
             "Rules": {
               "type": "object",
               "properties": {
+                "abstract-and-final-method": {
+                  "title": "detects methods that are both abstract and final",
+                  "description": "## What it does\n\nChecks for methods decorated with both `@abstractmethod` and `@final`.\n\n## Why is this bad?\n\nAn abstract method must be overridden for a subclass to become concrete, but a final\nmethod cannot be overridden. Combining the decorators therefore makes it impossible\nfor a subclass to provide a concrete implementation.\n\n## Example\n\n```python\nfrom abc import ABC, abstractmethod\nfrom typing import final\n\n\nclass Base(ABC):\n    @final\n    @abstractmethod\n    def method(self) -> None: ...  # error\n```",
+                  "default": "error",
+                  "oneOf": [
+                    {
+                      "$ref": "#/definitions/Level"
+                    }
+                  ]
+                },
                 "abstract-method-in-final-class": {
                   "title": "detects `@final` classes with unimplemented abstract methods",
                   "description": "## What it does\n\nChecks for `@final` classes that have unimplemented abstract methods.\n\n## Why is this bad?\n\nA class decorated with `@final` cannot be subclassed. If such a class has abstract\nmethods that are not implemented, the class can never be properly instantiated, as\nthe abstract methods can never be implemented (since subclassing is prohibited).\n\nAt runtime, instantiation of classes with unimplemented abstract methods is only\nprevented for classes that have `ABCMeta` (or a subclass of it) as their metaclass.\nHowever, type checkers also enforce this for classes that do not use `ABCMeta`, since\nthe intent for the class to be abstract is clear from the use of `@abstractmethod`.\n\n## Example\n\n```python\nfrom abc import ABC, abstractmethod\nfrom typing import final\n\n\nclass Base(ABC):\n    @abstractmethod\n    def method(self) -> int: ...\n\n\n@final\n# `Derived` does not implement `method`\nclass Derived(Base):  # error\n    pass\n```",
@@ -9265,7 +9346,7 @@
                 },
                 "ambiguous-protocol-member": {
                   "title": "detects protocol classes with ambiguous interfaces",
-                  "description": "## What it does\n\nChecks for protocol classes with members that will lead to ambiguous interfaces.\n\n## Why is this bad?\n\nAssigning to an undeclared variable in a protocol class leads to an ambiguous\ninterface which may lead to the type checker inferring unexpected things. It's\nrecommended to ensure that all members of a protocol class are explicitly declared.\n\n## Examples\n\n```py\nfrom typing import Protocol\n\n\nclass BaseProto(Protocol):\n    a: int  # fine (explicitly declared as `int`)\n\n    # fine: a method definition using `def` is considered a declaration\n    def method_member(self) -> int: ...\n\n    # no explicit declaration, leading to ambiguity\n    c = \"some variable\"  # error\n    # no explicit declaration, leading to ambiguity\n    b = method_member  # error\n\n    # This creates implicit assignments of `d` and `e` in the protocol class body.\n    # Were they really meant to be considered protocol members?\n    # error: \"`d` is not declared as a protocol member\"\n    # error: \"`e` is not declared as a protocol member\"\n    for d, e in enumerate(range(42)):\n        pass\n\n\nclass SubProto(BaseProto, Protocol):\n    a = 42  # fine (declared in superclass)\n```",
+                  "description": "## What it does\n\nChecks for protocol classes with members that will lead to ambiguous interfaces.\n\n## Why is this bad?\n\nAssigning to an undeclared variable in a protocol class, or to an undeclared attribute\nthrough a protocol method's `self` or `cls` receiver, leads to an ambiguous interface\nwhich may lead to the type checker inferring unexpected things. It's recommended to\nensure that all members of a protocol class are explicitly declared.\n\n## Examples\n\n```py\nfrom typing import ClassVar, Protocol\n\n\nclass BaseProto(Protocol):\n    a: int  # fine (explicitly declared as `int`)\n    instance_member: str\n    class_member: ClassVar[str]\n\n    # fine: a method definition using `def` is considered a declaration\n    def method_member(self) -> int: ...\n\n    def method(self) -> None:\n        self.instance_member = \"value\"  # fine (declared in the class body)\n        self.implicit = \"value\"  # error: [ambiguous-protocol-member]\n\n    @classmethod\n    def class_method(cls) -> None:\n        cls.class_member = \"value\"  # fine (declared in the class body)\n        cls.implicit_class = \"value\"  # error: [ambiguous-protocol-member]\n\n    # no explicit declaration, leading to ambiguity\n    c = \"some variable\"  # error\n    # no explicit declaration, leading to ambiguity\n    b = method_member  # error\n\n    # This creates implicit assignments of `d` and `e` in the protocol class body.\n    # Were they really meant to be considered protocol members?\n    # error: \"`d` is not declared as a protocol member\"\n    # error: \"`e` is not declared as a protocol member\"\n    for d, e in enumerate(range(42)):\n        pass\n\n\nclass SubProto(BaseProto, Protocol):\n    a = 42  # fine (declared in superclass)\n```",
                   "default": "warn",
                   "oneOf": [
                     {
@@ -9277,6 +9358,16 @@
                   "title": "detects failed type assertions",
                   "description": "## What it does\n\nChecks for `assert_type()` calls where the actual type\nis an unspellable subtype of the asserted type.\n\n## Why is this bad?\n\n`assert_type()` is intended to ensure that the inferred type of a value\nis exactly the same as the asserted type. But in some situations, ty\nhas nonstandard extensions to the type system that allow it to infer\nmore precise types than can be expressed in user annotations. ty emits a\ndifferent error code to `type-assertion-failure` in these situations so\nthat users can easily differentiate between the two cases.\n\n## Example\n\n```toml\n[environment]\npython-version = \"3.11\"\n```\n\n```python\nfrom typing import assert_type\n\n\ndef _(x: int):\n    assert_type(x, int)  # fine\n    if x:\n        # the actual type is `int & ~AlwaysFalsy`,\n        # which excludes types like `Literal[0]`\n        # error: [assert-type-unspellable-subtype]\n        assert_type(x, int)\n```",
                   "default": "error",
+                  "oneOf": [
+                    {
+                      "$ref": "#/definitions/Level"
+                    }
+                  ]
+                },
+                "blanket-ignore-comment": {
+                  "title": "detects blanket `ty: ignore` comments",
+                  "description": "## What it does\n\nChecks for `ty: ignore` comments that don't specify which rules to ignore.\n\n## Why is this bad?\n\nA blanket `ty: ignore` comment suppresses every type-checking diagnostic on the\napplicable line or file. Specifying rule codes documents which diagnostics are\nexpected and prevents the comment from silencing unrelated errors.\n\n## Examples\n\n```py\n# error\nvalue = unknown  # ty: ignore\n```\n\nUse instead:\n\n```py\nvalue = unknown  # ty: ignore[unresolved-reference]\n```",
+                  "default": "ignore",
                   "oneOf": [
                     {
                       "$ref": "#/definitions/Level"
@@ -9445,7 +9536,7 @@
                 },
                 "final-without-value": {
                   "title": "detects `Final` declarations without a value",
-                  "description": "## What it does\n\nChecks for `Final` symbols that are declared without a value and are never\nassigned a value in their scope.\n\n## Why is this bad?\n\nA `Final` symbol must be initialized with a value at the time of declaration\nor in a subsequent assignment. At module or function scope, the assignment must\noccur in the same scope. In a class body, the assignment may occur in `__init__`.\n\n## Examples\n\n```python\nfrom typing import Final\n\n# `Final` symbol without a value\nMY_CONSTANT: Final[int]  # error\n\n# OK: `Final` symbol with a value\nINITIALIZED_CONSTANT: Final[int] = 1\n```",
+                  "description": "## What it does\n\nChecks for `Final` symbols that are declared without a value and are never\nassigned a value in their scope.\n\n## Why is this bad?\n\nA `Final` symbol must be initialized with a value at the time of declaration\nor in a subsequent assignment. At module or function scope, the assignment must\noccur in the same scope. In a class body, the assignment may occur in `__init__`.\nProtocol members are declarations of an interface and do not require a value.\n\n## Examples\n\n```python\nfrom typing import Final\n\n# `Final` symbol without a value\nMY_CONSTANT: Final[int]  # error\n\n# OK: `Final` symbol with a value\nINITIALIZED_CONSTANT: Final[int] = 1\n```",
                   "default": "error",
                   "oneOf": [
                     {
@@ -9535,7 +9626,7 @@
                 },
                 "invalid-attribute-access": {
                   "title": "Invalid attribute access",
-                  "description": "## What it does\n\nChecks for assignments to class variables from instances\nand assignments to instance-only attributes from their class.\n\n## Why is this bad?\n\nIncorrect assignments break the rules of the type system and\nweaken a type checker's ability to accurately reason about your code.\n\n## Examples\n\n```python\nfrom typing import ClassVar\n\n\nclass C:\n    class_var: ClassVar[int] = 1\n\n    def __init__(self):\n        self.instance_var: int = 42\n\n\nC.class_var = 3  # okay\n# Cannot assign to class variable\nC().class_var = 3  # error\nC().instance_var = 56\n# Cannot assign to instance-only variable from class\nC.instance_var = 56  # error\n```",
+                  "description": "## What it does\n\nChecks for assignments to class variables from instances\nand assignments to instance-only attributes from their class.\n\nAn \"instance-only\" variable is one which is only ever assigned to or declared\nwhen accessed via `self` in an instance method.\n\n## Why is this bad?\n\nIncorrect assignments break the rules of the type system and\nweaken a type checker's ability to accurately reason about your code.\n\n## Examples\n\n```python\nfrom typing import ClassVar\n\n\nclass C:\n    instance_var: int\n    class_var: ClassVar[int] = 1\n\n    def __init__(self):\n        # instance variable declared in the class body\n        self.instance_var = 42\n\n        # instance-only variable not declared in the class body\n        self.instance_only_var: int = 42\n\n\nC.class_var = 3  # okay\n\nC.instance_var = 56  # okay\nC().instance_var = 72  # okay\n\nC().instance_only_var = 100  # okay\n\n# Cannot assign to class variable from instance\nC().class_var = 3  # error\n\n# Cannot assign to instance-only variable from class\nC.instance_only_var = 56  # error\n```",
                   "default": "error",
                   "oneOf": [
                     {
@@ -9715,7 +9806,7 @@
                 },
                 "invalid-match-pattern": {
                   "title": "detect invalid match patterns",
-                  "description": "## What it does\n\nChecks for invalid match patterns.\n\n## Why is this bad?\n\nMatching on invalid patterns will lead to a runtime error.\n\n## Examples\n\n```python\nNotAClass = 42\n\nmatch object():\n    # TypeError at runtime: must be a class\n    case NotAClass():  # error\n        ...\n```",
+                  "description": "## What it does\n\nChecks for invalid match patterns.\n\n## Why is this bad?\n\nInvalid match patterns can cause a `TypeError` at runtime. This includes:\n\n- Using a non-type object in a class pattern.\n- Providing positional subpatterns when `__match_args__` is missing or has an invalid static type.\n- Matching against `collections.abc.Callable` with positional subpatterns.\n- Matching against a non-runtime-checkable protocol.\n- Matching against a `TypedDict`.\n\n## Examples\n\n```python\nclass Point:\n    __match_args__ = (\"x\", \"y\")\n\n\ndef describe(p: Point) -> None:\n    match p:\n        # TypeError at runtime: Point() accepts 2 positional sub-patterns (3 given)\n        case Point(x, y, z):  # error: [invalid-match-pattern]\n            ...\n```\n\n```python\nNotAClass = 42\n\nmatch object():\n    # TypeError at runtime: called match pattern must be a class\n    case NotAClass():  # error: [invalid-match-pattern]\n        ...\n```",
                   "default": "error",
                   "oneOf": [
                     {
@@ -9745,7 +9836,7 @@
                 },
                 "invalid-named-tuple": {
                   "title": "detects invalid `NamedTuple` class definitions",
-                  "description": "## What it does\n\nChecks for invalidly defined `NamedTuple` classes.\n\n## Why is this bad?\n\nAn invalidly defined `NamedTuple` class may lead to the type checker\ndrawing incorrect conclusions. It may also lead to `TypeError`s or\n`AttributeError`s at runtime.\n\n## Examples\n\nA class definition cannot combine `NamedTuple` with other base classes\nin multiple inheritance; doing so raises a `TypeError` at runtime. The sole\nexception to this rule is `Generic[]`, which can be used alongside `NamedTuple`\nin a class's bases list.\n\n```pycon\n>>> from typing import NamedTuple\n>>> class Foo(NamedTuple, object): ...\nTypeError: can only inherit from a NamedTuple type and Generic\n```\n\nFurther, `NamedTuple` field names cannot start with an underscore:\n\n```pycon\n>>> from typing import NamedTuple\n>>> class Foo(NamedTuple):\n...     _bar: int\nValueError: Field names cannot start with an underscore: '_bar'\n```\n\n`NamedTuple` classes also have certain synthesized attributes (like `_asdict`, `_make`,\n`_replace`, etc.) that cannot be overwritten. Attempting to assign to these attributes\nwithout a type annotation will raise an `AttributeError` at runtime.\n\n```pycon\n>>> from typing import NamedTuple\n>>> class Foo(NamedTuple):\n...     x: int\n...     _asdict = 42\nAttributeError: Cannot overwrite NamedTuple attribute _asdict\n```",
+                  "description": "## What it does\n\nChecks for invalidly defined `NamedTuple` classes.\n\n## Why is this bad?\n\nAn invalidly defined `NamedTuple` class may lead to the type checker\ndrawing incorrect conclusions. It may also lead to `TypeError`s or\n`AttributeError`s at runtime.\n\n## Examples\n\nA class definition cannot combine `NamedTuple` with other base classes\nin multiple inheritance; doing so raises a `TypeError` at runtime. The sole\nexception to this rule is `Generic[]`, which can be used alongside `NamedTuple`\nin a class's bases list.\n\n```pycon\n>>> from typing import NamedTuple\n>>> class Foo(NamedTuple, object): ...\nTypeError: can only inherit from a NamedTuple type and Generic\n```\n\nFurther, `NamedTuple` field names cannot start with an underscore:\n\n```pycon\n>>> from typing import NamedTuple\n>>> class Foo(NamedTuple):\n...     _bar: int\nValueError: Field names cannot start with an underscore: '_bar'\n```\n\n`NamedTuple` classes also have certain synthesized attributes (like `_asdict`, `_make`,\n`_replace`, etc.) that cannot be overwritten. Attempting to assign to these attributes\nwithout a type annotation will raise an `AttributeError` at runtime.\n\n```pycon\n>>> from typing import NamedTuple\n>>> class Foo(NamedTuple):\n...     x: int\n...     _asdict = 42\nAttributeError: Cannot overwrite NamedTuple attribute _asdict\n```\n\nFinally, `NamedTuple` field annotations cannot use the `ClassVar` or `Final` type\nqualifiers. These qualifiers also cause a runtime error when annotations are evaluated eagerly:\n\n```pycon\n>>> from typing import ClassVar, NamedTuple\n>>> class Foo(NamedTuple):\n...     x: ClassVar[int]\nTypeError: typing.ClassVar[int] is not valid as type argument\n```",
                   "default": "error",
                   "oneOf": [
                     {
@@ -9845,7 +9936,7 @@
                 },
                 "invalid-syntax-in-forward-annotation": {
                   "title": "detects invalid syntax in forward annotations",
-                  "description": "## What it does\n\nChecks for string-literal annotations where the string cannot be\nparsed as a Python expression.\n\n## Why is this bad?\n\nType annotations are expected to be Python expressions that\ndescribe the expected type of a variable, parameter, attribute or\n`return` statement.\n\nType annotations are permitted to be string-literal expressions, in\norder to enable forward references to names not yet defined.\nHowever, it must be possible to parse the contents of that string\nliteral as a normal Python expression.\n\n## Example\n\n```python\ndef foo() -> \"intstance of C\":  # error\n    return 42\n\n\nclass C: ...\n```\n\nUse instead:\n\n```python\ndef foo() -> \"C\":\n    return C()\n\n\nclass C: ...\n```\n\n## References\n\n- [Typing spec: The meaning of annotations](https://typing.python.org/en/latest/spec/annotations.html#the-meaning-of-annotations)\n- [Typing spec: String annotations](https://typing.python.org/en/latest/spec/annotations.html#string-annotations)",
+                  "description": "## What it does\n\nChecks for string-literal annotations where the string cannot be\nparsed as a Python expression.\n\n## Why is this bad?\n\nType annotations are expected to be Python expressions that\ndescribe the expected type of a variable, parameter, attribute or\n`return` statement.\n\nType annotations are permitted to be string-literal expressions, in\norder to enable forward references to names not yet defined.\nHowever, it must be possible to parse the contents of that string\nliteral as a normal Python expression.\n\n## Example\n\n```python\ndef foo() -> \"instance of C\":  # error\n    return 42\n\n\nclass C: ...\n```\n\nUse instead:\n\n```python\ndef foo() -> \"C\":\n    return C()\n\n\nclass C: ...\n```\n\n## References\n\n- [Typing spec: The meaning of annotations](https://typing.python.org/en/latest/spec/annotations.html#the-meaning-of-annotations)\n- [Typing spec: String annotations](https://typing.python.org/en/latest/spec/annotations.html#string-annotations)",
                   "default": "error",
                   "oneOf": [
                     {
@@ -9865,7 +9956,7 @@
                 },
                 "invalid-type-alias-type": {
                   "title": "detects invalid TypeAliasType definitions",
-                  "description": "## What it does\n\nChecks for the creation of invalid `TypeAliasType`s\n\n## Why is this bad?\n\nThere are several requirements that you must follow when creating a `TypeAliasType`.\n\n## Examples\n\n```toml\n[environment]\npython-version = \"3.12\"\n```\n\n```python\nfrom typing import TypeAliasType\n\n\ndef get_name() -> str:\n    return \"NewAlias\"\n\n\nIntOrStr = TypeAliasType(\"IntOrStr\", int | str)  # okay\n# TypeAliasType name must be a string literal\nNewAlias = TypeAliasType(get_name(), int)  # error\n```",
+                  "description": "## What it does\n\nChecks for the creation of invalid `TypeAliasType`s\n\n## Why is this bad?\n\nThere are several requirements that you must follow when creating a `TypeAliasType`.\n\n## Examples\n\n```toml\n[environment]\npython-version = \"3.12\"\n```\n\n```python\nfrom typing import TypeAliasType, TypeVar\n\n\ndef get_name() -> str:\n    return \"NewAlias\"\n\n\nIntOrStr = TypeAliasType(\"IntOrStr\", int | str)  # okay\n# TypeAliasType name must be a string literal\nNewAlias = TypeAliasType(get_name(), int)  # error\n\nT = TypeVar(\"T\")\nGenericAlias = TypeAliasType(\"GenericAlias\", list[T], type_params=(T,))  # okay\n# TypeAliasType type parameters must be type variables\nInvalidAlias = TypeAliasType(\"InvalidAlias\", list[T], type_params=(list[T],))  # error\n```",
                   "default": "error",
                   "oneOf": [
                     {
@@ -9896,16 +9987,6 @@
                 "invalid-type-form": {
                   "title": "detects invalid type forms",
                   "description": "## What it does\n\nChecks for expressions that are used as [type expressions]\nbut cannot validly be interpreted as such.\n\n## Why is this bad?\n\nSuch expressions cannot be understood by ty.\nIn some cases, they might raise errors at runtime.\n\n## Examples\n\n```python\nfrom typing import Annotated\n\n# Int literals are not allowed in this context in type expressions\na: list[1]  # error\n# `Annotated` expects at least two arguments\nb: Annotated[int]  # error\n```\n\n[type expressions]: https://typing.python.org/en/latest/spec/annotations.html#type-and-annotation-expressions",
-                  "default": "error",
-                  "oneOf": [
-                    {
-                      "$ref": "#/definitions/Level"
-                    }
-                  ]
-                },
-                "invalid-type-guard-call": {
-                  "title": "detects type guard function calls that has no narrowing effect",
-                  "description": "## What it does\n\nChecks for type guard function calls without a valid target.\n\n## Why is this bad?\n\nThe first non-keyword non-variadic argument to a type guard function\nis its target and must map to a symbol.\n\nStarred (`is_str(*a)`), literal (`is_str(42)`) and other non-symbol-like\nexpressions are invalid as narrowing targets.\n\n## Examples\n\n```toml\n[environment]\npython-version = \"3.13\"\n```\n\n```python\nfrom typing import TypeIs\n\n\ndef is_int(value: object = object()) -> TypeIs[int]:\n    return isinstance(value, int)\n\n\n# no positional narrowing target\nis_int()  # error\n\n# narrowing target passed by keyword\nis_int(value=1)  # error\n```",
                   "default": "error",
                   "oneOf": [
                     {
@@ -10185,8 +10266,18 @@
                 },
                 "possibly-unresolved-reference": {
                   "title": "detects references to possibly undefined names",
-                  "description": "## What it does\n\nChecks for references to names that are possibly not defined.\n\n## Why is this bad?\n\nUsing an undefined variable will raise a `NameError` at runtime.\n\n## Rule status\n\nThis rule is currently disabled by default because of the number of\nfalse positives it can produce.\n\n## Example\n\n```python\nfor i in range(0):\n    x = i\n\n# NameError: name 'x' is not defined\nprint(x)  # error\n```",
+                  "description": "## What it does\n\nChecks for references to names that are possibly not defined.\n\n## Why is this bad?\n\nUsing an undefined variable will raise a `NameError` at runtime.\n\n## Rule status\n\nThis rule is currently disabled by default because of the number of\nfalse positives it can produce.\n\n## Example\n\n```python\nfor i in range(int(input())):\n    x = i\n\n# NameError: name 'x' is not defined\nprint(x)  # error\n```",
                   "default": "ignore",
+                  "oneOf": [
+                    {
+                      "$ref": "#/definitions/Level"
+                    }
+                  ]
+                },
+                "pydantic-discarded-extra-argument": {
+                  "title": "detects extra constructor arguments that Pydantic silently discards",
+                  "description": "## What it does\n\nChecks for extra keyword arguments that Pydantic silently discards when a model uses\n`extra=\"ignore\"`, either implicitly or explicitly.\n\n## Why is this bad?\n\nA discarded argument has no effect on the constructed model, but it may indicate a misspelled field\nname or an incorrect assumption about the model's schema.\n\n## Example\n\n```python {data-mdtest=\"ignore\"}\nfrom pydantic import BaseModel\n\n\nclass User(BaseModel):\n    name: str\n    admin: bool = False\n\n\nuser = User(name=\"Alice\", admni=True)  # error: [pydantic-discarded-extra-argument]\n```\n\nIf the field name has been misspelled, fix the typo. Otherwise, consider removing the extra argument,\nor explicitly configure the model with `extra=\"allow\"`.",
+                  "default": "warn",
                   "oneOf": [
                     {
                       "$ref": "#/definitions/Level"
@@ -10215,7 +10306,7 @@
                 },
                 "redundant-final-classvar": {
                   "title": "detects redundant combinations of `ClassVar` and `Final`",
-                  "description": "## What it does\n\nChecks for redundant combinations of the `ClassVar` and `Final` type qualifiers.\n\n## Why is this bad?\n\nAn attribute that is marked `Final` in a class body is implicitly a class variable.\nMarking it as `ClassVar` is therefore redundant.\n\nNote that this diagnostic is not emitted for dataclass fields, where\n`ClassVar[Final[int]]` has a distinct meaning from `Final[int]`.\n\n## Examples\n\n```python\nfrom typing import ClassVar, Final\n\n\nclass C:\n    # redundant\n    x: ClassVar[Final[int]] = 1  # error\n    # redundant\n    y: Final[ClassVar[int]] = 1  # error\n```",
+                  "description": "## What it does\n\nChecks for redundant combinations of the `ClassVar` and `Final` type qualifiers.\n\n## Why is this bad?\n\nAn attribute that is marked `Final` in a class body is implicitly a class variable.\nMarking it as `ClassVar` is therefore redundant.\n\nNote that this diagnostic is not emitted for dataclass fields or protocol members,\nwhere `ClassVar[Final[int]]` has a distinct meaning from `Final[int]`.\n\n## Examples\n\n```python\nfrom typing import ClassVar, Final\n\n\nclass C:\n    # redundant\n    x: ClassVar[Final[int]] = 1  # error\n    # redundant\n    y: Final[ClassVar[int]] = 1  # error\n```",
                   "default": "warn",
                   "oneOf": [
                     {
@@ -10482,6 +10573,13 @@
                     }
                   ]
                 },
+                "exclude-scripts": {
+                  "description": "Whether to exclude files containing PEP 723 inline script metadata unless they are\nexplicitly passed on the command line.",
+                  "type": [
+                    "boolean",
+                    "null"
+                  ]
+                },
                 "include": {
                   "description": "A list of files and directories to check. The `include` option\nfollows a similar syntax to `.gitignore` but reversed:\nIncluding a file or directory will make it so that it (and its contents)\nare type checked.\n\n- `./src/` matches only a directory\n- `./src` matches both files and directories\n- `src` matches a file or directory named `src`\n- `*` matches any (possibly empty) sequence of characters (except `/`).\n- `**` matches zero or more path components.\n  This sequence **must** form a single path component, so both `**a` and `b**` are invalid and will result in an error.\n  A sequence of more than two consecutive `*` characters is also invalid.\n- `?` matches any single character except `/`\n- `[abc]` matches any character inside the brackets. Character sequences can also specify ranges of characters, as ordered by Unicode,\n  so e.g. `[0-9]` specifies any character between `0` and `9` inclusive. An unclosed bracket is invalid.\n\nAll paths are anchored relative to the project root (`src` only\nmatches `<project_root>/src` and not `<project_root>/test/src`).\n\n`exclude` takes precedence over `include`.",
                   "anyOf": [
@@ -10499,18 +10597,6 @@
                     "boolean",
                     "null"
                   ]
-                },
-                "root": {
-                  "description": "The root of the project, used for finding first-party modules.\n\nIf left unspecified, ty will try to detect common project layouts and initialize `src.root` accordingly.\nThe project root (`.`) is always included. Additionally, the following directories are included\nif they exist and are not packages (i.e. they do not contain `__init__.py` or `__init__.pyi` files):\n\n* `./src`\n* `./<project-name>` (if a `./<project-name>/<project-name>` directory exists)\n* `./python`",
-                  "anyOf": [
-                    {
-                      "$ref": "#/definitions/RelativePathBuf"
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ],
-                  "deprecated": true
                 }
               },
               "additionalProperties": false
@@ -10573,7 +10659,7 @@
               "type": "object",
               "properties": {
                 "error-on-warning": {
-                  "description": "Use exit code 1 if there are any warning-level diagnostics.\n\nDefaults to `false`.",
+                  "description": "Use exit code 1, even if all diagnostics only had `warning` severity.\n\nDefaults to `true`.",
                   "type": [
                     "boolean",
                     "null"
@@ -11493,6 +11579,29 @@
                   },
                   "type": "string"
                 },
+                "expression": {
+                  "title": "Expression",
+                  "description": "A Python expression that will be evaluated in the context of the loaded file to return the version",
+                  "x-taplo": {
+                    "links": {
+                      "key": "https://hatch.pypa.io/latest/plugins/version-source/code/#options"
+                    }
+                  },
+                  "type": "string"
+                },
+                "search-paths": {
+                  "title": "Search paths",
+                  "description": "A list of relative paths to directories that will be prepended to Python's search path",
+                  "x-taplo": {
+                    "links": {
+                      "key": "https://hatch.pypa.io/latest/plugins/version-source/code/#options"
+                    }
+                  },
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
                 "source": {
                   "title": "Source",
                   "description": "A source to use for retrieving and updating the version.",
@@ -11646,6 +11755,7 @@
                     "path"
                   ],
                   "properties": {
+                    "source": false,
                     "path": {
                       "type": "string"
                     },
@@ -11672,8 +11782,81 @@
                     "source"
                   ],
                   "properties": {
+                    "path": false,
                     "source": {
+                      "type": "string",
+                      "not": {
+                        "enum": [
+                          "code",
+                          "regex"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "required": [
+                "version"
+              ],
+              "properties": {
+                "version": {
+                  "x-taplo": {
+                    "links": {
+                      "key": "https://hatch.pypa.io/latest/version/"
+                    }
+                  },
+                  "type": "object",
+                  "required": [
+                    "path",
+                    "source"
+                  ],
+                  "properties": {
+                    "source": {
+                      "const": "regex"
+                    },
+                    "path": {
                       "type": "string"
+                    },
+                    "pattern": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "required": [
+                "version"
+              ],
+              "properties": {
+                "version": {
+                  "x-taplo": {
+                    "links": {
+                      "key": "https://hatch.pypa.io/latest/plugins/version-source/code/"
+                    }
+                  },
+                  "type": "object",
+                  "required": [
+                    "path",
+                    "source"
+                  ],
+                  "properties": {
+                    "source": {
+                      "const": "code"
+                    },
+                    "path": {
+                      "type": "string"
+                    },
+                    "expression": {
+                      "type": "string"
+                    },
+                    "search-paths": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
                     }
                   }
                 }
@@ -22981,8 +23164,7 @@
                       "type": "string"
                     }
                   ],
-                  "description": "Add the specified OPTS to the set of command line arguments as if they had been specified by the user.",
-                  "x-tombi-array-values-order": "ascending"
+                  "description": "Add the specified OPTS to the set of command line arguments as if they had been specified by the user."
                 },
                 "cache_dir": {
                   "type": "string",
@@ -23751,8 +23933,7 @@
                   "items": {
                     "type": "string"
                   },
-                  "description": "Add the specified OPTS to the set of command line arguments as if they had been specified by the user.",
-                  "x-tombi-array-values-order": "ascending"
+                  "description": "Add the specified OPTS to the set of command line arguments as if they had been specified by the user."
                 },
                 "cache_dir": {
                   "type": "string",
@@ -24480,7 +24661,7 @@
                     "null"
                   ],
                   "items": {
-                    "type": "string"
+                    "$ref": "#/definitions/GlobPattern"
                   },
                   "minItems": 1,
                   "default": [
@@ -24495,13 +24676,31 @@
                     "null"
                   ],
                   "items": {
-                    "type": "string"
-                  },
-                  "minItems": 1
+                    "$ref": "#/definitions/GlobPattern"
+                  }
+                },
+                "respect-ignore-files": {
+                  "title": "Respect repository ignore files",
+                  "description": "Whether to respect `.ignore`, `.gitignore`, and `.git/info/exclude` while discovering files.",
+                  "default": true,
+                  "allOf": [
+                    {
+                      "$ref": "#/definitions/BoolDefaultTrue"
+                    }
+                  ]
                 }
               },
               "additionalProperties": false,
               "x-tombi-table-keys-order": "schema"
+            },
+            "GlobPattern": {
+              "description": "Glob pattern used by config include/exclude lists.",
+              "type": "string",
+              "minLength": 1
+            },
+            "BoolDefaultTrue": {
+              "type": "boolean",
+              "default": true
             },
             "FormatOptions": {
               "title": "Formatter options",
@@ -24563,6 +24762,19 @@
                     }
                   ],
                   "default": "T"
+                },
+                "group-blank-lines-limit": {
+                  "title": "The blank lines limit between groups.",
+                  "description": "Consecutive groups remain separate for sorting purposes,\nand existing blank lines between them are preserved up to this limit.\n\n```toml\n# BEFORE\nkey1 = \"value1\"\nkey2 = \"value2\"\n\nkey3 = \"value3\"\n\n\nkey4 = \"value4\"\n\n# AFTER (`group-blank-lines-limit = 1`)\nkey1 = \"value1\"\nkey2 = \"value2\"\n\nkey3 = \"value3\"\n\nkey4 = \"value4\"\n```",
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/BlankLinesLimit"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ],
+                  "default": 1
                 },
                 "indent-style": {
                   "title": "The style of indentation",
@@ -24643,6 +24855,19 @@
                   ],
                   "default": false
                 },
+                "key-quote-style": {
+                  "title": "The preferred quote character for keys",
+                  "description": "Choose which quote style the formatter prefers for quoted keys.\nIf unspecified, `string-quote-style` is used.",
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/StringQuoteStyle"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ],
+                  "default": null
+                },
                 "string-quote-style": {
                   "title": "The preferred quote character for strings",
                   "description": "Choose which quote style the formatter prefers for basic strings.",
@@ -24704,6 +24929,19 @@
                   ],
                   "default": 80
                 },
+                "table-blank-lines": {
+                  "title": "The number of blank lines between tables.",
+                  "description": "This applies when the formatter inserts spacing between table or array-of-table blocks.\n\n```toml\n# BEFORE\n[aaa]\nkey1 = \"value1\"\n[bbb]\nkey2 = \"value2\"\n\n# AFTER (`table-blank-lines = 2`)\n[aaa]\nkey1 = \"value1\"\n\n\n[bbb]\nkey2 = \"value2\"\n```\n\nTight parent/child table adjacency is controlled separately, so this does not apply\nwhen a child table follows a parent table that has no key-value pairs.\n\n```toml\n# BEFORE\n[aaa]\n\n[aaa.bbb]\n\n# AFTER\n[aaa]\n[aaa.bbb]\n```",
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/BlankLines"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ],
+                  "default": 1
+                },
                 "trailing-comment-space-width": {
                   "title": "The number of spaces before the trailing comment.",
                   "description": "```toml\nkey = \"value\"  # trailing comment\n#            ^^  <- this\n```",
@@ -24752,6 +24990,12 @@
                   "const": "preserve"
                 }
               ]
+            },
+            "BlankLinesLimit": {
+              "type": "integer",
+              "format": "uint8",
+              "minimum": 1,
+              "maximum": 255
             },
             "IndentStyle": {
               "type": "string",
@@ -24824,6 +25068,12 @@
               "type": "integer",
               "format": "uint8",
               "minimum": 1,
+              "maximum": 255
+            },
+            "BlankLines": {
+              "type": "integer",
+              "format": "uint8",
+              "minimum": 0,
               "maximum": 255
             },
             "TrailingCommentSpaceWidth": {
@@ -24991,6 +25241,17 @@
                     }
                   ]
                 },
+                "references": {
+                  "title": "References Feature options",
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/LspReferences"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
                 "goto-type-definition": {
                   "title": "Goto Type Definition Feature options",
                   "anyOf": [
@@ -25045,10 +25306,6 @@
                 }
               },
               "additionalProperties": false
-            },
-            "BoolDefaultTrue": {
-              "type": "boolean",
-              "default": true
             },
             "LspCompletion": {
               "type": "object",
@@ -25128,6 +25385,24 @@
                 "enabled": {
                   "title": "Enable goto definition feature",
                   "description": "Whether to enable goto definition.",
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/BoolDefaultTrue"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "additionalProperties": false
+            },
+            "LspReferences": {
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "title": "Enable references feature",
+                  "description": "Whether to enable references.",
                   "anyOf": [
                     {
                       "$ref": "#/definitions/BoolDefaultTrue"
@@ -25240,8 +25515,12 @@
               "additionalProperties": false
             },
             "SchemaCatalogPath": {
-              "description": "Generic value that can be either single or multiple",
-              "type": "string"
+              "description": "Schema catalog path or URL",
+              "type": "string",
+              "examples": [
+                "tombi://www.schemastore.org/api/json/catalog.json",
+                "https://www.schemastore.org/api/json/catalog.json"
+              ]
             },
             "SchemaItem": {
               "title": "Schema item",
@@ -25271,16 +25550,34 @@
                 },
                 "path": {
                   "title": "The schema path",
-                  "type": "string"
+                  "type": "string",
+                  "examples": [
+                    "https://www.schemastore.org/cargo.json",
+                    "https://www.schemastore.org/pyproject.json",
+                    "tombi://www.schemastore.org/cargo.json",
+                    "tombi://www.schemastore.org/pyproject.json",
+                    "tombi://www.schemastore.org/tombi.json"
+                  ]
                 },
                 "include": {
                   "title": "The file match pattern of the schema",
                   "description": "The file match pattern to include the target to apply the schema.\nSupports glob pattern.",
                   "type": "array",
                   "items": {
-                    "type": "string"
+                    "$ref": "#/definitions/GlobPattern"
                   },
                   "minItems": 1
+                },
+                "exclude": {
+                  "title": "The file match pattern to exclude the schema",
+                  "description": "The file match pattern to exclude the target from applying the schema.\nSupports glob pattern.",
+                  "type": [
+                    "array",
+                    "null"
+                  ],
+                  "items": {
+                    "$ref": "#/definitions/GlobPattern"
+                  }
                 },
                 "format": {
                   "title": "Schema-specific format options",
@@ -25491,7 +25788,7 @@
             },
             "PatternAccessor": {
               "title": "Accessor pattern",
-              "description": "To apply it to the Root Table, use `\"\"`.\n\nArray indices are matched as wildcards. That means `[*]` and numeric\nindices such as `[0]` are treated the same and will match any array\nelement, so `items[0].name` behaves like `items[*].name`.\n\n**Example**:\n  - `\"\"`\n  - `\"tool.*\"`\n  - `\"items[*].name\"`",
+              "description": "To apply it to the Root Table, use `\"\"`.\n\nUse `[*]` to match any array element, or a numeric index such as `[1]`\nto match a specific tuple position.\n\n**Example**:\n  - `\"\"`\n  - `\"tool.*\"`\n  - `\"items[*].name\"`\n  - `\"items[1].name\"`",
               "type": "string",
               "minLength": 0
             },
@@ -25643,9 +25940,20 @@
                   "description": "The file match pattern to include the target to apply the sub schema.\nSupports glob pattern.",
                   "type": "array",
                   "items": {
-                    "type": "string"
+                    "$ref": "#/definitions/GlobPattern"
                   },
                   "minItems": 1
+                },
+                "exclude": {
+                  "title": "The file match pattern to exclude the sub schema",
+                  "description": "The file match pattern to exclude the target from applying the sub schema.\nSupports glob pattern.",
+                  "type": [
+                    "array",
+                    "null"
+                  ],
+                  "items": {
+                    "$ref": "#/definitions/GlobPattern"
+                  }
                 },
                 "format": {
                   "title": "Schema-specific format options",
@@ -25738,7 +26046,7 @@
                   "description": "The file match pattern to include in formatting and linting.\nSupports glob pattern.",
                   "type": "array",
                   "items": {
-                    "type": "string"
+                    "$ref": "#/definitions/GlobPattern"
                   },
                   "minItems": 1
                 },
@@ -25750,9 +26058,8 @@
                     "null"
                   ],
                   "items": {
-                    "type": "string"
-                  },
-                  "minItems": 1
+                    "$ref": "#/definitions/GlobPattern"
+                  }
                 }
               },
               "additionalProperties": false,
@@ -25923,44 +26230,22 @@
             "CargoLspFeatureTree": {
               "type": "object",
               "properties": {
+                "code-action": {
+                  "title": "Code action feature options",
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/CargoCodeActionFeatures"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
                 "completion": {
                   "title": "Completion feature options",
                   "anyOf": [
                     {
                       "$ref": "#/definitions/CargoCompletionFeatures"
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                },
-                "inlay-hint": {
-                  "title": "Inlay hint feature options",
-                  "anyOf": [
-                    {
-                      "$ref": "#/definitions/CargoInlayHintFeatures"
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                },
-                "goto-definition": {
-                  "title": "Goto definition feature options",
-                  "anyOf": [
-                    {
-                      "$ref": "#/definitions/CargoNavigationFeatures"
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                },
-                "goto-declaration": {
-                  "title": "Goto declaration feature options",
-                  "anyOf": [
-                    {
-                      "$ref": "#/definitions/CargoNavigationFeatures"
                     },
                     {
                       "type": "null"
@@ -25978,6 +26263,28 @@
                     }
                   ]
                 },
+                "goto-declaration": {
+                  "title": "Goto declaration feature options",
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/CargoGotoDeclarationFeatures"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "goto-definition": {
+                  "title": "Goto definition feature options",
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/CargoGotoDefinitionFeatures"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
                 "hover": {
                   "title": "Hover feature options",
                   "anyOf": [
@@ -25989,318 +26296,22 @@
                     }
                   ]
                 },
-                "code-action": {
-                  "title": "Code action feature options",
+                "inlay-hint": {
+                  "title": "Inlay hint feature options",
                   "anyOf": [
                     {
-                      "$ref": "#/definitions/CargoCodeActionFeatures"
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                }
-              },
-              "additionalProperties": false,
-              "x-tombi-table-keys-order": "ascending"
-            },
-            "CargoCompletionFeatures": {
-              "anyOf": [
-                {
-                  "$ref": "#/definitions/EnabledOnly"
-                },
-                {
-                  "$ref": "#/definitions/CargoCompletionFeatureTree"
-                }
-              ]
-            },
-            "CargoCompletionFeatureTree": {
-              "type": "object",
-              "properties": {
-                "dependency-version": {
-                  "title": "Dependency version completion feature",
-                  "description": "Whether completion suggests dependency versions.",
-                  "anyOf": [
-                    {
-                      "$ref": "#/definitions/ToggleFeatureDefaultTrue"
+                      "$ref": "#/definitions/CargoInlayHintFeatures"
                     },
                     {
                       "type": "null"
                     }
                   ]
                 },
-                "dependency-feature": {
-                  "title": "Dependency feature completion feature",
-                  "description": "Whether completion suggests dependency features.",
+                "references": {
+                  "title": "References feature options",
                   "anyOf": [
                     {
-                      "$ref": "#/definitions/ToggleFeatureDefaultTrue"
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                },
-                "path": {
-                  "title": "Path completion feature",
-                  "description": "Whether completion suggests filesystem paths.",
-                  "anyOf": [
-                    {
-                      "$ref": "#/definitions/ToggleFeatureDefaultTrue"
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                }
-              },
-              "additionalProperties": false,
-              "x-tombi-table-keys-order": "ascending"
-            },
-            "ToggleFeatureDefaultTrue": {
-              "type": "object",
-              "properties": {
-                "enabled": {
-                  "title": "Enable feature",
-                  "description": "Whether this nested feature is enabled.",
-                  "anyOf": [
-                    {
-                      "$ref": "#/definitions/BoolDefaultTrue"
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                }
-              },
-              "additionalProperties": false
-            },
-            "CargoInlayHintFeatures": {
-              "anyOf": [
-                {
-                  "$ref": "#/definitions/EnabledOnly"
-                },
-                {
-                  "$ref": "#/definitions/CargoInlayHintFeatureTree"
-                }
-              ],
-              "x-tombi-table-keys-order": "ascending"
-            },
-            "CargoInlayHintFeatureTree": {
-              "type": "object",
-              "properties": {
-                "dependency-version": {
-                  "title": "Dependency version inlay hint feature",
-                  "description": "Whether inlay hints show dependency versions.",
-                  "anyOf": [
-                    {
-                      "$ref": "#/definitions/ToggleFeatureDefaultTrue"
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                },
-                "default-features": {
-                  "title": "Default features inlay hint feature",
-                  "description": "Whether inlay hints show `default-features` values.",
-                  "anyOf": [
-                    {
-                      "$ref": "#/definitions/ToggleFeatureDefaultTrue"
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                },
-                "workspace-value": {
-                  "title": "Workspace value inlay hint feature",
-                  "description": "Whether inlay hints show values inherited from the Cargo workspace.",
-                  "anyOf": [
-                    {
-                      "$ref": "#/definitions/ToggleFeatureDefaultTrue"
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                }
-              },
-              "additionalProperties": false,
-              "x-tombi-table-keys-order": "ascending"
-            },
-            "CargoNavigationFeatures": {
-              "anyOf": [
-                {
-                  "$ref": "#/definitions/EnabledOnly"
-                },
-                {
-                  "$ref": "#/definitions/CargoNavigationFeatureTree"
-                }
-              ]
-            },
-            "CargoNavigationFeatureTree": {
-              "type": "object",
-              "properties": {
-                "dependency": {
-                  "title": "Dependency navigation feature",
-                  "description": "Whether navigation resolves dependency definitions and declarations.",
-                  "anyOf": [
-                    {
-                      "$ref": "#/definitions/ToggleFeatureDefaultTrue"
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                },
-                "member": {
-                  "title": "Member navigation feature",
-                  "description": "Whether navigation resolves workspace member targets.",
-                  "anyOf": [
-                    {
-                      "$ref": "#/definitions/ToggleFeatureDefaultTrue"
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                },
-                "path": {
-                  "title": "Path navigation feature",
-                  "description": "Whether navigation resolves filesystem paths.",
-                  "anyOf": [
-                    {
-                      "$ref": "#/definitions/ToggleFeatureDefaultTrue"
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                }
-              },
-              "additionalProperties": false,
-              "x-tombi-table-keys-order": "ascending"
-            },
-            "CargoDocumentLinkFeatures": {
-              "anyOf": [
-                {
-                  "$ref": "#/definitions/EnabledOnly"
-                },
-                {
-                  "$ref": "#/definitions/CargoDocumentLinkFeatureTree"
-                }
-              ]
-            },
-            "CargoDocumentLinkFeatureTree": {
-              "type": "object",
-              "properties": {
-                "cargo-toml": {
-                  "title": "Cargo.toml document link feature",
-                  "description": "Whether document links are created for `Cargo.toml` references.",
-                  "anyOf": [
-                    {
-                      "$ref": "#/definitions/ToggleFeatureDefaultFalse"
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                },
-                "crates-io": {
-                  "title": "crates.io document link feature",
-                  "description": "Whether document links are created for crates.io package references.",
-                  "anyOf": [
-                    {
-                      "$ref": "#/definitions/ToggleFeatureDefaultTrue"
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                },
-                "git": {
-                  "title": "Git document link feature",
-                  "description": "Whether document links are created for Git references.",
-                  "anyOf": [
-                    {
-                      "$ref": "#/definitions/ToggleFeatureDefaultFalse"
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                },
-                "path": {
-                  "title": "Path document link feature",
-                  "description": "Whether document links are created for filesystem paths.",
-                  "anyOf": [
-                    {
-                      "$ref": "#/definitions/ToggleFeatureDefaultFalse"
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                },
-                "workspace": {
-                  "title": "Workspace document link feature",
-                  "description": "Whether document links are created for `workspace = true` references.",
-                  "anyOf": [
-                    {
-                      "$ref": "#/definitions/ToggleFeatureDefaultFalse"
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                }
-              },
-              "additionalProperties": false,
-              "x-tombi-table-keys-order": "ascending"
-            },
-            "ToggleFeatureDefaultFalse": {
-              "type": "object",
-              "properties": {
-                "enabled": {
-                  "title": "Enable feature",
-                  "description": "Whether this nested feature is enabled.",
-                  "anyOf": [
-                    {
-                      "$ref": "#/definitions/BoolDefaultFalse"
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                }
-              },
-              "additionalProperties": false
-            },
-            "BoolDefaultFalse": {
-              "type": "boolean",
-              "default": false
-            },
-            "CargoHoverFeatures": {
-              "anyOf": [
-                {
-                  "$ref": "#/definitions/EnabledOnly"
-                },
-                {
-                  "$ref": "#/definitions/CargoHoverFeatureTree"
-                }
-              ],
-              "x-tombi-table-keys-order": "ascending"
-            },
-            "CargoHoverFeatureTree": {
-              "type": "object",
-              "properties": {
-                "dependency-detail": {
-                  "title": "Dependency detail hover feature",
-                  "description": "Whether hover shows detailed dependency metadata.",
-                  "anyOf": [
-                    {
-                      "$ref": "#/definitions/ToggleFeatureDefaultTrue"
+                      "$ref": "#/definitions/CargoReferencesFeatures"
                     },
                     {
                       "type": "null"
@@ -26371,6 +26382,437 @@
                       "type": "null"
                     }
                   ]
+                },
+                "update-dependency-to-latest-version": {
+                  "title": "Update-dependency-to-latest-version code action feature",
+                  "description": "Whether code actions can rewrite dependency versions to the latest published version.",
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/ToggleFeatureDefaultTrue"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "additionalProperties": false,
+              "x-tombi-table-keys-order": "ascending"
+            },
+            "ToggleFeatureDefaultTrue": {
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "title": "Enable feature",
+                  "description": "Whether this nested feature is enabled.",
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/BoolDefaultTrue"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "additionalProperties": false
+            },
+            "CargoCompletionFeatures": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/EnabledOnly"
+                },
+                {
+                  "$ref": "#/definitions/CargoCompletionFeatureTree"
+                }
+              ]
+            },
+            "CargoCompletionFeatureTree": {
+              "type": "object",
+              "properties": {
+                "dependency-version": {
+                  "title": "Dependency version completion feature",
+                  "description": "Whether completion suggests dependency versions.",
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/ToggleFeatureDefaultTrue"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "dependency-feature": {
+                  "title": "Dependency feature completion feature",
+                  "description": "Whether completion suggests dependency features.",
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/ToggleFeatureDefaultTrue"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "path": {
+                  "title": "Path completion feature",
+                  "description": "Whether completion suggests filesystem paths.",
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/ToggleFeatureDefaultTrue"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "additionalProperties": false,
+              "x-tombi-table-keys-order": "ascending"
+            },
+            "CargoDocumentLinkFeatures": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/EnabledOnly"
+                },
+                {
+                  "$ref": "#/definitions/CargoDocumentLinkFeatureTree"
+                }
+              ]
+            },
+            "CargoDocumentLinkFeatureTree": {
+              "type": "object",
+              "properties": {
+                "cargo-toml": {
+                  "title": "Deprecated Cargo.toml document link feature",
+                  "description": "Deprecated. This setting is accepted for backward compatibility and will be removed in a future release.",
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/ToggleFeatureDefaultFalse"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ],
+                  "deprecated": true
+                },
+                "crates-io": {
+                  "title": "crates.io document link feature",
+                  "description": "Whether document links are created for crates.io package references.",
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/ToggleFeatureDefaultTrue"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "git": {
+                  "title": "Deprecated Git document link feature",
+                  "description": "Deprecated. This setting is accepted for backward compatibility and will be removed in a future release.",
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/ToggleFeatureDefaultFalse"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ],
+                  "deprecated": true
+                },
+                "path": {
+                  "title": "Deprecated path document link feature",
+                  "description": "Deprecated. This setting is accepted for backward compatibility and will be removed in a future release.",
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/ToggleFeatureDefaultFalse"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ],
+                  "deprecated": true
+                },
+                "workspace": {
+                  "title": "Deprecated workspace document link feature",
+                  "description": "Deprecated. This setting is accepted for backward compatibility and will be removed in a future release.",
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/ToggleFeatureDefaultFalse"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ],
+                  "deprecated": true
+                }
+              },
+              "additionalProperties": false,
+              "x-tombi-table-keys-order": "ascending"
+            },
+            "ToggleFeatureDefaultFalse": {
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "title": "Enable feature",
+                  "description": "Whether this nested feature is enabled.",
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/BoolDefaultFalse"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "additionalProperties": false
+            },
+            "BoolDefaultFalse": {
+              "type": "boolean",
+              "default": false
+            },
+            "CargoGotoDeclarationFeatures": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/EnabledOnly"
+                },
+                {
+                  "$ref": "#/definitions/CargoGotoDeclarationFeatureTree"
+                }
+              ]
+            },
+            "CargoGotoDeclarationFeatureTree": {
+              "type": "object",
+              "properties": {
+                "dependency": {
+                  "title": "Dependency declaration navigation feature",
+                  "description": "Whether declaration navigation resolves dependency declarations.",
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/ToggleFeatureDefaultTrue"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "member": {
+                  "title": "Deprecated member declaration navigation feature",
+                  "description": "Deprecated. This setting is accepted for backward compatibility but ignored.",
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/ToggleFeatureDefaultTrue"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ],
+                  "deprecated": true
+                },
+                "path": {
+                  "title": "Deprecated path declaration navigation feature",
+                  "description": "Deprecated. This setting is accepted for backward compatibility but ignored.",
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/ToggleFeatureDefaultTrue"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ],
+                  "deprecated": true
+                }
+              },
+              "additionalProperties": false,
+              "x-tombi-table-keys-order": "ascending"
+            },
+            "CargoGotoDefinitionFeatures": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/EnabledOnly"
+                },
+                {
+                  "$ref": "#/definitions/CargoGotoDefinitionFeatureTree"
+                }
+              ]
+            },
+            "CargoGotoDefinitionFeatureTree": {
+              "type": "object",
+              "properties": {
+                "dependency": {
+                  "title": "Dependency definition navigation feature",
+                  "description": "Whether definition navigation resolves dependency targets.",
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/ToggleFeatureDefaultTrue"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "member": {
+                  "title": "Member definition navigation feature",
+                  "description": "Whether definition navigation resolves workspace member targets.",
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/ToggleFeatureDefaultTrue"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "path": {
+                  "title": "Path definition navigation feature",
+                  "description": "Whether definition navigation resolves filesystem paths.",
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/ToggleFeatureDefaultTrue"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "additionalProperties": false,
+              "x-tombi-table-keys-order": "ascending"
+            },
+            "CargoHoverFeatures": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/EnabledOnly"
+                },
+                {
+                  "$ref": "#/definitions/CargoHoverFeatureTree"
+                }
+              ],
+              "x-tombi-table-keys-order": "ascending"
+            },
+            "CargoHoverFeatureTree": {
+              "type": "object",
+              "properties": {
+                "dependency-detail": {
+                  "title": "Dependency detail hover feature",
+                  "description": "Whether hover shows detailed dependency metadata.",
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/ToggleFeatureDefaultTrue"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "default-features": {
+                  "title": "Default features hover feature",
+                  "description": "Whether hover shows default Cargo dependency features.",
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/ToggleFeatureDefaultTrue"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "feature-dependencies": {
+                  "title": "Feature dependencies hover feature",
+                  "description": "Whether hover shows dependencies of the selected Cargo feature.",
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/ToggleFeatureDefaultTrue"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "additionalProperties": false,
+              "x-tombi-table-keys-order": "ascending"
+            },
+            "CargoInlayHintFeatures": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/EnabledOnly"
+                },
+                {
+                  "$ref": "#/definitions/CargoInlayHintFeatureTree"
+                }
+              ],
+              "x-tombi-table-keys-order": "ascending"
+            },
+            "CargoInlayHintFeatureTree": {
+              "type": "object",
+              "properties": {
+                "dependency-version": {
+                  "title": "Dependency version inlay hint feature",
+                  "description": "Whether inlay hints show dependency versions.",
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/ToggleFeatureDefaultTrue"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "default-features": {
+                  "title": "Default features inlay hint feature",
+                  "description": "Whether inlay hints show `default-features` values.",
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/ToggleFeatureDefaultTrue"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "workspace-value": {
+                  "title": "Workspace value inlay hint feature",
+                  "description": "Whether inlay hints show values inherited from the Cargo workspace.",
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/ToggleFeatureDefaultTrue"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "additionalProperties": false,
+              "x-tombi-table-keys-order": "ascending"
+            },
+            "CargoReferencesFeatures": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/EnabledOnly"
+                },
+                {
+                  "$ref": "#/definitions/CargoReferencesFeatureTree"
+                }
+              ]
+            },
+            "CargoReferencesFeatureTree": {
+              "type": "object",
+              "properties": {
+                "dependency": {
+                  "title": "Dependency references feature",
+                  "description": "Whether references list dependency-related usages.",
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/ToggleFeatureDefaultTrue"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
                 }
               },
               "additionalProperties": false,
@@ -26417,48 +26859,24 @@
             "PyprojectLspFeatureTree": {
               "type": "object",
               "properties": {
+                "code-action": {
+                  "title": "Code action feature options",
+                  "description": "Configure pyproject code action features.",
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/PyprojectCodeActionFeatures"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
                 "completion": {
                   "title": "Completion feature options",
                   "description": "Configure pyproject completion features.",
                   "anyOf": [
                     {
                       "$ref": "#/definitions/PyprojectCompletionFeatures"
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                },
-                "inlay-hint": {
-                  "title": "Inlay hint feature options",
-                  "description": "Configure pyproject inlay hint features.",
-                  "anyOf": [
-                    {
-                      "$ref": "#/definitions/PyprojectInlayHintFeatures"
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                },
-                "goto-definition": {
-                  "title": "Goto definition feature options",
-                  "description": "Configure pyproject go-to-definition features.",
-                  "anyOf": [
-                    {
-                      "$ref": "#/definitions/PyprojectNavigationFeatures"
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                },
-                "goto-declaration": {
-                  "title": "Goto declaration feature options",
-                  "description": "Configure pyproject go-to-declaration features.",
-                  "anyOf": [
-                    {
-                      "$ref": "#/definitions/PyprojectNavigationFeatures"
                     },
                     {
                       "type": "null"
@@ -26477,6 +26895,30 @@
                     }
                   ]
                 },
+                "goto-declaration": {
+                  "title": "Goto declaration feature options",
+                  "description": "Configure pyproject go-to-declaration features.",
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/PyprojectGotoDeclarationFeatures"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "goto-definition": {
+                  "title": "Goto definition feature options",
+                  "description": "Configure pyproject go-to-definition features.",
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/PyprojectGotoDefinitionFeatures"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
                 "hover": {
                   "title": "Hover feature options",
                   "description": "Configure pyproject hover features.",
@@ -26489,12 +26931,77 @@
                     }
                   ]
                 },
-                "code-action": {
-                  "title": "Code action feature options",
-                  "description": "Configure pyproject code action features.",
+                "inlay-hint": {
+                  "title": "Inlay hint feature options",
+                  "description": "Configure pyproject inlay hint features.",
                   "anyOf": [
                     {
-                      "$ref": "#/definitions/PyprojectCodeActionFeatures"
+                      "$ref": "#/definitions/PyprojectInlayHintFeatures"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "references": {
+                  "title": "References feature options",
+                  "description": "Configure pyproject references features.",
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/PyprojectReferencesFeatures"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "additionalProperties": false,
+              "x-tombi-table-keys-order": "ascending"
+            },
+            "PyprojectCodeActionFeatures": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/EnabledOnly"
+                },
+                {
+                  "$ref": "#/definitions/PyprojectCodeActionFeatureTree"
+                }
+              ]
+            },
+            "PyprojectCodeActionFeatureTree": {
+              "type": "object",
+              "properties": {
+                "use-workspace-dependency": {
+                  "title": "Use-workspace-dependency code action feature",
+                  "description": "Whether code actions can reuse a dependency declared in the workspace.",
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/ToggleFeatureDefaultTrue"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "add-to-workspace-and-use-workspace-dependency": {
+                  "title": "Add-to-workspace-and-use-workspace-dependency code action feature",
+                  "description": "Whether code actions can add a dependency to the workspace and reuse it.",
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/ToggleFeatureDefaultTrue"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "update-dependency-to-latest-version": {
+                  "title": "Update-dependency-to-latest-version code action feature",
+                  "description": "Whether code actions can rewrite dependency versions to the latest published version.",
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/ToggleFeatureDefaultTrue"
                     },
                     {
                       "type": "null"
@@ -26534,89 +27041,6 @@
               "additionalProperties": false,
               "x-tombi-table-keys-order": "ascending"
             },
-            "PyprojectInlayHintFeatures": {
-              "anyOf": [
-                {
-                  "$ref": "#/definitions/EnabledOnly"
-                },
-                {
-                  "$ref": "#/definitions/PyprojectInlayHintFeatureTree"
-                }
-              ],
-              "x-tombi-table-keys-order": "ascending"
-            },
-            "PyprojectInlayHintFeatureTree": {
-              "type": "object",
-              "properties": {
-                "dependency-version": {
-                  "title": "Dependency version inlay hint feature",
-                  "description": "Whether inlay hints show resolved dependency versions.",
-                  "anyOf": [
-                    {
-                      "$ref": "#/definitions/ToggleFeatureDefaultTrue"
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                }
-              },
-              "additionalProperties": false,
-              "x-tombi-table-keys-order": "ascending"
-            },
-            "PyprojectNavigationFeatures": {
-              "anyOf": [
-                {
-                  "$ref": "#/definitions/EnabledOnly"
-                },
-                {
-                  "$ref": "#/definitions/PyprojectNavigationFeatureTree"
-                }
-              ]
-            },
-            "PyprojectNavigationFeatureTree": {
-              "type": "object",
-              "properties": {
-                "dependency": {
-                  "title": "Dependency navigation feature",
-                  "description": "Whether navigation resolves dependency definitions and declarations.",
-                  "anyOf": [
-                    {
-                      "$ref": "#/definitions/ToggleFeatureDefaultTrue"
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                },
-                "member": {
-                  "title": "Member navigation feature",
-                  "description": "Whether navigation resolves workspace member targets.",
-                  "anyOf": [
-                    {
-                      "$ref": "#/definitions/ToggleFeatureDefaultTrue"
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                },
-                "path": {
-                  "title": "Path navigation feature",
-                  "description": "Whether navigation resolves filesystem paths.",
-                  "anyOf": [
-                    {
-                      "$ref": "#/definitions/ToggleFeatureDefaultTrue"
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                }
-              },
-              "additionalProperties": false,
-              "x-tombi-table-keys-order": "ascending"
-            },
             "PyprojectDocumentLinkFeatures": {
               "anyOf": [
                 {
@@ -26631,8 +27055,8 @@
               "type": "object",
               "properties": {
                 "pyproject-toml": {
-                  "title": "pyproject.toml document link feature",
-                  "description": "Whether document links are created for `pyproject.toml` references.",
+                  "title": "Deprecated pyproject.toml document link feature",
+                  "description": "Deprecated. This setting is accepted for backward compatibility and will be removed in a future release.",
                   "anyOf": [
                     {
                       "$ref": "#/definitions/ToggleFeatureDefaultFalse"
@@ -26640,11 +27064,119 @@
                     {
                       "type": "null"
                     }
-                  ]
+                  ],
+                  "deprecated": true
                 },
                 "pypi-org": {
                   "title": "PyPI document link feature",
                   "description": "Whether document links are created for `pypi.org` package references.",
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/ToggleFeatureDefaultTrue"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "additionalProperties": false,
+              "x-tombi-table-keys-order": "ascending"
+            },
+            "PyprojectGotoDeclarationFeatures": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/EnabledOnly"
+                },
+                {
+                  "$ref": "#/definitions/PyprojectGotoDeclarationFeatureTree"
+                }
+              ]
+            },
+            "PyprojectGotoDeclarationFeatureTree": {
+              "type": "object",
+              "properties": {
+                "dependency": {
+                  "title": "Dependency declaration navigation feature",
+                  "description": "Whether declaration navigation resolves dependency declarations.",
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/ToggleFeatureDefaultTrue"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "member": {
+                  "title": "Member declaration navigation feature",
+                  "description": "Whether declaration navigation resolves workspace member declarations.",
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/ToggleFeatureDefaultTrue"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "path": {
+                  "title": "Deprecated path declaration navigation feature",
+                  "description": "Deprecated. This setting is accepted for backward compatibility but ignored.",
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/ToggleFeatureDefaultTrue"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ],
+                  "deprecated": true
+                }
+              },
+              "additionalProperties": false,
+              "x-tombi-table-keys-order": "ascending"
+            },
+            "PyprojectGotoDefinitionFeatures": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/EnabledOnly"
+                },
+                {
+                  "$ref": "#/definitions/PyprojectGotoDefinitionFeatureTree"
+                }
+              ]
+            },
+            "PyprojectGotoDefinitionFeatureTree": {
+              "type": "object",
+              "properties": {
+                "dependency": {
+                  "title": "Dependency definition navigation feature",
+                  "description": "Whether definition navigation resolves dependency targets.",
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/ToggleFeatureDefaultTrue"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "member": {
+                  "title": "Member definition navigation feature",
+                  "description": "Whether definition navigation resolves workspace member targets.",
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/ToggleFeatureDefaultTrue"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "path": {
+                  "title": "Path definition navigation feature",
+                  "description": "Whether definition navigation resolves filesystem paths.",
                   "anyOf": [
                     {
                       "$ref": "#/definitions/ToggleFeatureDefaultTrue"
@@ -26688,22 +27220,23 @@
               "additionalProperties": false,
               "x-tombi-table-keys-order": "ascending"
             },
-            "PyprojectCodeActionFeatures": {
+            "PyprojectInlayHintFeatures": {
               "anyOf": [
                 {
                   "$ref": "#/definitions/EnabledOnly"
                 },
                 {
-                  "$ref": "#/definitions/PyprojectCodeActionFeatureTree"
+                  "$ref": "#/definitions/PyprojectInlayHintFeatureTree"
                 }
-              ]
+              ],
+              "x-tombi-table-keys-order": "ascending"
             },
-            "PyprojectCodeActionFeatureTree": {
+            "PyprojectInlayHintFeatureTree": {
               "type": "object",
               "properties": {
-                "use-workspace-dependency": {
-                  "title": "Use-workspace-dependency code action feature",
-                  "description": "Whether code actions can reuse a dependency declared in the workspace.",
+                "dependency-version": {
+                  "title": "Dependency version inlay hint feature",
+                  "description": "Whether inlay hints show resolved dependency versions.",
                   "anyOf": [
                     {
                       "$ref": "#/definitions/ToggleFeatureDefaultTrue"
@@ -26712,10 +27245,27 @@
                       "type": "null"
                     }
                   ]
+                }
+              },
+              "additionalProperties": false,
+              "x-tombi-table-keys-order": "ascending"
+            },
+            "PyprojectReferencesFeatures": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/EnabledOnly"
                 },
-                "add-to-workspace-and-use-workspace-dependency": {
-                  "title": "Add-to-workspace-and-use-workspace-dependency code action feature",
-                  "description": "Whether code actions can add a dependency to the workspace and reuse it.",
+                {
+                  "$ref": "#/definitions/PyprojectReferencesFeatureTree"
+                }
+              ]
+            },
+            "PyprojectReferencesFeatureTree": {
+              "type": "object",
+              "properties": {
+                "dependency": {
+                  "title": "Dependency references feature",
+                  "description": "Whether references list dependency-related usages.",
                   "anyOf": [
                     {
                       "$ref": "#/definitions/ToggleFeatureDefaultTrue"
@@ -26783,24 +27333,24 @@
                     }
                   ]
                 },
-                "goto-definition": {
-                  "title": "Goto definition feature options",
-                  "description": "Configure Tombi go-to-definition features.",
-                  "anyOf": [
-                    {
-                      "$ref": "#/definitions/TombiGotoDefinitionFeatures"
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                },
                 "document-link": {
                   "title": "Document link feature options",
                   "description": "Configure Tombi document link features.",
                   "anyOf": [
                     {
                       "$ref": "#/definitions/TombiDocumentLinkFeatures"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "goto-definition": {
+                  "title": "Goto definition feature options",
+                  "description": "Configure Tombi go-to-definition features.",
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/TombiGotoDefinitionFeatures"
                     },
                     {
                       "type": "null"
@@ -26853,6 +27403,36 @@
               "additionalProperties": false,
               "x-tombi-table-keys-order": "ascending"
             },
+            "TombiDocumentLinkFeatures": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/EnabledOnly"
+                },
+                {
+                  "$ref": "#/definitions/TombiDocumentLinkFeatureTree"
+                }
+              ]
+            },
+            "TombiDocumentLinkFeatureTree": {
+              "type": "object",
+              "properties": {
+                "path": {
+                  "title": "Deprecated path document link feature",
+                  "description": "Deprecated. This setting is accepted for backward compatibility and will be removed in a future release.",
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/ToggleFeatureDefaultFalse"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ],
+                  "deprecated": true
+                }
+              },
+              "additionalProperties": false,
+              "x-tombi-table-keys-order": "ascending"
+            },
             "TombiGotoDefinitionFeatures": {
               "anyOf": [
                 {
@@ -26873,35 +27453,6 @@
                   "anyOf": [
                     {
                       "$ref": "#/definitions/ToggleFeatureDefaultTrue"
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                }
-              },
-              "additionalProperties": false,
-              "x-tombi-table-keys-order": "ascending"
-            },
-            "TombiDocumentLinkFeatures": {
-              "anyOf": [
-                {
-                  "$ref": "#/definitions/EnabledOnly"
-                },
-                {
-                  "$ref": "#/definitions/TombiDocumentLinkFeatureTree"
-                }
-              ]
-            },
-            "TombiDocumentLinkFeatureTree": {
-              "type": "object",
-              "properties": {
-                "path": {
-                  "title": "Path document link feature",
-                  "description": "Whether document links are created for filesystem paths.",
-                  "anyOf": [
-                    {
-                      "$ref": "#/definitions/ToggleFeatureDefaultFalse"
                     },
                     {
                       "type": "null"
@@ -28013,20 +28564,20 @@
               }
             },
             "exclude-dependencies": {
-              "description": "Package names to exclude, e.g., `werkzeug`, `numpy`.",
+              "description": "Dependencies to exclude when resolving the project's dependencies.\n\nExcludes are used to prevent a package from being selected during resolution,\nregardless of whether it's requested by any other package. When a package is excluded,\nit will be omitted from the dependency list entirely.\n\nIncluding a package as an exclusion will prevent it from being installed, even if\nit's requested by transitive dependencies. This can be useful for removing optional\ndependencies or working around packages with broken dependencies.\n\nExclusions can be limited to the dependencies declared by a specific package version by\nusing a table with `package` and `dependencies`. The `package` table identifies the package\nwhose dependencies will be excluded by `name` and, optionally, `version`. If `version` is\nomitted, the exclusions apply to all versions of that package. A version-specific entry\ntakes precedence over an all-versions entry.\n\n!!! note\n    In `uv lock`, `uv sync`, and `uv run`, uv will only read `exclude-dependencies` from\n    the `pyproject.toml` at the workspace root, and will ignore any declarations in other\n    workspace members or `uv.toml` files.",
               "type": [
                 "array",
                 "null"
               ],
               "items": {
-                "type": "string"
+                "$ref": "#/definitions/ExcludeDependency"
               }
             },
             "exclude-newer": {
-              "description": "Limit candidate packages to those that were uploaded prior to the given date.\n\nThe date is compared against the upload time of each individual distribution artifact\n(i.e., when each file was uploaded to the package index), not the release date of the\npackage version.\n\nAccepts RFC 3339 timestamps (e.g., `2006-12-02T02:07:43Z`), a \"friendly\" duration (e.g.,\n`24 hours`, `1 week`, `30 days`), or an ISO 8601 duration (e.g., `PT24H`, `P7D`, `P30D`).\n\nDurations do not respect semantics of the local time zone and are always resolved to a fixed\nnumber of seconds assuming that a day is 24 hours (e.g., DST transitions are ignored).\nCalendar units such as months and years are not allowed.",
+              "description": "Limit candidate packages to those that were uploaded prior to the given date.\n\nThe date is compared against the upload time of each individual distribution artifact\n(i.e., when each file was uploaded to the package index), not the release date of the\npackage version.\n\nAccepts RFC 3339 timestamps (e.g., `2006-12-02T02:07:43Z`), a \"friendly\" duration (e.g.,\n`24 hours`, `1 week`, `30 days`), or an ISO 8601 duration (e.g., `PT24H`, `P7D`, `P30D`).\n\nDurations do not respect semantics of the local time zone and are always resolved to a fixed\nnumber of seconds assuming that a day is 24 hours (e.g., DST transitions are ignored).\nCalendar units such as months and years are not allowed.\n\nSet to `false` to disable `exclude-newer`.",
               "anyOf": [
                 {
-                  "$ref": "#/definitions/ExcludeNewerValue"
+                  "$ref": "#/definitions/ExcludeNewerOverride"
                 },
                 {
                   "type": "null"
@@ -28186,7 +28737,8 @@
               "type": [
                 "boolean",
                 "null"
-              ]
+              ],
+              "deprecated": true
             },
             "no-binary": {
               "description": "Don't install pre-built wheels.\n\nThe given packages will be built and installed from source. The resolver will still use\npre-built wheels to extract package metadata, if available.",
@@ -28206,7 +28758,7 @@
               }
             },
             "no-build": {
-              "description": "Don't build source distributions.\n\nWhen enabled, resolving will not run arbitrary Python code. The cached wheels of\nalready-built source distributions will be reused, but operations that require building\ndistributions will exit with an error.",
+              "description": "Don't build source distributions.\n\nWhen enabled, uv will reuse cached wheels from previously built source distributions, but\noperations that require building a source distribution will exit with an error. uv may\nstill build editable requirements, and their build backends may run arbitrary Python code.",
               "type": [
                 "boolean",
                 "null"
@@ -28288,13 +28840,13 @@
               ]
             },
             "override-dependencies": {
-              "description": "PEP 508-style requirements, e.g., `ruff==0.5.0`, or `ruff @ https://...`.",
+              "description": "Overrides to apply when resolving the project's dependencies.\n\nOverrides are used to force selection of a specific version of a package, regardless of the\nversion requested by any other package, and regardless of whether choosing that version\nwould typically constitute an invalid resolution.\n\nWhile constraints are _additive_, in that they're combined with the requirements of the\nconstituent packages, overrides are _absolute_, in that they completely replace the\nrequirements of any constituent packages.\n\nIncluding a package as an override will _not_ trigger installation of the package on its\nown; instead, the package must be requested elsewhere in the project's first-party or\ntransitive dependencies.\n\nOverrides can be limited to the dependencies declared by a specific package version by\nusing a table with `package` and `dependencies`. The `package` table identifies the package\nwhose dependencies will be overridden by `name` and, optionally, `version`. If `version` is\nomitted, the overrides apply to all versions of that package. Requirements in `dependencies`\nreplace dependencies with the same name and add dependencies that are not declared by the\npackage. Dependencies not listed in `dependencies` are left unchanged.\n\nScoped overrides currently support registry version specifiers only. Direct URL and path\nsources, including Git sources, and explicit indexes are not supported.\n\n!!! note\n    In `uv lock`, `uv sync`, and `uv run`, uv will only read `override-dependencies` from\n    the `pyproject.toml` at the workspace root, and will ignore any declarations in other\n    workspace members or `uv.toml` files.",
               "type": [
                 "array",
                 "null"
               ],
               "items": {
-                "type": "string"
+                "$ref": "#/definitions/Override"
               }
             },
             "package": {
@@ -28326,10 +28878,22 @@
               ]
             },
             "preview": {
-              "description": "Whether to enable experimental, preview features.",
+              "description": "Whether to enable all experimental, preview features.\n\nUse `preview-features` instead.",
               "type": [
                 "boolean",
                 "null"
+              ],
+              "deprecated": true
+            },
+            "preview-features": {
+              "description": "Whether to enable specific or all experimental preview features.\n\nUnknown feature names are ignored with a warning.",
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/PreviewFeaturesOption"
+                },
+                {
+                  "type": "null"
+                }
               ]
             },
             "publish-url": {
@@ -28505,6 +29069,16 @@
             }
           },
           "additionalProperties": false,
+          "not": {
+            "properties": {
+              "preview": {},
+              "preview-features": {}
+            },
+            "required": [
+              "preview",
+              "preview-features"
+            ]
+          },
           "definitions": {
             "AddBoundsKind": {
               "description": "The default version specifier when adding a dependency.",
@@ -28779,6 +29353,17 @@
               "type": "string",
               "format": "uri"
             },
+            "ExcludeDependency": {
+              "description": "An exclusion, either global or scoped to a specific package version.",
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/PackageExclusion"
+                },
+                {
+                  "$ref": "#/definitions/PackageName"
+                }
+              ]
+            },
             "ExcludeNewerOverride": {
               "oneOf": [
                 {
@@ -28944,7 +29529,7 @@
                   "default": "simple"
                 },
                 "ignore-error-codes": {
-                  "description": "Status codes that uv should ignore when deciding whether\nto continue searching in the next index after a failure.\n\n```toml\n[[tool.uv.index]]\nname = \"my-index\"\nurl = \"https://<omitted>/simple\"\nignore-error-codes = [401, 403]\n```",
+                  "description": "Status codes that uv should ignore when deciding whether to continue resolution after a\nrequest to this index fails.\n\n```toml\n[[tool.uv.index]]\nname = \"my-index\"\nurl = \"https://<omitted>/simple\"\nignore-error-codes = [401, 403]\n```",
                   "type": [
                     "array",
                     "null"
@@ -29110,12 +29695,63 @@
                 }
               ]
             },
+            "Override": {
+              "description": "An override, either global or scoped to a specific package version.",
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/PackageOverride"
+                },
+                {
+                  "$ref": "#/definitions/Requirement"
+                }
+              ]
+            },
             "PackageConfigSettings": {
               "description": "Settings to pass to PEP 517 build backends on a per-package basis.",
               "type": "object",
               "additionalProperties": {
                 "$ref": "#/definitions/ConfigSettings"
               }
+            },
+            "PackageExclusion": {
+              "description": "A set of exclusions that applies to the dependencies of a specific package version.",
+              "type": "object",
+              "properties": {
+                "dependencies": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/PackageName"
+                  }
+                },
+                "package": {
+                  "$ref": "#/definitions/PackageExclusionTarget"
+                }
+              },
+              "additionalProperties": false,
+              "required": [
+                "package",
+                "dependencies"
+              ]
+            },
+            "PackageExclusionTarget": {
+              "description": "The package and optional version selected by a [`PackageExclusion`].",
+              "type": "object",
+              "properties": {
+                "name": {
+                  "$ref": "#/definitions/PackageName"
+                },
+                "version": {
+                  "description": "PEP 440-style package version, e.g., `1.2.3`",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "additionalProperties": false,
+              "required": [
+                "name"
+              ]
             },
             "PackageName": {
               "description": "The normalized name of a package.\n\nConverts the name to lowercase and collapses runs of `-`, `_`, and `.` down to a single `-`.\nFor example, `---`, `.`, and `__` are all converted to a single `-`.\n\nSee: <https://packaging.python.org/en/latest/specifications/name-normalization/>",
@@ -29125,6 +29761,46 @@
               "description": "The name of a package, or `:all:` or `:none:` to select or omit all packages, respectively.",
               "type": "string",
               "pattern": "^(:none:|:all:|([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9._-]*[a-zA-Z0-9]))$"
+            },
+            "PackageOverride": {
+              "description": "An override that applies to the dependencies of a specific package version.",
+              "type": "object",
+              "properties": {
+                "dependencies": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Requirement"
+                  }
+                },
+                "package": {
+                  "$ref": "#/definitions/PackageOverrideTarget"
+                }
+              },
+              "additionalProperties": false,
+              "required": [
+                "package",
+                "dependencies"
+              ]
+            },
+            "PackageOverrideTarget": {
+              "description": "The package and optional version selected by a [`PackageOverride`].",
+              "type": "object",
+              "properties": {
+                "name": {
+                  "$ref": "#/definitions/PackageName"
+                },
+                "version": {
+                  "description": "PEP 440-style package version, e.g., `1.2.3`",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "additionalProperties": false,
+              "required": [
+                "name"
+              ]
             },
             "PipGroupName": {
               "description": "The pip-compatible variant of a [`GroupName`].\n\nEither <groupname> or <path>:<groupname>.\nIf <path> is omitted it defaults to \"pyproject.toml\".",
@@ -29262,10 +29938,10 @@
                   ]
                 },
                 "exclude-newer": {
-                  "description": "Limit candidate packages to those that were uploaded prior to a given point in time.\n\nThe date is compared against the upload time of each individual distribution artifact\n(i.e., when each file was uploaded to the package index), not the release date of the\npackage version.\n\nAccepts RFC 3339 timestamps (e.g., `2006-12-02T02:07:43Z`), a \"friendly\" duration (e.g.,\n`24 hours`, `1 week`, `30 days`), or an ISO 8601 duration (e.g., `PT24H`, `P7D`, `P30D`).\n\nDurations do not respect semantics of the local time zone and are always resolved to a fixed\nnumber of seconds assuming that a day is 24 hours (e.g., DST transitions are ignored).\nCalendar units such as months and years are not allowed.",
+                  "description": "Limit candidate packages to those that were uploaded prior to a given point in time.\n\nThe date is compared against the upload time of each individual distribution artifact\n(i.e., when each file was uploaded to the package index), not the release date of the\npackage version.\n\nAccepts RFC 3339 timestamps (e.g., `2006-12-02T02:07:43Z`), a \"friendly\" duration (e.g.,\n`24 hours`, `1 week`, `30 days`), or an ISO 8601 duration (e.g., `PT24H`, `P7D`, `P30D`).\n\nDurations do not respect semantics of the local time zone and are always resolved to a fixed\nnumber of seconds assuming that a day is 24 hours (e.g., DST transitions are ignored).\nCalendar units such as months and years are not allowed.\n\nSet to `false` to disable `exclude-newer`.",
                   "anyOf": [
                     {
-                      "$ref": "#/definitions/ExcludeNewerValue"
+                      "$ref": "#/definitions/ExcludeNewerOverride"
                     },
                     {
                       "type": "null"
@@ -29425,7 +30101,7 @@
                   }
                 },
                 "no-build": {
-                  "description": "Don't build source distributions.\n\nWhen enabled, resolving will not run arbitrary Python code. The cached wheels of\nalready-built source distributions will be reused, but operations that require building\ndistributions will exit with an error.\n\nAlias for `--only-binary :all:`.",
+                  "description": "Don't build source distributions.\n\nWhen enabled, uv will reuse cached wheels from previously built source distributions, but\noperations that require building a source distribution will exit with an error. uv may\nstill build editable requirements, and their build backends may run arbitrary Python code.\n\nAlias for `--only-binary :all:`.",
                   "type": [
                     "boolean",
                     "null"
@@ -29521,7 +30197,7 @@
                   ]
                 },
                 "only-binary": {
-                  "description": "Only use pre-built wheels; don't build source distributions.\n\nWhen enabled, resolving will not run code from the given packages. The cached wheels of already-built\nsource distributions will be reused, but operations that require building distributions will\nexit with an error.\n\nMultiple packages may be provided. Disable binaries for all packages with `:all:`.\nClear previously specified packages with `:none:`.",
+                  "description": "Only use pre-built wheels; don't build source distributions.\n\nWhen enabled, uv will reuse cached wheels from previously built source distributions, but\noperations that require building a source distribution for the given packages will exit\nwith an error. uv may still build editable requirements, and their build backends may run\narbitrary Python code.\n\nMultiple packages may be provided. Disable binaries for all packages with `:all:`.\nClear previously specified packages with `:none:`.",
                   "type": [
                     "array",
                     "null"
@@ -29714,6 +30390,71 @@
                   "description": "Allow pre-release versions if all versions of a package are pre-release, or if the package\nhas an explicit pre-release marker in its version requirements.",
                   "type": "string",
                   "const": "if-necessary-or-explicit"
+                }
+              ]
+            },
+            "PreviewFeature": {
+              "type": "string",
+              "anyOf": [
+                {
+                  "enum": [
+                    "python-install-default",
+                    "python-upgrade",
+                    "json-output",
+                    "pylock",
+                    "add-bounds",
+                    "package-conflicts",
+                    "extra-build-dependencies",
+                    "detect-module-conflicts",
+                    "format-command",
+                    "native-auth",
+                    "s3-endpoint",
+                    "cache-size",
+                    "init-project-flag",
+                    "workspace-metadata",
+                    "workspace-dir",
+                    "workspace-list",
+                    "sbom-export",
+                    "auth-helper",
+                    "direct-publish",
+                    "target-workspace-discovery",
+                    "metadata-json",
+                    "gcs-endpoint",
+                    "adjust-ulimit",
+                    "special-conda-env-names",
+                    "relocatable-envs-default",
+                    "publish-require-normalized",
+                    "audit-command",
+                    "project-directory-must-exist",
+                    "index-exclude-newer",
+                    "azure-endpoint",
+                    "toml-backwards-compatibility",
+                    "malware-check",
+                    "venv-safe-clear",
+                    "check-command",
+                    "packaged-init",
+                    "centralized-project-envs",
+                    "tool-install-locks",
+                    "workspace-list-scripts",
+                    "no-distutils-patch"
+                  ]
+                },
+                {
+                  "pattern": "\\S"
+                }
+              ]
+            },
+            "PreviewFeaturesOption": {
+              "description": "Represents the `preview-features` configuration option.",
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/PreviewFeature"
+                  }
                 }
               ]
             },
@@ -30393,9 +31134,14 @@
                   "const": "x86_64-linux-android"
                 },
                 {
-                  "description": "A wasm32 target using the Pyodide 2024 platform. Meant for use with Python 3.12.",
+                  "description": "A wasm32 target using the Pyodide 2024 platform. Meant for use with Python 3.12.\nSee <https://pyodide.org/en/stable/development/abi/312.html>",
                   "type": "string",
                   "const": "wasm32-pyodide2024"
+                },
+                {
+                  "description": "A wasm32 target using the Pyodide 2025 platform. Meant for use with Python 3.13.\nSee <https://pyodide.org/en/stable/development/abi/313.html>",
+                  "type": "string",
+                  "const": "wasm32-pyodide2025"
                 },
                 {
                   "description": "An ARM64 target for iOS device\n\nBy default, iOS 13.0 is used, but respects the `IPHONEOS_DEPLOYMENT_TARGET`\nenvironment variable if set.",
@@ -30464,6 +31210,11 @@
                   "description": "Use the CPU-only PyTorch index.",
                   "type": "string",
                   "const": "cpu"
+                },
+                {
+                  "description": "Use the PyTorch index for CUDA 13.2.",
+                  "type": "string",
+                  "const": "cu132"
                 },
                 {
                   "description": "Use the PyTorch index for CUDA 13.0.",

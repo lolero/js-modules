@@ -1,6 +1,4 @@
-// Pinned to ESLint 9 — eslint-plugin-react doesn't declare ESLint 10 peer
-// support yet: https://github.com/jsx-eslint/eslint-plugin-react/issues/3977
-// TODO: monitor eslint-plugin-react support for ESLint 10 (see above)
+// Runs on ESLint 9 — see the `eslint` override in pnpm-workspace.yaml.
 import { readFileSync } from 'fs';
 import { join } from 'path';
 import pluginHtml from '@html-eslint/eslint-plugin';
@@ -238,15 +236,12 @@ const eslintConfigs: Record<EslintConfigType, EslintConfig> = {
                 // only include src
                 ...(packageDir !== repoRoot ? ['eslint.config.ts'] : []),
                 'jest.config.ts',
+                // WATCH: ts-config-dir
                 // Covers flat package-local scripts/ dirs. Recursive globs
                 // (`scripts/**/*.ts`) are disallowed by allowDefaultProject.
                 // Packages needing scripts subdirectories should add a
                 // tsconfig.json inside their scripts/ dir instead (auto-
-                // discovered by the project service). Could be unified at the
-                // root tsconfig.json include once TypeScript supports
-                // extending includes with `${configDir}`.
-                // https://github.com/microsoft/TypeScript/issues/56436
-                // TODO: monitor ${configDir} support (see above)
+                // discovered by the project service).
                 'scripts/*.ts',
               ],
               defaultProject: join(repoRoot, 'tsconfig.json'),

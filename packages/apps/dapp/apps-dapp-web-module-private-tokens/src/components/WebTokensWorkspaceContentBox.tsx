@@ -138,7 +138,6 @@ export function WebTokensWorkspaceContentBox(): React.ReactNode {
             </Box>,
           ] as React.ReactNode;
         }}
-        renderGroup={(params) => params as unknown as React.ReactNode}
       />
       <Typography>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra

@@ -3,7 +3,6 @@ import type {
   PkSchema,
   Reducer,
   ReducerConfig,
-  ReducerEdges,
   ReducerMetadata,
   RequestMetadata,
 } from '../types/reducers.types';

@@ -1,4 +1,4 @@
-import type { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
+import type { PostgresDataSourceOptions } from 'typeorm/driver/postgres/PostgresDataSourceOptions';
 import {
   LogEntriesEntity,
   UsersEntity,
@@ -6,7 +6,7 @@ import {
 import { loadEnvConfig } from '@js-modules/common-utils-general-cjs';
 
 loadEnvConfig();
-export const configTypeormDataSourceOptions: PostgresConnectionOptions = {
+export const configTypeormDataSourceOptions: PostgresDataSourceOptions = {
   type: 'postgres',
   host: process.env.DB_CORE_HOST,
   port: Number(process.env.DB_CORE_PORT),

@@ -1,26 +1,7 @@
-// TODO: @swc/jest does not hoist jest.mock() when `jest` is imported from
-//  @jest/globals — it transforms the call to `_globals.jest.mock()`, which
-//  runs after module requires and breaks mocks.
-//  Track: https://github.com/swc-project/swc/issues/10325
-//    → Look for a comment or PR saying "@jest/globals imports are now hoisted"
-//      or that jest.mock() hoisting no longer depends on the identifier being
-//      an unbound global. The sibling issue
-//      https://github.com/swc-project/jest/issues/120 was closed as
-//      not-planned; the fix (if it comes) will land in swc core instead.
-//  Workaround in spec files: import `jest as jestGlobals` from @jest/globals
-//  for typed mock utilities (mocked, spyOn, resetAllMocks, etc.), and use the
-//  bare global `jest` only for jest.mock() calls at module scope (requires
-//  "jest" in tsconfig.json compilerOptions.types for the global to type-check).
-//  When fixed, confirm by adding `import { jest } from '@jest/globals'` to any
-//  spec file that has jest.mock() and running its tests — if mocks resolve
-//  correctly, the fix is live. Then clean up:
-//    1. In all spec files: change `jest as jestGlobals` → `jest`, rename all
-//       `jestGlobals.` → `jest.`
-//    2. Remove "jest" from tsconfig.json compilerOptions.types
-//    3. Remove @types/jest from root devDependencies
-//    4. In scripts/eslint.configs.ts: simplify
-//    `jest/prefer-importing-jest-globals` from `{ types: ['hook',
-//    'describe', 'test', 'expect', 'unknown'] }` to just `'error'`
+// WATCH: swc-jest-mock-hoisting
+// Spec files use the bare global `jest` for jest.mock() at module scope (hence
+// "jest" in tsconfig.json compilerOptions.types) and `jest as jestGlobals` for
+// typed utilities (mocked, spyOn, resetAllMocks).
 import { readFileSync } from 'fs';
 import { join } from 'path';
 import type { Config } from 'jest';

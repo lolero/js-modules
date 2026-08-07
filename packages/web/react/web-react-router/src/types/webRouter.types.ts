@@ -2,7 +2,7 @@ import type React from 'react';
 
 export type WebRouterLinkProps = {
   href: string;
-} & Omit<React.ComponentPropsWithoutRef<'a'>, 'href'>;
+} & Omit<React.ComponentPropsWithRef<'a'>, 'href'>;
 
 export type WebRouterLinkComponent = React.ComponentType<WebRouterLinkProps>;
 

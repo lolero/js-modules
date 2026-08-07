@@ -1,4 +1,7 @@
-import type { AutocompleteProps } from '@mui/material/Autocomplete';
+import type {
+  AutocompleteProps,
+  AutocompleteRenderGroupParams,
+} from '@mui/material/Autocomplete';
 import Autocomplete, { autocompleteClasses } from '@mui/material/Autocomplete';
 import ListSubheader from '@mui/material/ListSubheader';
 import Popper from '@mui/material/Popper';
@@ -8,11 +11,11 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import {
   type CSSProperties,
-  forwardRef,
   type HTMLAttributes,
   type Key,
   type ReactElement,
   type ReactNode,
+  type Ref,
   useImperativeHandle,
   useRef,
 } from 'react';
@@ -51,18 +54,28 @@ function renderRow(
   );
 }
 
-// Adapter for @tanstack/react-virtual
-const ListboxComponent = forwardRef<
-  HTMLElement,
-  HTMLAttributes<HTMLElement> & { overscanCount?: number; ownerState?: unknown }
->(function ListboxComponent(props, ref) {
-  const {
-    children,
-    overscanCount = 5,
-    ownerState: _ownerState,
-    ...other
-  } = props;
+type ListboxComponentProps = HTMLAttributes<HTMLElement> & {
+  ref?: Ref<HTMLElement>;
+  overscanCount?: number;
+  ownerState?: unknown;
+};
 
+/**
+ * Adapter for `@tanstack/react-virtual` — MUI's `slots.listbox`, virtualized.
+ * @param props - Component props.
+ * @param props.ref - Ref MUI uses to reach the scrollable listbox element.
+ * @param props.children - Group and option elements supplied by MUI.
+ * @param props.overscanCount - Rows rendered beyond the visible window.
+ * @param props.ownerState - MUI-injected slot state, unused here.
+ * @returns The virtualized listbox element.
+ */
+function ListboxComponent({
+  ref,
+  children,
+  overscanCount = 5,
+  ownerState: _ownerState,
+  ...other
+}: ListboxComponentProps) {
   const itemData: RowDataItem[] = [];
   (children as ReactElement[]).forEach(
     (item: ReactElement & { children?: ReactElement[] }) => {
@@ -127,7 +140,19 @@ const ListboxComponent = forwardRef<
       </div>
     </ul>
   );
-});
+}
+
+/**
+ * Passes a group's `{ key, group, children }` straight through instead of
+ * letting MUI's default wrap it in an `<li>`, so `ListboxComponent` can flatten
+ * groups and their options into one flat list of virtualized rows. Not a valid
+ * `ReactNode`, hence the cast — MUI's own virtualization demo does the same.
+ * @param params - The group's key, label and rendered options.
+ * @returns The untouched group params.
+ */
+function renderGroup(params: AutocompleteRenderGroupParams): ReactNode {
+  return params as unknown as ReactNode;
+}
 
 const StyledPopper = styled(Popper)({
   [`& .${autocompleteClasses.listbox}`]: {
@@ -146,7 +171,7 @@ export type VirtualizedAutocompleteProps<
   FreeSoloT extends boolean | undefined = undefined,
 > = Omit<
   AutocompleteProps<OptionT, MultipleT, DisableClearableT, FreeSoloT>,
-  'disableListWrap' | 'slots'
+  'disableListWrap' | 'renderGroup' | 'slots'
 > & {
   getOptionLabel: AutocompleteProps<
     OptionT,
@@ -185,6 +210,10 @@ export function VirtualizedAutocomplete<
     <Autocomplete
       {...props}
       disableListWrap
+      // Pass each group's `{ key, group, children }` through untouched instead
+      // of letting MUI wrap it in an <li>, so the listbox can flatten groups and
+      // their options into one virtualized row list.
+      renderGroup={renderGroup}
       slots={{
         listbox: ListboxComponent as React.JSXElementConstructor<
           React.HTMLAttributes<HTMLElement>
