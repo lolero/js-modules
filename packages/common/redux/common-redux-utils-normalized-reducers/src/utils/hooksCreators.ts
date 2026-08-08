@@ -1,11 +1,14 @@
 import { pick } from 'lodash';
-import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import type { ReducerHooks } from '../types/hooks.types';
 import type {
   Entity,
+  ReducerConfig,
+  ReducerData,
   ReducerGroup,
   ReducerMetadata,
+  Request,
+  RequestMetadata,
 } from '../types/reducers.types';
 import type { ReducerSelectors } from '../types/selectors.types';
 
@@ -36,13 +39,10 @@ export function createReducerHooks<
    * @param requestId - Request ID.
    * @returns Request.
    */
-  function useRequest(requestId: string) {
+  function useRequest(requestId: string): Request<RequestMetadata> {
     const reducerRequests = useSelector(selectRequests);
 
-    const request = useMemo(
-      () => reducerRequests[requestId],
-      [reducerRequests, requestId],
-    );
+    const request = reducerRequests[requestId];
 
     return request;
   }
@@ -52,16 +52,14 @@ export function createReducerHooks<
    * @param requestIds - Request IDs. 'undefined' to retrieve all requests.
    * @returns Requests.
    */
-  function useRequests(requestIds?: string[]) {
+  function useRequests(
+    requestIds?: string[],
+  ): Record<string, Request<RequestMetadata>> {
     const reducerRequests = useSelector(selectRequests);
 
-    const requests = useMemo(() => {
-      if (!requestIds) {
-        return reducerRequests;
-      }
-
-      return pick(reducerRequests, requestIds);
-    }, [reducerRequests, requestIds]);
+    const requests = requestIds
+      ? pick(reducerRequests, requestIds)
+      : reducerRequests;
 
     return requests;
   }
@@ -70,7 +68,7 @@ export function createReducerHooks<
    * Retrieves a reducer's metadata.
    * @returns Reducer's metadata.
    */
-  function useReducerMetadata() {
+  function useReducerMetadata(): ReducerMetadataT {
     const reducerMetadata = useSelector(selectMetadata);
 
     return reducerMetadata;
@@ -81,13 +79,10 @@ export function createReducerHooks<
    * @param entityPk - Entity PK.
    * @returns Entity.
    */
-  function useEntity(entityPk: string) {
+  function useEntity(entityPk: string): EntityT {
     const reducerData = useSelector(selectData);
 
-    const entity = useMemo(
-      () => reducerData[entityPk],
-      [entityPk, reducerData],
-    );
+    const entity = reducerData[entityPk];
 
     return entity;
   }
@@ -97,16 +92,10 @@ export function createReducerHooks<
    * @param entityPks - Entity PKs. 'undefined' to retrieve all entities.
    * @returns Entities.
    */
-  function useEntities(entityPks?: string[]) {
+  function useEntities(entityPks?: string[]): ReducerData<EntityT> {
     const reducerData = useSelector(selectData);
 
-    const entities = useMemo(() => {
-      if (!entityPks) {
-        return reducerData;
-      }
-
-      return pick(reducerData, entityPks);
-    }, [entityPks, reducerData]);
+    const entities = entityPks ? pick(reducerData, entityPks) : reducerData;
 
     return entities;
   }
@@ -115,7 +104,7 @@ export function createReducerHooks<
    * Retrieves a reducer's config.
    * @returns Reducer's config.
    */
-  function useReducerConfig() {
+  function useReducerConfig(): ReducerConfig {
     const reducerConfig = useSelector(selectConfig);
 
     return reducerConfig;

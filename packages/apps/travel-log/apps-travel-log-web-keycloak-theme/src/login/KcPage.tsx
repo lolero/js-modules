@@ -1,5 +1,6 @@
 import type { ClassKey } from 'keycloakify/login';
 import DefaultPage from 'keycloakify/login/DefaultPage';
+import type React from 'react';
 import { lazy, Suspense } from 'react';
 import { useI18n } from './i18n';
 import type { KcContext } from './KcContext';
@@ -13,12 +14,16 @@ const Login = lazy(() => import('./pages/Login'));
 
 const doMakeUserConfirmPassword = true;
 
-export default function KcPage({ kcContext }: { kcContext: KcContext }) {
+export default function KcPage({
+  kcContext,
+}: {
+  kcContext: KcContext;
+}): React.ReactNode {
   const { i18n } = useI18n({ kcContext });
 
   return (
     <Suspense>
-      {(() => {
+      {((): React.ReactNode => {
         switch (kcContext.pageId) {
           case 'login.ftl':
             return (

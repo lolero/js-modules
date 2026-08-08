@@ -1,7 +1,6 @@
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import type React from 'react';
-import { useCallback, useMemo } from 'react';
 import type { StateSettingsReducer } from '@js-modules/apps-travel-log-common-store-redux';
 import {
   useStateSettingsUpdatePartialReducerMetadata,
@@ -21,21 +20,15 @@ export function SettingsProfileEditWorkspaceContentBox(): React.ReactNode {
     validateCallback: validateCallbackProfilePartialUnsaved,
   } = useStateSettingsValidateProfilePartialUnsaved();
 
-  const updateProfilePartialUnsavedCallback = useCallback(
-    (
-      profilePartialUnsavedUpdated: StateSettingsReducer['metadata']['profilePartialUnsaved'],
-    ) => {
-      settingsUpdatePartialReducerMetadataCallback({
-        profilePartialUnsaved: profilePartialUnsavedUpdated,
-      });
-    },
-    [settingsUpdatePartialReducerMetadataCallback],
-  );
+  function updateProfilePartialUnsavedCallback(
+    profilePartialUnsavedUpdated: StateSettingsReducer['metadata']['profilePartialUnsaved'],
+  ): void {
+    settingsUpdatePartialReducerMetadataCallback({
+      profilePartialUnsaved: profilePartialUnsavedUpdated,
+    });
+  }
 
-  const profilePartialUnsavedNonNull = useMemo(
-    () => profilePartialUnsaved ?? {},
-    [profilePartialUnsaved],
-  );
+  const profilePartialUnsavedNonNull = profilePartialUnsaved ?? {};
   const {
     formDataTemp: profilePartialUnsavedTemp,
     changeFieldCallback: changeFieldCallbackProfilePartialUnsaved,

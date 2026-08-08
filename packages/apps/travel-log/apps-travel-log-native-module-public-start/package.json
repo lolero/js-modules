@@ -20,9 +20,11 @@
     "react-native-paper": "catalog:"
   },
   "devDependencies": {
+    "@testing-library/react-native": "catalog:",
     "@types/react": "catalog:",
     "react": "catalog:",
-    "react-native": "catalog:"
+    "react-native": "catalog:",
+    "test-renderer": "catalog:"
   },
   "peerDependencies": {
     "react": "catalog:",

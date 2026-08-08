@@ -3,6 +3,7 @@ import type { FontAwesomeIconProps } from '@fortawesome/react-fontawesome';
 import type { SvgIconProps } from '@mui/material';
 import { SvgIcon } from '@mui/material';
 import { clsx } from 'clsx';
+import type React from 'react';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 
 export type MuiFaIconProps = Omit<SvgIconProps, 'viewBox'> &
@@ -74,7 +75,7 @@ export function MuiFaIcon({
   flipDirection,
   widthAuto,
   ...muiProps
-}: MuiFaIconProps) {
+}: MuiFaIconProps): React.ReactNode {
   const {
     prefix,
     iconName,

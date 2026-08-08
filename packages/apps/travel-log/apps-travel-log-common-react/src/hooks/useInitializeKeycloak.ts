@@ -1,5 +1,5 @@
 import type { KeycloakInitOptions, KeycloakServerConfig } from 'keycloak-js';
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import {
   AUTH__URI__TRAVEL_LOG,
   WebModulesPrivate,
@@ -49,15 +49,14 @@ export function useInitializeKeycloak(clientType: ClientType): {
     stateSettingsSignoutCallback,
   );
 
-  const rootPath = useMemo(() => {
-    if (clientType === ClientType.native) {
-      return !isAuthenticated ? WebModulesPublic.home : WebModulesPrivate.feeds;
-    }
-
-    return !isAuthenticated
-      ? routesMetadataPublic[WebModulesPublic.home].path
-      : routesMetadataPrivate[WebModulesPrivate.feeds].path;
-  }, [clientType, isAuthenticated]);
+  let rootPath: string = routesMetadataPublic[WebModulesPublic.home].path;
+  if (clientType === ClientType.native) {
+    rootPath = isAuthenticated
+      ? WebModulesPrivate.feeds
+      : WebModulesPublic.home;
+  } else if (isAuthenticated) {
+    rootPath = routesMetadataPrivate[WebModulesPrivate.feeds].path;
+  }
 
   useEffect(() => {
     stateAuthInitializeKeycloakCallback();

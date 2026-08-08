@@ -96,11 +96,11 @@ export class UsersEntity implements RequestEntity {
   deletedAt?: Date;
 
   @AfterInsert()
-  logInsert() {}
+  logInsert(): void {}
 
   @AfterUpdate()
-  logUpdate() {}
+  logUpdate(): void {}
 
   @AfterRemove()
-  logRemove() {}
+  logRemove(): void {}
 }

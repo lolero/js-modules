@@ -1,6 +1,6 @@
 import type { AlertProps } from '@mui/material';
 import type React from 'react';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 
 export type SnackbarMessageMetadata = {
   unixMilliseconds: number;
@@ -31,16 +31,16 @@ export function useSnackPackUtils(autoHideDuration = 5000): SnackPackUtils {
     useState<SnackbarMessageMetadata | null>(null);
   const [isSnackbarOpen, setIsSnackbarOpen] = useState<boolean>(false);
 
-  const closeSnackbarCallback = useCallback((_e: unknown, reason?: string) => {
+  function closeSnackbarCallback(_e: unknown, reason?: string): void {
     if (reason === 'clickaway') {
       return;
     }
     setIsSnackbarOpen(false);
-  }, []);
+  }
 
-  const exitedSnackbarCallback = useCallback(() => {
+  function exitedSnackbarCallback(): void {
     setSnackbarMessageMetadata(null);
-  }, []);
+  }
 
   if (snackPack.length && !snackbarMessageMetadata) {
     setSnackbarMessageMetadata({ ...snackPack[0] });

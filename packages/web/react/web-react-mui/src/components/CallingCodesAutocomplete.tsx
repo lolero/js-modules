@@ -7,7 +7,6 @@ import noop from 'lodash/noop';
 import pick from 'lodash/pick';
 import values from 'lodash/values';
 import type React from 'react';
-import { useCallback } from 'react';
 import type { FormData } from '@js-modules/common-react-utils';
 import type { CallingCode } from '@js-modules/common-utils-general';
 import {
@@ -105,21 +104,18 @@ export function CallingCodesAutocomplete<
   MultipleT,
   DisableClearableT,
   FreeSoloT
->) {
-  const changeCallback = useCallback(
-    (
-      e: React.SyntheticEvent<Element, Event>,
-      selectedOption: CallingCode | null,
-    ) => {
-      const eInput = e as React.ChangeEvent<HTMLInputElement>;
-      eInput.target.value = (selectedOption?.[optionProp] as string) ?? '';
-      if (dataKey) {
-        eInput.currentTarget.setAttribute('data-key', dataKey);
-      }
-      onChange(eInput);
-    },
-    [optionProp, dataKey, onChange],
-  );
+>): React.ReactNode {
+  function changeCallback(
+    e: React.SyntheticEvent<Element, Event>,
+    selectedOption: CallingCode | null,
+  ): void {
+    const eInput = e as React.ChangeEvent<HTMLInputElement>;
+    eInput.target.value = (selectedOption?.[optionProp] as string) ?? '';
+    if (dataKey) {
+      eInput.currentTarget.setAttribute('data-key', dataKey);
+    }
+    onChange(eInput);
+  }
 
   return (
     <VirtualizedAutocomplete

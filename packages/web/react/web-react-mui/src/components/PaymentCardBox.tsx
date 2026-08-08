@@ -6,7 +6,6 @@ import TextField from '@mui/material/TextField';
 import ceil from 'lodash/ceil';
 import isEmpty from 'lodash/isEmpty';
 import type React from 'react';
-import { useCallback, useMemo } from 'react';
 import type { FormValidator } from '@js-modules/common-react-utils';
 import type { PaymentCard } from '@js-modules/common-utils-general';
 import type { FormUtilsWeb } from '../hooks/hooksMaterialUi/useFormUtilsWeb';
@@ -53,31 +52,26 @@ export function PaymentCardBox({
   isFormFieldsDisabled,
   textFieldProps = {},
 }: PaymentCardBoxProps): React.ReactNode {
-  const cardNumberDisplayStr = useMemo(() => {
-    const digitGroupSize = 4;
-    const digitGroupCount = ceil(paymentCardTemp.cardNumber.length / 4);
-    const digitGroups = new Array(digitGroupCount)
-      .fill(null)
-      .map((nullValue, digitGroupIndex) => {
-        const digitGroupTemp = paymentCardTemp.cardNumber.slice(
-          digitGroupIndex * digitGroupSize,
-          (digitGroupIndex + 1) * digitGroupSize,
-        );
+  const digitGroupSize = 4;
+  const digitGroupCount = ceil(paymentCardTemp.cardNumber.length / 4);
+  const digitGroups = new Array(digitGroupCount)
+    .fill(null)
+    .map((_, digitGroupIndex) => {
+      const digitGroup = paymentCardTemp.cardNumber.slice(
+        digitGroupIndex * digitGroupSize,
+        (digitGroupIndex + 1) * digitGroupSize,
+      );
 
-        return digitGroupTemp;
-      });
+      return digitGroup;
+    });
+  const cardNumberDisplayStr = digitGroups.join(' ');
 
-    const cardNumberDisplayStrTemp = digitGroups.join(' ');
-    return cardNumberDisplayStrTemp;
-  }, [paymentCardTemp.cardNumber]);
-
-  const changeCardNumberCallback = useCallback(
-    (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-      e.target.value = e.target.value.replaceAll(' ', '');
-      changeFieldCallback(e);
-    },
-    [changeFieldCallback],
-  );
+  function changeCardNumberCallback(
+    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
+  ): void {
+    e.target.value = e.target.value.replaceAll(' ', '');
+    changeFieldCallback(e);
+  }
 
   return (
     <Box sx={sx}>

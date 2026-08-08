@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import type {
   Request,
@@ -39,20 +39,17 @@ export function useNodeUsersGetOne(): UseRequestEntity<
   const nodeUserPk = request?.entityPks?.[0];
   const entity = useNodeUsersEntity(nodeUserPk ?? '');
 
-  const callback = useCallback(
-    (
-      uniqueKeyValue: NodeUsersGetOneRequestAction['requestMetadata']['uniqueKeyValue'],
-      uniqueKeyName: NodeUsersGetOneRequestAction['requestMetadata']['uniqueKeyName'] = 'id',
-    ) => {
-      const action = createNodeUsersGetOneRequestAction(
-        uniqueKeyValue,
-        uniqueKeyName,
-      );
-      setRequestId(action.requestId);
-      dispatch(action);
-    },
-    [dispatch],
-  );
+  function callback(
+    uniqueKeyValue: NodeUsersGetOneRequestAction['requestMetadata']['uniqueKeyValue'],
+    uniqueKeyName: NodeUsersGetOneRequestAction['requestMetadata']['uniqueKeyName'] = 'id',
+  ): void {
+    const action = createNodeUsersGetOneRequestAction(
+      uniqueKeyValue,
+      uniqueKeyName,
+    );
+    setRequestId(action.requestId);
+    dispatch(action);
+  }
 
   return {
     request,
@@ -77,11 +74,11 @@ export function useNodeUsersGetMany(): UseRequestEntities<
   const entityPks = request?.entityPks;
   const entities = useNodeUsersEntities(entityPks ?? []);
 
-  const callback = useCallback(() => {
+  function callback(): void {
     const action = createNodeUsersGetManyRequestAction();
     setRequestId(action.requestId);
     dispatch(action);
-  }, [dispatch]);
+  }
 
   return {
     request,

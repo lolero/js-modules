@@ -549,12 +549,21 @@ export const targetBuilders: TargetBuilders = {
     }),
   },
   [TargetType.types]: {
-    [Language.javascript]: (projectPathRel) => ({
-      [`${TargetType.types}:check`]: buildTargetConfiguration(
-        'tsc --noEmit',
-        projectPathRel,
-      ),
-    }),
+    [Language.javascript]: (projectPathRel) => {
+      // SvelteKit projects extend a tsconfig that `sync` generates into a
+      // gitignored `.svelte-kit/`, alongside the `$types` modules their routes
+      // import, so `tsc` has nothing to read until it has run
+      // https://svelte.dev/docs/kit/cli#svelte-kit-sync
+      const isSvelteKit = ['svelte.config.js', 'svelte.config.ts'].some(
+        (file) => existsSync(join(projectPathRel, file)),
+      );
+      return {
+        [`${TargetType.types}:check`]: buildTargetConfiguration(
+          isSvelteKit ? 'svelte-kit sync && tsc --noEmit' : 'tsc --noEmit',
+          projectPathRel,
+        ),
+      };
+    },
   },
   [TargetType.vite]: {
     [Language.javascript]: (projectPathRel) => {

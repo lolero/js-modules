@@ -1,7 +1,7 @@
 import type { BoxProps } from '@mui/material/Box';
 import Box from '@mui/material/Box';
 import type React from 'react';
-import { useContext, useEffect, useMemo, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { usePrevious } from '@js-modules/common-react-utils';
 import { useWebRouter } from '@js-modules/web-react-router';
 import { useChildNodeSize } from '@js-modules/web-react-utils';
@@ -100,51 +100,27 @@ export function WorkspaceBox({
   const { isMobile, isTablet } = useNavDisplayMetadata();
   const isMobilePrevious = usePrevious(isMobile);
 
-  const isNavLeftDrawerWithContent = useMemo(() => {
-    return !!navLeftDrawerContent || !!navLeftDrawerFooter;
-  }, [navLeftDrawerContent, navLeftDrawerFooter]);
+  const isNavLeftDrawerWithContent =
+    !!navLeftDrawerContent || !!navLeftDrawerFooter;
 
-  const isNavRightDrawerWithContent = useMemo(() => {
-    return !!navRightDrawerContent || !!navRightDrawerFooter;
-  }, [navRightDrawerContent, navRightDrawerFooter]);
+  const isNavRightDrawerWithContent =
+    !!navRightDrawerContent || !!navRightDrawerFooter;
 
-  const workspaceMarginLeft = useMemo(() => {
-    if (isMobile) {
-      return '0px';
-    }
+  let workspaceMarginLeft = `${navLeftDrawerWidth}px`;
+  if (isMobile) {
+    workspaceMarginLeft = '0px';
+  } else if (isTablet) {
+    workspaceMarginLeft = navLeftDrawerCollapsedWidth;
+  }
 
-    if (isTablet) {
-      return navLeftDrawerCollapsedWidth;
-    }
+  let workspaceMarginRight = `${navRightDrawerWidth}px`;
+  if (isMobile) {
+    workspaceMarginRight = '0px';
+  } else if (isTablet) {
+    workspaceMarginRight = navRightDrawerCollapsedWidth;
+  }
 
-    return `${navLeftDrawerWidth}px`;
-  }, [isMobile, isTablet, navLeftDrawerCollapsedWidth, navLeftDrawerWidth]);
-
-  const workspaceMarginRight = useMemo(() => {
-    if (isMobile) {
-      return '0px';
-    }
-
-    if (isTablet) {
-      return navRightDrawerCollapsedWidth;
-    }
-
-    return `${navRightDrawerWidth}px`;
-  }, [isMobile, isTablet, navRightDrawerCollapsedWidth, navRightDrawerWidth]);
-
-  const workspaceContextValue: WorkspaceContextValue = useMemo(() => {
-    return {
-      navTopToolbarHeight,
-      navLeftDrawerWidth,
-      navRightDrawerWidth,
-      workspaceTopToolbarHeight,
-      workspaceMarginLeft,
-      workspaceMarginRight,
-      isWorkspaceScroll,
-      workspaceScrollTop,
-      workspaceScrollDirection,
-    };
-  }, [
+  const workspaceContextValue: WorkspaceContextValue = {
     navTopToolbarHeight,
     navLeftDrawerWidth,
     navRightDrawerWidth,
@@ -154,7 +130,7 @@ export function WorkspaceBox({
     isWorkspaceScroll,
     workspaceScrollTop,
     workspaceScrollDirection,
-  ]);
+  };
 
   useEffect(() => {
     if (isMobilePrevious && !isMobile) {

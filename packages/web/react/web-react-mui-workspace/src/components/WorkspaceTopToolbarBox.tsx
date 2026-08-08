@@ -21,7 +21,7 @@ type WorkspaceTopToolbarBoxProps = {
 export function WorkspaceTopToolbarBox({
   ref,
   children,
-}: WorkspaceTopToolbarBoxProps) {
+}: WorkspaceTopToolbarBoxProps): React.ReactNode {
   const { workspaceTopToolbarPaddingYSpacing, workspacePaddingXSpacing } =
     useContext(NavContext);
 

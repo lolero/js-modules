@@ -6,7 +6,6 @@ import type { PickerValidDate } from '@mui/x-date-pickers/models';
 import { format, parse } from 'date-fns';
 import isNull from 'lodash/isNull';
 import type React from 'react';
-import { useCallback, useMemo } from 'react';
 import type { SetSearchParams } from '@js-modules/common-react-utils';
 import { useFindManyRangesUtils } from '@js-modules/common-react-utils';
 
@@ -36,34 +35,25 @@ export function FindManyRangeBoxDate({
     setSearchParams,
   );
 
-  const range = useMemo(() => {
-    const rangeTemp = getRangeCallback(rangeKey);
-    return rangeTemp;
-  }, [getRangeCallback, rangeKey]);
+  const range = getRangeCallback(rangeKey);
 
   // The picker uses `AdapterDateFns`, so values are always `Date` at runtime.
   // Typing the param as the picker's own `PickerValidDate` (and narrowing with
   // `instanceof Date`) keeps `onChange` assignable even when another package's
   // typecheck pulls in adapters that widen the global `PickerValidDate` union.
-  const changeDateRangeFromCallback = useCallback(
-    (value: PickerValidDate | null) => {
-      setRangeCallback(rangeKey, [
-        value instanceof Date ? format(value, 'yyyyMMdd') : 'null',
-        range[1],
-      ]);
-    },
-    [range, rangeKey, setRangeCallback],
-  );
+  function changeDateRangeFromCallback(value: PickerValidDate | null): void {
+    setRangeCallback(rangeKey, [
+      value instanceof Date ? format(value, 'yyyyMMdd') : 'null',
+      range[1],
+    ]);
+  }
 
-  const changeDateRangeToCallback = useCallback(
-    (value: PickerValidDate | null) => {
-      setRangeCallback(rangeKey, [
-        range[0],
-        value instanceof Date ? format(value, 'yyyyMMdd') : 'null',
-      ]);
-    },
-    [range, rangeKey, setRangeCallback],
-  );
+  function changeDateRangeToCallback(value: PickerValidDate | null): void {
+    setRangeCallback(rangeKey, [
+      range[0],
+      value instanceof Date ? format(value, 'yyyyMMdd') : 'null',
+    ]);
+  }
 
   // return (
   //   <MenuItem>

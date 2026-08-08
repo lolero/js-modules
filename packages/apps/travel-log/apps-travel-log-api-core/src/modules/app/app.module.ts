@@ -82,7 +82,7 @@ import { AppService } from './app.service';
 export class AppModule {
   constructor(private readonly configService: ConfigService) {}
 
-  configure(consumer: MiddlewareConsumer) {
+  configure(consumer: MiddlewareConsumer): void {
     consumer
       .apply(
         cookieSession({

@@ -1,3 +1,4 @@
+import type { AxiosResponse } from 'axios';
 import { get } from 'svelte/store';
 import { api } from '$api';
 import { writable } from '../writeable';
@@ -59,11 +60,14 @@ const INITIAL_STATE: ChatState = {
 
 const store = writable<ChatState>(INITIAL_STATE);
 
-const set = (val: Partial<ChatState>) => {
+const set = (val: Partial<ChatState>): void => {
   store.update((state) => ({ ...state, ...val }));
 };
 
-const getRawMessages = () => {
+const getRawMessages = (): {
+  role: 'user' | 'assistant' | 'system' | 'pending';
+  content: string;
+}[] => {
   const conversation = getActiveConversation();
   if (!conversation) {
     return [];
@@ -76,7 +80,7 @@ const getRawMessages = () => {
     });
 };
 
-const getActiveConversation = () => {
+const getActiveConversation = (): Conversation | null | undefined => {
   const { conversations, activeConversationId } = get(store);
   if (!activeConversationId) {
     return null;
@@ -85,7 +89,7 @@ const getActiveConversation = () => {
   return conversations.find((c) => c.id === activeConversationId);
 };
 
-const insertMessageToActive = (message: Message) => {
+const insertMessageToActive = (message: Message): void => {
   store.update((s) => {
     const conv = s.conversations.find((c) => c.id === s.activeConversationId);
     if (!conv) {
@@ -95,7 +99,7 @@ const insertMessageToActive = (message: Message) => {
   });
 };
 
-const removeMessageFromActive = (id: number) => {
+const removeMessageFromActive = (id: number): void => {
   store.update((s) => {
     const conv = s.conversations.find((c) => c.id === s.activeConversationId);
     if (!conv) {
@@ -105,13 +109,13 @@ const removeMessageFromActive = (id: number) => {
   });
 };
 
-const scoreConversation = async (score: number) => {
+const scoreConversation = async (score: number): Promise<AxiosResponse> => {
   const conversationId = get(store).activeConversationId;
 
   return api.post(`/scores?conversation_id=${conversationId}`, { score });
 };
 
-const fetchConversations = async (documentId: number) => {
+const fetchConversations = async (documentId: number): Promise<void> => {
   const { data } = await api.get<Conversation[]>(
     `/conversations?pdf_id=${documentId}`,
   );
@@ -126,7 +130,9 @@ const fetchConversations = async (documentId: number) => {
   }
 };
 
-const createConversation = async (documentId: number) => {
+const createConversation = async (
+  documentId: number,
+): Promise<Conversation> => {
   const { data } = await api.post<Conversation>(
     `/conversations?pdf_id=${documentId}`,
   );
@@ -139,15 +145,15 @@ const createConversation = async (documentId: number) => {
   return data;
 };
 
-const setActiveConversationId = (id: number) => {
+const setActiveConversationId = (id: number): void => {
   set({ activeConversationId: id });
 };
 
-const resetAll = () => {
+const resetAll = (): void => {
   set(INITIAL_STATE);
 };
 
-const resetError = () => {
+const resetError = (): void => {
   set({ error: '' });
 };
 

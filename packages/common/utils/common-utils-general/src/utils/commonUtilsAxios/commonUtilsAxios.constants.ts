@@ -1,11 +1,6 @@
 import type { CreateAxiosDefaults } from 'axios';
 import axios from 'axios';
-import {
-  buildMemoryStorage,
-  defaultHeaderInterpreter,
-  defaultKeyGenerator,
-  setupCache,
-} from 'axios-cache-interceptor';
+import { buildMemoryStorage, setupCache } from 'axios-cache-interceptor';
 
 const axiosConfig: CreateAxiosDefaults = {
   headers: {
@@ -17,7 +12,5 @@ export const axiosRequest = axios.create(axiosConfig);
 
 export const axiosRequestCached = setupCache(axios.create(axiosConfig), {
   storage: buildMemoryStorage(),
-  generateKey: defaultKeyGenerator,
-  headerInterpreter: defaultHeaderInterpreter,
   debug: undefined,
 });

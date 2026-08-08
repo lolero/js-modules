@@ -1,5 +1,4 @@
 import type React from 'react';
-import { useCallback } from 'react';
 import { Outlet } from 'react-router-dom';
 import { WEB_CLIENT__URI__TRAVEL_LOG } from '@js-modules/apps-travel-log-common-constants';
 import {
@@ -36,9 +35,9 @@ export function PrivateWorkspaceLayout(): React.ReactNode {
     stateSettingsGetProfileCallback,
   );
 
-  const getIsAuthorizedCallback = useCallback(() => {
+  function getIsAuthorizedCallback(): boolean {
     return isAuthenticated;
-  }, [isAuthenticated]);
+  }
 
   return (
     <WorkspaceLayout

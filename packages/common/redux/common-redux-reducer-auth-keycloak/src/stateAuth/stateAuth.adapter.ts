@@ -31,7 +31,7 @@ export class StateAuthAdapter implements AuthAdapter {
     const keycloakInstance = this.keycloak;
 
     const isTokenValidChannel = eventChannel<boolean>((emit) => {
-      const clearTokenAndEmitFalse = () => {
+      const clearTokenAndEmitFalse = (): void => {
         // Only clear if tokens exist
         if (keycloakInstance.token || keycloakInstance.refreshToken) {
           keycloakInstance.clearToken();
@@ -68,27 +68,27 @@ export class StateAuthAdapter implements AuthAdapter {
       }, 60000); // Check every minute
 
       // Keycloak events
-      keycloakInstance.onAuthSuccess = () => {
+      keycloakInstance.onAuthSuccess = (): void => {
         emit(true);
       };
 
-      keycloakInstance.onAuthError = () => {
+      keycloakInstance.onAuthError = (): void => {
         clearTokenAndEmitFalse();
       };
 
-      keycloakInstance.onAuthRefreshSuccess = () => {
+      keycloakInstance.onAuthRefreshSuccess = (): void => {
         emit(true);
       };
 
-      keycloakInstance.onAuthRefreshError = () => {
+      keycloakInstance.onAuthRefreshError = (): void => {
         clearTokenAndEmitFalse();
       };
 
-      keycloakInstance.onAuthLogout = () => {
+      keycloakInstance.onAuthLogout = (): void => {
         clearTokenAndEmitFalse();
       };
 
-      keycloakInstance.onTokenExpired = () => {
+      keycloakInstance.onTokenExpired = (): void => {
         // Token expired, try to refresh
         keycloakInstance
           .updateToken(5)
@@ -101,7 +101,7 @@ export class StateAuthAdapter implements AuthAdapter {
       };
 
       // Cleanup function
-      return () => {
+      return (): void => {
         clearInterval(updateTokenInterval);
         keycloakInstance.onAuthSuccess = undefined;
         keycloakInstance.onAuthError = undefined;

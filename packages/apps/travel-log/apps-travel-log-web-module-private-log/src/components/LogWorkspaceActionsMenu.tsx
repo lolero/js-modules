@@ -7,7 +7,6 @@ import ListItemText from '@mui/material/ListItemText';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import type React from 'react';
-import { useMemo } from 'react';
 import {
   WebModulesPrivate,
   WebSubModulesLog,
@@ -35,15 +34,12 @@ const rangeTypes: FindManyRangesTypes = {
   deletedAt: FindManyRangeType.date,
 };
 
-export function LogWorkspaceActionsMenu(): React.ReactNode {
-  const routeMetadataAddNew = useMemo(
-    () =>
-      routesMetadataPrivate[WebModulesPrivate.log].subRoutes![
-        WebSubModulesLog.logEntry
-      ].subRoutes![WebSubModulesLogLogEntry.addNew],
-    [],
-  );
+const routeMetadataAddNew =
+  routesMetadataPrivate[WebModulesPrivate.log].subRoutes![
+    WebSubModulesLog.logEntry
+  ].subRoutes![WebSubModulesLogLogEntry.addNew];
 
+export function LogWorkspaceActionsMenu(): React.ReactNode {
   const { menuAnchor, openMenuCallback, closeMenuCallback } = useMenuUtils();
 
   const { searchParams, setSearchParams } = useWebRouter();
@@ -54,27 +50,21 @@ export function LogWorkspaceActionsMenu(): React.ReactNode {
     rangeTypes,
   );
 
-  const rangesMenuButton = useMemo(() => {
-    if (rangeKeysActive.length === 0) {
-      return (
-        <MenuItem>
-          <ListItemIcon>
-            <MuiFaIcon icon={faCalendarPlus} />
-          </ListItemIcon>
-          <ListItemText>Add filter range</ListItemText>
-        </MenuItem>
-      );
-    }
-
-    return (
-      <MenuItem>
-        <ListItemIcon>
-          <MuiFaIcon icon={faCalendarDays} />
-        </ListItemIcon>
-        <ListItemText>{rangeKeysActive.length} Filter ranges</ListItemText>
-      </MenuItem>
-    );
-  }, [rangeKeysActive.length]);
+  const hasRangeKeysActive = rangeKeysActive.length > 0;
+  const rangesMenuButton = (
+    <MenuItem>
+      <ListItemIcon>
+        <MuiFaIcon
+          icon={hasRangeKeysActive ? faCalendarDays : faCalendarPlus}
+        />
+      </ListItemIcon>
+      <ListItemText>
+        {hasRangeKeysActive
+          ? `${rangeKeysActive.length} Filter ranges`
+          : 'Add filter range'}
+      </ListItemText>
+    </MenuItem>
+  );
 
   return (
     <>

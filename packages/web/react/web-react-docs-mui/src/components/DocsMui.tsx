@@ -1,6 +1,6 @@
 import type { Theme } from '@mui/material/styles';
 import type React from 'react';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import type { DocsMuiContextValue } from '../contexts/DocsMuiContext';
 import { DocsMuiContext } from '../contexts/DocsMuiContext';
 import { DocsMuiThemeProvider } from './DocsMuiThemeProvider';
@@ -14,13 +14,11 @@ export function DocsMui({ themes }: DocsMuiProps): React.ReactNode {
     Object.keys(themes)[1],
   );
 
-  const docsMuiContextValue: DocsMuiContextValue = useMemo(() => {
-    return {
-      themeKeys: Object.keys(themes),
-      themeKeySelected: themeKeySelected,
-      setThemeKeySelected: setThemeKeySelected,
-    };
-  }, [themeKeySelected, themes]);
+  const docsMuiContextValue: DocsMuiContextValue = {
+    themeKeys: Object.keys(themes),
+    themeKeySelected: themeKeySelected,
+    setThemeKeySelected: setThemeKeySelected,
+  };
 
   return (
     <DocsMuiContext.Provider value={docsMuiContextValue}>

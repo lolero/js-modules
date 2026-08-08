@@ -4,7 +4,6 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Fab from '@mui/material/Fab';
 import type React from 'react';
-import { useMemo } from 'react';
 import {
   WebModulesPrivate,
   WebSubModulesLog,
@@ -14,26 +13,20 @@ import { routesMetadataPrivate } from '@js-modules/apps-travel-log-common-react'
 import { MuiFaIcon } from '@js-modules/web-react-mui';
 import { useWebParams, WebLink } from '@js-modules/web-react-router';
 
+const routeMetadataEdit =
+  routesMetadataPrivate[WebModulesPrivate.log].subRoutes![
+    WebSubModulesLog.logEntry
+  ].subRoutes![WebSubModulesLogLogEntry.edit];
+
 export function LogLogEntryWorkspaceTopToolbar(): React.ReactNode {
   const { logEntryId } = useWebParams();
 
-  const routeMetadataEdit = useMemo(
-    () =>
-      routesMetadataPrivate[WebModulesPrivate.log].subRoutes![
-        WebSubModulesLog.logEntry
-      ].subRoutes![WebSubModulesLogLogEntry.edit],
-    [],
+  const routeMetadataEditPath = routeMetadataEdit.path.replace(
+    '/logEntryId/',
+    `/${logEntryId}/`,
   );
 
-  const routeMetadataEditPath = useMemo(
-    () => routeMetadataEdit.path.replace('/logEntryId/', `/${logEntryId}/`),
-    [logEntryId, routeMetadataEdit.path],
-  );
-
-  const routeMetadataLog = useMemo(
-    () => routesMetadataPrivate[WebModulesPrivate.log],
-    [],
-  );
+  const routeMetadataLog = routesMetadataPrivate[WebModulesPrivate.log];
 
   return (
     <>

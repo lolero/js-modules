@@ -1,10 +1,11 @@
 import { existsSync, readFileSync } from 'fs';
 import { basename, dirname, join } from 'path';
-import type { CreateNodesV2, TargetConfiguration } from '@nx/devkit';
 import type {
+  CreateNodes,
   CreateNodesResult,
-  CreateNodesResultV2,
-} from 'nx/src/project-graph/plugins/public-api';
+  CreateNodesResultArray,
+  TargetConfiguration,
+} from '@nx/devkit';
 import { Language } from '../common/common.utils';
 import { targetBuilders, TargetType } from './nx.targets';
 
@@ -26,17 +27,17 @@ function filterExistingTargets(
   );
 }
 
-export const createNodesV2: CreateNodesV2 = [
+export const createNodes: CreateNodes = [
   '{package.json,packages/**/package.json,packages/**/pyproject.toml}',
-  (configFiles, _options, context) => {
-    const createNodesResultV2: CreateNodesResultV2 = configFiles.map(
+  (configFiles, _options, context): CreateNodesResultArray => {
+    const createNodesResultArray: CreateNodesResultArray = configFiles.map(
       (configFile) => {
         const projectPathRel = dirname(configFile);
         const isJs = configFile.endsWith('package.json');
         const isPython = configFile.endsWith('pyproject.toml');
 
         let createNodesResult: CreateNodesResult;
-        let nodeResult: CreateNodesResultV2[number];
+        let nodeResult: CreateNodesResultArray[number];
 
         if (
           // Skip workspace-level manifest at `packages/package.json`
@@ -190,6 +191,6 @@ export const createNodesV2: CreateNodesV2 = [
       },
     );
 
-    return createNodesResultV2;
+    return createNodesResultArray;
   },
 ];

@@ -6,7 +6,14 @@ import type { FindManyRange } from '@js-modules/api-nest-utils/src/types/types.r
 import type { FindManyRangesTypes } from '../types/findManyRanges.types';
 import type { SetSearchParams } from '../types/searchParams.types';
 
-export const useFindManyRangesUtils = (
+/**
+ * Reads and writes `<key>Range` search params for find-many queries.
+ * @param searchParams - Current search params.
+ * @param setSearchParams - Setter used to write range params back.
+ * @param rangeTypes - Range types keyed by range key.
+ * @returns The range keys and the get/set/delete range callbacks.
+ */
+export function useFindManyRangesUtils(
   searchParams: URLSearchParams,
   setSearchParams: SetSearchParams,
   rangeTypes: FindManyRangesTypes = {},
@@ -17,11 +24,13 @@ export const useFindManyRangesUtils = (
   getRangeCallback: (rangeKey: string) => FindManyRange;
   setRangeCallback: (rangeKey: string, range: FindManyRange) => void;
   deleteRangeCallback: (rangeKey: string) => void;
-} => {
+} {
+  // WHY: react-compiler-hookless-hook
   const rangeKeys = useMemo(() => {
     return keys(rangeTypes);
   }, [rangeTypes]);
 
+  // WHY: react-compiler-hookless-hook
   const rangeKeysActive = useMemo(() => {
     const activeKeys: string[] = [];
     Array.from(searchParams.entries()).forEach(([key]) => {
@@ -36,10 +45,12 @@ export const useFindManyRangesUtils = (
     return activeKeys;
   }, [searchParams, rangeKeys]);
 
+  // WHY: react-compiler-hookless-hook
   const rangeKeysUnselected = useMemo(() => {
     return difference(rangeKeys, rangeKeysActive);
   }, [rangeKeys, rangeKeysActive]);
 
+  // WHY: react-compiler-hookless-hook
   const getRangeCallback = useCallback(
     (rangeKey: string): FindManyRange => {
       const rangeParam = `${rangeKey}Range`;
@@ -64,6 +75,7 @@ export const useFindManyRangesUtils = (
     [searchParams],
   );
 
+  // WHY: react-compiler-hookless-hook
   const setRangeCallback = useCallback(
     (rangeKey: string, range: FindManyRange) => {
       const rangeParam = `${rangeKey}Range`;
@@ -82,6 +94,7 @@ export const useFindManyRangesUtils = (
     [setSearchParams],
   );
 
+  // WHY: react-compiler-hookless-hook
   const deleteRangeCallback = useCallback(
     (rangeKey: string) => {
       const rangeParam = `${rangeKey}Range`;
@@ -102,4 +115,4 @@ export const useFindManyRangesUtils = (
     setRangeCallback,
     deleteRangeCallback,
   };
-};
+}

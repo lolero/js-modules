@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 
 /**
  * Tracks table sort state (column and direction), toggling the direction when
@@ -21,18 +21,14 @@ export function useTableUtils<SortByT>(initialSortBy: SortByT): {
     sortDirection: 'desc',
   });
 
-  const onSortCallback = useCallback(
-    (column: SortByT) => {
-      const isAsc =
-        tableMetadata.sortBy === column &&
-        tableMetadata.sortDirection === 'asc';
-      setTableMetadata({
-        sortDirection: isAsc ? 'desc' : 'asc',
-        sortBy: column,
-      });
-    },
-    [tableMetadata.sortBy, tableMetadata.sortDirection],
-  );
+  function onSortCallback(column: SortByT): void {
+    const isAsc =
+      tableMetadata.sortBy === column && tableMetadata.sortDirection === 'asc';
+    setTableMetadata({
+      sortDirection: isAsc ? 'desc' : 'asc',
+      sortBy: column,
+    });
+  }
 
   return {
     tableMetadata,

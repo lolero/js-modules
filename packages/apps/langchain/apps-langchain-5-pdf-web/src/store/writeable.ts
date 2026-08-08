@@ -20,10 +20,10 @@ export const writable = <T>(value: T): Writable<T> => {
 
   return {
     ...store,
-    get: () => {
+    get: (): T => {
       return val;
     },
-    update: (fn: (value: T) => void) => {
+    update: (fn: (value: T) => void): void => {
       store.update((current) => {
         return produce(current, fn);
       });

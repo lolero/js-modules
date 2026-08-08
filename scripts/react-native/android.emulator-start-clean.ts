@@ -47,7 +47,7 @@ function shutdown(): void {
 process.on('SIGINT', shutdown);
 process.on('SIGTERM', shutdown);
 
-void (async () => {
+void (async (): Promise<void> => {
   runCommand('adb', ['wait-for-device']);
   console.log('Device detected, waiting for boot to complete...');
   while (adbOutput(['shell', 'getprop', 'sys.boot_completed']) !== '1') {

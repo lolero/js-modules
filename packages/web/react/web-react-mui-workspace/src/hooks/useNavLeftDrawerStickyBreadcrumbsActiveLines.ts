@@ -1,6 +1,7 @@
 import { treeItemClasses } from '@mui/x-tree-view/TreeItem';
+import isEqual from 'lodash/isEqual';
 import type { RefObject } from 'react';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   CSS_CLASSNAME__NAV_LEFT_DRAWER_ACTIVE,
   CSS_CLASSNAME__NAV_LEFT_DRAWER_ACTIVE_LINE,
@@ -19,6 +20,85 @@ type StickyBreadcrumbsMetadata = {
   countRows: number;
   isActiveLeafSubtreeInView: boolean;
 };
+
+/**
+ * Measures which active line rows are currently pinned to the header and footer
+ * edges of the scroll container. Pure: takes the measured DOM and returns the
+ * counts, so the geometry can be exercised without mounting the hook.
+ * @param scrollContainer - Scrollable container of the TreeView.
+ * @param activeLine - ActiveLineTreeViewItemMetadatas sorted from root to active.
+ * @param headerOffset - Space reserved at the top of the scroll container
+ * (below which the header crumbs are pinned).
+ * @returns The pinned row counts plus whether the active leaf's subtree
+ * currently reaches into view.
+ */
+function getStickyBreadcrumbsMetadata(
+  scrollContainer: HTMLElement,
+  activeLine: ActiveLineTreeViewItemMetadata[],
+  headerOffset: number,
+): StickyBreadcrumbsMetadata {
+  const rowsActiveLine = scrollContainer.querySelectorAll<HTMLElement>(
+    `.${CSS_CLASSNAME__NAV_LEFT_DRAWER_ACTIVE_LINE} > .${treeItemClasses.content}, .${CSS_CLASSNAME__NAV_LEFT_DRAWER_ACTIVE} > .${treeItemClasses.content}`,
+  );
+  const countRows = rowsActiveLine.length;
+  const scrollContainerRect = scrollContainer.getBoundingClientRect();
+
+  // A row is pinned to the header only once it is fully behind the crumbs
+  // already stacked above it (its bottom edge has cleared their bottom edge),
+  // so a crumb never appears while its real row is still in view. Rows can
+  // wrap to different heights, so the stack accumulates each row's measured
+  // height rather than assuming a fixed one.
+  let countAbove = 0;
+  let stackedHeightHeader = headerOffset;
+  for (let rowIndex = 0; rowIndex < countRows; rowIndex += 1) {
+    const rowActiveLineRect = rowsActiveLine[rowIndex].getBoundingClientRect();
+    const rowActiveLineBottomOffset =
+      rowActiveLineRect.bottom - scrollContainerRect.top;
+    if (rowActiveLineBottomOffset > stackedHeightHeader) {
+      break;
+    }
+    countAbove = rowIndex + 1;
+    stackedHeightHeader += rowActiveLineRect.height;
+  }
+
+  // Mirror of the header: a row is pinned to the footer only once it is fully
+  // behind the crumbs already stacked below it (its top edge has cleared
+  // their top edge), again accumulating each row's measured height.
+  let countBelow = 0;
+  let stackedHeightFooter = 0;
+  for (let rowIndex = countRows - 1; rowIndex >= 0; rowIndex -= 1) {
+    const rowActiveLineRect = rowsActiveLine[rowIndex].getBoundingClientRect();
+    const rowActiveLineTopOffset =
+      rowActiveLineRect.top - scrollContainerRect.top;
+    if (
+      rowActiveLineTopOffset <
+      scrollContainerRect.height - stackedHeightFooter
+    ) {
+      break;
+    }
+    countBelow = countRows - rowIndex;
+    stackedHeightFooter += rowActiveLineRect.height;
+  }
+
+  const visibleAreaTop = scrollContainerRect.top + stackedHeightHeader;
+  let isActiveLeafSubtreeInView = false;
+  if (countRows > 0 && countRows === activeLine.length) {
+    const activeLeafRoot = rowsActiveLine[countRows - 1].closest<HTMLElement>(
+      `.${treeItemClasses.root}`,
+    );
+    if (activeLeafRoot) {
+      isActiveLeafSubtreeInView =
+        activeLeafRoot.getBoundingClientRect().bottom > visibleAreaTop;
+    }
+  }
+
+  return {
+    countAbove,
+    countBelow,
+    countRows,
+    isActiveLeafSubtreeInView,
+  };
+}
 
 /**
  * React hook that measures which <NavLeftDrawer/> active line TreeViewItems
@@ -49,93 +129,32 @@ export function useNavLeftDrawerStickyBreadcrumbsActiveLines(
       isActiveLeafSubtreeInView: false,
     });
 
-  const updateStickyBreadcrumbsMetadata = useCallback(() => {
-    const scrollContainer = scrollContainerRef.current;
-    if (!scrollContainer) {
-      return;
-    }
-
-    const rowsActiveLine = scrollContainer.querySelectorAll<HTMLElement>(
-      `.${CSS_CLASSNAME__NAV_LEFT_DRAWER_ACTIVE_LINE} > .${treeItemClasses.content}, .${CSS_CLASSNAME__NAV_LEFT_DRAWER_ACTIVE} > .${treeItemClasses.content}`,
-    );
-    const countRows = rowsActiveLine.length;
-    const scrollContainerRect = scrollContainer.getBoundingClientRect();
-
-    // A row is pinned to the header only once it is fully behind the crumbs
-    // already stacked above it (its bottom edge has cleared their bottom edge),
-    // so a crumb never appears while its real row is still in view. Rows can
-    // wrap to different heights, so the stack accumulates each row's measured
-    // height rather than assuming a fixed one.
-    let countAbove = 0;
-    let stackedHeightHeader = headerOffset;
-    for (let rowIndex = 0; rowIndex < countRows; rowIndex += 1) {
-      const rowActiveLineRect =
-        rowsActiveLine[rowIndex].getBoundingClientRect();
-      const rowActiveLineBottomOffset =
-        rowActiveLineRect.bottom - scrollContainerRect.top;
-      if (rowActiveLineBottomOffset > stackedHeightHeader) {
-        break;
-      }
-      countAbove = rowIndex + 1;
-      stackedHeightHeader += rowActiveLineRect.height;
-    }
-
-    // Mirror of the header: a row is pinned to the footer only once it is fully
-    // behind the crumbs already stacked below it (its top edge has cleared
-    // their top edge), again accumulating each row's measured height.
-    let countBelow = 0;
-    let stackedHeightFooter = 0;
-    for (let rowIndex = countRows - 1; rowIndex >= 0; rowIndex -= 1) {
-      const rowActiveLineRect =
-        rowsActiveLine[rowIndex].getBoundingClientRect();
-      const rowActiveLineTopOffset =
-        rowActiveLineRect.top - scrollContainerRect.top;
-      if (
-        rowActiveLineTopOffset <
-        scrollContainerRect.height - stackedHeightFooter
-      ) {
-        break;
-      }
-      countBelow = countRows - rowIndex;
-      stackedHeightFooter += rowActiveLineRect.height;
-    }
-
-    const visibleAreaTop = scrollContainerRect.top + stackedHeightHeader;
-    let isActiveLeafSubtreeInView = false;
-    if (countRows > 0 && countRows === activeLine.length) {
-      const activeLeafRoot = rowsActiveLine[countRows - 1].closest<HTMLElement>(
-        `.${treeItemClasses.root}`,
-      );
-      if (activeLeafRoot) {
-        isActiveLeafSubtreeInView =
-          activeLeafRoot.getBoundingClientRect().bottom > visibleAreaTop;
-      }
-    }
-
-    setStickyBreadcrumbsMetadata((previousStickyBreadcrumbsMetadata) => {
-      if (
-        previousStickyBreadcrumbsMetadata.countAbove === countAbove &&
-        previousStickyBreadcrumbsMetadata.countBelow === countBelow &&
-        previousStickyBreadcrumbsMetadata.countRows === countRows &&
-        previousStickyBreadcrumbsMetadata.isActiveLeafSubtreeInView ===
-          isActiveLeafSubtreeInView
-      ) {
-        return previousStickyBreadcrumbsMetadata;
-      }
-
-      return {
-        countAbove,
-        countBelow,
-        countRows,
-        isActiveLeafSubtreeInView,
-      };
-    });
-  }, [scrollContainerRef, headerOffset, activeLine]);
-
   useEffect(() => {
     const scrollContainer = scrollContainerRef.current;
     if (!scrollContainer) {
       return undefined;
+    }
+
+    function updateStickyBreadcrumbsMetadata(): void {
+      const scrollContainerCurrent = scrollContainerRef.current;
+      if (!scrollContainerCurrent) {
+        return;
+      }
+
+      const stickyBreadcrumbsMetadataNext = getStickyBreadcrumbsMetadata(
+        scrollContainerCurrent,
+        activeLine,
+        headerOffset,
+      );
+
+      setStickyBreadcrumbsMetadata((stickyBreadcrumbsMetadataPrevious) =>
+        isEqual(
+          stickyBreadcrumbsMetadataPrevious,
+          stickyBreadcrumbsMetadataNext,
+        )
+          ? stickyBreadcrumbsMetadataPrevious
+          : stickyBreadcrumbsMetadataNext,
+      );
     }
 
     let animationFrame = 0;
@@ -171,7 +190,7 @@ export function useNavLeftDrawerStickyBreadcrumbsActiveLines(
       subtree: true,
     });
 
-    return () => {
+    return (): void => {
       cancelAnimationFrame(animationFrame);
       scrollContainer.removeEventListener(
         'scroll',
@@ -180,12 +199,7 @@ export function useNavLeftDrawerStickyBreadcrumbsActiveLines(
       resizeObserver.disconnect();
       mutationObserver.disconnect();
     };
-  }, [
-    scrollContainerRef,
-    contentRef,
-    updateStickyBreadcrumbsMetadata,
-    activeLine,
-  ]);
+  }, [scrollContainerRef, contentRef, activeLine, headerOffset]);
 
   const { countAbove, countBelow, countRows, isActiveLeafSubtreeInView } =
     stickyBreadcrumbsMetadata;

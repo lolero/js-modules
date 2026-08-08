@@ -7,7 +7,7 @@ import {
   store,
 } from './store';
 
-const _addPendingMessage = (message: Message, pendingId: number) => {
+const _addPendingMessage = (message: Message, pendingId: number): void => {
   insertMessageToActive(message);
   insertMessageToActive({
     id: pendingId,
@@ -16,7 +16,7 @@ const _addPendingMessage = (message: Message, pendingId: number) => {
   });
 };
 
-export const sendMessage = async (message: Message) => {
+export const sendMessage = async (message: Message): Promise<void> => {
   set({ loading: true });
   const pendingId = Math.random();
   try {

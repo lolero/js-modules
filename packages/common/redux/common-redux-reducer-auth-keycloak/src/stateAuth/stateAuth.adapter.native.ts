@@ -152,7 +152,7 @@ export class StateAuthAdapter implements AuthAdapter {
       }, 60000); // Check every minute (same as web)
 
       // Cleanup function
-      return () => {
+      return (): void => {
         this.isTokenValidEventEmitter = null;
         clearInterval(updateTokenInterval);
         if (this.tokenRefreshTimeout) {

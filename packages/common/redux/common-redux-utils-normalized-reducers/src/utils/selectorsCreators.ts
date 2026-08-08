@@ -27,7 +27,7 @@ export function createReducerPropSelector<
 ): (state: ReduxState) => Reducer<ReducerMetadataT, EntityT>[ReducerPropKey] {
   const selector = createSelector(
     [
-      (state: ReduxState) => {
+      (state: ReduxState): Reducer<ReducerMetadataT, EntityT> => {
         let reducerGroup: ReducerGroup<
           ReducerMetadataT,
           EntityT,

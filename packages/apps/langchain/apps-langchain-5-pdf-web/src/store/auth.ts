@@ -23,11 +23,11 @@ const INITIAL_STATE = {
 
 const auth = writable<AuthInfo>(INITIAL_STATE);
 
-const set = (val: Partial<AuthInfo>) => {
+const set = (val: Partial<AuthInfo>): void => {
   auth.update((state) => ({ ...state, ...val }));
 };
 
-const getUser = async () => {
+const getUser = async (): Promise<User> => {
   const { loading, user } = get(auth);
 
   if (loading) {
@@ -50,7 +50,7 @@ const getUser = async () => {
   }
 };
 
-const signin = async (email: string, password: string) => {
+const signin = async (email: string, password: string): Promise<void> => {
   set({ error: '', loading: true });
 
   try {
@@ -66,7 +66,7 @@ const signin = async (email: string, password: string) => {
   }
 };
 
-const signout = async () => {
+const signout = async (): Promise<void> => {
   set({ loading: true });
   try {
     await api.post('/auth/signout');
@@ -78,7 +78,7 @@ const signout = async () => {
   }
 };
 
-const signup = async (email: string, password: string) => {
+const signup = async (email: string, password: string): Promise<void> => {
   set({ error: '', loading: true });
 
   try {
@@ -91,7 +91,7 @@ const signup = async (email: string, password: string) => {
   }
 };
 
-const clearErrors = () => {
+const clearErrors = (): void => {
   set({ error: '', loading: false });
 };
 

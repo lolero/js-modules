@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import { useTheme } from '@mui/material/styles';
 import type React from 'react';
-import { useCallback, useContext, useRef } from 'react';
+import { useContext, useRef } from 'react';
 import { MuiFaIcon } from '@js-modules/web-react-mui';
 import { NavContext } from '../contexts/NavContext';
 import {
@@ -59,43 +59,33 @@ export function WorkspaceContentBox({
 
   const scrollableBoxRef = useRef<HTMLDivElement>(null);
 
-  const workspaceScrollCallback = useCallback(
-    (e: React.UIEvent<HTMLDivElement>) => {
-      const newWorkspaceScrollTop = e.currentTarget.scrollTop;
-      if (newWorkspaceScrollTop === workspaceScrollTop) {
-        return;
-      }
+  function workspaceScrollCallback(e: React.UIEvent<HTMLDivElement>): void {
+    const workspaceScrollTopNew = e.currentTarget.scrollTop;
+    if (workspaceScrollTopNew === workspaceScrollTop) {
+      return;
+    }
 
-      const newIsWorkspaceScroll = newWorkspaceScrollTop > 0;
+    const isWorkspaceScrollNew = workspaceScrollTopNew > 0;
 
-      let newWorkspaceScrollDirection = workspaceScrollDirection;
-      if (newWorkspaceScrollTop > workspaceScrollTop) {
-        newWorkspaceScrollDirection = ScrollDirection.down;
-      } else if (newWorkspaceScrollTop < workspaceScrollTop) {
-        newWorkspaceScrollDirection = ScrollDirection.up;
-      }
+    let workspaceScrollDirectionNew = workspaceScrollDirection;
+    if (workspaceScrollTopNew > workspaceScrollTop) {
+      workspaceScrollDirectionNew = ScrollDirection.down;
+    } else if (workspaceScrollTopNew < workspaceScrollTop) {
+      workspaceScrollDirectionNew = ScrollDirection.up;
+    }
 
-      setWorkspaceScrollTop(newWorkspaceScrollTop);
-      if (newIsWorkspaceScroll !== isWorkspaceScroll) {
-        setIsWorkspaceScroll(newIsWorkspaceScroll);
-      }
-      if (newWorkspaceScrollDirection !== workspaceScrollDirection) {
-        setWorkspaceScrollDirection(newWorkspaceScrollDirection);
-      }
-    },
-    [
-      isWorkspaceScroll,
-      setIsWorkspaceScroll,
-      setWorkspaceScrollDirection,
-      setWorkspaceScrollTop,
-      workspaceScrollDirection,
-      workspaceScrollTop,
-    ],
-  );
+    setWorkspaceScrollTop(workspaceScrollTopNew);
+    if (isWorkspaceScrollNew !== isWorkspaceScroll) {
+      setIsWorkspaceScroll(isWorkspaceScrollNew);
+    }
+    if (workspaceScrollDirectionNew !== workspaceScrollDirection) {
+      setWorkspaceScrollDirection(workspaceScrollDirectionNew);
+    }
+  }
 
-  const scrollToTopCallback = useCallback(() => {
+  function scrollToTopCallback(): void {
     scrollableBoxRef?.current?.scrollTo(0, 0);
-  }, []);
+  }
 
   return (
     <Box

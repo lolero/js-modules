@@ -8,7 +8,7 @@ import isEqual from 'lodash/isEqual';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import type React from 'react';
-import { useCallback, useContext, useMemo } from 'react';
+import { useContext } from 'react';
 import {
   WebModulesPrivate,
   WebSubModulesLog,
@@ -55,41 +55,27 @@ export function LogLogEntryAddEditWorkspaceTopToolbar(): React.ReactNode {
   const { validateCallback: validateCallbackNodeLogEntryUnsaved } =
     nodeLogEntryUnsavedFormValidator;
 
-  const { saveLabel, goBackPath, submitRequest } = useMemo((): {
-    saveLabel: string;
-    goBackPath: string;
-    submitRequest:
-      | typeof nodeLogEntriesCreateOneRequest
-      | typeof nodeLogEntriesUpdateOneWholeRequest;
-  } => {
-    if (logEntryId) {
-      return {
-        saveLabel: 'Save changes',
-        goBackPath: `${
-          routesMetadataPrivate[WebModulesPrivate.log].subRoutes![
-            WebSubModulesLog.logEntry
-          ].path
-        }/${logEntryId}`,
-        submitRequest: nodeLogEntriesUpdateOneWholeRequest,
-      };
-    }
+  let saveLabel = 'Create';
+  let goBackPath = routesMetadataPrivate[WebModulesPrivate.log].path;
+  let submitRequest:
+    | typeof nodeLogEntriesCreateOneRequest
+    | typeof nodeLogEntriesUpdateOneWholeRequest =
+    nodeLogEntriesCreateOneRequest;
+  if (logEntryId) {
+    saveLabel = 'Save changes';
+    goBackPath = `${
+      routesMetadataPrivate[WebModulesPrivate.log].subRoutes![
+        WebSubModulesLog.logEntry
+      ].path
+    }/${logEntryId}`;
+    submitRequest = nodeLogEntriesUpdateOneWholeRequest;
+  }
 
-    return {
-      saveLabel: 'Create',
-      goBackPath: routesMetadataPrivate[WebModulesPrivate.log].path,
-      submitRequest: nodeLogEntriesCreateOneRequest,
-    };
-  }, [
-    logEntryId,
-    nodeLogEntriesCreateOneRequest,
-    nodeLogEntriesUpdateOneWholeRequest,
-  ]);
-
-  const cancelCallback = useCallback(() => {
+  function cancelCallback(): void {
     pathPush(goBackPath);
-  }, [goBackPath, pathPush]);
+  }
 
-  const submitCallback = useCallback(() => {
+  function submitCallback(): void {
     const formErrorsNodeLogEntryUnsavedTemp =
       validateCallbackNodeLogEntryUnsaved();
 
@@ -104,39 +90,22 @@ export function LogLogEntryAddEditWorkspaceTopToolbar(): React.ReactNode {
     }
 
     pathPush(goBackPath);
-  }, [
-    goBackPath,
-    logEntryId,
-    pathPush,
-    nodeLogEntriesCreateOneCallback,
-    nodeLogEntriesUpdateOneWholeCallback,
-    nodeLogEntryUnsaved,
-    validateCallbackNodeLogEntryUnsaved,
-  ]);
+  }
 
-  const isSubmitButtonDisabled = useMemo(() => {
-    const isUnsavedChanges =
-      (isUndefined(logEntryId) &&
-        !isNull(nodeLogEntryUnsaved) &&
-        !isEqual(nodeLogEntryUnsaved, nodeLogEntryUnsavedEmpty)) ||
-      (!isUndefined(logEntryId) &&
-        !isUndefined(nodeLogEntry) &&
-        !isNull(nodeLogEntryUnsaved) &&
-        !isEqual(nodeLogEntryUnsaved, nodeLogEntry));
+  const isUnsavedChanges =
+    (isUndefined(logEntryId) &&
+      !isNull(nodeLogEntryUnsaved) &&
+      !isEqual(nodeLogEntryUnsaved, nodeLogEntryUnsavedEmpty)) ||
+    (!isUndefined(logEntryId) &&
+      !isUndefined(nodeLogEntry) &&
+      !isNull(nodeLogEntryUnsaved) &&
+      !isEqual(nodeLogEntryUnsaved, nodeLogEntry));
 
-    const isSubmitButtonDisabledTemp =
-      isNull(nodeLogEntryUnsaved) ||
-      (!isUndefined(logEntryId) && isUndefined(nodeLogEntry)) ||
-      nodeLogEntriesIsMutationPendingOrCompleted ||
-      !isUnsavedChanges;
-
-    return isSubmitButtonDisabledTemp;
-  }, [
-    logEntryId,
-    nodeLogEntriesIsMutationPendingOrCompleted,
-    nodeLogEntry,
-    nodeLogEntryUnsaved,
-  ]);
+  const isSubmitButtonDisabled =
+    isNull(nodeLogEntryUnsaved) ||
+    (!isUndefined(logEntryId) && isUndefined(nodeLogEntry)) ||
+    nodeLogEntriesIsMutationPendingOrCompleted ||
+    !isUnsavedChanges;
 
   return (
     <>

@@ -1,5 +1,5 @@
 import { circularProgressClasses } from '@mui/material/CircularProgress';
-import type { Theme } from '@mui/material/styles';
+import type { CSSObject, Theme } from '@mui/material/styles';
 // Augments MUI's `Components` type with the X TreeView slots (MuiSimpleTreeView).
 // https://mui.com/x/react-tree-view/quickstart/#theme-augmentation
 import type {} from '@mui/x-tree-view/themeAugmentation';
@@ -34,7 +34,7 @@ export function getThemeComponentsWorkspace(): Theme['components'] {
         // toolbar, with a smaller icon to fit. A descendant selectois used
         // because the toolbar's content is slot-portaled through a
         // WorkspaceSlotBox, so the Fab sits a couple of wrappers deep.
-        root: ({ theme }) => {
+        root: ({ theme }): CSSObject => {
           const fabSize = theme.spacing(4);
 
           return {

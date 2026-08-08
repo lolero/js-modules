@@ -40,7 +40,7 @@ export function NativeFaIcon({
   color,
   icon: { prefix, iconName },
   size,
-}: NativeFaIconProps & { ref?: Ref<NativeFaIconRef> }) {
+}: NativeFaIconProps & { ref?: Ref<NativeFaIconRef> }): React.ReactNode {
   return (
     <FontAwesome6Icon
       {...({

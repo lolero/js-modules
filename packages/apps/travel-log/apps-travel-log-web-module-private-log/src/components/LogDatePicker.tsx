@@ -3,7 +3,6 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { format, parse } from 'date-fns';
 import type React from 'react';
-import { useCallback } from 'react';
 import { useSearchParamLogDate } from '@js-modules/apps-travel-log-common-utils';
 import { useWebRouter } from '@js-modules/web-react-router';
 
@@ -12,19 +11,16 @@ export function LogDatePicker(): React.ReactNode {
 
   const logDate = useSearchParamLogDate();
 
-  const changeLogDateCallback = useCallback(
-    (value: Date | null) => {
-      setSearchParams((searchParamsPrevious) => {
-        if (value) {
-          searchParamsPrevious.set('log-date', format(value, 'yyyy-MM-dd'));
-        } else {
-          searchParamsPrevious.delete('log-date');
-        }
-        return searchParamsPrevious;
-      });
-    },
-    [setSearchParams],
-  );
+  function changeLogDateCallback(value: Date | null): void {
+    setSearchParams((searchParamsPrevious) => {
+      if (value) {
+        searchParamsPrevious.set('log-date', format(value, 'yyyy-MM-dd'));
+      } else {
+        searchParamsPrevious.delete('log-date');
+      }
+      return searchParamsPrevious;
+    });
+  }
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>

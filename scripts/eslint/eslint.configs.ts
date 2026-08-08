@@ -248,6 +248,26 @@ const eslintConfigs: Record<EslintConfigType, EslintConfig> = {
             },
           },
         },
+        // Rules carried here rather than in the global block because their
+        // syntax doesn't exist in JavaScript and they need type info the
+        // HTML/Svelte/Vue parsers don't forward. Scoping keeps them
+        // satisfiable — a `.mjs` file cannot carry a return type annotation at
+        // all — and is why no per-framework `off` override is needed.
+        rules: {
+          // Return types on declarations, assigned functions, class methods and
+          // object literal members. Contextually-typed callbacks stay inferred
+          // via the rule's own `allowTypedFunctionExpressions` default, so the
+          // rule only fires where nothing else declares the type.
+          // https://typescript-eslint.io/rules/explicit-function-return-type
+          '@typescript-eslint/explicit-function-return-type': 'error',
+          // import type vs import for type-only imports. Reduces bundle size.
+          // https://typescript-eslint.io/rules/consistent-type-imports
+          '@typescript-eslint/consistent-type-imports': 'error',
+          // Collapse `import { type X, type Y }` into `import type { X, Y }`.
+          // Reduces bundle size.
+          // https://typescript-eslint.io/rules/no-import-type-side-effects
+          '@typescript-eslint/no-import-type-side-effects': 'error',
+        },
       },
 
       {
@@ -258,13 +278,6 @@ const eslintConfigs: Record<EslintConfigType, EslintConfig> = {
             'error',
             { varsIgnorePattern: '^_', argsIgnorePattern: '^_' },
           ],
-          // import type vs import for type-only imports. Reduces bundle size.
-          // https://typescript-eslint.io/rules/consistent-type-imports
-          '@typescript-eslint/consistent-type-imports': 'error',
-          // Collapse `import { type X, type Y }` into `import type { X, Y }`.
-          // Reduces bundle size.
-          // https://typescript-eslint.io/rules/no-import-type-side-effects
-          '@typescript-eslint/no-import-type-side-effects': 'error',
           // Syntax-only rule (no type info required); TS-aware version avoids
           // false positives on enum + type/value same-name pairs.
           // https://typescript-eslint.io/rules/no-shadow
@@ -435,25 +448,6 @@ const eslintConfigs: Record<EslintConfigType, EslintConfig> = {
             ...extensions[Language.vue],
           ]),
         ],
-      },
-
-      // disableTypeChecked only covers rules from recommendedTypeChecked.
-      // consistent-type-imports and no-import-type-side-effects are manually
-      // added in the global rules block and also require type info, so they
-      // need an explicit off for any file whose parser doesn't forward
-      // parserOptions.project (HTML, Svelte, Vue).
-      {
-        files: [
-          extensionsToGlobRecursive([
-            ...extensions[Language.html],
-            ...extensions[Language.svelte],
-            ...extensions[Language.vue],
-          ]),
-        ],
-        rules: {
-          '@typescript-eslint/consistent-type-imports': 'off',
-          '@typescript-eslint/no-import-type-side-effects': 'off',
-        },
       },
     ],
   },
@@ -629,8 +623,11 @@ const eslintConfigs: Record<EslintConfigType, EslintConfig> = {
           // typed components)
           // https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/prop-types.md
           'react/prop-types': 'off',
-          // React Compiler rules are irrelevant without the react compiler plugin
-          'react-hooks/incompatible-library': 'off',
+          // Escalated from the plugin's `warn`: a library on the React
+          // Compiler's incompatible list silently costs every component that
+          // touches it. An error forces the trade-off to be made once, at the
+          // call site, instead of accumulating as ambient warnings.
+          'react-hooks/incompatible-library': 'error',
         },
       },
 

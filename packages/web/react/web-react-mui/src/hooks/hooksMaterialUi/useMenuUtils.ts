@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 
 export type MenuAnchor = EventTarget & HTMLElement;
 
@@ -35,31 +35,27 @@ export function useMenuUtils<
 
   const [menuMetadata, setMenuMetadata] = useState<MenuMetadataT | null>(null);
 
-  const openMenuCallback = useCallback(
-    (
-      e: React.MouseEvent<HTMLElement, MouseEvent>,
-      menuMetadataUpdated?: MenuMetadataT | null,
-    ) => {
-      e.preventDefault();
-      setMenuAnchor(e.currentTarget);
-      setMenuCoordinates({
-        mouseX: e.clientX - 2,
-        mouseY: e.clientY - 4,
-      });
-      setMenuMetadata(menuMetadataUpdated ?? null);
-    },
-    [],
-  );
+  function openMenuCallback(
+    e: React.MouseEvent<HTMLElement, MouseEvent>,
+    menuMetadataUpdated?: MenuMetadataT | null,
+  ): void {
+    e.preventDefault();
+    setMenuAnchor(e.currentTarget);
+    setMenuCoordinates({
+      mouseX: e.clientX - 2,
+      mouseY: e.clientY - 4,
+    });
+    setMenuMetadata(menuMetadataUpdated ?? null);
+  }
 
-  const closeMenuCallback = useCallback(
-    (e?: React.MouseEvent<HTMLElement, MouseEvent> | Record<string, never>) => {
-      setMenuAnchor(null);
-      setMenuCoordinates(null);
-      setMenuMetadata(null);
-      e?.preventDefault();
-    },
-    [],
-  );
+  function closeMenuCallback(
+    e?: React.MouseEvent<HTMLElement, MouseEvent> | Record<string, never>,
+  ): void {
+    setMenuAnchor(null);
+    setMenuCoordinates(null);
+    setMenuMetadata(null);
+    e?.preventDefault();
+  }
 
   return {
     menuAnchor,

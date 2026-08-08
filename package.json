@@ -89,6 +89,7 @@
     "@types/jest": "catalog:",
     "@types/mocha": "catalog:",
     "@types/node": "catalog:",
+    "babel-jest": "catalog:",
     "babel-plugin-react-compiler": "catalog:",
     "chai": "catalog:",
     "cross-env": "catalog:",

@@ -12,7 +12,7 @@ export class PipeTransformParseFormDataJson implements PipeTransform {
     private readonly dtoClass?: new () => Record<string, unknown>,
   ) {}
 
-  async transform(value: unknown) {
+  async transform(value: unknown): Promise<unknown> {
     if (isUndefined(value)) {
       if (this.isRequired) {
         throw new BadRequestException('Value is undefined but not optional');

@@ -22,16 +22,16 @@ const INITIAL_STATE = {
 
 const documents = writable<UploadStore>(INITIAL_STATE);
 
-const set = (val: Partial<UploadStore>) => {
+const set = (val: Partial<UploadStore>): void => {
   documents.update((state) => ({ ...state, ...val }));
 };
 
-const setUploadProgress = (event: AxiosProgressEvent) => {
+const setUploadProgress = (event: AxiosProgressEvent): void => {
   const progress = Math.round((event.progress ?? 0) * 100);
   set({ uploadProgress: progress });
 };
 
-const upload = async (file: File) => {
+const upload = async (file: File): Promise<void> => {
   set({ error: '' });
 
   try {
@@ -46,12 +46,12 @@ const upload = async (file: File) => {
   }
 };
 
-const getDocuments = async () => {
+const getDocuments = async (): Promise<void> => {
   const { data } = await api.get<Document[]>('/pdfs');
   set({ data });
 };
 
-const clearErrors = () => {
+const clearErrors = (): void => {
   set({ error: '', uploadProgress: 0 });
 };
 

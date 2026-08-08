@@ -41,9 +41,56 @@ After every update, re-check each pin accordingly. A major bump can also introdu
 
    - **`react-compiler-computed-keys`** — [React Compiler can't lower computed object keys](https://github.com/facebook/react/issues/29583) ([BuildHIR limitations](https://github.com/facebook/react/issues/31532)) — a template literal or `as`-cast in key position (``[`& .${cls.root}`]: …``, `['--x' as keyof CSSProperties]: …`) makes it skip **the whole component**, silently. Hence those keys are hoisted to a `const` and the key position holds a plain identifier, which lowers fine. Not configurable — `panicThreshold` only picks throw-vs-skip. Re-check by running the compiler over `packages/**/src` with a `logger` and counting `CompileError` events; when this is fixed, inline the hoisted selectors and destructured keys again — `grep -rn 'WATCH: react-compiler-computed-keys'` lists every site, including the `CLAUDE.md` rule that exists only for this.
 
+   - **`react-compiler-incompatible-library`** — the React Compiler keeps a hard-coded list of libraries it refuses to memoize (currently `@tanstack/react-virtual` and `@tanstack/react-table`); `grep -o '@tanstack/[a-z-]*' node_modules/babel-plugin-react-compiler/dist/index.js` shows the current list. `ListboxComponent` in `VirtualizedAutocomplete` uses `useVirtualizer`, so it is skipped — deliberately, since memoizing would break the virtualizer's measurement assumptions. `react-hooks/incompatible-library` is escalated to `error` in `scripts/eslint/eslint.configs.ts` so any _new_ incompatible usage fails the build rather than accruing warnings; the one accepted site carries an `eslint-disable-next-line`. When a library leaves the list, drop its disable comment.
+
    - **`swc-jest-mock-hoisting`** — [@swc/jest `jest.mock()` hoisting](https://github.com/swc-project/swc/issues/10325) — `@swc/jest` doesn't hoist `jest.mock()` when `jest` is imported from `@jest/globals`; it emits `_globals.jest.mock()`, which runs after module requires and breaks mocks. Hence spec files use the bare global `jest` for `jest.mock()` and `jest as jestGlobals` for typed utilities (see `scripts/jest/jest.configs.ts`). Watch for a comment/PR saying `@jest/globals` imports are now hoisted, or that hoisting no longer requires an unbound global; the sibling [swc-project/jest#120](https://github.com/swc-project/jest/issues/120) was closed not-planned, so a fix would land in swc core. Confirm by adding `import { jest } from '@jest/globals'` to a spec that has `jest.mock()` and running it — if mocks resolve, the fix is live. Then clean up: (1) in all spec files change `jest as jestGlobals` → `jest` and rename `jestGlobals.` → `jest.`, (2) remove `"jest"` from `tsconfig.json` `compilerOptions.types`, (3) remove `@types/jest` from root devDependencies, (4) simplify `jest/prefer-importing-jest-globals` from `{ types: [...] }` to `'error'` in `scripts/eslint/eslint.configs.ts`.
 
-5. **Verify** — a major update can break at build _or_ runtime. Run the full gate:
+5. **Check deprecations** — a bump can deprecate APIs we call. Neither taze nor
+   the standing lint config surfaces this: `@typescript-eslint/no-deprecated` is
+   deliberately **not** in the eslint config (TypeScript already strikes through
+   deprecated symbols in the editor, so a standing type-aware rule would cost time
+   on every `lint:check` to tell us what the editor already shows). Run it on
+   demand instead, per package or from a package dir:
+
+   ```bash
+   npx eslint . --no-error-on-unmatched-pattern \
+     --rule '{"@typescript-eslint/no-deprecated":"error"}'
+   ```
+
+   `error`, not `warn` — zero is currently reachable, so this is a ratchet: any
+   deprecation a bump introduces fails loudly, and there is no standing noise
+   teaching us that failure is normal. If zero ever stops being reachable, that is
+   the signal to reconsider, not to add suppressions.
+
+   Triage each finding **in this order**:
+   1. **Is the call load-bearing at all?** Check the library's own defaults before
+      hunting for a replacement. Both findings in the last sweep were redundant
+      explicit defaults (`generateKey: defaultKeyGenerator`) that `setupCache`
+      falls back to anyway — deleting them was behaviour-identical. Their
+      deprecation message ("tell us why you need it") made them look unfixable.
+   2. **Does upstream name a replacement?** `@deprecated … {@link X}` is a rename;
+      "will be removed someday" with no successor is research. **Verify
+      equivalence by reading the declarations** — never infer it from the name.
+      Every nx `*V2` type turned out to be a plain alias, which is why that
+      migration was safe.
+   3. **Type-only or behavioural?** A type rename is proven by `pnpm types:check`.
+      A runtime or exported-symbol rename needs a behavioural check — renaming the
+      plugin's `createNodesV2` export to `createNodes` was verified by target count
+      before and after (9 → 9); types would never have caught a break.
+   4. **Needs a real refactor? Stop and report — do not create a watch item yet.**
+      Creating the item _is_ the deferral decision, and it's the user's to make.
+      Report: sites and count, the named replacement or its absence, the upstream
+      deadline **verbatim** ("removed in Nx 24" forces a schedule; "hidden in
+      future versions" doesn't), type-only vs behavioral, blast radius, the cost
+      of doing nothing, and a recommendation labeled as one. Then act on the
+      decision — fix now, or add the watch item in step 4.
+
+   Boundaries: never touch vendored code (`_docsExamplesCopy-DO-NOT-EDIT`), and
+   ignore deprecations surfacing from inside a library's own types — not ours to
+   fix. Do **one library per pass**; a multi-library sweep mixes zero-risk renames
+   with judgment calls and makes the diff unreviewable.
+
+6. **Verify** — a major update can break at build _or_ runtime. Run the full gate:
    - `pnpm nx run-many -t build` + `-t test` (a bumped framework/test dep can break — e.g. this repo's jest/RN conflict only surfaces in tests)
    - `pnpm lint:fix` (new plugin majors change rules)
    - `pnpm deps:check` (see `/deps-cleanup` — new deps may need per-type `ignoreDependencies`)

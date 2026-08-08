@@ -2,7 +2,7 @@ import _isEmpty from 'lodash/isEmpty';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import pickBy from 'lodash/pickBy';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import isEmail from 'validator/lib/isEmail';
 import isEmpty from 'validator/lib/isEmpty';
 // import { UsersUpdateOnePartialDto } from '@js-modules/apps-travel-log-api-modules-core/src/modules/users/dtos/users.updateOnePartial.dto';
@@ -26,49 +26,50 @@ export function useStateSettingsValidateProfilePartialUnsaved(): FormValidator<P
     FormErrors<ProfilePartialUnsavedValidator>
   >({});
 
-  const validateCallback = useCallback(
-    (fieldNames: (keyof ProfilePartialUnsavedValidator)[] = []) => {
-      if (isNull(profilePartialUnsaved)) {
-        return formErrors;
+  function validateCallback(
+    fieldNames: (keyof ProfilePartialUnsavedValidator)[] = [],
+  ): FormErrors<ProfilePartialUnsavedValidator> {
+    if (isNull(profilePartialUnsaved)) {
+      return formErrors;
+    }
+
+    // const dto = Object.assign(
+    //   new UsersUpdateOnePartialDto(),
+    //   profilePartialUnsaved,
+    // );
+    // const formErrorsClean = await validateDto<ProfilePartialUnsavedValidator>(
+    //   dto,
+    //   formErrors,
+    //   fieldNames,
+    // );
+
+    const formErrorsTemp: FormErrors<ProfilePartialUnsavedValidator> = {
+      ...formErrors,
+    };
+
+    if (
+      !isUndefined(profilePartialUnsaved.email) &&
+      (_isEmpty(fieldNames) || fieldNames.includes('email'))
+    ) {
+      const fieldErrors: string[] = [];
+
+      if (isEmpty(profilePartialUnsaved.email)) {
+        fieldErrors.push('Enter email');
+      } else if (!isEmail(profilePartialUnsaved.email)) {
+        fieldErrors.push('Enter valid email');
       }
 
-      // const dto = Object.assign(
-      //   new UsersUpdateOnePartialDto(),
-      //   profilePartialUnsaved,
-      // );
-      // const formErrorsClean = await validateDto<ProfilePartialUnsavedValidator>(
-      //   dto,
-      //   formErrors,
-      //   fieldNames,
-      // );
+      formErrorsTemp.email = fieldErrors;
+    }
 
-      const formErrorsTemp: FormErrors<ProfilePartialUnsavedValidator> = {
-        ...formErrors,
-      };
+    const formErrorsClean: FormErrors<ProfilePartialUnsavedValidator> = pickBy(
+      formErrorsTemp,
+      (fieldErrors) => fieldErrors.length > 0,
+    );
 
-      if (
-        !isUndefined(profilePartialUnsaved.email) &&
-        (_isEmpty(fieldNames) || fieldNames.includes('email'))
-      ) {
-        const fieldErrors: string[] = [];
-
-        if (isEmpty(profilePartialUnsaved.email)) {
-          fieldErrors.push('Enter email');
-        } else if (!isEmail(profilePartialUnsaved.email)) {
-          fieldErrors.push('Enter valid email');
-        }
-
-        formErrorsTemp.email = fieldErrors;
-      }
-
-      const formErrorsClean: FormErrors<ProfilePartialUnsavedValidator> =
-        pickBy(formErrorsTemp, (fieldErrors) => fieldErrors.length > 0);
-
-      setFormErrors(formErrorsClean);
-      return formErrorsClean;
-    },
-    [profilePartialUnsaved, formErrors],
-  );
+    setFormErrors(formErrorsClean);
+    return formErrorsClean;
+  }
 
   return {
     formErrors,

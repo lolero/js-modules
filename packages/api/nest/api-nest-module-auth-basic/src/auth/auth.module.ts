@@ -19,7 +19,7 @@ export class AuthModule {
     };
   }
 
-  configure(consumer: MiddlewareConsumer) {
+  configure(consumer: MiddlewareConsumer): void {
     consumer.apply(AuthMiddlewareCurrentUser).forRoutes('*');
   }
 }

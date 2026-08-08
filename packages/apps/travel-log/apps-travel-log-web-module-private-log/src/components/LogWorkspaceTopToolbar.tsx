@@ -2,7 +2,6 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
 import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
 import type React from 'react';
-import { useMemo } from 'react';
 import {
   WebModulesPrivate,
   WebSubModulesLog,
@@ -14,15 +13,12 @@ import { WebLink } from '@js-modules/web-react-router';
 import { LogPagination } from './LogPagination';
 import { LogWorkspaceActionsMenu } from './LogWorkspaceActionsMenu';
 
-export function LogWorkspaceTopToolbar(): React.ReactNode {
-  const routeMetadata = useMemo(
-    () =>
-      routesMetadataPrivate[WebModulesPrivate.log].subRoutes![
-        WebSubModulesLog.logEntry
-      ].subRoutes![WebSubModulesLogLogEntry.addNew],
-    [],
-  );
+const routeMetadata =
+  routesMetadataPrivate[WebModulesPrivate.log].subRoutes![
+    WebSubModulesLog.logEntry
+  ].subRoutes![WebSubModulesLogLogEntry.addNew];
 
+export function LogWorkspaceTopToolbar(): React.ReactNode {
   return (
     <>
       <Box />

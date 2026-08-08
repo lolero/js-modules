@@ -15,13 +15,13 @@ const INITIAL_STATE = {
 
 const errorStore = writable<ErrorStore>(INITIAL_STATE);
 
-const addError = (error: ApiError) => {
+const addError = (error: ApiError): void => {
   errorStore.update((state) => {
     return { errors: [...state.errors, error] };
   });
 };
 
-const removeError = (error: ApiError) => {
+const removeError = (error: ApiError): void => {
   errorStore.update((state) => {
     return {
       errors: state.errors.filter((e) => e !== error),
@@ -29,7 +29,7 @@ const removeError = (error: ApiError) => {
   });
 };
 
-const reset = () => {
+const reset = (): void => {
   errorStore.set({ errors: [] });
 };
 

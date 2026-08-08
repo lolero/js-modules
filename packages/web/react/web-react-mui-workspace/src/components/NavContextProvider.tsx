@@ -1,7 +1,7 @@
 import type { IconDefinition } from '@fortawesome/fontawesome-common-types';
 import { useTheme } from '@mui/material/styles';
 import type React from 'react';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import type { RoutesMetadata } from '@js-modules/common-react-nav';
 import { NAV_LEFT_DRAWER_TREE_VIEW_ITEM_HEIGHT_MIN } from '../constants/nav.constants';
 import type { NavContextValue } from '../contexts/NavContext';
@@ -70,41 +70,24 @@ export function NavContextProvider({
     routesMetadatas,
   );
 
-  const navContextValue: NavContextValue = useMemo(() => {
-    return {
-      nonAuthorizedRedirectPath: nonAuthenticatedRedirectPath,
-      navLeftDrawerDisplayStatus,
-      setNavLeftDrawerDisplayStatus,
-      navRightDrawerDisplayStatus,
-      setNavRightDrawerDisplayStatus,
-      showNavLeftDrawerString,
-      hideNavLeftDrawerString,
-      showNavRightDrawerString,
-      hideNavRightDrawerString,
-      navLeftDrawerCollapsedWidth,
-      navLeftDrawerExpandedWidth,
-      navLeftDrawerTreeViewItemHeightMin,
-      navRightDrawerCollapsedWidth,
-      navRightDrawerExpandedWidth,
-      workspaceTopToolbarPaddingYSpacing,
-      workspacePaddingXSpacing,
-    };
-  }, [
+  const navContextValue: NavContextValue = {
+    nonAuthorizedRedirectPath: nonAuthenticatedRedirectPath,
+    navLeftDrawerDisplayStatus,
+    setNavLeftDrawerDisplayStatus,
+    navRightDrawerDisplayStatus,
+    setNavRightDrawerDisplayStatus,
+    showNavLeftDrawerString,
     hideNavLeftDrawerString,
+    showNavRightDrawerString,
     hideNavRightDrawerString,
     navLeftDrawerCollapsedWidth,
-    navLeftDrawerDisplayStatus,
     navLeftDrawerExpandedWidth,
     navLeftDrawerTreeViewItemHeightMin,
     navRightDrawerCollapsedWidth,
-    navRightDrawerDisplayStatus,
     navRightDrawerExpandedWidth,
-    nonAuthenticatedRedirectPath,
-    showNavLeftDrawerString,
-    showNavRightDrawerString,
-    workspacePaddingXSpacing,
     workspaceTopToolbarPaddingYSpacing,
-  ]);
+    workspacePaddingXSpacing,
+  };
 
   return (
     <NavContext.Provider value={navContextValue}>

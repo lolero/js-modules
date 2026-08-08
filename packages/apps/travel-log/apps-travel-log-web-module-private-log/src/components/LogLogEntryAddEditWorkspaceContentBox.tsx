@@ -3,7 +3,7 @@ import TextField from '@mui/material/TextField';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import type React from 'react';
-import { useCallback, useContext, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import {
   NODE_LOG_ENTRIES__CREATE_ONE__REQUEST_ID,
   NODE_LOG_ENTRIES__UPDATE_ONE_WHOLE__REQUEST_ID,
@@ -43,14 +43,13 @@ export function LogLogEntryAddEditWorkspaceContentBox(): React.ReactNode {
     formErrorsNodeLogEntryUnsaved,
   );
 
-  const updateNodeLogEntryUnsavedCallback = useCallback(
-    (nodeLogEntryUnsavedUpdated: NonNullable<typeof nodeLogEntryUnsaved>) => {
-      nodeLogEntriesUpdatePartialReducerMetadataCallback({
-        nodeLogEntryUnsaved: nodeLogEntryUnsavedUpdated,
-      });
-    },
-    [nodeLogEntriesUpdatePartialReducerMetadataCallback],
-  );
+  function updateNodeLogEntryUnsavedCallback(
+    nodeLogEntryUnsavedUpdated: NonNullable<typeof nodeLogEntryUnsaved>,
+  ): void {
+    nodeLogEntriesUpdatePartialReducerMetadataCallback({
+      nodeLogEntryUnsaved: nodeLogEntryUnsavedUpdated,
+    });
+  }
 
   const {
     formDataTemp: nodeLogEntryUnsavedTemp,

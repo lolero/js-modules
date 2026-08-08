@@ -75,7 +75,7 @@ function ListboxComponent({
   overscanCount = 5,
   ownerState: _ownerState,
   ...other
-}: ListboxComponentProps) {
+}: ListboxComponentProps): React.ReactNode {
   const itemData: RowDataItem[] = [];
   (children as ReactElement[]).forEach(
     (item: ReactElement & { children?: ReactElement[] }) => {
@@ -90,7 +90,7 @@ function ListboxComponent({
     ? parseInt(theme.spacing(4.5), 10)
     : parseInt(theme.spacing(6), 10);
 
-  const getChildSize = (child: RowDataItem) =>
+  const getChildSize = (child: RowDataItem): number =>
     !Array.isArray(child) ? parseInt(theme.spacing(6), 10) : itemSize;
 
   const scrollElementRef = useRef<HTMLUListElement>(null);
@@ -98,6 +98,12 @@ function ListboxComponent({
 
   const edgePaddingPx = parseInt(theme.spacing(1), 10);
 
+  // WATCH: react-compiler-incompatible-library
+  // @tanstack/react-virtual is on the React Compiler's incompatible list, so the
+  // compiler skips this component. Deliberate: memoizing would break the
+  // virtualizer's measurement assumptions. Only ListboxComponent is skipped —
+  // VirtualizedAutocomplete below still compiles.
+  // eslint-disable-next-line react-hooks/incompatible-library
   const virtualizer = useVirtualizer({
     count: itemData.length,
     getScrollElement: () => scrollElementRef.current,
@@ -205,7 +211,7 @@ export function VirtualizedAutocomplete<
     DisableClearableT,
     FreeSoloT
   >,
-) {
+): React.ReactNode {
   return (
     <Autocomplete
       {...props}

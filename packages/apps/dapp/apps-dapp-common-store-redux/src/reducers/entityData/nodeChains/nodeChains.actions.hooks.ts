@@ -1,4 +1,3 @@
-import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import type {
   Request,
@@ -30,10 +29,10 @@ export function useNodeChainsGetMany(): UseRequestEntities<
   const entityPks = request?.entityPks;
   const entities = useNodeChainsEntities(entityPks ?? []);
 
-  const callback = useCallback(() => {
+  function callback(): void {
     const action = createNodeChainsGetManyRequestAction();
     dispatch(action);
-  }, [dispatch]);
+  }
 
   return {
     request,

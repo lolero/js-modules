@@ -10,17 +10,17 @@ import {
   async: false,
 })
 class ValidatorIsNumberOrString implements ValidatorConstraintInterface {
-  validate(value: unknown) {
+  validate(value: unknown): boolean {
     return typeof value === 'number' || typeof value === 'string';
   }
 
-  defaultMessage() {
+  defaultMessage(): string {
     return '($value) must be a number or a string';
   }
 }
 
 export function isNumberOrString(validationOptions?: ValidationOptions) {
-  return function (object: object, propertyName: string) {
+  return function (object: object, propertyName: string): void {
     registerDecorator({
       target: object.constructor,
       propertyName,

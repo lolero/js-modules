@@ -1,5 +1,5 @@
 import type { Ref } from 'react';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 
 export function useChildNodeSize<NodeT extends HTMLElement>(): {
   nodeRef?: Ref<NodeT>;
@@ -9,7 +9,7 @@ export function useChildNodeSize<NodeT extends HTMLElement>(): {
   const [nodeWidth, setNodeWidth] = useState<number>(0);
   const [nodeHeight, setNodeHeight] = useState<number>(0);
 
-  const nodeRef = useCallback((node?: NodeT) => {
+  function nodeRefCallback(node?: NodeT): void {
     if (!node) {
       return;
     }
@@ -21,7 +21,8 @@ export function useChildNodeSize<NodeT extends HTMLElement>(): {
       }
     });
     resizeObserver.observe(node);
-  }, []) as Ref<NodeT> | undefined;
+  }
+  const nodeRef = nodeRefCallback as Ref<NodeT> | undefined;
 
   return {
     nodeRef,

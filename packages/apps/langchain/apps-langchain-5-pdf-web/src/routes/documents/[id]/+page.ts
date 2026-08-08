@@ -1,7 +1,16 @@
 import { api, getErrorMessage } from '$api';
 import type { PageLoad } from './$types';
 
-export const load = (async ({ params }) => {
+export const load = (async ({
+  params,
+}): Promise<
+  | {
+      document: { id: string; name: string };
+      documentUrl: string;
+      error?: undefined;
+    }
+  | { error: string; document?: undefined; documentUrl?: undefined }
+> => {
   try {
     const {
       data: { pdf, download_url },

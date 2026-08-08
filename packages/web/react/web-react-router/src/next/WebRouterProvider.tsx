@@ -31,6 +31,8 @@ function WebRouterProviderInner({
   const pathname = usePathname();
   const nextSearchParams = useSearchParams();
 
+  // WHY: react-compiler-hook-as-value
+  // `useParams` rides on the adapter below, so this component is never compiled.
   const searchParams = useMemo(() => {
     return new URLSearchParams(nextSearchParams.toString());
   }, [nextSearchParams]);

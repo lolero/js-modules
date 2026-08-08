@@ -2,7 +2,6 @@ import { faCircleNotch } from '@fortawesome/free-solid-svg-icons/faCircleNotch';
 import { faLink } from '@fortawesome/free-solid-svg-icons/faLink';
 import Button, { buttonClasses } from '@mui/material/Button';
 import type React from 'react';
-import { useCallback } from 'react';
 import {
   useStateWeb3WalletConnect,
   WalletType,
@@ -20,9 +19,9 @@ export function DappNavConnectButton(): React.ReactNode {
     callback: stateWeb3ConnectWalletCallback,
   } = useStateWeb3WalletConnect();
 
-  const walletConnectCallback = useCallback(() => {
+  function walletConnectCallback(): void {
     stateWeb3ConnectWalletCallback(WalletType.metamask);
-  }, [stateWeb3ConnectWalletCallback]);
+  }
 
   if (!wallet && !stateWeb3ConnectWalletRequest?.isPending) {
     return (

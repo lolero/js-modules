@@ -3,8 +3,8 @@ import Divider from '@mui/material/Divider';
 import type { DrawerProps } from '@mui/material/Drawer';
 import Drawer from '@mui/material/Drawer';
 import type React from 'react';
-import { useContext, useMemo } from 'react';
-import { NavContext, NavDrawerDisplayStatus } from '../contexts/NavContext';
+import { useContext } from 'react';
+import { NavContext } from '../contexts/NavContext';
 import { WorkspaceContext } from '../contexts/WorkspaceContext';
 import { useNavDisplayMetadata } from '../hooks/useNavDisplayMetadata';
 import { CSS_CLASSNAME__NAV_LEFT_DRAWER } from '../styles/cssClassNames';
@@ -28,49 +28,32 @@ export function NavLeftDrawer({
   ref,
   navLeftDrawerContent,
   navLeftDrawerFooter,
-}: NavLeftDrawerProps) {
-  const {
-    navLeftDrawerDisplayStatus,
-    navLeftDrawerCollapsedWidth,
-    navLeftDrawerExpandedWidth,
-  } = useContext(NavContext);
+}: NavLeftDrawerProps): React.ReactNode {
+  const { navLeftDrawerCollapsedWidth, navLeftDrawerExpandedWidth } =
+    useContext(NavContext);
 
   const { navTopToolbarHeight } = useContext(WorkspaceContext);
 
-  const { isMobile, isTablet, closeNavLeftDrawerCallback } =
-    useNavDisplayMetadata();
-
-  const navDrawerWidth = useMemo(() => {
-    if (navLeftDrawerDisplayStatus === NavDrawerDisplayStatus.collapsed) {
-      return navLeftDrawerCollapsedWidth;
-    }
-
-    if (
-      isMobile &&
-      navLeftDrawerDisplayStatus === NavDrawerDisplayStatus.expanded
-    ) {
-      return '100%';
-    }
-
-    return navLeftDrawerExpandedWidth;
-  }, [
+  const {
     isMobile,
-    navLeftDrawerDisplayStatus,
-    navLeftDrawerCollapsedWidth,
-    navLeftDrawerExpandedWidth,
-  ]);
+    isTablet,
+    isNavLeftDrawerExpanded,
+    isNavLeftDrawerCollapsed,
+    isNavLeftDrawerHidden,
+    closeNavLeftDrawerCallback,
+  } = useNavDisplayMetadata();
 
-  const drawerVariant: DrawerProps['variant'] = useMemo(() => {
-    if (
-      isMobile ||
-      (isTablet &&
-        navLeftDrawerDisplayStatus === NavDrawerDisplayStatus.expanded)
-    ) {
-      return 'temporary';
-    }
+  let navDrawerWidth = navLeftDrawerExpandedWidth;
+  if (isNavLeftDrawerCollapsed) {
+    navDrawerWidth = navLeftDrawerCollapsedWidth;
+  } else if (isMobile && isNavLeftDrawerExpanded) {
+    navDrawerWidth = '100%';
+  }
 
-    return 'permanent';
-  }, [isMobile, isTablet, navLeftDrawerDisplayStatus]);
+  let drawerVariant: DrawerProps['variant'] = 'permanent';
+  if (isMobile || (isTablet && isNavLeftDrawerExpanded)) {
+    drawerVariant = 'temporary';
+  }
 
   return (
     <Drawer
@@ -81,7 +64,7 @@ export function NavLeftDrawer({
       }}
       variant={drawerVariant}
       anchor={isMobile ? 'right' : 'left'}
-      open={navLeftDrawerDisplayStatus !== NavDrawerDisplayStatus.hidden}
+      open={!isNavLeftDrawerHidden}
       slotProps={{
         paper: {
           sx: {

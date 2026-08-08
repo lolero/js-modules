@@ -1,6 +1,6 @@
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { useCallback, useContext, useMemo } from 'react';
+import { useContext } from 'react';
 import { NavContext, NavDrawerDisplayStatus } from '../contexts/NavContext';
 
 export type NavDisplayMetadata = {
@@ -48,49 +48,37 @@ export function useNavDisplayMetadata(): NavDisplayMetadata {
 
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
 
-  const isNavLeftDrawerExpanded = useMemo(
-    () => navLeftDrawerDisplayStatus === NavDrawerDisplayStatus.expanded,
-    [navLeftDrawerDisplayStatus],
-  );
+  const isNavLeftDrawerExpanded =
+    navLeftDrawerDisplayStatus === NavDrawerDisplayStatus.expanded;
 
-  const isNavLeftDrawerCollapsed = useMemo(
-    () => navLeftDrawerDisplayStatus === NavDrawerDisplayStatus.collapsed,
-    [navLeftDrawerDisplayStatus],
-  );
+  const isNavLeftDrawerCollapsed =
+    navLeftDrawerDisplayStatus === NavDrawerDisplayStatus.collapsed;
 
-  const isNavLeftDrawerHidden = useMemo(
-    () => navLeftDrawerDisplayStatus === NavDrawerDisplayStatus.hidden,
-    [navLeftDrawerDisplayStatus],
-  );
+  const isNavLeftDrawerHidden =
+    navLeftDrawerDisplayStatus === NavDrawerDisplayStatus.hidden;
 
-  const isNavRightDrawerExpanded = useMemo(
-    () => navRightDrawerDisplayStatus === NavDrawerDisplayStatus.expanded,
-    [navRightDrawerDisplayStatus],
-  );
+  const isNavRightDrawerExpanded =
+    navRightDrawerDisplayStatus === NavDrawerDisplayStatus.expanded;
 
-  const isNavRightDrawerCollapsed = useMemo(
-    () => navRightDrawerDisplayStatus === NavDrawerDisplayStatus.collapsed,
-    [navRightDrawerDisplayStatus],
-  );
+  const isNavRightDrawerCollapsed =
+    navRightDrawerDisplayStatus === NavDrawerDisplayStatus.collapsed;
 
-  const isNavRightDrawerHidden = useMemo(
-    () => navRightDrawerDisplayStatus === NavDrawerDisplayStatus.hidden,
-    [navRightDrawerDisplayStatus],
-  );
+  const isNavRightDrawerHidden =
+    navRightDrawerDisplayStatus === NavDrawerDisplayStatus.hidden;
 
-  const hideNavLeftDrawerCallback = useCallback(() => {
+  function hideNavLeftDrawerCallback(): void {
     setNavLeftDrawerDisplayStatus(NavDrawerDisplayStatus.hidden);
-  }, [setNavLeftDrawerDisplayStatus]);
+  }
 
-  const collapseNavLeftDrawerCallback = useCallback(() => {
+  function collapseNavLeftDrawerCallback(): void {
     setNavLeftDrawerDisplayStatus(NavDrawerDisplayStatus.collapsed);
-  }, [setNavLeftDrawerDisplayStatus]);
+  }
 
-  const expandNavLeftDrawerCallback = useCallback(() => {
+  function expandNavLeftDrawerCallback(): void {
     setNavLeftDrawerDisplayStatus(NavDrawerDisplayStatus.expanded);
-  }, [setNavLeftDrawerDisplayStatus]);
+  }
 
-  const closeNavLeftDrawerCallback = useCallback(() => {
+  function closeNavLeftDrawerCallback(): void {
     if (isNavLeftDrawerExpanded) {
       if (isMobile) {
         setNavLeftDrawerDisplayStatus(NavDrawerDisplayStatus.hidden);
@@ -98,26 +86,21 @@ export function useNavDisplayMetadata(): NavDisplayMetadata {
         setNavLeftDrawerDisplayStatus(NavDrawerDisplayStatus.collapsed);
       }
     }
-  }, [
-    isMobile,
-    isNavLeftDrawerExpanded,
-    isTablet,
-    setNavLeftDrawerDisplayStatus,
-  ]);
+  }
 
-  const hideNavRightDrawerCallback = useCallback(() => {
+  function hideNavRightDrawerCallback(): void {
     setNavRightDrawerDisplayStatus(NavDrawerDisplayStatus.hidden);
-  }, [setNavRightDrawerDisplayStatus]);
+  }
 
-  const collapseNavRightDrawerCallback = useCallback(() => {
+  function collapseNavRightDrawerCallback(): void {
     setNavRightDrawerDisplayStatus(NavDrawerDisplayStatus.collapsed);
-  }, [setNavRightDrawerDisplayStatus]);
+  }
 
-  const expandNavRightDrawerCallback = useCallback(() => {
+  function expandNavRightDrawerCallback(): void {
     setNavRightDrawerDisplayStatus(NavDrawerDisplayStatus.expanded);
-  }, [setNavRightDrawerDisplayStatus]);
+  }
 
-  const closeNavRightDrawerCallback = useCallback(() => {
+  function closeNavRightDrawerCallback(): void {
     if (isNavRightDrawerExpanded) {
       if (isMobile) {
         setNavRightDrawerDisplayStatus(NavDrawerDisplayStatus.hidden);
@@ -125,12 +108,7 @@ export function useNavDisplayMetadata(): NavDisplayMetadata {
         setNavRightDrawerDisplayStatus(NavDrawerDisplayStatus.collapsed);
       }
     }
-  }, [
-    isMobile,
-    isNavRightDrawerExpanded,
-    isTablet,
-    setNavRightDrawerDisplayStatus,
-  ]);
+  }
 
   return {
     isMobile,

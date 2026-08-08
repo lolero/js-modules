@@ -7,7 +7,7 @@ import { UsersEntity } from '@js-modules/apps-travel-log-api-modules-core';
 export class AppController {
   @Get('/hello-world')
   @Public()
-  usersHelloWorld() {
+  usersHelloWorld(): string {
     return 'Hello world!';
   }
 

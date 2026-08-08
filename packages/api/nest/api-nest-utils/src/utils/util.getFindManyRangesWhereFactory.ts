@@ -29,7 +29,9 @@ export function utilGetFindManyRangesWhereFactory<
 ): (whereExpressionBuilder: WhereExpressionBuilder) => void {
   const rangeNames = keys(findManyRangesDto);
 
-  const whereFactory = (whereExpressionBuilder: WhereExpressionBuilder) => {
+  const whereFactory = (
+    whereExpressionBuilder: WhereExpressionBuilder,
+  ): void => {
     rangeNames.forEach((rangeName, rangeNameIndex) => {
       const rangeDto: FindManyRange =
         findManyRangesDto[rangeName as keyof EntityT]!;

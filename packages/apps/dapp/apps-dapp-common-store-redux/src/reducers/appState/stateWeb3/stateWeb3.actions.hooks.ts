@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import type {
   Request,
@@ -36,18 +36,15 @@ export function useStateWeb3UpdatePartialReducerMetadata(): UseRequestReducerMet
   >;
   const reducerMetadata = useStateWeb3ReducerMetadata();
 
-  const callback = useCallback(
-    (
-      partialReducerMetadata: StateWeb3UpdatePartialReducerMetadataRequestAction['requestMetadata']['partialReducerMetadata'],
-    ) => {
-      const action = createStateWeb3UpdatePartialReducerMetadataRequestAction(
-        partialReducerMetadata,
-      );
-      setRequestId(action.requestId);
-      dispatch(action);
-    },
-    [dispatch],
-  );
+  function callback(
+    partialReducerMetadata: StateWeb3UpdatePartialReducerMetadataRequestAction['requestMetadata']['partialReducerMetadata'],
+  ): void {
+    const action = createStateWeb3UpdatePartialReducerMetadataRequestAction(
+      partialReducerMetadata,
+    );
+    setRequestId(action.requestId);
+    dispatch(action);
+  }
 
   return {
     request,
@@ -69,19 +66,16 @@ export function useStateWeb3WalletConnect(): UseRequestReducerMetadata<
   ) as Request<StateWeb3WalletConnectRequestAction['requestMetadata']>;
   const reducerMetadata = useStateWeb3ReducerMetadata();
 
-  const callback = useCallback(
-    (
-      walletType: StateWeb3WalletConnectRequestAction['requestMetadata']['walletType'],
-    ) => {
-      if (request?.isPending) {
-        return;
-      }
+  function callback(
+    walletType: StateWeb3WalletConnectRequestAction['requestMetadata']['walletType'],
+  ): void {
+    if (request?.isPending) {
+      return;
+    }
 
-      const action = createStateWeb3WalletConnectRequestAction(walletType);
-      dispatch(action);
-    },
-    [dispatch, request?.isPending],
-  );
+    const action = createStateWeb3WalletConnectRequestAction(walletType);
+    dispatch(action);
+  }
 
   return {
     request,
@@ -101,14 +95,14 @@ export function useStateWeb3WalletDisconnect(): UseRequestReducerMetadata<
   ) as Request<StateWeb3WalletDisconnectRequestAction['requestMetadata']>;
   const reducerMetadata = useStateWeb3ReducerMetadata();
 
-  const callback = useCallback(() => {
+  function callback(): void {
     if (request?.isPending) {
       return;
     }
 
     const action = createStateWeb3WalletDisconnectRequestAction();
     dispatch(action);
-  }, [dispatch, request?.isPending]);
+  }
 
   return {
     request,

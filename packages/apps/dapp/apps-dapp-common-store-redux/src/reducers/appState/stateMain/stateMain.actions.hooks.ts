@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import type {
   Request,
@@ -26,18 +26,15 @@ export function useStateMainUpdatePartialReducerMetadata(): UseRequestReducerMet
   >;
   const reducerMetadata = useStateMainReducerMetadata();
 
-  const callback = useCallback(
-    (
-      partialReducerMetadata: StateMainUpdatePartialReducerMetadataRequestAction['requestMetadata']['partialReducerMetadata'],
-    ) => {
-      const action = createStateMainUpdatePartialReducerMetadataRequestAction(
-        partialReducerMetadata,
-      );
-      setRequestId(action.requestId);
-      dispatch(action);
-    },
-    [dispatch],
-  );
+  function callback(
+    partialReducerMetadata: StateMainUpdatePartialReducerMetadataRequestAction['requestMetadata']['partialReducerMetadata'],
+  ): void {
+    const action = createStateMainUpdatePartialReducerMetadataRequestAction(
+      partialReducerMetadata,
+    );
+    setRequestId(action.requestId);
+    dispatch(action);
+  }
 
   return {
     request,

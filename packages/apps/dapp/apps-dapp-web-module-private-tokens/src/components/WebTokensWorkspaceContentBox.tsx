@@ -11,7 +11,7 @@ import orderBy from 'lodash/orderBy';
 import values from 'lodash/values';
 import type { CSSProperties } from 'react';
 import type React from 'react';
-import { useCallback, useMemo, useState } from 'react';
+import { useState } from 'react';
 import type { NodeChain } from '@js-modules/apps-dapp-common-store-redux';
 import { useNodeChainsGetMany } from '@js-modules/apps-dapp-common-store-redux';
 import { usePrevious } from '@js-modules/common-react-utils';
@@ -38,21 +38,16 @@ export function WebTokensWorkspaceContentBox(): React.ReactNode {
     nodeChainsGetManyRequest,
   );
 
-  const sortedNodeChains = useMemo(() => {
-    return orderBy(values(nodeChains), 'name', 'asc');
-  }, [nodeChains]);
+  const sortedNodeChains = orderBy(values(nodeChains), 'name', 'asc');
 
   const [selectedChain, setSelectedChain] = useState<NodeChain | null>(null);
 
-  const changeChainCallback = useCallback(
-    (
-      _e: React.SyntheticEvent<Element, Event>,
-      nodeChain: NodeChain | null | undefined,
-    ) => {
-      setSelectedChain(nodeChain ?? null);
-    },
-    [],
-  );
+  function changeChainCallback(
+    _e: React.SyntheticEvent<Element, Event>,
+    nodeChain: NodeChain | null | undefined,
+  ): void {
+    setSelectedChain(nodeChain ?? null);
+  }
 
   if (
     nodeChainsGetManyRequestPrevious?.isPending &&

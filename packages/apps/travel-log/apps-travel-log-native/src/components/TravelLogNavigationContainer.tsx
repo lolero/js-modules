@@ -4,7 +4,6 @@ import {
   DefaultTheme as ThemeDefaultLight,
 } from '@react-navigation/native';
 import type React from 'react';
-import { useMemo } from 'react';
 import { adaptNavigationTheme } from 'react-native-paper';
 import type { MD3Theme } from 'react-native-paper/src/types';
 import {
@@ -23,21 +22,17 @@ export function TravelLogNavigationContainer({
 }: TravelLogNavigationContainerProps): React.ReactNode {
   const { themePalette } = useStateMainReducerMetadata();
 
-  const theme = useMemo(() => {
-    const isLightTheme = themePalette === ThemePalette.light;
-    const isDarkTheme = !isLightTheme;
+  const isLightTheme = themePalette === ThemePalette.light;
+  const isDarkTheme = !isLightTheme;
 
-    const { LightTheme, DarkTheme } = adaptNavigationTheme({
-      reactNavigationLight: ThemeDefaultLight,
-      reactNavigationDark: ThemeDefaultDark,
-      materialLight: isLightTheme ? paperTheme : undefined,
-      materialDark: isDarkTheme ? paperTheme : undefined,
-    });
+  const { LightTheme, DarkTheme } = adaptNavigationTheme({
+    reactNavigationLight: ThemeDefaultLight,
+    reactNavigationDark: ThemeDefaultDark,
+    materialLight: isLightTheme ? paperTheme : undefined,
+    materialDark: isDarkTheme ? paperTheme : undefined,
+  });
 
-    const themeTemp = isLightTheme ? LightTheme : DarkTheme;
-
-    return themeTemp;
-  }, [paperTheme, themePalette]);
+  const theme = isLightTheme ? LightTheme : DarkTheme;
 
   const linking = {
     prefixes: ['travellog://'],

@@ -10,13 +10,7 @@ import { treeItemClasses } from '@mui/x-tree-view/TreeItem';
 import isEqual from 'lodash/isEqual';
 import union from 'lodash/union';
 import type React from 'react';
-import {
-  useCallback,
-  useContext,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from 'react';
+import { useContext, useLayoutEffect, useRef, useState } from 'react';
 import { MuiFaIcon } from '@js-modules/web-react-mui';
 import { useWebRouter } from '@js-modules/web-react-router';
 import {
@@ -340,8 +334,8 @@ export function NavLeftDrawerTreeView({
     useState<string[]>(pathsExpandedActive);
   if (!isEqual(syncedPathsExpandedActive, pathsExpandedActive)) {
     setSyncedPathsExpandedActive(pathsExpandedActive);
-    setExpandedItems((previousExpandedItems) =>
-      union(previousExpandedItems, pathsExpandedActive),
+    setExpandedItems((expandedItemsPrevious) =>
+      union(expandedItemsPrevious, pathsExpandedActive),
     );
   }
 
@@ -349,50 +343,42 @@ export function NavLeftDrawerTreeView({
     scrollContainerRef.current = getScrollableParent(treeRef.current);
   }, []);
 
-  const onExpandedItemsChangeStickyBreadcrumbCallback = useCallback(
-    (itemPath: string) => {
-      // When a header breadcrumb is expanded, flag its path so the layout
-      // effect can scroll that crumb's subtree into view.
-      if (!expandedItems.includes(itemPath)) {
-        stickyBreadcrumbExpandingPathRef.current = itemPath;
-      }
-      setExpandedItems((previousExpandedItems) =>
-        previousExpandedItems.includes(itemPath)
-          ? previousExpandedItems.filter(
-              (path) =>
-                path !== itemPath &&
-                !isDescendantOfAncestor(path, itemPath, pathsParentByPath),
-            )
-          : [...previousExpandedItems, itemPath],
+  function onExpandedItemsChangeStickyBreadcrumbCallback(
+    itemPath: string,
+  ): void {
+    // When a header breadcrumb is expanded, flag its path so the layout
+    // effect can scroll that crumb's subtree into view.
+    if (!expandedItems.includes(itemPath)) {
+      stickyBreadcrumbExpandingPathRef.current = itemPath;
+    }
+    setExpandedItems((expandedItemsPrevious) =>
+      expandedItemsPrevious.includes(itemPath)
+        ? expandedItemsPrevious.filter(
+            (path) =>
+              path !== itemPath &&
+              !isDescendantOfAncestor(path, itemPath, pathsParentByPath),
+          )
+        : [...expandedItemsPrevious, itemPath],
+    );
+  }
+
+  function onExpandedItemsChangeCallback(itemIds: string[]): void {
+    setExpandedItems((expandedItemsPrevious) => {
+      const collapsedItemPaths = expandedItemsPrevious.filter(
+        (path) => !itemIds.includes(path),
       );
-    },
-    [expandedItems, pathsParentByPath],
-  );
+      if (collapsedItemPaths.length === 0) {
+        return itemIds;
+      }
 
-  const onExpandedItemsChangeCallback = useCallback(
-    (itemIds: string[]) => {
-      setExpandedItems((previousExpandedItems) => {
-        const collapsedItemPaths = previousExpandedItems.filter(
-          (path) => !itemIds.includes(path),
-        );
-        if (collapsedItemPaths.length === 0) {
-          return itemIds;
-        }
-
-        return itemIds.filter(
-          (path) =>
-            !collapsedItemPaths.some((collapsedItemPath) =>
-              isDescendantOfAncestor(
-                path,
-                collapsedItemPath,
-                pathsParentByPath,
-              ),
-            ),
-        );
-      });
-    },
-    [pathsParentByPath],
-  );
+      return itemIds.filter(
+        (path) =>
+          !collapsedItemPaths.some((collapsedItemPath) =>
+            isDescendantOfAncestor(path, collapsedItemPath, pathsParentByPath),
+          ),
+      );
+    });
+  }
 
   const showExpandCollapseButtons = pathsExpandable.length > 0;
   const expandedItemsSet = new Set(expandedItems);

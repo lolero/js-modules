@@ -1,7 +1,7 @@
 import debounce from 'lodash/debounce';
 import isEqual from 'lodash/isEqual';
 import type React from 'react';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type {
   FormData,
   FormErrors,
@@ -41,50 +41,48 @@ export function useFormUtilsWeb<FormDataT extends FormData>(
   const fieldsToValidateRef = useRef<(keyof FormDataT)[]>([]);
   const [validationVersion, setValidationVersion] = useState(0);
 
-  const changeFieldCallback = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      const inputType = e.currentTarget.getAttribute('type');
-      const fieldName = e.currentTarget.getAttribute(
-        'data-key',
-      ) as keyof FormDataT;
-      let fieldValue: FormFieldValue = e.target.value;
-      if (inputType === 'checkbox') {
-        fieldValue = (e as React.ChangeEvent<HTMLInputElement>).target.checked;
-      } else if (inputType === 'file') {
-        fieldValue = Array.from(
-          (e as React.ChangeEvent<HTMLInputElement>).target.files!,
-        );
-      } else if (jsonFieldNames.includes(fieldName)) {
-        fieldValue = JSON.parse(fieldValue) as FormFieldValue;
-      }
-      setFormDataTemp((tempFormDataPrev) => {
-        return {
-          ...tempFormDataPrev,
-          [fieldName]: fieldValue,
-        };
-      });
-      if (formErrors[fieldName]?.length) {
-        fieldsToValidateRef.current = [fieldName];
-        setValidationVersion((version) => version + 1);
-      }
-    },
-    [formErrors, jsonFieldNames],
-  );
-
-  const blurFieldCallback = useCallback(
-    (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      const fieldName = e.currentTarget.getAttribute(
-        'data-key',
-      ) as keyof FormDataT;
+  function changeFieldCallback(
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ): void {
+    const inputType = e.currentTarget.getAttribute('type');
+    const fieldName = e.currentTarget.getAttribute(
+      'data-key',
+    ) as keyof FormDataT;
+    let fieldValue: FormFieldValue = e.target.value;
+    if (inputType === 'checkbox') {
+      fieldValue = (e as React.ChangeEvent<HTMLInputElement>).target.checked;
+    } else if (inputType === 'file') {
+      fieldValue = Array.from(
+        (e as React.ChangeEvent<HTMLInputElement>).target.files!,
+      );
+    } else if (jsonFieldNames.includes(fieldName)) {
+      fieldValue = JSON.parse(fieldValue) as FormFieldValue;
+    }
+    setFormDataTemp((formDataTempPrevious) => {
+      return {
+        ...formDataTempPrevious,
+        [fieldName]: fieldValue,
+      };
+    });
+    if (formErrors[fieldName]?.length) {
       fieldsToValidateRef.current = [fieldName];
       setValidationVersion((version) => version + 1);
-    },
-    [],
-  );
+    }
+  }
 
-  const updateFormDataCallbackDebounced = useMemo(
-    () => debounce(updateCallback, debounceWaitMilliseconds),
-    [updateCallback, debounceWaitMilliseconds],
+  function blurFieldCallback(
+    e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ): void {
+    const fieldName = e.currentTarget.getAttribute(
+      'data-key',
+    ) as keyof FormDataT;
+    fieldsToValidateRef.current = [fieldName];
+    setValidationVersion((version) => version + 1);
+  }
+
+  const updateFormDataCallbackDebounced = debounce(
+    updateCallback,
+    debounceWaitMilliseconds,
   );
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import type {
   Request,
@@ -42,19 +42,15 @@ export function useStateSettingsUpdatePartialReducerMetadata(): UseRequestReduce
   >;
   const reducerMetadata = useStateSettingsReducerMetadata();
 
-  const callback = useCallback(
-    (
-      partialReducerMetadata: StateSettingsUpdatePartialReducerMetadataRequestAction['requestMetadata']['partialReducerMetadata'],
-    ) => {
-      const action =
-        createStateSettingsUpdatePartialReducerMetadataRequestAction(
-          partialReducerMetadata,
-        );
-      setRequestId(action.requestId);
-      dispatch(action);
-    },
-    [dispatch],
-  );
+  function callback(
+    partialReducerMetadata: StateSettingsUpdatePartialReducerMetadataRequestAction['requestMetadata']['partialReducerMetadata'],
+  ): void {
+    const action = createStateSettingsUpdatePartialReducerMetadataRequestAction(
+      partialReducerMetadata,
+    );
+    setRequestId(action.requestId);
+    dispatch(action);
+  }
 
   return {
     request,
@@ -74,10 +70,10 @@ export function useStateSettingsGetProfile(): UseRequestReducerMetadata<
   ) as Request<StateSettingsGetProfileRequestAction['requestMetadata']>;
   const reducerMetadata = useStateSettingsReducerMetadata();
 
-  const callback = useCallback(() => {
+  function callback(): void {
     const action = createStateSettingsGetProfileRequestAction();
     dispatch(action);
-  }, [dispatch]);
+  }
 
   return {
     request,
@@ -99,17 +95,14 @@ export function useStateSettingsUpdateProfile(): UseRequestReducerMetadata<
   ) as Request<StateSettingsUpdateProfileRequestAction['requestMetadata']>;
   const reducerMetadata = useStateSettingsReducerMetadata();
 
-  const callback = useCallback(
-    (
-      usersUpdateOnePartialDto: StateSettingsUpdateProfileRequestAction['requestMetadata']['usersUpdateOnePartialDto'],
-    ) => {
-      const action = createStateSettingsUpdateProfileRequestAction(
-        usersUpdateOnePartialDto,
-      );
-      dispatch(action);
-    },
-    [dispatch],
-  );
+  function callback(
+    usersUpdateOnePartialDto: StateSettingsUpdateProfileRequestAction['requestMetadata']['usersUpdateOnePartialDto'],
+  ): void {
+    const action = createStateSettingsUpdateProfileRequestAction(
+      usersUpdateOnePartialDto,
+    );
+    dispatch(action);
+  }
 
   return {
     request,
@@ -129,10 +122,10 @@ export function useStateSettingsResetPassword(): UseRequestReducerMetadata<
   ) as Request<StateSettingsResetPasswordRequestAction['requestMetadata']>;
   const reducerMetadata = useStateSettingsReducerMetadata();
 
-  const callback = useCallback(() => {
+  function callback(): void {
     const action = createStateSettingsResetPasswordRequestAction();
     dispatch(action);
-  }, [dispatch]);
+  }
 
   return {
     request,
@@ -152,10 +145,10 @@ export function useStateSettingsSignout(): UseRequestReducerMetadata<
   ) as Request<StateSettingsSignoutRequestAction['requestMetadata']>;
   const reducerMetadata = useStateSettingsReducerMetadata();
 
-  const callback = useCallback(() => {
+  function callback(): void {
     const action = createStateSettingsSignoutRequestAction();
     dispatch(action);
-  }, [dispatch]);
+  }
 
   return {
     request,

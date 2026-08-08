@@ -7,7 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import { useTheme } from '@mui/material/styles';
 import Tooltip from '@mui/material/Tooltip';
 import type React from 'react';
-import { useCallback, useContext, useMemo } from 'react';
+import { useContext } from 'react';
 import { MuiFaIcon } from '@js-modules/web-react-mui';
 import { useWebRouter } from '@js-modules/web-react-router';
 import { NavContext } from '../contexts/NavContext';
@@ -47,7 +47,7 @@ export function NavTopAppbar({
   homePath,
   isNavLeftDrawerWithContent,
   children,
-}: NavTopAppbarProps) {
+}: NavTopAppbarProps): React.ReactNode {
   const {
     showNavLeftDrawerString,
     hideNavLeftDrawerString,
@@ -70,40 +70,25 @@ export function NavTopAppbar({
     hideNavLeftDrawerCallback,
   } = useNavDisplayMetadata();
 
-  const toggleNavLeftDrawerCallback = useCallback(() => {
+  function toggleNavLeftDrawerCallback(): void {
     if (isNavLeftDrawerHidden) {
       expandNavLeftDrawerCallback();
     } else {
       hideNavLeftDrawerCallback();
     }
-  }, [
-    expandNavLeftDrawerCallback,
-    hideNavLeftDrawerCallback,
-    isNavLeftDrawerHidden,
-  ]);
+  }
 
   const theme = useTheme();
 
-  const appbarDisplay = useMemo(() => {
-    if (isMobile && workspaceScrollDirection === ScrollDirection.down) {
-      return 'none';
-    }
+  let appbarDisplay = 'flex';
+  if (isMobile && workspaceScrollDirection === ScrollDirection.down) {
+    appbarDisplay = 'none';
+  }
 
-    return 'flex';
-  }, [workspaceScrollDirection, isMobile]);
-
-  const logoBoxWidth = useMemo(() => {
-    if (isMobile || isNavLeftDrawerCollapsed) {
-      return navLeftDrawerCollapsedWidth;
-    }
-
-    return navLeftDrawerExpandedWidth;
-  }, [
-    isMobile,
-    isNavLeftDrawerCollapsed,
-    navLeftDrawerCollapsedWidth,
-    navLeftDrawerExpandedWidth,
-  ]);
+  let logoBoxWidth = navLeftDrawerExpandedWidth;
+  if (isMobile || isNavLeftDrawerCollapsed) {
+    logoBoxWidth = navLeftDrawerCollapsedWidth;
+  }
 
   return (
     <AppBar

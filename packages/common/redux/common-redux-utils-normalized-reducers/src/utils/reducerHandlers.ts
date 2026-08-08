@@ -36,17 +36,17 @@ export function handleClearReducerRequests<
   state: Reducer<ReducerMetadataT, EntityT>,
   action: ClearReducerRequestsAction<ActionTypeT>,
 ): Reducer<ReducerMetadataT, EntityT> {
-  const newState = duplicateState(state, action);
+  const stateNew = duplicateState(state, action);
   action.requestIds.forEach((requestId) => {
-    delete newState.requests[requestId];
+    delete stateNew.requests[requestId];
   });
 
-  return newState;
+  return stateNew;
 }
 
 /**
  * Calls handleCommonProps and updateCompletedRequestsCache.
- * @param newState - A copy of the redux state.
+ * @param stateNew - A copy of the redux state.
  * @param action - Success or fail action.
  */
 function handleCompletedRequest<
@@ -54,7 +54,7 @@ function handleCompletedRequest<
   ReducerMetadataT extends ReducerMetadata,
   EntityT extends Entity,
 >(
-  newState: Reducer<ReducerMetadataT, EntityT>,
+  stateNew: Reducer<ReducerMetadataT, EntityT>,
   action:
     | SaveNothingAction<ActionTypeT>
     | SaveWholeReducerMetadataAction<ActionTypeT, ReducerMetadataT>
@@ -65,8 +65,8 @@ function handleCompletedRequest<
     | DeleteEntitiesAction<ActionTypeT, ReducerMetadataT>
     | FailAction<ActionTypeT>,
 ): void {
-  handleCommonProps(newState, action);
-  updateCompletedRequestsCache(newState);
+  handleCommonProps(stateNew, action);
+  updateCompletedRequestsCache(stateNew);
 }
 
 /**
@@ -85,8 +85,8 @@ export function handleRequest<
   action: RequestAction<ActionTypeT, RequestMetadataT>,
 ): Reducer<ReducerMetadataT, EntityT> {
   const createdDate = new Date();
-  const newState = duplicateState(state, action);
-  newState.requests[action.requestId] = {
+  const stateNew = duplicateState(state, action);
+  stateNew.requests[action.requestId] = {
     id: action.requestId,
     createdAt: {
       unixMilliseconds: createdDate.valueOf(),
@@ -96,11 +96,11 @@ export function handleRequest<
   };
 
   if (state.config.requestsPrettyTimestamps) {
-    newState.requests[action.requestId].createdAt.formattedString =
+    stateNew.requests[action.requestId].createdAt.formattedString =
       createdDate.toISOString();
   }
 
-  return newState;
+  return stateNew;
 }
 
 /**
@@ -117,10 +117,10 @@ export function handleSaveNothing<
   state: Reducer<ReducerMetadataT, EntityT>,
   action: SaveNothingAction<ActionTypeT>,
 ): Reducer<ReducerMetadataT, EntityT> {
-  const newState = duplicateState(state, action);
-  handleCompletedRequest(newState, action);
+  const stateNew = duplicateState(state, action);
+  handleCompletedRequest(stateNew, action);
 
-  return newState;
+  return stateNew;
 }
 
 /**
@@ -137,11 +137,11 @@ export function handleSaveWholeReducerMetadata<
   state: Reducer<ReducerMetadataT, EntityT>,
   action: SaveWholeReducerMetadataAction<ActionTypeT, ReducerMetadataT>,
 ): Reducer<ReducerMetadataT, EntityT> {
-  const newState = duplicateState(state, action);
-  newState.metadata = action.wholeReducerMetadata;
-  handleCompletedRequest(newState, action);
+  const stateNew = duplicateState(state, action);
+  stateNew.metadata = action.wholeReducerMetadata;
+  handleCompletedRequest(stateNew, action);
 
-  return newState;
+  return stateNew;
 }
 
 /**
@@ -158,10 +158,10 @@ export function handleSavePartialReducerMetadata<
   state: Reducer<ReducerMetadataT, EntityT>,
   action: SavePartialReducerMetadataAction<ActionTypeT, ReducerMetadataT>,
 ): Reducer<ReducerMetadataT, EntityT> {
-  const newState = duplicateState(state, action);
-  handleCompletedRequest(newState, action);
+  const stateNew = duplicateState(state, action);
+  handleCompletedRequest(stateNew, action);
 
-  return newState;
+  return stateNew;
 }
 
 /**
@@ -179,13 +179,13 @@ export function handleSaveWholeEntities<
   state: Reducer<ReducerMetadataT, EntityT>,
   action: SaveWholeEntitiesAction<ActionTypeT, ReducerMetadataT, EntityT>,
 ): Reducer<ReducerMetadataT, EntityT> {
-  const newState = duplicateState(state, action);
-  newState.data = action.flush
+  const stateNew = duplicateState(state, action);
+  stateNew.data = action.flush
     ? action.wholeEntities
-    : { ...newState.data, ...action.wholeEntities };
-  handleCompletedRequest(newState, action);
+    : { ...stateNew.data, ...action.wholeEntities };
+  handleCompletedRequest(stateNew, action);
 
-  return newState;
+  return stateNew;
 }
 
 /**
@@ -203,9 +203,9 @@ export function handleSavePartialEntities<
   state: Reducer<ReducerMetadataT, EntityT>,
   action: SavePartialEntitiesAction<ActionTypeT, ReducerMetadataT, EntityT>,
 ): Reducer<ReducerMetadataT, EntityT> {
-  const newState = duplicateState(state, action);
+  const stateNew = duplicateState(state, action);
   Object.keys(action.partialEntities).forEach((entityPk) => {
-    if (!newState.data[entityPk]) {
+    if (!stateNew.data[entityPk]) {
       // no-console is disabled because a console warning is deliberately
       // intended when saving a partial entity to a PK that does not exist is
       // attempted
@@ -217,21 +217,21 @@ export function handleSavePartialEntities<
       return;
     }
 
-    newState.data[entityPk] = {
-      ...newState.data[entityPk],
+    stateNew.data[entityPk] = {
+      ...stateNew.data[entityPk],
       ...action.partialEntities[entityPk],
-      __edges__: newState.data[entityPk].__edges__,
+      __edges__: stateNew.data[entityPk].__edges__,
     };
     if (action.partialEntities[entityPk].__edges__) {
-      newState.data[entityPk].__edges__ = {
-        ...newState.data[entityPk].__edges__,
+      stateNew.data[entityPk].__edges__ = {
+        ...stateNew.data[entityPk].__edges__,
         ...action.partialEntities[entityPk].__edges__,
       };
     }
   });
-  handleCompletedRequest(newState, action);
+  handleCompletedRequest(stateNew, action);
 
-  return newState;
+  return stateNew;
 }
 
 /**
@@ -254,9 +254,9 @@ export function handleSavePartialPatternToEntities<
     EntityT
   >,
 ): Reducer<ReducerMetadataT, EntityT> {
-  const newState = duplicateState(state, action);
+  const stateNew = duplicateState(state, action);
   action.entityPks.forEach((entityPk) => {
-    if (!newState.data[entityPk]) {
+    if (!stateNew.data[entityPk]) {
       // no-console is disabled because a console warning is deliberately
       // intended when saving a partial entity to a PK that does not exist is
       // attempted
@@ -268,21 +268,21 @@ export function handleSavePartialPatternToEntities<
       return;
     }
 
-    newState.data[entityPk] = {
-      ...newState.data[entityPk],
+    stateNew.data[entityPk] = {
+      ...stateNew.data[entityPk],
       ...action.partialEntity,
-      __edges__: newState.data[entityPk].__edges__,
+      __edges__: stateNew.data[entityPk].__edges__,
     };
     if (action.partialEntity.__edges__) {
-      newState.data[entityPk].__edges__ = {
-        ...newState.data[entityPk].__edges__,
+      stateNew.data[entityPk].__edges__ = {
+        ...stateNew.data[entityPk].__edges__,
         ...action.partialEntity.__edges__,
       };
     }
   });
-  handleCompletedRequest(newState, action);
+  handleCompletedRequest(stateNew, action);
 
-  return newState;
+  return stateNew;
 }
 
 /**
@@ -300,11 +300,11 @@ export function handleDeleteEntities<
   state: Reducer<ReducerMetadataT, EntityT>,
   action: DeleteEntitiesAction<ActionTypeT, ReducerMetadataT>,
 ): Reducer<ReducerMetadataT, EntityT> {
-  const newState = duplicateState(state, action);
-  action.entityPks.forEach((entityPk) => delete newState.data[entityPk]);
-  handleCompletedRequest(newState, action);
+  const stateNew = duplicateState(state, action);
+  action.entityPks.forEach((entityPk) => delete stateNew.data[entityPk]);
+  handleCompletedRequest(stateNew, action);
 
-  return newState;
+  return stateNew;
 }
 
 /**
@@ -322,8 +322,8 @@ export function handleFail<
   state: Reducer<ReducerMetadataT, EntityT>,
   action: FailAction<ActionTypeT>,
 ): Reducer<ReducerMetadataT, EntityT> {
-  const newState = duplicateState(state, action);
-  handleCompletedRequest(newState, action);
+  const stateNew = duplicateState(state, action);
+  handleCompletedRequest(stateNew, action);
 
-  return newState;
+  return stateNew;
 }

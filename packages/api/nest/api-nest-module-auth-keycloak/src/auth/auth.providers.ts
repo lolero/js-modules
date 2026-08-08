@@ -10,6 +10,7 @@ import {
 import { AuthGuardMultiIssuer } from './auth.guard.multiIssuer';
 import { AuthGuardUsersEntityCurrent } from './auth.guard.usersEntityCurrent';
 import { AuthServiceMultiIssuer } from './auth.service.multiIssuer';
+import { AuthTokenProviderKeycloakAdminClient } from './auth.tokenProvider.keycloakAdminClient';
 import type {
   KeycloakAdminClientConfig,
   KeycloakMultiIssuerConfig,
@@ -30,7 +31,16 @@ export const authProviderKeycloakAdminClient: Provider = {
     const keycloakAdminClient = new KeycloakAdminClient(
       keycloakAdminClientConfig.connectionConfig,
     );
-    await keycloakAdminClient.auth(keycloakAdminClientConfig.credentials);
+    const authTokenProviderKeycloakAdminClient =
+      new AuthTokenProviderKeycloakAdminClient(
+        keycloakAdminClientConfig.connectionConfig,
+        keycloakAdminClientConfig.credentials,
+      );
+    keycloakAdminClient.registerTokenProvider(
+      authTokenProviderKeycloakAdminClient,
+    );
+    // Fetch once up front so bad credentials fail at startup
+    await authTokenProviderKeycloakAdminClient.getAccessToken();
     return keycloakAdminClient;
   },
   inject: [KEYCLOAK_ADMIN_CLIENT_CONFIG],

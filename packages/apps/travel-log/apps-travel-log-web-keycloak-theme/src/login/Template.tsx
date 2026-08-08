@@ -5,10 +5,14 @@ import { useInitialize } from 'keycloakify/login/Template.useInitialize';
 import type { TemplateProps } from 'keycloakify/login/TemplateProps';
 import { clsx } from 'keycloakify/tools/clsx';
 import { useSetClassName } from 'keycloakify/tools/useSetClassName';
+import type React from 'react';
 import { useEffect } from 'react';
 import type { I18n } from './i18n';
 import type { KcContext } from './KcContext';
 
+// Returns `ReactElement | null` rather than the usual `React.ReactNode`:
+// keycloakify types its Template slot as `(props) => ReactElement | null`, and
+// `ReactNode` also admits `undefined`, so it isn't assignable there.
 export default function Template({
   displayInfo = false,
   displayMessage = true,
@@ -23,7 +27,7 @@ export default function Template({
   doUseDefaultCss,
   classes,
   children,
-}: TemplateProps<KcContext, I18n>) {
+}: TemplateProps<KcContext, I18n>): React.ReactElement | null {
   const { kcClsx } = getKcClsx({ doUseDefaultCss, classes });
 
   const { msg, msgStr, currentLanguage, enabledLanguages } = i18n;
@@ -117,7 +121,7 @@ export default function Template({
               </div>
             </div>
           )}
-          {(() => {
+          {((): React.ReactNode => {
             const node = !(
               auth !== undefined &&
               auth.showUsername &&

@@ -8,7 +8,7 @@ import { loadEnvConfig } from '@js-modules/common-utils-general-cjs';
 import { AppModule } from './modules/app/app.module';
 
 loadEnvConfig();
-async function bootstrap() {
+async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule, {
     cors: {
       origin: WEB_CLIENT__URI__TRAVEL_LOG,

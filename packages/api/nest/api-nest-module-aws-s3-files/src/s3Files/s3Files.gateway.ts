@@ -24,7 +24,7 @@ export class S3FilesGateway
     private readonly s3FilesWebSocketGatewayConfig: S3FilesWebSocketGatewayConfig,
   ) {}
 
-  afterInit(server: Server) {
+  afterInit(server: Server): void {
     server.path(this.s3FilesWebSocketGatewayConfig.path);
     server.engine.opts.cors = {
       origin: [this.s3FilesWebSocketGatewayConfig.corsOrigin],
@@ -34,7 +34,7 @@ export class S3FilesGateway
     ];
   }
 
-  handleConnection(socket: Socket) {
+  handleConnection(socket: Socket): void {
     this.server
       .to(socket.id)
       .emit(
@@ -43,7 +43,7 @@ export class S3FilesGateway
       );
   }
 
-  handleDisconnect(socket: Socket) {
+  handleDisconnect(socket: Socket): void {
     this.server
       .to(socket.id)
       .emit(
@@ -52,7 +52,7 @@ export class S3FilesGateway
       );
   }
 
-  emitProgress(socketClientId: string, s3FilesProgress: S3FilesProgress) {
+  emitProgress(socketClientId: string, s3FilesProgress: S3FilesProgress): void {
     this.server.to(socketClientId).emit('upload-progress', s3FilesProgress);
   }
 }

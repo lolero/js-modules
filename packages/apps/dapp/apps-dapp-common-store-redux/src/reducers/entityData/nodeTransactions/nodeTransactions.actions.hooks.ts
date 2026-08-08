@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import type {
   Request,
@@ -37,11 +37,11 @@ export function useNodeTransactionsGetMany(): UseRequestEntities<
   const entityPks = request?.entityPks;
   const entities = useNodeTransactionsEntities(entityPks ?? []);
 
-  const callback = useCallback(() => {
+  function callback(): void {
     const action = createNodeTransactionsGetManyRequestAction();
     setRequestId(action.requestId);
     dispatch(action);
-  }, [dispatch]);
+  }
 
   return {
     request,
@@ -68,16 +68,13 @@ export function useNodeTransactionsGetOne(): UseRequestEntities<
   const entityPks = request?.entityPks;
   const entities = useNodeTransactionsEntities(entityPks ?? []);
 
-  const callback = useCallback(
-    (
-      uniqueKeyValue: NodeTransactionsGetOneRequestAction['requestMetadata']['uniqueKeyValue'],
-    ) => {
-      const action = createNodeTransactionsGetOneRequestAction(uniqueKeyValue);
-      setRequestId(action.requestId);
-      dispatch(action);
-    },
-    [dispatch],
-  );
+  function callback(
+    uniqueKeyValue: NodeTransactionsGetOneRequestAction['requestMetadata']['uniqueKeyValue'],
+  ): void {
+    const action = createNodeTransactionsGetOneRequestAction(uniqueKeyValue);
+    setRequestId(action.requestId);
+    dispatch(action);
+  }
 
   return {
     request,

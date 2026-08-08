@@ -15,10 +15,15 @@ const config = {
       fallback: 'index.html', // may differ from host to host
     }),
 
+    // This app's tsconfig extends the generated `.svelte-kit/tsconfig.json`
+    // rather than the root one, so workspace path aliases must be declared here
+    // https://svelte.dev/docs/kit/configuration#alias
     alias: {
       $c: 'src/components',
       $s: 'src/store',
       $api: 'src/api/axios.js',
+      '@js-modules/common-utils-general':
+        '../../../common/utils/common-utils-general/src',
     },
   },
 };

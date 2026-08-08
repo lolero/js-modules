@@ -5,7 +5,7 @@ import isNull from 'lodash/isNull';
 import min from 'lodash/min';
 import trim from 'lodash/trim';
 import type React from 'react';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 // WATCH: react-compiler-computed-keys
 // Hoisted so the key position holds a plain identifier.
@@ -36,74 +36,71 @@ export function OtpBox({
 }: OtpBoxProps): React.ReactNode {
   const [cursorIndex, setCursorIndex] = useState<number | null>(0);
 
-  const focusOtpValueCallback = useCallback(
-    (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement, Element>) => {
-      const cursorIndexFocus = Number(e.target.getAttribute('data-key'));
-      setCursorIndex(cursorIndexFocus);
-    },
-    [],
-  );
+  function focusOtpValueCallback(
+    e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement, Element>,
+  ): void {
+    const cursorIndexFocus = Number(e.target.getAttribute('data-key'));
+    setCursorIndex(cursorIndexFocus);
+  }
 
-  const blurOtpValueCallback = useCallback(() => {
+  function blurOtpValueCallback(): void {
     setCursorIndex(null);
-  }, []);
+  }
 
-  const changeOtpValueCallback = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      if ((e.nativeEvent as InputEvent).inputType === 'insertFromPaste') {
-        return;
-      }
+  function changeOtpValueCallback(
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ): void {
+    if ((e.nativeEvent as InputEvent).inputType === 'insertFromPaste') {
+      return;
+    }
 
-      const cursorIndexFocus = Number(e.target.getAttribute('data-key'));
+    const cursorIndexFocus = Number(e.target.getAttribute('data-key'));
 
-      const otpValueNew = trim(e.target.value).slice(0, 1);
+    const otpValueNew = trim(e.target.value).slice(0, 1);
 
-      const otpNew = [...otp];
-      otpNew[cursorIndexFocus] = otpValueNew;
-      setOtpCallback(otpNew);
+    const otpNew = [...otp];
+    otpNew[cursorIndexFocus] = otpValueNew;
+    setOtpCallback(otpNew);
 
-      if (cursorIndexFocus < otpLength - 1 && otpValueNew !== '') {
-        setCursorIndex(cursorIndexFocus + 1);
-      }
-    },
-    [otp, otpLength, setOtpCallback],
-  );
+    if (cursorIndexFocus < otpLength - 1 && otpValueNew !== '') {
+      setCursorIndex(cursorIndexFocus + 1);
+    }
+  }
 
-  const keyDownOptValueCallback = useCallback(
-    (e: React.KeyboardEvent<HTMLDivElement>) => {
-      const cursorIndexFocus = Number(
-        (e.target as typeof e.currentTarget).getAttribute('data-key'),
-      );
+  function keyDownOptValueCallback(
+    e: React.KeyboardEvent<HTMLDivElement>,
+  ): void {
+    const cursorIndexFocus = Number(
+      (e.target as typeof e.currentTarget).getAttribute('data-key'),
+    );
 
-      const otpValue = otp[cursorIndexFocus];
-      switch (e.nativeEvent.key) {
-        case 'Backspace':
-          if (otpValue === '') {
-            setCursorIndex(cursorIndexFocus - 1);
-          }
-          break;
-        case 'ArrowLeft':
-          if (
-            cursorIndexFocus > 0 &&
-            (e.target as HTMLInputElement).selectionEnd === 0
-          ) {
-            setCursorIndex(cursorIndexFocus - 1);
-          }
-          break;
-        case 'ArrowRight':
-          if (
-            cursorIndexFocus < otpLength - 1 &&
-            ((e.target as HTMLInputElement).selectionEnd as number) ===
-              otpValue.length
-          ) {
-            setCursorIndex(cursorIndexFocus + 1);
-          }
-          break;
-        default:
-      }
-    },
-    [otp, otpLength],
-  );
+    const otpValue = otp[cursorIndexFocus];
+    switch (e.nativeEvent.key) {
+      case 'Backspace':
+        if (otpValue === '') {
+          setCursorIndex(cursorIndexFocus - 1);
+        }
+        break;
+      case 'ArrowLeft':
+        if (
+          cursorIndexFocus > 0 &&
+          (e.target as HTMLInputElement).selectionEnd === 0
+        ) {
+          setCursorIndex(cursorIndexFocus - 1);
+        }
+        break;
+      case 'ArrowRight':
+        if (
+          cursorIndexFocus < otpLength - 1 &&
+          ((e.target as HTMLInputElement).selectionEnd as number) ===
+            otpValue.length
+        ) {
+          setCursorIndex(cursorIndexFocus + 1);
+        }
+        break;
+      default:
+    }
+  }
 
   useEffect(() => {
     function onPaste(e: ClipboardEvent): void {
@@ -129,7 +126,7 @@ export function OtpBox({
     }
 
     document.addEventListener('paste', onPaste);
-    return () => {
+    return (): void => {
       document.removeEventListener('paste', onPaste);
     };
   }, [cursorIndex, otp, otpLength, setOtpCallback]);

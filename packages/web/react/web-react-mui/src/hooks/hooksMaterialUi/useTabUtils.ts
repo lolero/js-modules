@@ -1,5 +1,5 @@
 import type React from 'react';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 
 export type TabUtils<TabValueT> = {
   changeTabCallback: (e: React.SyntheticEvent, tabValue: TabValueT) => void;
@@ -17,12 +17,12 @@ export function useTabUtils<TabValueT>(
   const [selectedTabValue, setSelectedTabValue] =
     useState<TabValueT>(initialTabValue);
 
-  const changeTabCallback = useCallback(
-    (e: React.SyntheticEvent, tabValue: TabValueT) => {
-      setSelectedTabValue(tabValue);
-    },
-    [],
-  );
+  function changeTabCallback(
+    _e: React.SyntheticEvent,
+    tabValue: TabValueT,
+  ): void {
+    setSelectedTabValue(tabValue);
+  }
 
   return {
     selectedTabValue,

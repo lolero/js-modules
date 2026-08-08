@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import type {
   Request,
@@ -56,13 +56,12 @@ export function useNodeLogEntriesClearReducerRequests(): UseCallback<
 > {
   const dispatch = useDispatch();
 
-  const callback = useCallback(
-    (requestIds: NodeLogEntriesClearReducerRequestsAction['requestIds']) => {
-      const action = createNodeLogEntriesClearReducerRequestsAction(requestIds);
-      dispatch(action);
-    },
-    [dispatch],
-  );
+  function callback(
+    requestIds: NodeLogEntriesClearReducerRequestsAction['requestIds'],
+  ): void {
+    const action = createNodeLogEntriesClearReducerRequestsAction(requestIds);
+    dispatch(action);
+  }
 
   return {
     callback,
@@ -83,19 +82,16 @@ export function useNodeLogEntriesUpdatePartialReducerMetadata(): UseRequestReduc
   >;
   const reducerMetadata = useNodeLogEntriesReducerMetadata();
 
-  const callback = useCallback(
-    (
-      partialReducerMetadata: NodeLogEntriesUpdatePartialReducerMetadataRequestAction['requestMetadata']['partialReducerMetadata'],
-    ) => {
-      const action =
-        createNodeLogEntriesUpdatePartialReducerMetadataRequestAction(
-          partialReducerMetadata,
-        );
-      setRequestId(action.requestId);
-      dispatch(action);
-    },
-    [dispatch],
-  );
+  function callback(
+    partialReducerMetadata: NodeLogEntriesUpdatePartialReducerMetadataRequestAction['requestMetadata']['partialReducerMetadata'],
+  ): void {
+    const action =
+      createNodeLogEntriesUpdatePartialReducerMetadataRequestAction(
+        partialReducerMetadata,
+      );
+    setRequestId(action.requestId);
+    dispatch(action);
+  }
 
   return {
     request,
@@ -120,15 +116,12 @@ export function useNodeLogEntriesCreateOne(): UseRequestEntity<
   const entityPk = request?.entityPks?.[0];
   const entity = useNodeLogEntriesEntity(entityPk ?? '');
 
-  const callback = useCallback(
-    (
-      nodeLogEntry: NodeLogEntriesCreateOneRequestAction['requestMetadata']['entity'],
-    ) => {
-      const action = createNodeLogEntriesCreateOneRequestAction(nodeLogEntry);
-      dispatch(action);
-    },
-    [dispatch],
-  );
+  function callback(
+    nodeLogEntry: NodeLogEntriesCreateOneRequestAction['requestMetadata']['entity'],
+  ): void {
+    const action = createNodeLogEntriesCreateOneRequestAction(nodeLogEntry);
+    dispatch(action);
+  }
 
   return {
     request,
@@ -156,20 +149,17 @@ export function useNodeLogEntriesGetOne(): UseRequestEntity<
   const nodeLogEntryPk = request?.entityPks?.[0];
   const entity = useNodeLogEntriesEntity(nodeLogEntryPk ?? '');
 
-  const callback = useCallback(
-    (
-      uniqueKeyValue: NodeLogEntriesGetOneRequestAction['requestMetadata']['uniqueKeyValue'],
-      uniqueKeyName: NodeLogEntriesGetOneRequestAction['requestMetadata']['uniqueKeyName'] = 'id',
-    ) => {
-      const action = createNodeLogEntriesGetOneRequestAction(
-        uniqueKeyValue,
-        uniqueKeyName,
-      );
-      setRequestId(action.requestId);
-      dispatch(action);
-    },
-    [dispatch],
-  );
+  function callback(
+    uniqueKeyValue: NodeLogEntriesGetOneRequestAction['requestMetadata']['uniqueKeyValue'],
+    uniqueKeyName: NodeLogEntriesGetOneRequestAction['requestMetadata']['uniqueKeyName'] = 'id',
+  ): void {
+    const action = createNodeLogEntriesGetOneRequestAction(
+      uniqueKeyValue,
+      uniqueKeyName,
+    );
+    setRequestId(action.requestId);
+    dispatch(action);
+  }
 
   return {
     request,
@@ -196,16 +186,13 @@ export function useNodeLogEntriesGetMany(): UseRequestEntities<
   const entityPks = request?.entityPks;
   const entities = useNodeLogEntriesEntities(entityPks ?? []);
 
-  const callback = useCallback(
-    (
-      findManyDto: NodeLogEntriesGetManyRequestAction['requestMetadata']['findManyDto'] = {},
-    ) => {
-      const action = createNodeLogEntriesGetManyRequestAction(findManyDto);
-      setRequestId(action.requestId);
-      dispatch(action);
-    },
-    [dispatch],
-  );
+  function callback(
+    findManyDto: NodeLogEntriesGetManyRequestAction['requestMetadata']['findManyDto'] = {},
+  ): void {
+    const action = createNodeLogEntriesGetManyRequestAction(findManyDto);
+    setRequestId(action.requestId);
+    dispatch(action);
+  }
 
   return {
     request,
@@ -231,18 +218,15 @@ export function useNodeLogEntriesUpdateOneWhole(): UseRequestEntity<
   const [entityPk, setEntityPk] = useState('');
   const entity = useNodeLogEntriesEntity(entityPk);
 
-  const callback = useCallback(
-    (
-      nodeLogEntry: NodeLogEntriesUpdateOneWholeRequestAction['requestMetadata']['entity'],
-    ) => {
-      const action =
-        createNodeLogEntriesUpdateOneWholeRequestAction(nodeLogEntry);
-      const nodeLogEntryPk = getPkOfNodeLogEntry(nodeLogEntry);
-      setEntityPk(nodeLogEntryPk);
-      dispatch(action);
-    },
-    [dispatch],
-  );
+  function callback(
+    nodeLogEntry: NodeLogEntriesUpdateOneWholeRequestAction['requestMetadata']['entity'],
+  ): void {
+    const action =
+      createNodeLogEntriesUpdateOneWholeRequestAction(nodeLogEntry);
+    const nodeLogEntryPk = getPkOfNodeLogEntry(nodeLogEntry);
+    setEntityPk(nodeLogEntryPk);
+    dispatch(action);
+  }
 
   return {
     request,
@@ -269,20 +253,17 @@ export function useNodeLogEntriesUpdateOnePartial(): UseRequestEntity<
   const [entityPk, setEntityPk] = useState('');
   const entity = useNodeLogEntriesEntity(entityPk);
 
-  const callback = useCallback(
-    (
-      nodeLogEntryPk: NodeLogEntriesUpdateOnePartialRequestAction['requestMetadata']['entityPk'],
-      partialEntity: NodeLogEntriesUpdateOnePartialRequestAction['requestMetadata']['partialEntity'],
-    ) => {
-      const action = createNodeLogEntriesUpdateOnePartialRequestAction(
-        nodeLogEntryPk,
-        partialEntity,
-      );
-      setEntityPk(nodeLogEntryPk);
-      dispatch(action);
-    },
-    [dispatch],
-  );
+  function callback(
+    nodeLogEntryPk: NodeLogEntriesUpdateOnePartialRequestAction['requestMetadata']['entityPk'],
+    partialEntity: NodeLogEntriesUpdateOnePartialRequestAction['requestMetadata']['partialEntity'],
+  ): void {
+    const action = createNodeLogEntriesUpdateOnePartialRequestAction(
+      nodeLogEntryPk,
+      partialEntity,
+    );
+    setEntityPk(nodeLogEntryPk);
+    dispatch(action);
+  }
 
   return {
     request,
@@ -311,21 +292,18 @@ export function useNodeLogEntriesUpdateManyPartialWithPattern(): UseRequestEntit
   const [entityPks, setEntityPks] = useState<string[]>([]);
   const entities = useNodeLogEntriesEntities(entityPks ?? []);
 
-  const callback = useCallback(
-    (
-      nodeLogEntryPks: NodeLogEntriesUpdateManyPartialWithPatternRequestAction['requestMetadata']['entityPks'],
-      partialEntity: NodeLogEntriesUpdateManyPartialWithPatternRequestAction['requestMetadata']['partialEntity'],
-    ) => {
-      const action =
-        createNodeLogEntriesUpdateManyPartialWithPatternRequestAction(
-          nodeLogEntryPks,
-          partialEntity,
-        );
-      setEntityPks(nodeLogEntryPks);
-      dispatch(action);
-    },
-    [dispatch],
-  );
+  function callback(
+    nodeLogEntryPks: NodeLogEntriesUpdateManyPartialWithPatternRequestAction['requestMetadata']['entityPks'],
+    partialEntity: NodeLogEntriesUpdateManyPartialWithPatternRequestAction['requestMetadata']['partialEntity'],
+  ): void {
+    const action =
+      createNodeLogEntriesUpdateManyPartialWithPatternRequestAction(
+        nodeLogEntryPks,
+        partialEntity,
+      );
+    setEntityPks(nodeLogEntryPks);
+    dispatch(action);
+  }
 
   return {
     request,
@@ -351,16 +329,13 @@ export function useNodeLogEntriesDeleteOne(): UseRequestEntity<
   const [entityPk, setEntityPk] = useState('');
   const entity = useNodeLogEntriesEntity(entityPk);
 
-  const callback = useCallback(
-    (
-      nodeLogEntryPk: NodeLogEntriesDeleteOneRequestAction['requestMetadata']['entityPk'],
-    ) => {
-      const action = createNodeLogEntriesDeleteOneRequestAction(nodeLogEntryPk);
-      setEntityPk(nodeLogEntryPk);
-      dispatch(action);
-    },
-    [dispatch],
-  );
+  function callback(
+    nodeLogEntryPk: NodeLogEntriesDeleteOneRequestAction['requestMetadata']['entityPk'],
+  ): void {
+    const action = createNodeLogEntriesDeleteOneRequestAction(nodeLogEntryPk);
+    setEntityPk(nodeLogEntryPk);
+    dispatch(action);
+  }
 
   return {
     request,
@@ -386,17 +361,13 @@ export function useNodeLogEntriesDeleteMany(): UseRequestEntities<
   const [entityPks, setEntityPks] = useState<string[]>([]);
   const entities = useNodeLogEntriesEntities(entityPks);
 
-  const callback = useCallback(
-    (
-      nodeLogEntryPks: NodeLogEntriesDeleteManyRequestAction['requestMetadata']['entityPks'],
-    ) => {
-      const action =
-        createNodeLogEntriesDeleteManyRequestAction(nodeLogEntryPks);
-      setEntityPks(nodeLogEntryPks);
-      dispatch(action);
-    },
-    [dispatch],
-  );
+  function callback(
+    nodeLogEntryPks: NodeLogEntriesDeleteManyRequestAction['requestMetadata']['entityPks'],
+  ): void {
+    const action = createNodeLogEntriesDeleteManyRequestAction(nodeLogEntryPks);
+    setEntityPks(nodeLogEntryPks);
+    dispatch(action);
+  }
 
   return {
     request,

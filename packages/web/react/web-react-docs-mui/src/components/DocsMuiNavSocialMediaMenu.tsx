@@ -9,7 +9,6 @@ import Tooltip from '@mui/material/Tooltip';
 import entries from 'lodash/entries';
 import upperFirst from 'lodash/upperFirst';
 import type React from 'react';
-import { useCallback } from 'react';
 import { MuiFaIcon, useMenuUtils } from '@js-modules/web-react-mui';
 import { useNavDisplayMetadata } from '@js-modules/web-react-mui-workspace';
 import { socialMediaMetadata } from './DocsMuiNavSocialMediaBox';
@@ -19,10 +18,10 @@ export function DocsMuiNavSocialMediaMenu(): React.ReactNode {
 
   const { menuAnchor, openMenuCallback, closeMenuCallback } = useMenuUtils();
 
-  const onSocialMediaLinkClickCallback = useCallback(() => {
+  function onSocialMediaLinkClickCallback(): void {
     closeMenuCallback();
     closeNavLeftDrawerCallback();
-  }, [closeMenuCallback, closeNavLeftDrawerCallback]);
+  }
 
   return (
     <>

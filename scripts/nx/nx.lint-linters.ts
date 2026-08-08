@@ -74,7 +74,7 @@ const linterDiffCheck = {
   // prettier's `--check` and `--list-different` only print file paths, not
   // diffs. Re-run prettier per flagged file to capture its formatted output,
   // then diff that against the on-disk file.
-  [LinterName.prettier]: (_lintContext, { flags, targets }) => {
+  [LinterName.prettier]: (_lintContext, { flags, targets }): 0 | 1 => {
     printCommand('prettier', ['--list-different', ...flags, ...targets]);
     // Inherit stderr so prettier's own errors also get printed
     const spawnSyncReturns = spawnSync(
@@ -99,7 +99,7 @@ const linterDiffCheck = {
   },
   // taplo's `--check` only prints paths; the installed build doesn't ship
   // `--diff`. Re-format via stdin and compare to the file on disk.
-  [LinterName.taplo]: ({ files }, _parts) => {
+  [LinterName.taplo]: ({ files }, _parts): number => {
     const tomlFiles = filterFilesByExtensions(
       files,
       linterExtensions[LinterName.taplo],
@@ -134,15 +134,15 @@ const linterDiffCheck = {
 
 export const linters = {
   [LinterName.eslint]: {
-    isEnabled: (files) =>
+    isEnabled: (files): boolean =>
       isExtensionInFiles(files, linterExtensions[LinterName.eslint]),
-    buildFlags: ({ scanMode }) =>
+    buildFlags: ({ scanMode }): string[] =>
       scanMode === ScanMode.shallow
         ? ['--no-error-on-unmatched-pattern', '--ignore-pattern', '*/**']
         : ['--no-error-on-unmatched-pattern'],
-    buildTargets: () => ['.'],
+    buildTargets: (): string[] => ['.'],
     lintFunctions: {
-      check: ({ scanMode, files }, { flags }) => {
+      check: ({ scanMode, files }, { flags }): number => {
         if (scanMode !== ScanMode.files) {
           return runCommand('eslint', [...flags, '.']);
         }
@@ -150,7 +150,7 @@ export const linters = {
           runCommand('eslint', [...flags, ...filesEslintProject], { cwd }),
         );
       },
-      fix: ({ scanMode, files }, { flags }) => {
+      fix: ({ scanMode, files }, { flags }): number => {
         if (scanMode !== ScanMode.files) {
           return runCommand('eslint', [...flags, '--fix', '.']);
         }
@@ -160,7 +160,7 @@ export const linters = {
           }),
         );
       },
-      health: (_lintContext, { targets }) =>
+      health: (_lintContext, { targets }): number =>
         healthCheckExitCode({
           [HealthCheckType.binary]: () =>
             healthChecksHelpers.binary('eslint', 'eslint'),
@@ -183,8 +183,9 @@ export const linters = {
   },
   // Run packageJson before prettier so fixes get prettier-normalized after
   [LinterName.packageJson]: {
-    isEnabled: (files) => files.some((file) => file.endsWith('package.json')),
-    buildTargets: ({ files }) =>
+    isEnabled: (files): boolean =>
+      files.some((file) => file.endsWith('package.json')),
+    buildTargets: ({ files }): string[] =>
       files.filter((file) => file.endsWith('package.json')),
     lintFunctions: {
       check: packageJsonCheck,
@@ -193,9 +194,9 @@ export const linters = {
     },
   },
   [LinterName.prettier]: {
-    isEnabled: (files) =>
+    isEnabled: (files): boolean =>
       isExtensionInFiles(files, linterExtensions[LinterName.prettier]),
-    buildFlags: ({ pathToRoot }) => [
+    buildFlags: ({ pathToRoot }): string[] => [
       '--no-error-on-unmatched-pattern',
       '--ignore-path',
       join(pathToRoot, '.prettierignore'),
@@ -205,7 +206,7 @@ export const linters = {
     // One glob per language group. Avoids ENAMETOOLONG when prettier's
     // pre-glob lstat() exceeds the filesystem's NAME_MAX (e.g. eCryptfs at
     // 143 bytes).
-    buildTargets: ({ scanMode }) => {
+    buildTargets: ({ scanMode }): string[] => {
       const languageGlobs = Object.values(extensionsPrettier).map(
         (extensionsPrettierLanguage) =>
           `*.{${extensionsPrettierLanguage.join(',')}}`,
@@ -216,9 +217,9 @@ export const linters = {
     },
     lintFunctions: {
       check: linterDiffCheck[LinterName.prettier],
-      fix: (_lintContext, { flags, targets }) =>
+      fix: (_lintContext, { flags, targets }): number =>
         runCommand('prettier', [...flags, '--write', ...targets]),
-      health: (_lintContext, { flags, targets }) => {
+      health: (_lintContext, { flags, targets }): number => {
         const ignorePaths = flags.reduce<string[]>(
           (ignorePathsTemp, flag, index) => {
             if (flag === '--ignore-path') {
@@ -251,21 +252,21 @@ export const linters = {
     },
   },
   [LinterName.ruff]: {
-    isEnabled: (files) =>
+    isEnabled: (files): boolean =>
       isExtensionInFiles(files, linterExtensions[LinterName.ruff]),
-    buildTargets: () => ['.'],
+    buildTargets: (): string[] => ['.'],
     lintFunctions: {
-      check: (_lintContext, { targets }) =>
+      check: (_lintContext, { targets }): number =>
         runCommands(
           ['uv', ['run', 'ruff', 'check', ...targets]],
           ['uv', ['run', 'ruff', 'format', '--check', ...targets]],
         ),
-      fix: (_lintContext, { targets }) =>
+      fix: (_lintContext, { targets }): number =>
         runCommands(
           ['uv', ['run', 'ruff', 'check', '--fix', ...targets]],
           ['uv', ['run', 'ruff', 'format', ...targets]],
         ),
-      health: (_lintContext, { targets }) =>
+      health: (_lintContext, { targets }): number =>
         healthCheckExitCode({
           [HealthCheckType.binary]: () =>
             healthChecksHelpers.binary('ruff', 'uv', [
@@ -293,14 +294,16 @@ export const linters = {
   },
   [LinterName.shellcheck]: {
     // shellcheck has no auto-fix — check and fix both report.
-    isEnabled: (files) =>
+    isEnabled: (files): boolean =>
       isExtensionInFiles(files, linterExtensions[LinterName.shellcheck]),
-    buildTargets: ({ files }) =>
+    buildTargets: ({ files }): string[] =>
       filterFilesByExtensions(files, linterExtensions[LinterName.shellcheck]),
     lintFunctions: {
-      check: (_lintContext, { targets }) => runCommand('shellcheck', targets),
-      fix: (_lintContext, { targets }) => runCommand('shellcheck', targets),
-      health: ({ pathToRoot }, { targets }) =>
+      check: (_lintContext, { targets }): number =>
+        runCommand('shellcheck', targets),
+      fix: (_lintContext, { targets }): number =>
+        runCommand('shellcheck', targets),
+      health: ({ pathToRoot }, { targets }): number =>
         healthCheckExitCode({
           [HealthCheckType.binary]: () =>
             healthChecksHelpers.binary('shellcheck', 'shellcheck'),
@@ -342,9 +345,9 @@ export const linters = {
     },
   },
   [LinterName.solhint]: {
-    isEnabled: (files) =>
+    isEnabled: (files): boolean =>
       isExtensionInFiles(files, linterExtensions[LinterName.solhint]),
-    buildFlags: ({ pathToRoot }) => [
+    buildFlags: ({ pathToRoot }): string[] => [
       // solhint doesn't walk up to find .solhint.json, so pass it explicitly.
       '-c',
       join(pathToRoot, '.solhint.json'),
@@ -354,18 +357,18 @@ export const linters = {
     ],
     // One glob per ext — solhint's globset parser treats `{x}` (no comma) as
     // literal braces, so single-ext brace groups match 0 files.
-    buildTargets: ({ scanMode }) =>
+    buildTargets: ({ scanMode }): string[] =>
       extensions[Language.solidity].map((extension) =>
         scanMode === ScanMode.recursive
           ? `./**/*.${extension}`
           : `*.${extension}`,
       ),
     lintFunctions: {
-      check: (_lintContext, { flags, targets }) =>
+      check: (_lintContext, { flags, targets }): number =>
         runCommand('solhint', [...flags, ...targets]),
-      fix: (_lintContext, { flags, targets }) =>
+      fix: (_lintContext, { flags, targets }): number =>
         runCommand('solhint', [...flags, '--fix', '--noPrompt', ...targets]),
-      health: ({ pathToRoot }, { targets }) => {
+      health: ({ pathToRoot }, { targets }): number => {
         const configPath = join(pathToRoot, '.solhint.json');
         return healthCheckExitCode({
           [HealthCheckType.binary]: () =>
@@ -389,18 +392,18 @@ export const linters = {
     },
   },
   [LinterName.taplo]: {
-    isEnabled: (files) =>
+    isEnabled: (files): boolean =>
       isExtensionInFiles(files, linterExtensions[LinterName.taplo]),
     // One glob per ext — taplo's globset parser treats `{x}` (no comma) as
     // literal braces, so single-ext brace groups match 0 files.
-    buildTargets: ({ scanMode }) =>
+    buildTargets: ({ scanMode }): string[] =>
       extensions[Language.toml].map((extension) =>
         scanMode === ScanMode.recursive
           ? `./**/*.${extension}`
           : `*.${extension}`,
       ),
     lintFunctions: {
-      check: (lintContext, lintCommandParts) => {
+      check: (lintContext, lintCommandParts): number => {
         let exitCode = 0;
         if (
           linterDiffCheck[LinterName.taplo](lintContext, lintCommandParts) !== 0
@@ -412,12 +415,12 @@ export const linters = {
         }
         return exitCode;
       },
-      fix: (_lintContext, { targets }) =>
+      fix: (_lintContext, { targets }): number =>
         runCommands(
           ['taplo', ['format', ...targets]],
           ['taplo', ['lint', ...targets]],
         ),
-      health: ({ pathToRoot }, { targets }) =>
+      health: ({ pathToRoot }, { targets }): number =>
         healthCheckExitCode({
           // taplo exits 1 on --version — check prefix from stdout
           [HealthCheckType.binary]: () => {
@@ -467,25 +470,25 @@ export const linters = {
     // yamllint has no auto-fix — check and fix both report; which is why we
     // format with prettier and only do semantic checks here.
     // Runs from repo root so `.yamllint`'s `ignore-from-file` resolves.
-    isEnabled: (files) =>
+    isEnabled: (files): boolean =>
       isExtensionInFiles(files, linterExtensions[LinterName.yamllint]),
-    buildFlags: () => ['-c', '.yamllint', '--strict'],
+    buildFlags: (): string[] => ['-c', '.yamllint', '--strict'],
     // Pass the package dir in recursive mode (let yamllint walk + filter)
     // Pass an explicit file list at the root (yamllint doesn't glob-expand).
-    buildTargets: ({ files, projectPathFromRoot, scanMode }) =>
+    buildTargets: ({ files, projectPathFromRoot, scanMode }): string[] =>
       scanMode === ScanMode.recursive
         ? [projectPathFromRoot]
         : filterFilesByExtensions(files, linterExtensions[LinterName.yamllint]),
     lintFunctions: {
-      check: ({ pathToRoot }, { flags, targets }) =>
+      check: ({ pathToRoot }, { flags, targets }): number =>
         runCommand('uv', ['run', 'yamllint', ...flags, ...targets], {
           cwd: pathToRoot,
         }),
-      fix: ({ pathToRoot }, { flags, targets }) =>
+      fix: ({ pathToRoot }, { flags, targets }): number =>
         runCommand('uv', ['run', 'yamllint', ...flags, ...targets], {
           cwd: pathToRoot,
         }),
-      health: ({ pathToRoot }, { targets }) =>
+      health: ({ pathToRoot }, { targets }): number =>
         healthCheckExitCode({
           [HealthCheckType.binary]: () =>
             healthChecksHelpers.binary('yamllint', 'uv', [

@@ -1,6 +1,5 @@
 import Pagination from '@mui/material/Pagination';
 import type React from 'react';
-import { useCallback } from 'react';
 import {
   SearchParamPaginationKeys,
   useSearchParamsPagination,
@@ -16,18 +15,18 @@ export function LogPagination(): React.ReactNode {
   const pageNumber =
     searchParamsPagination[SearchParamPaginationKeys.pageNumber];
 
-  const changePageNumberCallback = useCallback(
-    (_e: React.ChangeEvent<unknown>, pageNumberNew: number) => {
-      setSearchParams((searchParamsPrevious) => {
-        searchParamsPrevious.set(
-          SearchParamPaginationKeys.pageNumber,
-          `${pageNumberNew}`,
-        );
-        return searchParamsPrevious;
-      });
-    },
-    [setSearchParams],
-  );
+  function changePageNumberCallback(
+    _e: React.ChangeEvent<unknown>,
+    pageNumberNew: number,
+  ): void {
+    setSearchParams((searchParamsPrevious) => {
+      searchParamsPrevious.set(
+        SearchParamPaginationKeys.pageNumber,
+        `${pageNumberNew}`,
+      );
+      return searchParamsPrevious;
+    });
+  }
 
   return (
     <Pagination

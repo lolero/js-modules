@@ -6,7 +6,7 @@ import isNull from 'lodash/isNull';
 import lowerCase from 'lodash/lowerCase';
 import upperFirst from 'lodash/upperFirst';
 import type React from 'react';
-import { cloneElement, useCallback, useMemo, useState } from 'react';
+import { cloneElement, useState } from 'react';
 import type {
   FindManyRangesTypes,
   SetSearchParams,
@@ -46,38 +46,30 @@ export function FindManyRangesMenu({
 
   const { menuAnchor, openMenuCallback, closeMenuCallback } = useMenuUtils();
 
-  const buttonWithOnClick = useMemo(() => {
-    const buttonWithOnClickTemp = cloneElement(button, {
-      onClick: openMenuCallback,
-    } as unknown as React.ReactElement);
+  const buttonWithOnClick = cloneElement(button, {
+    onClick: openMenuCallback,
+  } as unknown as React.ReactElement);
 
-    return buttonWithOnClickTemp;
-  }, [button, openMenuCallback]);
+  function changeSelectedRangeMetadataCallback(
+    _e: React.SyntheticEvent<Element, Event>,
+    selectedOption: string | null,
+  ): void {
+    if (isNull(selectedOption)) {
+      return;
+    }
 
-  const changeSelectedRangeMetadataCallback = useCallback(
-    (
-      _e: React.SyntheticEvent<Element, Event>,
-      selectedOption: string | null,
-    ) => {
-      if (isNull(selectedOption)) {
-        return;
-      }
+    setSelectedRangeKey(selectedOption);
+  }
 
-      setSelectedRangeKey(selectedOption);
-    },
-    [],
-  );
-
-  const onDeleteRangeCallback = useCallback(
-    (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-      const rangeKey = event.currentTarget.getAttribute('data-key') as string;
-      deleteRangeCallback(rangeKey);
-      if (selectedRangeKey === rangeKey) {
-        setSelectedRangeKey(null);
-      }
-    },
-    [deleteRangeCallback, selectedRangeKey],
-  );
+  function onDeleteRangeCallback(
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ): void {
+    const rangeKey = event.currentTarget.getAttribute('data-key') as string;
+    deleteRangeCallback(rangeKey);
+    if (selectedRangeKey === rangeKey) {
+      setSelectedRangeKey(null);
+    }
+  }
 
   if (
     !isNull(selectedRangeKey) &&

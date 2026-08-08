@@ -14,7 +14,9 @@ export function utilGetFindManyBooleansWhereFactory<
 ): (whereExpressionBuilder: WhereExpressionBuilder) => void {
   const booleanNames = keys(findManyBooleansDto);
 
-  const whereFactory = (whereExpressionBuilder: WhereExpressionBuilder) => {
+  const whereFactory = (
+    whereExpressionBuilder: WhereExpressionBuilder,
+  ): void => {
     booleanNames.forEach((booleanName, booleanNameIndex) => {
       const booleanKeyValue = (findManyBooleansDto[
         booleanName as keyof EntityT

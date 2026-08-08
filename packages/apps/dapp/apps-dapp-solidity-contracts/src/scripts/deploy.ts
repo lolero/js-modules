@@ -1,6 +1,6 @@
 import { network } from 'hardhat';
 
-async function main() {
+async function main(): Promise<void> {
   const { ethers } = await network.create();
 
   const Greeter = await ethers.getContractFactory('Greeter');

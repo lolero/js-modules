@@ -1,4 +1,3 @@
-import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import type {
   Request,
@@ -24,12 +23,44 @@ import type {
 } from './stateAuth.types';
 import { SigninAction } from './stateAuth.types';
 
+type StateAuthActionHooks = {
+  useStateAuthInitializeKeycloak: (
+    keycloakServerConfig: StateAuthInitializeRequestAction['requestMetadata']['keycloakServerConfig'],
+    keycloakInitOptions: StateAuthInitializeRequestAction['requestMetadata']['keycloakInitOptions'],
+    onSigninCallback?: StateAuthInitializeRequestAction['requestMetadata']['onSigninCallback'],
+    onSignoutCallback?: StateAuthInitializeRequestAction['requestMetadata']['onSignoutCallback'],
+  ) => UseRequestReducerMetadata<
+    StateAuthInitializeRequestAction['requestMetadata'],
+    StateAuthReducer['metadata'],
+    () => void
+  >;
+  useStateAuthSignup: StateAuthSigninHook;
+  useStateAuthLogin: StateAuthSigninHook;
+  useStateAuthLogout: (
+    keycloakLogoutOptions: StateAuthSignoutRequestAction['requestMetadata']['keycloakLogoutOptions'],
+    onSignoutCallback?: StateAuthSignoutRequestAction['requestMetadata']['onSignoutCallback'],
+  ) => UseRequestReducerMetadata<
+    StateAuthSignoutRequestAction['requestMetadata'],
+    StateAuthReducer['metadata'],
+    () => void
+  >;
+};
+
+type StateAuthSigninHook = (
+  keycloakLoginOptions: StateAuthSigninRequestAction['requestMetadata']['keycloakLoginOptions'],
+  onSigninCallback?: StateAuthSigninRequestAction['requestMetadata']['onSigninCallback'],
+) => UseRequestReducerMetadata<
+  StateAuthSigninRequestAction['requestMetadata'],
+  StateAuthReducer['metadata'],
+  () => void
+>;
+
 export function getStateAuthActionHooks(
   useStateAuthRequest: (
     requestId: string,
   ) => Request<RequestMetadata> | undefined,
   useStateAuthReducerMetadata: () => StateAuthReducerMetadata,
-) {
+): StateAuthActionHooks {
   function useStateAuthInitializeKeycloak(
     keycloakServerConfig: StateAuthInitializeRequestAction['requestMetadata']['keycloakServerConfig'],
     keycloakInitOptions: StateAuthInitializeRequestAction['requestMetadata']['keycloakInitOptions'],
@@ -46,7 +77,7 @@ export function getStateAuthActionHooks(
     ) as Request<StateAuthInitializeRequestAction['requestMetadata']>;
     const reducerMetadata = useStateAuthReducerMetadata();
 
-    const callback = useCallback(() => {
+    function callback(): void {
       if (request) {
         return;
       }
@@ -58,14 +89,7 @@ export function getStateAuthActionHooks(
         onSignoutCallback,
       );
       dispatch(action);
-    }, [
-      dispatch,
-      keycloakServerConfig,
-      keycloakInitOptions,
-      onSigninCallback,
-      onSignoutCallback,
-      request,
-    ]);
+    }
 
     return {
       request,
@@ -88,14 +112,14 @@ export function getStateAuthActionHooks(
     ) as Request<StateAuthSigninRequestAction['requestMetadata']>;
     const reducerMetadata = useStateAuthReducerMetadata();
 
-    const callback = useCallback(() => {
+    function callback(): void {
       const action = createStateAuthSigninRequestAction(
         SigninAction.signup,
         keycloakLoginOptions,
         onSigninCallback,
       );
       dispatch(action);
-    }, [dispatch, keycloakLoginOptions, onSigninCallback]);
+    }
 
     return {
       request,
@@ -118,14 +142,14 @@ export function getStateAuthActionHooks(
     ) as Request<StateAuthSigninRequestAction['requestMetadata']>;
     const reducerMetadata = useStateAuthReducerMetadata();
 
-    const callback = useCallback(() => {
+    function callback(): void {
       const action = createStateAuthSigninRequestAction(
         SigninAction.login,
         keycloakLoginOptions,
         onSigninCallback,
       );
       dispatch(action);
-    }, [dispatch, keycloakLoginOptions, onSigninCallback]);
+    }
 
     return {
       request,
@@ -148,13 +172,13 @@ export function getStateAuthActionHooks(
     ) as Request<StateAuthSignoutRequestAction['requestMetadata']>;
     const reducerMetadata = useStateAuthReducerMetadata();
 
-    const callback = useCallback(() => {
+    function callback(): void {
       const action = createStateAuthSignoutRequestAction(
         keycloakLogoutOptions,
         onSignoutCallback,
       );
       dispatch(action);
-    }, [dispatch, keycloakLogoutOptions, onSignoutCallback]);
+    }
 
     return {
       request,

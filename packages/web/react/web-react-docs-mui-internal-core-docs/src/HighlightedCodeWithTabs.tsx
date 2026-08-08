@@ -22,7 +22,7 @@ export default function HighlightedCodeWithTabs({
     <Box>
       <Tabs
         value={activeTab}
-        onChange={(_event, newValue: number) => setActiveTab(newValue)}
+        onChange={(_event, activeTabNew: number) => setActiveTab(activeTabNew)}
         variant="scrollable"
       >
         {tabs.map((tab, index) => (

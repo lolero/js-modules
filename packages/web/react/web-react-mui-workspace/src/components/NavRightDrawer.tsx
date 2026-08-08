@@ -3,8 +3,8 @@ import Divider from '@mui/material/Divider';
 import type { DrawerProps } from '@mui/material/Drawer';
 import Drawer from '@mui/material/Drawer';
 import type React from 'react';
-import { useContext, useMemo } from 'react';
-import { NavContext, NavDrawerDisplayStatus } from '../contexts/NavContext';
+import { useContext } from 'react';
+import { NavContext } from '../contexts/NavContext';
 import { WorkspaceContext } from '../contexts/WorkspaceContext';
 import { useNavDisplayMetadata } from '../hooks/useNavDisplayMetadata';
 import { NavBoxShadowVerticalSx } from '../styles/navStyles';
@@ -27,49 +27,32 @@ export function NavRightDrawer({
   ref,
   navRightDrawerContent,
   navRightDrawerFooter,
-}: NavRightDrawerProps) {
-  const {
-    navRightDrawerDisplayStatus,
-    navRightDrawerCollapsedWidth,
-    navRightDrawerExpandedWidth,
-  } = useContext(NavContext);
+}: NavRightDrawerProps): React.ReactNode {
+  const { navRightDrawerCollapsedWidth, navRightDrawerExpandedWidth } =
+    useContext(NavContext);
 
   const { navTopToolbarHeight } = useContext(WorkspaceContext);
 
-  const { isMobile, isTablet, closeNavRightDrawerCallback } =
-    useNavDisplayMetadata();
-
-  const navDrawerWidth = useMemo(() => {
-    if (navRightDrawerDisplayStatus === NavDrawerDisplayStatus.collapsed) {
-      return navRightDrawerCollapsedWidth;
-    }
-
-    if (
-      isMobile &&
-      navRightDrawerDisplayStatus === NavDrawerDisplayStatus.expanded
-    ) {
-      return '100%';
-    }
-
-    return navRightDrawerExpandedWidth;
-  }, [
+  const {
     isMobile,
-    navRightDrawerDisplayStatus,
-    navRightDrawerCollapsedWidth,
-    navRightDrawerExpandedWidth,
-  ]);
+    isTablet,
+    isNavRightDrawerExpanded,
+    isNavRightDrawerCollapsed,
+    isNavRightDrawerHidden,
+    closeNavRightDrawerCallback,
+  } = useNavDisplayMetadata();
 
-  const drawerVariant: DrawerProps['variant'] = useMemo(() => {
-    if (
-      isMobile ||
-      (isTablet &&
-        navRightDrawerDisplayStatus === NavDrawerDisplayStatus.expanded)
-    ) {
-      return 'temporary';
-    }
+  let navDrawerWidth = navRightDrawerExpandedWidth;
+  if (isNavRightDrawerCollapsed) {
+    navDrawerWidth = navRightDrawerCollapsedWidth;
+  } else if (isMobile && isNavRightDrawerExpanded) {
+    navDrawerWidth = '100%';
+  }
 
-    return 'permanent';
-  }, [isMobile, isTablet, navRightDrawerDisplayStatus]);
+  let drawerVariant: DrawerProps['variant'] = 'permanent';
+  if (isMobile || (isTablet && isNavRightDrawerExpanded)) {
+    drawerVariant = 'temporary';
+  }
 
   return (
     <Drawer
@@ -77,7 +60,7 @@ export function NavRightDrawer({
       sx={{ width: navDrawerWidth }}
       variant={drawerVariant}
       anchor={isMobile ? 'left' : 'right'}
-      open={navRightDrawerDisplayStatus !== NavDrawerDisplayStatus.hidden}
+      open={!isNavRightDrawerHidden}
       slotProps={{
         paper: {
           sx: {
@@ -93,7 +76,7 @@ export function NavRightDrawer({
       onClose={closeNavRightDrawerCallback}
     >
       <Divider sx={{ mx: 0.5 }} />
-      {navRightDrawerDisplayStatus === NavDrawerDisplayStatus.expanded && (
+      {isNavRightDrawerExpanded && (
         <>
           <Box
             sx={{

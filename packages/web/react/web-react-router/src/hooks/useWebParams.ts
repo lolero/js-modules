@@ -12,6 +12,8 @@ export function useWebParams(): WebRouterParams {
   const { useParams } = useWebRouter();
   const params = useParams();
 
+  // WHY: react-compiler-hook-as-value
+  // Calls a hook carried on the adapter, so this hook is never compiled.
   return useMemo(() => {
     const webParams: WebRouterParams = {};
     for (const key of Object.keys(params)) {

@@ -6,7 +6,6 @@ import type { TextFieldProps } from '@mui/material/TextField';
 import TextField from '@mui/material/TextField';
 import noop from 'lodash/noop';
 import type React from 'react';
-import { useCallback } from 'react';
 import type { FormData } from '@js-modules/common-react-utils';
 import type { Country } from '@js-modules/common-utils-general';
 import { countries, countriesArray } from '@js-modules/common-utils-general';
@@ -91,21 +90,18 @@ export function CountriesAutocomplete<
   MultipleT,
   DisableClearableT,
   FreeSoloT
->) {
-  const changeCallback = useCallback(
-    (
-      e: React.SyntheticEvent<Element, Event>,
-      selectedOption: Country | null,
-    ) => {
-      const eInput = e as React.ChangeEvent<HTMLInputElement>;
-      eInput.target.value = (selectedOption?.[optionProp] as string) ?? '';
-      if (dataKey) {
-        eInput.currentTarget.setAttribute('data-key', dataKey);
-      }
-      onChange(eInput);
-    },
-    [optionProp, dataKey, onChange],
-  );
+>): React.ReactNode {
+  function changeCallback(
+    e: React.SyntheticEvent<Element, Event>,
+    selectedOption: Country | null,
+  ): void {
+    const eInput = e as React.ChangeEvent<HTMLInputElement>;
+    eInput.target.value = (selectedOption?.[optionProp] as string) ?? '';
+    if (dataKey) {
+      eInput.currentTarget.setAttribute('data-key', dataKey);
+    }
+    onChange(eInput);
+  }
 
   return (
     <VirtualizedAutocomplete

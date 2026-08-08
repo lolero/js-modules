@@ -1,7 +1,6 @@
 import type { IconDefinition } from '@fortawesome/fontawesome-common-types';
 import entries from 'lodash/entries';
 import type React from 'react';
-import { useMemo } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import type { RoutesMetadata } from '@js-modules/common-react-nav';
 import {
@@ -28,22 +27,11 @@ export function DocsMuiModuleRoutes<WebModuleT extends WebModuleWithSubRoutes>({
   subModuleBoxes,
   moduleBox,
 }: DocsMuiModuleRoutesProps<WebModuleT>): React.ReactNode {
-  const { modulePath, subRoutes, subModuleBoxesEntries, subModuleFirst } =
-    useMemo(() => {
-      const modulePathTemp = routesMetadataMui[webModule].path;
-      const subRoutesTemp: RoutesMetadata<IconDefinition> =
-        routesMetadataMui[webModule].subRoutes;
-      const subModuleBoxesEntriesTemp =
-        entries<React.ReactNode>(subModuleBoxes);
-      const [subModuleFirstTemp] = subModuleBoxesEntriesTemp[0];
-
-      return {
-        modulePath: modulePathTemp,
-        subRoutes: subRoutesTemp,
-        subModuleBoxesEntries: subModuleBoxesEntriesTemp,
-        subModuleFirst: subModuleFirstTemp,
-      };
-    }, [webModule, subModuleBoxes]);
+  const modulePath = routesMetadataMui[webModule].path;
+  const subRoutes: RoutesMetadata<IconDefinition> =
+    routesMetadataMui[webModule].subRoutes;
+  const subModuleBoxesEntries = entries<React.ReactNode>(subModuleBoxes);
+  const [subModuleFirst] = subModuleBoxesEntries[0];
 
   return (
     <Routes>

@@ -11,7 +11,9 @@ export function utilGetFindManySearchWhereFactory<
 ): (whereExpressionBuilder: WhereExpressionBuilder) => void {
   const { searchStr, entityPropNames } = findManySearchDto;
 
-  const whereFactory = (whereExpressionBuilder: WhereExpressionBuilder) => {
+  const whereFactory = (
+    whereExpressionBuilder: WhereExpressionBuilder,
+  ): void => {
     entityPropNames.forEach((entityPropName, uniqueKeyNameIndex) => {
       const whereStr = `${query.alias}.${camelToSnakeCaseWithAcronyms(
         entityPropName as string,

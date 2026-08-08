@@ -10,7 +10,6 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import startCase from 'lodash/startCase';
 import type React from 'react';
-import { useCallback, useMemo } from 'react';
 import {
   ThemePalette,
   WEB_CLIENT__URI__TRAVEL_LOG,
@@ -46,24 +45,22 @@ export function PrivateWorkspaceAccountMenu(): React.ReactNode {
     stateSettingsSignoutCallback,
   );
 
-  const username = useMemo(() => {
-    return startCase(
-      (tokens?.id.metadata.given_name as string | undefined) ?? '',
-    );
-  }, [tokens?.id.metadata.given_name]);
+  const username = startCase(
+    (tokens?.id.metadata.given_name as string | undefined) ?? '',
+  );
 
-  const copyTokenCallback = useCallback(() => {
+  function copyTokenCallback(): void {
     void navigator.clipboard.writeText(tokens!.access.token);
-  }, [tokens]);
+  }
 
-  const toggleThemeCallback = useCallback(() => {
+  function toggleThemeCallback(): void {
     stateMainUpdatePartialReducerMetadataCallback({
       themePalette:
         themePalette === ThemePalette.light
           ? ThemePalette.dark
           : ThemePalette.light,
     });
-  }, [stateMainUpdatePartialReducerMetadataCallback, themePalette]);
+  }
 
   return (
     <>

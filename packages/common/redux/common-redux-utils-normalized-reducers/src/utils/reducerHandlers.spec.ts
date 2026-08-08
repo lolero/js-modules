@@ -103,7 +103,7 @@ describe('reducerHandlers', () => {
           requestIds: ['request_id_1', 'request_id_2'],
         };
 
-      const newState = handleClearReducerRequests(
+      const stateNew = handleClearReducerRequests(
         state,
         testClearReducerRequestsAction,
       );
@@ -112,7 +112,7 @@ describe('reducerHandlers', () => {
         state,
         testClearReducerRequestsAction,
       );
-      expect(newState).toEqual({
+      expect(stateNew).toEqual({
         ...duplicatedState,
         requests: pick(duplicatedState.requests, 'request_id_3'),
       });
@@ -136,10 +136,10 @@ describe('reducerHandlers', () => {
     });
 
     it('Should handle request', () => {
-      const newState = handleRequest(state, testRequestAction);
+      const stateNew = handleRequest(state, testRequestAction);
 
       expect(duplicateState).toHaveBeenCalledWith(state, testRequestAction);
-      expect(newState).toEqual({
+      expect(stateNew).toEqual({
         ...duplicatedState,
         requests: {
           [testRequestAction.requestId]: {
@@ -164,10 +164,10 @@ describe('reducerHandlers', () => {
           },
         };
 
-        const newState = handleRequest(state, testRequestAction);
+        const stateNew = handleRequest(state, testRequestAction);
 
         const requestCreatedAt =
-          newState.requests[testRequestAction.requestId].createdAt;
+          stateNew.requests[testRequestAction.requestId].createdAt;
         const createdDate = new Date(requestCreatedAt.unixMilliseconds);
         expect(requestCreatedAt.formattedString).toBe(
           createdDate.toISOString(),
@@ -214,7 +214,7 @@ describe('reducerHandlers', () => {
         },
       };
 
-      const newState = handleSaveWholeReducerMetadata(
+      const stateNew = handleSaveWholeReducerMetadata(
         state,
         testSaveWholeReducerMetadataAction,
       );
@@ -230,7 +230,7 @@ describe('reducerHandlers', () => {
       expect(updateCompletedRequestsCache).toHaveBeenCalledWith(
         duplicatedState,
       );
-      expect(newState).toEqual({
+      expect(stateNew).toEqual({
         ...duplicatedState,
         metadata: testSaveWholeReducerMetadataAction.wholeReducerMetadata,
       });
@@ -283,7 +283,7 @@ describe('reducerHandlers', () => {
         },
       };
 
-      const newState = handleSaveWholeEntities(
+      const stateNew = handleSaveWholeEntities(
         state,
         testSaveWholeEntitiesAction,
       );
@@ -299,7 +299,7 @@ describe('reducerHandlers', () => {
       expect(updateCompletedRequestsCache).toHaveBeenCalledWith(
         duplicatedState,
       );
-      expect(newState).toEqual({
+      expect(stateNew).toEqual({
         ...duplicatedState,
         data: {
           ...duplicatedState.data,
@@ -325,7 +325,7 @@ describe('reducerHandlers', () => {
         flush: true,
       };
 
-      const newState = handleSaveWholeEntities(
+      const stateNew = handleSaveWholeEntities(
         state,
         testSaveWholeEntitiesAction,
       );
@@ -341,7 +341,7 @@ describe('reducerHandlers', () => {
       expect(updateCompletedRequestsCache).toHaveBeenCalledWith(
         duplicatedState,
       );
-      expect(newState).toEqual({
+      expect(stateNew).toEqual({
         ...duplicatedState,
         data: {
           ...testSaveWholeEntitiesAction.wholeEntities,
@@ -380,7 +380,7 @@ describe('reducerHandlers', () => {
         },
       };
 
-      const newState = handleSavePartialEntities(
+      const stateNew = handleSavePartialEntities(
         state,
         testSavePartialEntitiesAction,
       );
@@ -396,7 +396,7 @@ describe('reducerHandlers', () => {
       expect(updateCompletedRequestsCache).toHaveBeenCalledWith(
         duplicatedState,
       );
-      expect(newState).toEqual({
+      expect(stateNew).toEqual({
         ...duplicatedState,
         data: {
           ...duplicatedState.data,
@@ -452,7 +452,7 @@ describe('reducerHandlers', () => {
         },
       };
 
-      const newState = handleSavePartialEntities(
+      const stateNew = handleSavePartialEntities(
         state,
         testSavePartialEntitiesAction,
       );
@@ -473,7 +473,7 @@ describe('reducerHandlers', () => {
         `Failed to save partial entity with PK 'nonExistingPk'`,
         testSavePartialEntitiesAction,
       );
-      expect(newState).toEqual({
+      expect(stateNew).toEqual({
         ...duplicatedState,
         data: {
           ...duplicatedState.data,
@@ -526,7 +526,7 @@ describe('reducerHandlers', () => {
         },
       };
 
-      const newState = handleSavePartialPatternToEntities(
+      const stateNew = handleSavePartialPatternToEntities(
         state,
         testSavePartialPatternToEntitiesAction,
       );
@@ -542,7 +542,7 @@ describe('reducerHandlers', () => {
       expect(updateCompletedRequestsCache).toHaveBeenCalledWith(
         duplicatedState,
       );
-      expect(newState).toEqual({
+      expect(stateNew).toEqual({
         ...duplicatedState,
         data: {
           ...duplicatedState.data,
@@ -601,7 +601,7 @@ describe('reducerHandlers', () => {
         },
       };
 
-      const newState = handleSavePartialPatternToEntities(
+      const stateNew = handleSavePartialPatternToEntities(
         state,
         testSavePartialPatternToEntitiesAction,
       );
@@ -622,7 +622,7 @@ describe('reducerHandlers', () => {
         `Failed to save partial pattern to entity with PK 'nonExistingPk'`,
         testSavePartialPatternToEntitiesAction,
       );
-      expect(newState).toEqual({
+      expect(stateNew).toEqual({
         ...duplicatedState,
         data: {
           ...duplicatedState.data,
@@ -659,7 +659,7 @@ describe('reducerHandlers', () => {
         ],
       };
 
-      const newState = handleDeleteEntities(state, testDeleteEntitiesAction);
+      const stateNew = handleDeleteEntities(state, testDeleteEntitiesAction);
 
       expect(duplicateState).toHaveBeenCalledWith(
         state,
@@ -672,7 +672,7 @@ describe('reducerHandlers', () => {
       expect(updateCompletedRequestsCache).toHaveBeenCalledWith(
         duplicatedState,
       );
-      expect(newState).toEqual({
+      expect(stateNew).toEqual({
         ...duplicatedState,
         data: {
           [getPkOfTestEntity(testEntity2)]: testEntity2,

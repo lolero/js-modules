@@ -8,11 +8,11 @@ import {
   store,
 } from './store';
 
-const _addMessage = (message: Message) => {
+const _addMessage = (message: Message): void => {
   insertMessageToActive(message);
 };
 
-const _appendResponse = (id: number, text: string) => {
+const _appendResponse = (id: number, text: string): void => {
   store.update((state) => {
     const conv = state.conversations.find(
       (c) => c.id === state.activeConversationId,
@@ -30,7 +30,7 @@ const _appendResponse = (id: number, text: string) => {
   });
 };
 
-export const sendMessage = async (userMessage: Message) => {
+export const sendMessage = async (userMessage: Message): Promise<void> => {
   const conversation = getActiveConversation();
 
   if (!conversation) {
@@ -80,7 +80,7 @@ export const sendMessage = async (userMessage: Message) => {
 const readResponse = async (
   reader: ReadableStreamDefaultReader<Uint8Array>,
   responseMessage: Message,
-) => {
+): Promise<void> => {
   let inProgress = true;
 
   while (inProgress) {
@@ -100,7 +100,7 @@ const readResponse = async (
 const readError = async (
   statusCode: number,
   reader: ReadableStreamDefaultReader<Uint8Array>,
-) => {
+): Promise<void> => {
   let inProgress = true;
   let message = '';
   while (inProgress) {

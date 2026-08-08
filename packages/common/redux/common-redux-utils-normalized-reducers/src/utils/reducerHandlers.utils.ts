@@ -48,7 +48,7 @@ export function duplicateState<
   // The metadata object is not duplicated here since it gets duplicated in the
   // 'handleCommonProps' function, which should get called by every handler
   // that completes an action.
-  const newState = {
+  const stateNew = {
     ...state,
     requests: { ...state.requests },
     data: Object.entries(state.data).reduce((stateData, [entityPk, entity]) => {
@@ -73,7 +73,7 @@ export function duplicateState<
     }, {}),
   };
 
-  return newState;
+  return stateNew;
 }
 
 /**
@@ -83,7 +83,7 @@ export function duplicateState<
  * which have already created a copy of the redux state.
  * 2. To avoid an additional and unnecessary duplication of the redux state,
  * which could result in a performance drag in the application.
- * @param newState - A copy of the redux state.
+ * @param stateNew - A copy of the redux state.
  * @param action - Success/fail action.
  */
 export function handleCommonProps<
@@ -91,7 +91,7 @@ export function handleCommonProps<
   ReducerMetadataT extends ReducerMetadata,
   EntityT extends Entity,
 >(
-  newState: Reducer<ReducerMetadataT, EntityT>,
+  stateNew: Reducer<ReducerMetadataT, EntityT>,
   action:
     | SaveNothingAction<ActionTypeT>
     | SaveWholeReducerMetadataAction<ActionTypeT, ReducerMetadataT>
@@ -106,16 +106,16 @@ export function handleCommonProps<
   // duplicated in the respective handler that calls this function hence the
   // risk of mutating the state object is already mitigated.
   if ('partialReducerMetadata' in action) {
-    newState.metadata = {
-      ...newState.metadata,
+    stateNew.metadata = {
+      ...stateNew.metadata,
       ...action.partialReducerMetadata,
     };
   }
 
   if ('requestId' in action && action.requestId) {
     const completedDate = new Date();
-    newState.requests[action.requestId] = {
-      ...newState.requests[action.requestId],
+    stateNew.requests[action.requestId] = {
+      ...stateNew.requests[action.requestId],
       completedAt: {
         unixMilliseconds: completedDate.valueOf(),
       },
@@ -123,9 +123,9 @@ export function handleCommonProps<
       isOk: !('error' in action),
     };
 
-    if (newState.config.requestsPrettyTimestamps) {
+    if (stateNew.config.requestsPrettyTimestamps) {
       (
-        newState.requests[action.requestId].completedAt as {
+        stateNew.requests[action.requestId].completedAt as {
           unixMilliseconds: number;
           formattedString?: string;
         }
@@ -133,25 +133,25 @@ export function handleCommonProps<
     }
 
     if ('wholeEntities' in action) {
-      newState.requests[action.requestId].entityPks = Object.keys(
+      stateNew.requests[action.requestId].entityPks = Object.keys(
         action.wholeEntities,
       );
     } else if ('partialEntities' in action) {
-      newState.requests[action.requestId].entityPks = Object.keys(
+      stateNew.requests[action.requestId].entityPks = Object.keys(
         action.partialEntities,
       );
     } else if ('entityPks' in action) {
-      newState.requests[action.requestId].entityPks = action.entityPks;
+      stateNew.requests[action.requestId].entityPks = action.entityPks;
     }
 
     if ('statusCode' in action) {
-      newState.requests[action.requestId].statusCode = action.statusCode;
+      stateNew.requests[action.requestId].statusCode = action.statusCode;
     }
     if ('subRequests' in action) {
-      newState.requests[action.requestId].subRequests = action.subRequests;
+      stateNew.requests[action.requestId].subRequests = action.subRequests;
     }
     if ('error' in action) {
-      newState.requests[action.requestId].error = action.error;
+      stateNew.requests[action.requestId].error = action.error;
     }
   }
 }
@@ -160,23 +160,23 @@ export function handleCommonProps<
  * Updates reducer's completed requests cache. That is, removes the oldest
  * completed requests according to the reducer config's 'successRequestsCache'
  * and 'failRequestsCache'.
- * @param newState - Copy of the redux state.
+ * @param stateNew - Copy of the redux state.
  */
 export function updateCompletedRequestsCache<
   ReducerMetadataT extends ReducerMetadata,
   EntityT extends Entity,
->(newState: Reducer<ReducerMetadataT, EntityT>): void {
+>(stateNew: Reducer<ReducerMetadataT, EntityT>): void {
   if (
-    newState.config.successRequestsCache === null &&
-    newState.config.failRequestsCache === null
+    stateNew.config.successRequestsCache === null &&
+    stateNew.config.failRequestsCache === null
   ) {
     return;
   }
 
-  const pendingRequests = Object.values(newState.requests).filter(
+  const pendingRequests = Object.values(stateNew.requests).filter(
     (request) => request.isPending,
   );
-  const completedRequests = Object.values(newState.requests).filter(
+  const completedRequests = Object.values(stateNew.requests).filter(
     (request) => !request.isPending,
   );
   type RequestsSeparated = {
@@ -193,7 +193,7 @@ export function updateCompletedRequestsCache<
   } = completedRequests.reduce(
     (requestsSeparated: RequestsSeparated, request) => {
       const requestsSeparatedTemp = { ...requestsSeparated };
-      const isProtectedRequest = newState.config.protectedRequestIds?.includes(
+      const isProtectedRequest = stateNew.config.protectedRequestIds?.includes(
         request.id,
       );
 
@@ -226,8 +226,8 @@ export function updateCompletedRequestsCache<
   let failRequests = [...requestsProtectedFail, ...requestsUnprotectedFail];
 
   if (
-    newState.config.successRequestsCache !== null &&
-    requestsUnprotectedSuccess.length > newState.config.successRequestsCache
+    stateNew.config.successRequestsCache !== null &&
+    requestsUnprotectedSuccess.length > stateNew.config.successRequestsCache
   ) {
     const requestsUnprotectedSuccessSorted = orderBy(
       requestsUnprotectedSuccess,
@@ -238,7 +238,7 @@ export function updateCompletedRequestsCache<
     const requestsUnprotectedSuccessSortedCache =
       requestsUnprotectedSuccessSorted.slice(
         0,
-        newState.config.successRequestsCache,
+        stateNew.config.successRequestsCache,
       );
 
     successRequests = [
@@ -248,8 +248,8 @@ export function updateCompletedRequestsCache<
   }
 
   if (
-    newState.config.failRequestsCache !== null &&
-    failRequests.length > newState.config.failRequestsCache
+    stateNew.config.failRequestsCache !== null &&
+    failRequests.length > stateNew.config.failRequestsCache
   ) {
     const requestsUnprotectedFailSorted = orderBy(
       failRequests,
@@ -258,7 +258,7 @@ export function updateCompletedRequestsCache<
     );
 
     const requestsUnprotectedFailSortedCache =
-      requestsUnprotectedFailSorted.slice(0, newState.config.failRequestsCache);
+      requestsUnprotectedFailSorted.slice(0, stateNew.config.failRequestsCache);
 
     failRequests = [
       ...requestsProtectedFail,
@@ -266,7 +266,7 @@ export function updateCompletedRequestsCache<
     ];
   }
 
-  newState.requests = {
+  stateNew.requests = {
     ...keyBy(pendingRequests, 'id'),
     ...keyBy(successRequests, 'id'),
     ...keyBy(failRequests, 'id'),

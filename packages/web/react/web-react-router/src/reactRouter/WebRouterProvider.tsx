@@ -29,6 +29,8 @@ export function WebRouterProvider({
   const navigate = useNavigate();
   const [searchParams, setReactRouterSearchParams] = useSearchParams();
 
+  // WHY: react-compiler-hook-as-value
+  // `useParams` rides on the adapter below, so this component is never compiled.
   const pathPush = useCallback(
     (path: string) => {
       void navigate(path);

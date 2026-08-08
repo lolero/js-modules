@@ -1,5 +1,5 @@
 import type React from 'react';
-import { useCallback, useMemo, useState } from 'react';
+import { useState } from 'react';
 import type { WorkspaceSlotName } from '../constants/workspaceSlotNames.constants';
 import type { WorkspaceSlotsContextValue } from '../contexts/WorkspaceSlotsContext';
 import { WorkspaceSlotsContext } from '../contexts/WorkspaceSlotsContext';
@@ -42,21 +42,21 @@ export function WorkspaceLayout({
     Partial<Record<WorkspaceSlotName, HTMLElement | null>>
   >({});
 
-  const registerSlotNode = useCallback(
-    (slotName: WorkspaceSlotName, node: HTMLElement | null) => {
-      setSlotNodes((previousSlotNodes) =>
-        previousSlotNodes[slotName] === node
-          ? previousSlotNodes
-          : { ...previousSlotNodes, [slotName]: node },
-      );
-    },
-    [],
-  );
+  function registerSlotNode(
+    slotName: WorkspaceSlotName,
+    node: HTMLElement | null,
+  ): void {
+    setSlotNodes((slotNodesPrevious) =>
+      slotNodesPrevious[slotName] === node
+        ? slotNodesPrevious
+        : { ...slotNodesPrevious, [slotName]: node },
+    );
+  }
 
-  const workspaceSlotsContextValue: WorkspaceSlotsContextValue = useMemo(
-    () => ({ slotNodes, registerSlotNode }),
-    [slotNodes, registerSlotNode],
-  );
+  const workspaceSlotsContextValue: WorkspaceSlotsContextValue = {
+    slotNodes,
+    registerSlotNode,
+  };
 
   return (
     <WorkspaceSlotsContext.Provider value={workspaceSlotsContextValue}>

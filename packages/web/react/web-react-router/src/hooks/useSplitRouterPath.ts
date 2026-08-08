@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import { splitRouterPath } from '../utils/splitRouterPath';
 import { useWebRouter } from './useWebRouter';
 
@@ -9,5 +8,5 @@ import { useWebRouter } from './useWebRouter';
 export function useSplitRouterPath(): string[] {
   const { pathname } = useWebRouter();
 
-  return useMemo(() => splitRouterPath(pathname), [pathname]);
+  return splitRouterPath(pathname);
 }

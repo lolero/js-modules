@@ -2,7 +2,6 @@ import type { IconDefinition } from '@fortawesome/fontawesome-common-types';
 import intersection from 'lodash/intersection';
 import isEmpty from 'lodash/isEmpty';
 import type React from 'react';
-import { useCallback, useMemo } from 'react';
 import type {
   RouteMetadata,
   RoutesMetadata,
@@ -30,51 +29,47 @@ export function useNavLeftDrawerTreeViewMetadata(
   const { isNavLeftDrawerExpanded, closeNavLeftDrawerCallback } =
     useNavDisplayMetadata();
 
-  const pathRouter = useMemo(() => {
-    return `/${splitRouterPath.join('/')}`;
-  }, [splitRouterPath]);
+  const pathRouter = `/${splitRouterPath.join('/')}`;
 
-  const onClickCallback = useCallback(
-    (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-      const routeMetadataPartialJson =
-        event.currentTarget.getAttribute('data-key');
-      const routeMetadataPartial = JSON.parse(
-        routeMetadataPartialJson!,
-      ) as Pick<RouteMetadata<IconDefinition>, 'path' | 'keepQueryParamsKeys'>;
+  function onClickCallback(
+    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+  ): void {
+    const routeMetadataPartialJson =
+      event.currentTarget.getAttribute('data-key');
+    const routeMetadataPartial = JSON.parse(routeMetadataPartialJson!) as Pick<
+      RouteMetadata<IconDefinition>,
+      'path' | 'keepQueryParamsKeys'
+    >;
 
-      if (!routeMetadataPartial.keepQueryParamsKeys) {
-        closeNavLeftDrawerCallback();
-        return;
-      }
+    if (!routeMetadataPartial.keepQueryParamsKeys) {
+      closeNavLeftDrawerCallback();
+      return;
+    }
 
-      const queryParamsKeys = [
-        ...searchParams.keys().map((key: string) => key),
-      ];
-      const queryParamsKeysKeep = intersection(
-        queryParamsKeys,
-        routeMetadataPartial.keepQueryParamsKeys,
-      );
+    const queryParamsKeys = [...searchParams.keys().map((key: string) => key)];
+    const queryParamsKeysKeep = intersection(
+      queryParamsKeys,
+      routeMetadataPartial.keepQueryParamsKeys,
+    );
 
-      if (isEmpty(queryParamsKeysKeep)) {
-        closeNavLeftDrawerCallback();
-        return;
-      }
+    if (isEmpty(queryParamsKeysKeep)) {
+      closeNavLeftDrawerCallback();
+      return;
+    }
 
-      const queryParamsKeep: URLSearchParams = new URLSearchParams();
-      queryParamsKeysKeep.forEach((key) => {
-        queryParamsKeep.set(key, searchParams.get(key)!);
-      });
+    const queryParamsKeep: URLSearchParams = new URLSearchParams();
+    queryParamsKeysKeep.forEach((key) => {
+      queryParamsKeep.set(key, searchParams.get(key)!);
+    });
 
-      const newPath = `${
-        routeMetadataPartial.path
-      }?${queryParamsKeep.toString()}`;
+    const newPath = `${
+      routeMetadataPartial.path
+    }?${queryParamsKeep.toString()}`;
 
-      event.preventDefault();
+    event.preventDefault();
 
-      pathPush(newPath);
-    },
-    [closeNavLeftDrawerCallback, pathPush, searchParams],
-  );
+    pathPush(newPath);
+  }
 
   const {
     pathActive,
@@ -83,27 +78,17 @@ export function useNavLeftDrawerTreeViewMetadata(
     activeLineTreeViewItemMetadatas,
     pathsExpandable,
     pathsParentByPath,
-  } = useMemo(() => {
-    return getNavLeftDrawerTreeViewMetadata(
-      routesMetadata,
-      0,
-      pathRouter,
-      null,
-      isNavLeftDrawerExpanded,
-      LinkComponent,
-      onClickCallback,
-      userRoles,
-      translateCallback,
-    );
-  }, [
+  } = getNavLeftDrawerTreeViewMetadata(
     routesMetadata,
+    0,
     pathRouter,
+    null,
     isNavLeftDrawerExpanded,
     LinkComponent,
     onClickCallback,
     userRoles,
     translateCallback,
-  ]);
+  );
 
   return {
     activeLineTreeViewItemMetadatas,

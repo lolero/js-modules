@@ -57,6 +57,8 @@ class Serialize<EntityT> implements NestInterceptor {
   }
 }
 
-export function InterceptorSerialize<EntityT>(dto: Dto) {
+export function InterceptorSerialize<EntityT>(
+  dto: Dto,
+): MethodDecorator & ClassDecorator {
   return UseInterceptors(new Serialize<EntityT>(dto));
 }

@@ -37,13 +37,32 @@ export function createJestConfig(
     dependencies?: Record<string, string>;
     devDependencies?: Record<string, string>;
     peerDependencies?: Record<string, string>;
+    peerDependenciesMeta?: Record<string, { optional?: boolean }>;
   };
 
-  const depsAll = new Set<string>([
-    ...Object.keys(pkg.dependencies ?? {}),
-    ...Object.keys(pkg.peerDependencies ?? {}),
-    ...Object.keys(pkg.devDependencies ?? {}),
-  ]);
+  // An optional peer means "works with X if you have it", not "is an X", and the
+  // question here is which environment the tests actually need. Subtracted from
+  // the whole set, not just the peer bucket: this repo mirrors every peer into
+  // devDependencies so libs build standalone, so filtering peers alone leaves the
+  // name behind. `common-utils-general` declares `react-native` optionally so RN
+  // consumers resolve its source but has no RN code — counting it would hand a
+  // plain utils package the RN jest preset, whose ESM setup file jest can't parse.
+  // Deliberately unlike `scripts/eslint/eslint.configs.ts`, which does count
+  // optional peers: lint cares about code paths you might exercise, tests about
+  // the environment you require.
+  const peerDependenciesOptional = new Set(
+    Object.entries(pkg.peerDependenciesMeta ?? {})
+      .filter(([, meta]) => meta.optional)
+      .map(([dep]) => dep),
+  );
+
+  const depsAll = new Set<string>(
+    [
+      ...Object.keys(pkg.dependencies ?? {}),
+      ...Object.keys(pkg.peerDependencies ?? {}),
+      ...Object.keys(pkg.devDependencies ?? {}),
+    ].filter((dep) => !peerDependenciesOptional.has(dep)),
+  );
 
   const jestConfigTypesEnabled = (
     Object.values(JestConfigType) as JestConfigType[]
@@ -73,34 +92,36 @@ const extensionsJest = [
 const extensionsJestStr = extensionsJest.join(',');
 const extensionsJestRegex = `\\.(${extensionsJest.join('|')})$`;
 
+const transformSwc: [string, Record<string, unknown>] = [
+  '@swc/jest',
+  {
+    jsc: {
+      loose: true,
+      parser: {
+        syntax: 'typescript',
+        tsx: true,
+        decorators: true,
+      },
+      transform: {
+        react: {
+          runtime: 'automatic',
+        },
+        legacyDecorator: true,
+        decoratorMetadata: true,
+      },
+    },
+    module: {
+      type: 'commonjs',
+    },
+  },
+];
+
 const jestConfigs: Record<JestConfigType, JestConfig> = {
   [JestConfigType.common]: {
     isEnabled: () => true,
     buildConfig: () => ({
       transform: {
-        [extensionsJestRegex]: [
-          '@swc/jest',
-          {
-            jsc: {
-              loose: true,
-              parser: {
-                syntax: 'typescript',
-                tsx: true,
-                decorators: true,
-              },
-              transform: {
-                react: {
-                  runtime: 'automatic',
-                },
-                legacyDecorator: true,
-                decoratorMetadata: true,
-              },
-            },
-            module: {
-              type: 'commonjs',
-            },
-          },
-        ],
+        [extensionsJestRegex]: transformSwc,
       },
       testMatch: [
         `<rootDir>/src/**/*.{test,spec}.{${extensionsJestStr}}`,
@@ -136,6 +157,31 @@ const jestConfigs: Record<JestConfigType, JestConfig> = {
     isEnabled: (deps) => deps.has('react-native'),
     buildConfig: () => ({
       preset: '@react-native/jest-preset',
+      // The preset's own pattern assumes a flat layout
+      // (`node_modules/(?!((jest-)?react-native|@react-native(-community)?)/)`),
+      // so under pnpm it matches at the `.pnpm/` segment and leaves the RN
+      // packages untransformed — their ESM then fails to parse. Match on package
+      // identity anywhere in the path instead, which survives
+      // `node_modules/.pnpm/@react-native+jest-preset@x.y.z/node_modules/@react-native/...`.
+      transformIgnorePatterns: [
+        'node_modules/(?!.*(?:@react-native|react-native))',
+      ],
+      // Two transformers, and the order matters — Jest uses the first pattern
+      // that matches. React Native ships **Flow**-typed JS (`value(cb: number =>
+      // void): TimeoutID`), which swc cannot parse: it supports TypeScript, not
+      // Flow. So route `node_modules` through babel with the RN preset, and keep
+      // swc for our own sources.
+      transform: {
+        '[/\\\\]node_modules[/\\\\].+\\.[cm]?[jt]sx?$': [
+          'babel-jest',
+          {
+            presets: ['module:@react-native/babel-preset'],
+            babelrc: false,
+            configFile: false,
+          },
+        ],
+        [extensionsJestRegex]: transformSwc,
+      },
     }),
   },
 };

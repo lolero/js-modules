@@ -14,7 +14,9 @@ export function utilGetFindManyUniqueKeysWhereFactory<
 ): (whereExpressionBuilder: WhereExpressionBuilder) => void {
   const uniqueKeyNames = keys(findManyUniqueKeysDto);
 
-  const whereFactory = (whereExpressionBuilder: WhereExpressionBuilder) => {
+  const whereFactory = (
+    whereExpressionBuilder: WhereExpressionBuilder,
+  ): void => {
     uniqueKeyNames.forEach((uniqueKeyName, uniqueKeyNameIndex) => {
       const uniqueKeyValues =
         findManyUniqueKeysDto[uniqueKeyName as keyof EntityT]!;

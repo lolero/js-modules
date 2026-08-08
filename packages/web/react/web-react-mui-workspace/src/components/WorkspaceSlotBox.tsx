@@ -1,7 +1,7 @@
 import type { BoxProps } from '@mui/material/Box';
 import Box from '@mui/material/Box';
 import type React from 'react';
-import { useCallback, useContext } from 'react';
+import { useContext } from 'react';
 import type { WorkspaceSlotName } from '../constants/workspaceSlotNames.constants';
 import { WorkspaceSlotsContext } from '../contexts/WorkspaceSlotsContext';
 
@@ -25,12 +25,9 @@ export function WorkspaceSlotBox({
 }: WorkspaceSlotBoxProps): React.ReactNode {
   const { registerSlotNode } = useContext(WorkspaceSlotsContext);
 
-  const setSlotNode = useCallback(
-    (node: HTMLElement | null) => {
-      registerSlotNode(name, node);
-    },
-    [registerSlotNode, name],
-  );
+  function setSlotNode(node: HTMLElement | null): void {
+    registerSlotNode(name, node);
+  }
 
   return <Box ref={setSlotNode} sx={sx} />;
 }

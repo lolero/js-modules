@@ -11,7 +11,7 @@ import isArray from 'lodash/isArray';
   async: false,
 })
 class ValidatorIsFindManyRange implements ValidatorConstraintInterface {
-  validate(value: unknown) {
+  validate(value: unknown): boolean {
     if (!isArray(value)) {
       return false;
     }
@@ -32,13 +32,13 @@ class ValidatorIsFindManyRange implements ValidatorConstraintInterface {
     return true;
   }
 
-  defaultMessage() {
+  defaultMessage(): string {
     return '($value) must be a tuple of numbers, strings or nulls';
   }
 }
 
 export function isFindManyRange(validationOptions?: ValidationOptions) {
-  return function (object: object, propertyName: string) {
+  return function (object: object, propertyName: string): void {
     registerDecorator({
       target: object.constructor,
       propertyName,

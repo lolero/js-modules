@@ -31,7 +31,7 @@ api.interceptors.response.use(
   },
 );
 
-export const getErrorMessage = (error: unknown) => {
+export const getErrorMessage = (error: unknown): string => {
   if (axios.isAxiosError(error)) {
     const apiError = error.response?.data as ApiError;
     if (typeof apiError === 'string' && (apiError as string).length > 0) {
@@ -56,7 +56,7 @@ export const getErrorMessage = (error: unknown) => {
   return 'Something went wrong';
 };
 
-export const getError = (error: unknown) => {
+export const getError = (error: unknown): ApiError | null => {
   if (axios.isAxiosError(error)) {
     const apiError = error.response?.data as ApiError;
     return apiError;

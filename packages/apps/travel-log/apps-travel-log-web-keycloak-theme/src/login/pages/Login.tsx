@@ -2,8 +2,8 @@ import { kcSanitize } from 'keycloakify/lib/kcSanitize';
 import { getKcClsx, type KcClsx } from 'keycloakify/login/lib/kcClsx';
 import type { PageProps } from 'keycloakify/login/pages/PageProps';
 import { clsx } from 'keycloakify/tools/clsx';
-import type { JSX } from 'keycloakify/tools/JSX';
 import { useIsPasswordRevealed } from 'keycloakify/tools/useIsPasswordRevealed';
+import type React from 'react';
 import { useState } from 'react';
 import type { I18n } from '../i18n';
 import type { KcContext } from '../KcContext';
@@ -14,7 +14,10 @@ export default function Login({
   doUseDefaultCss,
   Template,
   classes,
-}: PageProps<Extract<KcContext, { pageId: 'login.ftl' }>, I18n>) {
+}: PageProps<
+  Extract<KcContext, { pageId: 'login.ftl' }>,
+  I18n
+>): React.ReactNode {
   const { kcClsx } = getKcClsx({
     doUseDefaultCss,
     classes,
@@ -129,7 +132,7 @@ export default function Login({
               {!usernameHidden && (
                 <div className={kcClsx('kcFormGroupClass')}>
                   <label htmlFor="username" className={kcClsx('kcLabelClass')}>
-                    {(() => {
+                    {((): React.ReactNode => {
                       if (!realm.loginWithEmailAllowed) {
                         return msg('username');
                       }
@@ -278,8 +281,8 @@ function PasswordWrapper({
   kcClsx: KcClsx;
   i18n: I18n;
   passwordInputId: string;
-  children: JSX.Element;
-}) {
+  children: React.ReactNode;
+}): React.ReactNode {
   const { msgStr } = i18n;
 
   const { isPasswordRevealed, toggleIsPasswordRevealed } =

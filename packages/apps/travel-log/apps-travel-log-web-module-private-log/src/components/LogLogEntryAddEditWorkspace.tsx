@@ -2,7 +2,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 import type React from 'react';
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import {
   WebModulesPrivate,
   WebSubModulesLog,
@@ -46,27 +46,21 @@ export function LogLogEntryAddEditWorkspace(): React.ReactNode {
     callback: nodeLogEntriesUpdatePartialReducerMetadataCallback,
   } = useNodeLogEntriesUpdatePartialReducerMetadata();
 
-  const logLogEntryAddEditContextValue: LogLogEntryAddEditContextValue =
-    useMemo(() => {
-      return {
-        nodeLogEntryUnsavedFormValidator,
-      };
-    }, [nodeLogEntryUnsavedFormValidator]);
+  const logLogEntryAddEditContextValue: LogLogEntryAddEditContextValue = {
+    nodeLogEntryUnsavedFormValidator,
+  };
 
-  const routeMetadata = useMemo(() => {
-    let routeMetadataTemp = logEntryId
-      ? routesMetadataPrivate[WebModulesPrivate.log].subRoutes![
-          WebSubModulesLog.logEntry
-        ].subRoutes![WebSubModulesLogLogEntry.edit]
-      : routesMetadataPrivate[WebModulesPrivate.log].subRoutes![
-          WebSubModulesLog.logEntry
-        ].subRoutes![WebSubModulesLogLogEntry.addNew];
-    routeMetadataTemp = {
-      ...routeMetadataTemp,
-      label: `${routeMetadataTemp.label} log entry`,
-    };
-    return routeMetadataTemp;
-  }, [logEntryId]);
+  const routeMetadataBase = logEntryId
+    ? routesMetadataPrivate[WebModulesPrivate.log].subRoutes![
+        WebSubModulesLog.logEntry
+      ].subRoutes![WebSubModulesLogLogEntry.edit]
+    : routesMetadataPrivate[WebModulesPrivate.log].subRoutes![
+        WebSubModulesLog.logEntry
+      ].subRoutes![WebSubModulesLogLogEntry.addNew];
+  const routeMetadata = {
+    ...routeMetadataBase,
+    label: `${routeMetadataBase.label} log entry`,
+  };
 
   useEffect(() => {
     let nodeLogEntryUnsavedInitial: NodeLogEntry;
@@ -95,16 +89,9 @@ export function LogLogEntryAddEditWorkspace(): React.ReactNode {
     nodeLogEntry,
   ]);
 
-  const workspaceContent = useMemo(() => {
-    if (
-      !isUndefined(logEntryId) &&
-      (isUndefined(nodeLogEntry) || isNull(nodeLogEntryUnsaved))
-    ) {
-      return <CircularProgress size={40} />;
-    }
-
-    return <LogLogEntryAddEditWorkspaceContentBox />;
-  }, [logEntryId, nodeLogEntry, nodeLogEntryUnsaved]);
+  const isLogEntryLoading =
+    !isUndefined(logEntryId) &&
+    (isUndefined(nodeLogEntry) || isNull(nodeLogEntryUnsaved));
 
   return (
     <LogLogEntryAddEditContext.Provider value={logLogEntryAddEditContextValue}>
@@ -118,7 +105,11 @@ export function LogLogEntryAddEditWorkspace(): React.ReactNode {
           ),
         }}
       >
-        {workspaceContent}
+        {isLogEntryLoading ? (
+          <CircularProgress size={40} />
+        ) : (
+          <LogLogEntryAddEditWorkspaceContentBox />
+        )}
       </Workspace>
     </LogLogEntryAddEditContext.Provider>
   );

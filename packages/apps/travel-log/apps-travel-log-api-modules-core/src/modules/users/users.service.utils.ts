@@ -57,7 +57,7 @@ export class UsersServiceUtils {
       userKeycloak[usersEntityKey] = usersEntityValue;
     });
 
-    const updatedUserRepresentation: UserRepresentation = {
+    const userRepresentationUpdated: UserRepresentation = {
       ...userRepresentation,
       username: userKeycloak.username,
       email: userKeycloak.email,
@@ -65,7 +65,7 @@ export class UsersServiceUtils {
       lastName: userKeycloak.lastName,
     };
 
-    return updatedUserRepresentation;
+    return userRepresentationUpdated;
   }
 
   async validateUsername(username: UsersEntity['username']): Promise<boolean> {

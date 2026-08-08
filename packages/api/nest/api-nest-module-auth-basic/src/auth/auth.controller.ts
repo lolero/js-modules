@@ -21,7 +21,7 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Get('/hello-world')
-  usersHelloWorld() {
+  usersHelloWorld(): string {
     return 'Hello world!';
   }
 

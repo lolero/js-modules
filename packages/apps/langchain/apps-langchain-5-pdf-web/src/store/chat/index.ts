@@ -13,7 +13,7 @@ import {
 import { sendMessage as sendStreamingMessage } from './stream';
 import { sendMessage as sendSyncMessage } from './sync';
 
-const sendMessage = (message: Message, opts: MessageOpts) => {
+const sendMessage = (message: Message, opts: MessageOpts): Promise<void> => {
   return opts.useStreaming
     ? sendStreamingMessage(message)
     : sendSyncMessage(message);

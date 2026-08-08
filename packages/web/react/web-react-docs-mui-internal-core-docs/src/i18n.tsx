@@ -8,9 +8,18 @@ export type Translate = (
   options?: Record<string, unknown>,
 ) => string;
 
+// WHY: react-compiler-hookless-hook
+// Hoisted for a stable identity — `useTranslate` is never compiled, so an
+// inline arrow would be a new reference every render.
+const translate: Translate = (key) => key;
+
+/**
+ * Translate function for the showcase — there is no translation catalog, so it
+ * echoes the key back.
+ * @returns The translate function.
+ */
 export function useTranslate(): Translate {
-  // No translation catalog in the showcase — echo the key back.
-  return (key) => key;
+  return translate;
 }
 
 export function useUserLanguage(): string {
